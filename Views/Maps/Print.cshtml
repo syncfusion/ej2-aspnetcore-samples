@@ -1,0 +1,124 @@
+@using Syncfusion.EJ2.Maps;
+@section ControlsSection{
+    @{
+
+        var colorMaps = new List<Syncfusion.EJ2.Maps.MapsColorMapping>
+        {
+                       new MapsColorMapping{
+                            From= 580000, To= 2800000, Color= "#dae8f1", Label= "<3M"
+                        },
+                        new MapsColorMapping{
+                From= 2800000, To= 5280000, Color= "#b0cde1", Label= "3-6M"
+                        },
+                        new MapsColorMapping{
+                From= 5280000, To= 8260000, Color= "#90bad8", Label= "6-9M"
+                        },
+                        new MapsColorMapping{
+                From= 8260000, To= 11660000, Color= "#6ea7d2", Label= "9-12M"
+                        },
+                        new MapsColorMapping{
+                From= 11660000, To= 19600000, Color= "#4c96cb", Label= "12-20M"
+                        },
+                        new MapsColorMapping{
+                From= 19600000, To= 26500000, Color= "#3182bd", Label= "20-25M"
+                        },
+                        new MapsColorMapping{
+                From= 26500000, To= 38400000, Color= "#004374", Label= ">25M"
+                        }
+
+};
+        var border = new MapsBorder
+        {
+            Width = 0.5,
+            Color = "gray"
+        };
+    }
+    <div class="col-lg-9 control-section">
+        <div id="maps">
+            <ejs-maps id="maps" load="onMapLoad" format="n" useGroupingSeparator="true" tooltipRender="tooltipRender">
+                <e-maps-titlesettings alignment="@Syncfusion.EJ2.Maps.Alignment.Center" text="State-wise US population - 2010"></e-maps-titlesettings>
+                <e-maps-zoomsettings enable="false"></e-maps-zoomsettings>
+                <e-maps-legendsettings mode="@LegendMode.Interactive" alignment="@Alignment.Center" height="10" width="350" visible="true" position="@Syncfusion.EJ2.Maps.LegendPosition.Bottom" labelDisplayMode="@LabelIntersectAction.Trim"></e-maps-legendsettings>
+                <e-maps-layers>
+                    <e-maps-layer shapeData="ViewBag.mapdata" dataSource="ViewBag.datasource" shapePropertyPath="name" shapeDataPath="name">
+                        <e-layersettings-shapesettings border="border" colorValuePath="population" colorMapping="colorMaps">
+                        </e-layersettings-shapesettings>
+                        <e-layersettings-tooltipsettings visible="true" valuePath="population" format="State= ${name} <br> Population= ${population}"></e-layersettings-tooltipsettings>
+                    </e-maps-layer>
+                </e-maps-layers>
+            </ejs-maps>
+           
+        </div>
+        <div style="float: right; margin-right: 10px;">
+            Source:
+            <a href="https://en.wikipedia.org/wiki/List_of_members_of_the_United_Nations_Security_Council" target="_blank">en.wikipedia.org</a>
+        </div>
+    </div>
+    <div class="col-md-3 property-section">
+        <table id="property" title="Properties" style="width: 100%">
+            <tbody>
+                <tr id="button-control" style="height: 50px">
+                    <td align="center">
+                        <div>
+                            <button id="togglebtn">Print</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+<style>
+    .e-play-icon::before {
+        content: '\e728';
+    }
+</style>
+}
+<script>
+	function tooltipRender(args) {
+        if (args.options.toString().indexOf('density') > -1) {
+            args.cancel = true;
+        }
+    }
+    function onMapLoad(args) {
+        window.maps = args.maps;
+        var theme = location.hash.split("/")[1];
+        theme = theme ? theme : "Material";
+        args.maps.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+    }
+
+    window.onload = function () {
+        window.togglebtn1 = new ej.buttons.Button({
+            iconCss: 'e-icons e-play-icon', cssClass: 'e-flat', isPrimary: true,
+        });
+        window.togglebtn1.appendTo('#togglebtn');
+        document.getElementById('togglebtn').onclick = () => {
+            window.maps.print();
+        };
+    };
+</script>
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Maps control illustrates the printing functionality in the maps control." />
+}
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample visualizes the continents in the world by rendering these in a map layer. Also marks the office locations of YouTube in the world using markers.
+        </p>
+    </div>
+}
+@section Description{
+
+    <div id="description">
+        <p>
+            In this example, you can see how to render a map with the provided GeoJSON data. Group of shapes can be combined to form a layer of the map. You can bind the desired colors from the data source to the map shapes. The marker templates are used to display the names for shapes and mark specific locations. Legend is enabled in this example to represent each continent.
+        </p>
+        <p>
+            Tooltip is enabled in this example. To see the tooltip in action, hover the mouse over a marker or tap a marker in touch enabled devices.
+        </p>
+        <br />
+        <p style="font-weight= 500">Injecting Module</p>
+        <p>
+            Maps component features are segregated into individual feature-wise modules. To use a marker, inject the <code>Marker</code> module using the <code>Maps.Inject(Marker)</code> method, and use a legend by injecting the <code>Legend</code> module.
+        </p>
+    </div>
+}

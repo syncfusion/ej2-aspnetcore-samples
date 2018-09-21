@@ -1,0 +1,133 @@
+﻿@using Syncfusion.EJ2.TreeMap;
+
+@section ControlsSection{
+<link href="http://npmci.syncfusion.com/packages/development/ej2-buttons/styles/material.css" rel="stylesheet" /> 
+    @{
+        var colorMaps = new[]{
+               new {from = 1.3, to = 22, color = "#FAB665", minOpacity=0.5, maxOpacity=1 }
+            };
+        var leafBorder = new TreeMapBorder{ Color = "white", Width = 0.5 };
+    }
+    <div class="col-lg-9 control-section">
+        <div id="container">
+            <ejs-treemap id="container" load="treeMapLoad" layoutType="@Syncfusion.EJ2.TreeMap.LayoutMode.SliceAndDiceVertical" dataSource="ViewBag.dataSource" weightValuePath="Percentage" rangeColorValuePath="Percentage">
+                <e-treemap-titlesettings text="Top 10 best selling smartphone brands - 2017"></e-treemap-titlesettings>
+                <e-treemap-tooltipsettings visible="true" format="${Product} (+${Percentage}) %"></e-treemap-tooltipsettings>
+                <e-treemap-leafitemsettings colorMapping="colorMaps" interSectAction="@LabelAlignment.Hide" labelPosition="@Syncfusion.EJ2.TreeMap.LabelPosition.Center" labelPath="Product" fill="#6699cc" labelFormat="${Product} (+${Percentage}) %" border="leafBorder"></e-treemap-leafitemsettings>
+            </ejs-treemap>
+        </div>
+        <div style="float: right; margin-right: 10px;">
+            Source:
+            <a href=" http://zeenews.india.com/photos/business/worlds-10-best-selling-smartphone-brands-2033958/samsung-2033959" target="_blank">zeenews.india.com</a>
+        </div>
+    </div>
+<div class="col-lg-3 property-section">
+    <table id="property" title="Properties" style="width: 100%">
+        <tbody>
+            <tr style="height: 50px">
+                <td style="width: 40%">
+                    <div>
+                        Export Type
+                    </div>
+                </td>
+                <td style="width: 60%;">
+                    <div style="margin-left: -10px">
+                        <select id="mode">
+                            <option value='JPEG'>JPEG</option>
+                            <option value='PNG'>PNG</option>
+                            <option value='SVG'>SVG</option>
+                            <option value='PDF'>PDF</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr style="height: 50px">
+                <td style="width: 40%">
+                    <div>File Name</div>
+                </td>
+                <td style="width: 40%;">
+                    <div class="e-float-input" style='margin-top: 0px;'>
+                        <input type="text" value="Treemap" id="fileName" style="margin-left: -10px">
+                    </div>
+                </td>
+            </tr>
+            <tr id="button-control1">
+                <td>
+                    <div style="height: 45px">
+                        <button id="export" style="width: 100px">Export</button>
+                    </div>
+                </td>
+            </tr>
+            <tr id="button-control2">
+                <td>
+                    <div style="height: 45px">
+                        <button id="print" style="width: 100px">Print</button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+    <style>
+    .e-play-icon::before {
+        content: '\e728';
+    }
+</style>
+
+}
+<script>
+
+    function treeMapLoad(args) {
+        window.treemap = args.treemap;
+        var theme = location.hash.split('/')[1];
+        theme = theme ? theme : 'Material';
+        args.treemap.theme = theme.charAt(0).toUpperCase() + theme.slice(1);
+    }
+
+    window.onload = function () {
+        window.exportType = new ej.dropdowns.DropDownList({
+            index: 0,
+            width: 90
+        });
+        window.exportType.appendTo('#mode');
+        window.togglebtn1 = new ej.buttons.Button({
+            iconCss: 'e-icons e-play-icon', cssClass: 'e-flat', isPrimary: true,
+        });
+        window.togglebtn1.appendTo('#export');
+        window.togglebtn2 = new ej.buttons.Button({
+            iconCss: 'e-icons e-play-icon', cssClass: 'e-flat', isPrimary: true,
+        });
+        window.togglebtn2.appendTo('#print');
+
+        document.getElementById('export').onclick = () => {
+            var fileName = document.getElementById('fileName').value;
+            window.treemap.export(window.exportType.value, fileName);
+        };
+        document.getElementById('print').onclick = () => {
+            window.treemap.print();
+        };
+    };
+
+    
+</script>
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 TreeMap control depicts the top 10 best-selling smartphone brands. Print and export options have been enabled." />
+}
+@section ActionDescription{
+    <div id="action-description">
+    <p>
+        This sample demonstrates the top 10 best-selling smartphone brands. Printing and exporting options has been enabled in this sample.
+    </p>
+</div>
+}
+@section Description{
+<div id="description">
+    <p>
+        In this example, you can see how to export and print the rendered treemap. Treemap can be exported to JPEG, PNG, SVG and PDF formats.
+    </p>
+</div>
+}
+
+
+
+

@@ -1,0 +1,111 @@
+﻿@using Syncfusion.EJ2
+@section ControlsSection{
+
+<div class="control-section" align="center">
+    <h4 id="default" style="font-family: Segoe UI;font-weight: 500; font-style:normal; font-size:15px;">Bitcoin (USD) Price Range</h4>
+    <div id="container">
+        <ejs-rangenavigator id="container" valueType="DateTime" load="onChartLoad" labelFormat="MMM-yy">
+            <e-rangenavigator-navigatorstylesettings unselectedRegionColor="transparent"></e-rangenavigator-navigatorstylesettings>
+            <e-rangenavigator-tooltip enable="true" displayMode="Always" format="MM/dd/yyyy"></e-rangenavigator-tooltip>
+            <e-rangenavigator-rangenavigatorseriescollection>
+                <e-rangenavigator-rangenavigatorseries xName="x" yName="y" type="Area" width="2">
+                </e-rangenavigator-rangenavigatorseries>
+            </e-rangenavigator-rangenavigatorseriescollection>
+        </ejs-rangenavigator>
+    </div>
+</div>
+    <script src="~/scripts/range-navigator/default_data.js"></script>
+    <script>
+        var data = bitCoinData;
+        var selectedTheme = location.hash.split('/')[1];
+        selectedTheme = selectedTheme ? selectedTheme : 'Material';
+        var theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1));
+        var themes = ['Material', 'Fabric', 'Bootstrap', 'Highcontrast']
+        var borderColor = ['#00bdae', '#4472c4', '#a16ee5', '#79ECE4'];
+        var regionColor = ['rgba(0, 189, 174, 0.3)', 'rgba(68, 114, 196, 0.3)',
+            'rgba(161, 110, 229, 0.3)', 'rgba(121, 236, 228, 0.3)'];
+        window.onChartLoad = function (args) {
+
+            args.rangeNavigator.theme = theme;
+            args.rangeNavigator.width = ej.base.Browser.isDevice ? "100%" : "80%";
+            args.rangeNavigator.series[0].dataSource = data;
+            args.rangeNavigator.series[0].border = { width: 2, color: borderColor[themes.indexOf(theme)] };
+            args.rangeNavigator.series[0].fill = 'url(#' + theme.toLowerCase() + '-gradient-chart)';
+            args.rangeNavigator.value =  [new Date('2017-09-01'), new Date('2018-02-01')];
+            args.rangeNavigator.navigatorStyleSettings.selectedRegionColor = regionColor[themes.indexOf(theme)];
+
+        }
+
+    </script>
+}
+
+@section Scripts {
+
+}
+
+<style>
+    #control-container {
+        padding: 0px !important;
+    }
+
+    #container {
+        transform: translate(0, 25%);
+    }
+
+    #material-gradient-chart stop {
+        stop-color: #00bdae;
+    }
+
+    #fabric-gradient-chart stop {
+        stop-color: #4472c4;
+    }
+
+    #bootstrap-gradient-chart stop {
+        stop-color: #a16ee5;
+    }
+
+    #highcontrast-gradient-chart stop {
+        stop-color: #79ECE4;
+    }
+
+    .chart-gradient stop[offset="0"] {
+        stop-opacity: 0.9;
+    }
+
+    .chart-gradient stop[offset="1"] {
+        stop-opacity: 0.3;
+    }
+</style>
+<svg style="height: 0">
+    <defs>
+        <linearGradient id="material-gradient-chart" style="opacity: 0.75" class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0"></stop>
+            <stop offset="1"></stop>
+        </linearGradient>
+        <linearGradient id="fabric-gradient-chart" style="opacity: 0.75" class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0"></stop>
+            <stop offset="1"></stop>
+        </linearGradient>
+        <linearGradient id="bootstrap-gradient-chart" style="opacity: 0.75" class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0"></stop>
+            <stop offset="1"></stop>
+        </linearGradient>
+        <linearGradient id="highcontrast-gradient-chart" style="opacity: 0.75" class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0"></stop>
+            <stop offset="1"></stop>
+        </linearGradient>
+    </defs>
+</svg>
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Range Navigator control shows the default rendering of range navigator with range area series." />
+}
+@section ActionDescription{
+<p>
+    This sample visualizes the bitcoin price range with area series in the range navigator. Selected range values are enhanced with tooltip.
+</p>
+}
+@section Description{
+<p>
+    In this example, you can see how to render and configure the range navigator with area type series. <code>tooltip</code> is used to represent selected data value. You can also use <code>selectedRegionColor</code> and <code>unselectedRegionColor</code> properties to customize selected and unselected area in range navigator.
+</p>    
+}

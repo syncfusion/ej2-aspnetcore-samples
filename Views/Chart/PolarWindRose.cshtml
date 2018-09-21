@@ -1,0 +1,101 @@
+﻿@using Syncfusion.EJ2
+@section ControlsSection{
+    @{     
+        var Polar = "Polar";
+    }
+        <div class="control-section col-lg-9">
+
+            <ejs-chart id="container" load="window.onChartLoad" title="Wind Rose Chart">
+                <e-chart-tooltipsettings enable="true">
+                </e-chart-tooltipsettings>
+                <e-chart-primaryxaxis valueType="Category" labelPlacement="OnTicks" interval="1" coefficient="100"></e-chart-primaryxaxis>
+                <e-chart-legendsettings visible="true">
+                </e-chart-legendsettings>
+                <e-series-collection>
+                    <e-series dataSource="ViewBag.dataSource" name="6-9" xName="x" width="2" yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Polar" drawType="@Syncfusion.EJ2.Charts.ChartDrawType.StackingColumn">
+                        <e-series-border color="white" width="1"></e-series-border>
+                    </e-series>
+                    <e-series dataSource="ViewBag.dataSource" name="9-11" xName="x" width="2" yName="y1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Polar" drawType="@Syncfusion.EJ2.Charts.ChartDrawType.StackingColumn">
+                        <e-series-border color="white" width="1"></e-series-border>
+                    </e-series>
+                    <e-series dataSource="ViewBag.dataSource" name="11-14" xName="x" width="2" yName="y2" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Polar" drawType="@Syncfusion.EJ2.Charts.ChartDrawType.StackingColumn">
+                        <e-series-border color="white" width="1"></e-series-border>
+                    </e-series>
+                    <e-series dataSource="ViewBag.dataSource" name="14-17" xName="x" width="2" yName="y3" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Polar" drawType="@Syncfusion.EJ2.Charts.ChartDrawType.StackingColumn">
+                        <e-series-border color="white" width="1"></e-series-border>
+                    </e-series>
+                    <e-series dataSource="ViewBag.dataSource" name="17-20" xName="x" width="2" yName="y4" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Polar" drawType="@Syncfusion.EJ2.Charts.ChartDrawType.StackingColumn">
+                        <e-series-border color="white" width="1"></e-series-border>
+                    </e-series>
+                    <e-series dataSource="ViewBag.dataSource" name="23 Above" xName="x" width="2" yName="y5" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Polar" drawType="@Syncfusion.EJ2.Charts.ChartDrawType.StackingColumn">
+                        <e-series-border color="white" width="1"></e-series-border>
+                    </e-series>
+                </e-series-collection>
+            </ejs-chart>
+        </div>
+        <div class="col-lg-3 property-section">
+            <div class="property-panel-section">
+                <div class="property-panel-content">
+                    <table id="property" class="property-panel-table" title="Properties" style="width: 100%">
+                        <tr style="height: 50px">
+                            <td style="width: 50%">
+                                <div>Series Type:</div>
+                            </td>
+                            <td style="width: 50%;">
+                                <ejs-dropdownlist id="serieschange" dataSource="@ViewBag.select" value="Polar" change="seriesChange" popupHeight="220px"></ejs-dropdownlist>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+        <script>
+            window.onChartLoad = function (args) {
+                var selectedTheme = location.hash.split('/')[1];
+                selectedTheme = selectedTheme ? selectedTheme : 'Material';
+                args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1));
+            }
+            function seriesChange() {
+                var chart = document.getElementById('container').ej2_instances[0];
+                chart.series[0].type = this.value;
+                chart.series[1].type = this.value;
+                chart.series[2].type = this.value;
+                chart.series[3].type = this.value;
+                chart.series[4].type = this.value;
+                chart.series[5].type = this.value;                
+                chart.refresh();
+            }
+        </script>
+
+
+        <style>
+            #control-container {
+                padding: 0px !important;
+            }
+        </style>
+    }
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Chart control shows how to render wind rose using stacking column in polar and radar charts." />
+}
+    @section ActionDescription{
+        <p>
+            This sample demonstrates polar series with stacking column type. The switching between polar and radar series can be done by using <code>Series Type</code> in property panel.
+        </p>
+    }
+    @section Description{
+        <p>
+            In this example, you can see how to render and configure the stacking column type charts. Stacks the points in the series
+            vertically and also you can use <code>stackingGroup</code> property to group the stacking collection based
+            on categories. You can use <code>border</code>, <code>fill</code> properties to customize the vertical bar. <code>dataLabel</code>        is used to represent individual data and its value.
+        </p>
+        <p>
+            Tooltip is enabled in this example, to see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+        </p>
+        <br>
+        <p>
+            More information on the Polar series can be found in this
+            <a target="_blank" href="http://ej2.syncfusion.com/documentation/chart/api-axis.html#valuetype-valuetype">documentation section</a>.
+        </p>
+    }

@@ -1,0 +1,82 @@
+﻿@using Syncfusion.EJ2
+@section ControlsSection{
+  <div class="control-section" align='center'>
+        <ejs-accumulationchart id="container" selectionMode="Point" title="Mobile Browser Statistics" load="load" animationComplete="animation" textRender="textRender">
+            <e-accumulationchart-tooltipsettings enable="false"></e-accumulationchart-tooltipsettings>
+            <e-accumulationchart-legendsettings toggleVisibility=false position="Right" height="28%" width="44%">
+            </e-accumulationchart-legendsettings>
+            <e-accumulation-series-collection>
+                <e-accumulation-series dataSource="ViewBag.dataSource" xName="xValue" yName="yValue" name="Revenue" innerRadius="40%">
+                    <e-accumulationseries-datalabel name="text" visible="true">
+                        <e-font fontWeight="600" color="white"></e-font>
+                    </e-accumulationseries-datalabel>
+                </e-accumulation-series>
+            </e-accumulation-series-collection>
+        </ejs-accumulationchart>
+    </div>
+
+    <script>
+        var centerTitle = document.createElement('div');
+        centerTitle.innerHTML = 'Expenses <br> Year    2013';
+        centerTitle.style.position = 'absolute';
+        centerTitle.style.visibility = 'hidden';
+        function load(args) {
+            var indexedTheme = location.hash.split('/')[1];
+            indexedTheme = indexedTheme ? indexedTheme : 'Material';
+            args.accumulation.theme = (indexedTheme.charAt(0).toUpperCase() + indexedTheme.slice(1));
+        }
+
+        function animation(args) {
+            centerTitle.style.fontSize = getFontSize(args.accumulation.initialClipRect.width);
+            var rect = centerTitle.getBoundingClientRect();
+            centerTitle.style.top = (args.accumulation.center.y - rect.height / 2) + 'px';
+            centerTitle.style.left = (args.accumulation.center.x - rect.width / 2) + 'px';
+            centerTitle.style.visibility = 'visible';
+            let points = args.accumulation.visibleSeries[0].points;
+            for (var point of points) {
+                if (point.labelPosition === 'Outside' && point.labelVisible) {
+                    var label = document.getElementById('container_datalabel_Series_0_text_' + point.index);
+                    label.setAttribute('fill', 'black');
+                }
+            }
+
+        }
+
+        function textRender(args) {
+            var pie = document.getElementById('container').ej2_instances[0];
+            args.series.dataLabel.font.size = getFontSize(pie.initialClipRect.width);
+            pie.animateSeries = true;
+
+        }
+
+        function getFontSize(width) {
+            if (width > 300) {
+                return '13px';
+            } else if (width > 250) {
+                return '8px';
+            } else {
+                return '6px';
+            }
+        }
+        document.getElementById('container').appendChild(centerTitle);
+    </script>
+}
+}
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Chart control shows how to render and configure the legends in pie charts." />
+}
+@section ActionDescription{
+
+    <div id="action-description">
+        This sample demonstrates pie chart with legend. For pie chart, you can change start angle of chart by Pie Angle in properties panel. Outer radius for pie chart can be changed by Outer Radius. Explode Index and explode radius for chart can be changed by Explode Radius and Explode Index
+    </div>
+}
+@section Description {
+    <div id="description">
+        In this example, you can see how to render and configure the pie chart. You can use border, fill properties to customize the pie point. dataLabel is used to represent individual data and its value.
+
+        Tooltip is enabled in this example, to see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+    </div>
+
+}
+

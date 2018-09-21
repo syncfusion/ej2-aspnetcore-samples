@@ -1,0 +1,57 @@
+﻿@using Syncfusion.EJ2.Maps;
+@section ControlsSection{
+    @{
+
+                var TextStyle = new MapsFont
+                {
+                    Size = "16px"
+                };
+                var shape = new MapsShapeSettings
+                {
+                  Fill="#5100a3",
+                  Opacity= 0.5
+        };
+    }
+    <div class="control-section">
+        <div class="row">
+            <div class="col-md-12">
+                <ejs-maps id="maps">
+                    <e-maps-titlesettings alignment="@Syncfusion.EJ2.Maps.Alignment.Center" text="Location of Africa continent in the World map" textStyle="TextStyle">
+                    </e-maps-titlesettings>
+                    <e-maps-zoomsettings zoomFactor="2" enable="true"></e-maps-zoomsettings>
+                    <e-maps-annotations>
+                        <e-maps-annotation content="<div style=height:18px;width:170px;background:white;text-align:center><a href=https://www.openstreetmap.org/copyright target=_blank>©OpenStreetMap contributors</a></div>"
+                                           verticalAlignment="@Syncfusion.EJ2.Maps.AnnotationAlignment.Far" horizontalAlignment="@Syncfusion.EJ2.Maps.AnnotationAlignment.Far" zIndex="1" x="-40" y="-20"></e-maps-annotation>
+                    </e-maps-annotations>
+                    <e-maps-layers>
+                        <e-maps-layer layerType="@Syncfusion.EJ2.Maps.ShapeLayerType.OSM">
+                        </e-maps-layer>
+                        <e-maps-layer type="@Syncfusion.EJ2.Maps.Type.SubLayer" shapeData="ViewBag.mapdata" shapeSettings="shape"></e-maps-layer>
+                    </e-maps-layers>
+                </ejs-maps>
+            </div>
+        </div>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this example, you can see how to render geomentric layers as sublayer on an Open Street Map. Denoted the outline of Africa
+            continent with different color.
+        </p>
+        <br />
+        <p style="font-weight: 500">Injecting Module</p>
+        <p>
+            Maps component features are segregated into individual feature-wise modules. To use zooming feature, inject the Zoom module
+            using the
+            <code>Maps.Inject(Zoom)</code> method.
+        </p>
+    </div>
+}
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample visualizes the Africa continent location in the World map.
+        </p>
+    </div>
+}

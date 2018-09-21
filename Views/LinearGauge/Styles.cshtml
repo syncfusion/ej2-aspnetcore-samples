@@ -1,0 +1,211 @@
+﻿@using Syncfusion.EJ2;
+@section ControlsSection{
+    <div class="control-section" style="border-right:0px;">
+        <div class="row">
+            <ejs-lineargauge id="linear1" load="gaugeLoad1" style="height:100px;">
+                <e-lineargauge-axes>
+                    <e-lineargauge-axis>
+                        <e-axis-majorticks interval="10"></e-axis-majorticks>
+                    </e-lineargauge-axis>
+                </e-lineargauge-axes>
+            </ejs-lineargauge>
+        </div>
+        <div class="row">
+            <ejs-lineargauge id="linear2" load="gaugeLoad2" style="height:100px;">
+                <e-lineargauge-axes>
+                    <e-lineargauge-axis></e-lineargauge-axis>
+                </e-lineargauge-axes>
+            </ejs-lineargauge>
+        </div>
+        <div class="row">            
+            <ejs-lineargauge id="linear3" load="gaugeLoad3" style="height:120px;">
+                <e-lineargauge-axes>
+                    <e-lineargauge-axis>
+                        <e-axis-line offset="-20"></e-axis-line>
+                        <e-axis-majorticks interval="10"></e-axis-majorticks>
+                    </e-lineargauge-axis>
+                </e-lineargauge-axes>
+            </ejs-lineargauge>
+        </div>
+        <div class="row">
+           
+            <ejs-lineargauge id="linear4" load="gaugeLoad4" style="height:100px;">
+                <e-lineargauge-axes>
+                    <e-lineargauge-axis>
+                        <e-axis-line width="0"></e-axis-line>
+                        <e-axis-labelstyle offset="55"></e-axis-labelstyle>
+                        <e-axis-majorticks interval="10" height="0"></e-axis-majorticks>
+                        <e-axis-minorticks height="0"></e-axis-minorticks>
+                    </e-lineargauge-axis>
+                </e-lineargauge-axes>
+            </ejs-lineargauge>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        var gauge;
+        window.gaugeLoad1 = function (args) {
+            var theme = location.hash.split('/')[1];
+            theme = theme ? theme : 'Material';
+            args.gauge.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+            if (window.gaugeLoaded1)
+                return;
+            window.gaugeLoaded1 = true;
+            gauge = args.gauge;
+            args.gauge.orientation = "Horizontal";
+            var axis = args.gauge.axes[0];
+            axis.pointers = [{
+                value: 80,
+                offset: 10,
+                height: 13,
+                width: 13
+            }];
+        }
+        window.gaugeLoad2 = function (args) {
+            var theme = location.hash.split('/')[1];
+            theme = theme ? theme : 'Material';
+            args.gauge.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+            if (window.gaugeLoaded2)
+                return;
+            window.gaugeLoaded2 = true;
+            gauge = args.gauge;
+            gauge.container = {
+                width: 30,
+                backgroundColor: '#e0e0e0',
+                border: {
+                    width: 0
+                },
+                offset: -20
+            };
+            args.gauge.orientation = "Horizontal";
+            var axis = args.gauge.axes[0];
+
+            axis.pointers = [{
+                value: 10,
+                placement: 'Near',
+                offset: -50,
+                height: 15,
+                width: 15,
+                markerType: 'Triangle'
+            }];
+            axis.line = {
+                offset : 30
+            };
+            axis.majorTicks = {
+                interval: 10,
+            };
+            axis.labelStyle = {
+                offset: 50
+            };
+                axis.ranges = [
+                    {
+                        start: 0,
+                        end: 10,
+                        startWidth: 30,
+                        endWidth: 30,
+                        color: '#30b32d'
+                    }
+                ];
+        }
+        window.gaugeLoad3 = function (args) {
+            var theme = location.hash.split('/')[1];
+            theme = theme ? theme : 'Material';
+            args.gauge.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+            if (window.gaugeLoaded3)
+                return;
+            window.gaugeLoaded3 = true;
+            gauge = args.gauge;
+            args.gauge.orientation = "Horizontal";
+            var axis = args.gauge.axes[0];
+            axis.line = {
+                offset: -20
+            };
+            axis.majorTicks = {
+                interval: 10
+            };
+            axis.pointers = [
+                {
+                    value: 70,
+                    offset: 20,
+                    height: 13,
+                    width: 13
+                },
+                {
+                    value: 70,
+                    type: 'Bar',
+                    height: 10,
+                    color: 'red'
+                }
+            ];
+        }
+        window.gaugeLoad4 = function (args) {
+            var theme = location.hash.split('/')[1];
+            theme = theme ? theme : 'Material';
+            args.gauge.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+            if (window.gaugeLoaded4)
+                return;
+            window.gaugeLoaded4 = true;
+            gauge = args.gauge;
+            args.gauge.orientation = "Horizontal";
+            gauge.container = {
+                width : 30,
+                offset : 0,
+                backgroundColor : "#e0e0e0"
+            };
+            var axis = args.gauge.axes[0];
+
+            axis.pointers = [
+                {
+                    value: 60,
+                    height: 15,
+                    width: 15,
+                    placement: 'Near',
+                    offset: -50,
+                    markerType: 'Triangle'
+                },
+                {
+                    type: 'Bar',
+                    color: '#ff9200',
+                    value: 60,
+                    height: 30
+                }
+            ];
+            axis.line = {
+                width: 0
+            },
+                axis.majorTicks = {
+                    interval: 10,
+                    height: 0
+                };
+                axis.minorTicks = {
+                    height: 0
+                };
+                axis.labelStyle = {
+                    offset: 55
+                };
+        }
+    </script>
+}
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Linear Gauge control visualizes the available options for customization." />
+}
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample visualizes the available customizing options in linear gauge.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this sample, we have indicated a value in various styles using bar and marker pointers. You can display any number of
+            pointers in an axis.
+            <br>
+        <p>
+            More information about visual editing can be found in this
+            <a target="_blank" href="http://ej2.syncfusion.com/documentation">documentation section</a>.
+        </p>
+    </div>
+}

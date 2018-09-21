@@ -1,0 +1,97 @@
+﻿@using Syncfusion.EJ2
+@section ControlsSection{
+ 
+    <div class="control-section">
+        <div id="container" align='center'>
+            <ejs-chart id="BollingerContainer" title="AAPL - 2012-2017" 
+                      load="onChartLoad">
+                <e-chart-tooltipsettings enable="true" shared="true">
+                </e-chart-tooltipsettings>
+                <e-chart-primaryxaxis valueType="DateTime" intervalType="Months" zoomFactor=0.2 zoomPosition=0.6>
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                    <e-crosshairtooltip enable="true"></e-crosshairtooltip>
+                </e-chart-primaryxaxis>
+                <e-chart-primaryyaxis title="Price" labelFormat="${value}" minimum=50 maximum=170 plotOffset=25
+                 interval=30 rowIndex=1  opposedPosition=true>
+                    <e-majorticklines width="0"></e-majorticklines>
+                    <e-linestyle width="0"></e-linestyle>
+                </e-chart-primaryyaxis>
+                <e-chart-chartarea>
+                    <e-chartarea-border width="0"></e-chartarea-border>
+                </e-chart-chartarea>
+                <e-chart-legendsettings visible="false">
+                </e-chart-legendsettings>
+                <e-chart-zoomsettings enablePinchZooming="true" enableSelectionZooming="true" mode="@Syncfusion.EJ2.Charts.ZoomMode.X"></e-chart-zoomsettings>
+                <e-chart-crosshairsettings enable=true lineType="Vertical"></e-chart-crosshairsettings>
+                <e-chart-axes>
+                    <e-chart-axis name="secondary" opposedPosition=true rowIndex=0 minimum=-3.5 maximum=3.5
+                                  interval=3 title="MACD">
+                        <e-majorgridlines width="0"></e-majorgridlines>
+                        <e-majorticklines width="0"></e-majorticklines>
+                        <e-linestyle width="0"></e-linestyle>
+                        <e-striplines>
+                            <e-stripline start="-3.5" end="3.5" text="" color="black" visible="true" opacity="0.03" zIndex="Behind"></e-stripline>
+                        </e-striplines>
+                    </e-chart-axis>
+                </e-chart-axes>
+                <e-chart-rows>
+                    <e-chart-row height="40%"></e-chart-row>
+                    <e-chart-row height="60%"></e-chart-row>
+                </e-chart-rows>
+                <e-series-collection>
+                    <e-series xName="x" yName="y" low="low" high="high" close="close" volume="volume" open="open" width=2
+                              name="Apple Inc"  bearFillColor="#2ecd71" bullFillColor="#e74c3d"
+                              type="@Syncfusion.EJ2.Charts.ChartSeriesType.Candle"></e-series>
+                </e-series-collection>
+                <e-indicators>
+                    <e-indicator type="@Syncfusion.EJ2.Charts.TechnicalIndicators.Macd" period=3
+                                 fastPeriod=8 slowPeriod=5 seriesName="Apple Inc" macdType="Both"
+                                 width=2 macdPositiveColor="#2ecd71" macdNegativeColor="#e74c3d"
+                                 fill="#6063ff" yAxisName="secondary">
+                    </e-indicator>
+                </e-indicators>
+            </ejs-chart>
+        </div>
+    </div>
+    <script src="~/scripts/chart/financial-data.js"></script>
+    <script type="text/javascript">
+        var onChartLoad = function (args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1));
+            args.chart.series[0].dataSource = window.chartData;
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "80%";
+        }
+    </script>
+}
+
+@section Scripts {
+
+}
+<style>
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Chart control shows how to render and configure the moving average convergence divergence indicator." />
+}
+@section ActionDescription{
+    <p>
+        This sample illustrates a stock chart with candle series and a Moving Average Convergence Divergence indicator. Trackball shows the information about the stock, signalline, Macdline, and Histogram value of a day.
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can see how to render and configure the MACD Indicator. You can use <code>border</code>,
+        <code>fill</code> properties to customize the area.
+    </p>
+    <p>
+        Tooltip is enabled in this example, to see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+    </p>
+
+    <p>
+        More information on the MACD Indicator can be found in this
+        <a target="_blank" href="http://ej2.syncfusion.com/documentation/chart/api-series.html#type-chartseriestype">documentation section</a>.
+    </p>
+}

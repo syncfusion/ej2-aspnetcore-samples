@@ -1,0 +1,167 @@
+@using Syncfusion.EJ2.Maps;
+@section ControlsSection{
+    @{
+        var centerPosition = new
+        {
+            latitude = 30.41078179084589,
+            longitude = 90.52734374999999
+        };
+        int zoomfactor = (int)2.5;
+        var titleStyle = new MapsFont
+        {
+            Size = "16px"
+        };
+        var data1 = new[]
+        {
+           new { name = "India"},
+           new { name = "China"}
+        };
+        var border1 = new MapsBorder { Width = 1, Color = "black" };
+        var shapeborder = new MapsBorder { Width = 0.1, Color = "black" };
+        var colormapping = new List<Syncfusion.EJ2.Maps.MapsColorMapping> {
+                new MapsColorMapping{ Value = "China", Color = "#f7d083" },
+                new MapsColorMapping{ Value = "India", Color = "#FFFE99" }
+        };
+        var tooltip = new MapsTooltipSettings
+        {
+            Visible = true,
+            ValuePath = "title"
+        };
+        var mdata1 = new[] { new { name = "New Delhi", latitude = 28.6139391, longitude = 77.2090212 } };
+        var mdata2 = new[] { new { name = "Mumbai", latitude = 19.0759837, longitude = 72.8776559 } };
+        var mdata3 = new[] { new { name = "Chennai", latitude = 13.0826802, longitude = 80.2707184 } };
+        var mdata4 = new[] { new { name = "Kolkata", latitude = 22.572646, longitude = 88.363895 } };
+        var mdata5 = new[] { new { name = "Kunming", latitude = 24.880095, longitude = 102.832891 } };
+        var mdata6 = new[] { new { name = "Beijing", latitude = 39.9041999, longitude = 116.4073963 } };
+        var mdata7 = new[] { new { name = "Shanghai", latitude = 31.2303904, longitude = 121.4737021 } };
+        var mdata8 = new[] { new { name = "Hong Kong", latitude = 22.396428, longitude = 114.109497 } };
+        var mdata9 = new[] { new { name = "Guangzhou", latitude = 23.12911, longitude = 113.264385 } };
+    }
+            <div class="control-section">
+        <div class="row">
+            <div class="col-md-12">
+                <ejs-maps id="maps" load="window.onMapLoad" projectionType="Equirectangular" centerPosition="centerPosition">
+                    <e-maps-titlesettings alignment="@Syncfusion.EJ2.Maps.Alignment.Center" text="Flights from India to China" textStyle="titleStyle"></e-maps-titlesettings>
+                    <e-maps-zoomsettings enable="false" zoomFactor="zoomfactor"></e-maps-zoomsettings>
+                    <e-maps-mapsarea background="#AEE2FA"></e-maps-mapsarea>
+                    <e-maps-layers>
+                        <e-maps-layer shapeData="ViewBag.mapdata" shapeDataPath="name" shapePropertyPath="name" dataSource="data1">
+                            <e-layersettings-markers>
+                                <e-layersettings-marker dataSource="ViewBag.markers" visible="true" shape="Circle" fill="white" width="8" height="8" animationDuration="0" border="border1" tooltipSettings="tooltip"></e-layersettings-marker>
+                                <e-layersettings-marker dataSource="mdata1" visible="true" offset="new { x = -50, y = 10 }" animationDuration="0" template="<div style='font-size: 12px;color:black; font-weight: 500;'>New Delhi</div>"></e-layersettings-marker>
+                                <e-layersettings-marker dataSource="mdata2" visible="true" offset="new { x = 1, y = 12 }" animationDuration="0" template="<div style='font-size: 12px;color:black; font-weight: 500;'>Mumbai</div>"></e-layersettings-marker>
+                                <e-layersettings-marker dataSource="mdata3" visible="true" offset="new { x = 1, y = 12 }" animationDuration="0" template="<div style='font-size: 12px;color:black; font-weight: 500;'>Chennai</div>"></e-layersettings-marker>
+                                <e-layersettings-marker dataSource="mdata4" visible="true" offset="new { x = 1, y = 12 }" animationDuration="0" template="<div style='font-size: 12px;color:black; font-weight: 500;'>Kolkata</div>"></e-layersettings-marker>
+                                <e-layersettings-marker dataSource="mdata5" visible="true" offset="new { x = 1, y = 14 }" animationDuration="0" template="<div style='font-size: 12px;color:black; font-weight: 500;'>Kunming</div>"></e-layersettings-marker>
+                                <e-layersettings-marker dataSource="mdata6" visible="true" offset="new { x = 1, y = 12 }" animationDuration="0" template="<div style='font-size: 12px;color:black; font-weight: 500;'>Beijing</div>"></e-layersettings-marker>
+                                <e-layersettings-marker dataSource="mdata7" visible="true" offset="new { x = 1, y = 12 }" animationDuration="0" template="<div style='font-size: 12px;color:black; font-weight: 500;'>Shanghai</div>"></e-layersettings-marker>
+                                <e-layersettings-marker dataSource="mdata8" visible="true" offset="new { x = 20, y = 20 }" animationDuration="0" template="<div style='font-size: 12px;color:black; font-weight: 500;'>Hong Kong</div>"></e-layersettings-marker>
+                                <e-layersettings-marker dataSource="mdata9" visible="true" offset="new { x = 35, y = -10 }" animationDuration="0" template="<div style='font-size: 12px;color:black; font-weight: 500;'>Guangzhou</div>"></e-layersettings-marker>
+                            </e-layersettings-markers>
+                            <e-layersettings-shapesettings colorValuePath="name" fill="#fcfbf9" border="shapeborder" colorMapping="colormapping"></e-layersettings-shapesettings>
+                        </e-maps-layer>
+                    </e-maps-layers>
+                </ejs-maps>
+                <div style="float: right; margin-right: 10px;">
+                    Source:
+                    <a href="https://www.tibettravel.org/nepal-map/nepal-india-map.html" target="_blank">www.tibettravel.org</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script>
+    function onMapLoad(args) {
+        var theme = location.hash.split("/")[1];
+        theme = theme ? theme : "Material";
+        args.maps.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+        args.maps.layers[0].navigationLineSettings = [
+            {
+                dashArray: '5,1',
+                visible: true,
+                angle: -0.8,
+                color: 'black',
+                latitude: [28.6139391, 39.9041999],
+                longitude: [77.2090212, 116.4073963],
+
+            },
+            {
+                dashArray: '5,1',
+                visible: true,
+                angle: -0.8,
+                color: 'black',
+                latitude: [28.6139391, 31.2303904],
+                longitude: [77.2090212, 121.4737021],
+
+            },
+            {
+                dashArray: '5,1',
+                visible: true,
+                angle: -0.6,
+                color: 'black',
+                latitude: [28.6139391, 23.12911],
+                longitude: [77.2090212, 113.264385],
+
+            },
+            {
+                dashArray: '5,1',
+                visible: true,
+                angle: -0.8,
+                color: 'black',
+                latitude: [28.6139391, 22.396428],
+                longitude: [77.2090212, 114.109497],
+
+            },
+            {
+                dashArray: '5,1',
+                visible: true,
+                angle: -0.8,
+                color: 'black',
+                latitude: [19.0759837, 23.12911],
+                longitude: [72.8776559, 113.264385],
+
+            },
+            {
+                dashArray: '5,1',
+                visible: true,
+                angle: -0.8,
+                color: 'black',
+                latitude: [13.0826802, 22.396428],
+                longitude: [80.2707184, 114.109497],
+
+            },
+            {
+                dashArray: '5,1',
+                visible: true,
+                angle: -0.8,
+                color: 'black',
+                latitude: [22.572646, 24.880095],
+                longitude: [88.363895, 102.832891],
+            }
+        ];
+       };
+</script>
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Maps control demonstrates the flight routes from India to China using navigation lines feature." />
+}
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+           This sample demonstrates the flight routes from India to China.
+       </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+           In this example, you can see how to render the curved lines between two points in a map. You can use the <code>dashArray</code>, <code>width</code>, and <code>color</code> properties to customize the appearance of the navigation lines.
+    
+        </p>
+    <br/>
+        <p style="font-weight: 500">Injecting Module</p>
+        <p>
+          Maps component features are segregated into individual feature-wise modules. To use the navigation lines, inject the <code>NavigationLine</code> module using the <code>Maps.Inject(NavigationLine)</code> method.
+        </p>
+    </div>
+}
+

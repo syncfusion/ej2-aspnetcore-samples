@@ -1,0 +1,112 @@
+﻿@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="control-section" align="center">
+        <ejs-chart id="container" title="Sales History of Product X" load=" load">
+            <e-chart-primaryxaxis title="Years" valueType="@Syncfusion.EJ2.Charts.ValueType.DateTime" skeleton="yMMM" edgeLabelPlacement="Shift" >
+                <e-majorgridlines width="0"></e-majorgridlines>
+            </e-chart-primaryxaxis>
+            <e-chart-primaryyaxis title="Profit ($)" rangePadding="None" >
+                <e-majorticklines width=" 0"></e-majorticklines>
+                <e-linestyle width=" 0"></e-linestyle>
+            </e-chart-primaryyaxis>
+            <e-chart-legendsettings visible="false"></e-chart-legendsettings>
+            <e-chart-zoomsettings enableMouseWheelZooming="true" enableScrollbar="true" enablePinchZooming="true" enableSelectionZooming="true" mode="X"></e-chart-zoomsettings>
+            <e-series-collection>
+                <e-series name="Warmest" xName="x" width="2" opacity="1" yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Area" fill="url(#gradient-chart)">
+                    <e-series-border width="0.5" color="#00bdae"></e-series-border>
+                </e-series>
+            </e-series-collection>
+            <e-chart-chartarea>
+                <e-chartarea-border width="0"></e-chartarea-border>
+            </e-chart-chartarea>
+        </ejs-chart>
+    </div>
+    <svg style="height: 0">
+        <defs>
+            <linearGradient id="gradient-chart" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0" />
+                <stop offset="1" />
+            </linearGradient>
+        </defs>
+    </svg>
+    <script src="~/scripts/chart/financial-data.js"></script>
+    <script>
+        function load(args) {
+            var indexedTheme = location.hash.split('/')[1];
+            indexedTheme = indexedTheme ? indexedTheme : 'Material';
+            args.chart.theme = (indexedTheme.charAt(0).toUpperCase() + indexedTheme.slice(1));
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "60%";
+
+            //series dataSource
+            var series1 = [];
+            var point1;
+            var value = 80;
+            var i;
+            for (i = 1; i < 500; i++) {
+                if (Math.random() > 0.5) {
+                    value += Math.random();
+                }
+                else {
+                    value -= Math.random();
+                }
+                point1 = { x: new Date(1950, i + 2, i), y: value.toFixed(1) };
+                series1.push(point1);
+            }
+            args.chart.series[0].dataSource = series1;
+        }
+    </script>
+    <style>
+        #gradient-chart stop {
+            stop-color: #BDEDE9;
+        }
+
+            #gradient-chart stop[offset="0"] {
+                stop-opacity: 0.75;
+            }
+
+            #gradient-chart stop[offset="1"] {
+                stop-opacity: 0;
+            }
+    </style>
+
+}
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Chart control demonstrates the zooming and panning behavior in chart." />
+}
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample illustrates zooming feature in chart. The change can be zoomed by pinching or by mouse wheel.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>This sample demonstrates the zooming and panning behavior in chart.</p>
+        <ul>
+            <li>Click and drag the mouse on a chart area to enable selection zooming.</li>
+            <li>Hover the mouse on the toolbar at the top right corner of chart area to switch between zooming and panning.</li>
+            <li>Pinch in and pinch out the chart area to zoom in or zoom out the chart in touch enabled devices.</li>
+            <li>Touch and drag to pan the chart.</li>
+            <li>Double tap to reset the zoomed chart.</li>
+        </ul>
+        <p>Chart component supports four types of zooming which can be set using <code>enableSelectionZooming</code>, <code>enablePinchZooming</code>, <code>enableMouseWheelZooming</code>, <code>enableDeferredZooming</code> property.</p>
+        <p>
+            Chart supports two mode of zooming which can be set using
+            <code>
+                <a target="_blank"
+                   href="http://ej2.syncfusion.com/react/documentation/chart/api-zoomSettings.html#mode-string">mode</a>
+            </code> property.
+        </p>
+        <ul>
+            <li><code>XY</code> - Zoom the chart with respect to both the axis.</li>
+            <li><code>X</code> - Zoom the chart with respect to horizontal axis.</li>
+            <li><code>Y</code> - Zoom the chart with respect to vertical axis.</li>
+        </ul>
+      
+        <p>
+            More information on the Zooming can be found in this &nbsp;
+            <a target="_blank" href="http://ej2.syncfusion.com/react/documentation/chart/api-zoomSettings.html#properties">documentation section</a>.
+        </p>
+    </div>
+}

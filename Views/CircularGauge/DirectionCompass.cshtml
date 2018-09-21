@@ -1,0 +1,147 @@
+﻿@using Syncfusion.EJ2;
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Circular Gauge control illustrates how to make a direction compass by using the circular gauge." />
+}
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample illustrates how to make a direction compass by using the features in gauge.
+            Color of the needle and direction labels can be customized by using options.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            Circular gauge can be customized as per a user requirement.
+            In this example, a direction compass has been depicted by adding <code>needles</code> and by customizing the <code>labels</code> to show the direction.
+        </p>
+        <p>
+            More information on the needle and labels can be found in this
+            <a target="_blank" href="http://ej2.syncfusion.com/documentation"> documentation section</a>.
+        </p>
+    </div>
+}
+@section ControlsSection{
+    @{
+        var font = new
+            {
+                size = "12px",
+                fontFamily = "Roboto"
+        };
+     }
+    <div class="col-md-8 control-section">
+        <div class="content-wrapper">
+            <ejs-circulargauge id="circular" axisLabelRender="axisLabelRender" load="gaugeload">
+                <e-circulargauge-axes>
+                    <e-circulargauge-axis startAngle="0" endAngle="360" minimum="0" maximum="8" radius="70%">
+                        <e-axis-linestyle width="8" color="#E0E0E0"></e-axis-linestyle>
+                        <e-axis-labelstyle font="font" useRangeColor="true" autoAngle="true" hiddenLabel="@Syncfusion.EJ2.CircularGauge.HiddenLabel.Last"></e-axis-labelstyle>
+                        <e-axis-majorticks height="15" interval="1" color="9E9E9E"></e-axis-majorticks>
+                        <e-axis-minorticks height="10" interval="0.5" color="#9E9E9E"></e-axis-minorticks>
+                    </e-circulargauge-axis>
+                </e-circulargauge-axes>
+            </ejs-circulargauge>
+        </div>
+    </div>
+<div class="col-md-4 property-section">
+    <table id="property" title="Properties" style="width: 100%">
+        <tbody>
+            <tr style="height: 50px">
+                <td>
+                    <div id="">Pointer Color</div>
+                </td>
+                <td>
+                    <div>
+                        <select id="poiterColor" class="form-control" style="width:90%">
+                            <option value="#f03e3e" selected="true">#f03e3e</option>
+                            <option value="#4472c4">#4472c4</option>
+                            <option value="#ed7d31">#ed7d31</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr style="height: 50px">
+                <td>
+                    <div id="">Label Color</div>
+                </td>
+                <td>
+                    <div>
+                        <select id="labelColor" class="form-control" style="width:90%">
+                            <option value="#f03e3e" selected="true">#f03e3e</option>
+                            <option value="#4472c4">#4472c4</option>
+                            <option value="#ed7d31">#ed7d31</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+}
+<script>
+    var value = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW', ''];
+    var pointerColor, circulargauge;
+    var labelColor;
+    window.addEventListener('load', function () { 
+        pointerColor = new ej.dropdowns.DropDownList({
+            index: 0,
+            placeholder: 'Select Range Bar Color',
+            width: 120,
+            change: function () {
+                var rangeColor = pointerColor.value.toString();
+                circulargauge.axes[0].pointers[0].color = rangeColor;                
+                circulargauge.refresh();
+            }
+        });
+        pointerColor.appendTo('#poiterColor');
+        labelColor = new ej.dropdowns.DropDownList({
+            index: 0,
+            placeholder: 'Select Range Bar Color',
+            width: 120,
+            change: function () {
+                var rangeColor = labelColor.value.toString();
+                circulargauge.axes[0].ranges[0].color = rangeColor;
+                circulargauge.refresh();
+            }
+        });
+        labelColor.appendTo('#labelColor');
+    });
+    window.axisLabelRender = function (args) {
+        args.text = value[args.value];
+    }
+    window.gaugeload = function (args) {
+        var theme = location.hash.split('/')[1];
+        theme = theme ? theme : 'Material';
+        args.gauge.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+        if (window.gaugeLoaded)
+            return;
+        window.gaugeLoaded = true;
+        circulargauge = args.gauge;
+        var axis = args.gauge.axes[0];
+        axis.ranges = [{
+            start: 7,
+            end: 7,
+            color: '#f03e3e'
+        }];
+        axis.pointers = [{
+            value: 7,
+            radius: '50%',
+            color: '#f03e3e',
+            pointerWidth: 20,
+            cap: {
+                radius: 0
+            },
+            animation: { enable: false }
+        }, {
+            value: 3,
+            radius: '50%',
+            color: '#9E9E9E',
+            pointerWidth: 20,
+            cap: {
+                radius: 0
+            },
+            animation: { enable: false }
+        }];
+    }
+</script>

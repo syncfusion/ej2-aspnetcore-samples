@@ -1,0 +1,120 @@
+﻿@using Syncfusion.EJ2;
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Circular Gauge control visualizes the short-put distance covered by the athletes by using the image pointer." />
+}
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample visualizes the short-put distance covered by the athletes by using the image pointer in gauge.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this example, you can see how to use the pointer image for an axis in the circular gauge. Pointer value points out the
+            actual value set in the <b>Circular Gauge</b>. You can customize the <code>pointers</code> to improve the
+            appearance of <b>Gauge</b>.
+        </p>
+        <br>
+        <p>
+            In this sample, a pointer with image is used to show the short-put distance thrown by the player.
+        </p>
+        <p>
+            More information on the pointers can be found in this
+            <a target="_blank" href="http://ej2.syncfusion.com/documentation">documentation section</a>.
+        </p>
+    </div>
+}
+@section ControlsSection{
+    @{
+        var font = new
+            {
+                color = "#424242",
+                fontFamily = "Roboto",
+                size = "0px",
+                fontWeight = "Regular"
+         };
+    }
+    <div class="control-section" style="border:0px;">
+        <div class="content-wrapper">
+            <ejs-circulargauge id="circular" centerY="57%" title = "Short Put Distance" load="window.gaugeload">
+                <e-circulargauge-axes>
+                    <e-circulargauge-axis startAngle="200" endAngle="130" minimum="0" maximum="14" radius="90%">
+                        <e-axis-linestyle width="0" color="transparent"></e-axis-linestyle>
+                        <e-axis-labelstyle font="font" offset="-5"></e-axis-labelstyle>
+                        <e-axis-majorticks interval="20" color="transparent"></e-axis-majorticks>
+                        <e-axis-minorticks color="transparent"></e-axis-minorticks>
+                    </e-circulargauge-axis>
+                </e-circulargauge-axes>
+            </ejs-circulargauge>
+        </div>
+    </div>
+}
+<script>
+    window.gaugeload = function (args) {
+        var theme = location.hash.split('/')[1];
+        theme = theme ? theme : 'Material';
+        args.gauge.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+        var axis = args.gauge.axes[0];
+        axis.ranges = [{
+            start: 0, end: 12, radius: '115%',
+            color: '#01aebe', startWidth: 25, endWidth: 25
+        }, {
+            start: 0, end: 11, radius: '85%',
+            color: '#3bceac', startWidth: 25, endWidth: 25
+        }, {
+            start: 0, end: 10, radius: '55%',
+            color: '#ee4266', startWidth: 25, endWidth: 25
+        }];
+        axis.annotations = [{
+            content: '12 M', radius: '108%', angle: 98, zIndex: '1'
+        }, {
+            content: '11 M', radius: '80%', angle: 81, zIndex: '1'
+        }, {
+            content: '10 M', radius: '50%', angle: 69, zIndex: '1'
+        }, {
+            content: 'Doe', radius: '108%', angle: 190, zIndex: '1'
+        }, {
+            content: 'Almaida', radius: '80%', angle: 185, zIndex: '1'
+        }, {
+            content: 'John', radius: '50%', angle: 180, zIndex: '1'
+        }],
+            axis.pointers = [{
+                type: 'Marker', value: 12, markerShape: 'Image',
+                imageUrl: '../styles/images/circulargauge/football.png',
+                radius: '108%', markerWidth: 28, markerHeight: 28,
+                animation: { duration: 1500 }
+            }, {
+                type: 'Marker', value: 11, markerShape: 'Image',
+                imageUrl: '../styles/images/circulargauge/basketball.png',
+                radius: '78%', markerWidth: 28, markerHeight: 28,
+                animation: { duration: 1200 }
+            }, {
+                type: 'Marker', value: 10, markerShape: 'Image',
+                imageUrl: '../styles/images/circulargauge/golfball.png',
+                radius: '48%', markerWidth: 28, markerHeight: 28,
+                animation: { duration: 900 }
+            }, {
+                type: 'Marker', value: 12, markerShape: 'Image',
+                imageUrl: '../styles/images/circulargauge/Athletics.png',
+                radius: '0%', markerWidth: 90, markerHeight: 90,
+                animation: { duration: 0 }
+            }, {
+                type: 'Marker', value: 0.1, markerShape: 'Image',
+                imageUrl: '../styles/images/circulargauge/girl1.png',
+                radius: '108%', markerWidth: 28, markerHeight: 28,
+                animation: { duration: 1500 }
+            }, {
+                type: 'Marker', value: 0.1, markerShape: 'Image',
+                imageUrl: '../styles/images/circulargauge/man1.png',
+                radius: '78%', markerWidth: 28, markerHeight: 28,
+                animation: { duration: 1500 }
+            }, {
+                type: 'Marker', value: 0.1, markerShape: 'Image',
+                imageUrl: '../styles/images/circulargauge/man2.png',
+                radius: '48%', markerWidth: 28, markerHeight: 28,
+                animation: { duration: 1500 }
+            }];
+    }
+</script>

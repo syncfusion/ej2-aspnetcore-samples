@@ -1,0 +1,134 @@
+﻿
+
+@section ControlsSection{
+    <div class="control-section">
+
+        <style type="text/css" class="cssStyles">
+    .photo img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50px;
+        box-shadow: inset 0 0 1px #e0e0e0, inset 0 0 14px rgba(0, 0, 0, 0.2);
+    }
+  
+    .photo,
+    .details {
+        border-color: #e0e0e0;
+        border-style: solid;
+    }
+
+    .photo {
+        border-width: 1px 0px 0px 0px;
+        text-align: center;
+    }
+
+    .details {
+        border-width: 1px 0px 0px 0px;
+        padding-left: 18px;
+    }
+
+    .e-bigger .details {
+        padding-left: 25px;
+    }
+
+    .e-device .details {
+        padding-left: 8px;
+    }
+
+    .details > table {
+        width: 100%;
+    }
+
+    .CardHeader {
+        font-weight: 600;
+    }
+
+    td {
+        padding: 2px 2px 3px 4px;
+    }
+        </style>
+
+  <script id="rowtemplate" type="text/x-template">
+            <tr>
+                <td class="photo">
+                    <img src="@Url.Content("~/scripts/Images/Employees/${EmployeeID}.png")" alt="${EmployeeID}" />
+                </td>
+                <td class="details">
+                    <table class="CardTable" cellpadding="3" cellspacing="2">
+                        <colgroup>
+                            <col width="50%">
+                            <col width="50%">
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <td class="CardHeader">First Name </td>
+                                <td>${FirstName} </td>
+                            </tr>
+                            <tr>
+                                <td class="CardHeader">Last Name</td>
+                                <td>${LastName} </td>
+                            </tr>
+                            <tr>
+                                <td class="CardHeader">
+                                    Title
+                                </td>
+
+                                <td>
+                                    ${Title}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="CardHeader">
+                                    Birth Date
+                                </td>
+                                <td>
+                                    ${BirthDate.toLocaleDateString()}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="CardHeader">
+                                    Hire Date
+                                </td>
+                                <td>
+                                    ${HireDate.toLocaleDateString()}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </script>
+       <ejs-grid id="Grid" dataSource="ViewBag.datasource" height="335" width="auto" rowTemplate="#rowtemplate">
+           <e-grid-columns>
+              <e-grid-column headerText="Employee Image" width="150" textAlign="Center"> </e-grid-column>
+                <e-grid-column headerText="Employee Details" width="300" field="EmployeeID" textAlign="Left"></e-grid-column>
+            </e-grid-columns>
+        </ejs-grid>
+    </div>
+}
+@section ActionDescription{
+	<div id="action-description">
+		 <p>This sample demonstrates the Grid component with the row template feature. In this sample, we have rendered each Grid
+			row using the template.
+		</p>
+	</div>
+}
+
+@section Meta{
+    <meta name="description" content="This demo for Essential JS 2 grid control shows the usage of the row template feature."/>
+}
+
+@section Description{
+    <div id="description">
+		    <p>
+				The Grid provides a way to use a custom layout for its rows using template feature. The
+				<code>rowTemplate</code> property accepts either string or HTML element`s ID value, which will be used as the template
+				for the row.
+			</p>
+			<p>
+				In this demo, we have presented Employee Information with Employee Photo in the first column and employee details like Name,
+				Address etc. in the second column.
+			</p>
+			<p>The template expression should be provided inside <code>${...}</code> interpolation syntax.</p>    
+    </div>
+}

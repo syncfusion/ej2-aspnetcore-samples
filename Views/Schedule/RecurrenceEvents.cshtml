@@ -1,0 +1,52 @@
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+    <div class="control-section">
+        <div class="schedule-wrapper">
+            <ejs-schedule id="schedule" height="650" selectedDate="new DateTime(2018, 2, 20)" eventRendered="onEventRendered">
+                <e-schedule-eventsettings dataSource="@ViewBag.appointments"></e-schedule-eventsettings>
+                <e-schedule-views>
+                    <e-schedule-view option="Day"></e-schedule-view>
+                    <e-schedule-view option="Week"></e-schedule-view>
+                    <e-schedule-view option="Month"></e-schedule-view>
+                </e-schedule-views>
+            </ejs-schedule>
+        </div>
+    </div>
+    <script src="~/scripts/schedule/applyCategoryColor.js"></script>
+    <script type="text/javascript">
+        function onEventRendered(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            applyCategoryColor(args, scheduleObj.currentView);
+        }
+    </script>
+}
+
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Schedule control shows the scheduler with recurring meetings handled on a regular pattern." />
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This demo showcases the schedule with recurring meetings handled by a top-level manager on a regular pattern.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id='description'>
+        <p>
+            In this demo, the recurrence events are defined with different repeat patterns. It can be defined through
+            <code>recurrenceRule</code> field which should accept the valid rule string following the
+            <a target="_blank" href="https://tools.ietf.org/html/rfc5545#section-3.3.10">iCalendar</a> specifications. The recurring events are differentiated from other events by a repeat marker added
+            to the right-bottom of it. These events can repeat on daily, weekly, monthly or yearly basis.
+        </p>
+        <p>
+            Here, the daily patterned events are depicted in blue color, weekly events are differentiated with green color, monthly events
+            are depicted in orange color and the yearly event is depicted in the all-day section with another green shade for
+            reference.
+        </p>
+    </div>
+}
+

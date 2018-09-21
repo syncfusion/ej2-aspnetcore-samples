@@ -1,0 +1,133 @@
+﻿
+
+@section ControlsSection{
+    <div class="col-lg-8 control-section">
+        <div class="control-wrapper">
+            <div class="control-section">
+                <ejs-grid id="Grid" dataSource="ViewBag.datasource" actionComplete="actionComplete" allowPaging="true">
+                    <e-grid-pageSettings pageCount="2"></e-grid-pageSettings>
+                    <e-grid-columns>
+                        <e-grid-column field="ProductID" headerText="Product ID" textAlign="Right" width="160"></e-grid-column>
+                        <e-grid-column field="ProductName" headerText="Product Name" width="170"></e-grid-column>
+                        <e-grid-column field="UnitPrice" headerText="Unit Price" format="C2" textAlign="Right" width="170"></e-grid-column>
+                        <e-grid-column field="UnitsInStock" headerText="Units in Stock" textAlign="Right" width="170"></e-grid-column>
+                    </e-grid-columns>
+
+                </ejs-grid>
+            </div>
+        </div>
+            </div>
+
+<div class="col-lg-4 property-section">
+
+
+
+    <table id="property" title="Properties" style="width: 100%;">
+
+
+        <tr>
+            <td class="left-side">Allow Paging</td>
+            <td style="padding-bottom:10px">
+                <ejs-checkbox id="paging" checked="true" change="onChange"></ejs-checkbox>
+            </td>
+        </tr>
+        <tr>
+            <td class="left-side">Page Size</td>
+            <td style="padding-bottom:10px">
+                <ejs-numerictextbox id="pageSize" change="pageSizeChange" min=1 value=12 max=100></ejs-numerictextbox>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="left-side">Page Count</td>
+            <td style="padding-bottom:10px">
+                <ejs-numerictextbox id="pageCount" change="pageCountChange" min=1 value=2 max=8></ejs-numerictextbox>
+            </td>
+        </tr>
+        <tr>
+            <td class="left-side">Current Page</td>
+            <td style="padding-bottom:10px">
+                <ejs-numerictextbox id="currentPage" change="currentPageChange"  min=1 value=1 max=5></ejs-numerictextbox>
+            </td>
+        </tr>
+
+
+    </table>    
+</div>
+
+   <script>
+
+       function onChange(args) { 
+
+           var grid = document.getElementById("Grid").ej2_instances[0];
+           grid.allowPaging = this.checked;
+           if (grid.allowPaging) {
+               document.getElementById("pageCount").ej2_instances[0].enabled = true;
+               document.getElementById("pageSize").ej2_instances[0].enabled = true;
+               document.getElementById("currentPage").ej2_instances[0].enabled = true;
+           } else {
+               document.getElementById("pageCount").ej2_instances[0].enabled  = false;
+               document.getElementById("pageSize").ej2_instances[0].enabled = false;
+               document.getElementById("currentPage").ej2_instances[0].enabled = false;
+           }
+       }
+       function pageSizeChange(args) { 
+           var grid = document.getElementById("Grid").ej2_instances[0];
+           this.value = parseInt(this.value, 10) > grid.pageSettings.totalRecordsCount ?
+               grid.pageSettings.totalRecordsCount :this.value;
+           grid.pageSettings.pageSize = parseInt(this.value, 10);
+           this.max = Math.ceil(grid.pageSettings.totalRecordsCount / grid.pageSettings.pageSize).toString();
+       }
+       function pageCountChange(args) {
+           var grid = document.getElementById("Grid").ej2_instances[0];
+           this.value = parseInt(this.value, 10) > 8 ? '8' : this.value;
+           grid.pageSettings.pageCount = parseInt(this.value, 10);
+
+       }
+       function currentPageChange(args) {
+           var grid = document.getElementById("Grid").ej2_instances[0];
+           this.value = parseInt(this.value, 10) > parseInt(this.max, 10) ? this.max : this.value;
+           var pageNumber = parseInt(this.value, 10);
+           grid.goToPage(pageNumber);
+
+       }
+       function actionComplete(args) { 
+
+           if (args.requestType === 'paging') {
+               document.getElementById("currentPage").ej2_instances[0].value = args.currentPage;
+           }
+       }
+    </script>
+}
+@section ActionDescription{
+	<div id="action-description">
+		<p>
+			This sample demonstrates the usage of paging API in Grid. In this sample, use the properties panel to change the page size,
+			page count and current page of the Grid.
+		</p>
+	</div>
+}
+
+@section Meta{
+    <meta name="description" content="This demo for Essential JS 2 grid control shows the usage of the paging API."/>
+}
+
+@section Description{
+    <div id="description">
+		 <p>Paging allows you to display the contents of the Grid in page segments. The number of items on a page is determined by
+			the <code>pageSettings->pageSize</code> property. If no value is specified for the <code>
+			pageSettings->pageSize</code> property, the Grid will display 12 items on a page. By default, paging is disabled. To enable paging,
+			set <code>allowPaging</code> property to true.</p>
+		<p>In this demo,</p>
+		<ul>
+			<li>Click the <strong>Allow Paging</strong> check box to enable/disable paging feature.</li>
+			<li>Change the value of <strong>Page Size</strong> textbox to change <code>
+			pageSettings->pageSize.</code></li>
+			<li>Change the value of <strong>Page Count</strong> textbox to change <code>
+			pageSettings->pageCount.</code></li>
+			<li>Change the value of <strong>Current Page</strong> textbox to change<code>
+			pageSettings->currentPage.</code></li>
+		</ul>	
+    </div>
+}
+

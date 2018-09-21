@@ -1,0 +1,78 @@
+@using Syncfusion.EJ2;
+
+@section ControlsSection{
+    <div class="control-section">
+        <p style="font-weight:normal">
+            Click the button to convert an Excel spreadsheet to image using Essential XlsIO. Please
+            note that a picture viewer is required to view the resultant image.
+        </p>
+        <br />
+        
+        <div class="celldiv">
+            <table>
+                <tr>
+                    <td>
+                        <h5>Image Format:</h5>
+                    </td>
+                    <td>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </td>
+                    <td>
+                        @Html.EJS().RadioButton("radio1").Label("PNG").Name("select").Value("png").Checked(true).Render()
+                    </td>
+                    <td>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </td>
+                    <td>
+                        @Html.EJS().RadioButton("radio2").Label("JPEG").Name("select").Value("jpeg").Checked(false).Render()
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br />
+        <div class="celldiv">
+            <input id="inputbtn" class="e-btn" type="submit" name="inputbtn" value="Input Template" style="width:135px;padding-left:0.5em"/>
+            <input id="convertbtn" class="e-btn" type="submit" name="convertbtn" value="Convert" style="width:145px;padding-left:0.5em"/>
+        </div>
+    </div>
+    <script>
+    document.getElementById('inputbtn').onclick = function () {
+        location.href = '@Html.Raw(@Url.Action("WorksheetToImage", new { button= "Input Template", SaveOption = "png" }))';
+    };
+    document.getElementById('convertbtn').onclick = function () {
+        if (document.getElementById('radio1').checked == true)
+            location.href = '@Html.Raw(@Url.Action("WorksheetToImage", new { button = "Convert To Image", SaveOption = "png" }))';
+        else
+            location.href = '@Html.Raw(@Url.Action("WorksheetToImage", new { button = "Convert To Image", SaveOption = "jpeg" }))';
+        };
+    </script>
+}
+}
+@section ActionDescription{
+    This sample demonstrates how to convert Worksheets to images using Essential XlsIO.
+}
+@section Meta{
+    <meta name="description" content="This sample demonstrates how to convert Excel worksheet to image in ASP.NET Core using Syncfusion XlsIO (Excel) library." />
+}
+@section Description{
+    <div class="rowdiv">
+        A worksheet is converted to an image with few limitations. The image is of any format, and can also be saved as the memory stream.
+        <br />
+        <br />
+        <b>Features</b>
+        <br />
+        <ul>
+            <li>Convert entire Excel worksheet into Image.</li>
+            <li>Convert specific Excel range into Image.</li>
+            <li>Convert Excel document with,</li>
+            <li>Pivot tables</li>
+            <li>Conditional formatting</li>
+            <li>Styles</li>
+            <li>Rich-text formatting</li>
+            <li>Text alignments</li>
+            <li>Images</li>
+            <li>Text boxes</li>
+            <li>Unicode characters</li>
+        </ul>
+    </div>
+}

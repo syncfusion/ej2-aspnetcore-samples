@@ -1,0 +1,104 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="col-lg-9 control-section">
+        <div class="schedule-wrapper">
+            <ejs-schedule id="schedule" height="650px" selectedDate="new DateTime(2018, 2, 15)">
+                <e-schedule-eventsettings dataSource="@ViewBag.appointments"></e-schedule-eventsettings>
+            </ejs-schedule>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties" class="property-panel-table" style="width: 100%;">
+            <tbody>
+                <tr style="height: 50px">
+                    <td style="width: 30%">
+                        <div class='col-md-4' style="padding-top: 8px">Current Date:</div>
+                    </td>
+                    <td style="width: 70%">
+                        <div class='datepicker-control-section'>
+                            <ejs-datepicker id="datepicker" value="new DateTime(2018, 2, 15)" change="onChange"></ejs-datepicker>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script type="text/javascript">
+        function onChange(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            scheduleObj.selectedDate = args.value;
+            scheduleObj.dataBind();
+        }
+    </script>
+}
+
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Schedule control shows how the flat Scheduler looks like with its default set of minimal configurations." />
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This demo showcases how the flat Schedule looks like with its default set of minimal configurations. Here, some of the
+            documentary shows are displayed as events parallel to its relevant telecast timings. The show names are given as
+            event's subject and simply notified of the start and end of it.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            The Schedule is an event calendar which facilitates user with the common Outlook-calendar features, thus allowing them to
+            plan and manage the appointments and its time in an efficient manner. It comes with 6 different view modes as listed
+            below, out of which the
+            <code>Week</code> view is set as active.
+        </p>
+        <ul>
+            <li>Day</li>
+            <li>Week</li>
+            <li>Work Week</li>
+            <li>Month</li>
+            <li>Agenda</li>
+            <li>Month Agenda</li>
+        </ul>
+        <p>
+            To navigate between views and dates, the navigation options are available at the Schedule header bar and the active view
+            option is highlighted in it by default. The date range of the active view will also be displayed in the header bar,
+            clicking on which will open a calendar popup for ease of required date selection.
+        </p>
+        <p>
+            <strong>Touch actions on Mobile mode</strong>
+        </p>
+        <table style="width:100%">
+            <tr>
+                <th style="width:100px">
+                    <strong>Action</strong>
+                </th>
+                <th>
+                    <strong>Description</strong>
+                </th>
+            </tr>
+            <tr>
+                <td style="padding:4px 0">Single Tap</td>
+                <td>Single tapping on events, opens the popup showing event information.</td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top;padding: 4px 0;">Tap hold </td>
+                <td>
+                    <ol style="padding-left:12px;">
+                        <li>Tap holding on cells, opens the new event editor. </li>
+                        <li>
+                            Tap holding on events, opens a small popup at the top holding the options to edit or delete and also
+                            displays the selected event's subject. As a continuation of this action, if user keeps on single
+                            tapping on other events will allow the multiple event selection along with that popup remaining in
+                            opened state counting the number of events selected.
+                        </li>
+                        <li>Tap holding the events will also open the tooltip on Schedule.</li>
+                    </ol>
+                </td>
+            </tr>
+        </table>
+    </div>
+}

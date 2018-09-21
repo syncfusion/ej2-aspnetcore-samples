@@ -1,0 +1,106 @@
+﻿@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="control-section">
+        <div class="control-wrapper">
+            <div class="control-section">
+                <ejs-richtexteditor id="defaultmarkdown" value="@ViewBag.value"
+                                    height="250px" editorMode="Markdown" created="created">
+                    <e-richtexteditor-toolbarsettings items="@ViewBag.items"></e-richtexteditor-toolbarsettings>
+                </ejs-richtexteditor>
+            </div>
+        </div>
+    </div>
+    <style>
+        .e-richtexteditor textarea.e-content {
+            float: left;
+        }
+
+        .e-richtexteditor .e-rte-content {
+            overflow: hidden;
+        }
+
+        .e-icon-btn.e-active .e-md-preview::before {
+            content: '\e350';
+        }
+
+        .e-icon-btn .e-md-preview::before {
+            content: '\e345';
+        }
+    </style>
+
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates markdown editing in the rich text editor with complete features.
+        </p>
+    </div>
+}
+@section Description{
+<div id="description">
+    <p>The rich text editor supports markdown editing when the <code>editorMode</code> is set to mode property of the RichTextEditor</p>
+    <p>The editor’s toolbar contains commands to format the markdown content. The toolbar consists of:</p>
+    <ul>
+        <li><code>Lists</code> - Ordered and unordered list types.</li>
+        <li><code>Links</code> - A hyperlink can be inserted into the editor for quick access to related information.</li>
+        <li><code>Image</code> - Inserts and manages images.</li>
+        <li><code>Alignment</code> - Aligns the content with left, center, and right margins.</li>
+        <li><code>Format</code> – Formats the sentence in different ways such as heading level, quotation, and code snippet</li>
+        <li><code>Styles</code> – Allows you to apply inline styles to the selected content like bold, italic, and more.</li>
+    </ul>
+
+    <p>The third-party library <code>Marked</code> is used in this sample to convert markdown into HTML content.</p>
+</div>
+}
+
+<script>
+    var defaultRTE, textArea, mdsource;
+    function created() { 
+        defaultRTE = this;
+        textArea = defaultRTE.contentModule.getEditPanel();
+        textArea.addEventListener('keyup', function (e) {
+            markDownConversion();
+        });
+        mdsource = document.getElementById('preview-code');
+        mdsource.addEventListener('click', function (e) {
+            fullPreview();
+            if (e.currentTarget.classList.contains('e-active')) {
+                defaultRTE.disableToolbarItem(['Bold', 'Italic', 'StrikeThrough', 'OrderedList',
+                    'UnorderedList', 'CreateLink', 'Image', 'Formats', 'Undo', 'Redo']);
+            }
+            else {
+                defaultRTE.enableToolbarItem(['Bold', 'Italic', 'StrikeThrough', 'OrderedList',
+                    'UnorderedList', 'CreateLink', 'Image', 'Formats', 'Undo', 'Redo']);
+            }
+        });
+    }
+    loadExternalFile();
+    function loadExternalFile() {
+        var script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.19/marked.js';
+        document.getElementsByTagName('head')[0].appendChild(script);
+    }
+    function fullPreview() {
+        var id = defaultRTE.getID() + 'html-preview';
+        var htmlPreview = defaultRTE.element.querySelector('#' + id);
+        if (mdsource.classList.contains('e-active')) {
+            mdsource.classList.remove('e-active');
+            mdsource.parentElement.title = 'Preview';
+            textArea.style.display = 'block';
+            htmlPreview.style.display = 'none';
+        }
+        else {
+            mdsource.classList.add('e-active');
+            if (!htmlPreview) {
+                htmlPreview = ej.base.createElement('div', { className: 'e-content e-pre-source' });
+                htmlPreview.id = id;
+                textArea.parentNode.appendChild(htmlPreview);
+            }
+            textArea.style.display = 'none';
+            htmlPreview.style.display = 'block';
+            htmlPreview.innerHTML = marked(defaultRTE.contentModule.getEditPanel().value);
+            mdsource.parentElement.title = 'Code View';
+        }
+    }
+</script>

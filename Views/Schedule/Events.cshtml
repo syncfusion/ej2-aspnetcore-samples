@@ -1,0 +1,113 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="col-lg-9 control-section">
+        <div class="schedule-wrapper">
+            <ejs-schedule id="schedule" width="100%" height="650px" selectedDate="new DateTime(2018, 2, 15)" created="OnCreate" actionBegin="OnActionBegin"
+                          actionComplete="OnActionComplete" actionFailure="OnActionFailure" cellClick="OnCellClick" cellDoubleClick="OnCellDoubleClick"
+                          destroyed="OnDestroyed" navigating="OnNavigating" eventClick="OnEventClick" popupOpen="OnPopupOpen" eventRendered="onEventRendered">
+                <e-schedule-eventsettings dataSource="@ViewBag.appointments"></e-schedule-eventsettings>
+            </ejs-schedule>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id='property' title='Properties' class='property-panel-table' style="width: 100%;">
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="eventarea" style="height: 245px;overflow: auto">
+                            <span class="EventLog" id="EventLog" style="word-break: normal;"></span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="evtbtn" title="Clear" style="padding-bottom: 10px">
+                            <ejs-button id="clear" content="Clear"></ejs-button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <style>
+        #EventLog b {
+            color: #388e3c;
+        }
+
+        hr {
+            margin: 1px 10px 1px 0px;
+            border-top: 1px solid #eee;
+        }
+    </style>
+    <script src="~/scripts/schedule/applyCategoryColor.js"></script>
+    <script type="text/javascript">
+        document.getElementById("clear").addEventListener('click', function () {
+            document.getElementById('EventLog').innerHTML = '';
+        });
+        function OnCreate() {
+            appendElement('Schedule <b>Load</b> event called<hr>');
+        }
+        function OnActionBegin() {
+            appendElement('Schedule <b>Action Begin</b> event called<hr>');
+        }
+        function OnActionComplete() {
+            appendElement('Schedule <b>Action Complete</b> event called<hr>');
+        }
+        function OnActionFailure() {
+            appendElement('Schedule <b>Action Failure</b> event called<hr>');
+        }
+        function OnCellDoubleClick() {
+            appendElement('SChedule <b>Cell Double Click</b> event called<hr>');
+        }
+        function OnCellClick() {
+            appendElement('Schedule <b>Cell Click</b> event called<hr>');
+        }
+        function OnNavigating() {
+            appendElement('Schedule <b>Navigating</b> event called<hr>');
+        }
+        function OnDestroyed() {
+            appendElement('Schedule <b>Destroyed</b> event called<hr>');
+        }
+        function OnEventClick() {
+            appendElement('Schedule <b>Event Click</b> event called<hr>');
+        }
+        function OnPopupOpen() {
+            appendElement('Schedule <b>Popup Open</b> event called<hr>');
+        }
+        function appendElement(html) {
+            var span = document.createElement('span');
+            span.innerHTML = html;
+            var log = document.getElementById('EventLog');
+            log.insertBefore(span, log.firstChild);
+        }
+        function onEventRendered(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            applyCategoryColor(args, scheduleObj.currentView);
+        }
+    </script>
+
+}
+
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Schedule control shows the client-side events that triggers on respective scheduler actions." />
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This demo illustrates the client-side events that triggers on respective Schedule actions and the same is being displayed
+            on the event trace panel.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id='description'>
+        <p>
+            In this demo, the client-side events that triggers based on the action taking place in Schedule has been demonstrated. The
+            user can make use of these events, if at some point they need to perform some custom actions or any needed additional
+            customizations on the available Schedule features.
+        </p>
+    </div>
+}

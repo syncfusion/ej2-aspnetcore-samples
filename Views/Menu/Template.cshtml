@@ -1,0 +1,178 @@
+@using Syncfusion.EJ2
+@using Syncfusion.EJ2.Navigations
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Menu control shows the template functionalities. It supports customization of menu items using data source with fields." />
+}
+@section ControlsSection{
+    <div class="control-section">
+        <div class="menu-control">
+            <ejs-menu id="menu" items="ViewBag.data" fields="ViewBag.menuFields" template="#menuTemplate"></ejs-menu>
+        </div>
+    </div>
+}
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the template functionalities of the <code>menu</code> component. Interact with <code>menu</code> using hover / click to display sub menu pop-up items with its customized templates.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            The menu component has an option to customize menu items using the <code>property</code>, so that the menu items can be rendered according to the requirement.
+        </p>
+        <p>
+            For more information, refer to the
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/menu/getting-started-core.html">
+                templates
+            </a> section in the documentation.
+        </p>
+    </div>
+}
+<!-- Template to render Menu -->
+<script id="menuTemplate" type="text/x-template">
+    ${if(category)}
+    ${category}
+    ${else if (value && url)}
+    <div class="e-avatar e-avatar-small image" style="background-image: url(@Url.Content("~/css/menu/images/${url}.png)");">${value}</div>
+    ${else if (support)}
+    <ul>
+        ${for(val of support)}
+        <li>
+            ${val.value}
+            ${if(val.count)}
+            <span class='e-badge e-badge-success'>${val.count}</span>
+            ${/if}
+        </li>
+        ${/for}
+    </ul>
+    ${else}
+    <div tabindex="0" class="e-card">
+        <div class="e-card-header">
+            <div class="e-card-header-caption">
+                <div class="e-card-header-title">About Us</div>
+            </div>
+        </div>
+        <div class="e-card-content">
+            ${about.value}
+        </div>
+        <div class="e-card-actions">
+            <button class="e-btn e-outline">
+                Read More
+            </button>
+        </div>
+    </div>
+    ${/if}
+</script>
+<style>
+    /**
+    * ej2 Menu template styles
+    */
+    .menu-control {
+        margin-top: 45px;
+        text-align: center;
+    }
+
+    /**
+    * Common customization 
+    */
+    .e-bigger .e-menu-wrapper.e-control ul.e-ul .e-menu-item,
+    .e-menu-wrapper.e-control ul.e-ul .e-menu-item {
+        display: flex;
+        height: auto;
+        padding: 0;
+    }
+
+    /**
+    * Avatar customization
+    */
+    .e-bigger .e-menu-wrapper ul .e-menu-item .e-avatar {
+        background-size: auto;
+        text-indent: 40px;
+    }
+
+    .e-menu-wrapper ul .e-menu-item .e-avatar {
+        background-color: inherit;
+        background-position: 0;
+        background-size: 25px;
+        color: inherit;
+        font-size: inherit;
+        height: inherit;
+        justify-content: left;
+        margin: 0 10px;
+        width: 100%;
+        text-indent: 35px;
+    }
+
+    /**
+    * Badge customization
+    */
+    .e-menu-wrapper ul .e-menu-item ul li {
+        padding: 0 10px;
+    }
+
+    .e-bigger .e-menu-wrapper ul .e-menu-item ul li .e-badge {        
+        margin: 18px 0px 0px 10px;
+    }
+
+    .e-menu-wrapper ul .e-menu-item ul li .e-badge {
+        float: right;
+        margin: 13px 0px 0px 10px;
+    }
+
+    .e-menu-wrapper ul .e-menu-item ul li:hover {
+        background-color: #eee;
+    }
+
+    .fabric .e-menu-wrapper ul .e-menu-item ul li:hover {
+        background-color: #eaeaea;
+    }
+
+    .bootstrap .e-menu-wrapper ul .e-menu-item ul li:hover {
+        background-color: #e6e6e6;
+    }
+
+    .highcontrast .e-menu-wrapper ul .e-menu-item ul li:hover {
+        background-color: #685708;
+    }
+
+    /**
+    * Card customization
+    */
+    .e-bigger .e-menu-wrapper ul.e-ul .e-menu-item .e-card {        
+        width: 320px;
+    }
+
+    .e-menu-wrapper ul.e-ul .e-menu-item .e-card {        
+        width: 290px;
+        font-size: inherit;
+        cursor: default;
+        background-color: inherit;
+        border-color: transparent;
+    }
+
+    .e-menu-wrapper ul.e-ul .e-menu-item .e-card .e-card-content {
+        white-space: normal;
+        color: inherit;
+        padding-top: 0;
+        text-align: justify;
+        font-size: inherit;
+    }
+
+    .e-bigger .e-menu-wrapper ul.e-ul .e-menu-item .e-card .cb-icons {
+        width: 40px;
+        font-size: 40px;
+        height: 40px;
+    }
+
+    .e-menu-wrapper ul.e-ul .e-menu-item .e-card .cb-icons {
+        width: 30px;
+        font-size: 30px;
+        height: 30px;
+    }
+
+    .e-menu-wrapper ul.e-ul .e-menu-item .e-card .e-card-btn {
+        background-color: inherit;
+    }
+</style>

@@ -1,0 +1,180 @@
+﻿@using Syncfusion.EJ2;
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Circular Gauge control visualizes the circular gauge with multiple axes." />
+}
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample visualizes the multiple axes in the gauge and options are available to change the direction, start, and end angle of an axis.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this example, you can see how to render and configure multipe axes in gauge. Use <code>axes</code> collection
+            to render multiple axis in gauge. Each axis can be customized with its own <code>pointer</code> and <code>scales</code>.
+        </p>
+        <br>
+        <p>
+            In this sample, two axes with a pointer has been used.
+        </p>
+        <p>
+            More information on the axis can be found in this
+            <a target="_blank" href="http://ej2.syncfusion.com/documentation">documentation section</a>.
+        </p>
+    </div>
+}
+@section ControlsSection{
+    @{
+        var font = new { color = "#E84011" };
+    }
+    <div class="col-md-8 control-section">
+        <div class="content-wrapper">
+            <ejs-circulargauge id="circular" title='Gauge with Multiple Axes' load="gaugeload">
+                <e-circulargauge-axes>
+                    <e-circulargauge-axis startAngle="220" endAngle="140" minimum="0" maximum="160" radius="95%">
+                        <e-axis-linestyle width="1.5" color="#9E9E9E"></e-axis-linestyle>
+                        <e-axis-labelstyle autoAngle="true" position="@Syncfusion.EJ2.CircularGauge.Position.Inside" hiddenLabel="@Syncfusion.EJ2.CircularGauge.HiddenLabel.None"></e-axis-labelstyle>
+                        <e-axis-majorticks position="@Syncfusion.EJ2.CircularGauge.Position.Inside" width="2" height="10" color="#757575"></e-axis-majorticks>
+                        <e-axis-minorticks height="5" width="2" color="#757575" position="@Syncfusion.EJ2.CircularGauge.Position.Inside"></e-axis-minorticks>
+                    </e-circulargauge-axis>
+                    <e-circulargauge-axis startAngle="220" endAngle="140" minimum="0" maximum="240" radius="95%">
+                        <e-axis-linestyle width="1.5" color="#E84011"></e-axis-linestyle>
+                        <e-axis-labelstyle autoAngle="true" position="@Syncfusion.EJ2.CircularGauge.Position.Outside" font="font" hiddenLabel="@Syncfusion.EJ2.CircularGauge.HiddenLabel.None"></e-axis-labelstyle>
+                        <e-axis-majorticks position="@Syncfusion.EJ2.CircularGauge.Position.Outside" width="2" height="10" color="#E84011"></e-axis-majorticks>
+                        <e-axis-minorticks height="5" width="2" color="#E84011" position="@Syncfusion.EJ2.CircularGauge.Position.Outside"></e-axis-minorticks>
+                    </e-circulargauge-axis>
+                </e-circulargauge-axes>
+            </ejs-circulargauge>
+        </div>
+    </div>
+    <div class="col-md-4 property-section">
+        <table id="property" title="Properties" style="width: 100%">
+            <tbody>
+                <tr>
+                    <td>
+                        <div> Axis </div>
+                    </td>
+                    <td>
+                        <div>
+                            <select id="axisIndex" class="form-control" style="width:90%">
+                                <option value="0" selected="true">Axis 1</option>
+                                <option value="1">Axis 2</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div> Direction </div>
+                    </td>
+                    <td>
+                        <div>
+                            <select id="axisDirection" class="form-control" style="width:90%">
+                                <option value="ClockWise" selected="true">ClockWise</option>
+                                <option value="AntiClockWise">AntiClockWise</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div id="start">Start Angle <span> &nbsp;&nbsp;&nbsp;220</span> </div>
+                    </td>
+                    <td>
+                        <div>
+                            <input type="range" id="startAngle" value="220" min="0" max="360" style="width:90%">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div id="end">End Angle <span> &nbsp;&nbsp;&nbsp;140</span> </div>
+                    </td>
+                    <td>
+                        <div>
+                            <input type="range" id="endAngle" value="140" min="0" max="360" style="width:90%">
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+}
+<script>
+    var circulargauge;
+    window.addEventListener('load', function () {
+        var axisIndex = 0;
+        var axis;
+        var direction;
+        axis = new ej.dropdowns.DropDownList({
+            index: 0, width: 120,
+            change: function () {
+                axisIndex = +axis.value;
+                direction.value = circulargauge.axes[axisIndex].direction;
+                var startAngle = circulargauge.axes[axisIndex].startAngle;
+                var endAngle = circulargauge.axes[axisIndex].endAngle;
+                document.getElementById('start').innerHTML = 'Start Angle <span>    ' + startAngle;
+                document.getElementById('end').innerHTML = 'End Angle <span>    ' + endAngle;
+                document.getElementById('startAngle').value = startAngle.toString();
+                document.getElementById('endAngle').value = endAngle.toString();
+            }
+        });
+        axis.appendTo('#axisIndex');
+        direction = new ej.dropdowns.DropDownList({
+            index: 0, width: 120,
+            change: function () {
+                circulargauge.axes[axisIndex].direction = direction.value.toString();
+                circulargauge.axes[0].pointers[0].animation.enable = false;
+                circulargauge.axes[1].pointers[0].animation.enable = false;
+                circulargauge.refresh();
+            }
+        });
+        direction.appendTo('#axisDirection');
+        document.getElementById('startAngle').onpointermove = document.getElementById('startAngle').ontouchmove =
+            document.getElementById('startAngle').onchange = function () {
+                var value = parseInt(document.getElementById('startAngle').value, 10);
+                circulargauge.axes[0].pointers[0].animation.enable = false;
+                circulargauge.axes[1].pointers[0].animation.enable = false;
+                circulargauge.axes[axisIndex].startAngle = value;
+                document.getElementById('start').innerHTML = 'Start Angle <span>    ' + value;
+                circulargauge.axes[axisIndex].labelStyle.hiddenLabel =
+                    ej.circulargauge.isCompleteAngle(circulargauge.axes[axisIndex].startAngle, circulargauge.axes[axisIndex].endAngle) ?
+                        'First' : 'None';
+                circulargauge.refresh();
+            };
+        document.getElementById('endAngle').onpointermove = document.getElementById('endAngle').ontouchmove =
+            document.getElementById('endAngle').onchange = function () {
+                var value = parseInt(document.getElementById('endAngle').value, 10);
+                circulargauge.axes[0].pointers[0].animation.enable = false;
+                circulargauge.axes[1].pointers[0].animation.enable = false;
+                circulargauge.axes[axisIndex].endAngle = value;
+                document.getElementById('end').innerHTML = 'End Angle <span>    ' + value;
+                circulargauge.axes[axisIndex].labelStyle.hiddenLabel =
+                    ej.circulargauge.isCompleteAngle(circulargauge.axes[axisIndex].startAngle, circulargauge.axes[axisIndex].endAngle) ?
+                        'First' : 'None';
+                circulargauge.refresh();
+            };
+    });
+    window.gaugeload = function (args) {
+        var theme = location.hash.split('/')[1];
+        theme = theme ? theme : 'Material';
+        args.gauge.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+        if (window.gaugeLoaded)
+            return;
+        window.gaugeLoaded = true;
+         circulargauge = args.gauge;
+        var axis = args.gauge.axes[0];
+        axis.pointers = [{
+            value: 80, radius: '100%', color: '#333333',
+            markerHeight: 15, markerWidth: 15, type: 'Marker',
+            markerShape: 'Triangle',
+        }];
+        args.gauge.axes[1].pointers = [{
+            value: 120, radius: '100%', color: '#C62E0A',
+            markerHeight: 15, markerWidth: 15, type: 'Marker',
+            markerShape: 'InvertedTriangle',
+        }]
+    }
+</script>

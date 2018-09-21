@@ -1,0 +1,145 @@
+﻿@using Syncfusion.EJ2
+@{
+    var defaultanimation = new Syncfusion.EJ2.Popups.DialogAnimationSettings { Effect = Syncfusion.EJ2.Popups.DialogEffect.None };
+}
+
+@section ControlsSection {
+    <div class="col-lg-12 control-section" id="target">
+        <ejs-button id="dialogBtn" cssClass="dlgbtn" content="Open Dialog"></ejs-button>
+
+        <ejs-dialog id="defaultDialog" animationSettings="defaultanimation" width="452px" target="#target" open="dialogOpen"
+                    close="dialogClose" showCloseIcon="true" footerTemplate=@Html.Raw("<span id='posvalue' style='float:left;margin-left:8px;padding:10px;'> Position: { X: 'Center', Y: 'Center' }</span>") header="Choose a Dialog Position">
+            <e-dialog-position X="center" Y="center"></e-dialog-position>
+            <e-content-template>
+                <table style="width:405px;" id="poschange">
+                    <tr>
+                        <td><ejs-radiobutton id="radio1" name="xy" label="Left Top" value="left top" change="onChangeHandler" ></ejs-radiobutton></td>
+                        <td><ejs-radiobutton id="radio2" name="xy" label="Center Top" value="center top" change="onChangeHandler"></ejs-radiobutton></td>
+                        <td><ejs-radiobutton id="radio3" name="xy" label="Right Top" value="right top" change="onChangeHandler"></ejs-radiobutton></td>
+                    </tr>
+                    <tr>
+                        <td><ejs-radiobutton id="radio4" name="xy" label="Left Center" value="left center" change="onChangeHandler"></ejs-radiobutton></td>
+                        <td><ejs-radiobutton id="radio5" name="xy" label="Center Center" value="center center" change="onChangeHandler" checked="true"></ejs-radiobutton></td>
+                        <td><ejs-radiobutton id="radio6" name="xy" label="Right Center" value="right center" change="onChangeHandler"></ejs-radiobutton></td>
+                    </tr>
+                    <tr>
+                        <td><ejs-radiobutton id="radio7" name="xy" label="Left Bottom" value="left bottom" change="onChangeHandler"></ejs-radiobutton></td>
+                        <td><ejs-radiobutton id="radio8" name="xy" label="Center Bottom" value="center bottom" change="onChangeHandler"></ejs-radiobutton></td>
+                        <td><ejs-radiobutton id="radio9" name="xy" label="Right Bottom" value="right bottom" change="onChangeHandler"></ejs-radiobutton></td>
+                    </tr>
+                </table>
+            </e-content-template>
+        </ejs-dialog>
+    </div>
+}
+
+@section PreScripts{
+    <script>
+        var dialog = document.getElementById('defaultDialog');
+        var onChangeHandler = function (args) {
+            dialog.ej2_instances[0].position.X = args.value.split(" ")[0];
+            dialog.ej2_instances[0].position.Y = args.value.split(" ")[1];
+            var txt = args.event.target.parentElement.querySelector('.e-label').innerText.split(" ");
+            document.getElementById("posvalue").innerHTML = 'Position: { X: "' + txt[0] + '", Y: "' + txt[1] + '" }';
+        };
+        document.getElementById('dialogBtn').onclick = function () {
+            var dialogObj = document.getElementById('defaultDialog').ej2_instances[0];
+            dialogObj.show();
+        };
+        function dialogClose() {
+            document.getElementById('dialogBtn').style.display = 'block';
+        }
+        function dialogOpen() {
+            document.getElementById('dialogBtn').style.display = 'none';
+        }
+    </script>
+}
+
+<style>
+    #target {
+        height: 100%;
+        min-height: 350px;
+    }
+
+    html,
+    body,
+    #container {
+        height: 100%;
+        overflow: hidden;
+        width: 100%;
+    }
+
+    #defaultDialog table,
+    #defaultDialog th,
+    #defaultDialog td {
+        border: 1px solid #D8D8D8;
+        border-collapse: collapse;
+    }
+
+    #container {
+        height: 365px;
+    }
+
+    #defaultDialog .e-dialog .e-footer-content {
+        padding:  0px 10px 10px;
+    }
+
+    .control-section {
+        width: 98%;
+    }
+
+    .e-dialog .e-dlgcontent {
+        padding: 10px 16px 10px;
+    }
+
+    .e-radio + label .e-label {
+        line-height: 18px;
+    }
+
+    td {
+        padding: 4px;
+    }
+    .bootstrap .e-dialog .e-footer-content {
+        padding: 5px;
+    }
+    .fabric .e-dialog .e-footer-content, .highcontrast .e-dialog .e-footer-content {
+        padding-left: 11px;
+    }
+    .fabric .control-section, .highcontrast .control-section {
+        min-height: 370px;
+        margin-bottom: 37px;
+        margin-top: 10px;
+    }
+    .control-section {
+        min-height: 370px;
+        margin-bottom: 14px;
+        margin-top: 10px;
+    }
+    .highcontrast .e-dialog .e-dlg-content, .fabric .e-dialog .e-dlg-content {
+        padding: 28px 19px 20px;
+    }
+</style>
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates how to position the dialog component. Select the appropriate radio button to position where the dialog is displayed.
+            The current position of the dialog is at the bottom.  Enable the "open dialog" button to reopen the dialog if it is closed.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            By default, the dialog is displayed in the center of the target container. Use the <code>position</code>
+            property to set location where the dialog displays relative to the target.
+            The property point-out the horizontal and vertical coordinates.
+            You can set position with specific X and Y coordinates in pixel values.
+        </p>
+    </div>
+}
+
+@section Meta{
+    <meta name="description" content="This sample demonstrates how to display the dialog component at various built-in and custom positions." />
+}

@@ -1,0 +1,69 @@
+﻿@using Syncfusion.EJ2;
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Circular Gauge control illustrates the default rendering of circular gauge." />
+}
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample illustrates the default rendering of circular gauge.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this example, you can see how to render a default circular gauge. The CircularGauge control visualizes the numerical values
+            of scales in a circular manner. You can use <code>axes</code>, <code>ranges</code>, <code>pointers</code>        properties to customize the default appearance of the gauge. In this sample, a axis with multiple ranges and a pointer
+            has been used.
+        </p>
+        <p>
+            More information on the gauge can be found in this
+            <a target="_blank" href="http://ej2.syncfusion.com/documentation">documentation section</a>.
+        </p>
+    </div>
+}
+@section ControlsSection{
+    @{
+        var font = new
+        {
+            fontFamily = "Roboto",
+            size = "12px",
+            fontWeight = "Regular"
+        };
+    }
+    <div class="control-section" style="border-right:0px;">
+        <ejs-circulargauge id="circular" load="gaugeload">
+            <e-circulargauge-axes>
+                <e-circulargauge-axis startAngle="230" endAngle="130" minimum="0" maximum="100" radius="80%">
+                    <e-axis-linestyle width="8" color="#E0E0E0"></e-axis-linestyle>
+                    <e-axis-labelstyle offset="-5" font="font"></e-axis-labelstyle>
+                    <e-axis-majorticks color="transparent"></e-axis-majorticks>
+                    <e-axis-minorticks color="transparent"></e-axis-minorticks>
+                </e-circulargauge-axis>
+            </e-circulargauge-axes>
+        </ejs-circulargauge>
+    </div>
+}
+<script>
+    window.gaugeload = function (args) {
+        var theme = location.hash.split('/')[1];
+        theme = theme ? theme : 'Material';
+        args.gauge.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+        var axis = args.gauge.axes[0];
+        axis.pointers = [{
+            value: 60,
+            radius: '60%',
+            color: '#757575',
+            pointerWidth: 7,
+            cap: {
+                radius: 8,
+                color: '#757575',
+                border: { width: 0 }
+            },
+            needleTail: {
+                length: '25%',
+                color:"#757575"
+            }
+        }];
+    }
+</script>

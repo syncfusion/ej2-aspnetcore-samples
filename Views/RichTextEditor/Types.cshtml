@@ -1,0 +1,124 @@
+﻿@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="col-lg-8 control-section">
+        <div class="content-wrapper" id="all-option-sample">
+            <div class="control-section">
+                <ejs-richtexteditor id="types" height="720px" value="@ViewBag.value" created="created" actionBegin="handleFullScreen"
+                        actionComplete="actionCompleteHandler" >
+                    <e-richtexteditor-toolbarsettings type="Expand" enableFloating="false" items="@ViewBag.items"></e-richtexteditor-toolbarsettings>
+                </ejs-richtexteditor>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 property-section" id="all-option-table">
+        <table id="property" title="Properties">
+            <tbody>
+                <tr>
+                    <td style="padding-right: 10px">
+                        <div class="type-prop">
+                            <ejs-dropdownlist id="typeddl" dataSource="@ViewBag.data" placeholder="Types" floatLabelType=@Syncfusion.EJ2.Inputs.FloatLabelType.Auto created="dropcreated"
+                                              change="onChange" text="Expand">
+                                <e-dropdownlist-fields text="text" value="value"></e-dropdownlist-fields>
+                            </ejs-dropdownlist>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>
+                            <ejs-checkbox id="float"checked="false" label="Enable Floating" change="checkchange"></ejs-checkbox>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <style>
+        .e-richtexteditor img {
+            width: 300px;
+        }
+
+        .sb-header {
+            z-index: 100;
+        }
+
+        .property-panel-table div {
+            padding-left: 0;
+        }
+    </style>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This sample demonstrates the different behavior of toolbar support in the rich text editor. Change the toolbar type as multiRow or expand from the property panel to see its appearance . Check or uncheck the floating toolbar in property panel to have a view of its behavior.</p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            The rich text editor allows you to configure different types of toolbar using <code>toolbarSettings.type</code> property. The types of
+            toolbar are:
+        </p>
+        <ul>
+            <li><code>Expand</code>: The toolbar hides the overflowing items in the next row. Click the expand arrow to view overflowing toolbar items</li>
+            <li><code>Multi Row</code>: The toolbar hides the overflowing items in the next row.</li>
+            <li><code>Floating</code>: set boolean value to toolbarSettings.enableFloating property to enable or disable the floating toolbar. </li>
+        </ul>
+    </div>
+}
+
+<script type="text/javascript">
+    var defaultRTE;
+    var dropdownInstance;
+    function created() {
+        defaultRTE = this;
+    }
+    function dropcreated() {
+        dropdownInstance = this;
+    }
+    function onChange() {
+        switch (dropdownInstance.value) {
+            case 1:
+                defaultRTE.toolbarSettings.type = ej.richtexteditor.ToolbarType.Expand;
+                break;
+            case 2:
+                defaultRTE.toolbarSettings.type = ej.richtexteditor.ToolbarType.MultiRow;
+                break;
+        }
+        defaultRTE.dataBind();
+    }
+    function handleFullScreen(e) {
+        var leftBar;
+        var transformElement;
+        if (ej.base.Browser.isDevice) {
+            leftBar = document.querySelector('#right-sidebar');
+            transformElement = document.querySelector('.sample-browser.e-view.e-content-animation');
+        }
+        else {
+            leftBar = document.querySelector('.sb-left-pane');
+            transformElement = document.querySelector('#right-pane');
+        }
+        if (e.targetItem === 'Maximize') {
+            ej.base.addClass([leftBar], ['e-close']);
+            ej.base.removeClass([leftBar], ['e-open']);
+            transformElement.style.transform = 'inherit';
+        }
+        else if (e.targetItem === 'Minimize') {
+            ej.base.removeClass([leftBar], ['e-close']);
+            if (!ej.base.Browser.isDevice) {
+                ej.base.addClass([leftBar], ['e-open']);
+            }
+            transformElement.style.transform = 'translateX(0px)';
+        }
+    }
+    function actionCompleteHandler() {
+        setTimeout(function () { defaultRTE.toolbarModule.refreshToolbarOverflow(); }, 400);
+    }
+    function checkchange(args) {
+        defaultRTE.toolbarSettings.enableFloating = args.checked;
+        defaultRTE.dataBind();
+    }
+
+</script>

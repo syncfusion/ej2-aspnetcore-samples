@@ -1,0 +1,77 @@
+﻿@using Syncfusion.EJ2.HeatMap;
+@section ControlsSection{
+    @{
+                var textStyle = new { size = "15px", fontWeight = "500", fontStyle = "Normal" };
+                var xAxisLabel = new string[] { "China", "Australia", "Mexico", "Canada", "Brazil", "USA",
+            "UK", "Germany", "Russia", "France", "Japan" };
+                var yAxisLabel = new string[] { "2000", "2005", "2010", "2011", "2012", "2013", "2014" };
+                var cellBorder = new
+                {
+                    width = "0",
+                };
+                var celltextStyle = new
+                {
+                    color= "white"
+        };
+    }
+    <div class="control-section">
+        <div class="row">
+            <div class="col-md-12">
+                <ejs-heatmap id='container' tooltipRender="window.ontooltipRender" load="window.onHeatmapLoad" dataSource="ViewBag.dataSource">
+                    <e-heatmap-titlesettings text="Percentage of Individuals Using Internet by Country" textStyle="textStyle">
+                    </e-heatmap-titlesettings>
+                    <e-heatmap-xaxis labels="xAxisLabel"></e-heatmap-xaxis>
+                    <e-heatmap-yaxis labels="yAxisLabel"></e-heatmap-yaxis>
+                    <e-heatmap-palettesettings>
+                        <e-palettes>
+                            <e-palette color="#3498DB"></e-palette>
+                            <e-palette color="#2C3E50"></e-palette>
+                        </e-palettes>
+                    </e-heatmap-palettesettings>
+                    <e-heatmap-cellsettings border="cellBorder" textStyle="celltextStyle" format="{value} %"></e-heatmap-cellsettings>
+                    <e-heatmap-legendsettings visible="false"></e-heatmap-legendsettings>
+                </ejs-heatmap>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        window.onHeatmapLoad = function (args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.heatmap.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1));
+        }
+        window.ontooltipRender = function (args) {
+            args.content = [args.yLabel + " | " + args.xLabel + " : " + args.value + " %"];
+        }
+    </script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample visualizes the percentage growth rate of individuals using the internet in a country compared to the overall
+            population to the country.
+        </p>
+    </div>
+}
+@section Description{
+
+    <div id="description">
+        <p>
+            In this example, you can see how to bind two-dimensional array object as datasource for heatmap and configure the Heatmap
+            using the data adaptor support.
+        </p>
+        <p>
+            Tooltip is enabled in this example, to see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+        </p>
+        <br />
+        <p style="font-weight: 500">Injecting Module</p>
+        <p>
+            Heatmap component features are segregated into individual feature-wise modules. To use data adaptor support, we need to inject
+            <code>Adaptor </code>module using <code>Heatmap.Inject(Adaptor) </code> method and to use a tooltip, inject the <code>Tooltip </code>        module using the <code>Heatmap.Inject(Tooltip) </code> method.
+        </p>
+    </div>
+}
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Heatmap control demonstrates how to bind the array data with values for each cell to heatmap." />
+}

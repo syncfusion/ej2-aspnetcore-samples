@@ -1,0 +1,81 @@
+﻿@using Syncfusion.EJ2
+@section ControlsSection{
+     <div class="control-section">
+        <div id="container" align='center'>
+            <ejs-chart id="lineContainer" title="Sales comparison of a Product" load=" load" >
+                <e-chart-tooltipsettings enable="true">
+                </e-chart-tooltipsettings>
+                <e-chart-legendsettings visible="false"></e-chart-legendsettings>
+                <e-chart-chartarea>
+                    <e-chartarea-border width="0"></e-chartarea-border>
+                </e-chart-chartarea>
+                <e-chart-primaryxaxis valueType="DateTimeCategory" intervalType="Days" skeleton="Ed"
+                                edgeLabelPlacement="Shift" title="Business Days">
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                </e-chart-primaryxaxis>
+                <e-chart-primaryyaxis labelFormat="{value}M"
+                                rangePadding="None" minimum=0
+                                maximum=100 interval=20>
+                    <e-majorticklines width="0"></e-majorticklines>
+                    <e-minorticklines width="0"></e-minorticklines>
+                    <e-linestyle width="0"></e-linestyle>
+                </e-chart-primaryyaxis>
+                <e-series-collection>
+                    <e-series dataSource="ViewBag.dataSource" name="Warmest" xName="xValue" width="2" opacity="1" yName="yValue1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column"></e-series>
+                </e-series-collection>
+            </ejs-chart>
+        </div>
+    </div>
+    <script>
+        function load(args) {
+            var indexedTheme = location.hash.split('/')[1];
+            indexedTheme = indexedTheme ? indexedTheme : 'Material';
+            args.chart.theme = (indexedTheme.charAt(0).toUpperCase() + indexedTheme.slice(1));
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "60%";
+            args.chart.primaryXAxis.stripLines = [
+                { visible: true, start: new Date(2017, 11, 20), end: new Date(2017, 11, 27), color: 'skyblue', opacity: 0.5, },
+                { visible: true, start: new Date(2018, 0, 2), end: new Date(2018, 0, 8), color: 'pink', opacity: 0.5 },
+            ];
+            args.chart.annotations = [
+                {
+                    x: new Date(2017, 11, 22), y: 90, coordinateUnits: 'Point',
+                    content: '<div style="color:#FF0000;font-family: bold; font-weight: 600">Christmas Offer<br> Dec 2017</div>',
+                },
+                {
+                    x: new Date(2018, 0, 4), y: 90, coordinateUnits: 'Point',
+                    content: '<div style="color:#FF0000;font-family: bold; font-weight: 800">New Year Offer<br> Jan 2018</div>',
+                }
+            ];
+        }
+    </script>
+
+}
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Chart control shows how to render the date-time category axis in charts." />
+}
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample illustrates sales of a product in business days.
+            Data points in this sample are enhanced with tooltip.
+        </p>
+
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            In this sample, you can see how to render and configure the date time category axis.
+            Date time category axis is used to represent only business days in datetime axis.
+        </p>
+        <p>
+            Tooltip is enabled in this example. To see the tooltip in action, hover a point or tap a point in touch enabled devices.
+        </p>
+       
+        <p>
+            More information on the date time category can be found in this &nbsp;
+            <a target="_blank" href="http://ej2.syncfusion.com/react/documentation/chart/api-series.html#type-chartseriestype">documentation section</a>.
+        </p>
+    </div>
+}

@@ -1,0 +1,68 @@
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+    <div class="col-lg-9 control-section">
+        <div class="schedule-wrapper">
+            <ejs-schedule id="schedule" height="650" selectedDate="new DateTime(2018, 2, 15)" eventRendered="onEventRendered">
+                <e-schedule-views>
+                    <e-schedule-view option="Day"></e-schedule-view>
+                    <e-schedule-view option="Week"></e-schedule-view>
+                    <e-schedule-view option="TimelineDay"></e-schedule-view>
+                    <e-schedule-view option="TimelineWeek"></e-schedule-view>
+                </e-schedule-views>
+                <e-schedule-eventsettings dataSource="@ViewBag.appointments"></e-schedule-eventsettings>
+            </ejs-schedule>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties" class="property-panel-table" style="width: 100%;">
+            <tbody>
+                <tr style="height: 50px">
+                    <td>
+                        <div>
+                            Scroll To
+                        </div>
+                    </td>
+                    <td style="width: 50%;">
+                        <div>
+                            <ejs-timepicker id="ScrollToHour" width="100" format="HH:mm" value=@ViewBag.value change="onChange"></ejs-timepicker>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="~/scripts/schedule/applyCategoryColor.js"></script>
+    <script type="text/javascript">
+        function onChange(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            scheduleObj.scrollTo(args.text);
+        }
+        function onEventRendered(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            applyCategoryColor(args, scheduleObj.currentView);
+        }
+    </script>
+}
+
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Schedule control shows the way of manually scrolling to specific time on scheduler." />
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This demo illustrates the way of manually scrolling to specific time on Schedule.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            In this demo, the way of manually scrolling to specific time on schedule has been demonstrated by making use of the
+            <code>scrollTo</code> method of Schedule.
+        </p>
+    </div>
+}

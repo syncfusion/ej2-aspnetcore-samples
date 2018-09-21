@@ -1,0 +1,103 @@
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+    <div class="col-lg-9 control-section">
+        <div class="schedule-wrapper">
+            <ejs-schedule id="schedule" width="100%" height="650px" selectedDate="new DateTime(2018, 2, 15)" workDays="@ViewBag.workDays" eventRendered="onEventRendered">
+                <e-schedule-workhours start="08:00"></e-schedule-workhours>
+                <e-schedule-views>
+                    <e-schedule-view option="Week"></e-schedule-view>
+                    <e-schedule-view option="WorkWeek"></e-schedule-view>
+                    <e-schedule-view option="Month"></e-schedule-view>
+                    <e-schedule-view option="TimelineWeek"></e-schedule-view>
+                    <e-schedule-view option="TimelineMonth"></e-schedule-view>
+                </e-schedule-views>
+                <e-schedule-eventsettings dataSource="@ViewBag.appointments"></e-schedule-eventsettings>
+            </ejs-schedule>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id='property' title='Properties' class='property-panel-table' style="width: 100%;">
+            <tbody>
+                <tr style="height: 50px">
+                    <td style="width: 30%">
+                        <div>
+                            Work days
+                        </div>
+                    </td>
+                    <td style="width: 70%;">
+                        <div>
+                            <ejs-dropdownlist id="scheduleworkdays" dataSource="@ViewBag.workDaysdata" change="onChange" value="@{"1,3,5"}" popupWidth="auto">
+                                <e-dropdownlist-fields text="Name" value="Value"></e-dropdownlist-fields>
+                            </ejs-dropdownlist>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td style="width: 30%">
+                        <div>
+                            First day of week
+                        </div>
+                    </td>
+                    <td style="width: 70%;">
+                        <div>
+                            <ejs-dropdownlist id="scheduledayofweek" dataSource="@ViewBag.dayOfWeek" change="onDayChange" value="@{"0"}" popupWidth="auto">
+                                <e-dropdownlist-fields text="Name" value="Value"></e-dropdownlist-fields>
+                            </ejs-dropdownlist>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="~/scripts/schedule/applyCategoryColor.js"></script>
+    <script type="text/javascript">
+        function onChange(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            scheduleObj.workDays = args.value.toString().split(',').map(Number);
+            scheduleObj.dataBind();
+        }
+        function onDayChange(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            scheduleObj.firstDayOfWeek = parseInt(args.value, 10);
+            scheduleObj.dataBind();
+        }
+        function onEventRendered(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            applyCategoryColor(args, scheduleObj.currentView);
+        }
+    </script>
+}
+
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Schedule control showcases how to set customized working days as well as first day of a week on scheduler." />
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This demo showcases how to set customized working days as well as first day of a week on Schedule.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            In this demo, the working days of a week can be set on Schedule using the
+            <code>workDays</code> property which accepts the collection of day indexes (from 0 to 6) of a week. By default, it is set to
+            <code>[1, 2, 3, 4, 5]</code> and in this demo, it has been set to
+            <code>[1, 3, 5]</code> which means that
+            <code>Monday, Wednesday, Friday</code> is being set as working days of a week and is visually differentiated from non-working days. The working hours usually
+            applies only on these given working days.
+        </p>
+        <p>
+            The first day of the week can also be set on the Schedule by making use of the
+            <code>firstDayOfWeek</code> property, doing so which will make the Schedule to start with that day.
+        </p>
+        <p>
+            <strong>Note: </strong> Here, Sunday is always denoted as 0, Monday as 1 and so on.
+        </p>
+    </div>
+}

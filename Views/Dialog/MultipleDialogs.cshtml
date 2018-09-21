@@ -1,0 +1,105 @@
+﻿@using Syncfusion.EJ2
+@{
+    var defaultanimation = new Syncfusion.EJ2.Popups.DialogAnimationSettings { Effect = Syncfusion.EJ2.Popups.DialogEffect.None };
+}
+
+@section ControlsSection {
+    <div class="col-lg-12 control-section" id="target">
+        <ejs-button id="dialogBtn" cssClass="dlgbtn" content="Open Dialog"></ejs-button>
+        <ejs-dialog id="defaultDialog" animationSettings="defaultanimation" width="330px" visible="true" height="260px" target="#target" open="dialogOpen" Content="<p>This is the first dialog and acts as a parent dialog, you can open the second (child) dialog by clicking 'Next'.</p>"
+                    close="dialogClose" showCloseIcon="true" header="First Dialog">
+            <e-dialog-buttons>
+                <e-dialog-dialogbutton buttonModel="ViewBag.defaultbutton" click="dlgButtonClick"></e-dialog-dialogbutton>
+            </e-dialog-buttons>
+        </ejs-dialog>
+        <ejs-dialog id="secondDialog" header="Second Dialog" visible="false" isModal="true" animationSettings="defaultanimation" width="285px" height="215px" target="#target" open="dialogOpen" Content="<p>This is the second dialog and act as a child dialog.</p>"
+                    close="dialogClose2" showCloseIcon="true">
+            <e-dialog-buttons>
+                <e-dialog-dialogbutton buttonModel="ViewBag.defaultbutton1" click="dlg2ButtonClick"></e-dialog-dialogbutton>
+            </e-dialog-buttons>
+        </ejs-dialog>
+    </div>
+}
+
+@section PreScripts{
+    <script>
+        document.getElementById('dialogBtn').onclick = function () {
+            var dialogObj = document.getElementById('defaultDialog').ej2_instances[0];
+            var dialogObj1 = document.getElementById('secondDialog').ej2_instances[0];
+            dialogObj.show();
+            dialogObj1.hide();
+        };
+        function dlgButtonClick() {
+            var dialogObj = document.getElementById('secondDialog').ej2_instances[0];
+            dialogObj.show();
+        }
+        function dlg2ButtonClick() {
+            var dialogObj = document.getElementById('secondDialog').ej2_instances[0];
+            dialogObj.hide();
+        }
+        function dialogClose() {
+            document.getElementById('dialogBtn').style.display = 'block';
+        }
+        function dialogClose2() {
+            document.getElementById('dialogBtn').style.display = 'none';
+        }
+        function dialogOpen() {
+            document.getElementById('dialogBtn').style.display = 'none';
+        }
+    </script>
+}
+
+<style>
+    #control-container {
+        padding: 0px !important;
+    }
+
+    .e-btn-hide {
+        display: none;
+    }
+
+    .dlgbtn {
+        margin-right: 10px;
+    }
+
+    #container {
+        height: 100%;
+        min-height: 350px;
+        position: relative;
+    }
+
+    @@media screen and (min-width: 150px) and (max-width: 480px) {
+        .control-section {
+            margin-bottom: 30px;
+        }
+
+        .control-wrapper {
+            margin-bottom: 0px;
+        }
+    }
+</style>
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates how to display multiple dialogs one over the other.
+            The second dialog is configured with draggable behavior to adjust its position.
+            You can invoke the second dialog from first dialog's button.
+            Enable the "open dialog" button to reopen the dialog if the first dialog is closed.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            You can configure the dialog as a parent and child, and invoke the child dialog from its parent dialog.
+            In addition, multiple dialogs can be shown at a time in a page.
+            The Z- index order will be controlled automatically in the browser and manually using the <code>zIndex</code> property.
+        </p>
+    </div>
+}
+
+@section Meta{
+    <meta name="description" content="This sample demonstrates how to display multiple dialogs sequentially and how to open multiple dialogs simultaneously for both modal and modeless dialogs." />
+}

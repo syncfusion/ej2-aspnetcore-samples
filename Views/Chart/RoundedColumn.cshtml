@@ -1,0 +1,118 @@
+﻿@using Syncfusion.EJ2
+@section ControlsSection{
+   <div class="control-section">
+        <div id="container" align='center'>
+            <ejs-chart id="lineContainer"  load="window.onChartLoad" title="Tiger Population - 2016"
+                      pointRender="window.pointRender" tooltipRender="window.tooltipRender">
+                <e-chart-primaryxaxis valueType="Category" interval="1" tickPosition="Inside" labelPosition="Inside">
+                <e-majorgridlines width="0"></e-majorgridlines>
+                    <e-labelstyle color="#ffffff"></e-labelstyle>
+                </e-chart-primaryxaxis>
+                <e-chart-primaryyaxis minimum="0" maximum="300" interval="50">
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                    <e-majorticklines width="0"></e-majorticklines>
+                    <e-minorgridlines width="0"></e-minorgridlines>
+                    <e-minorticklines width="0"></e-minorticklines>
+                    <e-linestyle width="0"></e-linestyle>
+                    <e-labelstyle color="transparent"></e-labelstyle>
+                </e-chart-primaryyaxis>
+                <e-chart-chartarea>
+                    <e-chartarea-border width="0"></e-chartarea-border>
+                </e-chart-chartarea>
+                <e-series-collection>
+                    <e-series dataSource="ViewBag.dataSource" xName="x" yName="y" name="Tiger" width=2 type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                        <e-series-marker>
+                            <e-series-datalabel visible="true" position="Top">
+                                <e-font fontWeight="600" color="#ffffff"></e-font>
+                            </e-series-datalabel>
+                        </e-series-marker>
+                        <e-series-cornerradius bottomLeft="10" bottomRight="10" topLeft="10" topRight="10"></e-series-cornerradius>
+                    </e-series>
+                </e-series-collection>
+                <e-chart-tooltipsettings enable="true"></e-chart-tooltipsettings>
+                <e-chart-legendsettings visible="false"></e-chart-legendsettings>
+            </ejs-chart>
+        </div>
+    </div>
+    <script>
+        window.pointRender = function (args) {
+            var materialColors = ['#00bdae', '#404041', '#357cd2', '#e56590', '#f8b883', '#70ad47', '#dd8abd', '#7f84e8', '#7bb4eb',
+                '#ea7a57', '#404041', '#00bdae'];
+            var fabricColors = ['#4472c4', '#ed7d31', '#ffc000', '#70ad47', '#5b9bd5',
+                '#c1c1c1', '#6f6fe2', '#e269ae', '#9e480e', '#997300', '#4472c4', '#70ad47', '#ffc000', '#ed7d31'];
+            var bootstrapColors = ['#a16ee5', '#f7ce69', '#55a5c2', '#7ddf1e', '#ff6ea6',
+                '#7953ac', '#b99b4f', '#407c92', '#5ea716', '#b91c52'];
+            var highContrastColors = ['#79ECE4', '#E98272', '#DFE6B6', '#C6E773', '#BA98FF',
+                '#FA83C3', '#00C27A', '#43ACEF', '#D681EF', '#D8BC6E'];
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            if (selectedTheme && selectedTheme.indexOf('fabric') > -1) {
+                args.fill = fabricColors[args.point.index % 10];
+            } else if (selectedTheme === 'material') {
+                args.fill = materialColors[args.point.index % 10];
+            } else if (selectedTheme === 'bootstrap') {
+                args.fill = bootstrapColors[args.point.index % 10];
+            } else {
+                args.fill = highContrastColors[args.point.index % 10];
+            }
+        }
+        window.onChartLoad = function (args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1));
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "60%";
+        }
+        window.tooltipRender = function (args) {
+            var tooltip = args.text;
+            if (tooltip.indexOf('BGD') > -1) {
+                tooltip = tooltip.replace('BGD', 'Bangladesh');
+            } else if (tooltip.indexOf('BTN') > -1) {
+                tooltip = tooltip.replace('BTN', 'Bhutan');
+            } else if (tooltip.indexOf('NPL') > -1) {
+                tooltip = tooltip.replace('NPL', 'Nepal');
+            } else if (tooltip.indexOf('THA') > -1) {
+                tooltip = tooltip.replace('THA', 'Thailand');
+            } else {
+                tooltip = tooltip.replace('MYS', 'Malaysia');
+            }
+            args.text = tooltip;
+        }
+    </script>
+}
+
+@section Scripts {
+    <script>
+    </script>
+}
+
+<style>
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Chart control shows how to render the rounded column series." />
+}
+@section ActionDescription{
+    <p>
+        This sample visualizes the Olympic medal count in Rio with default column series in the chart.
+        Data points values are showed by using data label.
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can see how to render and configure the column type charts. Column type charts are used for comparing
+        the frequency, count, total or average of data in different categories. You can use <code>border</code>,
+        <code>fill</code> properties to customize the vertical rect. <code>dataLabel</code> is used to represent individual
+        data and its value.
+    </p>
+    <p>
+        Tooltip is enabled in this example, to see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+    </p>
+    <br>
+
+    <p>
+        More information on the column series can be found in this
+        <a target="_blank" href="http://ej2.syncfusion.com/documentation/chart/api-series.html#type-chartseriestype">documentation section</a>.
+    </p>
+}

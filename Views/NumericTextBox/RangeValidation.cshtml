@@ -1,0 +1,126 @@
+﻿@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="col-lg-8 control-section">
+        <div class="content-wrapper">
+            <div class="control-label">
+                Numeric TextBox
+            </div>
+            <!-- Initialize Numeric Textbox -->
+            <ejs-numerictextbox id="numeric" min="10" max="100" value="15"></ejs-numerictextbox>
+        </div>
+    </div>
+    <div class="col-lg-4 property-section">
+        <table id="property" title="Properties">
+            <tbody>
+                <tr>
+                    <td>
+                        <div>Min Value </div>
+                    </td>
+                    <td>
+                        <div>
+                            <input id="min" type="number" class="form-control" value="10">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>Max Value </div>
+                    </td>
+                    <td>
+                        <div>
+                            <input id="max" type="number" class="form-control" value="100">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>Increment Step </div>
+                    </td>
+                    <td>
+                        <div>
+                            <input id="step" type="number" max="100" min="0" class="form-control" value="1">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <div>
+                            <ejs-button id="buttonApply" cssClass="e-flat" isPrimary="true" content="apply"></ejs-button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+}
+
+@section Meta{
+    <meta name="description" content="The NumericTextBox has the options to restrict the input value between a specific range using the min, max, and strictMode properties. In this demo, numeric textbox is restricted between 10 to 100 through the min and max properties." />
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This sample demonstrates the range validation functionalities of the Numeric TextBox. Change the min, max and step values and click on apply button to change the property values in Numeric TextBox.</p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            The NumericTextBox has the options to restrict the input value between a specific range using the min, max, and strictMode properties.
+        </p>
+        <p>
+            When you enable the strictMode property, the value will automatically change within a range on passing the out-of-range values.
+            When you disable the strictMode property, the NumericTextBox component allows the out-of-range value with the highlighted textbox to indicate the given value is wrong.
+        </p>
+        <p>
+            In this demo, numeric textbox is restricted between 10 to 100 through the min and max properties. So you can enter only the value between this range.
+        </p>
+        <p>
+            More information about NumericTextBox can be found in this
+            <a target="_blank"
+               href="http://ej2.syncfusion.com/aspnetcore/documentation/numerictextbox/getting-started.html">
+                documentation section
+            </a>.
+        </p>
+    </div>
+}
+@section Scripts {
+    <script>
+        document.getElementById("buttonApply").onclick = function () {
+            var numeric = document.getElementById('numeric').ej2_instances[0];
+            var min1 = parseFloat(document.getElementById('min').value);
+            var max1 = parseFloat(document.getElementById('max').value);
+            var step1 = parseFloat(document.getElementById('step').value);
+            numeric.min = min1;
+            numeric.max = max1;
+            numeric.step = step1;
+        };
+    </script>
+}
+<style>
+    .property {
+        padding: 0px 10px 10px 0;
+    }
+
+    .content-wrapper {
+        width: 48%;
+        margin: 0 auto;
+        min-width: 185px;
+    }
+
+    .e-float-input.e-numeric.e-input-group {
+        margin-top: 40px;
+    }
+
+    #buttonApply {
+        float: right;
+        text-transform:uppercase;
+    }
+
+    .control-label {
+        padding: 24px 0px 10px 0px;
+        font-size: 12px;
+    }
+</style>

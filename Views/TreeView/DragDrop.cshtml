@@ -1,0 +1,189 @@
+﻿@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="col-lg-12 control-section custom-tree">
+        <div class="control-wrapper">
+            <div class="col-lg-4 tree1-data">
+                <h4>TreeView-1</h4>
+                <div class="content">
+                    <ejs-treeview id="tree1" allowDragAndDrop="true" nodeDragStop="onDragStop">
+                        <e-treeview-fields dataSource="ViewBag.dataSource" id="id" text="name" parentID="pid" expanded="expanded" hasChildren="hasChild"></e-treeview-fields>
+                    </ejs-treeview>
+                </div>
+            </div>
+            <div class="col-lg-4 tree2-data">
+                <h4>TreeView-2</h4>
+                <div class="content">
+                    <ejs-treeview id="tree2" allowDragAndDrop="true" nodeDragStop="onDragStop">
+                        <e-treeview-fields dataSource="ViewBag.data" id="id" parentID="pid" text="name" hasChildren="hasChild" expanded="expanded"></e-treeview-fields>
+                    </ejs-treeview>
+                </div>
+            </div>
+            <div class="col-lg-4 tree3-data">
+                <h4>ListView</h4>
+                <div class="content">
+                    <div class="e-droppable" id="list">
+                        <ejs-listview enable="true" id="list" cssClass="custom-list" template="<div><span>${text}</span><span id=${iconId} class=${class}></span></div>">
+                        </ejs-listview>
+                    </div>
+                </div>
+            </div>
+            <div id="overlay">
+            </div>
+        </div>
+    </div>
+    <script>
+        var listData = [];
+        var id = 1;
+        function onDragStop(args) {
+            var targetEle = ej.base.closest(args.target, '.e-droppable');
+            targetEle = targetEle ? targetEle : args.target;
+            // Check the target as ListView or not
+            if (targetEle && targetEle.classList.contains('custom-list')) {
+                args.cancel = true;
+                var newData = [];
+                if (args.draggedNode.classList.contains('e-active')) {
+                    var selNodes = this.selectedNodes;
+                    var len = selNodes.length;
+                    for (var i = 0; i < len; i++) {
+                       var nodeEle = document.querySelector('[data-uid="' + selNodes[i] + '"]').querySelector('.e-list-text');
+                       var nodeText = nodeEle.textContent;
+                       var newNode = { id: 'l' + id, text: nodeText, class: 'custom-delete', iconId: 'i' + id };
+                       id++;
+                       newData.push(newNode);
+                    }
+                } else {
+                    var text = 'text';
+                    var nodeText = args.draggedNodeData[text] ;
+                    var newNode= { id: 'l' + id, text: nodeText, class: 'custom-delete', iconId: 'i' + id };
+                    id++;
+                    newData.push(newNode);
+                }
+                // Add collection of node to ListView
+                var listObj = document.getElementById('list').ej2_instances[0];
+                listObj.addItem(newData, undefined);
+            }
+        }
+        // Add the custom action for delete icon in ListView
+        document.getElementById('list').addEventListener('mousedown', function(event) {
+            if (event.target.classList.contains('custom-delete')) {
+                var node = ej.base.closest(event.target, 'li');
+                var listObj = document.getElementById('list').ej2_instances[0];
+                listObj.removeItem(node);
+            }
+        });
+        document.getElementById('overlay').addEventListener('mousedown', function (event) {
+            document.getElementById('overlay').style.display = 'none';
+        });
+
+    </script>
+}
+@section Meta{
+    <meta name="description" content="The tree view nodes can be drag and drop from one position to another, also the drop can be done to another tree view or other external container." />
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This sample demonstrates the drag and drop functionality of TreeView. A drag and drop image is present at the top of the sample which hides on clicking the sample. To drag and drop node, select and drag the desired node and drop it on the target node or external container.</p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>The <code>TreeView</code> component allows users to drag any node and drop it on any other node in the same or different tree using <code>allowDragAndDrop</code> property. Additionally, it supports dropping a tree node to an external container using <code>nodeDragStop</code> event of the TreeView</p>
+        <p>For more information, you can refer to the <a href="http://ej2.syncfusion.com/aspnetcore/documentation/treeview/drag-and-drop.html" target="_blank">Drag and Drop</a> section from the documentation.</p>
+    </div>
+}
+    <style>
+        #overlay {
+            position: absolute; 
+			display: block; 
+			width: 100%; 
+			height: 100%; 
+			z-index: 2; 
+			cursor: pointer;
+			background-image: url('@Url.Content("~/css/treeview/images/useCase/drag-and-drop.png")');
+			background-repeat: no-repeat; 
+			background-position: center; 
+			background-size: 70%;
+        }
+
+		#tree1, #tree2, #list {
+			height: 300px;
+			overflow: auto;
+		}
+		
+        #imageContent {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            -ms-transform: translate(-50%,-50%);
+        }
+
+       @@media (max-width: 1200px) {
+            .tree1-data, .tree2-data, .tree3-data {
+                width: 33.33333333%;
+                float: left;
+            }
+      }
+
+    .custom-tree {
+            overflow: auto;
+    }
+
+    .custom-tree .control-wrapper {
+			position: relative; 
+			min-width: 700px; 
+			min-height: 400px; 
+			overflow: auto;
+    }
+	.e-bigger #list, .e-bigger #tree1, .e-bigger #tree2 {
+		height: 354px;
+        overflow: auto;
+	}
+    .tree1-data, .tree2-data, .tree3-data {
+        padding: 15px;
+        margin-bottom: 25px;
+    }
+
+    .content {
+        margin: 0 auto;
+        border: 1px solid #dddddd;
+        border-radius: 3px;
+        min-height: 288px;
+    }
+
+    .custom-delete::before {
+        content: "";
+		cursor: pointer;
+        color: rgba(0, 0, 0, 0.54);
+        font-size: 15px;
+    }
+    
+    .fabric.e-bigger #list.e-listview .e-list-item,
+    .highcontrast.e-bigger #list.e-listview .e-list-item {
+        line-height: 43px;
+    }
+
+    .material.e-bigger #list.e-listview .e-list-item {
+        line-height: 48px;
+    }
+
+    .bootstrap.e-bigger #list.e-listview .e-list-item {
+        line-height: 47px;
+    }
+
+    .custom-delete {
+        float: right;
+        font-family: 'e-icons';
+    }
+
+    .highcontrast .custom-delete::before {
+        color: #fff;
+    }
+
+    .highcontrast .e-active.e-list-item .custom-delete::before {
+	    color: #000;
+	}
+
+</style>

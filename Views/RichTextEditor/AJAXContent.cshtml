@@ -1,0 +1,37 @@
+﻿@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="control-section">
+        <div class="control-wrapper">
+            <div class="control-section">
+                <ejs-richtexteditor id="ajax" created="onCreated"></ejs-richtexteditor>
+            </div>
+        </div>
+    </div>
+
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This sample demonstrates how to load content to the editor from an external source using <code>Ajax library</code>. </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            The rich text editor allows you to load content from an external source. The sample content is loaded from “Ajax_content.html” file using AJAX library, and when the event is <code>successful</code> the content is loaded into the editor using <code>value</code> property
+        </p>
+    </div>
+}
+
+<script>
+    var defaultRTE;
+
+    function onCreated() {
+        defaultRTE = this;
+        var ajax = new ej.base.Ajax('../Views/RichTextEditor/Ajax_content.html', 'GET', true);
+        ajax.send().then();
+        ajax.onSuccess = function (data) {
+            defaultRTE.setProperties({ value: data });
+        };
+    }
+</script>

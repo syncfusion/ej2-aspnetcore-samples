@@ -1,0 +1,148 @@
+﻿@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="col-lg-8 control-section">
+        <div class="control-wrapper">
+            <div class="control-section">
+                <ejs-richtexteditor id="defaultRTE" value="@ViewBag.value"
+                                    created="created" actionBegin="actionBegin" actionComplete="actionComplete"
+                                    focus="focus" blur="blur" change="change" toolbarClick="toolbarClick">
+									<e-richtexteditor-toolbarsettings items="@ViewBag.items"></e-richtexteditor-toolbarsettings>
+				</ejs-richtexteditor>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 property-section">
+        <table id="property" title="Event Trace">
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="eventarea" style="height: 200px;overflow: auto">
+                            <span class="EventLog" id="EventLog" style="word-break: normal;"></span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="evtbtn">
+                            <ejs-button id="clear" cssClass="e-flat" content="Clear"></ejs-button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        var defaultRTE;
+        document.getElementById('clear').onclick = function () {
+            document.getElementById('EventLog').innerHTML = '';
+        };
+        function created() {
+            defaultRTE = this;
+            appendElement('RichTextEditor <b>create</b> event called<hr>');
+        }
+        function actionBegin(args) {
+            appendElement('<b>' + args.requestType + '</b> action is called<hr>');
+            handleFullScreen(args);
+        }
+        function actionComplete(args) {
+            appendElement('<b>' + args.requestType + '</b> action is completed<hr>');
+            actionCompleteHandler();
+        }
+        function focus() {
+            appendElement('RichTextEditor <b>focus</b> event called<hr>');
+        }
+        function blur() {
+            appendElement('RichTextEditor <b>blur</b> event called<hr>');
+        }
+        function change() {
+            appendElement('RidhTextEditor <b>change</b> event called<hr>');
+        }
+        function toolbarClick() {
+            appendElement('RidhTextEditor <b>toolbar click</b> event called<hr>');
+        }
+        function appendElement(html) {
+            var span = document.createElement('span');
+            span.innerHTML = html;
+            var log = document.getElementById('EventLog');
+            log.insertBefore(span, log.firstChild);
+        }
+        function handleFullScreen(e) {
+            var leftBar;
+            var transformElement;
+            if (ej.base.Browser.isDevice) {
+                leftBar = document.querySelector('#right-sidebar');
+                transformElement = document.querySelector('.sample-browser.e-view.e-content-animation');
+            }
+            else {
+                leftBar = document.querySelector('.sb-left-pane');
+                transformElement = document.querySelector('#right-pane');
+            }
+            if (e.targetItem === 'Maximize') {
+                ej.base.addClass([leftBar], ['e-close']);
+                ej.base.removeClass([leftBar], ['e-open']);
+                transformElement.style.transform = 'inherit';
+            }
+            else if (e.targetItem === 'Minimize') {
+                ej.base.removeClass([leftBar], ['e-close']);
+                if (!ej.base.Browser.isDevice) {
+                    ej.base.addClass([leftBar], ['e-open']);
+                }
+                transformElement.style.transform = 'translateX(0px)';
+            }
+        }
+        function actionCompleteHandler() {
+            setTimeout(function () { defaultRTE.toolbarModule.refreshToolbarOverflow(); }, 400);
+        }
+    </script>
+
+    <style>
+        .control-wrapper {
+            margin: 0 auto;
+        }
+
+        .property-section .right-side {
+            padding-left: 10px;
+        }
+
+        .property-section .left-side {
+            padding: 5px;
+            width: 25%
+        }
+
+        .sb-header {
+            z-index: 100;
+        }
+        #EventLog b {
+            color: #388e3c;
+        }
+
+        hr {
+            margin: 1px 10px 1px 0px;
+            border-top: 1px solid #eee;
+        }
+    </style>
+}
+@section ActionDescription{
+    <div id="action-description">
+        <p>This sample demonstrates the events that trigger on every action of the rich text editor. The event details are showcased in the event trace panel.
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            The rich text editor triggers the events based on its actions.
+            The events can be used as an extension point to perform custom operations.
+        </p>
+        <ul>
+            <li><code>change</code> - Triggers when the editor gets blurred and changes are made to the content.</li>
+            <li><code>focus</code> - Triggers when the editor is in focus.</li>
+            <li><code>blur</code> - Triggers when focused out of the editor.</li>
+            <li><code>actionBegin</code> - Triggers before the execution of command.</li>
+            <li><code>actionComplete</code> - Triggers after the execution of command.</li>
+            <li><code>created</code> - Triggers when the component is created.</li>
+            <li><code>destroyed</code> – Triggers when the component is destroyed.</li>
+        </ul>
+    </div>
+}

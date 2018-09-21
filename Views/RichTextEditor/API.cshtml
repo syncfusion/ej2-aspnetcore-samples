@@ -1,0 +1,145 @@
+﻿@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="col-lg-8 control-section">
+        <div class="content-wrapper" id="all-option-sample">
+            <div class="control-section">
+                <ejs-richtexteditor id="api" created="created" value="@ViewBag.value"
+                                    showCharCount="true" maxLength="1000"></ejs-richtexteditor>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 property-section" id="all-option-table">
+        <table id="property" title="Properties">
+            <tbody>
+                <tr>
+                    <td style="width: 50%">
+                        <div class="userselect">Max Length </div>
+                    </td>
+                    <td style="width: 50%;padding-right: 10px">
+                        <div>
+                            <ejs-numerictextbox id="maxlength" min="555" max="2000" format="n0" value="1000" change="maxlength_onChange"></ejs-numerictextbox>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 50%">
+                        <div class="userselect">Readonly </div>
+                    </td>
+                    <td style="width: 50%;padding-right: 10px">
+                        <div style="padding-left: 0;padding-top: 0">
+                            <ejs-checkbox id="readonly" checked="false" change="readOnly_onChange"></ejs-checkbox>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 50%">
+                        <div class="userselect">Enable </div>
+                    </td>
+                    <td style="width: 50%;padding-right: 10px">
+                        <div style="padding-left: 0;padding-top: 0">
+                            <ejs-checkbox id="enable" checked="true" change="enabled_onChange"></ejs-checkbox>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 50%">
+                        <div class="userselect">Enable HTML Encode </div>
+                    </td>
+                    <td style="width: 50%;padding-right: 10px">
+                        <div style="padding-left: 0;padding-top: 0">
+                            <ejs-checkbox id="enablehtml" checked="false" change="enablehtml_onChange"></ejs-checkbox>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <div>
+                            <button id="getVal" class="btn btn-default">Get Value</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <div>
+                            <button id="selectHtml" class="btn btn-default">Get Selection</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <div>
+                            <button id="selectall" class="btn btn-default">Select All </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+}
+
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrate the usage of API in RichTextEditor, use the properties panel to change the maximum length, read
+            only mode, disable status, to get value, enable HTML encode, select all content and get selected HTML from the RichTextEditor.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>In this demos, Ensuring the API'S behavious by doing</p>
+        <ul>
+            <li>Change the value of <code>maxLength</code> textbox to change maximum Length of character.</li>
+            <li>Click the <code>readOnly</code> check box to enable/disable editable and non-editable mode of the RTE.</li>
+            <li>Click the <code>enabled</code> check box to enable/disable the RTE component.</li>
+            <li>Click the <code>enableHtmlEncode</code> check box to enableHtmlEncode/disableHtmlEncode the RTE component.</li>
+            <li>Click the <code>getValue</code> button which shows the RTE values in the alert window.</li>
+            <li>Click the <code>getSelection</code> button which shows the selectedText in the alert window.</li>
+            <li>Click the <code>selectAll</code> button selecting all text content in the RTE.</li>
+        </ul>
+    </div>
+}
+@section Scripts{
+    <script>
+        document.getElementById('getVal').onclick = function () {
+            alert(defaultAPI.value);
+        };
+        document.getElementById('selectHtml').onclick = function () {
+            alert(defaultAPI.getSelection());
+        };
+        document.getElementById('selectall').onclick = function () {
+            defaultAPI.selectAll();
+        };
+
+        </script>
+
+}
+
+        <script>
+            var defaultAPI;
+            function created() {
+                defaultAPI = this;
+            }
+            
+            function maxlength_onChange(args) {
+                defaultAPI.maxLength = args.value;
+            }
+
+            function readOnly_onChange(args) {
+                defaultAPI.readonly = args.checked;
+            }
+
+            function enabled_onChange(args) {
+                defaultAPI.enabled = args.checked;
+            }
+
+            function enablehtml_onChange(args) {
+                defaultAPI.enableHtmlEncode = args.checked;
+            }
+    </script>

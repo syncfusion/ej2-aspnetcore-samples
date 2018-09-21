@@ -1,0 +1,72 @@
+﻿
+@section ControlsSection{
+
+    @{ 
+        List<object> toolbar = new List<object>();
+        toolbar.Add(new { prefixIcon = "e-small-icon", id = "big", align = "Right" });
+        toolbar.Add(new { prefixIcon = "e-medium-icon", id = "medium", align = "Right" });
+        toolbar.Add(new { prefixIcon = "e-big-icon", id = "small", align = "Right" });
+
+    }
+    <div class="control-section">
+        <ejs-grid id="Grid" dataSource="ViewBag.datasource" height="400" rowHeight="20" toolbarClick="toolbarClick" toolbar="toolbar">
+            <e-grid-columns>
+                <e-grid-column field="OrderID" headerText="Order ID" textAlign="Right" width="120"></e-grid-column>
+                <e-grid-column field="CustomerID" headerText="Customer Name" width="150"></e-grid-column>
+                <e-grid-column field="OrderDate" headerText=" Order Date" textAlign="Right" format="yMd" width="130"></e-grid-column>
+                <e-grid-column field="Freight" headerText="Freight" textAlign="Right" format="C2" width="120"></e-grid-column>
+                <e-grid-column field="ShippedDate" headerText="Shipped Date" textAlign="Right" format="yMd" width="140"></e-grid-column>
+                <e-grid-column field="ShipCountry" headerText="Ship Country" width="150"></e-grid-column>
+            </e-grid-columns>
+        </ejs-grid>
+    </div>
+    <style>
+        .e-small-icon::before {
+            content: '\e997';
+        }
+
+        .e-medium-icon::before {
+            content: '\e94c';
+        }
+
+        .e-big-icon::before {
+            content: '\e74c';
+        }
+    </style>
+    
+    <script>
+        function toolbarClick(args) { 
+
+
+            if (args.item.id === 'small') {
+                this.rowHeight = 20;
+            }
+            if (args.item.id === 'medium') {
+                this.rowHeight = 40;
+            }
+            if (args.item.id === 'big') {
+                this.rowHeight = 60;
+            }
+        }
+    </script>
+
+}
+@section ActionDescription{
+	<div id="action-description">
+		 <p>This sample demonstrates the row height feature of the Grid. In this demo, the <b>rowHeight</b> for all the Grid rows can be
+    changed as <b>20px</b>, <b>40px</b> and <b>60px</b> on ToolBar button click.</p>
+	</div>
+}
+
+@section Meta{
+    <meta name="description" content="This demo for Essential JS 2 grid control shows the row height feature."/>
+}
+
+@section Description{
+    <div id="description">
+		     <p>
+				The Grid has support to provide <code>rowHeight</code> property.  
+			</p>
+    </div>
+}
+

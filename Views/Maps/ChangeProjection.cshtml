@@ -1,0 +1,110 @@
+﻿@using Syncfusion.EJ2.Maps;
+@section ControlsSection{
+    @{
+        var colormapping = new List<Syncfusion.EJ2.Maps.MapsColorMapping>
+        {
+            new Syncfusion.EJ2.Maps.MapsColorMapping { Value = "Permanent", Color = "#EDB46F"},
+            new Syncfusion.EJ2.Maps.MapsColorMapping { Value = "Non-Permanent", Color = "#F1931B"}
+        };
+        var titleStyle = new MapsFont
+        {
+            Size = "16px",
+        };
+    }
+    <div class="col-lg-9 control-section">
+        <div id="maps">
+            <ejs-maps id="maps" load="window.onMapLoad" loaded="onCreated">
+                <e-maps-titlesettings alignment="@Syncfusion.EJ2.Maps.Alignment.Center" text="Members of the UN Security Council" textStyle="titleStyle">
+                    <e-titlesettings-subtitlesettings text="- In 2017" alignment="@Syncfusion.EJ2.Maps.Alignment.Far"></e-titlesettings-subtitlesettings>
+                </e-maps-titlesettings>
+                <e-maps-zoomsettings enable="false"></e-maps-zoomsettings>
+                <e-maps-legendsettings visible="true"></e-maps-legendsettings>
+                <e-maps-layers>
+                    <e-maps-layer dataSource="ViewBag.uno" shapeData="ViewBag.mapdata" shapePropertyPath="name" shapeDataPath="Country">
+                        <e-layersettings-tooltipsettings valuePath="Country" visible="true"></e-layersettings-tooltipsettings>
+                        <e-layersettings-shapesettings colorMapping="colormapping" fill="lightgrey" colorValuePath="Membership"></e-layersettings-shapesettings>
+                    </e-maps-layer>
+                </e-maps-layers>
+            </ejs-maps>
+            <div style="float: right; margin-right: 10px;">
+                Source:
+                <a href="https://en.wikipedia.org/wiki/List_of_members_of_the_United_Nations_Security_Council" target="_blank">en.wikipedia.org</a>
+            </div>
+        </div>
+        </div>
+        <div class="col-md-3 property-section">
+            <table id="property" title="Properties">
+                <tbody>
+                    <tr style="height: 50px">
+                        <td style="width: 60%">
+                            <div>Projection Type</div>
+                        </td>
+                        <td style="width: 30%;">
+                            <div>
+                                <select name="projectionType" id="projectiontype" style="margin-left: 25px">
+                                    <option value="Mercator">Mercator</option>
+                                    <option value="Equirectangular">Equirectangular</option>
+                                    <option value="Miller">Miller</option>
+                                    <option value="Eckert3">Eckert3</option>
+                                    <option value="Eckert5">Eckert5</option>
+                                    <option value="Eckert6">Eckert6</option>
+                                    <option value="Winkel3">Winkel3</option>
+                                    <option value="AitOff">AitOff</option>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+}
+<script>
+    window.onload = function () {
+        var projection = new ej.dropdowns.DropDownList({
+            index: 0,
+            placeholder: 'Select projection type',
+            width: 120,
+            change: function () {
+                maps.projectionType = projection.value;
+                maps.refresh();
+            }
+        });
+        projection.appendTo('#projectiontype');
+
+    };
+    var maps;
+    function onCreated() {
+        maps = document.getElementById('maps').ej2_instances[0];
+    }
+    function onMapLoad(args) {
+        var theme = location.hash.split("/")[1];
+        theme = theme ? theme : "Material";
+        args.maps.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+    }
+</script>
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Maps control shows the details of permanent and non-permanent countries in the UN Security Council, in 2017." />
+}
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample illustrates the details of permanent and non-permanent countries in the UN security council, in 2017. Projection of the map can be changed by using the <code>Projection type</code> in properties panel.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this example, you can see how to render a map with various projections. You can use the <code>ColorMapping</code> property to customize the color of the shapes.
+        </p>
+        <p>
+            Tooltip is enabled in this example. To see the tooltip in action, hover the mouse over a shape or tap a shape in touch enabled devices.
+        </p>
+        <br />
+        <p style="font-weight: 500">Injecting Module</p>
+        <p>
+            Maps component features are segregated into individual feature-wise modules. To use a legend, inject the <code>Legend</code> module using the <code>Maps.Inject(Legend)</code> method.
+        </p>
+    </div>
+}
+

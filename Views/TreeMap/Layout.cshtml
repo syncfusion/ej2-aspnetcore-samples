@@ -1,0 +1,81 @@
+﻿@using Syncfusion.EJ2.TreeMap;
+@section ControlsSection{
+    @{
+        var leafBorder = new TreeMapBorder{ Color = "black", Width = 0.5 };
+        var colorMaps = new[]{
+               new {from = 1550, to = 17946, color = "#9cbb59", minOpacity=0.5, maxOpacity=1 }
+            };
+    }
+    <div class="col-lg-9 control-section">
+        <div id="container">
+            <ejs-treemap id="container" load="treeMapLoad" dataSource="ViewBag.dataSource" weightValuePath="GDP" rangeColorValuePath="GDP">
+                <e-treemap-titlesettings text="Top 10 countries by GDP Nominal - 2015"></e-treemap-titlesettings>
+                <e-treemap-leafitemsettings colorMapping="colorMaps" labelPath="State" labelFormat="${State}<br>$${GDP} Trillion<br>(${percentage} %)" border="leafBorder"></e-treemap-leafitemsettings>
+                <e-treemap-tooltipsettings visible="true" format="${State}<br>Rank : ${Rank}"></e-treemap-tooltipsettings>
+            </ejs-treemap>
+        </div>
+        <div style="float: right; margin-right: 10px;">
+            Source:
+            <a href=" https://www.reinisfischer.com/top-10-largest-economies-world-gdp-nominal-2015" target="_blank">www.reinisfischer.com</a>
+        </div>
+        </div>
+        <div class="col-lg-3 property-section">
+            <table id="property" title="Properties" style="width: 100%">
+                <tbody>
+                    <tr style="height: 50px">
+                        <td style="width: 30%">
+                            <div>Layout Type</div>
+                        </td>
+                        <td style="width: 80%;">
+                            <select name="selectIndex" autocomplete="off" id="layoutMode" style="width:80%;">
+                                <option value="Squarified" selected>Squarified</option>
+                                <option value="SliceAndDiceHorizontal">Horizontal</option>
+                                <option value="SliceAndDiceVertical">Vertical</option>
+                                <option value="SliceAndDiceAuto">Auto</option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+}
+<script>
+
+    function treeMapLoad(args) {
+        window.treemap = args.treemap;
+        var theme = location.hash.split('/')[1];
+        theme = theme ? theme : 'Material';
+        args.treemap.theme = theme.charAt(0).toUpperCase() + theme.slice(1);
+    }
+    window.onload = function () {
+        window.layoutMode = new ej.dropdowns.DropDownList({
+            index: 0,
+            width: 120,
+            change: function () {
+                window.treemap.layoutType = window.layoutMode.value;
+                window.treemap.refresh();
+            }
+        });
+        window.layoutMode.appendTo('#layoutMode');
+    };
+</script>
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 TreeMap control illustrates the GDP nominal of top 10 countries in the year 2015. The layout of the TreeMap can also be changed." />
+}
+@section ActionDescription{
+    <div id="action-description">
+    <p>
+        This sample illustrates the details of GDP Nominal of top 10 countries in the year 2015. Layout of the treemap can be changed by using the <code>Layout Type</code> in properties panel.
+    </p>
+</div>
+}
+@section Description{
+<div id="description">
+    <p>
+        In this example, you can change the layout of the treemap and we have applied desaturation color mapping, to denote weightage of the items by varying the fill color. Also we have formatted the labels text and placed it in multiple lines.
+    </p>
+    <p>
+        Tooltip is enabled in this example. To see the tooltip in action, hover the mouse over an item or tap an item in touch enabled devices.
+    </p>
+</div>
+}

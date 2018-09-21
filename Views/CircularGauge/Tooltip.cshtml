@@ -1,0 +1,106 @@
+﻿@using Syncfusion.EJ2;
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Circular Gauge control visualizes the tooltip template for circular gauge pointer." />
+}
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample visualizes the tooltip of pointer value in gauge. To see the tooltip in action, hover pointer or tap the pointer.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this example, you can see how to show the tooltip for pointer in gauge, to see the tooltip in action, hover pointer or
+            tap on pointer in touch enabled devices.
+        </p>
+        <br>        
+        <p>
+            More information on the tooltip can be found in this
+            <a target="_blank" href="http://ej2.syncfusion.com/documentation">documentation section</a>.
+        </p>
+    </div>
+}
+@section ControlsSection{
+    @{
+        var font = new { color = "#424242", size = "13px", fontFamily = "Roboto" };
+    }
+    <div class="control-section" style="border-right:0px;">
+        <div class="content-wrapper">
+            <ejs-circulargauge id="circular" title = 'Tooltip Customization' 
+                        enablePointerDrag = "false" load="gaugeload" tooltipRender="tooltipRender">                
+                <e-circulargauge-titlestyle size="15px" color="grey"></e-circulargauge-titlestyle>
+                <e-circulargauge-tooltip enable="true" enableAnimation="false" ></e-circulargauge-tooltip>
+                <e-circulargauge-axes>
+                    <e-circulargauge-axis startAngle="240" endAngle="120" minimum="0" maximum="120" radius="90%">
+                        <e-axis-linestyle width="0" color="transparent"></e-axis-linestyle>
+                        <e-axis-labelstyle useRangeColor="true" font="font"></e-axis-labelstyle>
+                        <e-axis-majorticks color="white" offset="-5" height="12"></e-axis-majorticks>
+                        <e-axis-minorticks width="0" color="transparent"></e-axis-minorticks>
+                    </e-circulargauge-axis>
+                </e-circulargauge-axes>
+            </ejs-circulargauge>
+        </div>
+    </div>
+}
+<script>
+    var circulargauge; 
+    window.tooltipRender = function (args) {
+        var imageName = ((args.pointer.currentValue >= 0 && args.pointer.currentValue <= 50) ? 'range1' : 'range3');
+        var borderColor = ((args.pointer.currentValue >= 0 && args.pointer.currentValue <= 50) ? '#3A5DC8' : '#33BCBD');
+        args.tooltip.template = '<div id="templateWrap" style="border:2px solid ' + borderColor +
+           '"><img src="../styles/images/circulargauge/' + imageName + '.png"/><div class="des" style="color: ' +
+           borderColor + '"><span>${value} MPH</span></div></div>';
+    }
+    window.gaugeload = function (args) {
+        var theme = location.hash.split('/')[1];
+        theme = theme ? theme : 'Material';
+        args.gauge.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+        if (!window.gaugeLoaded) {
+            window.gaugeLoaded = true;
+            var axis = args.gauge.axes[0];
+            circulargauge = args.gauge;
+            //circulargauge.enablePointerDrag = true;
+            axis.pointers = [{
+                value: 70,
+                radius: '60%',
+                color: '#33BCBD',
+                cap: { radius: 10, border: { color: '#33BCBD', width: 5 } },
+                animation: { enable: true, duration: 1500 }
+            }];
+            window.pointer = axis.pointers[0];
+            axis.ranges = [{
+                start: 0,
+                end: 50,
+                startWidth: 10, endWidth: 10,
+                radius: '102%',
+                color: '#3A5DC8',
+            }, {
+                start: 50,
+                end: 120,
+                radius: '102%',
+                startWidth: 10, endWidth: 10,
+                color: '#33BCBD',
+            }];
+        }
+    }
+</script>
+<style>
+    #templateWrap img {
+        border-radius: 30px;
+        width: 30px;
+        height: 30px;
+        margin: 0 auto;
+    }
+    #templateWrap {
+        background: #fff;
+        padding: 3px;
+        border-radius: 2px;
+    }
+    #templateWrap .des {
+        float: right;
+        padding-left: 10px;
+        line-height: 30px;
+    }
+</style>

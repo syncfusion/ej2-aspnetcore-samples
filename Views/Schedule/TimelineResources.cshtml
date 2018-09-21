@@ -1,0 +1,230 @@
+﻿@using Syncfusion.EJ2
+
+@section ControlsSection{
+    <div class="control-section">
+        <div class="content-wrapper">
+            <ejs-schedule id="schedule" width="100%" height="650px" selectedDate="new DateTime(2018, 8, 1)" currentView="TimelineWeek" resourceHeaderTemplate="#resource-template" actionBegin="onActionBegin" eventRendered="onEventRendered" renderCell="onRenderCell" popupOpen="onPopupOpen">
+                <e-schedule-workhours start="08:00" end="18:00"></e-schedule-workhours>
+                <e-schedule-timescale slotCount="1" interval="60"></e-schedule-timescale>
+                <e-schedule-views>
+                    <e-schedule-view option="TimelineDay"></e-schedule-view>
+                    <e-schedule-view option="TimelineWeek"></e-schedule-view>
+                </e-schedule-views>
+                <e-schedule-group enableCompactView="false" resources="@ViewBag.ResourceNames"></e-schedule-group>
+                <e-schedule-resources>
+                    <e-schedule-resource dataSource="@ViewBag.RoomDatas" field="RoomId" title="Room Type" name="MeetingRoom" allowMultiple="true" textField="name" idField="id" colorField="color"></e-schedule-resource>
+                </e-schedule-resources>
+                <e-schedule-eventsettings dataSource="@ViewBag.datasource">
+                    <e-eventsettings-fields>
+                        <e-field-subject name="Subject" title="Travel Summary"></e-field-subject>
+                        <e-field-location name="Location" title="Source"></e-field-location>
+                        <e-field-description name="Description" title="Comments"></e-field-description>
+                        <e-field-starttime name="StartTime" title="Departure Time"></e-field-starttime>
+                        <e-field-endtime name="EndTime" title="Arrival Time"></e-field-endtime>
+                    </e-eventsettings-fields>
+                </e-schedule-eventsettings>
+            </ejs-schedule>
+        </div>
+    </div>
+    <style>
+        .e-schedule .e-timeline-view .e-resource-left-td {
+            vertical-align: bottom;
+        }
+
+            .e-schedule .e-timeline-view .e-resource-left-td .e-resource-text {
+                display: flex;
+                font-weight: 500;
+                padding: 0;
+            }
+
+                .e-schedule .e-timeline-view .e-resource-left-td .e-resource-text > div {
+                    border-right: 1px solid rgba(0, 0, 0, 0.12);
+                    border-top: 1px solid rgba(0, 0, 0, 0.12);
+                    flex: 0 0 33.3%;
+                    font-weight: 500;
+                    height: 36px;
+                    line-height: 34px;
+                    padding-left: 5px;
+                }
+
+                    .e-schedule .e-timeline-view .e-resource-left-td .e-resource-text > div:last-child {
+                        border-right: 0;
+                    }
+
+        .e-schedule .template-wrap {
+            display: flex;
+            height: 100%;
+            text-align: left;
+        }
+
+            .e-schedule .template-wrap > div {
+                border-right: 1px solid rgba(0, 0, 0, 0.12);
+                flex: 0 0 33.3%;
+                font-weight: 500;
+                line-height: 58px;
+                overflow: hidden;
+                padding-left: 5px;
+                text-overflow: ellipsis;
+            }
+
+                .e-schedule .template-wrap > div:last-child {
+                    border-right: 0;
+                }
+
+        .e-schedule .e-timeline-view .e-resource-cells,
+        .e-schedule .e-timeline-month-view .e-resource-cells {
+            padding-left: 0;
+        }
+
+        .e-schedule .e-timeline-view .e-date-header-wrap table col,
+        .e-schedule .e-timeline-view .e-content-wrap table col {
+            width: 100px;
+        }
+
+        .e-schedule .e-lunch-break {
+            background-color: rgba(0, 0, 0, 0.1) !important;
+            font-weight: 500 !important;
+            opacity: 0.8 !important;
+            text-align: center;
+        }
+
+        .e-schedule .e-read-only {
+            opacity: .8;
+        }
+
+        @@media (max-width: 550px) {
+            .e-schedule .e-timeline-view .e-resource-left-td {
+                width: 100px;
+            }
+
+                .e-schedule .e-timeline-view .e-resource-left-td .e-resource-text > div,
+                .e-schedule .template-wrap > div {
+                    flex: 0 0 100%;
+                }
+
+                    .e-schedule .template-wrap > div:first-child {
+                        border-right: 0;
+                    }
+
+                    .e-schedule .e-timeline-view .e-resource-left-td .e-resource-text > div:first-child {
+                        border-right: 0;
+                    }
+
+            .e-schedule .room-type,
+            .e-schedule .room-capacity {
+                display: none;
+            }
+        }
+    </style>
+    <script id="resource-template" type="text/x-template">
+        <div class='template-wrap'>
+            <div class="room-name">${getRoomName(data)}</div>
+            <div class="room-type">${getRoomType(data)}</div>
+            <div class="room-capacity">${getRoomCapacity(data)}</div>
+        </div>
+    </script>
+    <script type="text/javascript">
+        var isReadOnly = function (endDate) {
+            return (endDate < new Date(2018, 6, 31, 0, 0));
+        };
+        window.getRoomName = function (value) {
+            return value.resourceData[value.resource.textField];
+        };
+        window.getRoomType = function (value) {
+            return value.resourceData.type;
+        };
+        window.getRoomCapacity = function (value) {
+            return value.resourceData.capacity;
+        };
+        function onPopupOpen(args) {
+            var data = args.data;
+            if (args.type === 'QuickInfo' || args.type === 'Editor' || args.type === 'RecurrenceAlert' || args.type === 'DeleteAlert') {
+                var target = (args.type === 'RecurrenceAlert' ||
+                    args.type === 'DeleteAlert') ? data.element[0] : args.target;
+                if (!ej.base.isNullOrUndefined(target) && target.classList.contains('e-work-cells')) {
+                    if ((target.classList.contains('e-read-only-cells')) ||
+                        (!this.isSlotAvailable(data.endTime, data.endTime, data.groupIndex))) {
+                        args.cancel = true;
+                    }
+                }
+                else if (!ej.base.isNullOrUndefined(target) && target.classList.contains('e-appointment') &&
+                    (isReadOnly(data.EndTime))) {
+                    args.cancel = true;
+                }
+            }
+        }
+        function onRenderCell(args) {
+            if (args.element.classList.contains('e-work-cells')) {
+                if (args.date.getHours() === 13) {
+                    args.element.classList.add('e-read-only-cells');
+                    args.element.classList.add('e-lunch-break');
+                    args.element.innerHTML = '<span>Lunch Break </span>';
+                }
+                if (args.date < new Date(2018, 6, 31, 0, 0)) {
+                    args.element.setAttribute('aria-readonly', 'true');
+                    args.element.classList.add('e-read-only-cells');
+                }
+            }
+            if (args.elementType === 'emptyCells' && args.element.classList.contains('e-resource-left-td')) {
+                var target = args.element.querySelector('.e-resource-text');
+                target.innerHTML = '<div class="name">Rooms</div><div class="type">Type</div><div class="capacity">Capacity</div>';
+            }
+        }
+        function onEventRendered(args) {
+            var data = args.data;
+            if (isReadOnly(data.EndTime)) {
+                args.element.setAttribute('aria-readonly', 'true');
+                args.element.classList.add('e-read-only');
+            }
+        }
+        function onActionBegin(args) {
+            if (args.requestType === 'eventCreate' || args.requestType === 'eventChange') {
+                var data;
+                if (args.requestType === 'eventCreate') {
+                    data = args.data[0];
+                }
+                else if (args.requestType === 'eventChange') {
+                    data = args.data;
+                }
+                var groupIndex = this.eventBase.getGroupIndexFromEvent(data);
+                if (!this.isSlotAvailable(data.StartTime, data.EndTime, groupIndex)) {
+                    args.cancel = true;
+                }
+            }
+        }
+    </script>
+}
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Schedule control shows how to design the room scheduling calendar and manage the events booked on a particular time interval." />
+}
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This demo showcases the scheduler that lists out the meeting rooms of an office and its availability. The slots which are
+            already booked and the lunch time can’t be allowed for any new bookings. Also, the existing bookings which were made
+            on past dates were not allowed to edit as well as the new bookings on those past dates will also be not allowed.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            Here, the timeline view is grouped with single level of resources by making use of the
+            <code>group</code> property. Also, the lunch time blocking is done by applying styles on those cells through the
+            <code>renderCell</code> event. The event editor and popup is prevented to open on those blocked time slots as well
+            as on the past bookings by making use of the
+            <code>popupOpen</code> event. The
+            <code>eventRendered</code> event is utilized in order to make the bookings done on past dates as read-only. To block
+            more than one bookings per slot, the
+            <code>isSlotAvailable</code> method is used. Also, the resource header displayed at the left panel is customized
+            to render as columns with the help of
+            <code>resourceHeaderTemplate</code>. The tooltip for resource header is customized by defining the
+            <code>headerTooltipTemplate</code> property within the
+            <code>group</code> API.
+        </p>
+        <p>
+            <b>Note:</b> The dates which lies beyond the current date set to scheduler through
+            <code>selectedDate</code> property is considered as the past dates here in this sample.
+        </p>
+    </div>
+}

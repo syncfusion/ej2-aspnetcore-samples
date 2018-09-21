@@ -1,0 +1,307 @@
+﻿@using Syncfusion.EJ2;
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Circular Gauge control shows the properties required to customize the pointers." />
+}
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample illustrates how to customize the gauge with pointers.
+            Options to change the color and type of the pointer are available in the property panel.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this example, you can see how to customize the gauge elements such as <code>pointers</code> and <code>range</code>.
+            Here a needle and range bar are added to show the current value and its appearance
+            can be customized by using options in property panel.
+        </p>
+        <p>
+            More information on the range and pointer customization can be found in this
+            <a target="_blank" href="http://ej2.syncfusion.com/documentation"> documentation section</a>.
+        </p>
+    </div>
+}
+@section ControlsSection{
+    @{
+        var font = new
+            {
+                color = "transparent",
+                fontFamily = "Roboto",
+                size = "12px",
+                fontWeight = "Regular"
+        };
+    }
+    <div class="col-md-8 control-section">
+        <div class="content-wrapper">
+            <ejs-circulargauge id="circular" load="gaugeload" centerY='70%'>
+                <e-circulargauge-axes>
+                    <e-circulargauge-axis startAngle="300" endAngle="60" minimum="999" maximum="2000" radius="80%">
+                        <e-axis-linestyle width="8" color="transparent"></e-axis-linestyle>
+                        <e-axis-labelstyle offset="-5" font="font"></e-axis-labelstyle>
+                        <e-axis-majorticks width="0" color="transparent"></e-axis-majorticks>
+                        <e-axis-minorticks width="0" color="transparent"></e-axis-minorticks>
+                    </e-circulargauge-axis>
+                </e-circulargauge-axes>
+            </ejs-circulargauge>
+        </div>
+    </div>
+    <div class="col-md-4 property-section">
+        <table id="property" title="Properties" style="width: 100%">
+            <tbody>
+                <tr style="height: 50px">
+                    <td>
+                        <img id="random" src="~/styles/images/circulargauge/gauge1.png" style="margin-left:25px;margin-top:10px;">
+                        <div id="random_line" style="display:block;left: 0px;background: #ff4081;padding-top: 0px;height: 2px !important;width: 85px;margin: 2px 2px 2px 17px;"></div>
+                    </td>
+                    <td>
+                        <img id="usage" src="~/styles/images/circulargauge/gauge2.png" style="margin-left:25px;margin-top:10px;">
+                        <div id="usage_line" style="display:none;left: 0px;background: #ff4081;padding-top: 0px;height: 2px !important;width: 85px;margin: 2px 2px 2px 17px;"></div>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td>
+                        <div id="currentPointerValue">Current Value <span> &nbsp;&nbsp;&nbsp;1800</span> </div>
+                    </td>
+                    <td>
+                        <div>
+                            <input type="range" id="currentValue" value="1800" min="1000" max="2000">
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td>
+                        <div id="rangebarColor">RangeBar Color</div>
+                    </td>
+                    <td>
+                        <div>
+                            <select id="barColor" class="form-control">
+                                <option value="#FFDD00" selected="true">#FFDD00</option>
+                                <option value="#00bdae">#00bdae</option>
+                                <option value="#FF2680">#FF2680</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td>
+                        <div id="range">Range Color</div>
+                    </td>
+                    <td>
+                        <div>
+                            <select id="rangeColor" class="form-control">
+                                <option value="#E0E0E0" selected="true">#E0E0E0</option>
+                                <option value="#7bb4eb">#7bb4eb</option>
+                                <option value="#ea7a57">#ea7a57</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td>
+                        <div id="pointColor">Pointer Color</div>
+                    </td>
+                    <td>
+                        <div>
+                            <select id="pointerColor" class="form-control">
+                                <option value="#424242" selected="true">#424242</option>
+                                <option value="#6f6fe2">#6f6fe2</option>
+                                <option value="#9e480e">#9e480e</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+}
+<script>
+    var random, usage;
+    window.addEventListener("load", function (event) {
+        random = document.getElementById('circular').ej2_instances[0];
+        usage = new ej.circulargauge.CircularGauge(customGauge2());
+        var gauge = random;
+        var isUsage = false;
+        var barColor;
+        var rangeColor;
+        var pointerColor;
+        barColor = new ej.dropdowns.DropDownList({
+            index: 0,
+            width: 120,
+            change: function () {
+                gauge.axes[0].pointers[0].color = barColor.value.toString();
+                gauge.refresh();
+            }
+        });
+        barColor.appendTo('#barColor');
+        rangeColor = new ej.dropdowns.DropDownList({
+            index: 0,
+            width: 120,
+            change: function () {
+                gauge.axes[0].ranges[0].color = rangeColor.value.toString();
+                gauge.refresh();
+            }
+        });
+        rangeColor.appendTo('#rangeColor');
+        pointerColor = new ej.dropdowns.DropDownList({
+            index: 0,
+            width: 120,
+            change: function () {
+                var color = pointerColor.value.toString();
+                if (!isUsage) {
+                    gauge.axes[0].pointers[1].color = color;
+                    gauge.axes[0].pointers[1].cap.border.color = color;
+                    gauge.axes[0].pointers[1].cap.color = color;
+                }
+                gauge.refresh();
+            }
+        });
+        pointerColor.appendTo('#pointerColor');
+        document.getElementById('usage').onclick = function () {
+            random.destroy();
+            usage.appendTo('#circular');
+            gauge = usage;
+            isUsage = true;
+            var element = document.getElementById('currentValue');
+            element.min = '0.5';
+            element.max = '100';
+            element.value = usage.axes[0].pointers[0].value.toString();
+            document.getElementById('currentPointerValue').innerHTML =
+                'Current Value <span>    ' + usage.axes[0].pointers[0].value + '</span>';
+            barColor.value = usage.axes[0].pointers[0].color;
+            rangeColor.value = usage.axes[0].ranges[0].color;
+            pointerColor.enabled = false;
+            var pointElement = document.getElementById('pointColor');
+            pointElement.className = 'e-disabled';
+            var currentElement = document.getElementById('usage');
+            var existElement = document.getElementById('random');
+            var currentLine = document.getElementById('usage_line');
+            var exisLine = document.getElementById('random_line');
+            currentLine.style.display = 'block';
+            exisLine.style.display = 'none';
+        };
+        document.getElementById('random').onclick = function () {
+            usage.destroy();
+            random.appendTo('#circular');
+            gauge = random;
+            isUsage = false;
+            var currentElement = document.getElementById('random');
+            var existElement = document.getElementById('usage');
+            var exisLine = document.getElementById('usage_line');
+            var currentLine = document.getElementById('random_line');
+            currentLine.style.display = 'block';
+            exisLine.style.display = 'none';
+            var element = document.getElementById('currentValue');
+            var pointElement = document.getElementById('pointColor');
+            pointElement.className = 'e-enabled';
+            pointerColor.enabled = true;
+            element.min = '1000';
+            element.max = '2000';
+            element.value = random.axes[0].pointers[0].value.toString();
+            document.getElementById('currentPointerValue').innerHTML = 'Current Value <span>    ' +
+                random.axes[0].pointers[0].value + '</span>';
+            barColor.value = random.axes[0].pointers[0].color;
+            rangeColor.value = random.axes[0].ranges[0].color;
+            pointerColor.value = random.axes[0].pointers[1].color;
+        };
+        document.getElementById('currentValue').onpointermove = document.getElementById('currentValue').ontouchmove =
+            document.getElementById('currentValue').onchange = function () {
+                var value = +document.getElementById('currentValue').value;
+                gauge.axes[0].pointers[0].value = value;
+                if (!isUsage)
+                    gauge.axes[0].pointers[1].value = value;
+
+                gauge.axes[0].annotations[0].content = '<div style="color:#666666;font-size:35px;">' + value + (isUsage ? 'GB' : '') + '</div>';                
+                document.getElementById('currentPointerValue').innerHTML = 'Current Value <span>    ' + value + '</span>';
+                gauge.refresh();
+            };
+
+        var selectedTheme = location.hash.split('/')[1];
+        var color;
+        if (selectedTheme === 'bootstrap') {
+            color = '#a16ee5';
+        }
+        else if (selectedTheme === 'fabric') {
+            color = '#1783FF';
+        }
+        else {
+            color = '#ff4081';
+        }
+        var exisLine = document.getElementById('usage_line');
+        var currentLine = document.getElementById('random_line');
+        exisLine.style.background = color;
+        currentLine.style.background = color;    
+    });
+    function customGauge2() {
+        var customGauge2 = new ej.circulargauge.CircularGauge({
+            axes: [{
+                annotations: [{
+                    content: '<div style="color:#666666;font-size:35px;">50.5GB</div>',
+                    angle: 180, radius: '0%', zIndex: 1
+                }, {
+                    content: '<div style="color:#757575;font-size:15px;">Used</div>',
+                    angle: 180, radius: '25%',
+                    textStyle: {
+                        fontFamily: 'Roboto',
+                        color: '#9E9E9E',
+                        fontStyle: 'Bold',
+                        fontWeight: 'Regular',
+                        size: '14px'
+                    }, zIndex: 1
+                }],
+                lineStyle: { width: 0 },
+                startAngle: 180, endAngle: 180,
+                radius: '80%',
+                labelStyle: { font: { size: '0px' } },
+                majorTicks: { width: 0 },
+                minorTicks: { height: 0 },
+                minimum: 0, maximum: 100,
+                ranges: [{
+                    start: 0, end: 100,
+                    radius: '80%', startWidth: 30,
+                    endWidth: 30, color: '#E0E0E0'
+                }],
+                pointers: [{
+                    type: 'RangeBar',
+                    value: 50.5, radius: '80%',
+                    color: '#FF2680', animation: { duration: 0 },
+                    pointerWidth: 30
+                }]
+            }]
+        });
+        return customGauge2;
+    }
+    window.gaugeload = function (args) {
+        var theme = location.hash.split('/')[1];
+        theme = theme ? theme : 'Material';
+        args.gauge.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+        if (window.gaugeLoaded)
+            return;
+        window.gaugeLoaded = true;
+        var axis = args.gauge.axes[0];
+        axis.pointers = [{
+            type: 'RangeBar',
+            value: 1800, radius: '90%',
+            color: '#FFDD00', animation: { duration: 0 },
+            pointerWidth: 30
+        }, {
+            radius: '90%', value: 1800,
+            color: '#424242',
+            animation: { duration: 0 },
+            pointerWidth: 9,
+            cap: { radius: 10, color: '#424242', border: { width: 0 } }
+        }];
+        axis.annotations = [{
+            content: '<div style="color:#666666;font-size:35px;">1800</div>',
+            angle: 0,
+            radius: '110%', zIndex: 1
+        }];
+        axis.ranges = [{
+            start: 1000, end: 2000,
+            radius: '90%',
+            startWidth: 30, endWidth: 30,
+            color: '#E0E0E0'
+        }];
+    }
+</script>

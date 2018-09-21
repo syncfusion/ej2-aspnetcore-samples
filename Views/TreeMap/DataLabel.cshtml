@@ -1,0 +1,100 @@
+﻿@using Syncfusion.EJ2.TreeMap;
+
+@section ControlsSection{
+    @{
+        var colorMaps = new Object[]{
+               new {from = 100000000, to = 10000000000, color = "#4B134F", label="200M - 1.3M" },
+               new {from = 20000000, to = 100000000, color = "#8C304D", label="20M - 200M" },
+               new {from = 100000, to = 20000000, color = "#C84B4B", label="0.1M - 20M" }
+            };
+        var levelBorder = new { color = "black", width = 0.5 };
+    }
+    <div class="col-lg-9 control-section">
+        <div id="container">
+            <ejs-treemap id="container" load="treeMapLoad" dataSource="ViewBag.dataSource" format="n" useGroupingSeparator="true" rangeColorValuePath="Population" weightValuePath="Population">
+                <e-treemap-titlesettings text="Countries ordered based on Population - 2017"></e-treemap-titlesettings>
+                <e-treemap-leafitemsettings labelPath="Country" colorMapping="colorMaps"></e-treemap-leafitemsettings>
+                <e-treemap-tooltipsettings visible="true" format="${Country} : ${Population}"></e-treemap-tooltipsettings>
+                <e-treemap-legendsettings visible="true" width="300px" height="10px" mode="@LegendMode.Interactive" position="@Syncfusion.EJ2.TreeMap.LegendPosition.Top" shape="@Syncfusion.EJ2.TreeMap.LegendShape.Rectangle"></e-treemap-legendsettings>
+            </ejs-treemap>
+        </div>
+        <div style="float: right; margin-right: 10px;">
+            Source:
+            <a href=" https://www.populationpyramid.net/population-size-per-country/2017" target="_blank"> www.populationpyramid.net</a>
+        </div>
+    </div>
+<div class="col-lg-3 property-section">
+    <table id="property" title="Properties" style="width: 100%">
+        <tbody>
+            <tr style="height: 50px">
+                <td style="width: 60%">
+                    <div>Label Intersect Action</div>
+                </td>
+                <td style="width: 40%;">
+                    <select name="selectIndex" autocomplete="off" id="labels" style="width:100%;">
+                        <option value="Trim" selected>Trim</option>
+                        <option value="Hide">Hide</option>
+                        <option value="Wrap">Wrap</option>
+                        <option value="WrapByWord">WrapByWord</option>
+                    </select>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+}
+<script>
+    function treeMapLoad(args) {
+        window.treemap = args.treemap;
+        var theme = location.hash.split('/')[1];
+        theme = theme ? theme : 'Material';
+        args.treemap.theme = theme.charAt(0).toUpperCase() + theme.slice(1);
+    }
+    window.onload = function () {
+        window.labels = new ej.dropdowns.DropDownList({
+            index: 0,
+            width: 120,
+            change: function () {
+                window.treemap.leafItemSettings.interSectAction = window.labels.value;
+                window.treemap.refresh();
+            }
+        });
+        window.labels.appendTo('#labels');
+    };
+</script>
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 TreeMap control depicts the population level of various countries in 2017 along with data labels." />
+}
+@section ActionDescription{
+    <div id="action-description">
+    <p>
+        This sample illustrates the population of various countries in 2017. Leaf item labels intersecting action can be changed by using the <code>Label Intersect Action</code> in properties panel.
+    </p>
+</div>
+}
+@section Description{
+<div id="description">
+    <p>
+        In this example, you can see the various label intersect actions available in treemap. We have specified range color mapping and enabled default legend in this example.
+    </p>
+    <p>
+        Tooltip is enabled in this example. To see the tooltip in action, hover the mouse over an item or tap an item in touch enabled devices
+    </p>
+    <br />
+    <p style="font-weight: 500">Injecting Module</p>
+    <p>
+
+        Treemap component features are segregated into individual feature-wise modules. To use a tooltip, inject the <code>Tooltip</code> module using the <code>Treemap.Inject(TreeMapTooltip)</code> method, and use a legend by injecting the <code>Legend</code> module using the <code>Treemap.Inject(TreeMapLegend)</code> method.
+    </p>
+</div>
+}
+
+
+
+
+
+
+
+
+
+

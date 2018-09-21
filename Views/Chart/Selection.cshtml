@@ -1,0 +1,106 @@
+﻿@using Syncfusion.EJ2
+@section ControlsSection{
+    @{
+      var Point = "Point";
+    }
+    <div class="control-section col-md-8">
+        <ejs-chart id="container" load="onChartLoad" title="Age Distribution by Country"
+                  selectionMode="Point">
+            <e-chart-chartarea>
+                <e-chartarea-border width="0"></e-chartarea-border>
+            </e-chart-chartarea>
+            <e-chart-primaryxaxis valueType="Category" interval="1" >
+                <e-majorgridlines width="0"></e-majorgridlines>
+            </e-chart-primaryxaxis>
+            <e-chart-primaryyaxis title="Countries" interval="20"></e-chart-primaryyaxis>
+            <e-chart-legendsettings visible="true" toggleVisibility="false"></e-chart-legendsettings>
+            <e-series-collection>
+                <e-series dataSource="ViewBag.dataSource" xName='x' yName='y1' name='Age 0-14' width=2 type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column"></e-series>
+                <e-series dataSource="ViewBag.dataSource" xName='x' yName='y2' name='Age 15-64' width=2 type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column"></e-series>
+                <e-series dataSource="ViewBag.dataSource" xName='x' yName='y3' name='Age 65 & Above' width=2 type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column"></e-series>
+            </e-series-collection>
+            <e-chart-tooltipsettings enable="false"></e-chart-tooltipsettings>
+        </ejs-chart>
+    </div>
+    <div class="col-md-4 property-section">
+        <table id="property" title="Properties" style="width: 100%">
+            <tbody>
+                <tr style="height: 50px">
+                    <td>
+                        <div>Selection Mode:</div>
+                    </td>
+                    <td>
+                        <ejs-dropdownlist id="selection" dataSource="@ViewBag.selection" change="onChange" value="Point" popupHeight="220px"></ejs-dropdownlist>
+                    </td>
+                </tr>
+                <tr id="" style="height: 50px">
+                    <td>
+                        <div> Enable Multi Selection:</div>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="select" style="margin-top: 15px">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        onChartLoad = function (args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1));
+        }
+
+        function onChange(args) {
+            var chart = document.getElementById("container").ej2_instances[0];
+            chart.selectionMode = this.value;
+
+        }
+    </script>
+}
+
+
+<style>
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Chart control demonstrates the selection behavior in chart." />
+}
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample illustrates the selection feature in chart. To select a specific point, click  the point. The selection mode can be changed by changing Selection Mode in panel. <code>Multiple selection</code> also can be enabled by <code>Enable MultipleSelection.</code>
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            This sample demonstrates the selection behavior in a chart. Any point or a series can be selected in a chart by clicking or touching the point.
+            We can also select the point while loading chart through <code>selectedDataIndexes</code> properties. Click to select a point or series, click and drag to enable rectangular selection.
+            Rectangular selection will return the collection point that are selected under the region.
+        </p>
+        <p>
+            Tap to select a point or series, double tap and drag to enable rectangular selection in touch enabled devices.
+        </p>
+        <p>
+            Chart supports five mode of selection which can be set using <code>SelectionMode</code> property.
+        </p>
+        <ul>
+            <li><code>Series</code> - Select the series in chart.</li>
+            <li><code>Point</code> - Select a point in the series .</li>
+            <li><code>Cluster</code> - Select a group of points in the chart.</li>
+            <li><code>DragXY</code> - Rectangular selection with respect to both axis.</li>
+            <li><code>DragX</code> - Rectangular selection with respect to horizontal axis.</li>
+            <li><code>DragY</code> - Rectangular selection with respect to vertical axis.</li>
+        </ul>
+
+        <p><b>Injecting Module</b></p>
+        <p>
+            Chart component features are segregated into individual feature-wise modules. To use selection feature, we need to inject
+            <code>Selection</code> module into <code>services</code>.
+        </p>
+    </div>
+}

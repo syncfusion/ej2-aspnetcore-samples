@@ -1,0 +1,334 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" rel="stylesheet" />
+    <style rel="stylesheet" id="themelink"></style>
+    <link href="https://cdn.syncfusion.com/ej2/material.css" rel="stylesheet">
+    <script type="text/javascript">
+        if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
+            document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.5/bluebird.min.js"><\/script>');
+        }
+    </script>
+    <script id='sample-datasource' type='text/javascript'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-signals/1.0.0/js-signals.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crossroads/0.12.0/crossroads.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hasher/1.2.0/hasher.min.js"></script>
+    <script src="~/scripts/samplelist.js"></script>
+    <script src="~/scripts/search-index.js"></script>
+    <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js"></script>
+</head>
+<body>
+
+    <div id="wrapper">
+                <div class="col-lg-12 col-sm-12 col-md-12">
+                    <!-- sidebar element declaration -->
+                    <span id="hamburger" class="e-icons menu"></span>
+                    <ejs-sidebar id="default-sidebar">
+                        <e-content-template>
+                            <div class="title-header">
+                                <div style="display:inline-block"> Sidebar </div>
+                                <span id="close" class="e-icons"></span>
+                            </div>
+                            <div class="sub-title">
+                                Place your primary content here.
+                            </div>
+                            </e-content-template>
+                 </ejs-sidebar>
+                    <!-- end of sidebar element -->
+                    <div class="list-group">
+                        <div class="list-group-item">
+                            <h2 class="title">Overview</h2>
+                              <br />
+                            <p>
+                                The Sidebar component is a collapsible side content placed along with the main content either in left
+                                or right side of the page.
+                            </p>
+                            <p>
+                                <br>
+                            </p>
+                            <h3 class="title">Options</h3>
+                           <br /> 
+                            <div class="inline-element responsive">
+                                <!--Open or close the sidebar -->
+                                <p class=" inline-element" style="width:70%">
+                                    <b>Toggle</b> - Toggles the Sidebar to be open or closed state.
+                                </p>
+                                <ejs-button id="togglesidebar" class="inline-element right" cssClass='e-info' isToggle="true"> <e-content-template>Toggle </e-content-template></ejs-button>
+                                <br />
+                                <br />
+                                <!--Sidebar position -->
+                                <p class=" inline-element" style="width:70%">
+                                    <b>Position</b> - Allows to place the sidebar in right or left side of the page.
+                                </p>
+                                <ejs-button id="positionButton" class="inline-element right" cssClass='e-info' isToggle="true" content="Right"></ejs-button>
+                                <br />
+                                <br />
+                                <!--Sidebar types -->
+                                <p class="inline-element" style="width:70%"><b>Types </b> - Specifies the act of expanding or collapsing the sidebar with main content.</p>
+                                <div class="inline-element right" style="width:75px">
+                                    <ejs-dropdownlist id="types" class="e-textbox right" index="3" popupHeight="200px" dataSource="@ViewBag.data" cssClass="right" change="onChange"></ejs-dropdownlist>
+                                </div>
+                                <br />
+                                <br />
+                                <!--on document click -->
+                                <p class=" inline-element" style="width:70%"><b>Closing on document click</b> - Allows to collapse / close the sidebar on document click.</p>
+                                <ejs-button id="documentclick" class="inline-element right" cssClass='e-info' isToggle="true"> <e-content-template>True </e-content-template></ejs-button>
+                                <br />
+                                <br />
+                                <!--showbackdrop option -->
+                                <p class=" inline-element" style="width:70%"><b>Backdrop</b> - Sets the backdrop over the main content area on open / expanded state. </p>
+                                <ejs-button id="backdrop" class="inline-element right" cssClass='e-info' isToggle="true"> <e-content-template>True </e-content-template></ejs-button>
+                                <br />
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        <title>Essential JS 2 (Preview) for ASP.Net Core Sidebar-> API</title>
+                <!--end of sample level element declaration -->
+            </div>
+</body>
+</html>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        dropDownInstance = document.getElementById('types').ej2_instances[0];
+        sidebar = document.getElementById('default-sidebar').ej2_instances[0];
+        positionElement = document.getElementById('positionButton');
+        documentclickElement = document.getElementById('documentclick');
+        backdropElement = document.getElementById('backdrop');
+        toggleElement = document.getElementById('togglesidebar');
+
+        toggleElement.addEventListener('click', function () {
+            if (toggleElement.classList.contains('e-active')) {
+                sidebar.hide();
+            } else {
+                sidebar.show();
+            }
+
+        })
+
+        positionElement.addEventListener('click' , function () {
+            if (positionElement.classList.contains('e-active')) {
+                positionButton.content = 'Left';
+                sidebar.position = "Right";
+                document.getElementById("hamburger").className += " e-rtl";
+            } else {
+                positionButton.content = 'Right';
+                sidebar.position = "Left";
+                document.getElementById("hamburger").classList.remove("e-rtl");
+            }
+        });
+
+        documentclickElement.addEventListener('click' , function () {
+            if (documentclickElement.classList.contains('e-active')) {
+                documentclickElement.innerText = 'False';
+                //enable the closeOnDocumentClick property
+                sidebar.closeOnDocumentClick = true;
+            } else {
+                documentclickElement.innerText = 'True';
+                //disable the closeOnDocumentClick property
+                sidebar.closeOnDocumentClick = false;
+            }
+        });
+
+        backdropElement.addEventListener('click', function () {
+            if (backdropElement.classList.contains('e-active')) {
+                backdropElement.innerText = 'False';
+                //enable the backdrop property
+                sidebar.showBackdrop = true;
+            } else {
+                backdropElement.innerText = 'True';
+                //disable the backdrop property
+                sidebar.showBackdrop = false;
+            }
+        });
+        
+        // Close the Sidebar
+        document.getElementById('close').onclick = function () {
+            sidebar.hide();
+        };
+
+        //open the sidebar
+        document.getElementById('hamburger').onclick = function () {
+            sidebar.show();
+        };
+
+    });
+
+    //Dropdown list change event handler
+    function onChange() {
+        //change the types of sidebar
+        sidebar.type = this.value;
+    }
+    
+
+</script>
+
+<style>
+    /* content area styles */
+
+  .responsive {
+    width: 80%;
+}
+
+
+.center-align {
+    text-align: center;
+    padding: 20px;
+}
+
+.title {
+    color: #000000;
+    font-weight: 500;
+    line-height: 24px;
+    font-size: 18px;
+    margin: 0px;
+}
+
+    body {
+        font-family: "Roboto", "Segoe UI", "GeezaPro", "DejaVu Serif", "sans-serif";
+        margin: 0px;
+        font-size: 14px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+}
+/* End of content area styles */
+/* property content styles */
+
+#types {
+    background-color: #ffffff;
+    border: none;
+    border-radius: 2px;
+}
+
+.inline-element.right.e-btn {
+    color: white;
+    border: none;
+    width: 75px;
+}
+
+.inline-element {
+    display: inline-block;
+}
+
+.right {
+    float: right;
+}
+
+.list-group-item {
+    border: none;
+    padding: 60px 10px 10px 45px;
+    font-size: 14px;
+}
+
+.center {
+    text-align: center;
+    display: none;
+    font-size: 13px;
+    font-weight: 400;
+    margin-top: 20px;
+}
+
+.sb-content-tab .center {
+    display: block;
+}
+/* end of property content styles */
+/* sidebar styles */
+
+.sb-content-tab #wrapper {
+    display: none;
+}
+
+.content {
+    margin-bottom: 20px;
+    overflow-y: auto;
+}
+
+#wrapper #close:before {
+    content: "\e945";
+}
+
+.title-header {
+    text-align: center;
+    font-size: 18px;
+    padding: 15px;
+}
+
+.sub-title {
+    text-align: center;
+    font-size: 16px;
+    padding: 10px;
+}
+
+.e-sidebar .title-header #close {
+    color: #fafafa;
+    cursor: pointer;
+    line-height: 25px;
+}
+
+.e-sidebar.e-left .title-header #close {
+    float: right;
+}
+
+.e-sidebar.e-right .title-header #close {
+    float: left;
+}
+
+#default-sidebar {
+    background: #2196f3;
+    color: #ffffff;
+}
+
+#hamburger.menu {
+    font-size: 25px;
+    cursor: pointer;
+    float: left;
+    line-height: 50px;
+    position: absolute;
+    z-index: 1000;
+}
+
+#hamburger.menu:before {
+    content: '\e7f6';
+}
+
+#hamburger.menu.e-rtl{
+    position:relative;
+    float: right;
+}
+
+#wrapper #close:before {
+    content: "\e945";
+}
+
+.e-sidebar .title-header #close {
+    color: #fafafa;
+    cursor: pointer;
+    line-height: 25px;
+}
+
+.e-sidebar.e-left .title-header #close {
+    float: right;
+}
+
+.e-sidebar.e-right .title-header #close {
+    float: left;
+}
+/* end of sidebar styles */
+
+
+</style>
+<ejs-scripts></ejs-scripts>

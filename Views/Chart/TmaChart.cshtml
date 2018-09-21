@@ -1,0 +1,77 @@
+﻿@using Syncfusion.EJ2
+@section ControlsSection{
+   <div class="control-section" align='center'>
+             <ejs-chart id="BollingerContainer" title="AAPL - 2012-2017" load="window.onChartLoad">
+                 <e-chart-chartarea>
+                     <e-chartarea-border width="0"></e-chartarea-border>
+                 </e-chart-chartarea>
+                 <e-chart-primaryxaxis valueType="DateTime" intervalType="Months" zoomFactor="0.2" zoomPosition="0.6">
+                     <e-majorgridlines width="0"></e-majorgridlines>
+                     <e-crosshairtooltip enable="true"></e-crosshairtooltip>
+                 </e-chart-primaryxaxis>
+                 <e-chart-primaryyaxis title="Price" minimum="50" maximum="170" interval="30" labelFormat="{value}M" >
+                     <e-majorticklines width="0"></e-majorticklines>
+                     <e-linestyle width="0"></e-linestyle>
+                 </e-chart-primaryyaxis>
+                 <e-series-collection>
+                     <e-series xName="x" yName="y" low="low" high="high" close="close" volume="volume" open="open" width=2
+                               name="Apple Inc" bearFillColor="#2ecd71" bullFillColor="#e74c3d"
+                               type="@Syncfusion.EJ2.Charts.ChartSeriesType.Candle">
+                         <e-series-animation enable="false"></e-series-animation>
+                     </e-series>
+                 </e-series-collection>
+                 <e-indicators>
+                     <e-indicator type="@Syncfusion.EJ2.Charts.TechnicalIndicators.Tma" field="Close" seriesName="Apple Inc" fill="#6063ff"
+                                  period=14>
+                         <e-indicator-animation enable="true"></e-indicator-animation>
+                     </e-indicator>
+                 </e-indicators>
+                 <e-chart-crosshairsettings enable="true" lineType="Vertical"></e-chart-crosshairsettings>
+                 <e-chart-legendsettings visible="false"></e-chart-legendsettings>
+                 <e-chart-tooltipsettings enable="true" shared="true"></e-chart-tooltipsettings>
+             </ejs-chart>
+        </div>
+    <script src="~/scripts/chart/financial-data.js"></script>
+    <script type="text/javascript">
+        window.onChartLoad = function (args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1));
+            args.chart.series[0].dataSource = window.chartData;
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "80%";
+        }
+    </script>
+}
+
+@section Scripts {
+
+}
+<style>
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Chart control shows how to render and configure the triangular moving average indicator." />
+}
+@section ActionDescription{
+    <p>
+        This sample illustrates a stock chart with candle series and a Triangle Moving Average indicator. Trackball shows the information about the stock and signal value of a day.
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can see how to render and configure the TMA Indicator. You can use <code>border</code>,
+        <code>fill</code> properties to customize the area.
+    </p>
+    <p>
+        Tooltip is enabled in this example, to see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+    </p>
+
+   
+    <p>
+        More information on the TMA Indicator can be found in this
+        <a target="_blank" href="http://ej2.syncfusion.com/documentation/chart/api-series.html#type-chartseriestype">documentation section</a>.
+    </p>
+}
+

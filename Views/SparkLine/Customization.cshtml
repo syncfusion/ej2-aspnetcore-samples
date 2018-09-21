@@ -1,0 +1,534 @@
+﻿@using Syncfusion.EJ2.Charts;
+
+@section ControlsSection {
+    @{
+        var axisLine = new { color = "red", width = 2 };
+        var trackLine = new SparklineTrackLineSettings { Color = "red", Width = 1 };
+    }
+
+    <div class="col-lg-8 control-section">
+        <div id="spark-container" class="row">
+            <div class="cols-sample-area" align="center">
+                <p>
+                    <font size=4px> Worldwide car sales by brand - 2017</font>
+                </p>
+                <table style="width:150%;">
+                    <tr>
+                        <td align="center">Sales Percentage</td>
+                        <td>
+                            <div id="percentage" style="width:200px; height:200px">
+                                <ejs-sparkline id="percentage" load="sparkLoad" height="200px" width="200px" lineWidth="1"
+                                               type="@SparklineType.Column" valueType="@Syncfusion.EJ2.Charts.SparklineValueType.Category"
+                                               xName="xval" yName="yval">
+                                    <e-sparkline-markersettings fill="red" size="5"></e-sparkline-markersettings>
+                                    <e-sparkline-tooltipsettings format="${xval}: ${yval}" trackLineSettings="trackLine"></e-sparkline-tooltipsettings>
+                                </ejs-sparkline>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">Sales Count</td>
+                        <td>
+                            <div id="sales" style="width:200px; height:200px">
+                                <ejs-sparkline id="sales" load="sparkLoad" height="200px" width="200px" lineWidth="1"
+                                               type="@SparklineType.Column" valueType="@Syncfusion.EJ2.Charts.SparklineValueType.Category"
+                                               xName="xval" yName="yval">
+                                    <e-sparkline-markersettings fill="red" size="5"></e-sparkline-markersettings>
+                                    <e-sparkline-tooltipsettings format="${xval}: ${yval}" trackLineSettings="trackLine"></e-sparkline-tooltipsettings>
+                                </ejs-sparkline>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div style="float: right; margin-right: 10px;">
+                Source:
+                <a href=" http://carsalesbase.com/global-car-sales-2017" target="_blank">carsalesbase.com</a>
+            </div>
+        </div>
+    </div>
+   <div class="col-lg-4 property-section">
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    <br>
+    <table id="property" style="width:100%" title="Properties">
+        <tbody>
+            <tr style="height: 30px">
+                <td class="property-text" style="width: 50%">
+                    Sparkline
+                </td>
+                <td style="width: 50%">
+                    <select id="spark" style="width: 100%;">
+                        <option selected value="salespercentage">Sales Percentage</option>
+                        <option value="salescount">Sales Count</option>
+                    </select>
+                </td>
+            </tr>
+            <tr style="height: 30px">
+                <td style="width: 50%">
+                    Special Points
+                </td>
+                <td style="width: 50%">
+                    <table>
+                        <tr>
+                            <td>All</td>
+                            <td>
+                                <input type="checkbox" id="all">
+                            </td>
+                            <td style="padding: 5px;">Negative</td>
+                            <td>
+                                <input type="checkbox" id="negative">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">First</td>
+                            <td>
+                                <input type="checkbox" id="first">
+                            </td>
+                            <td style="padding: 5px;">Last</td>
+                            <td>
+                                <input type="checkbox" id="last">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">High</td>
+                            <td>
+                                <input type="checkbox" id="high">
+                            </td>
+                            <td style="padding: 5px;">Low</td>
+                            <td>
+                                <input type="checkbox" id="low">
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr style="height: 30px">
+                <td style="width: 50%">
+                    Marker
+                </td>
+                <td style="width: 50%">
+                    <input type="checkbox" name="marker" id="marker">
+                </td>
+            </tr>
+            <tr style="height: 30px">
+                <td style="width: 50%">
+                    Data Label
+                </td>
+                <td style="width: 50%">
+                    <input type="checkbox" name="datalabel" id="datalabel">
+                </td>
+            </tr>
+            <tr style="height: 30px">
+                <td style="width: 50%">
+                    Tooltip
+                </td>
+                <td style="width: 50%">
+                    <input type="checkbox" name="tooltip" id="tooltip">
+                </td>
+            </tr>
+            <tr style="height: 30px">
+                <td style="width: 50%">
+                    Track Line
+                </td>
+                <td style="width: 50%">
+                    <input type="checkbox" name="trackline" id="trackline">
+                </td>
+            </tr>
+            <tr style="height: 30px">
+                <td style="width: 50%">
+                    Axis Line
+                </td>
+                <td style="width: 50%">
+                    <input type="checkbox" name="axis" id="axis1">
+                </td>
+            </tr>
+            <tr>
+                <td id='axisval'>
+                    Axis Value
+                    <span>&nbsp;&nbsp;&nbsp;0</span>
+                </td>
+                <td>
+                    <div id="range"></div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+    <style>
+        .sparkinput {
+            opacity: 1 !important;
+            position: relative !important;
+        }
+
+        .property-text {
+            font-family: "Roboto", "Segoe UI", "GeezaPro", "DejaVu Serif", "sans-serif" !important;
+            font-size: 13px !important;
+            font-weight: 400 !important;
+        }
+
+        #range > * {
+            padding: 0px !important;
+        }
+
+        label {
+            height: 32px !important;
+        }
+    </style>
+
+    <script type="text/javascript">
+        var percentage, sales;
+        function sparkLoad(args) {
+            if (args.sparkline.element.id === "percentage") {
+                percentage = args.sparkline;
+                args.sparkline.dataSource = [
+                    { x: 0, xval: 'AUDI', yval: 1 },
+                    { x: 1, xval: 'BMW', yval: 5 },
+                    { x: 2, xval: 'BUICK', yval: -1 },
+                    { x: 3, xval: 'CETROEN', yval: -6 },
+                    { x: 4, xval: 'CHEVROvar', yval: 0 },
+                    { x: 5, xval: 'FIAT', yval: 1 },
+                    { x: 6, xval: 'FORD', yval: -2 },
+                    { x: 7, xval: 'HONDA', yval: 7 },
+                    { x: 8, xval: 'HYUNDAI', yval: -9 },
+                    { x: 9, xval: 'JEEP', yval: 0 },
+                    { x: 10, xval: 'KIA', yval: -10 },
+                    { x: 11, xval: 'MAZDA', yval: 3 },
+                    { x: 12, xval: 'MERCEDES', yval: 13 },
+                    { x: 13, xval: 'NISSAN', yval: 5 },
+                    { x: 14, xval: 'OPEL/VHALL', yval: -6 },
+                    { x: 15, xval: 'PEUGEOT', yval: 0 },
+                    { x: 16, xval: 'RENAULT', yval: 7 },
+                    { x: 17, xval: 'SKODA', yval: 5 },
+                    { x: 18, xval: 'SUBARU', yval: 5 },
+                    { x: 19, xval: 'SUZUKI', yval: 11 },
+                    { x: 20, xval: 'TOYOTA', yval: 5 },
+                    { x: 21, xval: 'VOLKSWAGEN', yval: 3 },
+                ];
+            } else {
+                sales = args.sparkline;
+                args.sparkline.dataSource = [
+                    { x: 0, xval: 'AUDI', yval: 1847613 },
+                    { x: 1, xval: 'BMW', yval: 2030331 },
+                    { x: 2, xval: 'BUICK', yval: 1465823 },
+                    { x: 3, xval: 'CETROEN', yval: 999888 },
+                    { x: 4, xval: 'CHEVROvar', yval: 3857388 },
+                    { x: 5, xval: 'FIAT', yval: 1503806 },
+                    { x: 6, xval: 'FORD', yval: 5953122 },
+                    { x: 7, xval: 'HONDA', yval: 4967689 },
+                    { x: 8, xval: 'HYUNDAI', yval: 3951176 },
+                    { x: 9, xval: 'JEEP', yval: 1390130 },
+                    { x: 10, xval: 'KIA', yval: 2511293 },
+                    { x: 11, xval: 'MAZDA', yval: 1495557 },
+                    { x: 12, xval: 'MERCEDES', yval: 2834181 },
+                    { x: 13, xval: 'NISSAN', yval: 4834694 },
+                    { x: 14, xval: 'OPEL/VHALL', yval: 996559 },
+                    { x: 15, xval: 'PEUGEOT', yval: 1590300 },
+                    { x: 16, xval: 'RENAULT', yval: 2275227 },
+                    { x: 17, xval: 'SKODA', yval: 1180672 },
+                    { x: 18, xval: 'SUBARU', yval: 1050390 },
+                    { x: 19, xval: 'SUZUKI', yval: 2891415 },
+                    { x: 20, xval: 'TOYOTA', yval: 7843423 },
+                    { x: 21, xval: 'VOLKSWAGEN', yval: 6639250 },
+                ];
+            }
+        }
+
+        window.onload = function () {
+            window.sampleValue = new ej.dropdowns.DropDownList({
+                index: 0,
+                placeholder: 'Sales Percentage',
+                width: '100%',
+                change: dropDownChange
+            }, "#spark");
+
+            function dropDownChange(drop) {
+                if (drop.value === 'salespercentage') {
+                    slider.min = 0;
+                    slider.max = 10;
+                } else {
+                    slider.min = 0;
+                    slider.max = 5000000;
+                }
+
+                if ((drop.value === 'salespercentage' && percentage.markerSettings.visible.length) ||
+                    (drop.value === 'salescount' && sales.markerSettings.visible.length)) {
+                    window.markerCheckBox.checked = true;
+                } else {
+                    window.markerCheckBox.checked = false;
+                }
+                if ((drop.value === 'salespercentage' && percentage.dataLabelSettings.visible.length) ||
+                    (drop.value === 'salescount' && sales.dataLabelSettings.visible.length)) {
+                    window.datalabelCheckBox.checked = true;
+                } else {
+                    window.datalabelCheckBox.checked = false;
+                }
+                var spark = drop.value === 'salespercentage' ? percentage : sales;
+                if (!markerCheckBox.checked && !datalabelCheckBox.checked) {
+                    window.allCheckBox.checked = false;
+                    window.negativeCheckBox.checked = false;
+                    window.firstCheckBox.checked = false;
+                    window.lastCheckBox.checked = false;
+                    window.highCheckBox.checked = false;
+                    window.lowCheckBox.checked = false;
+                }
+                if (markerCheckBox.checked) {
+                    var spark = drop.value === 'salespercentage' ? percentage : sales;
+                    window.allCheckBox.checked = spark.markerSettings.visible.indexOf('All') > -1;
+                    window.negativeCheckBox.checked = spark.markerSettings.visible.indexOf('Negative') > -1;
+                    window.firstCheckBox.checked = spark.markerSettings.visible.indexOf('Start') > -1;
+                    window.lastCheckBox.checked = spark.markerSettings.visible.indexOf('End') > -1;
+                    window.highCheckBox.checked = spark.markerSettings.visible.indexOf('High') > -1;
+                    window.lowCheckBox.checked = spark.markerSettings.visible.indexOf('Low') > -1;
+                }
+                if (datalabelCheckBox.checked) {
+                    var spark = drop.value === 'salespercentage' ? percentage : sales;
+                    window.allCheckBox.checked = spark.dataLabelSettings.visible.indexOf('All') > -1;
+                    window.negativeCheckBox.checked = spark.dataLabelSettings.visible.indexOf('Negative') > -1;
+                    window.firstCheckBox.checked = spark.dataLabelSettings.visible.indexOf('Start') > -1;
+                    window.lastCheckBox.checked = spark.dataLabelSettings.visible.indexOf('End') > -1;
+                    window.highCheckBox.checked = spark.dataLabelSettings.visible.indexOf('High') > -1;
+                    window.lowCheckBox.checked = spark.dataLabelSettings.visible.indexOf('Low') > -1;
+                }
+
+                if ((drop.value === 'salespercentage' && percentage.tooltipSettings.visible === true) ||
+                    (drop.value === 'salescount' && sales.tooltipSettings.visible === true)) {
+                    window.tooltipCheckBox.checked = true;
+                } else {
+                    window.tooltipCheckBox.checked = false;
+                }
+
+                if ((drop.value === 'salespercentage' && percentage.tooltipSettings.trackLineSettings.visible === true) ||
+                    (drop.value === 'salescount' && sales.tooltipSettings.trackLineSettings.visible === true)) {
+                    window.trackerCheckBox.checked = true;
+                } else {
+                    window.trackerCheckBox.checked = false;
+                }
+
+                if ((drop.value === 'salespercentage' && percentage.axisSettings.lineSettings.visible === true) ||
+                    (drop.value === 'salescount' && sales.axisSettings.lineSettings.visible === true)) {
+                    window.axislineCheckBox.checked = true;
+                } else {
+                    window.axislineCheckBox.checked = false;
+                }
+
+                if (drop.value === 'salespercentage' && percentage.axisSettings.value !== 0) {
+                    slider.value = percentage.axisSettings.value;
+                    slider.min = 0;
+                    slider.max = 10;
+                    document.getElementById('axisval').innerHTML = 'Axis value: <span> ' + percentage.axisSettings.value;
+                }
+                if (drop.value === 'salescount' && sales.axisSettings.value !== 0) {
+                    slider.value = sales.axisSettings.value;
+                    slider.min = 0;
+                    slider.max = 5000000;
+                    document.getElementById('axisval').innerHTML = 'Axis value: <span> ' + sales.axisSettings.value;
+                }
+
+                allCheckBox.checked = !(negativeCheckBox.checked || highCheckBox.checked || lowCheckBox.checked ||
+                    window.firstCheckBox.checked || lastCheckBox.checked);
+                negativeCheckBox.disabled = highCheckBox.disabled = lowCheckBox.disabled = firstCheckBox.disabled =
+                    window.lastCheckBox.disabled = allCheckBox.checked;
+            }
+
+            var slider = new ej.inputs.Slider(
+                {
+                    value: 0, type: 'MinRange',
+                    change: sliderChange,
+                    max: 10, min: 0
+                },
+                '#range');
+
+            function sliderChange(e) {
+                var spark = window.sampleValue.value === 'salespercentage' ? percentage : sales;
+                spark.axisSettings.value = e.value;
+                document.getElementById('axisval').innerHTML = 'Axis value: <span> ' + e.value;
+                spark.refresh();
+            };
+
+            window.allCheckBox = new ej.buttons.CheckBox(
+                {
+                    checked: true,
+                    change: allChange
+                },
+                '#all');
+            window.negativeCheckBox = new ej.buttons.CheckBox(
+                {
+                    change: otherchange, disabled: true
+                },
+                '#negative');
+
+            window.firstCheckBox = new ej.buttons.CheckBox(
+                {
+                    change: otherchange, disabled: true
+                },
+                '#first');
+            window.lastCheckBox = new ej.buttons.CheckBox(
+                {
+                    change: otherchange, disabled: true
+                },
+                '#last');
+            window.highCheckBox = new ej.buttons.CheckBox(
+                {
+                    change: otherchange, disabled: true
+                },
+                '#high');
+            window.lowCheckBox = new ej.buttons.CheckBox(
+                {
+                    change: otherchange, disabled: true
+                },
+                '#low');
+
+            window.markerCheckBox = new ej.buttons.CheckBox(
+                {
+                    change: markerchange
+                },
+                '#marker');
+
+            window.datalabelCheckBox = new ej.buttons.CheckBox(
+                {
+                    change: datalabelchange
+                },
+                '#datalabel');
+
+            window.tooltipCheckBox = new ej.buttons.CheckBox(
+                {
+                    change: tooltipchange
+                },
+                '#tooltip');
+
+            window.trackerCheckBox = new ej.buttons.CheckBox(
+                {
+                    change: trackerchange
+                },
+                '#trackline');
+
+            window.axislineCheckBox = new ej.buttons.CheckBox(
+                {
+                    change: axislinechange
+                },
+                '#axis1');
+        }
+
+        function allChange(e) {
+            var checked = e.checked;
+            window.negativeCheckBox.disabled = checked;
+            window.firstCheckBox.disabled = checked;
+            window.lastCheckBox.disabled = checked;
+            window.highCheckBox.disabled = checked;
+            window.lowCheckBox.disabled = checked;
+            var spark = sampleValue.value === 'salespercentage' ? percentage : sales;
+            spark.markerSettings.visible = (checked && markerCheckBox.checked) ? ['All'] : (markerCheckBox.checked) ? getVisible() : [];
+            spark.dataLabelSettings.visible = (checked && datalabelCheckBox.checked) ? ['All'] :
+                (datalabelCheckBox.checked) ? getVisible() : [];
+            spark.refresh();
+        }
+
+        function datalabelchange(e){
+            var boolean = e.checked;
+            var spark = window.sampleValue.value === 'salespercentage' ? percentage : sales;
+            if (boolean) {
+                spark.dataLabelSettings.visible = getVisible();
+            } else {
+                spark.dataLabelSettings.visible = [];
+            }
+            spark.refresh();
+        }
+
+        function otherchange(e) {
+            var checked = e.checked;
+            var spark = window.sampleValue.value === 'salespercentage' ? percentage : sales;
+            if (markerCheckBox.checked) {
+                spark.markerSettings.visible = getVisible();
+                spark.refresh();
+            }
+            if (datalabelCheckBox.checked) {
+                spark.dataLabelSettings.visible = getVisible();
+                spark.refresh();
+            }
+        }
+
+        function getVisible(){
+            var visible = [];
+            if (window.allCheckBox.checked) { return ['All']; }
+            if (window.negativeCheckBox.checked) { visible.push('Negative'); }
+            if (window.firstCheckBox.checked) { visible.push('Start'); }
+            if (window.lastCheckBox.checked) { visible.push('End'); }
+            if (window.highCheckBox.checked) { visible.push('High'); }
+            if (window.lowCheckBox.checked) { visible.push('Low'); }
+            return visible;
+        };
+
+        function markerchange(e) {
+            var boolean = e.checked;
+            var spark = window.sampleValue.value === 'salespercentage' ? percentage : sales;
+            if (boolean) {
+                spark.markerSettings.visible = getVisible();
+            } else {
+                spark.markerSettings.visible = [];
+            }
+            spark.refresh();
+        }
+
+        function tooltipchange(e){
+            var boolean = e.checked;
+            var spark = window.sampleValue.value === 'salespercentage' ? percentage : sales;
+            if (boolean) {
+                spark.tooltipSettings.visible = true;
+                spark.tooltipSettings.format = '${xval}: ${yval}';
+            } else {
+                spark.tooltipSettings.visible = false;
+            }
+            spark.refresh();
+        }
+
+        function trackerchange(e) {
+            var boolean = e.checked;
+            var spark = window.sampleValue.value === 'salespercentage' ? percentage : sales;
+            if (boolean) {
+                spark.tooltipSettings.trackLineSettings.visible = true;
+                spark.tooltipSettings.trackLineSettings.color = 'red';
+                spark.tooltipSettings.trackLineSettings.width = 1;
+            } else {
+                spark.tooltipSettings.trackLineSettings.visible = false;
+            }
+            spark.refresh();
+        }
+
+        function axislinechange(e){
+            var boolean = e.checked;
+            var spark = window.sampleValue.value === 'salespercentage' ? percentage : sales;
+            if (boolean) {
+                spark.axisSettings.lineSettings.visible = true;
+                spark.axisSettings.lineSettings.color = 'red';
+                spark.axisSettings.lineSettings.width = 2;
+            } else {
+                spark.axisSettings.lineSettings.visible = false;
+            }
+            spark.refresh();
+        }
+
+        function sliderChange(e) {
+            var spark = window.sampleValue.value === 'salespercentage' ? percentage : sales;
+            spark.axisSettings.value = e.value;
+            document.getElementById('axisval').innerHTML = 'Axis value: <span> ' + e.value;
+            spark.refresh();
+        }
+    </script>
+}
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Sparkline control depicts the properties required to customize the sparkline." />
+}
+@section ActionDescription{
+    <div id="action-description">
+    <p>
+        This sample depicts the various customization options available in Sparkline.
+    </p>
+</div>
+}
+@section Description{
+    <div id="description">
+    <p>
+        In this example, you can make several customizations available in sparkline. Tooltip is enabled in this example. To see the tooltip in action, hover the mouse over the data points or tap on a data point in touch enabled devices.
+    </p>
+</div>
+}

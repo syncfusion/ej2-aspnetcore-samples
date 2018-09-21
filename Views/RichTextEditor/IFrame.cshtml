@@ -1,0 +1,74 @@
+﻿@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="control-section">
+        <div class="control-wrapper">
+            <div class="control-section">
+                <ejs-richtexteditor id="iframe" created="created" value="@ViewBag.value"
+                                    height="500" actionBegin="handleFullScreen" actionComplete="actionCompleteHandler">
+                    <e-richtexteditor-iframesettings enable="true"></e-richtexteditor-iframesettings>
+                    <e-richtexteditor-toolbarsettings items="@ViewBag.items"></e-richtexteditor-toolbarsettings>
+                </ejs-richtexteditor>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var iframeRTE;
+        function created() {
+            iframeRTE = this;
+        }
+        function handleFullScreen(e) {
+            var leftBar;
+            var transformElement;
+            if (ej.base.Browser.isDevice) {
+                leftBar = document.querySelector('#right-sidebar');
+                transformElement = document.querySelector('.sample-browser.e-view.e-content-animation');
+            }
+            else {
+                leftBar = document.querySelector('.sb-left-pane');
+                transformElement = document.querySelector('#right-pane');
+            }
+            if (e.targetItem === 'Maximize') {
+                ej.base.addClass([leftBar], ['e-close']);
+                ej.base.removeClass([leftBar], ['e-open']);
+                transformElement.style.transform = 'inherit';
+            }
+            else if (e.targetItem === 'Minimize') {
+                ej.base.removeClass([leftBar], ['e-close']);
+                if (!ej.base.Browser.isDevice) {
+                    ej.base.addClass([leftBar], ['e-open']);
+                }
+                transformElement.style.transform = 'translateX(0px)';
+            }
+        }
+        function actionCompleteHandler() {
+            setTimeout(function () { iframeRTE.toolbarModule.refreshToolbarOverflow(); }, 400);
+        }
+    </script>
+    <style>
+        .e-rte-content body {
+            color: black;
+            background-color: white;
+        }
+
+        .sb-header {
+            z-index: 100;
+        }
+    </style>
+
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This sample demonstrates the default rendering of the rich text editor in <code>iframe mode</code>.</p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            The rich text editor is WYSIWYG ("what you see is what you get") editor that is used to create and edit content, and return valid HTML markup. The editor provides a standard toolbar to format content using its commands. The toolbar contains commands to align the text, insert link, insert image,
+            insert list, undo/redo the operation, HTML view, and more.
+        </p>
+    </div>
+}
+

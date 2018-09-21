@@ -1,0 +1,216 @@
+@using Syncfusion.EJ2.Maps;
+@section ControlsSection{
+    @{
+        var colormapping = new List<Syncfusion.EJ2.Maps.MapsColorMapping> {
+                new MapsColorMapping{ Value = "Trump", Color = "#D84444" },
+                new MapsColorMapping{ Value = "Clinton", Color = "#316DB5" }
+        };
+        var titleStyle = new MapsFont{
+            Size = "16px"
+        };
+     }
+            <div class="control-section">
+        <div class="row">
+            <div class="col-md-12">
+                <ejs-maps id="maps" load="window.onMapLoad" shapeSelected="window.shapeSelected">
+                    <e-maps-titlesettings alignment="@Syncfusion.EJ2.Maps.Alignment.Center" text="USA Election Results - 2016" textStyle="titleStyle"></e-maps-titlesettings>
+                    <e-maps-zoomsettings enable="false"></e-maps-zoomsettings>
+                    <e-maps-legendsettings visible="true" mode="Interactive" position="Top" width="80%">
+                        <e-legendsettings-textstyle fontWeight="400" size="14px"></e-legendsettings-textstyle>
+                    </e-maps-legendsettings>
+                    <e-maps-layers>
+                        <e-maps-layer dataSource="ViewBag.electiondata" shapeData="ViewBag.usmap" shapeDataPath="State" shapePropertyPath="name">
+                            <e-layersettings-tooltipsettings visible="true" valuePath="State"></e-layersettings-tooltipsettings>
+                            <e-layersettings-shapesettings colorValuePath="Candidate" colorMapping="colormapping"></e-layersettings-shapesettings>
+                            <e-layersettings-highlightsettings enable="true" fill="#A3B0D0"></e-layersettings-highlightsettings>
+                            <e-layersettings-selectionsettings enable="true" fill="#4C515B" opacity="1"></e-layersettings-selectionsettings>
+                        </e-maps-layer>
+                    </e-maps-layers>
+                </ejs-maps>
+            </div>
+        </div>
+    </div>
+<div style="float: right; margin-right: 10px;">
+    Source:
+    <a href="https://en.wikipedia.org/wiki/United_States_presidential_election,_2016" target="_blank">en.wikipedia.org</a>
+</div>
+<div class="popup" id="closepopup">
+    <span id='closebutton'>x</span>
+    <table style="margin-top:5px;width:auto">
+        <tr>
+            <td align="left" style="padding:0.3px">
+                <label id="winner" style="color:#666666;font-size:12px;font-family:Roboto;font-weight:700;"></label>
+            </td>
+        </tr>
+        <tr style="border-top:1px solid #CCCCCC">
+            <td align="left" style="padding:0.3px;padding-top:0.5em;">
+                <label style="color:#575757;font-size:12px;font-family:Roboto;font-weight:400;">State</label>
+            </td>
+            <td align="left" style="padding:0.3px;padding-top:0.5em;">
+                <label style="color:#575757;font-size:12px;font-family:Roboto;font-weight:400;margin-left:8px">:</label>
+            </td>
+            <td align="left" style="padding:0.3px;padding-top:0.5em;">
+                <label id="state" style="color:#575757;font-size:12px;font-family:Roboto;font-weight:400;margin-left:8px"></label>
+            </td>
+        </tr>
+        <tr>
+            <td align="left" style="padding:0.3px">
+                <label style="color:#575757;font-size:12px;font-family:Roboto;font-weight:400;white-space:nowrap">Trump</label>
+            </td>
+            <td align="left" style="padding:0.3px">
+                <label style="color:#575757;font-size:12px;font-family:Roboto;font-weight:400;margin-left:8px">:</label>
+            </td>
+            <td align="left" style="padding:0.3px">
+                <label id="trumpvotes" style="color:#575757;font-size:12px;font-family:Roboto;font-weight:400;margin-left:8px"></label>
+            </td>
+        </tr>
+        <tr>
+            <td align="left" style="padding:0.3px">
+                <label style="color:#575757;font-size:12px;font-family:Roboto;font-weight:400;white-space:nowrap">Clinton</label>
+            </td>
+            <td align="left" style="padding:0.3px">
+                <label style="color:#575757;font-size:12px;font-family:Roboto;font-weight:400;margin-left:8px">:</label>
+            </td>
+            <td align="left" style="padding:0.3px">
+                <label id="clintonvotes" style="color:#575757;font-size:12px;font-family:Roboto;font-weight:400;margin-left:8px"></label>
+            </td>
+        </tr>
+    </table>
+</div>
+}
+<script>
+    function onMapLoad(args) {
+        var theme = location.hash.split("/")[1];
+        theme = theme ? theme : "Material";
+        args.maps.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+    }
+    function shapeSelected(args) {
+        if (args.shapeData !== ej.base.isNullOrUndefined) {
+            var matched = navigator.userAgent;
+            var browser = matched.toLowerCase();
+            var isIE11 = !!navigator.userAgent.match(/Trident\/7\./);
+            if (isIE11) {
+                browser = "msie";
+            }
+            var object = args.data;
+            var popup = document.getElementById("closepopup");
+            var closebutton = document.getElementById("closebutton");
+            var winner = document.getElementById("winner");
+            var state = document.getElementById("state");
+            var trumpvote = document.getElementById("trumpvotes");
+            var clintonvote = document.getElementById("clintonvotes");
+            popup.style.display = "block";
+            closebutton.style.display = "block";
+            closebutton.onclick = function () {
+                var popup = document.getElementById("closepopup");
+                var closebutton = document.getElementById("closebutton");
+                popup.style.display = "none";
+                closebutton.style.display = "none";
+            };
+            if (browser !== "mozilla") {
+                state.innerText = args.data.State;
+                winner.innerText = args.data.Candidate;
+                trumpvote.innerText = args.data.Trump + "%";
+                clintonvote.innerText = args.data.Clinton + "%";
+            }
+            else {
+                state.textContent = args.data.State;
+                winner.textContent = args.data.Candidate;
+                trumpvote.textContent = args.data.Trump + "%";
+                clintonvote.textContent = args.data.Clinton + "%";
+            }
+        }
+    }
+</script>
+<style>
+    #container {
+        margin-top: -10px;
+    }
+
+    .tip {
+        border: 1px solid #4D4D4D;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+        border-radius: 7px;
+        margin-right: 25px;
+        min-width: 110px;
+        padding-top: 9px;
+        padding-right: 10px;
+        padding-left: 10px;
+        width: auto;
+        height: auto;
+        background: #4D4D4D;
+    }
+
+    #chart {
+        display: none !important;
+    }
+
+    .popup {
+        border: 0.5px groove #CCCCCC;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+        left: 70%;
+        top: 65%;
+        border-radius: 2px;
+        display: none;
+        max-width: 220px;
+        position: absolute;
+        padding: 1em;
+        background: #F4F4F4;
+    }
+
+    .close-btn {
+        border: 2px solid #5B5B5B;
+        margin-left: -9px;
+        position: absolute;
+        opacity: 0.8;
+        background-color: #605F61;
+        border-radius: 50%/50%;
+        width: 20px;
+        height: 19px;
+        display: none;
+        z-index: 1000;
+    }
+
+        .close-btn a {
+            margin-left: 2px;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+
+    #closebutton {
+        float: right;
+        font-size: 16px;
+        display: inline-block;
+        padding: 2px 5px;
+        cursor: pointer;
+        color: black;
+    }
+
+    .firstLine td {
+        border-bottom: 2px solid black;
+    }
+</style>
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Maps control visualizes USA president election results in the year 2016. Default and interactive are the two types of legend." />
+}
+@section ActionDescription{
+    
+<div id="action-description">
+    <p>
+        This sample visualizes USA president election results in the year 2016. Vote details of a state will be displayed in a popup on clicking a state. Placed interactive legend at the top of the map.
+    </p>
+</div>
+}
+@section Description{
+<div id="description">
+        <p>
+           In this example, you can see how to apply various styles for a shape in the map, when it is clicked or mouse hovered. 
+        </p>
+    <br/>
+        <p style="font-weight: 500">Injecting Module</p>
+        <p>
+           Maps component features are segregated into individual feature-wise modules. To use selection, inject the <code>Selection</code> module using the <code>Maps.Inject(Selection)</code> method, and use highlight by injecting the <code>Highlight</code> module.
+        </p>
+    </div>
+}

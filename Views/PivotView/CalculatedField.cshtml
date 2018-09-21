@@ -1,0 +1,94 @@
+@using Syncfusion.EJ2.PivotView
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Pivot Table control shows calculated field, and it allows users to add calculated items either through a dialog window at run time or through code behind" />
+}
+@section ControlsSection{
+    @{var stock = "\"" + "Sum(In_Stock)" + "\"";}
+    @{var sold = "\"" + "Sum(Sold)" + "\"";}
+    @{ var totalPrice = stock + "+" + sold;}
+
+    <div class="col-lg-9 control-section">
+        <div class="content-wrapper">
+            <ejs-pivotview id="pivotview"  width="100%" height="300" allowCalculatedField="true" showFieldList="true">
+                <e-datasource data="@ViewBag.data" expandAll="false" enableSorting="true">
+                    <e-formatsettings>
+                        <e-field name="Amount" format="C0" maximumSignificantDigits="10" minimumSignificantDigits="1" useGrouping="true"></e-field>
+                    </e-formatsettings>
+                    <e-rows>
+                        <e-field name="Country"></e-field>
+                        <e-field name="Products"></e-field>
+                    </e-rows>
+                    <e-columns>
+                        <e-field name="Year"></e-field>
+                        <e-field name="Order_Source" caption="Order Source"></e-field>
+                    </e-columns>
+                    <e-values>
+                        <e-field name="In_Stock" caption="In Stock"></e-field>
+                        <e-field name="Sold" caption="Units Sold"></e-field>
+                        <e-field name="Total" caption="Total Units" type="CalculatedField"></e-field>
+                    </e-values>
+                    <e-filters>
+                        <e-field name="Product_Categories" caption="Product Categories"></e-field>
+                    </e-filters>
+                    <e-calculatedfieldsettings>
+                        <e-field name="Total" formula="@totalPrice"></e-field>
+                    </e-calculatedfieldsettings>
+                </e-datasource>
+                <e-gridSettings columnWidth="140"></e-gridSettings>
+            </ejs-pivotview>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties" style="width: 100%">
+            <tbody>
+                <tr style="height: 50px">
+                    <td>
+                        <div>
+                            <ejs-button id="calculated-field-btn" content="Calculated Field" isPrimary="true"></ejs-button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <style>
+        #pivotview {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <script>
+        document.getElementById("calculated-field-btn").addEventListener('click', function () {
+            var pivotGridObj = document.getElementById('pivotview').ej2_instances[0];
+            pivotGridObj.calculatedFieldModule.createCalculatedFieldDialog();
+        });
+    </script>
+}
+
+@section PreScripts {
+    <script>
+        ej.base.enableRipple(false);
+    </script>
+}
+
+@section ActionDescription{
+   <div id="action-description">
+       <p>
+           In this sample,
+           <b>Total Units</b> acts as the calculated field. Users are allowed to insert a new calculated field based on the existing
+           calculated items either through a dialog window at run time or through code behind.
+       </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            The calculated field feature allows users to create custom fields which are not present in the actual data. Users can
+            create these fields using basic mathematical expression collaborating with existing fields. Calculated fields can
+            be created through UI dialog as well as code behind and it can be enabled by setting <code>allowCalculatedField</code> as true. The
+            <code>calculatedFieldSettings</code> property is available to configure the calculated field in code behind.
+        </p>
+    </div>
+}

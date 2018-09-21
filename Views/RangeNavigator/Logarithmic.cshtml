@@ -1,0 +1,158 @@
+﻿@using Syncfusion.EJ2
+@section ControlsSection{
+   
+<div class="control-section">
+    <h4 align="center" style="font-family: Segoe UI;font-weight: 500; font-style:normal; font-size:15px;">Inflation vs Goods Consumers</h4>
+    <ejs-rangenavigator id="container" align="center" height="120" labelPosition="Outside" valueType="Logarithmic" labelIntersectAction="None"
+                        interval=1 load="onChartLoad" changed="changed" labelRender="labelRenderEvent" tooltipRender="tooltipRenderEvent">
+        <e-rangenavigator-tooltip enable="true"></e-rangenavigator-tooltip>
+        <e-rangenavigator-rangenavigatorseriescollection>
+            <e-rangenavigator-rangenavigatorseries xName="x" yName="y" width="2" type="StepLine">
+            </e-rangenavigator-rangenavigatorseries>
+        </e-rangenavigator-rangenavigatorseriescollection>
+    </ejs-rangenavigator>
+
+    <ejs-chart id="chart" load="chartLoad" height="350" align="center">
+        <e-chart-primaryxaxis valueType="Logarithmic" edgeLabelPlacement="Shift" title="Numers of Goods Consumers"
+                              interval="1">
+            <e-majorgridlines width="0"></e-majorgridlines>
+        </e-chart-primaryxaxis>
+        <e-chart-primaryyaxis title="Infliation" minimum="0" maximum="100" labelFormat="{value}%" interval="20">
+            <e-linestyle width="0"></e-linestyle>
+            <e-majorticklines width="0"></e-majorticklines>
+        </e-chart-primaryyaxis>
+        <e-chart-chartarea>
+            <e-chartarea-border color="transparent" width="0"></e-chartarea-border>
+        </e-chart-chartarea>
+        <e-series-collection>
+            <e-series xName="x" width="2" yName="y" type="StepArea">
+                <e-series-animation enable="false"></e-series-animation>
+                <e-series-marker visible="true"></e-series-marker>
+            </e-series>
+        </e-series-collection>
+        <e-chart-chartarea>
+            <e-chartarea-border width="0"></e-chartarea-border>
+        </e-chart-chartarea>
+    </ejs-chart>
+</div>
+    <script>
+        var data = [];
+        var max = 100;
+        for (var i = 0; i < 100; i++) {
+            data.push({
+                x: Math.pow(10, i * 0.1),
+                y: Math.floor(Math.random() * (80 - 30 + 1)) + 30
+            });
+        }
+        var selectedTheme = location.hash.split('/')[1];
+        selectedTheme = selectedTheme ? selectedTheme : 'Material';
+        var theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1));
+        var themes = ['Material', 'Fabric', 'Bootstrap', 'Highcontrast']
+        var borderColor = ['#00bdae', '#4472c4', '#a16ee5', '#79ECE4'];
+        var regionColor = ['rgba(0, 189, 174, 0.3)', 'rgba(68, 114, 196, 0.3)',
+            'rgba(161, 110, 229, 0.3)', 'rgba(121, 236, 228, 0.3)'];
+        window.onChartLoad = function (args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.rangeNavigator.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1));
+            args.rangeNavigator.width = ej.base.Browser.isDevice ? "100%" : "80%";
+            args.rangeNavigator.series[0].dataSource = data;
+            args.rangeNavigator.value = [4, 6];            
+        }
+
+        changed = function (args) {
+            if (document.getElementById('chart').childNodes.length > 1) {
+                var chart = document.getElementById('chart').ej2_instances[0];
+                chart.primaryXAxis.zoomPosition = args.zoomPosition;
+                chart.primaryXAxis.zoomFactor = args.zoomFactor;
+                chart.dataBind();
+            }
+
+        }
+
+        chartLoad = function (args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1));
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "80%";
+            args.chart.series[0].dataSource = data;
+            args.chart.series[0].fill = 'url(#' + theme.toLowerCase() + '-gradient-chart)';
+            args.chart.series[0].border = { width: 2, color: borderColor[themes.indexOf(theme)] };
+        }
+
+        labelRenderEvent = function (args) {
+            args.text = (+args.text).toExponential().toLocaleUpperCase();
+        }
+
+        tooltipRenderEvent = function (args) {
+            args.text = [(+(+args.text).toFixed(1)).toExponential(1).toString().toLocaleUpperCase()];
+        }
+    </script>
+}
+
+@section Scripts {
+
+}
+
+<style>
+    #control-container {
+        padding: 0px !important;
+    }
+
+    #material-gradient-chart stop {
+        stop-color: #00bdae;
+    }
+
+    #fabric-gradient-chart stop {
+        stop-color: #4472c4;
+    }
+
+    #bootstrap-gradient-chart stop {
+        stop-color: #a16ee5;
+    }
+
+    #highcontrast-gradient-chart stop {
+        stop-color: #79ECE4;
+    }
+
+    .chart-gradient stop[offset="0"] {
+        stop-opacity: 0.9;
+    }
+
+    .chart-gradient stop[offset="1"] {
+        stop-opacity: 0.3;
+    }
+</style>
+<svg style="height: 0">
+    <defs>
+        <linearGradient id="material-gradient-chart" style="opacity: 0.75" class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0"></stop>
+            <stop offset="1"></stop>
+        </linearGradient>
+        <linearGradient id="fabric-gradient-chart" style="opacity: 0.75" class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0"></stop>
+            <stop offset="1"></stop>
+        </linearGradient>
+        <linearGradient id="bootstrap-gradient-chart" style="opacity: 0.75" class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0"></stop>
+            <stop offset="1"></stop>
+        </linearGradient>
+        <linearGradient id="highcontrast-gradient-chart" style="opacity: 0.75" class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0"></stop>
+            <stop offset="1"></stop>
+        </linearGradient>
+    </defs>
+</svg>
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Range Navigator control shows how to visualize the logarithmic scale when data has values with both lower (e.g.: 10^-6) and higher (e.g.: 10^6) orders of magnitude." />
+}
+@section ActionDescription{
+    <p>
+        This sample demonstrates the rendering of logarithmic axis in the range navigator.
+    </p>
+}
+@section Description{
+    <p>
+        Logarithmic axis uses logarithmic scale and it is very useful in visualizing when the data has values with both lower order of magnitude (eg: 10^-6) and higher order of magnitude (eg: 10^6). To render Logarithmic axis, set <code>valueType</code> to <code>Logarithmic</code>. Tooltip is enabled in this example, to see the tooltip in action, while the selected range is changed.
+    </p>
+}

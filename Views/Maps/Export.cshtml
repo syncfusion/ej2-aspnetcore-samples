@@ -1,0 +1,136 @@
+@using Syncfusion.EJ2.Maps;
+@section ControlsSection{
+    @{
+        var markerData = new Object[] {
+                             new { longitude= 116.5703749, latitude= 40.4319077, name= "The Great Wall of China, China " },
+                            new { longitude= 35.4443622, latitude= 30.3284544, name= "Petra, Jorden" },
+                            new { longitude= 78.0421552, latitude= 27.1750151, name= "Taj Mahal, Agra, India" },
+                            new { longitude= 12.4922309, latitude= 41.8902102, name= "The Roman Colosseum, Rome, Italy" },
+                            new { longitude= -88.5677826, latitude= 20.6842849, name= "The Chichen Itza, Mexico" },
+                            new { longitude= -72.5449629, latitude= -13.1631412, name= "Machu Picchu, Peru" },
+                            new { longitude= -43.2104872, latitude= -22.951916, name= "Christ Redeemer, Rio de janeiro, Brazil" }
+        };
+        var border = new MapsBorder
+        {
+            Width = 0.1,
+            Color = "black"
+        };
+
+        var markerTooltip = new MapsTooltipSettings { Visible = true, ValuePath = "name" };
+    }
+    <div class="col-lg-9 control-section">
+        <div id="maps">
+            <ejs-maps id="maps" load="onMapLoad">
+                <e-maps-titlesettings alignment="@Syncfusion.EJ2.Maps.Alignment.Center" text="Location of the Wonders in the World"></e-maps-titlesettings>
+                <e-maps-layers>
+                    <e-maps-layer shapeData="ViewBag.mapData">
+                        <e-layersettings-shapesettings border="border">
+                        </e-layersettings-shapesettings>
+                        <e-layersettings-markers>
+                            <e-layersettings-marker dataSource="markerData" animationDuration=" 0" visible="true" shape="@MarkerType.Balloon" fill="#E13E40" height="20" width="15" tooltipSettings="markerTooltip">
+                            </e-layersettings-marker>
+                        </e-layersettings-markers>
+                    </e-maps-layer>
+                </e-maps-layers>
+            </ejs-maps>
+        </div>
+        <div style="float:right; margin-right:10px;">
+            Source:
+            <a href="https=//en.wikipedia.org/wiki/List_of_members_of_the_United_Nations_Security_Council" target="_blank">en.wikipedia.org</a>
+        </div>
+        </div>
+        <div class="col-lg-3 property-section">
+    <table id="property" title="Properties" style="width: 100%">
+        <tr style="height: 50px">
+            <td style="width: 40%">
+                <div>
+                    Export Type:
+                </div>
+            </td>
+            <td style="width: 50%;">
+                <div style="margin-left: -10px">
+                    <select id="mode">
+                        <option value='JPEG'>JPEG</option>
+                        <option value='PNG'>PNG</option>
+                        <option value='SVG'>SVG</option>
+                        <option value='PDF'>PDF</option>
+                    </select>
+                </div>
+            </td>
+        </tr>
+        <tr style="height: 50px">
+            <td style="width: 40%">
+                <div>File Name:</div>
+            </td>
+            <td style="width: 40%;">
+                <div class="e-float-input" style='margin-top: 0px;'>
+                    <input type="text" value="Maps" id="fileName" style="margin-left: -10px;width: 75px;">
+                </div>
+            </td>
+        </tr>
+        <tr id="button-control" style="height: 50px" align='center'>
+            <td>
+                <div>
+                    <button id="togglebtn">Export</button>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+    <style>
+        .e-play-icon::before {
+            content: '\e728';
+        }
+    </style>
+}
+<script>
+
+    function onMapLoad(args) {
+        window.maps = args.maps;
+        var theme = location.hash.split("/")[1];
+        theme = theme ? theme : "Material";
+        args.maps.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+    }
+
+    window.onload = function () {
+        window.exportType = new ej.dropdowns.DropDownList({
+            index: 0,
+            width: 75
+        });
+        window.exportType.appendTo("#mode");
+        window.togglebtn1 = new ej.buttons.Button({
+            iconCss: "e-icons e-play-icon", cssClass: "e-flat", isPrimary: true,
+        });
+        window.togglebtn1.appendTo("#togglebtn");
+        document.getElementById("togglebtn").onclick = () => {
+            var fileName = document.getElementById("fileName").value;
+            window.maps.export(window.exportType.value, fileName);
+        };
+    };
+</script>
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Maps control illustrates the exporting functionality in the maps control." />
+}
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample visualizes the continents in the world by rendering these in a map layer. Also marks the office locations of YouTube in the world using markers.
+        </p>
+    </div>
+}
+@section Description{
+
+    <div id="description">
+        <p>
+            In this example, you can see how to render a map with the provided GeoJSON data. Group of shapes can be combined to form a layer of the map. You can bind the desired colors from the data source to the map shapes. The marker templates are used to display the names for shapes and mark specific locations. Legend is enabled in this example to represent each continent.
+        </p>
+        <p>
+            Tooltip is enabled in this example. To see the tooltip in action, hover the mouse over a marker or tap a marker in touch enabled devices.
+        </p>
+        <br />
+        <p style="font-weight= 500">Injecting Module</p>
+        <p>
+            Maps component features are segregated into individual feature-wise modules. To use a marker, inject the <code>Marker</code> module using the <code>Maps.Inject(Marker)</code> method, and use a legend by injecting the <code>Legend</code> module.
+        </p>
+    </div>
+}

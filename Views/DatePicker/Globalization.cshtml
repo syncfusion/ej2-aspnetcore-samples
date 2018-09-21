@@ -1,0 +1,142 @@
+﻿@using Syncfusion.EJ2
+
+@section ControlsSection{
+    <div class=" col-lg-8 control-section">
+        <div id="wrapper" class="datepicker-section">
+            <div id="datepicker-control">
+                <ejs-datepicker id="datepicker"></ejs-datepicker>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 property-section">
+        <div class="radio-control" id="property" title="Select a Locale">
+            <div class="row">
+                <ejs-radiobutton id="en" name="locale" label="English" value="en" change="onLocaleChange"></ejs-radiobutton>
+            </div>
+            <div class="row">
+                <ejs-radiobutton id="de" name="locale" label="German" value="de" change="onLocaleChange" checked="true"></ejs-radiobutton>
+            </div>
+            <div class="row">
+                <ejs-radiobutton id="ar" name="locale" label="Arabic" value="ar" change="onLocaleChange"></ejs-radiobutton>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    function onLocaleChange(args) {
+        /*Apply selected format to the component*/
+        var culture = args.value;
+        datepicker.locale = culture;
+        datepicker.enableRtl = (datepicker.locale === 'ar');
+        if (culture !== 'en') {
+            loadCultureFiles(culture);
+        }
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+        datepicker = document.getElementById('datepicker').ej2_instances[0];
+        var L10n = ej.base.L10n;
+        L10n.load({
+            'de': {
+                'datepicker': {
+                    placeholder: 'Wählen Sie ein Datum',
+                    today: 'heute'
+                }
+            },
+            'en': {
+                'datepicker': {
+                    placeholder: 'Choose a date',
+                    today: 'Today'
+                }
+            },
+            'ar': {
+                'datepicker': {
+                    placeholder: 'اختر تاريخا',
+                    today: 'اليوم'
+                }
+            }
+        });
+        loadCultureFiles('de');
+        datepicker.locale = 'de';
+    });
+    function loadCultureFiles(name) {
+        var files = ['ca-gregorian.json', 'numbers.json', 'timeZoneNames.json'];
+        if (name === 'ar') {
+            files.push('numberingSystems.json');
+        }
+        var loader = ej.base.loadCldr;
+        var loadCulture = function (prop) {
+            var val, ajax;
+            if (name === 'ar' && prop === files.length - 1) {
+                ajax = new ej.base.Ajax(location.origin + location.pathname + '/../../scripts/cldr-data/supplemental/' + files[prop], 'GET', false);
+            } else {
+                ajax = new ej.base.Ajax(location.origin + location.pathname + '/../../scripts/cldr-data/main/' + name + '/' + files[prop], 'GET', false);
+            }
+            ajax.onSuccess = function (value) {
+                val = value;
+            };
+            ajax.send();
+            loader(JSON.parse(val));
+        };
+        for (var prop = 0; prop < files.length; prop++) {
+            loadCulture(prop);
+        }
+    }
+</script>
+
+<style>
+    .property-section {
+        width: 200px;
+    }
+
+    #wrapper {
+        max-width: 280px;
+        margin: 30px auto;
+        padding-top: 50px;
+    }
+
+    .e-calendar.e-rtl {
+        max-width: 332px;
+    }
+
+    .e-bigger .e-calendar.e-rtl {
+        max-width: 332px;
+    }
+</style>
+
+@section Meta{
+    <meta name="DatePicker for ASP.NET Core supports globalization(Internationalization and localization) by adapting to specific cultures/ languages by translating messages" />
+}
+
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            In this sample, the DatePicker has been configured with
+            <code>German</code> culture. To change this current culture, go to the properties panel at the right side and select a culture from
+            the dropdown options.
+        </p>
+    </div>
+
+
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            The DatePicker component was rendered with
+            <code>German</code> culture. Here the date separator, week header, and month text content are updated based on the current culture.
+            You can also change the component culture by selecting it from the culture options in the properties panel.
+        </p>
+        <p>
+            More information on the globalization configuration can be found in the
+            <a href="https://ej2.syncfusion.com/aspnetcore/documentation/datepicker/globalization.html" target="_blank"> documentation section</a>.
+        </p>
+    </div>
+
+
+}
+
+
+
+

@@ -1,0 +1,140 @@
+﻿@using Syncfusion.EJ2
+@{ 
+    var alertanimation = new Syncfusion.EJ2.Popups.DialogAnimationSettings { Effect = Syncfusion.EJ2.Popups.DialogEffect.None };
+    var confirmanimation = new Syncfusion.EJ2.Popups.DialogAnimationSettings { Effect = Syncfusion.EJ2.Popups.DialogEffect.None };
+    var promptanimation = new Syncfusion.EJ2.Popups.DialogAnimationSettings { Effect = Syncfusion.EJ2.Popups.DialogEffect.None };
+}
+@section ControlsSection{
+<div class=" col-lg-12 control-section" id="target">
+    <ejs-button id="alertBtn" class="dlgbtn" type="button" content="Alert"></ejs-button>
+    <ejs-button id="confirmBtn" class="dlgbtn" type="button" content="Confirm"></ejs-button>
+    <ejs-button id="promptBtn" class="dlgbtn" type="button" content="Prompt"></ejs-button>
+    <ejs-dialog id="alert_dialog" animationSettings="alertanimation" open="dialogOpen" close="dialogClose" visible="false" created="onLoadalert" target="#target" width="250px" header="Low Battery" content="<div>10% of battery remaining</div>">
+        <e-dialog-buttons>
+            <e-dialog-dialogbutton buttonModel="ViewBag.alertbutton" click="alertBtnClick"></e-dialog-dialogbutton>
+        </e-dialog-buttons>
+    </ejs-dialog>
+    <ejs-dialog id="confirm_dialog" animationSettings="confirmanimation" open="dialogOpen" close="dialogClose" visible="false" created="onLoadconfirm" width="400px" target="#target" header="Delete Multiple Items" content="Are you sure you want to permanently delete these items ?" showCloseIcon="true">
+        <e-dialog-buttons>
+            <e-dialog-dialogbutton buttonModel="ViewBag.confirmbutton" click="confirmBtnClick"></e-dialog-dialogbutton>
+            <e-dialog-dialogbutton buttonModel="ViewBag.confirmbutton1" click="confirmBtnClick"></e-dialog-dialogbutton>
+        </e-dialog-buttons>
+    </ejs-dialog>
+    <ejs-dialog id="prompt_dialog" animationSettings="promptanimation" open="dialogOpen" close="dialogClose" visible="false" created="onLoadprompt" target="#target" width="330px" header="Join Wi-Fi network" content="<table class='Table'><tbody><tr><td>SSID:</td></tr><tr><td><b>AndroidAP</b></td></tr><tr><td>Password:</td></tr><tr><td><span class='e-input-group'><input type='password' id='password' name='Required' class='e-input'></span></td></tr></tbody></table>">
+        <e-dialog-buttons>
+            <e-dialog-dialogbutton buttonModel="ViewBag.promptbutton" click="promptBtnClick"></e-dialog-dialogbutton>
+            <e-dialog-dialogbutton buttonModel="ViewBag.promptbutton1" click="promptBtnClick"></e-dialog-dialogbutton>
+        </e-dialog-buttons>
+    </ejs-dialog>
+    </div>
+}
+<style>
+    .e-btn-hide {
+        display: none;
+    }
+
+    .Table {
+        border-collapse: separate;
+        border-spacing: 10px;
+        width: 100%;
+        padding: 0px 20px 20px;
+    }
+
+    .dlgbtn {
+        margin-right: 10px;
+    }
+
+    #target {
+        height: 100%;
+        min-height: 350px;
+    }
+
+    @@media screen and (min-width: 150px) and (max-width: 480px) {
+        .control-section {
+            margin-bottom: 30px;
+        }
+
+        .control-wrapper {
+            margin-bottom: 0px;
+        }
+    }
+</style>
+
+@section PreScripts {
+    <script>
+        function onLoadalert() {
+            document.getElementById('alertBtn').onclick = function () {
+                var dialogObj = document.getElementById('alert_dialog').ej2_instances[0];
+                dialogObj.show();
+            };
+        }
+        function onLoadconfirm() {
+            document.getElementById('confirmBtn').onclick = function () {
+                var dialogObj = document.getElementById('confirm_dialog').ej2_instances[0];
+                dialogObj.show();
+            };
+        }
+        function onLoadprompt() {
+            document.getElementById('promptBtn').onclick = function () {
+                var dialogObj = document.getElementById('prompt_dialog').ej2_instances[0];
+                dialogObj.show();
+            };
+            document.getElementById('password').addEventListener('focus', function () {
+                this.parentElement.classList.add('e-input-focus');
+            });
+            document.getElementById('password').addEventListener('blur', function () {
+                this.parentElement.classList.remove('e-input-focus');
+            });
+        }      
+        function alertBtnClick() {
+            var dialogObj = document.getElementById('alert_dialog').ej2_instances[0];
+            dialogObj.hide();
+        }
+        function confirmBtnClick() {
+            var dialogObj = document.getElementById('confirm_dialog').ej2_instances[0];
+            dialogObj.hide();
+        }
+        function promptBtnClick() {
+            var dialogObj = document.getElementById('prompt_dialog').ej2_instances[0];
+            dialogObj.hide();
+        }
+        function dialogClose() {
+            document.querySelectorAll('.dlgbtn')[0].classList.remove('e-btn-hide');
+            document.querySelectorAll('.dlgbtn')[1].classList.remove('e-btn-hide');
+            document.querySelectorAll('.dlgbtn')[2].classList.remove('e-btn-hide');
+        }
+        function dialogOpen() {
+            document.querySelectorAll('.dlgbtn')[0].classList.add('e-btn-hide');
+            document.querySelectorAll('.dlgbtn')[1].classList.add('e-btn-hide');
+            document.querySelectorAll('.dlgbtn')[2].classList.add('e-btn-hide');
+        }
+    </script>
+}
+
+
+@section ActionDescription{
+<div id="action-description">
+    <p>
+        This sample demonstrates the different types of Dialog like alert, confirm, and prompt.
+        The buttons “Alert”, “Confirm”, and “Prompt” will be shown after closing the alert Dialog.
+        These buttons are used to open the corresponding Dialogs.
+    </p>
+</div>
+}
+@section Description{
+<div id="description">
+    <p>
+        The Dialog control is used to display messages such as supplementary content like images and text,
+        and an interactive content like form components within a web page. The following are the two types of Dialogs:
+        <ul>
+            <li>Alert - Used to show errors, warnings, and information that needs user awareness.</li>
+            <li>Prompt - Used to get input from the user.</li>
+            <li>Confirmation - Used to get approval from user that appears before any critical action.</li>
+        </ul>
+    </p>
+</div>
+}
+
+@section Meta{
+    <meta name="description" content="This sample demonstrates how to create custom dialogs such as alert dialogs, confirmation dialogs, and prompt dialogs using the Essential JS 2 dialog component." />
+}

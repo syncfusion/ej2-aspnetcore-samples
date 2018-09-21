@@ -1,0 +1,85 @@
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+    <div class="col-lg-9 control-section">
+        <div class="schedule-wrapper">
+            <ejs-schedule id="schedule" width="100%" height="650" selectedDate="new DateTime(2018, 2, 15)" eventRendered="onEventRendered">
+                <e-schedule-views>
+                    <e-schedule-view option="Day"></e-schedule-view>
+                    <e-schedule-view option="Week"></e-schedule-view>
+                    <e-schedule-view option="WorkWeek"></e-schedule-view>
+                    <e-schedule-view option="Month"></e-schedule-view>
+                </e-schedule-views>
+                <e-schedule-eventsettings dataSource="@ViewBag.appointments"></e-schedule-eventsettings>
+            </ejs-schedule>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id='property' title='Properties' class='property-panel-table' style="width: 100%;">
+            <tbody>
+                <tr style="height: 50px">
+                    <td style="width: 30%">
+                        <div>
+                            Current View
+                        </div>
+                    </td>
+                    <td style="width: 70%;">
+                        <div>
+                            <ejs-dropdownlist id="scheduleview" dataSource="@ViewBag.data" index="1" change="onViewChange">
+                                <e-dropdownlist-fields text="Name" value="Value"></e-dropdownlist-fields>
+                            </ejs-dropdownlist>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="~/scripts/schedule/applyCategoryColor.js"></script>
+    <script type="text/javascript">
+        function onViewChange() {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            var ddl = document.getElementById('scheduleview').ej2_instances[0];
+            scheduleObj.currentView = ddl.value;
+            scheduleObj.dataBind();
+        }
+        function onEventRendered(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            applyCategoryColor(args, scheduleObj.currentView);
+        }
+    </script>
+}
+
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Schedule control shows the usage of basic views such as Day, Week, Work Week and Month." />
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This demo showcases the usage of basic views available in Schedule such as Day, Week, Work Week, Month and Agenda. Here, the wildlife
+            events being held in zoos are displayed against its respective timings.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id='description'>
+        <p>
+            In this demo, Schedule is showcased with 4 basic views namely
+        </p>
+        <ul>
+            <li>Day</li>
+            <li>Week</li>
+            <li>Work Week</li>
+            <li>Month</li>
+            <li>Agenda</li>
+        </ul>
+        <p>
+            The user can navigate between different view options available on the header section just by clicking on it. From any of
+            the views, the user can switch back to the day view by clicking dates in the date header section. These view options
+            to be displayed on the Schedule header bar is based on the values ['Day', 'Week', 'WorkWeek', 'Month'] assigned to
+            the
+            <code>views</code> property.
+        </p>
+    </div>
+}

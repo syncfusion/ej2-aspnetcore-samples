@@ -1,0 +1,184 @@
+@using Syncfusion.EJ2.PivotView
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Pivot Table control demonstrate integration of pivot table data into a simple chart widget" />
+}
+@section ControlsSection{
+
+    <div class="control-section">
+        <div class="content-wrapper">
+            <ejs-pivotview id="pivotview" width="100%" height="300" dataBound="onDataBound">
+                <e-datasource data="@ViewBag.data" expandAll="false" enableSorting="true">
+                    <e-rows>
+                        <e-field name="Country"></e-field>
+                        <e-field name="Products"></e-field>
+                    </e-rows>
+                    <e-columns>
+                        <e-field name="Year"></e-field>
+                        <e-field name="Order_Source" caption="Order Source"></e-field>
+                    </e-columns>
+                    <e-values>
+                        <e-field name="In_Stock" caption="In Stock"></e-field>
+                        <e-field name="Sold" caption="Units Sold"></e-field>
+                    </e-values>
+                    <e-filters>
+                        <e-field name="Product_Categories" caption="Product Categories"></e-field>
+                    </e-filters>
+                </e-datasource>
+                <e-gridSettings columnWidth="120"></e-gridSettings>
+            </ejs-pivotview>
+        </div>
+        <br />
+        <br />
+        <div id="chart" style="height: 450px;"></div>
+        <div id='ddldiv' style="float: right;margin-right: 10px">
+            <select id="measures" name="ddl-view-mode">
+                <option value='In Stock' selected>In Stock</option>
+                <option value='Unit Sold'>Units Sold</option>
+            </select>
+        </div>
+    </div>
+ 
+    <style>
+        #ddldiv {
+            margin-top: -446px;
+        }
+
+        .e-bigger #ddldiv {
+            margin-top: -452px;
+        }
+
+        @@media only screen and (max-width: 400px) {
+            #ddldiv {
+                margin-top: -490px !important;
+            }
+        }
+    </style>
+    <script>
+        var onInit = true;
+        var measure = 'In Stock';
+        var engineModule;
+        var chart;
+        function onDataBound(args) {
+            if (onInit) {
+                onChartLoad();
+            }
+        }
+        var measuresddl = new ej.dropdowns.DropDownList({
+            change: function (args) {
+                measure = args.value.toString();
+                onChartLoad();
+            }
+        });
+        measuresddl.appendTo('#measures');
+        function onChartLoad() {
+            var pivotGridObj = document.getElementById('pivotview').ej2_instances[0];
+            if (onInit) {
+                onInit = false;
+                engineModule = ej.base.extend({}, pivotGridObj.engineModule, null, true);
+            }
+            if (engineModule) {
+                var valuesContent = engineModule.valueContent;
+                var data = [];
+                for (var cCnt = 0; cCnt < valuesContent.length; cCnt++) {
+                    if (!valuesContent[cCnt][0].type) {
+                        data[cCnt] = valuesContent[cCnt];
+                    }
+                }
+                var chartSeries = void 0;
+                for (var cCnt = 0; cCnt < 1; cCnt++) {
+                    if (data[cCnt]) {
+                        for (var rCnt = measure === 'In Stock' ? 1 : 2; rCnt < Object.keys(data[cCnt]).length; rCnt++) {
+                            if (data[cCnt][rCnt] && !engineModule.pivotValues[0][rCnt].type && !data[cCnt][rCnt].type && rCnt > 0) {
+                                var colText = engineModule.pivotValues[0][rCnt].formattedText;
+                                if (!chartSeries) {
+                                    chartSeries = [{
+                                        dataSource: data,
+                                        xName: cCnt + '.valueSort.levelName',
+                                        yName: rCnt + '.value',
+                                        type: 'Column',
+                                        name: colText
+                                    }];
+                                }
+                                else {
+                                    chartSeries.push({
+                                        dataSource: data,
+                                        xName: cCnt + '.valueSort.levelName',
+                                        yName: rCnt + '.value',
+                                        type: 'Column',
+                                        name: colText
+                                    });
+                                }
+                                rCnt++;
+                            }
+                        }
+                    }
+                }
+                if (chart && chart.element) {
+                    chart.primaryYAxis = {
+                        title: measure
+                    };
+                    chart.primaryXAxis = {
+                        valueType: 'Category',
+                        title: 'Country',
+                        labelIntersectAction: 'Rotate45'
+                    };
+                    chart.series = chartSeries;
+                    chart.refresh();
+                }
+                else {
+                    ej.charts.Chart.Inject(ej.charts.ColumnSeries, ej.charts.LineSeries, ej.charts.Legend, ej.charts.Tooltip, ej.charts.Category);
+                    chart = new ej.charts.Chart({
+                        title: 'Sales Analysis',
+                        legendSettings: {
+                            visible: true
+                        },
+                        tooltip: {
+                            enable: true
+                        },
+                        primaryYAxis: {
+                            title: measure,
+                        },
+                        primaryXAxis: {
+                            valueType: 'Category',
+                            title: 'Country',
+                            labelIntersectAction: 'Rotate45'
+                        },
+                        series: chartSeries,
+                        load: function (args) {
+                            var selectedTheme = location.hash.split('/')[1];
+                            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+                            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1));
+                        }
+                    }, '#chart');
+                }
+            }
+        }
+    </script>
+}
+
+@section PreScripts {
+    <script>
+        ej.base.enableRipple(false);
+    </script>
+}
+
+@section ActionDescription{
+   <div id="action-description">
+       <p>This sample demonstrates the integration of pivotgrid data into a simple chart widget.</p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            In this sample, the stock and sales of certain products, across different countries over certain fiscal years are acquired
+            from the pivotgrid and plotted in the chart widget as series. The
+            <b>stock</b> and
+            <b>sales</b> values can be switched using the drop-down list located on the top-right corner of the chart widget.
+        </p>
+        <p>
+            Since we have only a simple chart now, we have bound the aggregated pivotgrid data alone without any UI interactions. On
+            pivotchart implementation in the near future, we will provide rich UI interactions.
+        </p>
+    </div>
+}

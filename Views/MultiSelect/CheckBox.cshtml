@@ -1,0 +1,95 @@
+﻿@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="control-section col-lg-9">
+        <div class="control-wrapper">
+            <h4>CheckBox</h4>
+            <ejs-multiselect id="checkList" dataSource="@ViewBag.data" mode="CheckBox" placeholder="Select countries"
+                            showSelectAll="true" showDropDownIcon="true"
+                            filterBarPlaceholder="Search countries" popupHeight="350px">
+                <e-multiselect-fields text="Name" value="Code"></e-multiselect-fields>
+            </ejs-multiselect>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section">
+        <div id="property" title="Properties">
+            <table id="property" title="Properties">
+                <tbody>
+                    <tr>
+                        <td style="width: 50%;">
+                            <div>
+                                <ejs-checkbox id="selectall" change="selectallchange" label="Show Select All" checked='true'></ejs-checkbox>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%;">
+                            <div>
+                                <ejs-checkbox id="dropicon" change="dropiconchange" label="DropDown Button" checked='true'></ejs-checkbox>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%;">
+                            <div>
+                                <ejs-checkbox id="reorder" change="reorderchange" label="Selection Reorder" checked='true'></ejs-checkbox>
+
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <style>
+        .control-fluid, .container-fluid {
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+    </style>
+    <link href="../css/multiselect/checkbox.css" rel="stylesheet" />
+    <script type="text/javascript">
+
+        function selectallchange(args) {
+            var checkList = document.getElementById("checkList").ej2_instances[0];
+            // enable or disable the SelectAll in multiselect on CheckBox checked state
+            checkList.showSelectAll = args.checked;
+        }
+
+
+        function dropiconchange(args) {
+            var checkList = document.getElementById("checkList").ej2_instances[0];
+            // enable or disable the SelectAll in multiselect on CheckBox checked state
+            checkList.showDropDownIcon = args.checked;
+        }
+        function reorderchange(args) {
+            var checkList = document.getElementById("checkList").ej2_instances[0];
+            // enable or disable the SelectAll in multiselect on CheckBox checked state
+            checkList.enableSelectionOrder = args.checked;
+        }
+    </script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the checkbox functionalities of the MultiSelect. 
+            Click the MultiSelect element and then type a character in the search box. It will display the filtered list items based on the typed characters and then select the multiple values through the checkbox.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            The MultiSelect has built-in support to select the multiple values through checkbox, when the <code>mode</code> property is set as <code>checkbox</code>.
+        </p>
+
+        <p>In this sample, the local data is bound to a collection of countries data. Also, provided options for the following:
+        <p> To enable/disable the <code>Select All</code> feature in the property panel.</p>
+        <p> To enable/disable the <code>DropDown Button</code>feature in the property panel.</p>
+        <p> To enable/disable the <code>Selection Reorder</code>feature in the property panel.</p>
+        </p>
+
+        <p>The checkbox sample illustrates  using the countries data. </p>
+
+    </div>
+}

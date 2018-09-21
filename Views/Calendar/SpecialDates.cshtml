@@ -1,0 +1,167 @@
+﻿@using Syncfusion.EJ2
+
+@section ControlsSection{
+    <div class=" control-section">
+        <div class="calender-section">
+            <div id="calender-control">
+                <ejs-calendar id="calendar" renderDayCell="customDates" change="valueChange"></ejs-calendar>
+                <br>
+                <span id="date_label"> Selected Value: </span>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    var addClass = ej.base.addClass;
+    function customDates(args) {
+        /*Date need to be customized*/
+        var span;
+        if (args.date.getDate() === 10) {
+            specialDate(args, "Birthday");
+        }
+        if (args.date.getDate() === 15) {
+            specialDate(args, "Farewell");
+        }
+        if (args.date.getDate() === 25) {
+            specialDate(args, "Vacation");
+        }
+    }
+
+    function specialDate(args, name) {
+        span = document.createElement('span');
+        span.setAttribute('class', 'e-icons highlight');
+        args.element.firstElementChild.setAttribute('title', name + '!');
+        addClass([args.element], ['e-day', 'special', name.toLowerCase()]);
+        args.element.setAttribute('data-val', name + '!');
+        args.element.setAttribute('title', name + '!');
+        args.element.appendChild(span);
+    }
+
+    function valueChange(args) {
+        var title = '';
+        if (args.event) {
+            title = event.currentTarget.getAttribute('data-val');
+            title = title == null ? '' : ' ( ' + title + ' )';
+        }
+        document.getElementById('date_label').textContent = 'Selected Value: ' + args.value.toLocaleDateString() + title;
+    }
+</script>
+
+<style>
+    #date_label {
+        display: block;
+        width: 248px;
+        color: rgba(0, 0, 0, 0.58);
+        margin-left: 5px;
+    }
+
+    #calender-control {
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    span.e-icons.highlight {
+        margin-top: -13px;
+        display: block;
+        margin-left: 4px;
+    }
+
+        span.e-icons.highlight,
+        span.e-icons.highlight:before {
+            color: rgb(0, 0, 255);
+        }
+
+    .e-other-month span.e-icons.highlight:before {
+        content: "";
+    }
+
+    body.highcontrast .e-customStyle td.birthday span.e-icons.highlight,
+    body.highcontrast .e-customStyle td.birthday span.e-icons.highlight:before {
+        color: #ff6161;
+    }
+
+    body.highcontrast .e-customStyle td.farewell span.e-icons.highlight,
+    body.highcontrast .e-customStyle td.farewell span.e-icons.highlight:before {
+        color: #2bc700;
+    }
+
+    body.highcontrast .e-customStyle td.vacation span.e-icons.highlight,
+    body.highcontrast .e-customStyle td.vacation span.e-icons.highlight:before {
+        color: #ff7d1a;
+    }
+
+    span.e-icons.highlight:before {
+        content: "\e790";
+        vertical-align: middle;
+        margin-right: 3px;
+        font-size: 4px;
+        position: relative;
+        top: -1px;
+        font-weight: normal;
+    }
+
+    .e-bigger.e-calendar span.e-icons.highlight:before,
+    .e-bigger .e-calendar span.e-icons.highlight:before {
+        top: -3px;
+    }
+
+    body.highcontrast.e-bigger .e-customStyle.e-calendar span.e-icons.highlight:before,
+    body.highcontrast .e-customStyle.e-bigger.e-calendar span.e-icons.highlight:before,
+    body.bootstrap.e-bigger .e-customStyle.e-calendar span.e-icons.highlight:before,
+    body.bootstrap .e-customStyle.e-bigger.e-calendar span.e-icons.highlight:before {
+        top: 1px;
+    }
+
+    .e-selected span.e-icons.highlight:before {
+        color: #fff;
+    }
+
+    span.e-icons.highlight,
+    .e-calendar .e-content span.special,
+    .e-calendar .e-content span.daycell {
+        font-weight: bold;
+    }
+
+    .e-calendar .e-content span.special {
+        color: red;
+    }
+
+    .e-calendar .e-content span.daycell {
+        color: #ff9e00;
+    }
+
+    body.highcontrast #date_label {
+        color: white;
+    }
+</style>
+
+@section Meta{
+    <meta name="Calendar for ASP.NET Core that highlights multiple dates like weekends, holidays, events, or a range of days with options to add custom styles and descriptions" />
+}
+
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            In the following sample, specific dates are <code>highlighted</code> to notify the additional information of that date. Click the <code>special date</code>, and the tooltip information about the date will be displayed in the label below the Calendar.
+        </p>
+    </div>
+
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            Special Dates sample demonstrates, how to customize a specific dates in a calendar by using <code>renderDayCell</code> event. This event gets triggered on each day cell element creation that allows you to customize or disable the specific dates
+            in calendar. Here 10, 15 and 25 date's are customized with custom styles and custom classes.
+        </p>
+        <p>
+            <a href="https://ej2.syncfusion.com/aspnetcore/documentation/calendar/customization.html" target="_blank"> documentation section</a>.
+        </p>
+    </div>
+}
+
+
+
+

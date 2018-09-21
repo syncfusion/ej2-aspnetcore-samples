@@ -1,0 +1,248 @@
+﻿@using Syncfusion.EJ2
+@section ControlsSection{
+       <div class="control-section" align="center">
+        <div id="stockRange" style="font-family: Segoe UI;font-weight: 500; font-style:normal; font-size:14px;">
+            <div id="title" style="text-align: left">AAPL 2012-2015</div>
+            <div id="close" style=" font-size:10px">
+                <div id="value" style="float: left;">159.67</div>
+                <div id="inc" style="float: left; color: green;">&nbsp;&nbsp;&nbsp;+11.49 (+1.06%)</div>
+            </div>
+        </div>
+        <br>
+        <div id="container" align="center"></div>
+        <ejs-rangenavigator id="container" align="center" disableRangeSelector="true" xName="x" yName="close" valueType="DateTime"
+                            load="rangeLoad" changed="rangeChange" loaded="rangeLoaded">
+            <e-rangenavigator-periodselectorsettings position="Top">
+                <e-periods>
+                    <e-period interval="1" intervalType="Months" text="1M"></e-period>
+                    <e-period interval="3" intervalType="Months" text="3M"></e-period>
+                    <e-period interval="6" intervalType="Months" text="6M"></e-period>
+                    <e-period text="YTD"></e-period>
+                    <e-period interval="1" text="1Y"></e-period>
+                    <e-period interval="2" text="2Y" selected="true"></e-period>
+                    <e-period text="ALL"></e-period>
+                </e-periods>
+            </e-rangenavigator-periodselectorsettings>
+        </ejs-rangenavigator>
+        <ejs-chart id="chart" align="center" height="400" axisLabelRender="axisLabeRenderEvent" axisRangeCalculated="axisRangeEvent" loaded="chartLoaded" tooltipRender="tooltipRenderEvent"
+                   chartMouseLeave="chartMouseLeaveEvent" chartMouseMove="chartMouseMoveEvent" load="chartLoad"pointRender="pointRenderEvent">
+            <e-chart-primaryxaxis valueType="DateTime">
+                <e-majorgridlines width="0"></e-majorgridlines>
+                <e-crosshairtooltip enable="true"></e-crosshairtooltip>
+            </e-chart-primaryxaxis>
+            <e-chart-primaryyaxis title="Price" rowIndex="1"
+                                  labelFormat="n0" opposedPosition="true" rangePadding="None">
+                <e-majorgridlines width="0"></e-majorgridlines>
+                <e-crosshairtooltip enable="true"></e-crosshairtooltip>
+                <e-linestyle width="0"></e-linestyle>
+            </e-chart-primaryyaxis>
+            <e-chart-annotations>
+                <e-chart-annotation content="<div id='annotation'></div>" coordinateUnits="Pixel" x="10%" y="20%" region="Chart"></e-chart-annotation>
+            </e-chart-annotations>
+            <e-chart-margin top="0"></e-chart-margin>
+            <e-chart-chartarea>
+                <e-chartarea-border width="1" color="whitesmoke"></e-chartarea-border>
+            </e-chart-chartarea>
+            <e-chart-rows>
+                <e-chart-row height="30%"></e-chart-row>
+                <e-chart-row height="70%"></e-chart-row>
+            </e-chart-rows>
+            <e-chart-axes>
+                <e-chart-axis name="secondary" opposedPosition="true" rowIndex="0" rangePadding="None">
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                    <e-linestyle width="0"></e-linestyle>
+                </e-chart-axis>
+            </e-chart-axes>
+            <e-indicators>
+                <e-indicator type="Tma" fastPeriod="8" slowPeriod="5" period="3" seriesName="Apple Inc" width="2" fill="#6063ff"></e-indicator>
+            </e-indicators>
+            <e-series-collection>
+                <e-series xName="x" open="open" close="close" high="high" low="low" volume="volume" type="Candle" name="Apple Inc"  bearFillColor="#2ecd71" bullFillColor="#e74c3d">
+                </e-series>
+                <e-series xName="x" yName="volume" type="Column" yAxisName="secondary">
+                </e-series>
+            </e-series-collection>
+            <e-chart-legendsettings visible="false"></e-chart-legendsettings>
+            <e-chart-tooltipsettings enable="true" shared="true">
+            </e-chart-tooltipsettings>
+            <e-chart-crosshairsettings enable="true"></e-chart-crosshairsettings>
+        </ejs-chart>
+    </div>
+    <script src="~/scripts/chart/stock-chart-data.js"></script>
+    <script>
+        var data = chartData; var initialData;
+        var selectedTheme = location.hash.split('/')[1];
+        selectedTheme = selectedTheme ? selectedTheme : 'Material';
+        var theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1));
+        var pointColors = [];
+        rangeLoad = function (args) {
+            args.rangeNavigator.periodSelectorSettings.height =
+                document.body.className.indexOf('e-bigger') > -1 ? 56 : 42;
+            args.rangeNavigator.theme = theme;
+            args.rangeNavigator.width = ej.base.Browser.isDevice ? "100%" : "80%";
+            args.rangeNavigator.dataSource = data;                       
+        }
+
+        rangeChange = function (args) {
+            if ((document.getElementById('chart').childNodes.length > 1)) {
+                var chart = document.getElementById('chart').ej2_instances[0];
+                var data = initialData = chartData.filter(function (data) {
+                    return (data['x'].getTime() >= args.start.getTime() &&
+                        data['x'].getTime() <= args.end.getTime());
+                });
+                chart.series[0].animation.enable = false;
+                chart.primaryXAxis.zoomPosition = 0;
+                chart.primaryXAxis.zoomFactor = 1;
+                chart.series[1].animation.enable = false;
+                chart.primaryXAxis.stripLines = [{ visible: true }];
+                chart.indicators[0].animation.enable = false;
+                chart.series[0].dataSource = data;
+                chart.series[1].dataSource = data;
+                chart.refresh();
+                chart.setAnnotationValue(0, '<div id="annotation"></div>');
+            }
+        }
+
+        rangeLoaded = function (args) {
+            if (!ej.base.Browser.isDevice) {
+                document.getElementById('container_Secondary_Element').style.transform = 'translate(11%)';
+            }
+            var value = args.rangeNavigator.svgObject.getBoundingClientRect().left - args.rangeNavigator.element.getBoundingClientRect().left;
+            document.getElementById('stockRange').style.transform = 'translate(9.5%)';
+
+        }
+
+        axisLabeRenderEvent = function (args) {
+            if (args.axis.name === 'secondary') {
+                args.text = Math.round((args.value / 10000000)) + 'B';
+            } else if (args.axis.orientation === 'Vertical') {
+                args.text = '$' + Math.round(args.value);
+            }
+        }
+
+        axisRangeEvent = function (args) {
+            if ((document.getElementById('chart').childNodes.length > 1)) {
+                var chart = document.getElementById("chart").ej2_instances[0];
+                chart.setAnnotationValue(0, '<div></div>');
+            }
+        }
+
+        chartLoad = function (args) {
+            args.chart.series[0].dataSource = initialData;
+            args.chart.series[1].dataSource = initialData;
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "90%";
+            args.chart.tooltip.format = args.chart.series[0].type === 'Candle' ?
+                '${point.x}<br/>High : <b>${point.high}</b><br/>Low :' +
+                ' <b>${point.low}</b><br/>Open : <b>${point.open}</b><br/>Close : <b>${point.close}</b><br/>Volume : <b>${point.volume}</b>' :
+                '${point.x}<br/>Close : <b>${point.close}</b>';
+        }
+        chartLoaded = function (args) {
+            var labels = (args.chart.axisCollections[0]).visibleLabels;
+            var maxValue = args.chart.axisCollections[0].visibleRange.max;
+            if (args.chart.primaryXAxis.stripLines.length === 1) {
+                for (var i = 0; i < labels.length; i += 2) {
+                    args.chart.primaryXAxis.stripLines.push({
+                        start: new Date(labels[i].value), end: labels[i + 1] ? new Date(labels[i + 1].value) : new Date(maxValue),
+                        zIndex: 'Behind', border: { width: 0, color: 'transparent' }, rotation: null,
+                        opacity: 0.7, textStyle: {}, text: '', color: 'whitesmoke', visible: true
+                    });
+                }
+                args.chart.refresh();
+            }
+
+        }
+
+        tooltipRenderEvent = function (args) {
+            var annotationString = '<div id="annotation" style="line-height: 18px;' +
+                ' font-size: 13px;background: #fff; opacity:0.9; color: #464e56; ' +
+                ' box-shadow:0 0 8px 0 rgba(70,78,86,.25); padding: 7px 10px;' +
+                ' border-radius: 3px">';
+            if ((document.getElementById('chart').childNodes.length > 1)) {
+                var chart = document.getElementById("chart").ej2_instances[0];
+                if (args.series.type === 'Candle') {
+                    chart.setAnnotationValue(0, annotationString + (getContent(args.text) + '</table>') + '</div>');
+                }
+                args.text = '';
+            }
+        }
+
+        pointRenderEvent = function (args) {
+            if (args.series.type === 'Candle') { pointColors.push(args.fill); } else {
+                args.fill = pointColors[args.point.index];
+            }
+        }
+
+        var getContent = function (value) {
+            var text = value.split('<br/>');
+            var html = '<table><thead>' + text[0] + '</thead>';
+            for (var i = 1; i < text.length; i++) {
+                var value_1 = text[i].split(':');
+                if (i === text.length - 1) {
+                    html += '<tr><td style="opacity:0.5">' + value_1[0] + '</td><td style="padding-left: 5px;">' +
+                        Math.round(((+value_1[1].split('</b>')[0].split('<b>')[1]) / 10000000)) + 'B';
+                }
+                else {
+                    html += '<tr><td style="opacity:0.5">' + value_1[0] + '</td><td style="padding-left: 5px;">$' +
+                        (+value_1[1].split(' <b>')[1].split('</b>')[0]).toFixed(2) + '</td></tr>';
+                }
+            }
+            return html;
+        };
+
+        chartMouseLeaveEvent = function (args) {
+            removeSecondaryElement();
+        }
+
+        chartMouseMoveEvent = function (args) {
+            if ((document.getElementById('chart').childNodes.length > 1)) {
+                var chart = document.getElementById("chart").ej2_instances[0];
+                if (!ej.charts.withInBounds(chart.mouseX, chart.mouseY, chart.chartAxisLayoutPanel.seriesClipRect)) {
+                    removeSecondaryElement();
+                }
+            }
+        }
+
+        var removeSecondaryElement = function () {
+            setTimeout(function () {
+                if (document.getElementById('annotation')) {
+                    ej.base.remove(document.getElementById('annotation'));
+                }
+            }, 2000);
+        };
+
+    </script>
+}
+
+@section Scripts {
+
+}
+
+<style>
+    #chart_tooltip {
+        opacity: 0;
+    }
+
+    #chart_HorizontalLine,
+    #chart_VerticalLine {
+        stroke-dasharray: 2
+    }
+
+    #chart {
+        width: 90%;
+    }
+</style>
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Range Navigator control shows how to render the stock charts with specified periods using period selector." />
+}
+@section ActionDescription{
+<p>
+    This sample illustrates a stock price for AAPL over a period. Period Selector show the information about the stock values without range navigator.
+</p>
+}
+@section Description{
+<p>
+    In this example, you can see how to render and configure the period Selector with the financial chart. Tooltip is enabled in this example, to see the tooltip in action, while the selected range is changed.
+
+
+</p>
+}

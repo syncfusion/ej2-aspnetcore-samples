@@ -1,0 +1,101 @@
+﻿@using Syncfusion.EJ2;
+@using EJ2CoreSampleBrowser.Controllers.Diagram;
+@section ControlsSection{
+    <div class="control-section">
+        <div style="text-align:center">
+            <ejs-diagram id="container" width="100%" height="700px" setNodeTemplate="@ViewBag.setNodeTemplate" getConnectorDefaults="@ViewBag.getConnectorDefaults" getNodeDefaults="@ViewBag.getNodeDefaults" created="diagramCreated">
+                <e-diagram-snapsettings constraints="None"></e-diagram-snapsettings>
+                <e-diagram-layout type="ComplexHierarchicalTree" orientation="LeftToRight" horizontalSpacing="70" verticalSpacing="100"></e-diagram-layout>
+                <e-diagram-datasourcesettings id="Id" parentId="Category" dataManager="new DataManager() { Data = (List<pertChartDataDetails>)ViewBag.Nodes }"></e-diagram-datasourcesettings>
+            </ejs-diagram>
+        </div>
+    </div>
+    <style>
+        #diagram {
+            display: block;
+        }
+
+        .row {
+            display: block;
+        }
+    </style>
+
+    <script>
+        function diagramCreated() {
+            var diagram = document.getElementById("container").ej2_instances[0];
+            diagram.fitToPage();
+            diagram.tool = ej.diagrams.DiagramTools.ZoomPan;
+            diagram.dataBind();
+        }
+        function getConnectorDefaults(connector, diagram) {
+            connector.type = 'Straight';
+            connector.style.strokeColor = '#979797';
+            connector.targetDecorator.width = 10;
+            connector.targetDecorator.height = 10;
+            connector.targetDecorator.style = { fill: '#979797', strokeColor: '#979797' };
+            return connector;
+        }
+        function getNodeDefaults(nodeModel, data, diagram) {
+            var shape = 'shape'; var name = 'id';
+            nodeModel['shape'] = { type: 'Text' };
+        }
+        function setNodeTemplate(node) {
+            var table = new ej.diagrams.StackPanel();
+            table.style.fill = '#0069d9';
+            table.orientation = 'Vertical';
+            let nameKey = 'id';
+            let stack = new ej.diagrams.StackPanel();
+            stack.children = [];
+            stack.height = 25;
+            stack.orientation = 'Horizontal';
+            stack.style.fill = 'white';
+            stack.horizontalAlignment = 'Stretch';
+            addRows(stack, node);
+            table.children = [(getTextElement(node.data.Id, 'Stretch', 170, 'Stretch')), stack];
+            (table.children[0].style).color = 'white';
+            (table.children[0].style).fontSize = 14;
+            return table;
+        }
+        function getTextElement(text, alignment, width, valignment) {
+            var textElement = new ej.diagrams.TextElement();
+            textElement.content = text;
+            textElement.width = width;
+            textElement.height = 25;
+            textElement.horizontalAlignment = alignment;
+            textElement.verticalAlignment = valignment;
+            textElement.style.strokeWidth = 1;
+            textElement.style.strokeColor = '#b5b5b5';
+            textElement.style.fill = 'transparent';
+            textElement.style.color = '#3c3c3c';
+            textElement.relativeMode = 'Object';
+            return textElement;
+        }
+
+        function addRows(column, node) {
+            column.children.push(getTextElement(node.data.StartDate, 'Left', 70));
+            column.children.push(getTextElement(node.data.Duration, 'Center', 30));
+            column.children.push(getTextElement(node.data.EndDate, 'Right', 70));
+        }
+    </script>
+}
+@section ActionDescription{
+    <p>
+        This sample visualizes a project development process using Program Evaluation Review Technique (PERT). Complex hierarchical tree layout algorithm is used to automatically arrange the nodes.
+    </p>
+}
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Diagram control visualizes a project development process using Program Evaluation Review Technique (PERT). Complex hierarchical tree layout algorithm is used to automatically arrange the nodes."/>
+}
+@section Description{
+    <p>
+        This example shows how to generate a PERT chart from an external data source. The <code>dataSourceSettings</code> property can be used to map an external data source with the diagram control.
+        The <code>layout</code> property can be used to automatically position the nodes. In this example, the nodes are arranged from left to right of the diagram. The <code>orientation</code> property can be used to define the orientation of the layouts.
+
+    </p>
+    <p>
+        The diagram component’s features are segregated into individual feature-wise modules. To generate diagrams from an external data source, inject <code>DataBinding</code> module using <code>Diagram.Inject(DataBinding)</code> method. To automatically arrange the objects in a PERT Chart, inject
+        <code>ComplexHierarchicalTree</code> module using <code>Diagram.Inject(ComplexHierarchicalTree)</code> method.
+    </p>
+}
+
+

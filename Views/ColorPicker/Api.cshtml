@@ -1,0 +1,162 @@
+﻿@{
+    ViewData["Title"] = "Api ColorPicker";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="col-lg-8 control-section">
+        <div id="colorpicker-control">
+            <h4>Choose a color</h4>
+            <ejs-colorpicker id='color-picker' value="#0db1e7" change="onChange"></ejs-colorpicker>
+        </div>
+    </div>
+    <div class="col-lg-4 property-section">
+        <table id="property" title="Properties" style="width: 100%">
+            <tbody>
+                <tr>
+                    <td style="width: 50%">
+                        <div>Value</div>
+                    </td>
+                    <td style="width: 50%">
+                        <div style="max-width: 200px">
+                            <input id="hex-value" value="#0db1e7" type="text" onchange="inputChange()">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 50%;padding-top:10px">
+                        <div>Mode</div>
+                    </td>
+                    <td style="width: 50%;padding-top:10px">
+                        <div style="max-width: 200px">
+                            <ejs-dropdownlist id="ddl" dataSource="@ViewBag.data" popupHeight="200px" change="valueChanged" index="0">
+                                <e-dropdownlist-fields text="Mode" value="Id"></e-dropdownlist-fields>
+                            </ejs-dropdownlist>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 50%;padding-top:15px">
+                        <div>Disable</div>
+                    </td>
+                    <td style="width: 50%;padding-top:15px">
+                        <ejs-checkbox id='disabled' checked="false" change="disabled_onChange"></ejs-checkbox>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 50%;padding-top:15px">
+                        <div>Show Buttons</div>
+                    </td>
+                    <td style="width: 50%;padding-top:15px">
+                        <ejs-checkbox id='show-btn' checked="true" change="button_onChange"></ejs-checkbox>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 50%;padding-top:15px">
+                        <div>Mode Switcher</div>
+                    </td>
+                    <td style="width: 50%;padding-top:15px">
+                        <ejs-checkbox id='mode-switch' checked="true" change="mode_onChange"></ejs-checkbox>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+}
+
+@section Meta{
+    <meta name="description" content="This demo for Syncfusion Essential JS2 ColorPicker control shows the color picker supported properties and its functionality." />
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This sample demonstrates customization of the ColorPicker component by using its properties from the property pane. Select
+        any combination of properties from the property pane to customize the ColorPicker component.</p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+    <p>
+        The ColorPicker is a user interface to select and adjust color values. This supports various color specifications like RGB
+        (Red Green Blue), HSV (Hue Saturation Value), and Hex codes.
+    </p>
+    <p>In this sample, ColorPicker is rendered with default configuration.</p>
+    <p>This sample can be customized further with the combination of ColorPicker properties from the property pane. For example,</p>
+    <ul>
+        <li>Control (apply/cancel) buttons can be enabled or disabled using
+            <i>Show Buttons</i> checkbox from the property pane.</li>
+        <li>You can select the color by entering the color value in the property pane
+            <i>Value</i> textbox.</li>
+        <li>You can switch to 'Picker' and 'Palette' modes by clicking and selecting the mode from
+            <i>Select Mode</i> dropdownlist.</li>
+        <li>you can enable or disable the ColorPicker using
+            <i>Disabled</i> checkbox from property pane.</li>
+        <li>you can enable or disable the mode switcher using
+            <i>Mode Switcher</i> checkbox from property pane.</li>
+    </ul>
+    <p>
+        More information about ColorPicker can be found in this
+        <a target="_blank" href="http://ej2.syncfusion.com/documentation/colorpicker/getting-started.html">
+            documentation section</a>.
+    </p>
+    </div>
+}
+
+
+@section Scripts {
+    <script>
+        ej.inputs.Input.createInput({
+            element : document.getElementById('hex-value')
+        });
+    </script>
+}
+
+<script>
+
+    function onChange(args) {
+        document.getElementById('hex-value').value = args.currentValue.hex;
+    }
+    function inputChange() {
+        document.getElementById('color-picker').ej2_instances[0].value = document.getElementById('hex-value').value;
+    }
+    function valueChanged() {
+        document.getElementById('color-picker').ej2_instances[0].mode = document.getElementById('ddl').ej2_instances[0].index ? 'Palette' : 'Picker';
+    }
+    function mode_onChange(args) {
+        document.getElementById('color-picker').ej2_instances[0].modeSwitcher = args.checked;
+    }
+    function button_onChange(args) {
+        document.getElementById('color-picker').ej2_instances[0].showButtons = args.checked;
+    }
+    function disabled_onChange(args) {
+        document.getElementById('color-picker').ej2_instances[0].disabled = args.checked;
+    }
+</script>
+
+<style>
+    .property-panel-content {
+        padding: 0 10px 10px 0;
+        overflow: auto;
+    }
+
+    #colorpicker-control {
+        margin: 30px auto;
+        padding-top: 50px;
+        text-align: center;
+    }
+
+        #colorpicker-control h4 {
+            margin-bottom: 20px;
+            color: rgba(0, 0, 0, 0.64);
+        }
+
+    .highcontrast #colorpicker-control h4 {
+        color: #fff;
+    }
+
+    .e-bigger #colorpicker-control h4 {
+        font-size: 20px;
+    }
+</style>

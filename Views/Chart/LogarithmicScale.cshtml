@@ -1,0 +1,65 @@
+﻿@using Syncfusion.EJ2
+@section ControlsSection{
+  <div class="control-section">
+        <div id="container" align="center">
+            <ejs-chart id="lineContainer" title="Product X Growth [1995-2005]" load="load" >
+                <e-chart-tooltipsettings enable="true">
+                </e-chart-tooltipsettings>
+                <e-chart-primaryxaxis labelFormat="y"
+                                valueType="DateTime"
+                                edgeLabelPlacement="Shift"></e-chart-primaryxaxis>
+                <e-chart-primaryyaxis valueType="Logarithmic"
+                                edgeLabelPlacement="Shift"
+                                minorTicksPerInterval=5
+                                minimum=0
+                                maximum=100000
+                                interval=1
+                                labelFormat="${value}">
+                    <e-majorgridlines width="1.5"></e-majorgridlines>
+                    <e-minorticklines width="0" height="4"></e-minorticklines>
+                </e-chart-primaryyaxis>
+                <e-chart-legendsettings visible="false">
+                </e-chart-legendsettings>
+                <e-series-collection>
+                    <e-series dataSource="ViewBag.dataSource" name="Profit" xName="xValue" width="2" yName="yValue1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Line">
+                        <e-series-marker visible="true" height="10" width="10"></e-series-marker>
+                    </e-series>
+                </e-series-collection>
+            </ejs-chart>
+        </div>
+    </div>
+    <script>
+        function load(args) {
+            var indexedTheme = location.hash.split("/")[1];
+            indexedTheme = indexedTheme ? indexedTheme : "Material";
+            args.chart.theme = (indexedTheme.charAt(0).toUpperCase() + indexedTheme.slice(1));
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "60%";
+        }
+    </script>
+
+}
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Chart control shows how to render the logarithmic axis in charts." />
+}
+@section ActionDescription{
+
+    <div id="action-description">
+        <p>
+            This sample demonstrates the rendering of logarithmic axis in the chart.
+        </p>
+    </div>
+}
+@section Description {
+    <div id="description">
+        <p>
+            Logarithmic axis uses logarithmic scale and it is very useful in visualizing when the data has values with both lower order of magnitude (eg: 10^-6) and higher order of magnitude (eg: 10^6).
+            To render Logarithmic axis, set <code>valueType</code> in axis to <b>Logarithmic</b>.
+        </p>
+        <p>
+            Tooltip is enabled in this example, t0 see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+        </p>  
+       
+       
+    </div>
+
+}

@@ -1,0 +1,156 @@
+﻿@using Syncfusion.EJ2
+
+@section ControlsSection{
+    <div class="col-lg-8 control-section">
+        <div class="calender-section">
+            <div id="calender-control">
+                <ejs-calendar id="calendar" change="startDate"></ejs-calendar>
+                <br>
+                <span id="date_label"> Selected Value: </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 property-section">
+        <div class="radio-control" id="property" title="Select a Locale">
+            <div class="row">
+                <ejs-radiobutton id="en" name="locale" label="English" value="en" change="onLocaleChange"></ejs-radiobutton>
+            </div>
+            <div class="row">
+                <ejs-radiobutton id="de" name="locale" label="German" value="de" change="onLocaleChange" checked="true"></ejs-radiobutton>
+            </div>
+            <div class="row">
+                <ejs-radiobutton id="ar" name="locale" label="Arabic" value="ar" change="onLocaleChange"></ejs-radiobutton>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    function startDate(args) {
+        /*Displays selected date in the label*/
+        (document.getElementById('date_label')).textContent = 'Selected Value: ' + args.value.toLocaleDateString();
+    }
+
+    function onLocaleChange(args) {
+        /*Apply selected format to the component*/
+        var culture = args.value;
+        calendarObject.locale = culture;
+        calendarObject.enableRtl = (calendarObject.locale === 'ar');
+        if (culture !== 'en') {
+            loadCultureFiles(culture);
+        }
+        globalize = new ej.base.Internationalization(calendarObject.locale);
+        if (calendarObject.value) {
+            var dateString = globalize.formatDate(calendarObject.value);
+            (document.getElementById('date_label')).textContent = 'Selected Value: ' + dateString;
+        }
+
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        calendarObject = document.getElementById('calendar').ej2_instances[0];
+        var L10n = ej.base.L10n;
+
+        L10n.load({
+            "de": {
+                "calendar": {
+                    today: 'heute'
+                }
+            },
+            "en": {
+                "calendar": {
+                    today: 'Today'
+                }
+            },
+            "ar": {
+                "calendar": {
+                    today: 'اليوم'
+                }
+            },
+
+
+        });
+        loadCultureFiles('de');
+        calendarObject.locale = 'de';
+    });
+    function loadCultureFiles(name) {
+        var files = ['ca-gregorian.json', 'numbers.json', 'timeZoneNames.json'];
+        if (name === 'ar') {
+            files.push('numberingSystems.json');
+        }
+        var loader = ej.base.loadCldr;
+        var loadCulture = function (prop) {
+            var val, ajax;
+            if (name === 'ar' && prop === files.length - 1) {
+                ajax = new ej.base.Ajax(location.origin + location.pathname + '/../../scripts/cldr-data/supplemental/' + files[prop], 'GET', false);
+            } else {
+                ajax = new ej.base.Ajax(location.origin + location.pathname + '/../../scripts/cldr-data/main/' + name + '/' + files[prop], 'GET', false);
+            }
+            ajax.onSuccess = function (value) {
+                val = value;
+            };
+            ajax.send();
+            loader(JSON.parse(val));
+        };
+        for (var prop = 0; prop < files.length; prop++) {
+            loadCulture(prop);
+        }
+    }
+
+</script>
+
+<style>
+    #date_label {
+        display: block;
+        width: 248px;
+        color: rgba(0, 0, 0, 0.58);
+        margin-left: 5px;
+    }
+
+    #calender-control {
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    body.highcontrast #date_label {
+        color: white;
+    }
+
+    .property-section {
+        width: 200px;
+    }
+</style>
+
+@section Meta{
+    <meta name="Calendar for ASP.NET Core supports globalization(Internationalization and localization) by adapting to specific cultures/ languages by translating messages" />
+}
+
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            In this sample, the calendar has been configured with
+            <code>German</code> culture. To change this current culture, go to the properties panel at the right side and select a culture from
+            the available options.
+        </p>
+    </div>
+
+
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            The calendar component was rendered with
+            <code>German</code> culture. Here the date separator, week header and month text content are updated based on current culture. You
+            can also change the component culture by selecting it from the culture options in the properties panel.
+        </p>
+        <p>
+            More information on the internationalization configuration can be found in this
+            <a href="https://ej2.syncfusion.com/aspnetcore/documentation/calendar/globalization.html" target="_blank"> documentation section</a>.
+        </p>
+    </div>
+
+
+}
+

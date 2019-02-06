@@ -23,8 +23,8 @@ namespace EJ2CoreSampleBrowser.Controllers.TreeView
             childData.ParentID = "EmployeeID";
             childData.DataSource = new DataManager
             {
-                Url = "https://js.syncfusion.com/demos/ejServices/Wcf/Northwind.svc",
-                Adaptor = "ODataAdaptor",
+                Url = "https://services.odata.org/V4/Northwind/Northwind.svc",
+                Adaptor = "ODataV4Adaptor",
                 CrossDomain = true
             };
             ViewBag.child = childData;

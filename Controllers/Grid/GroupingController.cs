@@ -15,6 +15,11 @@ namespace EJ2CoreSampleBrowser.Controllers.Grid
 
             var inventor = InventorDetails.GetAllRecords();
             ViewBag.datasource = inventor;
+            ViewBag.alertbutton = new
+            {
+                content = "OK",
+                isPrimary = true
+            };
             return View();
         }
 

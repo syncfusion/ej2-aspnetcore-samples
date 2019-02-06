@@ -1,0 +1,103 @@
+@using Syncfusion.EJ2
+
+
+@section ControlsSection{
+    <script src="~/scripts/TreeGrid/templateData.js"></script>
+    <div class="control-section">
+
+        <ejs-treegrid id="TreeGrid" dataSource="ViewBag.dataSource" rowDataBound="rowBound" height="359" childMapping="Children" treeColumnIndex="0" rowHeight="83" width="auto">
+            <e-treegrid-columns>
+                <e-treegrid-column field="EmpID" headerText="Employee ID" width="95"></e-treegrid-column>
+                <e-treegrid-column field="Name" headerText="Name" width="120"></e-treegrid-column>
+                <e-treegrid-column field="DOB" headerText=" DOB" textAlign="Right" format="yMd" type="date" width="90"></e-treegrid-column>
+                <e-treegrid-column headerText="Tax per annum" textAlign="Center" width="100" template="#columnTemplate1"></e-treegrid-column>
+                <e-treegrid-column headerText="One day index" textAlign="Center" width="100" template="#columnTemplate2"></e-treegrid-column>
+                <e-treegrid-column headerText="Year GR" textAlign="Center" width="120" template="#columnTemplate3"></e-treegrid-column>
+            </e-treegrid-columns>
+        </ejs-treegrid>
+
+    </div>
+
+    <script type="text/x-template" id="columnTemplate1">
+        <div id="spkline${EmployeeID}"></div>
+    </script>
+    <script type="text/x-template" id="columnTemplate2">
+        <div id="spkarea${EmployeeID}"></div>
+    </script>
+    <script type="text/x-template" id="columnTemplate3">
+        <div id="spkwl${EmployeeID}"></div>
+    </script>
+
+    <script>
+        function sparkload(args) {
+            let theme = location.hash.split('/')[1];
+            theme = theme ? theme : 'Material';
+            args.sparkline.theme = theme.charAt(0).toUpperCase() + theme.slice(1);
+        }
+        function rowBound(args) {
+            let line = new ej.charts.Sparkline({
+                height: '50px',
+                width: '150px', load: sparkload,
+                lineWidth: 2,
+                valueType: 'Numeric',
+                fill: '#3C78EF',
+                dataSource: lineData[args.data.EmployeeID]
+            });
+            line.appendTo(args.row.querySelector('#spkline' + args.data.EmployeeID));
+            let column = new ej.charts.Sparkline({
+                height: '50px',
+                width: '150px', load: sparkload,
+                type: 'Column',
+                valueType: 'Numeric',
+                fill: '#3C78EF',
+                negativePointColor: '#f7a816',
+                dataSource: columnData[args.data.EmployeeID]
+            });
+            column.appendTo(args.row.querySelector('#spkarea' + args.data.EmployeeID));
+            let winloss = new ej.charts.Sparkline({
+                height: '50px',
+                width: '150px', load: sparkload,
+                type: 'WinLoss',
+                valueType: 'Numeric',
+                fill: '#3C78EF',
+                tiePointColor: 'darkgray',
+                negativePointColor: '#f7a816',
+                dataSource: columnData[args.data.EmployeeID]
+            });
+            winloss.appendTo(args.row.querySelector('#spkwl' + args.data.EmployeeID));
+        }
+    </script>
+
+}
+
+@section Meta{
+    <meta name="description" content="This demo explains how to define template columns in Syncfusion Essential JS2 TreeGrid control." />
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the usage of template columns in TreeGrid. In this sample, we have shown SparkLine control in TreeGrid columns.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            The TreeGrid provides a way to use a custom layout for each cell using column template feature.
+            The <code>columns->template</code> property accepts either string or HTML element`s ID value, which will be used as the template for the cell.
+        </p>
+        <p>
+            In this demo, using column template, we have presented sparkLine charts for the "Tax per annum", "One day index" and "Year GR" columns. In <code>columns->template</code> we have assigned with the ID of a SCRIPT element whose content is used as the template.
+        </p>
+        <p>The template expression should be provided inside <code>${...}</code> interpolation syntax</p>
+        <br>
+
+        <p>
+            More information on the data binding can be found in this documentation section.
+        </p>
+    </div>
+}
+
+

@@ -13,6 +13,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Grid
         {
             var order = OrdersDetails.GetAllRecords();
             ViewBag.datasource = order;
+            ViewBag.ddDataSource = new string[] { "Top", "Bottom" };
             return View();
         }
     }

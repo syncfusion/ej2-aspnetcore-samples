@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Syncfusion.EJ2.Navigations;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace EJ2CoreSampleBrowser.Controllers
 {
     public partial class TabController : Controller
@@ -18,7 +16,7 @@ namespace EJ2CoreSampleBrowser.Controllers
             ViewBag.headerLondon = new TabHeader { Text = "London" };
             
             ViewBag.styleData = new string[] { "Default", "Fill", "Accent" };
-            ViewBag.orientationData = new string[] { "Top", "Bottom" };
+            ViewBag.orientationData = new string[] { "Top", "Bottom", "Left", "Right" };
                         
             List<object> rome = new List<object>();
             rome.Add(new { Id = "1", Name = "Anne Dodsworth", Role = "Product Manager" });

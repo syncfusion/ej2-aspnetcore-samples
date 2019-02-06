@@ -1,0 +1,75 @@
+﻿@using Syncfusion.EJ2
+@section ControlsSection{
+    @{ 
+        var series = new string[0];
+        var indicator = new string[0];
+        var line = new string[0];
+        var export = new string[0];
+    }
+
+    <div class="control-section" align="center">
+        <div id="container">
+            <ejs-stockchart id="stockchartintraday" load="stockload" title="AAPL stock prices by Minutes" seriesType="series" indicatorType="indicator" trendlineType="line" exportType="export">
+                <e-stockchart-series-collection>
+                    <e-stockchart-series type='Line' xName='x' yName='y' name='google'> </e-stockchart-series>
+                </e-stockchart-series-collection>
+                <e-stockchart-periods>
+                    <e-stockchart-period interval="1" intervalType="Minutes" text="1m"></e-stockchart-period>
+                    <e-stockchart-period interval="30" intervalType="Minutes" text="30m"></e-stockchart-period>
+                    <e-stockchart-period interval="1" intervalType="Hours" text="1H"></e-stockchart-period>
+                    <e-stockchart-period interval="12" intervalType="Hours" text="12H" selected="true"></e-stockchart-period>
+                    <e-stockchart-period interval="1" intervalType="Days" text="1D"></e-stockchart-period>
+                </e-stockchart-periods>
+            </ejs-stockchart>
+        </div>
+    </div>
+    <script>
+        function stockload(args) {
+            letselectedTheme: string = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.stockChart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/dark/i, "Dark").replace(/light/i, "Light");
+            let series1 = [];
+            let point1;
+            let value = 80;
+            for (var i = 1; i < 1440; i++) {
+                if (Math.random() > .5) {
+                    value += Math.random();
+                } else {
+                    value -= Math.random();
+                }
+                point1 = { x: new Date(2000, 1, 1, 0, i), y: value.toFixed(1) };
+                series1.push(point1);
+            }
+            args.stockChart.series[0].dataSource = series1;
+            args.stockChart.primaryXAxis = { majorGridLines: { width: 0 }, },
+                
+            args.stockChart.border = { width: 0 };
+            args.stockChart.crosshair = { enable: true };
+            args.stockChart.primaryXAxis = {
+                crosshairTooltip: { enable: true }
+            };
+            args.stockChart.primaryYAxis = {
+                lineStyle: { color: 'transparent' },
+                majorTickLines: { color: 'transparent', width: 0 }, crosshairTooltip: { enable: true }
+            };
+            args.stockChart.chartArea = { border: { width: 0 } };
+        }
+        
+    </script>
+}
+
+@section Scripts {
+
+}
+
+@section ActionDescription{
+    <p>
+        This sample visualizes data for intraday using stock chart. Period and range selector help us to navigate different of data.
+    </p>
+}
+@section Description{
+    <p>
+        In this sample, you can configure the stock with intra day data.
+    </p>
+    <br>
+}

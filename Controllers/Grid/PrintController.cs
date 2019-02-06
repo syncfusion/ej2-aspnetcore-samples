@@ -12,7 +12,10 @@ namespace EJ2CoreSampleBrowser.Controllers.Grid
         public IActionResult Print()
         {
             var order = OrdersDetails.GetAllRecords();
-            ViewBag.datasource = order;
+            ViewBag.Datasource = order;
+            ViewBag.EmpDataSource = EmployeeView.GetAllRecords();
+            ViewBag.CustomerDataSource = Customer.GetAllRecords();
+            ViewBag.data = new List<string>() { "Expanded", "All", "None" };
             return View();
         }
     }

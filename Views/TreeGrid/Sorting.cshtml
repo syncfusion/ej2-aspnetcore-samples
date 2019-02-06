@@ -1,0 +1,203 @@
+@using Syncfusion.EJ2
+
+
+@section ControlsSection{
+    @{
+
+        List<object> cols = new List<object>();
+        cols.Add(new { field = "ShipmentCategory", direction = "Ascending" });
+        cols.Add(new { field = "Name", direction = "Descending" });
+    }
+
+    <div class="col-lg-9 control-section">
+        <div class="content-wrapper">
+            <ejs-treegrid id="TreeGrid" dataSource="ViewBag.dataSource" allowMultiSorting="true" allowSorting="true" allowPaging="true" childMapping="Children" treeColumnIndex="1" actionComplete="actionComplete">
+                <e-treegrid-sortsettings columns="cols"></e-treegrid-sortsettings>
+                <e-treegrid-columns>
+                    <e-treegrid-column field="Name" headerText="Order Name" width="180"></e-treegrid-column>
+                    <e-treegrid-column field="ShipmentCategory" headerText="Category" width="150"></e-treegrid-column>
+                    <e-treegrid-column field="OrderDate" headerText="Order Date" textAlign="Right" format="yMd" type="date" width="120"></e-treegrid-column>
+                    <e-treegrid-column field="Units" headerText="Units" textAlign="Right" width="100"></e-treegrid-column>
+                </e-treegrid-columns>
+            </ejs-treegrid>
+        </div>
+    </div>
+
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties" style="width: 100%">
+            <tr>
+                <td style="width: 70%">
+                    <div>
+                        Order Name
+                    </div>
+                </td>
+                <td style="width: 30%;padding:10px 10px 10px 0px">
+                    <div class="col-md-6">
+                        <ejs-checkbox id="name" checked="true" change="namechange"></ejs-checkbox>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 70%">
+                    <div>
+                        Category
+                    </div>
+                </td>
+                <td style="width: 30%;padding:10px 10px 10px 0px">
+                    <div class="col-md-6">
+                        <ejs-checkbox id="category" checked="true" change="categorychange"></ejs-checkbox>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 70%">
+                    <div>
+                        Order Date
+                    </div>
+                </td>
+                <td style="width: 30%; padding:10px 10px 10px 0px">
+                    <div class="col-md-6">
+                        <ejs-checkbox id="orderdate" change="datechange"></ejs-checkbox>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 70%">
+                    <div>
+                        Units
+                    </div>
+                </td>
+                <td style="width: 30%; padding:10px 10px 10px 0px">
+                    <div class="col-md-6">
+                        <ejs-checkbox id="units" change="unitschange"></ejs-checkbox>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+
+        function namechange(args) {
+            var treeGridObj = document.getElementById("TreeGrid").ej2_instances[0];
+            if (args.checked) {
+                treeGridObj.sortByColumn('Name', 'Ascending', true);
+            }
+            else {
+                treeGridObj.grid.removeSortColumn('Name');
+            }
+        }
+
+        function categorychange(args) {
+            var treeGridObj = document.getElementById("TreeGrid").ej2_instances[0];
+            if (args.checked) {
+                treeGridObj.sortByColumn('ShipmentCategory', 'Ascending', true);
+            }
+            else {
+                treeGridObj.grid.removeSortColumn('ShipmentCategory');
+            }
+
+        }
+
+        function datechange(args) {
+            var treeGridObj = document.getElementById("TreeGrid").ej2_instances[0];
+            if (args.checked) {
+                treeGridObj.sortByColumn('OrderDate', 'Ascending', true);
+            }
+            else {
+                treeGridObj.grid.removeSortColumn('OrderDate');
+            }
+
+        }
+
+        function unitschange(args) {
+            var treeGridObj = document.getElementById("TreeGrid").ej2_instances[0];
+            if (args.checked) {
+                treeGridObj.sortByColumn('Units', 'Ascending', true);
+            }
+            else {
+                treeGridObj.grid.removeSortColumn('Units');
+            }
+
+        }
+
+        function actionComplete(args) {
+            var treeGridObj = document.getElementById("TreeGrid").ej2_instances[0];
+            if (args.requestType === 'sorting') {
+                for (let columns of treeGridObj.getColumns()) {
+                    for (let sortcolumns of treeGridObj.sortSettings.columns) {
+                        if (sortcolumns.field === columns.field) {
+                            check(sortcolumns.field, true); break;
+                        } else {
+                            check(columns.field, false);
+                        }
+                    }
+                }
+            }
+        }
+
+        function check(field, state) {
+            var ordername = document.getElementById("name").ej2_instances[0];
+            var category = document.getElementById("category").ej2_instances[0];
+            var date = document.getElementById("orderdate").ej2_instances[0];
+            var units = document.getElementById("units").ej2_instances[0];
+            switch (field) {
+                case 'Name':
+                    ordername.checked = state; break;
+                case 'ShipmentCategory':
+                    category.checked = state; break;
+                case 'OrderDate':
+                    date.checked = state; break;
+                case 'Units':
+                    units.checked = state; break;
+            }
+        }
+    </script>
+
+
+}
+
+@section Meta{
+    <meta name="description" content="This example illustrates binding self-referential flat data with parent ID to a Syncfusion Essential JS2 TreeGrid control." />
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the TreeGrid multi sorting feature. To sort two or more columns, hold the CTRL key and click the column header.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        Sorting feature enables us to order the data in a particular direction. It can be enabled by setting the <code>allowSorting</code> as true.
+        </p>
+        <p class="e-grid" style="border:none">
+            To sort a TreeGrid column by simply click the column header. The icons <span class="e-icons e-icon-ascending"></span>(ascending)
+            and <span class="e-icons e-icon-descending"></span>(descending) specifies the sort direction of a column.
+        </p>
+        <p>
+            To sort multiple column hold <strong>CTRL</strong> key and click the column
+            header. To clear sort for a column, hold <strong>SHIFT</strong> key and click the column header.
+        </p>
+        <p>
+            While using TreeGrid in a touch device, you have an option for multi sorting in single tap on the treegrid header. By tapping on the treegrid header, it will show the toggle button in small popup with sort icon.
+            Now tap the button to enable the multi-sorting in single tap.
+        </p>
+        <p>In this demo, </p>
+        <ul>
+            <li>Simply click the column header to sort a column.</li>
+            <li>
+                Check the checkboxes in the properties panel to sort a column and uncheck to remove sort from a column.
+            </li>
+        </ul>
+        <br />
+
+        <p>
+            More information on the data binding can be found in this <a target="_blank" href="#"> documentation section.
+        </p>
+    </div>
+}
+
+

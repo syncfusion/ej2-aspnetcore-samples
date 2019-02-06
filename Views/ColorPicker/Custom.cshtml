@@ -36,7 +36,7 @@
 }
 
 @section Meta{
-    <meta name="description" content="This demo for Syncfusion Essential JS2 ColorPicker control shows the custom UI of color palette with different palette structures and its state." />
+    <meta name="description" content="This example demonstrates the Syncfusion ASP.NET Core ColorPicker, custom UI of the color palette with different structures and its state." />
 }
 
 @section ActionDescription{
@@ -60,54 +60,68 @@
         </li>
         <li>Using the
             <code>
-                <a target="_blank" class="code" href="http://ej2.syncfusion.com/documentation/colorpicker/api-colorpicker.html#presetColors-object">presetColors
+                <a target="_blank" class="code" href="https://help.syncfusion.com/cr/cref_files/aspnetcore-js2/Syncfusion.EJ2~Syncfusion.EJ2.Inputs.ColorPicker~PresetColors.html">presetColors
                 </a>
             </code> property, you can specify the custom colors to be loaded.</li>
     </ul>
     <p>
         More information about ColorPicker can be found in this
-        <a target="_blank" href="http://ej2.syncfusion.com/documentation/colorpicker/getting-started.html">
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/color-picker/how-to/customize-colorpicker/">
             documentation section</a>.
     </p>
     </div>
 }
 
-
-    <script>
-        function onChange(args) {
-            document.getElementById('e-shirt-preview').style.backgroundColor = args.currentValue.hex;
-        }
-        function beforeCircleTileRender(args) {
-            args.element.classList.add('e-circle-palette');
-            args.element.appendChild(ej.base.createElement('span', { className: 'e-circle-selection' }));
-        }
-
-        function beforeSquareTileRender(args) {
-            args.element.classList.add('e-square-palette');
-        }
-
-        function beforeRoundedTileRender(args) {
-            args.element.classList.add('e-rounded-palette');
-        }
-
-        function beforeScrollTileRender(args) {
-            args.element.classList.add('e-icons');
-            args.element.classList.add('e-scroll-palette');
-        }
-
-        function roundedPaletteChange(args) {
-            this.element.nextElementSibling.querySelector('.e-selected').style.boxShadow
+<script>
+    function onChange(args) {
+        document.getElementById('e-shirt-preview').style.backgroundColor = args.currentValue.hex;
+    }
+    function beforeCircleTileRender(args) {
+        args.element.classList.add('e-circle-palette');
+        args.element.appendChild(ej.base.createElement('span', { className: 'e-circle-selection' }));
+    }
+    function beforeSquareTileRender(args) {
+        args.element.classList.add('e-square-palette');
+    }
+    function beforeRoundedTileRender(args) {
+        args.element.classList.add('e-rounded-palette');
+    }
+    function beforeScrollTileRender(args) {
+        args.element.classList.add('e-icons');
+        args.element.classList.add('e-scroll-palette');
+    }
+    function roundedPaletteChange(args) {
+        this.element.nextElementSibling.querySelector('.e-selected').style.boxShadow
                 = args.currentValue.hex + ' 0 0 4px';
-            document.getElementById('e-shirt-preview').style.backgroundColor = args.currentValue.hex;
-        }
-    </script>
+        document.getElementById('e-shirt-preview').style.backgroundColor = args.currentValue.hex;
+    }
+</script>
     
 <style>
+/* Common sample level styles */
 #custom-control {
     margin: auto 0;
     text-align: center;
 }
+#custom-control .col-lg-6 {
+    margin-bottom: 20px;
+}
+#custom-control .col-lg-6.e-circle-wrap {
+    width: 26%;
+}
+#custom-control .col-lg-6.e-square-wrap {
+    margin-top: 37px;
+    width: 22%;
+}
+#custom-control .col-lg-6.e-rounded-wrap {
+    margin-top: 35px;
+    width: 20%;
+}
+#custom-control .col-lg-6.e-scroll-wrap {
+    width: 32%;
+}
 
+/* Preview area styles */
 #custom-control #e-shirt-preview {
     background: transparent url('@Url.Content("~/css/colorpicker/images/shirt.png")') no-repeat;
     height: 320px;
@@ -116,49 +130,24 @@
     width: 400px;
     background-color: rgb(244, 67, 54);
 }
-
 #custom-control.e-mobile-control #e-shirt-preview {
     margin-left: -21%;
     width: 320px;
 }
-
 .highcontrast #custom-control #e-shirt-preview {
     background: transparent url('@Url.Content("~/css/colorpicker/images/shirt_highcontrast.png")') no-repeat;
     background-color: rgb(244, 67, 54);
 }
 
-#custom-control .col-lg-6 {
-    margin-bottom: 20px;
-}
-
-#custom-control .col-lg-6.e-circle-wrap {
-    width: 26%;
-}
-
-#custom-control .col-lg-6.e-square-wrap {
-    margin-top: 37px;
-    width: 22%;
-}
-
-#custom-control .col-lg-6.e-rounded-wrap {
-    margin-top: 35px;
-    width: 20%;
-}
-
-#custom-control .col-lg-6.e-scroll-wrap {
-    width: 32%;
-}
-
+/* Common sample level styles for mobile */
 #custom-control.e-mobile-control .col-lg-6 {
     width: 55%;
 }
-
 @@media only screen and (min-width: 768px) {
     #custom-control.e-mobile-control .col-sm-12 {
         width: 25%;
     }
 }
-
 #custom-control.e-mobile-control #custom-content {
     display: flex;
     flex-wrap: nowrap;
@@ -169,15 +158,7 @@
     flex: 0 0 auto;
 }
 
-#custom-control h4 {
-    margin-bottom: 20px;
-    color: rgba(0, 0, 0, 0.64);
-}
-
-.e-bigger #custom-control h4 {
-    font-size: 20px;
-}
-
+/* Circle palette customization */
 .e-container .e-palette .e-circle-palette {
     border: 0;
     height: 32px;
@@ -185,18 +166,15 @@
     border-radius: 20px;
     margin: 4px;
 }
-
 .e-bigger .e-container .e-palette .e-circle-palette {
     height: 32px;
     width: 32px;
 }
-
 .e-container .e-palette .e-circle-palette:hover {
     box-shadow: none;
     transform: scale(1.2);
     transition: transform .2s ease-out;
 }
-
 .e-circle-palette .e-circle-selection {
     height: 32px;
     width: 32px;
@@ -205,13 +183,11 @@
     transform: scale(0);
     transition: transform 1.2s ease-in;
 }
-
 .e-circle-palette.e-selected .e-circle-selection {
     transform: scale(0.8);
     background-color: #fff;
     transition: transform .2s ease-out;
 }
-
 #circle-palette+.e-container,
 #scroll-palette+.e-container {
     background-color: transparent;
@@ -219,11 +195,11 @@
     box-shadow: none;
 }
 
+/* Scrollable palette customization */
 #scroll-palette+.e-container .e-custom-palette.e-palette-group,
 .e-bigger #scroll-palette+.e-container .e-custom-palette.e-palette-group {
     height: 125px;
 }
-
 .e-container .e-palette .e-scroll-palette {
     border: 0;
     color: #fff;
@@ -234,48 +210,43 @@
     margin-top: 2px;
     margin-left: 10px;
 }
-
 .e-bigger .e-container .e-palette .e-scroll-palette {
     height: 24px;
     width: 35px;
 }
-
 .e-container .e-palette .e-scroll-palette.e-selected::before {
     content: '\e933';
 }
-
 .highcontrast .e-container .e-palette {
     border-bottom-color: transparent;
 }
 
-#square-palette+.e-container .e-custom-palette .e-palette,
-#rounded-palette+.e-container .e-custom-palette .e-palette {
-    padding: 5px;
-}
-
+/* Square palette customization */
 .e-container .e-palette .e-square-palette,
 .e-bigger .e-container .e-palette .e-square-palette {
     width: 20px;
     height: 20px;
 }
+#square-palette+.e-container .e-custom-palette .e-palette,
+#rounded-palette+.e-container .e-custom-palette .e-palette {
+    padding: 5px;
+}
 
+/* Rounded corner palette customization */
 .e-container .e-palette .e-rounded-palette {
     border-radius: 4px;
     margin: 3px;
     height: 16px;
     width: 16px;
 }
-
 .e-bigger .e-container .e-palette .e-rounded-palette {
     height: 16px;
     width: 16px;
 }
-
 .e-container .e-palette .e-rounded-palette:hover,
 .e-container .e-palette .e-scroll-palette:hover {
     box-shadow: none;
 }
-
 .e-container .e-palette .e-circle-palette.e-selected,
 .e-container .e-palette .e-rounded-palette.e-selected,
 .e-container .e-palette .e-square-palette.e-selected,

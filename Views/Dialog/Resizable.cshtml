@@ -1,0 +1,75 @@
+﻿﻿@using Syncfusion.EJ2
+@{
+    var defaultanimation = new Syncfusion.EJ2.Popups.DialogAnimationSettings { Effect = Syncfusion.EJ2.Popups.DialogEffect.None };
+}
+@section ControlsSection {
+    <div class="col-lg-12 control-section" id="target">
+        <ejs-button id="dialogBtn" cssClass="dlgbtn" content="Open Dialog"></ejs-button>
+        <ejs-dialog id="resizeDialog" allowDragging="true" enableResize="true" animationSettings="defaultanimation" visible="true" width="300px" target="#target" open="dialogOpen" Content="<span>This is a dialog with resizable support.</span>"
+                    close="dialogClose" showCloseIcon="true" header="Resize Me">
+        </ejs-dialog>
+    </div>
+}
+@section PreScripts{
+    <script>
+        document.getElementById('dialogBtn').onclick = function () {
+            var dialogObj = document.getElementById('resizeDialog').ej2_instances[0];
+            dialogObj.show();
+        };
+        function dialogClose() {
+            document.getElementById('dialogBtn').style.display = 'block';
+        }
+        function dialogOpen() {
+            document.getElementById('dialogBtn').style.display = 'none';
+        }
+    </script>
+}
+<style>
+
+    #control-container {
+        padding: 0px !important;
+    }
+
+    .e-btn-hide {
+        display: none;
+    }
+
+    .dlgbtn {
+        margin-right: 10px;
+    }
+
+    #container {
+        height: 100%;
+        min-height: 280px;
+        position: relative;
+    }
+
+    @@media screen and (min-width: 150px) and (max-width: 480px) {
+        .control-section {
+            margin-bottom: 30px;
+        }
+
+        .control-wrapper {
+            margin-bottom: 0px;
+        }
+    }
+</style>
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This example demonstrates the resize operation of the dialog control. To resize the modal dialog, select and resize a dialog using its handle (grip) within the sample container.
+            The "open dialog" button is used to reopen the dialog if it is closed.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            Users can create resizable modal dialog by setting the enableResize property to true, which is used to change the size of a dialog dynamically and view its content with expanded mode.
+            When you configure the target property along with enableResize property, the dialog can be resized within its specified target container.
+        </p>
+    </div>
+}
+@section Meta{
+    <meta name="description" content="This sample shows how to create resizable modal in dialog to change the size of a dialog efficiently and view its content more comfortably." />
+}

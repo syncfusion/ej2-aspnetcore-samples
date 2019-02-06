@@ -24,7 +24,7 @@ The third-party library <b>Marked</b> is used in this sample to convert markdown
                         <span class='e-btn-icon e-md-preview e-icons'></span></button>"
             };
             ViewBag.items = new object[] {"Bold", "Italic", "StrikeThrough", "|",
-                "Formats", "OrderedList", "UnorderedList", "|",
+                "Formats", "OrderedList", "UnorderedList", "|", "CreateTable",
                 "CreateLink", "Image", "|", tool
                 , "|", "Undo", "Redo"};
             return View();

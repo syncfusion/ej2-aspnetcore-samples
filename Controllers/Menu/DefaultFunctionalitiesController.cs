@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Syncfusion.EJ2.Navigations;
 
 namespace EJ2CoreSampleBrowser.Controllers
 {
@@ -10,77 +11,70 @@ namespace EJ2CoreSampleBrowser.Controllers
     {
         public IActionResult DefaultFunctionalities()
         {
-            List<object> menuItems = new List<object>();
-            menuItems.Add(new
-            {
-                text = "File",
-                iconCss = "em-icons e-file",
-                items = new List<object>()
-                {
-                    new { text= "Open", iconCss= "em-icons e-open" },
-                    new { text= "Save", iconCss= "e-icons e-save" },
-                    new { separator= true },
-                    new { text= "Exit" }
-                }
-            });
 
-            menuItems.Add(new
+            List<MenuItem> menuItems = new List<MenuItem>(){
+            new MenuItem
             {
-                text = "Edit",
-                iconCss = "em-icons e-edit",
-                items = new List<object>()
+                Text = "File",
+                IconCss = "em-icons e-file",
+                Items = new List<MenuItem>()
                 {
-                    new { text= "Cut", iconCss= "em-icons e-cut" },
-                    new { text= "Copy", iconCss= "em-icons e-copy" },
-                    new { text= "Paste", iconCss= "em-icons e-paste" }
+                    new MenuItem { Text= "Open", IconCss= "em-icons e-open" },
+                    new MenuItem { Text= "Save", IconCss= "e-icons e-save" },
+                    new MenuItem { Separator= true },
+                    new MenuItem { Text= "Exit" }
                 }
-            });
-
-            menuItems.Add(new
+            },
+            new MenuItem
             {
-                text = "View",
-                items = new List<object>()
+                Text = "Edit",
+                IconCss = "em-icons e-edit",
+                Items = new List<MenuItem>()
                 {
-                    new {
-                        text = "Toolbars",
-                        items = new List<object>()
+                    new MenuItem { Text= "Cut", IconCss= "em-icons e-cut" },
+                    new MenuItem { Text= "Copy", IconCss= "em-icons e-copy" },
+                    new MenuItem { Text= "Paste", IconCss= "em-icons e-paste" }
+                }
+            },
+            new MenuItem
+            {
+                Text = "View",
+                Items = new List<MenuItem>()
+                {
+                    new MenuItem {
+                        Text = "Toolbars",
+                        Items = new List<MenuItem>()
                         {
-                            new { text= "Menu Bar" },
-                            new { text= "Bookmarks Toolbar" },
-                            new { text= "Customize" }
+                            new MenuItem { Text= "Menu Bar" },
+                            new MenuItem { Text= "Bookmarks Toolbar" },
+                            new MenuItem { Text= "Customize" }
                         }
                     },
-                    new {
-                        text = "Zoom",
-                        items = new List<object>()
+                    new MenuItem {
+                        Text = "Zoom",
+                        Items = new List<MenuItem>()
                         {
-                            new  { text= "Zoom In" },
-                            new { text= "Zoom Out" },
-                            new { text= "Reset" },
+                            new MenuItem { Text= "Zoom In" },
+                            new MenuItem { Text= "Zoom Out" },
+                            new MenuItem { Text= "Reset" },
                         }
                     },
-                    new {
-                        text = "Full Screen"
-                    }
+                    new MenuItem { Text = "Full Screen" }
                 }
-            });
-
-            menuItems.Add(new
+            },
+            new MenuItem
             {
-                text = "Tools",
-                items = new List<object>()
+                Text = "Tools",
+                Items = new List<MenuItem>()
                 {
-                    new { text= "Spelling & Grammar" },
-                    new { text= "Customize" },
-                    new { separator= true },
-                    new { text= "Options" }
+                    new MenuItem { Text= "Spelling & Grammar" },
+                    new MenuItem { Text= "Customize" },
+                    new MenuItem { Separator= true },
+                    new MenuItem { Text= "Options" }
                 }
-            });
-
-            menuItems.Add(new
-            {
-                text = "Help",
-            });
+            },
+            new MenuItem { Text = "Help" }
+            };
 
             ViewBag.menuItems = menuItems;
             return View();

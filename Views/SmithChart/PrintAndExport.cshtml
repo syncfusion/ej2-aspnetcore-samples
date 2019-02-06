@@ -46,15 +46,15 @@
                 </tr>
                 <tr id="button-control1">
                     <td>
-                        <div style="height: 45px">
-                            <button id="export" style="width: 100px">Export</button>
+                        <div style="height: 45px;margin-left:50%">
+                            <button id="export" style="width: 80px">Export</button>
                         </div>
                     </td>
                 </tr>
                 <tr id="button-control2">
                     <td>
-                        <div style="height: 45px">
-                            <button id="print" style="width: 100px">Print</button>
+                        <div style="height: 45px;margin-left:50%">
+                            <button id="print" style="width: 80px">Print</button>
                         </div>
                     </td>
                 </tr>
@@ -70,6 +70,9 @@
     <script type="text/javascript">
 
         function smithLoad(args) {
+            var theme = location.hash.split('/')[1];
+            theme = theme ? theme : 'Material';
+            args.smithchart.theme = theme.charAt(0).toUpperCase() + theme.slice(1);
             args.smithchart.horizontalAxis.minorGridLines.visible = true;
             args.smithchart.radialAxis.minorGridLines.visible = true;
         }
@@ -81,11 +84,11 @@
             });
             window.exportType.appendTo('#mode');
             window.togglebtn1 = new ej.buttons.Button({
-                iconCss: 'e-icons e-play-icon', cssClass: 'e-flat', isPrimary: true,
+                cssClass: 'e-info', isPrimary: true
             });
             window.togglebtn1.appendTo('#export');
             window.togglebtn2 = new ej.buttons.Button({
-                iconCss: 'e-icons e-play-icon', cssClass: 'e-flat', isPrimary: true,
+                cssClass: 'e-info', isPrimary: true
             });
             window.togglebtn2.appendTo('#print');
 

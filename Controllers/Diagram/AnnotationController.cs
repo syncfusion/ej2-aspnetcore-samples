@@ -51,6 +51,16 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
 
             ViewBag.font = font;
 
+            List<TemplateList> templateList = new List<TemplateList>();
+            templateList.Add(new TemplateList() { Value = "none", Text = "None" });
+            templateList.Add(new TemplateList() { Value = "industry", Text = "Industry Competitors" });
+            templateList.Add(new TemplateList() { Value = "suppliers", Text = "Suppliers" });
+            templateList.Add(new TemplateList() { Value = "potential", Text = "Potential Entrants" });
+            templateList.Add(new TemplateList() { Value = "buyers", Text = "Buyers" });
+            templateList.Add(new TemplateList() { Value = "substitutes", Text = "Substitutes" });
+
+            ViewBag.templateList = templateList;
+
             ViewBag.connectors = Connectors;
 
             ViewBag.getNodeDefaults = "getNodeDefaults";
@@ -63,5 +73,11 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
     public class FontFamily
     {
         public string Name;
+    }
+
+    public class TemplateList
+    {
+        public string Value;
+        public string Text;
     }
 }

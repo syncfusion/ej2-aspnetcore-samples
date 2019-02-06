@@ -1,15 +1,15 @@
 @using Syncfusion.EJ2.PivotView
 @section Meta{
-    <meta name="description" content="This demo for Essential JS2 Pivot Table control demonstrate the field list feature of the pivotgrid widget, field list allows the user to rearrange the fields between different axes, including column, row, value, and filter along with filter and sort options" />
+    <meta name="description" content="This demo for Essential JS2 ASP.NET Core Pivot Table control demonstrate the field list feature of the pivotgrid widget" />
 }
 @section ControlsSection{
 
-    <div class="control-section">
+    <div class="control-section" style="overflow:auto">
         <div class="content-wrapper">
-            <ejs-pivotview id="pivotview" enginePopulated="onGridEnginePopulate"  width="99%" height="530">
+            <ejs-pivotview id="pivotview" enginePopulated="onGridEnginePopulate"  width="99%" height="600" locale="en">
                 <e-gridSettings columnWidth="140"></e-gridSettings>
             </ejs-pivotview>
-            <ejs-pivotfieldlist id="pivotfieldlist" renderMode="Fixed" load="onLoad" enginePopulated="onFieldListEnginePopulate" dataBound="onDataBound" allowCalculatedField="true">
+            <ejs-pivotfieldlist id="pivotfieldlist" renderMode="Fixed" load="onLoad" enginePopulated="onFieldListEnginePopulate" dataBound="onDataBound" allowCalculatedField="true" locale="en">
                 <e-datasource data="@ViewBag.data" expandAll="false" enableSorting="true" allowLabelFilter="true" allowValueFilter="true">
                     <e-fieldlist-formatsettings>
                         <e-field name="Amount" format="C0" maximumSignificantDigits="10" minimumSignificantDigits="1" useGrouping="true"></e-field>
@@ -64,33 +64,42 @@
                 if (ej.base.Browser.isDevice) {
                     fieldlistObj.renderMode = 'Popup';
                     fieldlistObj.target = '.control-section';
-                    document.getElementById('pivotfieldlist').removeAttribute('style');
                     ej.base.setStyleAttribute(document.getElementById('pivotfieldlist'), {
+                        'width': 0,
                         'height': 0,
-                        'float': 'left'
+                        'float': 'left',
+                        'display': 'none'
                     });
                 }
             }
         }
         function onGridEnginePopulate(args) {
-            var pivotGridObj = document.getElementById('pivotview').ej2_instances[0];
-            var fieldlistObj = document.getElementById('pivotfieldlist').ej2_instances[0];
-            if (fieldlistObj) {
-                fieldlistObj.update(pivotGridObj);
+            if (!ej.base.Browser.isDevice) {
+                var pivotGridObj = document.getElementById('pivotview').ej2_instances[0];
+                var fieldlistObj = document.getElementById('pivotfieldlist').ej2_instances[0];
+                if (fieldlistObj) {
+                    fieldlistObj.update(pivotGridObj);
+                }
             }
         }
         function onFieldListEnginePopulate(args) {
-            var pivotGridObj = document.getElementById('pivotview').ej2_instances[0];
-            var fieldlistObj = document.getElementById('pivotfieldlist').ej2_instances[0];
-            fieldlistObj.updateView(pivotGridObj);
+            if (document.getElementById('pivotview')) {
+                var pivotGridObj = document.getElementById('pivotview').ej2_instances[0];
+                var fieldlistObj = document.getElementById('pivotfieldlist').ej2_instances[0];
+                fieldlistObj.updateView(pivotGridObj);
+            }
         }
         function onDataBound(args) {
-            var pivotGridObj = document.getElementById('pivotview').ej2_instances[0];
-            var fieldlistObj = document.getElementById('pivotfieldlist').ej2_instances[0];
-            pivotGridObj.toolTip.destroy();
-            pivotGridObj.refresh();
-            if (ej.base.Browser.isDevice) {
-                ej.base.prepend([document.getElementById('pivotfieldlist')], document.getElementById('pivotview'));
+            if (document.getElementById('pivotview')) {
+                var pivotGridObj = document.getElementById('pivotview').ej2_instances[0];
+                var fieldlistObj = document.getElementById('pivotfieldlist').ej2_instances[0];
+                pivotGridObj.tooltip.destroy();
+                if (ej.base.Browser.isDevice) {
+					pivotGridObj.element.style.width = "100%";
+                    pivotGridObj.allowCalculatedField = true;
+                    pivotGridObj.showFieldList = true;
+                }
+                pivotGridObj.refresh();
             }
         }
     </script>

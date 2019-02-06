@@ -3,7 +3,7 @@
 @section ControlsSection{
     <div class="control-section">
         <div class="content-wrapper">
-            <ejs-schedule id="schedule" width="100%" height="650px" resourceHeaderTemplate="#resourceTemplate" selectedDate="new DateTime(2018, 4, 1)" popupOpen="onPopupOpen" actionBegin="onActionBegin" renderCell="onRenderCell" resizeStart="onResizeStart" dragStart="onDragStart">
+            <ejs-schedule id="schedule" width="100%" height="650px" resourceHeaderTemplate="#resourceTemplate" allowDragAndDrop="false" allowResizing="false" selectedDate="new DateTime(2018, 4, 1)" popupOpen="onPopupOpen" actionBegin="onActionBegin" renderCell="onRenderCell">
                 <e-schedule-group resources="@ViewBag.Resources"></e-schedule-group>
                 <e-schedule-resources>
                     <e-schedule-resource dataSource="@ViewBag.Doctors" field="DoctorId" title="Doctor Name" name="Doctors" textField="text" idField="id" colorField="color" workDaysField="workDays" startHourField="startHour" endHourField="endHour"></e-schedule-resource>
@@ -107,16 +107,28 @@
         };
 
         function onActionBegin(args) {
-            if (args.requestType === 'eventCreate' && args.data.length > 0) {
+            var isEventChange = (args.requestType === 'eventChange');
+            if ((args.requestType === 'eventCreate' && args.data.length > 0) || isEventChange) {
                 var scheduleObj = document.getElementById('schedule').ej2_instances[0];
-                var eventData = args.data[0];
+                var eventData = (isEventChange) ? args.data : args.data[0];
                 var eventField = scheduleObj.eventFields;
                 var startDate = eventData[eventField.startTime];
                 var endDate = eventData[eventField.endTime];
                 var resourceIndex = [1, 2, 3].indexOf(eventData.DoctorId);
-                args.cancel = !scheduleObj.isSlotAvailable(startDate, endDate, resourceIndex);
+                args.cancel = !isValidateTime(startDate, endDate, resourceIndex, scheduleObj);
+                if (!args.cancel) {
+                    args.cancel = !scheduleObj.isSlotAvailable(startDate, endDate, resourceIndex);
+                }
             }
         }
+
+        function isValidateTime(startDate, endDate, resIndex, scheduleObj) {
+            var resource = scheduleObj.getResourcesByIndex(resIndex);
+            var startHour = parseInt(resource.resourceData.startHour.toString().slice(0, 2), 10);
+            var endHour = parseInt(resource.resourceData.endHour.toString().slice(0, 2), 10);
+            return (startHour <= startDate.getHours() && endHour >= endDate.getHours());
+        }
+
         function onPopupOpen(args) {
             if (args.target && args.target.classList.contains('e-work-cells')) {
                 args.cancel = !args.target.classList.contains('e-work-hours');
@@ -128,18 +140,10 @@
                 ej.base.addClass([args.element], ['willsmith', 'alice', 'robson'][parseInt(args.element.getAttribute('data-group-index'), 10)]);
             }
         }
-
-        function onResizeStart(args) {
-            args.cancel = true;
-        }
-
-        function onDragStart(args) {
-            args.cancel = true;
-        }
     </script>
 }
 @section Meta{
-    <meta name="description" content="This demo for Essential JS2 Schedule control shows how to set different working days for each of the resources." />
+    <meta name="description" content="This demo for Essential JS2 Scheduler control shows how to set different working days for each of the resources." />
 }
 @section ActionDescription{
     <div id="action-description">

@@ -1,23 +1,22 @@
 ﻿@using Syncfusion.EJ2.Maps;
 @section ControlsSection{
     @{
-        var TextStyle = new MapsFont
-        {
-            Size = "16px"
-        };
-        var CenterPosition = new
-        {
-            latitude = 27.0902,
-            longitude = -105.7129
-        };
+                var TextStyle = new MapsFont
+                {
+                    Size = "16px"
+                };
+                var CenterPosition = new
+                {
+                    latitude = 27.0902,
+                    longitude = -105.7129
+                };
 
-        var markers = new List<Syncfusion.EJ2.Maps.MapsMarker>
+                var markers = new List<Syncfusion.EJ2.Maps.MapsMarker>
         {
             new Syncfusion.EJ2.Maps.MapsMarker
             {
                 Visible = true,
-                Offset = new { x =2, y = -15 },
-                Template = "<div><img src=../styles/images/maps/ballon.png style=height:30px;width:20px;></img></div>",
+                Template = "<div><img src=../styles/images/maps/group.svg style=height:15px; width: 15px;></img></div>",
                 TooltipSettings = new MapsTooltipSettings{ Visible = true, ValuePath="name" },
                 DataSource = new[]
                 {
@@ -27,31 +26,82 @@
                        latitude=23.6445,
                        longitude=-102.832
                     }
-                 }
+                 },
                },
             new Syncfusion.EJ2.Maps.MapsMarker
             {
                 Visible=  true,
-                Template = "<div><img src=../styles/images/maps/circle.png style=height:15px;width:15px;></img></div>",
+                Offset = new { x=2, y= -7 },
+                Template = "<div><img src=../styles/images/maps/ballon.png style=height:30px; width: 20px;></img></div>",
                 TooltipSettings = new MapsTooltipSettings{ Visible=true, ValuePath="name" },
                 DataSource = new[]
                 {
                    new
                    {
-                        name="Los Angeles City",
-                        latitude=34.0522,
-                        longitude=-118.2437
-                   },
-                   new {
-                                name="Mexico City",
-                                latitude=23.6445,
-                                longitude=-102.832
-                       }
-
+                         name="Mexico City",
+                         latitude= 24.2005,
+                         longitude= -102.832
+                   }
                 }
-
+            },
+             new Syncfusion.EJ2.Maps.MapsMarker
+            {
+                Visible=  true,
+                Offset = new { x=2, y= -7 },
+                Template = "<div style=font-weight:500;font-size:13px;text-align:left>Mexico</div>",
+                TooltipSettings = new MapsTooltipSettings{ Visible=true, ValuePath="name" },
+                DataSource = new[]
+                {
+                   new
+                   {
+                         name="Mexico City",
+                         latitude= 24.0005,
+                         longitude= -101.200
+                   }
+                }
+            },
+              new Syncfusion.EJ2.Maps.MapsMarker
+            {
+                Visible=  true,
+                Template = "<div><img src=../styles/images/maps/oval.svg style=height:15px;width:15px;></img></div>",
+                TooltipSettings = new MapsTooltipSettings{ Visible=true, ValuePath="name" },
+                DataSource = new[]
+                {
+                   new
+                   {
+                         name="Los Angeles",
+                         latitude=34.0522,
+                         longitude=-118.2437
+                   }
+                }
+            },
+               new Syncfusion.EJ2.Maps.MapsMarker
+            {
+                Visible=  true,
+                Template = "<div><div style=text-align:right;font-weight:500;font-size: 13px;>Los Angeles</br>International Airport</div></div>",
+                DataSource = new[]
+                {
+                   new
+                   {
+                           name="Los Angeles City",
+                           latitude=34.7000,
+                           longitude=-121.5000
+                   }
+                }
+            },
+                 new Syncfusion.EJ2.Maps.MapsMarker
+            {
+                Visible=  true,
+                Template = "<div><img src=../styles/images/maps/map-tooltip.svg style=height:50px; width:100px;></img></div>",
+                DataSource = new[]
+                {
+                   new
+                   {
+                           latitude=28.5,
+                           longitude=-110.50
+                   }
+                }
             }
-
         };
     }
     <div class="control-section">
@@ -60,16 +110,15 @@
                 <ejs-maps id="maps" load="mapLoad" centerPosition="CenterPosition">
                     <e-maps-titlesettings alignment="@Syncfusion.EJ2.Maps.Alignment.Center" text="Flight route from Los Angeles to Mexico city" textStyle="TextStyle">
                     </e-maps-titlesettings>
-                    <e-maps-zoomsettings zoomFactor="5" enable="true"></e-maps-zoomsettings>
-                    <e-maps-annotations>
-                        <e-maps-annotation content="<div style=height:18px;width:170px;background:white;text-align:center><a href=https://www.openstreetmap.org/copyright target=_blank>©OpenStreetMap contributors</a></div>"
-                                           verticalAlignment="@Syncfusion.EJ2.Maps.AnnotationAlignment.Far" horizontalAlignment="@Syncfusion.EJ2.Maps.AnnotationAlignment.Far" zIndex="1" x="-40" y="-20"></e-maps-annotation>
-                    </e-maps-annotations>
+                    <e-maps-zoomsettings zoomFactor="5" enable="false"></e-maps-zoomsettings>
                     <e-maps-layers>
                         <e-maps-layer layerType="@Syncfusion.EJ2.Maps.ShapeLayerType.OSM" markerSettings="markers">
                         </e-maps-layer>
                     </e-maps-layers>
                 </ejs-maps>
+                <div style="float: right">
+                    <a href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap contributors</a>
+                </div><br />
                 <div style="float: right; margin-right: 10px;">
                     Source:
                     <a href="https://en.wikipedia.org/wiki/Headquarters_of_the_United_Nations" target="_blank">en.wikipedia.org</a>
@@ -79,10 +128,13 @@
     </div>
     <script type="text/javascript">
         function mapLoad(args) {
+            var theme = location.hash.split("/")[1];
+            theme = theme ? theme : "Material";
+            args.maps.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
             args.maps.layers[0].navigationLineSettings = [{
-                width: 10,
+                width: 8,
                 visible: true,
-                angle: -0.1,
+                angle: -0.05,
                 color: '#00ace6',
                 latitude: [23.6445, 34.0522],
                 longitude: [-102.832, -118.2437]
@@ -91,24 +143,23 @@
     </script>
 }
 @section Description{
-    <div id="description">
+     <div id="description">
         <p>
-            In this example, you can see how to render the navigation lines on an Open Street Map. Also denoted the source and destination
-            locations using marker.
-        </p>
-        <br />
+            In this example, you can see how to render the navigation lines in the OpenStreetMap. The source and destination locations have been denoted using the marker template.
+       
         <p style="font-weight: 500">Injecting Module</p>
         <p>
-            Tooltip is enabled in this example. To see the tooltip in action, hover the mouse over a marker or tap a marker in touch
-            enabled devices. Maps component features are segregated into individual feature-wise modules. To use a marker,
-            inject the Marker module using the <code>Maps.Inject(Marker)</code> method..
+            The maps component features are segregated into individual modules by feature. To use a marker, inject the Marker module using the <code>Maps.Inject(Marker)</code> method.
         </p>
+       
     </div>
+
 }
 @section ActionDescription{
-    <div id="action-description">
+   <div id="action-description">
         <p>
-            This sample illustrates the flight route from Los Angeles to Mexico city using Navigation lines in an Open Street Map.
-        </p>
+            This sample illustrates the flight route from Los Angeles to Mexico City using navigation lines in the OpenStreetMap.
+       </p>
     </div>
+
 }

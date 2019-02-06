@@ -20,7 +20,7 @@
                     </td>
                     <td style="width: 50%">
                         <div style="max-width: 200px">
-                            <input id="hex-value" value="#0db1e7" type="text" onchange="inputChange()">
+                            <input id="hex-value" value="#0db1e7" maxlength="9" spellcheck="false" type="text" oninput="inputChange()">
                         </div>
                     </td>
                 </tr>
@@ -66,7 +66,7 @@
 }
 
 @section Meta{
-    <meta name="description" content="This demo for Syncfusion Essential JS2 ColorPicker control shows the color picker supported properties and its functionality." />
+    <meta name="description" content="This example demonstrates the supported API's and its functionalities of the Syncfusion ASP.NET Core ColorPicker." />
 }
 
 @section ActionDescription{
@@ -98,40 +98,43 @@
     </ul>
     <p>
         More information about ColorPicker can be found in this
-        <a target="_blank" href="http://ej2.syncfusion.com/documentation/colorpicker/getting-started.html">
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/color-picker/">
             documentation section</a>.
     </p>
     </div>
 }
 
-
 @section Scripts {
     <script>
+        // Getting COlorPicker control instance
+        var colorPicker = ej.base.getComponent(document.getElementById('color-picker'), 'colorpicker');
+        var input = document.getElementById('hex-value');
         ej.inputs.Input.createInput({
-            element : document.getElementById('hex-value')
+            element: input
         });
     </script>
 }
 
 <script>
-
     function onChange(args) {
-        document.getElementById('hex-value').value = args.currentValue.hex;
+        input.value = args.currentValue.hex;
     }
     function inputChange() {
-        document.getElementById('color-picker').ej2_instances[0].value = document.getElementById('hex-value').value;
+        var val = input.value;
+        // Sets to color picker default color value if user enters the invalid hex code
+        colorPicker.value = val && val.length > 2 ? (val[0] !== '#' ? '#' + val : val) : '#008000';
     }
-    function valueChanged() {
-        document.getElementById('color-picker').ej2_instances[0].mode = document.getElementById('ddl').ej2_instances[0].index ? 'Palette' : 'Picker';
+    function valueChanged(args) {
+        colorPicker.mode = args.value;
     }
     function mode_onChange(args) {
-        document.getElementById('color-picker').ej2_instances[0].modeSwitcher = args.checked;
+       colorPicker.modeSwitcher = args.checked;
     }
     function button_onChange(args) {
-        document.getElementById('color-picker').ej2_instances[0].showButtons = args.checked;
+        colorPicker.showButtons = args.checked;
     }
     function disabled_onChange(args) {
-        document.getElementById('color-picker').ej2_instances[0].disabled = args.checked;
+        colorPicker.disabled = args.checked;
     }
 </script>
 
@@ -147,13 +150,13 @@
         text-align: center;
     }
 
-        #colorpicker-control h4 {
-            margin-bottom: 20px;
-            color: rgba(0, 0, 0, 0.64);
-        }
+    #colorpicker-control h4 {
+        margin-bottom: 20px;
+        color: rgba(0, 0, 0, 0.64);
+    }
 
     .highcontrast #colorpicker-control h4 {
-        color: #fff;
+        color: rgba(255, 255, 255, 0.64);
     }
 
     .e-bigger #colorpicker-control h4 {

@@ -1,9 +1,9 @@
 @using Syncfusion.EJ2.PivotView
 @section Meta{
-    <meta name="description" content="This demo for Essential JS2 Pivot Table control shows different types of aggregation for value fields" />
+    <meta name="description" content="This demo for Essential JS2 ASP.NET Core Pivot Table control shows different types of aggregation for value fields" />
 }
 @section ControlsSection{
-    <div class="col-lg-10 control-section">
+    <div class="col-lg-9 control-section">
         <div class="content-wrapper">
             <ejs-pivotview id="pivotview" width="100%" height="300" showFieldList="true">
                 <e-datasource data="@ViewBag.data" expandAll="false" enableSorting="true">
@@ -11,8 +11,7 @@
                         <e-field name="EnerType" items="@ViewBag.drilledMembers"></e-field>
                     </e-drilledmembers>
                     <e-formatsettings>
-                        <e-field name="ProCost" format="C0" maximumSignificantDigits="10" minimumSignificantDigits="1" useGrouping="true"></e-field>
-                        <e-field name="PowUnits" format="N0" maximumSignificantDigits="10" minimumSignificantDigits="1" useGrouping="true"></e-field>
+                        <e-field name="ProCost" format="C"></e-field>                        
                     </e-formatsettings>
                     <e-rows>
                         <e-field name="Year" caption="Production Year"></e-field>
@@ -33,14 +32,14 @@
         </div>
     </div>
 
-    <div class="col-lg-2 property-section">
+    <div class="col-lg-3 property-section">
         <table id='property' title='Properties' class='property-panel-table' style="width: 100%;">
             <tbody>
                 <tr style="height: 50px">
                     <td>
                         <div>
                             <ejs-dropdownlist id="unitdrpdwn" dataSource="@ViewBag.unitdata" change="setUnitTypeChange" index="0" popupWidth="auto" placeholder="Units">
-                                <e-dropdownlist-fields text="Name" value="Value"></e-dropdownlist-fields>
+                                <e-dropdownlist-fields text="Value" value="Name"></e-dropdownlist-fields>
                             </ejs-dropdownlist>
                         </div>
                     </td>
@@ -49,7 +48,7 @@
                     <td>
                         <div>
                             <ejs-dropdownlist id="costdrpdwn" dataSource="@ViewBag.costdata" change="setCostTypeChange" index="0" popupWidth="auto" placeholder="Cost">
-                                <e-dropdownlist-fields text="Name" value="Value"></e-dropdownlist-fields>
+                                <e-dropdownlist-fields text="Value" value="Name"></e-dropdownlist-fields>
                             </ejs-dropdownlist>
                         </div>
                     </td>
@@ -83,7 +82,7 @@
             for (var vCnt = 0; vCnt < pivotGridObj.dataSource.values.length; vCnt++) {
                 if (pivotGridObj.dataSource.values[vCnt].name === fieldName) {
                     pivotGridObj.dataSource.values[vCnt].type = summaryType;
-                    isAvail = pivotGridObj.dataSource.values[vCnt].properties ? false : true;
+                    isAvail = true;
                 }
             }
             if (isAvail) {
@@ -102,34 +101,25 @@
 @section ActionDescription{
    <div id="action-description">
        <p>
-           This sample demonstrates the aggregate types in the pivot widget. In this sample, you can change the aggregate types
-           for value fields using a dropdown list separately.
+           This sample demonstrates the aggregate types in the pivot table widget.
        </p>
     </div>
 }
 
 @section Description{
-    <div id="description">
-        <p>
-            The pivot widget supports different types of aggregation for value fields. The aggregate type can be set using the type
-            property of the value field. The built-in aggregates are:
-        </p>
-        <ul>
-            <li>
-                <code>Sum</code>
-            </li>
-            <li>
-                <code>Average</code>
-            </li>
-            <li>
-                <code>Min</code>
-            </li>
-            <li>
-                <code>Max</code>
-            </li>
-            <li>
-                <code>Count</code>
-            </li>
-        </ul>
-    </div>
+   <div id="description">
+       <p>
+           In this sample, you can change the aggregate types for value fields using the dropdown list separately. The aggregate type can be set using the <code>type</code>
+           property of the value field. The built-in aggregates are:
+       </p>
+       <p>
+           <code>Sum</code>,  <code>Average</code>, <code>Min</code>, <code>Max</code>, <code>Count</code>, <code>Distinct Count</code>, <code>Product</code>,
+           <code>Index</code>, <code>Population StDev</code>, <code>Sample StDev</code>, <code>Population Var</code>, <code>Sample Var</code>, <code>Running Totals</code>,
+           <code>Difference From</code>, <code>% of Difference From</code>, <code>% of Grand Total</code>, <code>% of Column Total</code>, <code>% of Row Total</code>,
+           <code>% of Parent Total</code>, <code>% of Parent Column Total</code>, <code>% of Parent Row Total.</code>
+       </p>
+       <p>
+           To achieve aggregation through UI, navigate to <b>"User Interaction > Field List"</b> sample and click and open the value field settings menu to experience the same.
+       </p>
+   </div>
 }

@@ -48,7 +48,7 @@
         onChartLoad = function (args) {
             var selectedTheme = location.hash.split('/')[1];
             selectedTheme = selectedTheme ? selectedTheme : 'Material';
-            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1));
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/dark/i, "Dark").replace(/light/i, "Light"));
         }
 
         function onChange(args) {
@@ -56,6 +56,12 @@
             chart.selectionMode = this.value;
 
         }
+
+        document.getElementById('select').onchange = () => {
+            var chart = document.getElementById('container').ej2_instances[0];
+            var element = (document.getElementById('select'));
+            chart.isMultiSelect = element.checked;
+        };
     </script>
 }
 

@@ -16,7 +16,7 @@ namespace EJ2CoreSampleBrowser.Controllers
             ViewBag.weekEnd = ViewBag.weekStart.AddDays(6);
             ViewBag.monthStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             ViewBag.monthEnd = ViewBag.monthStart.AddMonths(1).AddDays(-1);
-            ViewBag.lastMonthStart = new DateTime(DateTime.Now.Year, (DateTime.Now.Month - 1), 1);
+            ViewBag.lastMonthStart = new DateTime(lastMonth.Year, lastMonth.Month, 1);
             ViewBag.lastMonthEnd = ViewBag.lastMonthStart.AddMonths(1).AddDays(-1);
             ViewBag.lastYearStart = new DateTime(DateTime.Now.Year - 1, 1, 1);
             ViewBag.lastYearEnd = new DateTime(DateTime.Now.Year - 1, 12, 31);

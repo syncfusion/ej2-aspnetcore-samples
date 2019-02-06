@@ -32,6 +32,7 @@
             Width = 0.5,
             Color = "gray"
         };
+        var propertyPath = new[] { "name" };
     }
     <div class="col-lg-9 control-section">
         <div id="maps">
@@ -40,10 +41,10 @@
                 <e-maps-zoomsettings enable="false"></e-maps-zoomsettings>
                 <e-maps-legendsettings mode="@LegendMode.Interactive" alignment="@Alignment.Center" height="10" width="350" visible="true" position="@Syncfusion.EJ2.Maps.LegendPosition.Bottom" labelDisplayMode="@LabelIntersectAction.Trim"></e-maps-legendsettings>
                 <e-maps-layers>
-                    <e-maps-layer shapeData="ViewBag.mapdata" dataSource="ViewBag.datasource" shapePropertyPath="name" shapeDataPath="name">
+                    <e-maps-layer shapeData="ViewBag.mapdata" dataSource="ViewBag.datasource" shapePropertyPath="propertyPath" shapeDataPath="name">
                         <e-layersettings-shapesettings border="border" colorValuePath="population" colorMapping="colorMaps">
                         </e-layersettings-shapesettings>
-                        <e-layersettings-tooltipsettings visible="true" valuePath="population" format="State= ${name} <br> Population= ${population}"></e-layersettings-tooltipsettings>
+                        <e-layersettings-tooltipsettings visible="true" valuePath="population" format="State: ${name} <br> Population: ${population}"></e-layersettings-tooltipsettings>
                     </e-maps-layer>
                 </e-maps-layers>
             </ejs-maps>
@@ -60,7 +61,7 @@
                 <tr id="button-control" style="height: 50px">
                     <td align="center">
                         <div>
-                            <button id="togglebtn">Print</button>
+                            <button id="togglebtn" style="width:80px">Print</button>
                         </div>
                     </td>
                 </tr>
@@ -88,7 +89,7 @@
 
     window.onload = function () {
         window.togglebtn1 = new ej.buttons.Button({
-            iconCss: 'e-icons e-play-icon', cssClass: 'e-flat', isPrimary: true,
+            cssClass: 'e-info', isPrimary: true
         });
         window.togglebtn1.appendTo('#togglebtn');
         document.getElementById('togglebtn').onclick = () => {
@@ -96,29 +97,29 @@
         };
     };
 </script>
-@section Meta{
-    <meta name="description" content="This demo for Essential JS2 Maps control illustrates the printing functionality in the maps control." />
-}
 @section ActionDescription{
     <div id="action-description">
         <p>
-            This sample visualizes the continents in the world by rendering these in a map layer. Also marks the office locations of YouTube in the world using markers.
+            This sample illustrates the print feature in Maps. By clicking the Print button, you can print the maps directly from the browser.
         </p>
     </div>
 }
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Maps control illustrates the printing functionality in the maps control." />
+}
 @section Description{
-
     <div id="description">
         <p>
-            In this example, you can see how to render a map with the provided GeoJSON data. Group of shapes can be combined to form a layer of the map. You can bind the desired colors from the data source to the map shapes. The marker templates are used to display the names for shapes and mark specific locations. Legend is enabled in this example to represent each continent.
+            In this example, you can see how to render and configure the print. The rendered maps can be printed directly from the browser by calling the public method.
         </p>
         <p>
             Tooltip is enabled in this example. To see the tooltip in action, hover the mouse over a marker or tap a marker in touch enabled devices.
         </p>
         <br />
-        <p style="font-weight= 500">Injecting Module</p>
+        <p style="font-weight: 500">Injecting Module</p>
         <p>
-            Maps component features are segregated into individual feature-wise modules. To use a marker, inject the <code>Marker</code> module using the <code>Maps.Inject(Marker)</code> method, and use a legend by injecting the <code>Legend</code> module.
+            Maps component features are segregated into individual feature-wise modules. To use a legend, inject the <code>Legend</code> module using the <code>Maps.Inject(Legend)</code> method.
         </p>
+
     </div>
 }

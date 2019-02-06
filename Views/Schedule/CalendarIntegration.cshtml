@@ -1,0 +1,66 @@
+﻿@using Syncfusion.EJ2
+@{
+    var calendarId = "5105trob9dasha31vuqek6qgp0@group.calendar.google.com";
+    var publicKey = "AIzaSyD76zjMDsL_jkenM5AAnNsORypS1Icuqxg";
+    var dataManager = new DataManager() { Url = "https://www.googleapis.com/calendar/v3/calendars/" + calendarId + "/events?key=" + publicKey, Adaptor = "WebApiAdaptor", CrossDomain = true };
+}
+@section ControlsSection{
+    <div class="control-section">
+        <div class="content-wrapper">
+            <ejs-schedule id="schedule" width="100%" height="650px" selectedDate="new DateTime(2018, 11, 14)" readonly="true" dataBinding="onDataBinding">
+                <e-schedule-eventsettings dataSource="dataManager">
+                </e-schedule-eventsettings>
+            </ejs-schedule>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        function onDataBinding(e) {
+            var items = e.result.items;
+            var scheduleData = [];
+            if (items.length > 0) {
+                for (var i = 0; i < items.length; i++) {
+                    var event = items[i];
+                    var when = event.start.dateTime;
+                    var start = event.start.dateTime;
+                    var end = event.end.dateTime;
+                    if (!when) {
+                        when = event.start.date;
+                        start = event.start.date;
+                        end = event.end.date;
+                    }
+                    scheduleData.push({
+                        Id: event.id,
+                        Subject: event.summary,
+                        StartTime: new Date(start),
+                        EndTime: new Date(end),
+                        IsAllDay: !event.start.dateTime
+                    });
+                }
+            }
+            e.result = scheduleData;
+        }
+    </script>
+
+}
+@section Meta{
+    <meta name="description" content="This example shows how to integrate Google Calendar events into ASP.NET Core Scheduler." />
+}
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This example illustrates how to load and integrate events data from the Google Calendar into our Scheduler.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this example, we have assigned our custom created Google Calendar url to the DataManager and assigned the
+            same to the Scheduler <code>dataSource</code> within the <code>eventSettings</code> API. Since the events data retrieved from the
+            Google Calendar will be in its own object format, therefore it needs to be resolved manually within the
+            Scheduler’s <code>dataBinding</code> event. Within this <code>dataBinding</code> event, the event fields needs to be mapped properly
+            and then assigned to the result.
+        </p>
+    </div>
+}

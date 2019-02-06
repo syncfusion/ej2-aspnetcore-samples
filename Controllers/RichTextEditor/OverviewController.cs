@@ -45,7 +45,7 @@ namespace EJ2CoreSampleBrowser.Controllers
                                             <p>Provides an option to customize quick toolbar for an image </p>
                                         </li>
                                     </ol>
-                                    <img alt = 'Logo' src ='/images/RichTextEditor/RTEImage-Feather.png' style='width: 300px'/>
+                                    <img alt = 'Logo' src ='../images/RichTextEditor/RTEImage-Feather.png' style='width: 300px'/>
                                      </div>
                                 </div>
                             </div>";

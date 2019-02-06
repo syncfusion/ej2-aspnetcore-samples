@@ -1,15 +1,23 @@
 ﻿@using Syncfusion.EJ2
 @section ControlsSection{
-   <div class="control-section col-lg-9" align='center'>
-        <ejs-accumulationchart id="container" title="Mobile Browser Statistics" load="load" enableAnimation="false">
+    @{
+        var piecenter = new
+        {
+            x = "50%",
+            y = "50%"
+        };
+
+    }
+    <div class="control-section col-lg-9" align='center'>
+        <ejs-accumulationchart id="container" title="Mobile Browser Statistics" load="load" enableAnimation="false" center="piecenter">
             <e-accumulationchart-tooltipsettings enable="true"></e-accumulationchart-tooltipsettings>
             <e-accumulationchart-legendsettings visible="false">
             </e-accumulationchart-legendsettings>
             <e-accumulation-series-collection>
                 <e-accumulation-series dataSource="ViewBag.dataSource" xName="xValue" yName="yValue" name="Browser" explodeIndex="0" explode="true" explodeOffset="10%">
-                <e-accumulationseries-datalabel name="text" visible="true">
-                    <e-font fontWeight="600" color="white"></e-font>
-                </e-accumulationseries-datalabel>
+                    <e-accumulationseries-datalabel name="text" visible="true">
+                        <e-font fontWeight="600" color="white"></e-font>
+                    </e-accumulationseries-datalabel>
                 </e-accumulation-series>
             </e-accumulation-series-collection>
         </ejs-accumulationchart>
@@ -65,7 +73,7 @@
                 <tr style="height: 50px">
                     <td style="width: 30%">
                         <div>
-                            Explode Index                            
+                            Explode Index
                         </div>
                     </td>
                     <td style="width: 70%;">
@@ -75,6 +83,40 @@
                     </td>
                     <td style="width: 30%;">
                         <p id="explodeindex" style="font-weight: normal;padding-top:15px">0</p>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td style="width: 30%">
+                        <div>
+                            Center X
+                        </div>
+                    </td>
+                    <td style="width: 70%;">
+                        <div data-role="rangeslider">
+                            <input type="range" name="range-min" id="x" value="50" min="0" max="100" style="width:90%">
+                        </div>
+                    </td>
+                    <td style="width: 60%;">
+                        <div data-role="rangeslider">
+                            <p id="xvalue" style="font-weight: normal;padding-top:10px;">50%</p>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td style="width: 30%">
+                        <div>
+                            Center Y
+                        </div>
+                    </td>
+                    <td style="width: 70%;">
+                        <div data-role="rangeslider">
+                            <input type="range" name="range-min" id="y" value="50" min="0" max="100" style="width:90%">
+                        </div>
+                    </td>
+                    <td style="width: 60%;">
+                        <div data-role="rangeslider">
+                            <p id="yvalue" style="font-weight: normal;padding-top:10px;">50%</p>
+                        </div>
                     </td>
                 </tr>
             </tbody>
@@ -93,8 +135,8 @@
                 pie.refreshChart();
             }
         }
-       
-            document.getElementById('pieangle').onpointermove = document.getElementById('pieangle').ontouchmove =
+
+        document.getElementById('pieangle').onpointermove = document.getElementById('pieangle').ontouchmove =
             document.getElementById('pieangle').onchange = (e) => {
                 anglechange(+(document.getElementById('pieangle')).value);
             };
@@ -108,7 +150,7 @@
                 pie.refreshChart();
             }
         }
-       
+
         document.getElementById('pieradius').onpointermove = document.getElementById('pieradius').ontouchmove =
             document.getElementById('pieradius').onchange = (e) => {
                 radiuschange(+(document.getElementById('pieradius')).value);
@@ -123,7 +165,7 @@
                 pie.refreshChart();
             }
         }
-       
+
         document.getElementById('pieexploderadius').onpointermove = document.getElementById('pieexploderadius').ontouchmove =
             document.getElementById('pieexploderadius').onchange = (e) => {
                 exploderadius(+(document.getElementById('pieexploderadius')).value);
@@ -138,15 +180,35 @@
                 pie.refreshChart();
             }
         }
-        
+
         document.getElementById('pieexplodeindex').onpointermove = document.getElementById('pieexplodeindex').ontouchmove =
             document.getElementById('pieexplodeindex').onchange = (e) => {
                 explodeIndex(+(document.getElementById('pieexplodeindex')).value);
             };
+        function xchange(value) {
+            var pie = document.getElementById("container").ej2_instances[0];
+            pie.center.x = value + '%';
+            document.getElementById('xvalue').innerHTML = value + '%';
+            pie.removeSvg(); pie.refreshSeries(); pie.refreshChart();
+        }
+        document.getElementById('x').onpointermove = document.getElementById('x').ontouchmove =
+            document.getElementById('x').onchange = function (e) {
+                xchange(+(document.getElementById('x')).value);
+            };
+        function ychange(value) {
+            var pie = document.getElementById("container").ej2_instances[0];
+            pie.center.y = value + '%';
+            document.getElementById('yvalue').innerHTML = value + '%';
+            pie.removeSvg(); pie.refreshSeries(); pie.refreshChart();
+        }
+        document.getElementById('y').onpointermove = document.getElementById('y').ontouchmove =
+            document.getElementById('y').onchange = function (e) {
+                ychange(+(document.getElementById('y')).value);
+            };
         function load(args) {
             var indexedTheme = location.hash.split('/')[1];
             indexedTheme = indexedTheme ? indexedTheme : 'Material';
-            args.accumulation.theme = (indexedTheme.charAt(0).toUpperCase() + indexedTheme.slice(1));
+            args.accumulation.theme = (indexedTheme.charAt(0).toUpperCase() + indexedTheme.slice(1).replace(/dark/i, "Dark").replace(/light/i, "Light"));
             args.accumulation.series[0].startAngle = 0;
             args.accumulation.series[0].endAngle = 0;
             args.accumulation.series[0].explodeIndex = 0;
@@ -159,12 +221,12 @@
 @section ActionDescription{
 
     <div id="action-description">
-        This sample demonstrates pie chart for mobile browser usage statistics. For pie chart, you can change start angle of chart by Pie Angle in properties panel. Outer radius for pie chart can be changed by Outer Radius. Explode Index and explode radius for chart can be changed by Explode Radius and Explode Index
+        This sample demonstrates pie chart for mobile browser usage statistics. Datalabel shows the Information about the points.
     </div>
 }
 @section Description {
     <div id="description">
-        In this example, you can see how to render and configure the pie chart. You can use border, fill properties to customize the pie point. dataLabel is used to represent individual data and its value.
+        In this example, you can see how to render and configure the pie chart. You can use <code>border</code>, <code>fill</code> properties to customize the pie point. <code>dataLabel</code> is used to represent individual data and its value.
 
         Tooltip is enabled in this example, to see the tooltip in action, hover a point or tap on a point in touch enabled devices.
     </div>

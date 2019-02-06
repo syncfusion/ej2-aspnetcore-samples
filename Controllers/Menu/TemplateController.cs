@@ -25,14 +25,10 @@ namespace EJ2CoreSampleBrowser.Controllers
                 new  {
                     category = "Services",
                     options = new List<object>(){
-                        new  {
-                            support = new List<object>() {
-                                new { value= "Application Development", count= "1200+" },
-                                new { value= "Maintenance & Support", count= "3700+" },
-                                new { value= "Quality Assurance" },
-                                new { value= "Cloud Integration", count= "900+" }
-                            }
-                        }
+                        new { value= "Application Development", count= "1200+" },
+                        new { value= "Maintenance & Support", count= "3700+" },
+                        new { value= "Quality Assurance" },
+                        new { value= "Cloud Integration", count= "900+" }
                     }
                 },
 
@@ -40,6 +36,7 @@ namespace EJ2CoreSampleBrowser.Controllers
                     category = "About Us",
                     options =  new List<object>(){
                         new {
+                            id = "about",
                             about = new List<object>() { new { value = "We are on a mission to provide world-class best software solutions for web, mobile and desktop platforms. Around 900+ applications are desgined and delivered to our customers to make digital & strengthen their businesses." } }[0]
                         }
                     }

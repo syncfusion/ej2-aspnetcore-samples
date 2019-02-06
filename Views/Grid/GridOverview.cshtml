@@ -1,65 +1,89 @@
 ﻿@using Syncfusion.EJ2
 
-
 @section ControlsSection{
-<link href="~/styles/Grid/style.css" rel="stylesheet" />
+    <link href="~/styles/Grid/style.css" rel="stylesheet" />
     <div class="control-section">
         <div id="default">
             <ejs-dropdownlist id="DataRange" dataSource="@ViewBag.Data" placeholder="Select a Data Range" index="0" change="valueChange" width="220px">
-               <e-dropdownlist-fields text="Text" value="Value"></e-dropdownlist-fields>
+                <e-dropdownlist-fields text="Text" value="Value"></e-dropdownlist-fields>
             </ejs-dropdownlist>
             <span id='msg'></span>
         </div>
         <ejs-grid id="GridOverview" allowFiltering="true" allowSorting="true" height="600" rowHeight="38" enableHover="false" load="load" queryCellInfo="queryCellInfo" dataBound="startTimer" actionComplete="complete" enableVirtualization="true" allowSelection="true">
-           <e-grid-filtersettings type="Menu"></e-grid-filtersettings>
+            <e-grid-filtersettings type="Menu"></e-grid-filtersettings>
             <e-grid-selectionsettings persistSelection="true" type="Multiple" checkboxOnly="true"></e-grid-selectionsettings>
             <e-grid-columns>
                 <e-grid-column field="" type="checkbox" width="60" allowFiltering="false" allowSorting="false"></e-grid-column>
                 <e-grid-column field="EmployeeID" headerText="Employee ID" isPrimaryKey="true" visible="false" textAlign="Right" width="120"></e-grid-column>
                 <e-grid-column field="Employees" headerText="Employee Name" filter="@(new { type="CheckBox"})" clipMode="EllipsisWithTooltip" template="#empTemplate" width="200"></e-grid-column>
                 <e-grid-column field="Designation" headerText="Designation" filter="@(new { type="CheckBox"})" clipMode="EllipsisWithTooltip" width="170"></e-grid-column>
-                <e-grid-column field="Mail" headerText="Mail"  filter="@(new { type="Menu"})" width="230"></e-grid-column>
+                <e-grid-column field="Mail" headerText="Mail" filter="@(new { type="Menu"})" width="230"></e-grid-column>
                 <e-grid-column field="Location" headerText="Location" template="#coltemplate" filter="@(new { type="CheckBox"})" width="140"></e-grid-column>
                 <e-grid-column field="Status" headerText="Status" template="#statusTemplate" filter="@(new { type="CheckBox", itemTemplate="#StatusItemTemp" })" width="150"></e-grid-column>
-                <e-grid-column field="Trustworthiness" headerText="Trustworthiness" filter="@(new { type="CheckBox", itemTemplate="${ trustTemp(data) }"})" template="#trustTemplate" width="160"></e-grid-column>
+                <e-grid-column field="Trustworthiness" headerText="Trustworthiness" filter="@(new { type="CheckBox", itemTemplate="${ trustTemp(data) }"})" template="#trustTemplate" width="200"></e-grid-column>
                 <e-grid-column field="Rating" headerText="Rating" filter="@(new { type="CheckBox", itemTemplate="<div>${ratingDetail(data)}</div>"})" template="#ratingTemplate" width="160"></e-grid-column>
                 <e-grid-column field="Software" headerText="Software" allowSorting="false" allowFiltering="false" template="#progessTemplate" width="180"></e-grid-column>
                 <e-grid-column field="CurrentSalary" headerText="Current Salary" filter="@(new { type="Menu"})" format="C2" textAlign="Right" width="160"></e-grid-column>
-                <e-grid-column field="Address" headerText="Address" filter="@(new { type="Menu"})"  width="240"></e-grid-column>
+                <e-grid-column field="Address" headerText="Address" filter="@(new { type="Menu"})" width="240"></e-grid-column>
             </e-grid-columns>
         </ejs-grid>
 
     </div>
 
-<script type="text/x-jsrender" id="progessTemplate">
-    <div id="myProgress" class="pbar">
-        <div id="myBar" class="bar">
-            <div id="label" class="barlabel"></div>
+
+    <script type="text/x-jsrender" id="progessTemplate">
+        <div id="myProgress" class="pbar">
+            <div id="myBar" class="bar">
+                <div id="label" class="barlabel"></div>
+            </div>
         </div>
-    </div>
-</script>
+    </script>
 
-<script type="text/x-jsrender" id="ratingTemplate">
-    <div class="rating">
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-    </div>
-</script>
-
-<script type="text/x-jsrender" id="empTemplate">
-    <div>
-        <div class="empimg">
-            <span class="e-userimg">
-            </span>
+    <script type="text/x-jsrender" id="ratingTemplate">
+        <div class="rating">
+            <span class="star"></span>
+            <span class="star"></span>
+            <span class="star"></span>
+            <span class="star"></span>
+            <span class="star"></span>
         </div>
-        <span id="Emptext">${Employees}</span>
-    </div>
-</script>
+    </script>
 
-<script type="text/javascript">
+    <script type="text/x-jsrender" id="empTemplate">
+        <div>
+            <div class="empimg">
+                <span class="e-userimg">
+                </span>
+            </div>
+            <span id="Emptext">${Employees}</span>
+        </div>
+    </script>
+
+    <script type="text/x-jsrender" id="trustTemplate">
+        <img style="width: 31px; height: 24px" src="@Url.Content("~/styles/images/grid/${Trustworthiness}.png")" />
+        <span id="Trusttext">${Trustworthiness}</span>
+    </script>
+
+    <script type="text/x-jsrender" id="statusTemplate">
+        <div id="status" class="statustemp">
+            <span class="statustxt">${Status}</span>
+        </div>
+    </script>
+
+    <script type="text/x-jsrender" id="StatusItemTemp">
+        ${statusDetail(data)}
+    </script>
+
+    <script id="coltemplate" type="text/x-template">
+        <div class="image">
+            <img src="@Url.Content("~/styles/images/grid/Map.png")" class="e-image" alt="${Location}" /> &nbsp
+            <span id="locationtext">${Location}</span>
+        </div>
+    </script>
+
+
+    <script type="text/javascript">
+
         var dReady = false;
         var theme;
         var dtTime = false;
@@ -110,10 +134,10 @@
                 span.textContent = "Active"
                 div.className = 'statustemp e-activecolor'
             }
-            if (e.Status === "InActive") {
+            if (e.Status === "Inactive") {
                 span = document.createElement('span');
                 span.className = 'statustxt e-inactivecolor';
-                span.textContent = "InActive"
+                span.textContent = "Inactive"
                 div.className = 'statustemp e-inactivecolor'
             }
             div.appendChild(span);
@@ -147,7 +171,7 @@
                     args.cell.querySelector(".statustxt").classList.add("e-activecolor");
                     args.cell.querySelector(".statustemp").classList.add("e-activecolor");
                 }
-                if (args.cell.textContent === "InActive") {
+                if (args.cell.textContent === "Inactive") {
                     args.cell.querySelector(".statustxt").classList.add("e-inactivecolor");
                     args.cell.querySelector(".statustemp").classList.add("e-inactivecolor");
                 }
@@ -165,7 +189,7 @@
                 }
                 args.cell.querySelector(".bar").style.width = args.data.Software + "%";
                 args.cell.querySelector(".barlabel").textContent = args.data.Software + "%";
-                if (args.data.Status === "InActive") {
+                if (args.data.Status === "Inactive") {
                     args.cell.querySelector(".bar").classList.add("progressdisable");
                 }
             }
@@ -207,7 +231,6 @@
                 msgEle.classList.remove('e-hide');
             }
         });
-
         function getTradeData(dataCount) {
             var check = [true, false];
             var Employees = [
@@ -219,8 +242,8 @@
             var Mail = ['sample.com', 'arpy.com', 'rpy.com', 'mail.com', 'jourrapide.com'];
             var category = ['Energy', 'Financial', 'Technology', 'Industrial'];
             var Location = ['UK', 'USA', 'Sweden', 'France', 'Canada', 'Argentina', 'Austria', 'Germany', 'Mexico'];
-            var Status = ['Active', 'InActive'];
-            var Trustworthiness = ['Perfect', 'Sufficient', 'InSufficient'];
+            var Status = ['Active', 'Inactive'];
+            var Trustworthiness = ['Perfect', 'Sufficient', 'Insufficient'];
             var tradeData = [];
             var Address = ["59 rue de l'Abbaye", "Luisenstr. 48", "Rua do Paço, 67", "2, rue du Commerce", "Boulevard Tirou, 255",
                 "Rua do Paço, 67", "Hauptstr. 31", "Starenweg 5", "Rua do Mercado, 12", "Carrera 22 con Ave. Carlos Soublette #8-35", "Kirchgasse 6",
@@ -257,240 +280,220 @@
             }
             return tradeData;
         }
-</script>
 
-<script type="text/x-jsrender" id="trustTemplate">
-    <img style="width: 31px; height: 24px" src="@Url.Content("~/styles/images/grid/${Trustworthiness}.png")" />
-    <span id="Trusttext">${Trustworthiness}</span>
-</script>
+    </script>
 
-<script type="text/x-jsrender" id="statusTemplate">
-    <div id="status" class="statustemp">
-        <span class="statustxt">${Status}</span>
-    </div>
-</script>
-
-<script type="text/x-jsrender" id="StatusItemTemp">
-    ${statusDetail(data)}
-</script>
-
-<script id="coltemplate" type="text/x-template">
-    <div class="image">
-        <img src="@Url.Content("~/styles/images/grid/Map.png")" class="e-image" alt="${Location}" /> &nbsp
-        <span id="locationtext">${Location}</span>
-    </div>
-</script>
-
-
-<style>
-    .fabric .empimg {
-        background-color: #0078d6;
-    }
-
-    .material .empimg {
-        background-color: #e3165b;
-    }
-
-    .highcontrast .empimg {
-        background-color: #ffd939;
-    }
-
-    _:-ms-fullscreen, :root .highcontrast .e-userimg.sf-icon-Male::before,
-    _:-ms-fullscreen, :root .highcontrast .e-userimg.sf-icon-FeMale::before {
-        color: black;
-    }
-
-    .highcontrast .e-userimg.sf-icon-Male::before,
-    .highcontrast .e-userimg.sf-icon-FeMale::before {
-        color: black;
-    }
-
-    .bootstrap .empimg {
-        background-color: #0078d6;
-    }
-
-    #Emptext {
-        top: -12px;
-        left: 41px;
-        position: relative;
-    }
-    .e-grid.e-rtl #Emptext {
-        top: -12px;
-        left: -41px;
-        position: relative;
-    }
-
-    .empimg {
-        height: 27px;
-        width: 29px;
-        border-radius: 14px;
-    }
-
-    .e-userimg.sf-icon-Male::before,
-    .e-userimg.sf-icon-FeMale::before {       
-        font-size: 13px;
-    }
-    .e-userimg.sf-icon-Male, .e-userimg.sf-icon-FeMale {
-        margin: 0px 8px;
-        line-height: 26px;
-        color: white;
-        font-size: 13px;
-    }
-
-    .e-userimg.sf-icon-Male::before {
-        content: '\e700';
-    }
-
-    .e-userimg.sf-icon-FeMale::before {
-        content: '\e701';
-    }
-
-    .highcontrast .e-grid td.e-rowcell.e-selectionbackground.e-active {
-        background-color: transparent;
-        color: white;
-    }
-
-    td.e-rowcell.e-selectionbackground.e-active {
-        background-color: transparent;
-    }   
-
-    .highcontrast #msg {
-        color: #FFFFFF
-    }
-
-    .e-bigger .e-grid .statustxt{
-        position: relative;
-        top:-2px;
-    }
-
-    .rating .star {
-        font-size: 132%;
-        color: lightgrey;
-    }
-
-        .rating .star.checked {
-            color: #ffa600;
+    <style>
+        .fabric .empimg {
+            background-color: #0078d6;
         }
 
-        .rating .star:before {
-            content: '★';
+        .material .empimg {
+            background-color: #e3165b;
         }
 
-    td.e-rowcell .statustxt.e-activecolor {
-        color: #00cc00;
-        position: relative;
-        top: 9px;
-    }
+        .highcontrast .empimg {
+            background-color: #ffd939;
+        }
 
-    td.e-rowcell .statustxt.e-inactivecolor {
-        color: #e60000;
-        position: relative;
-        top: 9px;
-    }
+        _:-ms-fullscreen, :root .highcontrast .e-userimg.sf-icon-Male::before,
+        _:-ms-fullscreen, :root .highcontrast .e-userimg.sf-icon-FeMale::before {
+            color: black;
+        }
 
-    .statustemp.e-inactivecolor {
-        background-color: #ffd7cc;
-    }
+        .highcontrast .e-userimg.sf-icon-Male::before,
+        .highcontrast .e-userimg.sf-icon-FeMale::before {
+            color: black;
+        }
 
-    .statustemp.e-activecolor {
-        background-color: #ccffcc;
-    }
+        .bootstrap .empimg {
+            background-color: #0078d6;
+        }
 
-    .statustxt.e-activecolor {
-        color: #00cc00;
-    }
+        #Emptext {
+            top: -12px;
+            left: 41px;
+            position: relative;
+        }
 
-    .statustxt.e-inactivecolor {
-        color: #e60000;
-    }
+        .e-grid.e-rtl #Emptext {
+            top: -12px;
+            left: -41px;
+            position: relative;
+        }
 
-    #Trusttext {
-        position: relative;
-        top: 1px;
-    }
+        .empimg {
+            height: 27px;
+            width: 29px;
+            border-radius: 14px;
+        }
 
-    .e-image {
-        height: 13px;
-        width: 14px;
-    }
+        .e-userimg.sf-icon-Male::before,
+        .e-userimg.sf-icon-FeMale::before {
+            font-size: 13px;
+        }
 
-    .statustemp.e-inactivecolor {
-        width: 64px;
-    }
+        .e-userimg.sf-icon-Male, .e-userimg.sf-icon-FeMale {
+            margin: 0px 8px;
+            line-height: 26px;
+            color: white;
+            font-size: 13px;
+        }
 
-    .statustemp.e-activecolor {
-        width: 57px;
-    }
+            .e-userimg.sf-icon-Male::before {
+                content: '\e700';
+            }
 
-    .statustemp {
-        position: relative;
-        height: 19px;
-        border-radius: 5px;
-        text-align: center
-    }
+            .e-userimg.sf-icon-FeMale::before {
+                content: '\e701';
+            }
 
-    #msg {
-        font-family: "Segoe UI", "GeezaPro", "DejaVu Serif", sans-serif;
-        font-size: 14px;
-        font-weight: 400;
-        opacity: 0.95;
-        color: #333;
-        float: right;
-        margin-top: 3px;
-    }
+        .highcontrast .e-grid td.e-rowcell.e-selectionbackground.e-active {
+            background-color: transparent;
+            color: white;
+        }
 
-    @@media only screen and (max-width: 370px) {
+        td.e-rowcell.e-selectionbackground.e-active {
+            background-color: transparent;
+        }
+
+        .highcontrast #msg {
+            color: #FFFFFF
+        }
+
+        .e-bigger .e-grid .statustxt {
+            position: relative;
+            top: -2px;
+        }
+
+        .rating .star {
+            font-size: 132%;
+            color: lightgrey;
+        }
+
+            .rating .star.checked {
+                color: #ffa600;
+            }
+
+            .rating .star:before {
+                content: '★';
+            }
+
+        td.e-rowcell .statustxt.e-activecolor {
+            color: #00cc00;
+            position: relative;
+            top: 9px;
+        }
+
+        td.e-rowcell .statustxt.e-inactivecolor {
+            color: #e60000;
+            position: relative;
+            top: 9px;
+        }
+
+        .statustemp.e-inactivecolor {
+            background-color: #ffd7cc;
+        }
+
+        .statustemp.e-activecolor {
+            background-color: #ccffcc;
+        }
+
+        .statustxt.e-activecolor {
+            color: #00cc00;
+        }
+
+        .statustxt.e-inactivecolor {
+            color: #e60000;
+        }
+
+        #Trusttext {
+            position: relative;
+            top: 1px;
+        }
+
+        .e-image {
+            height: 13px;
+            width: 14px;
+        }
+
+        .statustemp.e-inactivecolor {
+            width: 64px;
+        }
+
+        .statustemp.e-activecolor {
+            width: 57px;
+        }
+
+        .statustemp {
+            position: relative;
+            height: 19px;
+            border-radius: 5px;
+            text-align: center
+        }
+
         #msg {
-            float: left;
+            font-family: "Segoe UI", "GeezaPro", "DejaVu Serif", sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            opacity: 0.95;
+            color: #333;
+            float: right;
             margin-top: 3px;
         }
 
-        #GridOverview {
-            margin-top: 36px;
-        }
-    }
+        @@media only screen and (max-width: 370px) {
+            #msg {
+                float: left;
+                margin-top: 3px;
+            }
 
-    #samplecontainer {
-        padding-top: 5px;
-    }
-
-    #myProgress {
-        position: relative;
-        height: 18px;
-        width: 10em;
-        text-align: left;
-        background-color: white;
-    }
-
-    .highcontrast .e-grid #myProgress {
-        background-color: black;
-    }
-
-    #myBar {
-        position: absolute;
-        width: 10%;
-        height: 100%;
-        background-color: #00b300;
-    }
-
-        #myBar.progressdisable {
-            background-color: #df2222;
+            #GridOverview {
+                margin-top: 36px;
+            }
         }
 
-    #label {
-        position: relative;
-        left: 10px;
-        line-height: 18px;
-        font-size: 10px;
-        color: white;
-    }
-</style>
+        #samplecontainer {
+            padding-top: 5px;
+        }
+
+        #myProgress {
+            position: relative;
+            height: 18px;
+            width: 10em;
+            text-align: left;
+            background-color: white;
+        }
+
+        .highcontrast .e-grid #myProgress {
+            background-color: black;
+        }
+
+        #myBar {
+            position: absolute;
+            width: 10%;
+            height: 100%;
+            background-color: #00b300;
+        }
+
+            #myBar.progressdisable {
+                background-color: #df2222;
+            }
+
+        #label {
+            position: relative;
+            left: 10px;
+            line-height: 18px;
+            font-size: 10px;
+            color: white;
+        }
+    </style>
 
 }
 
 @section ActionDescription{
     <div id="action-description">
-         <p>This sample demonstrates the overview of basic grid features with its performance metrics of large data. To change datasource count, select rows and columns count from dropdown.</p>
+        <p>This sample demonstrates the overview of basic grid features with its performance metrics of large data. To change datasource count, select rows and columns count from dropdown.</p>
     </div>
 }
 
@@ -501,14 +504,14 @@
 @section Description{
     <div id="description">
         <p>
-           The Grid is used to display and manipulate tabular data with configuration options to control the way the data is presented
-	   and manipulated. It will pull the data from a data source, such as IEnumerable, OData web services,
-	   or <code>DataManager</code> binding data fields to columns. Also, displaying a column header to identify the field with
-	   support for grouped records.
-        </p>       
-         <p>
-	     In this demo, Grid features such as <code>Virtual Scrolling, Filtering, Sorting, Column Template, filter template </code> etc... are used along with large data source.
-	</p>
+            The Grid is used to display and manipulate tabular data with configuration options to control the way the data is presented
+            and manipulated. It will pull the data from a data source, such as IEnumerable, OData web services,
+            or <code>DataManager</code> binding data fields to columns. Also, displaying a column header to identify the field with
+            support for grouped records.
+        </p>
+        <p>
+            In this demo, Grid features such as <code>Virtual Scrolling, Filtering, Sorting, Column Template, filter template </code> etc... are used along with large data source.
+        </p>
     </div>
 }
 

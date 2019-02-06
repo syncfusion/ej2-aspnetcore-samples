@@ -1,0 +1,101 @@
+@using Syncfusion.EJ2
+
+
+@section ControlsSection{
+     <div class="col-lg-9 control-section">
+        <div class="control-wrapper">
+
+            <div class="control-section">
+
+                <ejs-treegrid id="TreeGrid" load="load" dataSource="ViewBag.datasource" allowPaging="true" childMapping="subTasks" treeColumnIndex="1">
+                    <e-treegrid-columns>
+                        <e-treegrid-column field="orderID" headerText="Order ID" textAlign="Right" width="90"></e-treegrid-column>
+                        <e-treegrid-column field="orderName" headerText="Order Name" width="155"></e-treegrid-column>
+                        <e-treegrid-column field="orderDate" headerText="Order Date" textAlign="Right" width="160"></e-treegrid-column>
+                        <e-treegrid-column field="price" headerText="Price" textAlign="Right" format="c2" width="110"></e-treegrid-column>
+                    </e-treegrid-columns>
+                </ejs-treegrid>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties" style="width: 100%;">
+            <tr style="height: 50px">
+                <td class="left-side" style="width: 10% !important;">Column</td>
+                <td>
+                    <ejs-dropdownlist id="Columns" dataSource="@ViewBag.columns" placeholder="Select a Column" index="0" popupHeight="220px" change="columnChange">
+                        <e-dropdownlist-fields text="name" value="id"></e-dropdownlist-fields>
+                    </ejs-dropdownlist>
+                </td>
+            </tr>
+            <tr style="height: 50px">
+                <td class="left-side" style="width: 10% !important;">Format</td>
+                <td>
+                <ejs-dropdownlist id="Formats" dataSource="@ViewBag.numberFormats" placeholder="Select a Format" index="2" popupHeight="220px" change="formatChange">
+                        <e-dropdownlist-fields text="format" value="id"></e-dropdownlist-fields>
+                    </ejs-dropdownlist>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        var priceFormat = @Html.Raw(Json.Serialize(ViewBag.numberFormats));
+        var dateFormat = @Html.Raw(Json.Serialize(ViewBag.dateFormats));
+        function columnChange(e) {
+            var treegrid = document.getElementById("TreeGrid").ej2_instances[0];
+            var dropDownFormat = document.getElementById("Formats").ej2_instances[0];
+            var columnName = e.value;
+            var format = treegrid.getColumnByField( columnName ).format;
+            format = typeof format === "string" ?  format : format.format;
+            dropDownFormat.dataSource = columnName === "price" ? priceFormat : dateFormat;
+            dropDownFormat.value = format;
+        }
+        function formatChange(e) {
+            var formatval = e.value;
+            var dropDownColumn = document.getElementById("Columns").ej2_instances[0];
+            var treegrid = document.getElementById("TreeGrid").ej2_instances[0];
+            var columnName = dropDownColumn.value;
+            treegrid.getColumnByField( columnName ).format = columnName === "price" ? formatval : { format: formatval, type: "date"};
+            treegrid.refreshColumns();
+        }
+
+        function load() {
+            var treegridObj = document.getElementById("TreeGrid").ej2_instances[0];
+            for (i = 0; i < treegridObj.columns.length; i++) {
+                if (treegridObj.columns[i].field == "orderDate") {
+                    treegridObj.columns[i].format = { type: 'date', format: 'M/d/yyyy' };
+                }
+            }
+        }
+    </script>
+
+}
+
+@section Meta{
+    <meta name="description" content="This demo explains how to display the content of TreeGrid columns based on the specified format in Syncfusion Essential JS2 TreeGrid." />
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+           This sample demonstrates the way of displaying the content of TreeGrid columns based on the specified format. In this sample, format of columns can be changed dynamically through property panel.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            Format is the process of customizing the particular column data/values based on specific culture. The TreeGrid uses <code>Internalization</code> library to format <code>number</code> and <code>date</code> values. The format can be specified by using <code>format</code>  property of columns.
+            In this demo, select the column and format from the property panel to format the corresponding column values.
+        </p>
+        <br>
+
+        <p>
+            More information on the data binding can be found in this documentation section.
+        </p>
+    </div>
+}
+
+

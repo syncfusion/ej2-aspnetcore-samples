@@ -1,4 +1,4 @@
-﻿@using Syncfusion.EJ2
+@using Syncfusion.EJ2
 
 @{
     var content0 = "HyperText Markup Language, commonly referred to as HTML, is the standard markup language used to create web" +
@@ -41,6 +41,11 @@
     function tabCreated() {
         tabObj = document.getElementById('adaptiveTab').ej2_instances[0];
     }
+    // Change event funtion for DropDownList component
+    function changeHeaderPosition(e) {
+        tabObj.headerPlacement = e.itemData.value;
+        tabObj.dataBind();
+    }
     function changeOverFlowMode(e) {
         if (e.itemData.value != null && e.itemData.value === 'Scrollable') {
             tabObj.overflowMode = 'Scrollable';
@@ -52,9 +57,10 @@
 </script>
 
 @section ControlsSection{
-    <div class="col-lg-8 control-section">
+<div class="e-tab-section">
+    <div class="col-lg-8 content-wrapper control-section">
         <div class="e-sample-resize-container">
-            <ejs-tab id="adaptiveTab" heightAdjustMode="Auto" created="tabCreated">
+            <ejs-tab id="adaptiveTab" heightAdjustMode="None" height="250px" created="tabCreated">
                 <e-tab-tabitems>
                     <e-tab-tabitem header="ViewBag.headerText0" content="@content0"></e-tab-tabitem>
                     <e-tab-tabitem header="ViewBag.headerText1" content="@content1"></e-tab-tabitem>
@@ -81,8 +87,19 @@
                         </div>
                     </td>
                 </tr>
+                <tr>
+                    <td style="width: 50%;">
+                        <div>Header Placement</div>
+                    </td>
+                    <td style="width: 50%;">
+                        <div>
+                            <ejs-dropdownlist id="orientation" width="90%" dataSource="ViewBag.orientationData" change="changeHeaderPosition" index="0"></ejs-dropdownlist>
+                        </div>
+                    </td>
+                </tr>
             </tbody>
         </table>
+    </div>
     </div>
 }
 
@@ -97,16 +114,19 @@
         The <code>Tab</code> is adaptable to the available space when the tab items exceed the view space.
     </p>
     <p>
+        The <code>Tab</code> allows to place the header section inside the Tab component either at <code>top / bottom / left / right</code> position by using <code>headerPlacement</code> property.
+    </p>
+    <p>
         You can assign overflowMode property value as <code>Scrollable / Popup</code>. By default scrollable mode of tab is enabled when tab item exceeds the view range. In this sample, users can change the <code>overflowMode</code> by selecting the dropdown options.
     </p>
     <p>
-        More information about Tab can be found in this <a target="_blank" href="http://ej2.syncfusion.com/aspnet/documentation/tab/getting-started-asp-core.html?syntax=tag"> documentation </a> section.
+        More information about Tab can be found in this <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/tab/getting-started-asp-core/"> documentation </a> section.
     </p>
 }
 
 @section Meta{
 
-    <meta name="description" content="The sample illustrates that responsive mode of Tab component that aligns tab items in a  scrollable or popup mode if there is no enough space." />
+    <meta name="description" content="The sample illustrates that responsive mode of Tab control that aligns tab items in a scrollable or popup mode in ASP.NET Core platform." />
 
 }
 
@@ -133,6 +153,32 @@
 
         .e-bigger .e-sample-resize-container {
             width: 75%;
+        }
+    }
+
+    #adaptiveTab .e-tab-text {
+        display: inherit;
+    }
+
+    @@media screen and (max-width: 481px) {
+        .control-section.e-tab-section,
+        .container-fluid {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+
+    @@media screen and (max-width: 425px) {
+        #adaptiveTab {
+            overflow: hidden;
+        }
+
+        #adaptiveTab .e-content {
+            height: inherit !important;
+        }
+
+        #adaptiveTab .e-item.e-active {
+            overflow: scroll;
         }
     }
 </style>

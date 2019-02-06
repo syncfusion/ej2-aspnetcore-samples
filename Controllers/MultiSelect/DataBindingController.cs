@@ -12,9 +12,8 @@ namespace EJ2CoreSampleBrowser.Controllers
         public IActionResult DataBinding()
         {
             ViewBag.localdata = new GameList().GameLists();
-            ViewBag.remotedata = new { url = "http://services.odata.org/V4/Northwind/Northwind.svc/Customers", adaptor = "ODataV4Adaptor", crossDomain = true };
             ViewBag.sort = "Ascending";
-            ViewBag.query = "new ej.data.Query().select(['ContactName', 'CustomerID']).take(25)";
+            ViewBag.query = "new ej.data.Query().select(['FirstName ', 'EmployeeID']).take(10).requiresCount()";
             return View();
         }
     }

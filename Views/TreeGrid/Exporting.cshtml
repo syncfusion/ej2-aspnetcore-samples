@@ -1,0 +1,59 @@
+@using Syncfusion.EJ2
+
+
+@section ControlsSection{
+    <div class="control-section">
+
+        <ejs-treegrid id="TreeGrid" dataSource="ViewBag.dataSource" toolbarClick="toolbarClick" allowExcelExport="true" allowPdfExport="true" toolbar="@(new List<string>() { "ExcelExport", "CsvExport", "PdfExport"})" height="400" childMapping="Children" treeColumnIndex="1">
+            <e-treegrid-columns>
+                <e-treegrid-column field="TaskId" headerText="Task ID" textAlign="Right" width="90"></e-treegrid-column>
+                <e-treegrid-column field="TaskName" headerText="Task Name" width="220"></e-treegrid-column>
+                <e-treegrid-column field="StartDate" headerText=" Start Date" textAlign="Right" format="yMd" type="date" width="110"></e-treegrid-column>
+                <e-treegrid-column field="EndDate" headerText=" End Date" textAlign="Right" format="yMd" type="date" width="110"></e-treegrid-column>
+                <e-treegrid-column field="Duration" headerText="Duration" textAlign="Right" width="100"></e-treegrid-column>
+                <e-treegrid-column field="Progress" headerText="Progress" textAlign="Right" width="100"></e-treegrid-column>
+            </e-treegrid-columns>
+        </ejs-treegrid>
+
+    </div>
+
+    <script>
+        function toolbarClick(args) {
+            var treeGridObj = document.getElementById("TreeGrid").ej2_instances[0];
+            if (args.item.text === 'Excel Export') {
+                treeGridObj.excelExport();
+            } else if (args.item.text === 'PDF Export') {
+                treeGridObj.pdfExport();
+            } else if (args.item.text === 'CSV Export') {
+                treeGridObj.csvExport();
+            }
+
+
+        }
+    </script>
+}
+
+@section Meta{
+    <meta name="description" content="This demo explains how to export the treegrid content to Excel, PDF, and CSV documents using the Syncfusion Essential JS2 TreeGrid control." />
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This sample demonstrates the client-side exporting of the TreeGrid, which allows you to export its data to the Excel, Pdf and CSV formats. Use the toolbar buttons to export TreeGrid data to desired format. </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+
+        <p>TreeGrid supports client-side exporting which allows you to export its data to the Excel, Pdf and CSV formats.</p>
+        <p>In this demo, for the toolbar items of exporting, we have defined actions in <code>toolbarClick</code> event to export the TreeGrid data using the <code>excelExport</code>, <code>pdfExport</code> and <code>csvExport</code> methods.</p>
+        <br>
+
+        <p>
+            More information on the data binding can be found in this documentation section.
+        </p>
+    </div>
+}
+
+

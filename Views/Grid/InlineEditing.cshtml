@@ -2,20 +2,61 @@
 
 
 @section ControlsSection{
-    <div class="control-section">
-        <ejs-grid id="Grid" dataSource="ViewBag.dataSource" load="load"  toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })" allowPaging="true">
-            <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true"></e-grid-editSettings>
+    <div class="col-lg-9 control-section">
+        <ejs-grid id="Grid" dataSource="ViewBag.dataSource" load="load"  toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })" allowPaging="true" actionBegin="actionBegin">
+            <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" newRowPosition="Top"></e-grid-editSettings>
             <e-grid-pagesettings pageCount="5"></e-grid-pagesettings>
             <e-grid-columns>
-                <e-grid-column field="OrderID" headerText="Order ID" isPrimaryKey="true" validationRules="@(new { required=true, number=true})" width="120"></e-grid-column>
+                <e-grid-column field="OrderID" headerText="Order ID" isPrimaryKey="true" validationRules="@(new { required=true, number=true})" width="140"></e-grid-column>
                 <e-grid-column field="CustomerID" headerText="Customer Name" validationRules="@(new { required=true})" width="150"></e-grid-column>
-                <e-grid-column field="Freight" headerText="Freight" validationRules="@(new { required=true})" textAlign="Right" editType="numericedit" format="C2" width="120"></e-grid-column>
-                <e-grid-column field="OrderDate" headerText="Order Date" editType="datetimepickeredit" width="170"></e-grid-column>
+                <e-grid-column field="Freight" headerText="Freight" validationRules="@(new { required=true})" textAlign="Right" editType="numericedit" format="C2" width="140"></e-grid-column>
+                <e-grid-column field="OrderDate" headerText="Order Date" editType="datetimepickeredit" width="160"></e-grid-column>
                 <e-grid-column field="ShipCountry" headerText="Ship Country" editType="dropdownedit" width="150"></e-grid-column>
                 <e-grid-column field="Verified" headerText="Verified" editType="booleanedit" displayAsCheckBox="true" type="boolean" width="100"></e-grid-column>
             </e-grid-columns>
         </ejs-grid>
     </div>
+
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties" style="width: 100%">
+            <tr>
+                <td style="width: 100%">
+                    <div style="padding-top: 7px">Add New Row Position</div>
+                </td>
+                <td style="width: 50%;padding-right: 10px">
+                    <div id='typeddl'>
+                        <ejs-dropdownlist id="newRowPosition" dataSource="@ViewBag.ddDataSource" value="@("Top")" change="rowPositionChange" popupHeight="220px"></ejs-dropdownlist>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+   <script>
+
+       function rowPositionChange(args) { 
+           var grid = document.getElementById("Grid").ej2_instances[0];           
+           grid.editSettings.newRowPosition = this.value;
+       }
+
+       function actionBegin(args) {
+            var grid = document.getElementById("Grid").ej2_instances[0];
+            if (args.requestType === 'save') {
+                if (grid.pageSettings.currentPage !== 1 && grid.editSettings.newRowPosition === 'Top') {
+                    args.index = (grid.pageSettings.currentPage * grid.pageSettings.pageSize) - grid.pageSettings.pageSize;
+                } else if (grid.editSettings.newRowPosition === 'Bottom') {
+                    args.index = (grid.pageSettings.currentPage * grid.pageSettings.pageSize) - 1;
+                }
+            }
+       }
+
+    </script>
+
+    <style>
+        #typeddl {
+            min-width: 100px;
+        }
+    </style>
 }
 <script>
     function load() {
@@ -37,6 +78,7 @@
 			<li><code>Delete</code> - To delete record, click toolbar Delete button after selected a row </li>
 			<li><code>Update</code>,<code>Cancel</code> - You can save or discard changes by click toolbar Update and Cancel button respectively</li>
 		</ul>
+        <p>By default, a new row will be added at the top of the grid. You can change it by setting <code>editSettings.newRowPosition</code> as <code>Bottom</code></p>
 	</div>
 }
 

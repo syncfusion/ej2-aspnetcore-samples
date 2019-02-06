@@ -20,7 +20,7 @@ RichTextEditor supports markdown editing when the editorMode set as **markdown**
 We can add our own custom formation syntax for the Markdown formation, [sample link](http://npmci.syncfusion.com/development/demos/#/material/rte/markdown-editor-custom-format.html).
 
 The third-party library <b>Marked</b> is used in this sample to convert markdown into HTML content";
-            ViewBag.items = new object[] {"Bold", "Italic", "StrikeThrough", "|", "Formats", "OrderedList", "UnorderedList", "|", "CreateLink", "Image", "|",
+            ViewBag.items = new object[] {"Bold", "Italic", "StrikeThrough", "|", "Formats", "OrderedList", "UnorderedList", "|", "CreateTable", "CreateLink", "Image", "|",
                 new {
                 tooltipText =  "Preview", template = @"<button id='preview-code' class='e-tbar-btn e-control e-btn e-icon-btn'>
                       <span class='e-btn-icon e-md-preview e-icons'></span></button>" },

@@ -1,0 +1,56 @@
+﻿@using Syncfusion.EJ2
+@section ControlsSection{
+
+    <div class="control-section" align="center">
+        <div id="container">
+            <ejs-stockchart id="stockchartdefault" load="stockload" title="AAPL Stock Price" tooltipRender="tooltipRender">
+                <e-stockchart-series-collection>
+                    <e-stockchart-series type='Candle' xName="x"> </e-stockchart-series>
+                </e-stockchart-series-collection>
+            </ejs-stockchart>
+        </div>
+    </div>
+    <script src="~/scripts/chart/financial-data.js"></script>
+    <script>
+        var data = chartData;
+        function stockload(args) {
+            letselectedTheme: string = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.stockChart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/dark/i, "Dark").replace(/light/i, "Light");
+            args.stockChart.series[0].dataSource = data;
+            args.stockChart.primaryXAxis = { majorGridLines: { width: 0 }, crosshairTooltip: { enable: true } }
+            args.stockChart.primaryYAxis = {
+                lineStyle: { width: 0 },
+            };
+            args.stockChart.chartArea = { border: { width: 0 } };
+            args.stockChart.tooltip = { enable: true };
+            args.stockChart.crosshair = { enable: true };
+        }
+
+        function tooltipRender(args) {
+            if (args.text.split('<br/>')[4]) {
+                let target = parseFloat(args.text.split('<br/>')[4].split('<b>')[1].split('</b>')[0]);
+                let value = (target / 100000000).toFixed(1) + 'B';
+                args.text = args.text.replace(args.text.split('<br/>')[4].split('<b>')[1].split('</b>')[0], value);
+            }
+
+        }
+    </script>
+}
+
+@section Scripts {
+
+}
+
+@section ActionDescription{
+    <p>
+        This sample visualizes stock chart.
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can see how to render and configure the Stock chart.
+        <code>CandleSeries</code> is used to represent selected data value.
+    </p>
+    <br>
+}

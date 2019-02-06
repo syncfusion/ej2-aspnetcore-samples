@@ -1,13 +1,15 @@
 ﻿
 @section ControlsSection{
 
-    @{ 
+    @{
         List<object> toolbar = new List<object>();
         toolbar.Add(new { prefixIcon = "e-small-icon", id = "big", align = "Right" });
         toolbar.Add(new { prefixIcon = "e-medium-icon", id = "medium", align = "Right" });
         toolbar.Add(new { prefixIcon = "e-big-icon", id = "small", align = "Right" });
 
     }
+
+    <link href="~/styles/Grid/gridfont.css" rel="stylesheet" />
     <div class="control-section">
         <ejs-grid id="Grid" dataSource="ViewBag.datasource" height="400" rowHeight="20" toolbarClick="toolbarClick" toolbar="toolbar">
             <e-grid-columns>
@@ -21,21 +23,24 @@
         </ejs-grid>
     </div>
     <style>
-        .e-small-icon::before {
+
+        .e-grid .e-small-icon::before {
+            font-family: 'e-grid-rowheight';
             content: '\e997';
         }
 
-        .e-medium-icon::before {
+        .e-grid .e-medium-icon::before {
             content: '\e94c';
         }
 
-        .e-big-icon::before {
+        .e-grid .e-big-icon::before {
+            font-family: 'e-grid-rowheight';
             content: '\e74c';
         }
     </style>
-    
+
     <script>
-        function toolbarClick(args) { 
+        function toolbarClick(args) {
 
 
             if (args.item.id === 'small') {
@@ -52,21 +57,23 @@
 
 }
 @section ActionDescription{
-	<div id="action-description">
-		 <p>This sample demonstrates the row height feature of the Grid. In this demo, the <b>rowHeight</b> for all the Grid rows can be
-    changed as <b>20px</b>, <b>40px</b> and <b>60px</b> on ToolBar button click.</p>
-	</div>
+    <div id="action-description">
+        <p>
+            This sample demonstrates the row height feature of the Grid. In this demo, the <b>rowHeight</b> for all the Grid rows can be
+            changed as <b>20px</b>, <b>40px</b> and <b>60px</b> on ToolBar button click.
+        </p>
+    </div>
 }
 
 @section Meta{
-    <meta name="description" content="This demo for Essential JS 2 grid control shows the row height feature."/>
+    <meta name="description" content="This demo for Essential JS 2 grid control shows the row height feature." />
 }
 
 @section Description{
     <div id="description">
-		     <p>
-				The Grid has support to provide <code>rowHeight</code> property.  
-			</p>
+        <p>
+            The Grid has support to provide <code>rowHeight</code> property.
+        </p>
     </div>
 }
 

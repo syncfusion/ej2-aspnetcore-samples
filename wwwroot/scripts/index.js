@@ -69,55 +69,8 @@ var isInitRedirected;
 var samplePath = [];
 var samplesAr = [];
 var currentControlID;
-var currencyDropDown;
-var cultureDropDown;
 var currentSampleID;
 var currentControl;
-// var matchedCurrency = {
-//     'en': 'USD',
-//     'de': 'EUR',
-//     'ar': 'AED',
-//     'zh': 'CNY',
-//     'fr-CH': 'CHF'
-// };
-
-// function changeCulture(cul) {
-//     if (cul === 'ar') {
-//         changeRtl(true);
-//     }
-//     else {
-//         changeRtl(false);
-//     }
-//     if (currencyDropDown) {
-//         currencyDropDown.value = matchedCurrency[cul];
-//     } else {
-//         ej.base.setCurrencyCode(matchedCurrency[cul]);
-//     }
-//     ej.base.setCulture(cul);
-// }
-// function changeRtl(bool) {
-//     var elementlist = ej.base.selectAll('.e-control', document.getElementById('control-content'));
-//     for (var i = 0; i < elementlist.length; i++) {
-//         var control = elementlist[i];
-//         if (control.ej2_instances) {
-//             for (var a = 0; a < control.ej2_instances.length; a++) {
-//                 var instance = control.ej2_instances[a];
-//                 instance.enableRtl = bool;
-//             }
-//         }
-//     }
-// }
-// function loadCulture(cul) {
-//     var ajaxc = new ej.base.Ajax('/scripts/' + 'cldr-data/' + 'main/' + cul + '/all.json', 'GET', true);
-//         ajaxc.send().then(function (value) {
-//             ej.base.loadCldr(value);
-//             changeCulture(cul);
-//         });
-// }
-
-// loadCulture('en');
-// ej.base.L10n.load(window.Locale);
-
 function preventTabSwipe(e) {
     if (e.isSwiped) {
         e.cancel = true;
@@ -163,20 +116,6 @@ function renderSbPopups() {
         change: function (e) { switchTheme(e.value); }
     });
     themeDropDown.appendTo('#sb-setting-theme');
-    // cultureDropDown = new ej.dropdowns.DropDownList({
-    //     index: 0,
-    //     change: function (e) {
-    //         var value = e.value;
-    //         loadCulture(value);
-    //     }
-
-    // });
-    // currencyDropDown = new ej.dropdowns.DropDownList({
-    //     index: 0,
-    //     change: function (e) { ej.base.setCurrencyCode(e.value); }
-    // });
-    // cultureDropDown.appendTo('#sb-setting-culture');
-    // currencyDropDown.appendTo('#sb-setting-currency');
     contentTab = new ej.navigations.Tab({
         selected: changeTab,
         selecting: preventTabSwipe,
@@ -184,7 +123,7 @@ function renderSbPopups() {
             if (e.selectedIndex == 1) {
                 sourceTab.items = ArrayItem;
                 sourceTab.refresh();
-				renderCopyCode();
+                renderCopyCode();
                 dynamicTabCreation(sourceTab);
             }
         }
@@ -195,9 +134,9 @@ function renderSbPopups() {
         cssClass: 'sb-source-code-section',
         created: dynamicTabCreation,
         selecting: preventTabSwipe, selected: function (e) {
-            /*if (e.selectedIndex === 0) {
-                renderCopyCode();
-            }*/
+            // if (e.selectedIndex === 0) {
+            //     renderCopyCode();
+            // }
             if (e.isSwiped) {
                 e.cancel = true;
             }
@@ -681,7 +620,7 @@ function setSbLink() {
         var sb = sbArray[i];
         var ele = ej.base.select('#' + sb);
         if (sb === 'aspnetmvc') {
-            ele.href = 'http://aspnetmvc.syncfusion.com/';
+            ele.href = 'http://ej2.syncfusion.com/aspnetmvc/';
         } else {
             ele.href = ((link) ? ('http://' + link[1] + '/' + (link[3] ? (link[3] + '/') : '')) :
                 ('http://ej2.syncfusion.com/')) + (sbObj[sb] ? (sb + '/') : '') +
@@ -1093,8 +1032,8 @@ function addRoutes(samplesList) {
             var sampleName = node.name + ' / ' + ((node.name !== subNode.category) ?
                 (subNode.category + ' / ') : '') + subNode.url;
             var selectedTheme = location.hash.split('/')[1] ? location.hash.split('/')[1] : 'material';
-            var urlString = '/' + control + '/' + sample;
-            if (location.pathname == urlString) {
+            var urlString = control + '/' + sample;
+            if (getSamplePath() == urlString) {
                 var dataSourceLoad = document.getElementById(node.dataSourcePath);
                 if (node.dataSourcePath && !dataSourceLoad) {
                     var dataAjax = new ej.base.Ajax(node.dataSourcePath, 'GET', true);
@@ -1148,7 +1087,7 @@ function onDataSourceLoad(node, subNode, control, sample, sampleName) {
         breadCrumbSample.innerHTML = subNode.name;
     }
     var title = document.querySelector('title');
-    title.innerHTML = node.name + ' · ' + subNode.url + ' · Essential JS 2 for ASP.NET Core · Syncfusion ';
+    title.innerHTML = node.name + ' · ' + subNode.url + ' · Syncfusion ASP.NET Core UI Controls ';
     if (subNode.sourceFiles) {
         add=[];
         name=[];

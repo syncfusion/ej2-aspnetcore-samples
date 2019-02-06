@@ -1,0 +1,74 @@
+﻿﻿@using Syncfusion.EJ2
+@section ControlsSection{
+
+    <div class="control-section" align="center">
+        <div id="container">
+            <ejs-stockchart id="stockchartcandle" load="stockload" axisLabelRender="labelRender" tooltipRender="tooltipRender" title="AAPL Historical">
+                <e-stockchart-axes>
+                    <e-stockchart-axis rowIndex=1 name='yAxis1' opposedPosition='true' labelPosition='Inside' tickPosition='Inside'>
+                    </e-stockchart-axis>
+                </e-stockchart-axes>
+                <e-stockchart-rows>
+                    <e-stockchart-row height=30%></e-stockchart-row>
+                    <e-stockchart-row height=70%></e-stockchart-row>
+                </e-stockchart-rows>
+                <e-stockchart-series-collection>
+                    <e-stockchart-series type='Candle' xName='x' yName='high' yAxisName='yAxis1' high='high' low='low'> </e-stockchart-series>
+                    <e-stockchart-series type='Column' xName='x' yName='volume' high='high' low='low' name='Apple Inc'> </e-stockchart-series>
+                </e-stockchart-series-collection>
+            </ejs-stockchart>
+        </div>
+    </div>
+    <script src="~/scripts/chart/financial-data.js"></script>
+    <script>
+        var data = chartData;
+        function stockload(args) {
+            letselectedTheme: string = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.stockChart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/dark/i, "Dark").replace(/light/i, "Light");
+            args.stockChart.series[0].dataSource = data;
+            args.stockChart.series[1].dataSource = data;
+            args.stockChart.primaryXAxis = { majorGridLines: { width: 0 }, crosshairTooltip: { enable: true } }
+            args.stockChart.primaryYAxis = {
+                lineStyle: { width: 0 },
+            };
+            args.stockChart.tooltip = { enable: true, shared: true },
+            args.stockChart.crosshair = { enable: true },
+            args.stockChart.chartArea = { border: { width: 0 } };
+            args.stockChart.border =  { width: 0 } ;
+        }
+        function labelRender(args)  {
+            let text = parseFloat(args.text);
+            if (args.axis.name === 'primaryYAxis') {
+                args.text = text / 100000000 + 'B';
+            }
+        }
+        function tooltipRender(args) {
+            if (args.text.split('<br/>')[4]) {
+                let target = parseFloat(args.text.split('<br/>')[4].split('<b>')[1].split('</b>')[0]);
+                let value = (target / 100000000).toFixed(1) + 'B';
+                args.text = args.text.replace(args.text.split('<br/>')[4].split('<b>')[1].split('</b>')[0], value);
+            }
+        }
+    </script>
+
+}
+
+@section Scripts {
+
+}
+
+@section ActionDescription{
+    <p>
+        This sample visualizes stock chart.
+    </p>
+
+}
+@section Description{
+    <p>
+        In this example, you can see how to render and configure the Stock chart.
+        <code>CandleSeries</code> is used to represent selected data value.
+    </p>
+    <br>   
+
+}

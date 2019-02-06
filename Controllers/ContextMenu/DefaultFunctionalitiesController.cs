@@ -11,43 +11,21 @@ namespace EJ2CoreSampleBrowser.Controllers
     {
         public IActionResult DefaultFunctionalities()
         {
+            List<ContextMenuItem> menuitems = new List<ContextMenuItem>() {
+                new ContextMenuItem{ Text="Cut", IconCss="e-cm-icons e-cut" },
+                new ContextMenuItem{ Text="Copy", IconCss="e-cm-icons e-copy" },
+                new ContextMenuItem{ Text="Paste", IconCss="e-cm-icons e-paste",
+                    Items = new List<ContextMenuItem>(){
+                        new ContextMenuItem{ Text = "Paste Text", IconCss = "e-cm-icons e-pastetext" },
+                        new ContextMenuItem{ Text = "Paste Special", IconCss = "e-cm-icons e-pastespecial" }
+                    }
+                },
+                new ContextMenuItem{ Separator= true},
+                new ContextMenuItem{ Text = "Link", IconCss = "e-cm-icons e-link"},
+                new ContextMenuItem{ Text = "New Comment", IconCss = "e-cm-icons e-comment"}
+            };
 
-            List<object> menuItems = new List<object>();
-            menuItems.Add(new
-            {
-                text = "Cut",
-                iconCss = "e-cm-icons e-cut"
-            });
-            menuItems.Add(new
-            {
-                text = "Copy",
-                iconCss = "e-cm-icons e-copy"
-            });
-            menuItems.Add(new
-            {
-                text = "Paste",
-                iconCss = "e-cm-icons e-paste",
-                items = new List<object>()
-                {
-                    new { text = "Paste Text", iconCss = "e-cm-icons e-pastetext" },
-                    new { text = "Paste Special", iconCss = "e-cm-icons e-pastespecial" }
-                }
-            });
-            menuItems.Add(new
-            {
-                separator = true
-            });
-            menuItems.Add(new
-            {
-                text = "Link",
-                iconCss = "e-cm-icons e-link"
-            });
-            menuItems.Add(new
-            {
-                text = "New Comment",
-                iconCss = "e-cm-icons e-comment"
-            });
-            ViewBag.menuItems = menuItems;
+            ViewBag.menuitems = menuitems;
             return View();
         }
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using EJ2CoreSampleBrowser.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace EJ2CoreSampleBrowser.Controllers
 {
@@ -20,5 +20,10 @@ namespace EJ2CoreSampleBrowser.Controllers
         {
             return View(model);
         }
+    }
+    public class CheckBoxModel
+    {
+        [Range(typeof(bool), "true", "true", ErrorMessage = "You need to agree to the Terms and Conditions")]
+        public bool check { get; set; }
     }
 }

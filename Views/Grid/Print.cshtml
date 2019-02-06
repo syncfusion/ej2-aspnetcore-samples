@@ -1,24 +1,64 @@
 ﻿
+@{
+    var SecondChildGrid = new Syncfusion.EJ2.Grids.Grid()
+    {
+        DataSource = (IEnumerable<object>)ViewBag.CustomerDataSource,
+        QueryString = "CustomerID",
+        Columns = new List<Syncfusion.EJ2.Grids.GridColumn> {
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="CustomerID", HeaderText="Customer ID", Width="90", TextAlign=Syncfusion.EJ2.Grids.TextAlign.Right },
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="ContactName", HeaderText="Name", Width="100" },
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="CompanyName", HeaderText="Company", Width="120" },
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="Country", HeaderText="Country", Width="90" },
+        }
+    };
+    var ChildGrid = new Syncfusion.EJ2.Grids.Grid() {
+        DataSource = (IEnumerable<object>)ViewBag.DataSource,
+        QueryString = "EmployeeID",
+        HierarchyPrintMode = Syncfusion.EJ2.Grids.HierarchyGridPrintMode.All,
+        Columns = new List<Syncfusion.EJ2.Grids.GridColumn> {
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="OrderID", HeaderText="Order ID", Width="120" },
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="Freight", HeaderText="Freight", Width="120", Format="C2", TextAlign=Syncfusion.EJ2.Grids.TextAlign.Right },
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="ShipName", HeaderText="Ship Name", Width="150" },
+                new Syncfusion.EJ2.Grids.GridColumn(){ Field="ShipCity", HeaderText="Ship City", Width="120" },
+        },
+        ChildGrid = SecondChildGrid
+    };
+}
 
 @section ControlsSection{
-    <div class="control-section">
-        <ejs-grid id="Grid" dataSource="ViewBag.datasource" toolbar="@(new List<string>() {"Print" })"  allowPaging="true">
-
-            <e-grid-pagesettings pageCount="5"></e-grid-pagesettings>
+    <div class="control-section col-lg-9">
+        <ejs-grid id="HierarchyPrint" dataSource="ViewBag.EmpDataSource" childGrid="ChildGrid" hierarchyPrintMode="All" toolbar="@(new List<string>() {"Print" })" >
             <e-grid-columns>
-                <e-grid-column field="OrderID" headerText="Order ID" textAlign="Right" width="120"></e-grid-column>
-                <e-grid-column field="CustomerID" headerText="Customer Name" width="150"></e-grid-column>
-                <e-grid-column field="OrderDate" headerText=" Order Date" textAlign="Right" format="yMd" width="130"></e-grid-column>
-                <e-grid-column field="Freight" headerText="Freight" textAlign="Right" format="C2" width="120"></e-grid-column>               
-                <e-grid-column field="ShipCountry" headerText="Ship Country" width="150"></e-grid-column>
+                <e-grid-column field="EmployeeID" headerText="Employee ID" textAlign="Right" width="125"></e-grid-column>
+                <e-grid-column field="FirstName" headerText="Name" width="120"></e-grid-column>
+                <e-grid-column field="Title" headerText="Title"  width="170"></e-grid-column>
+                <e-grid-column field="City" headerText="City" format='yMd' textAlign="Right" width="135"></e-grid-column>
             </e-grid-columns>
-
         </ejs-grid>
     </div>
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties" style="width: 100%;">
+            <tr>
+                <td class="left-side">Select Hierarchy PrintMode</td>
+                <td>
+                    <ejs-dropdownlist id="PrintMode" dataSource="@ViewBag.data" change="onChange" value="@{"All"}"></ejs-dropdownlist>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        function onChange(e) {
+            var grid = document.getElementById("HierarchyPrint").ej2_instances[0];
+            grid.hierarchyPrintMode = grid.childGrid.hierarchyPrintMode = e.value;
+        }
+    </script>
+
 }
 @section ActionDescription{
 	<div id="action-description">
-		<p>This sample demonstrates the option to print the Grid. Click the print button from the toolbar item to print Grid.</p>
+		 <p>This sample demonstrates the different options to print the hierarchy Grid. 
+            Select the hierarchy grid's print mode in the dropdown list and click the print button from the toolbar item to print Grid.</p>
 	</div>
 }
 
@@ -28,10 +68,36 @@
 
 @section Description{
     <div id="description">		   
-		<p>The Grid can be printed using the <code>print
-        </code> method. While printing the pager and scrollbar will be removed if they are enabled in Grid.</p>
-    <p>By default, all pages will be printed. We can print current page alone by setting the <code>printMode
-    </code> property value as <code>currentpage</code>.</p>
-    <p>In this demo, The Grid toolbar provides an option to print the Grid.</p>
+		<p>
+            The Grid can be printed using the <code> print </code> method. While printing the pager and scrollbar will be removed if they are enabled in Grid.
+            By default, all pages will be printed. We can print current page alone by setting the <code>
+                <a target="_blank" class="code"
+                   href="https://help.syncfusion.com/cr/cref_files/aspnetcore-js2/Syncfusion.EJ2~Syncfusion.EJ2.Grids.Grid~PrintMode.html">
+                    printMode
+                </a>
+            </code> property value as <code>currentpage</code>. The child grid allows us to print the grid with following options,
+        </p>
+        <ul>
+            <li><code>Expanded</code> - Prints the master grid with expanded child grids.</li>
+            <li><code>All</code> - Prints the master grid with all the child grids.</li>
+            <li><code>None</code> - Prints the master grid alone.</li>
+        </ul>
+        <p>
+            We can change the child grid's print option by using the <code>
+                <a target="_blank" class="code"
+                   href="https://help.syncfusion.com/cr/cref_files/aspnetcore-js2/Syncfusion.EJ2~Syncfusion.EJ2.Grids.Grid~HierarchyPrintMode.html">
+                    hierarchyPrintMode
+                </a>
+            </code> property.
+        </p>
+        <p>
+            In this demo, we have set the hierarchyPrintMode as<code>All</code>. You can change the hierarchy grid's print mode by using the dropdown list in the property panel and click the print icon to print Grid.
+        </p>
+        <p>
+            More information on the print feature can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/grid/print.html">
+                documentation section
+            </a>.
+        </p>
 	</div>
 }

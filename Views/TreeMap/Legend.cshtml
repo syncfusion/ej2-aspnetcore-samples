@@ -37,6 +37,19 @@
                     </select>
                 </td>
             </tr>
+            <tr style="height: 50px">
+                <td style="width: 40%">
+                    <div class="property-text" style="padding: 0px;">Position</div>
+                </td>
+                <td style="width: 30%">
+                    <select name="selectIndex" autocomplete="off" id="legendPosition" style="width:60%;">
+                        <option value="Top" selected>Top</option>
+                        <option value="Bottom">Bottom</option>
+                        <option value="Left">Left</option>
+                        <option value="Right">Right</option>
+                    </select>
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>
@@ -58,6 +71,33 @@
             }
         });
         window.legendMode.appendTo('#legendMode');
+
+        var legendPosition = new ej.dropdowns.DropDownList({
+            index: 0,
+            placeholder: 'Legend Position',
+            width: '100%',
+            change: () => {
+                window.treemap.legendSettings.position = legendPosition.value;
+            if (legendPosition.value === 'Left' || legendPosition.value === 'Right') {
+                window.treemap.legendSettings.orientation = 'Vertical';
+                if (window.treemap.legendSettings.mode === 'Interactive') {
+                    window.treemap.legendSettings.height = '70%';
+                    window.treemap.legendSettings.width = '10';
+                } else {
+                    window.treemap.legendSettings.height = '';
+                    window.treemap.legendSettings.width = '';
+                }
+            } else {
+                window.treemap.legendSettings.orientation = 'Horizontal';
+                if (window.treemap.legendSettings.mode === 'Interactive') {
+                    window.treemap.legendSettings.height = '10';
+                    window.treemap.legendSettings.width = '';
+                }
+            }
+            window.treemap.refresh();
+        }
+    });
+    legendPosition.appendTo('#legendPosition');
     };
 </script>
 @section Meta{

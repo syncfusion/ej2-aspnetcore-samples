@@ -29,12 +29,12 @@
             var range = nodeObj.getRange(defaultRTE.contentModule.getDocument());
             var imgEle = nodeObj.getNodeCollection(range)[0];
             var transform;
-            if (e.item.tooltipText === 'Rotate Right') {
+            if (e.item && e.item.tooltipText === 'Rotate Right') {
                 transform = (imgEle.style.transform === '') ? 0 :
                     parseInt(imgEle.style.transform.split('(')[1].split(')')[0], 10);
                 imgEle.style.transform = 'rotate(' + (transform + 90) + 'deg)';
             }
-            else if (e.item.tooltipText === 'Rotate Left') {
+            else if (e.item && e.item.tooltipText === 'Rotate Left') {
                 transform = (imgEle.style.transform === '') ? 0 :
                     Math.abs(parseInt(imgEle.style.transform.split('(')[1].split(')')[0], 10));
                 imgEle.style.transform = 'rotate(-' + (transform + 90) + 'deg)';

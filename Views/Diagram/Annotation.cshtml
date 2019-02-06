@@ -65,6 +65,24 @@
                 </div>
             </div>
         </div>
+        <div class="row property-panel-content" style="padding-top: 10px">
+            <div class="row row-header">
+                Templates
+            </div>
+            <div class="row col-xs-8" style="padding-left: 0px; padding-top: 8px">
+                <ejs-dropdownlist id="template" dataSource="@ViewBag.templateList" popupWidth="200" width="100%" placeholder="select a template" change="onLabelTemplateChange">
+                    <e-dropdownlist-fields text="Text" value="Value"></e-dropdownlist-fields>
+                </ejs-dropdownlist>
+            </div>
+        </div>
+        <div class="row" style="padding-top: 10px">
+            <div class="row row-header">
+                Behaviour
+            </div>
+            <div class="row" style="padding-top: 8px">
+                <ejs-checkbox id="labelConstraints" label="Label interaction" checked="false" change="onLabelInteractionChange"></ejs-checkbox>
+            </div>
+        </div>
     </div>
 
     <style>
@@ -297,6 +315,14 @@
             updateAnnotation('fontfamily', args.value);
         }
 
+        function onLabelTemplateChange(args) {
+            updateAnnotation('template', args.value);
+        }
+
+        function onLabelInteractionChange(args) {
+            updateAnnotation('interaction', '');
+        }
+
 
         function updateAnnotation(name, value) {
             var diagram = document.getElementById("container").ej2_instances[0];
@@ -316,6 +342,19 @@
                         annotationStyle.italic = true;
                     } else if (name === 'fontcolor') {
                         annotationStyle.color = value;
+                    } else if (name === 'template') {
+                        if (value === 'none') {
+                            node.annotations[j].template = '';
+                            node.annotations[j].width = undefined;
+                            node.annotations[j].height = undefined;
+                        } else {
+                            node.annotations[j].width = 25;
+                            node.annotations[j].height = 25;
+                            node.annotations[j].template =
+                                '<img src="../images/Diagram/annotation/' + value + '.svg" style="width:100%;height:100%" />';
+                        }
+                    } else if (name === 'interaction') {
+                        node.annotations[j].constraints = node.annotations[j].constraints ^ ej.diagrams.AnnotationConstraints.Interaction;
                     }
                     diagram.dataBind();
                 }
@@ -412,7 +451,7 @@
     </p>
 }
 @section Meta{
-    <meta name="description" content="This demo for Essential JS2 Diagram control illustrates the competitive environment of a business through five forces chart. The elements of the five force chart is described using nodes and annotations. Customizing the position and appearance of the annotation is illustrated in this example." />
+    <meta name="description" content="This demo for EJ2 ASP.NET Core Diagram control is illustrated by five forces chart. Customizing the position/appearance of the annotation is also illustrated." />
 }
 
 @section Description{

@@ -24,7 +24,7 @@ namespace EJ2CoreSampleBrowser.Controllers
 
     public class RadioButtonModel
     {
-        [Required]
+        [RegularExpression("male", ErrorMessage = "Male gender is required.")]
         public string gender { get; set; }
     }
 }

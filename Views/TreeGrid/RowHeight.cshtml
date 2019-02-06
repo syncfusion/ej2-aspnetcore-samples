@@ -1,0 +1,85 @@
+@using Syncfusion.EJ2
+
+
+@section ControlsSection{
+    <div class="control-section">
+        @{
+            List<object> toolbarItems = new List<object>();
+            toolbarItems.Add(new { prefixIcon = "e-big-icon", id = "small", align = "Left", tooltipText = "Small" });
+            toolbarItems.Add(new { prefixIcon = "e-medium-icon", id = "medium", align = "Left", tooltipText = "Medium" });
+            toolbarItems.Add(new { prefixIcon = "e-small-icon", id = "big", align = "Left", tooltipText = "Large" });
+        }
+        <ejs-treegrid id="TreeGrid" dataSource="ViewBag.dataSource" rowHeight="20" toolbarClick="toolbarClick" toolbar=toolbarItems height="380" childMapping="Children" treeColumnIndex="1">
+            <e-treegrid-columns>
+                <e-treegrid-column field="TaskId" headerText="Task ID" textAlign="Right" width="95"></e-treegrid-column>
+                <e-treegrid-column field="TaskName" headerText="Task Name" width="220"></e-treegrid-column>
+                <e-treegrid-column field="StartDate" headerText=" Start Date" textAlign="Right" format="yMd" type="date" width="115"></e-treegrid-column>
+                <e-treegrid-column field="EndDate" headerText=" End Date" textAlign="Right" format="yMd" type="date" width="115"></e-treegrid-column>
+                <e-treegrid-column field="Duration" headerText="Duration" textAlign="Right" width="100"></e-treegrid-column>
+                <e-treegrid-column field="Progress" headerText="Progress" textAlign="Right" width="105"></e-treegrid-column>
+                <e-treegrid-column field="Priority" headerText="Priority" width="100"></e-treegrid-column>
+            </e-treegrid-columns>
+        </ejs-treegrid>
+
+    </div>
+    <script>
+        function toolbarClick(args) {
+            if (args.item.id === 'small') {
+                this.rowHeight = 20;
+            }
+            if (args.item.id === 'medium') {
+                this.rowHeight = 40;
+            }
+            if (args.item.id === 'big') {
+                this.rowHeight = 60;
+            }
+        }
+    </script>
+    <style type="text/css">
+        @@font-face {
+            font-family: 'e-grid-rowheight';
+            src: url(data:application/x-font-ttf;charset=utf-8;base64,AAEAAAAKAIAAAwAgT1MvMj25TIkAAAEoAAAAVmNtYXDTR87+AAABjAAAAEBnbHlmIRqrXwAAAdQAAACAaGVhZBNsJEUAAADQAAAANmhoZWEIUAQEAAAArAAAACRobXR4DAAAAAAAAYAAAAAMbG9jYQAQAEAAAAHMAAAACG1heHABEwAkAAABCAAAACBuYW1lc0cOBgAAAlQAAAIlcG9zdErpthoAAAR8AAAATQABAAAEAAAAAFwEAAAAAAAD8wABAAAAAAAAAAAAAAAAAAAAAwABAAAAAQAAc0Ewh18PPPUACwQAAAAAANgtb68AAAAA2C1vrwAAAAAD8wPqAAAACAACAAAAAAAAAAEAAAADABgABgAAAAAAAgAAAAoACgAAAP8AAAAAAAAAAQQAAZAABQAAAokCzAAAAI8CiQLMAAAB6wAyAQgAAAIABQMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUGZFZABA50zplwQAAAAAXAQAAAAAAAABAAAAAAAABAAAAAQAAAAEAAAAAAAAAgAAAAMAAAAUAAMAAQAAABQABAAsAAAABgAEAAEAAudM6Zf//wAA50zpl///AAAAAAABAAYABgAAAAIAAQAAAAAAEABAAAEAAAAAA/MCXQAEAAATITUnIQ0D5gb8IAGiuwEAAAAABgAAAAADvAPqAAMABwALAA8AEwAXAAA3IRUhAyEVIREhFSETIRUhEyEVIQMhFSFFA3b8igIDd/yJA3f8iQIDdvyKAQN3/IkBA3b8inJdARBdAQ5cAQ5dAQ1dARBdAAAAAAASAN4AAQAAAAAAAAABAAAAAQAAAAAAAQAHAAEAAQAAAAAAAgAHAAgAAQAAAAAAAwAHAA8AAQAAAAAABAAHABYAAQAAAAAABQALAB0AAQAAAAAABgAHACgAAQAAAAAACgAsAC8AAQAAAAAACwASAFsAAwABBAkAAAACAG0AAwABBAkAAQAOAG8AAwABBAkAAgAOAH0AAwABBAkAAwAOAIsAAwABBAkABAAOAJkAAwABBAkABQAWAKcAAwABBAkABgAOAL0AAwABBAkACgBYAMsAAwABBAkACwAkASMgZS1pY29uc1JlZ3VsYXJlLWljb25zZS1pY29uc1ZlcnNpb24gMS4wZS1pY29uc0ZvbnQgZ2VuZXJhdGVkIHVzaW5nIFN5bmNmdXNpb24gTWV0cm8gU3R1ZGlvd3d3LnN5bmNmdXNpb24uY29tACAAZQAtAGkAYwBvAG4AcwBSAGUAZwB1AGwAYQByAGUALQBpAGMAbwBuAHMAZQAtAGkAYwBvAG4AcwBWAGUAcgBzAGkAbwBuACAAMQAuADAAZQAtAGkAYwBvAG4AcwBGAG8AbgB0ACAAZwBlAG4AZQByAGEAdABlAGQAIAB1AHMAaQBuAGcAIABTAHkAbgBjAGYAdQBzAGkAbwBuACAATQBlAHQAcgBvACAAUwB0AHUAZABpAG8AdwB3AHcALgBzAHkAbgBjAGYAdQBzAGkAbwBuAC4AYwBvAG0AAAAAAgAAAAAAAAAKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAQIBAwEEABNNVF9DaGVja2JveGNvbGxhcHNlDWFsaWduLWp1c3RpZnkAAAAAAA==) format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .e-small-icon::before {
+            font-family: 'e-grid-rowheight';
+            content: '\e997';
+        }
+
+        .e-medium-icon::before {
+            content: '\e94c';
+        }
+
+        .e-big-icon::before {
+            font-family: 'e-grid-rowheight';
+            content: '\e74c';
+        }
+    </style>
+}
+
+@section Meta{
+    <meta name="description" content="This demo explains the way of customizing the row height of Syncfusion Essential JS2 TreeGrid control." />
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the row height feature of the TreeGrid. In this demo, the rowHeight for all the TreeGrid rows can be changed as 20px, 40px and 60px through ToolBar button click.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            TreeGrid has provide an option to customize the row height by using rowHeight  property of treegrid.
+        </p>
+        <p>
+            In this sample, we have enabled an option in Toolbar to customize the row height of TreeGrid to 20px, 40px and 60px.
+        </p>
+    </div>
+}
+
+

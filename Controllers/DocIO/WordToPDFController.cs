@@ -17,7 +17,7 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
 {
     public partial class DocIOController : Controller
     {
-        public IActionResult WordToPDF(string button, string renderingMode1, string renderingMode2, string renderingMode3)
+        public IActionResult WordToPDF(string button, string renderingMode1, string renderingMode2, string renderingMode3, string renderingMode4)
         {
             if (button == null)
                 return View();
@@ -47,6 +47,9 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
                         render.Settings.ExportBookmarks = renderingMode3 == "PreserveWordHeadingsToPDFBookmarks"
                                                                ? Syncfusion.DocIO.ExportBookmarkType.Headings
                                                              : Syncfusion.DocIO.ExportBookmarkType.Bookmarks;
+                        if (renderingMode4 == "ShowRevisions")
+                            //Enables to show the revision marks in the generated PDF for tracked changes or revisions in the Word document.
+                            document.RevisionOptions.ShowMarkup = RevisionType.Deletions | RevisionType.Formatting | RevisionType.Insertions;
                         // Converts Word document into PDF document.
                         PdfDocument pdf = render.ConvertToPDF(document);
                         MemoryStream memoryStream = new MemoryStream();

@@ -11,34 +11,25 @@ namespace EJ2CoreSampleBrowser.Controllers.Button
     {
         public IActionResult ProgressButton()
         {
-            List<object> spinSettings = new List<object>();
-            spinSettings.Add(new {
-                position= "Right"
-            });
-            spinSettings.Add(new {
-                position= "Top"
-            });
-            spinSettings.Add(new {
-                position= "Bottom"
-            });
-            spinSettings.Add(new {
-                position= "Center"
-            });
-            ViewBag.spinSettings = spinSettings;
-            List<object> animationSettings = new List<object>();
-            animationSettings.Add(new {
-                effect= "SlideLeft"
-            });
-            animationSettings.Add(new {
-                effect= "SlideRight"
-            });
-            animationSettings.Add(new {
-                effect= "ZoomIn"
-            });
-            animationSettings.Add(new {
-                effect= "ZoomOut"
-            });
-            ViewBag.animationSettings = animationSettings;
+            ProgressButtonSpinSettings spinRight = new ProgressButtonSpinSettings() { Position = SpinPosition.Right };
+            ProgressButtonSpinSettings spinTop = new ProgressButtonSpinSettings() { Position = SpinPosition.Top };
+            ProgressButtonSpinSettings spinBottom = new ProgressButtonSpinSettings() { Position = SpinPosition.Bottom };
+            ProgressButtonSpinSettings spinCenter = new ProgressButtonSpinSettings() { Position = SpinPosition.Center };
+            
+            ViewBag.spinRight = spinRight;
+            ViewBag.spinTop = spinTop;
+            ViewBag.spinBottom = spinBottom;
+            ViewBag.spinCenter = spinCenter;
+
+            ProgressButtonAnimationSettings slideLeft = new ProgressButtonAnimationSettings() { Effect = AnimationEffect.SlideLeft };
+            ProgressButtonAnimationSettings slideRight = new ProgressButtonAnimationSettings() { Effect = AnimationEffect.SlideRight };
+            ProgressButtonAnimationSettings zoomIn = new ProgressButtonAnimationSettings() { Effect = AnimationEffect.ZoomIn };
+            ProgressButtonAnimationSettings zoomOut = new ProgressButtonAnimationSettings() { Effect = AnimationEffect.ZoomOut };
+            
+            ViewBag.slideLeft = slideLeft;
+            ViewBag.slideRight = slideRight;
+            ViewBag.zoomIn = zoomIn;
+            ViewBag.zoomOut = zoomOut;
             return View();
         }
     }

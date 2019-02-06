@@ -15,5 +15,4 @@ namespace EJ2CoreSampleBrowser.Controllers
             return View();
         }
     }
-    
 }

@@ -13,7 +13,6 @@ namespace EJ2CoreSampleBrowser.Controllers
 
         public IActionResult VirtualScrolling()
         {
-            ViewBag.data = new PivotViewData().GetVirtualData();
             return View();
         }
     }

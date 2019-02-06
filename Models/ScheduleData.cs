@@ -2068,6 +2068,7 @@ namespace EJ2CoreSampleBrowser.Models
                 Subject = "Project Workflow Analysis",
                 StartTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.AddDays(-2).Day, dateNow.AddHours(2).Hour, 0, 0),
                 EndTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.AddDays(-2).Day, dateNow.AddHours(4).Hour, 0, 0),
+                IsReadonly = true
             });
             readonlyEventsData.Add(new ReadonlyEventsData
             {
@@ -2075,6 +2076,7 @@ namespace EJ2CoreSampleBrowser.Models
                 Subject = "Project Requirement Planning",
                 StartTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.AddDays(-1).Day, dateNow.AddHours(2).Hour, 0, 0),
                 EndTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.AddDays(-1).Day, dateNow.AddHours(4).Hour, 0, 0),
+                IsReadonly = true
             });
             readonlyEventsData.Add(new ReadonlyEventsData
             {
@@ -2082,6 +2084,7 @@ namespace EJ2CoreSampleBrowser.Models
                 Subject = "Meeting with Developers",
                 StartTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.AddDays(-1).Day, dateNow.AddHours(-3).Hour, 0, 0),
                 EndTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.AddDays(-1).Day, dateNow.AddHours(-1).Hour, 0, 0),
+                IsReadonly = true
             });
             readonlyEventsData.Add(new ReadonlyEventsData
             {
@@ -2089,6 +2092,7 @@ namespace EJ2CoreSampleBrowser.Models
                 Subject = "Team Fun Activities",
                 StartTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, dateNow.AddHours(-4).Hour, 0, 0),
                 EndTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, dateNow.AddHours(-2).Hour, 0, 0),
+                IsReadonly = true
             });
             readonlyEventsData.Add(new ReadonlyEventsData
             {
@@ -2096,7 +2100,7 @@ namespace EJ2CoreSampleBrowser.Models
                 Subject = "Quality Analysis",
                 StartTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, dateNow.AddHours(1).Hour, 0, 0),
                 EndTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, dateNow.AddHours(3).Hour, 0, 0),
-                ReadOnly = true
+                IsReadonly = true
             });
             readonlyEventsData.Add(new ReadonlyEventsData
             {
@@ -2104,6 +2108,7 @@ namespace EJ2CoreSampleBrowser.Models
                 Subject = "Customer meeting – John Mackenzie",
                 StartTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, dateNow.AddHours(5).Hour, 0, 0),
                 EndTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, dateNow.AddHours(6).Hour, 0, 0),
+                IsReadonly = false
             });
             readonlyEventsData.Add(new ReadonlyEventsData
             {
@@ -2111,6 +2116,7 @@ namespace EJ2CoreSampleBrowser.Models
                 Subject = "Meeting with Core team",
                 StartTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, dateNow.AddHours(9).Hour, 0, 0),
                 EndTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, dateNow.AddHours(10).Hour, 0, 0),
+                IsReadonly = false
             });
             readonlyEventsData.Add(new ReadonlyEventsData
             {
@@ -2118,6 +2124,7 @@ namespace EJ2CoreSampleBrowser.Models
                 Subject = "Project Review",
                 StartTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.AddDays(1).Day, dateNow.AddHours(3).Hour, 0, 0),
                 EndTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.AddDays(1).Day, dateNow.AddHours(5).Hour, 0, 0),
+                IsReadonly = false
             });
             readonlyEventsData.Add(new ReadonlyEventsData
             {
@@ -2125,6 +2132,7 @@ namespace EJ2CoreSampleBrowser.Models
                 Subject = "Project demo meeting with Andrew",
                 StartTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.AddDays(1).Day, dateNow.AddHours(-4).Hour, 0, 0),
                 EndTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.AddDays(1).Day, dateNow.AddHours(-3).Hour, 0, 0),
+                IsReadonly = false
             });
             readonlyEventsData.Add(new ReadonlyEventsData
             {
@@ -2132,6 +2140,7 @@ namespace EJ2CoreSampleBrowser.Models
                 Subject = "Online Hosting of Project",
                 StartTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.AddDays(2).Day, dateNow.AddHours(4).Hour, 0, 0),
                 EndTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.AddDays(2).Day, dateNow.AddHours(6).Hour, 0, 0),
+                IsReadonly = false
             });
             return readonlyEventsData;
         }
@@ -4570,7 +4579,7 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 12,
                 Subject = "Coronary angiogram",
                 StartTime = new DateTime(2018, 4, 6, 8, 0, 0),
-                EndTime = new DateTime(2018, 4, 6, 8, 30, 0),
+                EndTime = new DateTime(2018, 4, 6, 9, 30, 0),
                 IsAllDay = false,
                 DoctorId = 1
             });
@@ -5479,9 +5488,248 @@ namespace EJ2CoreSampleBrowser.Models
                 EndTime = new DateTime(2018, 8, 1, 12, 30, 0),
                 RoomId = 10
             });
+            roomData.Add(new RoomData
+            {
+                Id = 56,
+                Subject = "Lunch Break",
+                StartTime = new DateTime(2018, 8, 1, 13, 0, 0),
+                EndTime = new DateTime(2018, 8, 1, 14, 0, 0),
+                RecurrenceRule = "FREQ=DAILY;INTERVAL=1;",
+                IsBlock = true,
+                RoomId = 1
+            });
+            roomData.Add(new RoomData
+            {
+                Id = 57,
+                Subject = "Lunch Break",
+                StartTime = new DateTime(2018, 8, 1, 13, 0, 0),
+                EndTime = new DateTime(2018, 8, 1, 14, 0, 0),
+                RecurrenceRule = "FREQ=DAILY;INTERVAL=1;",
+                IsBlock = true,
+                RoomId = 2
+            });
+            roomData.Add(new RoomData
+            {
+                Id = 58,
+                Subject = "Lunch Break",
+                StartTime = new DateTime(2018, 8, 1, 13, 0, 0),
+                EndTime = new DateTime(2018, 8, 1, 14, 0, 0),
+                RecurrenceRule = "FREQ=DAILY;INTERVAL=1;",
+                IsBlock = true,
+                RoomId = 3
+            });
+            roomData.Add(new RoomData
+            {
+                Id = 59,
+                Subject = "Lunch Break",
+                StartTime = new DateTime(2018, 8, 1, 13, 0, 0),
+                EndTime = new DateTime(2018, 8, 1, 14, 0, 0),
+                RecurrenceRule = "FREQ=DAILY;INTERVAL=1;",
+                IsBlock = true,
+                RoomId = 4
+            });
+            roomData.Add(new RoomData
+            {
+                Id = 60,
+                Subject = "Lunch Break",
+                StartTime = new DateTime(2018, 8, 1, 13, 0, 0),
+                EndTime = new DateTime(2018, 8, 1, 14, 0, 0),
+                RecurrenceRule = "FREQ=DAILY;INTERVAL=1;",
+                IsBlock = true,
+                RoomId = 5
+            });
+            roomData.Add(new RoomData
+            {
+                Id = 61,
+                Subject = "Lunch Break",
+                StartTime = new DateTime(2018, 8, 1, 13, 0, 0),
+                EndTime = new DateTime(2018, 8, 1, 14, 0, 0),
+                RecurrenceRule = "FREQ=DAILY;INTERVAL=1;",
+                IsBlock = true,
+                RoomId = 6
+            });
+            roomData.Add(new RoomData
+            {
+                Id = 62,
+                Subject = "Lunch Break",
+                StartTime = new DateTime(2018, 8, 1, 13, 0, 0),
+                EndTime = new DateTime(2018, 8, 1, 14, 0, 0),
+                RecurrenceRule = "FREQ=DAILY;INTERVAL=1;",
+                IsBlock = true,
+                RoomId = 7
+            });
+            roomData.Add(new RoomData
+            {
+                Id = 63,
+                Subject = "Lunch Break",
+                StartTime = new DateTime(2018, 8, 1, 13, 0, 0),
+                EndTime = new DateTime(2018, 8, 1, 14, 0, 0),
+                RecurrenceRule = "FREQ=DAILY;INTERVAL=1;",
+                IsBlock = true,
+                RoomId = 8
+            });
+            roomData.Add(new RoomData
+            {
+                Id = 64,
+                Subject = "Lunch Break",
+                StartTime = new DateTime(2018, 8, 1, 13, 0, 0),
+                EndTime = new DateTime(2018, 8, 1, 14, 0, 0),
+                RecurrenceRule = "FREQ=DAILY;INTERVAL=1;",
+                IsBlock = true,
+                RoomId = 9
+            });
+            roomData.Add(new RoomData
+            {
+                Id = 65,
+                Subject = "Lunch Break",
+                StartTime = new DateTime(2018, 8, 1, 13, 0, 0),
+                EndTime = new DateTime(2018, 8, 1, 14, 0, 0),
+                RecurrenceRule = "FREQ=DAILY;INTERVAL=1;",
+                IsBlock = true,
+                RoomId = 10
+            });
             return roomData;
         }
 
+        public List<BlockData> getBlockData()
+        {
+            List<BlockData> blockData = new List<BlockData>();
+            blockData.Add(new BlockData
+            {
+                Id = 1,
+                Subject = "Not Available",
+                StartTime = new DateTime(2018, 8, 1, 10, 0, 0),
+                EndTime = new DateTime(2018, 8, 1, 12, 0, 0),
+                IsAllDay = false,
+                IsBlock = true,
+                EmployeeId = 1
+            });
+            blockData.Add(new BlockData
+            {
+                Id = 2,
+                Subject = "Not Available",
+                StartTime = new DateTime(2018, 8, 1, 16, 0, 0),
+                EndTime = new DateTime(2018, 8, 1, 20, 0, 0),
+                IsAllDay = false,
+                IsBlock = true,
+                EmployeeId = 2
+            });
+            blockData.Add(new BlockData
+            {
+                Id = 3,
+                Subject = "Not Available",
+                StartTime = new DateTime(2018, 8, 1, 12, 0, 0),
+                EndTime = new DateTime(2018, 8, 1, 14, 0, 0),
+                IsAllDay = false,
+                IsBlock = true,
+                EmployeeId = 3
+            });
+            blockData.Add(new BlockData
+            {
+                Id = 4,
+                Subject = "Not Available",
+                StartTime = new DateTime(2018, 8, 4, 11, 0, 0),
+                EndTime = new DateTime(2018, 8, 5, 10, 0, 0),
+                IsAllDay = true,
+                IsBlock = true,
+                EmployeeId = 4
+            });
+            blockData.Add(new BlockData
+            {
+                Id = 5,
+                Subject = "Not Available",
+                StartTime = new DateTime(2018, 8, 10, 11, 0, 0),
+                EndTime = new DateTime(2018, 8, 12, 10, 0, 0),
+                IsAllDay = false,
+                IsBlock = true,
+                EmployeeId = 5
+            });
+            blockData.Add(new BlockData
+            {
+                Id = 6,
+                Subject = "Not Available",
+                StartTime = new DateTime(2018, 8, 8),
+                EndTime = new DateTime(2018, 8, 11),
+                IsAllDay = false,
+                IsBlock = true,
+                EmployeeId = 6
+            });
+            blockData.Add(new BlockData
+            {
+                Id = 7,
+                Subject = "Client Meeting",
+                StartTime = new DateTime(2018, 8, 3, 8, 0, 0),
+                EndTime = new DateTime(2018, 8, 3, 10, 30, 0),
+                IsAllDay = false,
+                EmployeeId = 3
+            });
+            blockData.Add(new BlockData
+            {
+                Id = 8,
+                Subject = "Conference",
+                StartTime = new DateTime(2018, 8, 2, 13, 30, 0),
+                EndTime = new DateTime(2018, 8, 2, 15, 0, 0),
+                IsAllDay = false,
+                EmployeeId = 4
+            });
+            blockData.Add(new BlockData
+            {
+                Id = 9,
+                Subject = "Employee Recruitment",
+                StartTime = new DateTime(2018, 8, 1, 10, 0, 0),
+                EndTime = new DateTime(2018, 8, 1, 13, 0, 0),
+                IsAllDay = false,
+                EmployeeId = 5
+            });
+            blockData.Add(new BlockData
+            {
+                Id = 10,
+                Subject = "Data Analyzing",
+                StartTime = new DateTime(2018, 8, 1, 15, 0, 0),
+                EndTime = new DateTime(2018, 8, 1, 17, 0, 0),
+                IsAllDay = false,
+                EmployeeId = 6
+            });
+            blockData.Add(new BlockData
+            {
+                Id = 11,
+                Subject = "Content Writting",
+                StartTime = new DateTime(2018, 8, 2, 14, 0, 0),
+                EndTime = new DateTime(2018, 8, 2, 16, 0, 0),
+                IsAllDay = false,
+                EmployeeId = 1
+            });
+            blockData.Add(new BlockData
+            {
+                Id = 12,
+                Subject = "Meeting",
+                StartTime = new DateTime(2018, 8, 1, 9, 0, 0),
+                EndTime = new DateTime(2018, 8, 1, 11, 0, 0),
+                IsAllDay = false,
+                EmployeeId = 4
+            });
+            blockData.Add(new BlockData
+            {
+                Id = 13,
+                Subject = "Not Available",
+                StartTime = new DateTime(2018, 8, 29, 11, 0, 0),
+                EndTime = new DateTime(2018, 8, 31, 10, 0, 0),
+                IsAllDay = false,
+                IsBlock = true,
+                EmployeeId = 4
+            });
+            blockData.Add(new BlockData
+            {
+                Id = 14,
+                Subject = "Not Available",
+                StartTime = new DateTime(2018, 8, 12),
+                EndTime = new DateTime(2018, 8, 15),
+                IsAllDay = false,
+                IsBlock = true,
+                EmployeeId = 3
+            });
+            return blockData;
+        }
         public List<AppointmentData> GetTimelineData()
         {
             List<AppointmentData> timelineData = new List<AppointmentData>();
@@ -5553,8 +5801,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 62,
                 Subject = "Bug Automation",
-                StartTime = new DateTime(2018, 4, 4, 13, 30, 0),
-                EndTime = new DateTime(2018, 4, 4, 16, 30, 0),
+                StartTime = new DateTime(2018, 4, 4, 16, 0, 0),
+                EndTime = new DateTime(2018, 4, 4, 20, 0, 0),
                 IsAllDay = false,
                 ProjectId = 2,
                 TaskId = 1
@@ -5574,10 +5822,10 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 64,
                 Subject = "Resolution-based testing",
                 StartTime = new DateTime(2018, 4, 4, 12, 0, 0),
-                EndTime = new DateTime(2018, 4, 4, 13, 0, 0),
+                EndTime = new DateTime(2018, 4, 4, 15, 0, 0),
                 IsAllDay = false,
-                ProjectId = 1,
-                TaskId = 1
+                ProjectId = 2,
+                TaskId = 4
             });
             timelineResourceData.Add(new ResourceData
             {
@@ -5586,8 +5834,8 @@ namespace EJ2CoreSampleBrowser.Models
                 StartTime = new DateTime(2018, 4, 4, 15, 0, 0),
                 EndTime = new DateTime(2018, 4, 4, 18, 0, 0),
                 IsAllDay = false,
-                ProjectId = 1,
-                TaskId = 1
+                ProjectId = 3,
+                TaskId = 6
             });
             timelineResourceData.Add(new ResourceData
             {
@@ -5606,8 +5854,8 @@ namespace EJ2CoreSampleBrowser.Models
                 StartTime = new DateTime(2018, 4, 4, 14, 30, 0),
                 EndTime = new DateTime(2018, 4, 4, 18, 30, 0),
                 IsAllDay = false,
-                ProjectId = 2,
-                TaskId = 2
+                ProjectId = 3,
+                TaskId = 5
             });
             timelineResourceData.Add(new ResourceData
             {
@@ -5616,18 +5864,18 @@ namespace EJ2CoreSampleBrowser.Models
                 StartTime = new DateTime(2018, 4, 4, 18, 30, 0),
                 EndTime = new DateTime(2018, 4, 4, 21, 0, 0),
                 IsAllDay = false,
-                ProjectId = 1,
-                TaskId = 2
+                ProjectId = 2,
+                TaskId = 4
             });
             timelineResourceData.Add(new ResourceData
             {
                 Id = 69,
                 Subject = "Bug Automation",
-                StartTime = new DateTime(2018, 4, 4, 18, 30, 0),
+                StartTime = new DateTime(2018, 4, 4, 16, 0, 0),
                 EndTime = new DateTime(2018, 4, 4, 20, 0, 0),
                 IsAllDay = false,
                 ProjectId = 2,
-                TaskId = 1
+                TaskId = 3
             });
             return timelineResourceData;
         }
@@ -5861,6 +6109,193 @@ namespace EJ2CoreSampleBrowser.Models
             return headerRowData;
         }
 
+        public List<HospitalData> GetHospitalData()
+        {
+            List<HospitalData> hospitalData = new List<HospitalData>();
+            hospitalData.Add(new HospitalData
+            {
+                Id = 10,
+                Name = "David",
+                StartTime = new DateTime(2018, 7, 1, 9, 0, 0),
+                EndTime = new DateTime(2018, 7, 1, 10, 0, 0),
+                Description = "Health Checkup",
+                DepartmentID = 1,
+                ConsultantID = 1,
+                DepartmentName = "GENERAL"
+            });
+            hospitalData.Add(new HospitalData
+            {
+                Id = 11,
+                Name = "John",
+                StartTime = new DateTime(2018, 7, 1, 10, 30, 0),
+                EndTime = new DateTime(2018, 7, 1, 11, 30, 0),
+                Description = "Tooth Erosion",
+                DepartmentID = 2,
+                ConsultantID = 2,
+                DepartmentName = "DENTAL"
+            });
+            hospitalData.Add(new HospitalData
+            {
+                Id = 12,
+                Name = "Peter",
+                StartTime = new DateTime(2018, 7, 1, 12, 0, 0),
+                EndTime = new DateTime(2018, 7, 1, 13, 0, 0),
+                Description = "Eye and Spectacles Checkup",
+                DepartmentID = 1,
+                ConsultantID = 3,
+                DepartmentName = "GENERAL"
+            });
+            hospitalData.Add(new HospitalData
+            {
+                Id = 13,
+                Name = "Starc",
+                StartTime = new DateTime(2018, 7, 1, 14, 0, 0),
+                EndTime = new DateTime(2018, 7, 1, 15, 0, 0),
+                Description = "Toothaches",
+                DepartmentID = 2,
+                ConsultantID = 4,
+                DepartmentName = "DENTAL"
+            });
+            hospitalData.Add(new HospitalData
+            {
+                Id = 14,
+                Name = "James",
+                StartTime = new DateTime(2018, 7, 1, 10, 0, 0),
+                EndTime = new DateTime(2018, 7, 1, 11, 0, 0),
+                Description = "Surgery Appointment",
+                DepartmentID = 1,
+                ConsultantID = 5,
+                DepartmentName = "GENERAL"
+            });
+            hospitalData.Add(new HospitalData
+            {
+                Id = 15,
+                Name = "Jercy",
+                StartTime = new DateTime(2018, 7, 1, 9, 30, 0),
+                EndTime = new DateTime(2018, 7, 1, 10, 30, 0),
+                Description = "Tooth Sensitivity",
+                DepartmentID = 2,
+                ConsultantID = 6,
+                DepartmentName = "DENTAL"
+            });
+            hospitalData.Add(new HospitalData
+            {
+                Id = 16,
+                Name = "Albert",
+                StartTime = new DateTime(2018, 7, 2, 10, 0, 0),
+                EndTime = new DateTime(2018, 7, 2, 11, 30, 0),
+                Description = "Skin care treatment",
+                DepartmentID = 1,
+                ConsultantID = 7,
+                DepartmentName = "GENERAL"
+            });
+            hospitalData.Add(new HospitalData
+            {
+                Id = 17,
+                Name = "Louis",
+                StartTime = new DateTime(2018, 7, 2, 12, 30, 0),
+                EndTime = new DateTime(2018, 7, 2, 13, 30, 0),
+                Description = "General Checkup",
+                DepartmentID = 1,
+                ConsultantID = 9,
+                DepartmentName = "DENTAL"
+            });
+            hospitalData.Add(new HospitalData
+            {
+                Id = 18,
+                Name = "Williams",
+                StartTime = new DateTime(2018, 7, 2, 12, 0, 0),
+                EndTime = new DateTime(2018, 7, 2, 14, 0, 0),
+                Description = "Mouth Sores",
+                DepartmentID = 2,
+                ConsultantID = 10,
+                DepartmentName = "DENTAL"
+            });
+            hospitalData.Add(new HospitalData
+            {
+                Id = 19,
+                Name = "David",
+                StartTime = new DateTime(2018, 7, 2, 16, 30, 0),
+                EndTime = new DateTime(2018, 7, 2, 18, 45, 0),
+                Description = "Eye checkup and Treatment",
+                DepartmentID = 1,
+                ConsultantID = 1,
+                DepartmentName = "GENERAL"
+            });
+            hospitalData.Add(new HospitalData
+            {
+                Id = 20,
+                Name = "John",
+                StartTime = new DateTime(2018, 7, 2, 19, 30, 0),
+                EndTime = new DateTime(2018, 7, 2, 21, 45, 0),
+                Description = "Tooth Decay",
+                DepartmentID = 2,
+                ConsultantID = 2,
+                DepartmentName = "DENTAL"
+            });
+            return hospitalData;
+        }
+
+        public List<HospitalData> GetWaitingListData()
+        {
+            List<HospitalData> waitingData = new List<HospitalData>();
+            waitingData.Add(new HospitalData
+            {
+                Id = 1,
+                Name = "Steven",
+                StartTime = new DateTime(2018, 8, 3, 7, 30, 0),
+                EndTime = new DateTime(2018, 8, 3, 9, 30, 0),
+                Description = "Consulting",
+                DepartmentName = "GENERAL"
+            });
+            waitingData.Add(new HospitalData
+            {
+                Id = 2,
+                Name = "Milan",
+                StartTime = new DateTime(2018, 8, 4, 8, 30, 0),
+                EndTime = new DateTime(2018, 8, 4, 10, 30, 0),
+                Description = "Bad Breath",
+                DepartmentName = "DENTAL"
+            });
+            waitingData.Add(new HospitalData
+            {
+                Id = 3,
+                Name = "Laura",
+                StartTime = new DateTime(2018, 8, 4, 9, 30, 0),
+                EndTime = new DateTime(2018, 8, 4, 10, 30, 0),
+                Description = "Extraction",
+                DepartmentName = "GENERAL"
+            });
+            waitingData.Add(new HospitalData
+            {
+                Id = 4,
+                Name = "Janet",
+                StartTime = new DateTime(2018, 8, 3, 11, 0, 0),
+                EndTime = new DateTime(2018, 8, 3, 12, 30, 0),
+                Description = "Gum Disease",
+                DepartmentName = "DENTAL"
+            });
+            waitingData.Add(new HospitalData
+            {
+                Id = 5,
+                Name = "Adams",
+                StartTime = new DateTime(2018, 8, 3, 11, 0, 0),
+                EndTime = new DateTime(2018, 8, 3, 12, 30, 0),
+                Description = "Observation",
+                DepartmentName = "GENERAL"
+            });
+            waitingData.Add(new HospitalData
+            {
+                Id = 6,
+                Name = "John",
+                StartTime = new DateTime(2018, 8, 3, 11, 30, 0),
+                EndTime = new DateTime(2018, 8, 3, 12, 30, 0),
+                Description = "Mouth Sores",
+                DepartmentName = "DENTAL"
+            });
+            return waitingData;
+        }
+
         public class AppointmentData
         {
             public int Id { get; set; }
@@ -5868,6 +6303,17 @@ namespace EJ2CoreSampleBrowser.Models
             public DateTime StartTime { get; set; }
             public DateTime EndTime { get; set; }
             public string CategoryColor { get; set; }
+        }
+
+        public class BlockData
+        {
+            public int Id { get; set; }
+            public string Subject { get; set; }
+            public DateTime StartTime { get; set; }
+            public DateTime EndTime { get; set; }
+            public bool IsAllDay { get; set; }
+            public bool IsBlock { get; set; }
+            public int EmployeeId { get; set; }
         }
 
         public class LeaveData
@@ -5964,7 +6410,7 @@ namespace EJ2CoreSampleBrowser.Models
             public string Subject { get; set; }
             public DateTime StartTime { get; set; }
             public DateTime EndTime { get; set; }
-            public bool ReadOnly { get; set; }
+            public bool IsReadonly { get; set; }
         }
 
         public class ResourceData
@@ -6037,6 +6483,8 @@ namespace EJ2CoreSampleBrowser.Models
             public DateTime StartTime { get; set; }
             public DateTime EndTime { get; set; }
             public int RoomId { get; set; }
+            public bool IsBlock { get; set; }
+            public string RecurrenceRule { get; set; }
         }
 
         public class HeaderRowData
@@ -6049,11 +6497,32 @@ namespace EJ2CoreSampleBrowser.Models
             public string CategoryColor { get; set; }
         }
 
+        public class HospitalData
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public DateTime StartTime { get; set; }
+            public DateTime EndTime { get; set; }
+            public string Description { get; set; }
+            public int DepartmentID { get; set; }
+            public int ConsultantID { get; set; }
+            public string DepartmentName { get; set; }
+        }
     }
     public class ResourceDataSourceModel
     {
         public string text { set; get; }
         public int id { set; get; }
         public string color { set; get; }
+        public int groupId { set; get; }
+    }
+
+    public class ConsultantDataSourceModel
+    {
+        public string text { set; get; }
+        public int id { set; get; }
+        public int groupId { set; get; }
+        public string color { set; get; }
+        public string designation { set; get; }
     }
 }

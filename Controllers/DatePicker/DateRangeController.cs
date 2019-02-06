@@ -11,7 +11,7 @@ namespace EJ2CoreSampleBrowser.Controllers
         // GET: /<controller>/
         public IActionResult DateRange()
         {
-            ViewBag.value = DateTime.Now;
+            ViewBag.value = new DateTime(DateTime.Now.Year,DateTime.Now.Month,10);
             ViewBag.minDate= new DateTime(DateTime.Now.Year,DateTime.Now.Month,05);
             ViewBag.maxDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 27);
             return View();

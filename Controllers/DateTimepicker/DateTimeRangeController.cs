@@ -14,7 +14,7 @@ namespace EJ2CoreSampleBrowser.Controllers
         {
             ViewBag.minDate= new DateTime(DateTime.Now.Year,DateTime.Now.Month,05, 10,00,00);
             ViewBag.maxDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 27, 22, 30, 00);
-            ViewBag.value = DateTime.Now;
+            ViewBag.value =new DateTime(DateTime.Now.Year,DateTime.Now.Month,09, 11,00,00);
             return View();
         }
     }

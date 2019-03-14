@@ -1,0 +1,205 @@
+﻿@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="col-lg-9 control-section">
+        <div class="content-wrapper">
+            <div class="col-md-12">
+                <ejs-schedule id="schedule" width='100%' height='650px' selectedDate="new DateTime(2019, 1, 10)">
+                    <e-schedule-eventsettings dataSource="@ViewBag.appointments"></e-schedule-eventsettings>
+                </ejs-schedule>
+                <div id="grid"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section property-customization">
+        <div class="property-panel-section">
+            <p class="property-panel-header header-customization" style="width: 100%">Search by all event fields</p>
+            <div class="property-panel-content">
+                <ejs-textbox type="text" class="e-input" id="events-search" placeholder="Enter the Search text"></ejs-textbox>
+            </div>
+            <form class="event-search" id="form-search">
+                <p class="property-panel-header  header-customization" style="width: 100%">
+                    Search by specific event fields
+                </p>
+                <table id="property-specific" style="width: 100%">
+                    <tbody>
+                        <tr class="row">
+                            <td class="property-panel-content" colspan="2">
+                                <ejs-textbox type="text" class="search-field" name="Subject" id="searchEventName" placeholder="Subject"></ejs-textbox>
+                            </td>
+                        </tr>
+                        <tr class="row" style="height: 45px">
+                            <td class="property-panel-content" colspan="2">
+                                <ejs-textbox type="text" class="search-field" name="Location" id="searchEventLocation" placeholder="Location"></ejs-textbox>
+                            </td>
+                        </tr>
+                        <tr class="row" style="height: 45px">
+                            <td class="property-panel-content" colspan="2">
+                                <ejs-datepicker class="search-field e-start-time" id="startScheduleDate" name="StartTime" placeholder="StartTime" showClearButton="false"></ejs-datepicker>
+                            </td>
+                        </tr>
+                        <tr class="row" style="height: 45px">
+                            <td class="property-panel-content" colspan="2">
+                                <ejs-datepicker class="search-field e-end-time" id="endScheduleDate" name="EndTime" placeholder="EndTime" showClearButton="false"></ejs-datepicker>
+                            </td>
+                        </tr>
+                        <tr class="row" style="height: 45px">
+                            <td class="e-field button-customization" style="width: 50%;">
+                                <ejs-button id="seperateSearch" type="button" content="Search"></ejs-button>
+                            </td>
+                            <td class="e-field button-customization" style="width: 50%;">
+                                <ejs-button id="clear" type="button" content="Clear"></ejs-button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+
+    @*custom code start*@
+    <style>
+        .header-customization {
+            padding-bottom: 10px;
+        }
+
+        .property-customization {
+            padding-right: 5px;
+        }
+
+        .button-customization {
+            padding: 15px;
+        }
+
+        @@media (max-width: 441px) {
+            .button-customization {
+                padding: 30px;
+            }
+        }
+    </style>
+    @*custom code end*@
+
+    <script>
+        document.getElementById("seperateSearch").addEventListener("click", function () {
+            var searchObj = [];
+            var startDate;
+            var endDate;
+            var formElements = [].slice.call(document.querySelectorAll('.event-search .search-field'));
+            formElements.forEach(function (node) {
+                if (node.value && node.value !== '') {
+                    var fieldOperator = 'contains';
+                    var predicateCondition = 'or';
+                    var fieldValue = node.value;
+                    var matchCase = true;
+                    if (node.classList.contains('e-datepicker')) {
+                        fieldOperator = node.classList.contains('e-start-time') ? 'greaterthanorequal' : 'lessthanorequal';
+                        predicateCondition = 'and';
+                        var fieldInstance = ((node)).ej2_instances[0];
+                        fieldValue = fieldInstance.value;
+                        if (node.classList.contains('e-start-time')) {
+                            startDate = new Date(+fieldValue);
+                        }
+                        if (node.classList.contains('e-end-time')) {
+                            var date = new Date(+fieldInstance.value);
+                            fieldValue = new Date(date.setDate(date.getDate() + 1));
+                            endDate = fieldValue;
+                        }
+                        matchCase = false;
+                    }
+                    searchObj.push({
+                        field: node.name, operator: fieldOperator, value: fieldValue, predicate: predicateCondition,
+                        matchcase: matchCase
+                    });
+                }
+            });
+            if (searchObj.length > 0) {
+                var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+                var filterCondition = searchObj[0];
+                var predicate = new ej.data.Predicate(
+                    filterCondition.field, filterCondition.operator, filterCondition.value, filterCondition.matchcase);
+                for (var i = 1; i < searchObj.length; i++) {
+                    predicate = predicate.and(searchObj[i].field, searchObj[i].operator, searchObj[i].value, searchObj[i].matchcase);
+                }
+                var result = new ej.data.DataManager(scheduleObj.getEvents(startDate, endDate, true)).executeLocal(new ej.data.Query().where(predicate));
+                showSearchEvents('show', result);
+            } else {
+                showSearchEvents('hide');
+            }
+        })
+
+        document.getElementById("clear").addEventListener("click", function () {
+            document.getElementById('schedule').style.display = 'block';
+            document.getElementById('form-search').reset();
+            showSearchEvents('hide');
+        })
+
+        document.getElementById("events-search").addEventListener("keyup", function (args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            var searchString = (args.target).value;
+            if (searchString !== '') {
+                new ej.data.DataManager(scheduleObj.getEvents(null, null, true)).executeQuery(new ej.data.Query().
+                    search(searchString, ['Subject', 'Location', 'Description'], null, true, true)).then(function (e) {
+                        if ((e.result).length > 0) {
+                            showSearchEvents('show', e.result);
+                        } else {
+                            showSearchEvents('hide');
+                        }
+                    });
+            } else {
+                showSearchEvents('hide');
+            }
+        })
+
+        function showSearchEvents(type, data) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            if (type === 'show') {
+                if (document.getElementById('grid').classList.contains('e-grid')) {
+                    var gridObj = document.querySelector('#grid').ej2_instances[0];
+                    gridObj.dataSource = data;
+                    gridObj.dataBind();
+                } else {
+                    var grid = new ej.grids.Grid({
+                        dataSource: data,
+                        height: 505,
+                        width: 'auto',
+                        columns: [
+                            { field: 'Subject', headerText: 'Subject', width: 120 },
+                            { field: 'Location', headerText: 'Location', width: 120 },
+                            { field: 'StartTime', headerText: 'StartTime', width: 120, format: { type: 'dateTime', format: 'M/d/y hh:mm a' } },
+                            { field: 'EndTime', headerText: 'EndTime', width: 120, format: { type: 'dateTime', format: 'M/d/y hh:mm a' } },
+                        ]
+                    });
+                    grid.appendTo(document.querySelector('#grid'));
+                    scheduleObj.element.style.display = 'none';
+                }
+            } else {
+                var gridObj = (document.querySelector('#grid')).ej2_instances;
+                if (gridObj && gridObj.length > 0 && !gridObj[0].isDestroyed) {
+                    gridObj[0].destroy();
+                }
+                scheduleObj.element.style.display = 'block';
+            }
+        }
+    </script>
+}
+
+@*custom code start*@
+@section Meta{
+    <meta name="description" content="This example shows how to search the scheduler events based on specific field criteria." />
+}
+@*custom code end*@
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This example showcases the search results of Scheduler appointments in a grid. When the user provides the search string on appropriate fields, the resulting event collection based on the search criteria will be displayed in a Grid.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            In this example, the search text value is compared with the event field values of Scheduler DataSource and then the filtered resultant event data collection is assigned to the DataSource of Grid.
+        </p>
+    </div>
+}

@@ -4,6 +4,19 @@
     <div class="control-section" align="center">
         <div id="container">
             <ejs-stockchart id="stockchartcandle" load="stockload" axisLabelRender="labelRender" tooltipRender="tooltipRender" title="AAPL Historical">
+                <e-stockchart-chartarea>
+                    <e-stockchartarea-border width="0"></e-stockchartarea-border>
+                </e-stockchart-chartarea>
+                <e-stockchart-border width="0"></e-stockchart-border>
+                <e-stockchart-primaryxaxis>
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                    <e-crosshairtooltip enable="true"></e-crosshairtooltip>
+                </e-stockchart-primaryxaxis>
+                <e-stockchart-primaryyaxis>
+                    <e-linestyle width="0"></e-linestyle>
+                </e-stockchart-primaryyaxis>
+                <e-stockchart-tooltipsettings enable="true" shared="true"></e-stockchart-tooltipsettings>
+                <e-stockchart-crosshairsettings enable="true"></e-stockchart-crosshairsettings>
                 <e-stockchart-axes>
                     <e-stockchart-axis rowIndex=1 name='yAxis1' opposedPosition='true' labelPosition='Inside' tickPosition='Inside'>
                     </e-stockchart-axis>
@@ -23,19 +36,13 @@
     <script>
         var data = chartData;
         function stockload(args) {
+            @*custom code start*@
             letselectedTheme: string = location.hash.split('/')[1];
             selectedTheme = selectedTheme ? selectedTheme : 'Material';
             args.stockChart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/dark/i, "Dark").replace(/light/i, "Light");
+            @* custom code end *@
             args.stockChart.series[0].dataSource = data;
             args.stockChart.series[1].dataSource = data;
-            args.stockChart.primaryXAxis = { majorGridLines: { width: 0 }, crosshairTooltip: { enable: true } }
-            args.stockChart.primaryYAxis = {
-                lineStyle: { width: 0 },
-            };
-            args.stockChart.tooltip = { enable: true, shared: true },
-            args.stockChart.crosshair = { enable: true },
-            args.stockChart.chartArea = { border: { width: 0 } };
-            args.stockChart.border =  { width: 0 } ;
         }
         function labelRender(args)  {
             let text = parseFloat(args.text);
@@ -53,11 +60,11 @@
     </script>
 
 }
-
+@*custom code start*@
 @section Scripts {
 
 }
-
+@*custom code end*@
 @section ActionDescription{
     <p>
         This sample visualizes stock chart.

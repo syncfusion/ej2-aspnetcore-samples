@@ -10,7 +10,7 @@ var searchInstance;
 var headerThemeSwitch = document.getElementById('header-theme-switcher');
 var settingElement = ej.base.select('.sb-setting-btn');
 var themeList = document.getElementById('themelist');
-var themeCollection = ['material', 'fabric', 'bootstrap', 'highcontrast'];
+var themeCollection = ['material', 'fabric', 'bootstrap', 'bootstrap4', 'highcontrast'];
 var themeDropDown;
 var contentTab;
 var sourceTab;
@@ -26,6 +26,8 @@ var sbHeader = ej.base.select('#sample-header');
 var resetSearch = ej.base.select('.sb-reset-icon');
 var urlRegex = /(npmci\.syncfusion\.com|ej2\.syncfusion\.com)(\/)(development|production)*/;
 var sampleRegex = /#\/(([^\/]+\/)+[^\/\.]+)/;
+//Regex for removing hidden
+var reg = /.*custom code start([\S\s]*?)custom code end.*/g;
 var sbArray = ['angular', 'react', 'typescript', 'javascript', 'aspnetmvc', 'vue'];
 var sbObj = {
     'angular': 'angular',
@@ -142,6 +144,7 @@ function renderSbPopups() {
             }
             var sourceEle = document.querySelector('#sb-source-tab > .e-content > #e-content_' + e.selectedIndex).children[0];
             sourceEle.innerHTML = items[e.selectedIndex].data;
+            sourceEle.innerHTML = sourceEle.innerHTML.replace(reg, '');
             sourceEle.classList.add('sb-src-code');
             hljs.highlightBlock(sourceEle);
         }
@@ -208,6 +211,7 @@ function dynamicTabCreation(obj){
     }
     var  blockEle = tabObj.element.querySelector('#e-content_' + tabObj.selectedItem).children[0];
     blockEle.innerHTML = tabObj.items[tabObj.selectedItem].data;
+    blockEle.innerHTML = blockEle.innerHTML.replace(reg, '');
     blockEle.classList.add('sb-src-code');
     if (blockEle) {
         hljs.highlightBlock(blockEle);
@@ -338,8 +342,18 @@ function onsearchInputChange(e) {
         expand: true,
         boolean: 'AND'
     });
-    if (val.length) {
-        var data = new ej.data.DataManager(val);
+    var value = [];
+    if (ej.base.Browser.isDevice) {
+        for (var j = 0; j < val.length; j++) {
+            if (val[j].doc.hideOnDevice !== true) {
+                value = value.concat(val);
+            }
+        }
+    }
+    var searchVal = ej.base.Browser.isDevice ? value : val;
+    if (searchVal.length) {
+        var data = new ej.data.DataManager(searchVal);
+
         var controls = data.executeLocal(new ej.data.Query().take(10).select('doc'));
         var controlsAccess = [];
         for (var i = 0, controls = controls; i < controls.length; i++) {
@@ -785,12 +799,33 @@ function viewMobilePropPane() {
 function getSampleList() {
     if (ej.base.Browser.isDevice) {
         var tempList = ej.base.extend([], window.samplesList);
+        var sampleList = [];
         for (var i = 0; i < tempList.length; i++) {
             var temp = tempList[i];
+            if (temp.hideOnDevice == true) {
+                if (temp.name == location.href.split('/').splice(-3, 1).join('/')) {
+                    var toastObj = new ej.notifications.Toast({
+                        position: {
+                            X: 'Right'
+                        }
+                    });
+                    toastObj.appendTo('#sb-home');
+                    setTimeout(function () {
+                        toastObj.show({
+                            content: location.href.split('/').splice(-3, 1)[0] + ' component not supported in mobile device'
+                        });
+                    }, 200);
+                    setTimeout(function () {
+                        location.href = location.origin + getPathName() + 'Grid/GridOverview#/material'
+                    }, 2000)
+                }
+                continue;
+            }
             var data = new ej.data.DataManager(temp.samples);
             temp.samples = data.executeLocal(new ej.data.Query().where('hideOnDevice', 'notEqual', true));
+            sampleList = sampleList.concat(temp);
         }
-        return tempList;
+        return sampleList;
     }
     return window.samplesList;
 }

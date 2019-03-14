@@ -5,45 +5,47 @@
     @{
 
     }
-<script src="~/scripts/SparkLine/OrderData.js"></script>
-        <div class="control-section">
-            <div id="sparkline" class="row">
-                <div class="cols-sample-area">
-                    <script type="text/x-template" id="columnTemplate1">
-                        <div id="spkline${EmployeeID}" />
-                    </script>
-                    <script type="text/x-template" id="columnTemplate2">
-                        <div id="spkarea${EmployeeID}" />
-                    </script>
-                    <script type="text/x-template" id="columnTemplate3">
-                        <div id="spkwl${EmployeeID}" />
-                    </script>
-                    <div id="grid">
-                        <ejs-grid id="grid" created="loadComplete" dataSource="ViewBag.dataSource" allowSelection="false" enableColumnVirtualization="false" enableHover="true" height="400">
-                            <e-grid-columns>
-                                <e-grid-column field="EmployeeID" headerText="ID" textAlign="Right" width="60"></e-grid-column>
-                                <e-grid-column field="CustomerID" headerText="Customer ID" width="100"></e-grid-column>
-                                <e-grid-column field="OrderDate" headerText="Order Date" width="100" textAlign="@Syncfusion.EJ2.Grids.TextAlign.Center"></e-grid-column>
-                                <e-grid-column field="ShipCountry" headerText="Ship Country" width="100"></e-grid-column>
-                                <e-grid-column headerText="Tax per annum" template="#columnTemplate1" textAlign="@Syncfusion.EJ2.Grids.TextAlign.Center" width="100"></e-grid-column>
-                                <e-grid-column headerText="One Day Index" template="#columnTemplate2" textAlign="@Syncfusion.EJ2.Grids.TextAlign.Center" width="100"></e-grid-column>
-                                <e-grid-column headerText="Year GR" template="#columnTemplate3" textAlign="@Syncfusion.EJ2.Grids.TextAlign.Center" width="150"></e-grid-column>
-                            </e-grid-columns>
-                        </ejs-grid>
-                    </div>
+    <script src="~/scripts/SparkLine/OrderData.js"></script>
+    <div class="control-section">
+        <div id="sparkline" class="row">
+            <div class="cols-sample-area">
+                <script type="text/x-template" id="columnTemplate1">
+                    <div id="spkline${EmployeeID}" />
+                </script>
+                <script type="text/x-template" id="columnTemplate2">
+                    <div id="spkarea${EmployeeID}" />
+                </script>
+                <script type="text/x-template" id="columnTemplate3">
+                    <div id="spkwl${EmployeeID}" />
+                </script>
+                <div id="grid">
+                    <ejs-grid id="grid" created="loadComplete" dataSource="ViewBag.dataSource" allowSelection="false" enableColumnVirtualization="false" enableHover="true" height="400">
+                        <e-grid-columns>
+                            <e-grid-column field="EmployeeID" headerText="ID" textAlign="Right" width="60"></e-grid-column>
+                            <e-grid-column field="CustomerID" headerText="Customer ID" width="100"></e-grid-column>
+                            <e-grid-column field="OrderDate" headerText="Order Date" width="100" textAlign="@Syncfusion.EJ2.Grids.TextAlign.Center"></e-grid-column>
+                            <e-grid-column field="ShipCountry" headerText="Ship Country" width="100"></e-grid-column>
+                            <e-grid-column headerText="Tax per annum" template="#columnTemplate1" textAlign="@Syncfusion.EJ2.Grids.TextAlign.Center" width="100"></e-grid-column>
+                            <e-grid-column headerText="One Day Index" template="#columnTemplate2" textAlign="@Syncfusion.EJ2.Grids.TextAlign.Center" width="100"></e-grid-column>
+                            <e-grid-column headerText="Year GR" template="#columnTemplate3" textAlign="@Syncfusion.EJ2.Grids.TextAlign.Center" width="150"></e-grid-column>
+                        </e-grid-columns>
+                    </ejs-grid>
                 </div>
             </div>
         </div>
-        <style>
-            .e-headertext {
-                font-weight: bolder;
-            }
-        </style>
+    </div>
+    @*custom code start*@
+    <style>
+        .e-headertext {
+            font-weight: bolder;
+        }
+    </style>
+    @*custom code end*@
     <script type="text/javascript">
         function loadComplete(args) {
             setTimeout(function () {
                 for (var i = 1; i < 21; i++) {
-                 var line = new ej.charts.Sparkline({
+                    var line = new ej.charts.Sparkline({
                         height: '50px',
                         width: '150px',
                         lineWidth: 2,
@@ -51,32 +53,32 @@
                         fill: '#3C78EF',
                         dataSource: getSparkData('line', i)
                     });
-                 line.appendTo('#spkline' + i);
+                    line.appendTo('#spkline' + i);
 
-                 var column = new ej.charts.Sparkline({
-                     height: '50px',
-                     width: '150px',
-                     type: 'Column',
-                     valueType: 'Numeric',
-                     fill: '#3C78EF',
-                     negativePointColor: '#f7a816',
-                     dataSource: getSparkData('column', i)
-                 });
-                 column.appendTo('#spkarea' + i);
+                    var column = new ej.charts.Sparkline({
+                        height: '50px',
+                        width: '150px',
+                        type: 'Column',
+                        valueType: 'Numeric',
+                        fill: '#3C78EF',
+                        negativePointColor: '#f7a816',
+                        dataSource: getSparkData('column', i)
+                    });
+                    column.appendTo('#spkarea' + i);
 
-                 var winloss = new ej.charts.Sparkline({
-                     height: '50px',
-                     width: '150px',
-                     type: 'WinLoss',
-                     valueType: 'Numeric',
-                     fill: '#3C78EF',
-                     tiePointColor: 'darkgray',
-                     negativePointColor: '#f7a816',
-                     dataSource: getSparkData('column', i)
-                 });
-                 winloss.appendTo('#spkwl' + i);
+                    var winloss = new ej.charts.Sparkline({
+                        height: '50px',
+                        width: '150px',
+                        type: 'WinLoss',
+                        valueType: 'Numeric',
+                        fill: '#3C78EF',
+                        tiePointColor: 'darkgray',
+                        negativePointColor: '#f7a816',
+                        dataSource: getSparkData('column', i)
+                    });
+                    winloss.appendTo('#spkwl' + i);
                 }
-            },1000)
+            }, 1000)
         }
 
         var lineData = [
@@ -103,7 +105,7 @@
             [1, 3, 4, 2, 5, 0, 6]
         ];
 
-       var columnData = [
+        var columnData = [
             [0, 6, -4, 1, -3, 2, 5],
             [5, -4, 6, 3, -1, 2, 0],
             [6, 4, 0, 3, -2, 5, 1],
@@ -137,20 +139,20 @@
     </script>
 }
 @section ActionDescription{
-	<div id="action-description">
-    <p>
-        This sample demonstrates rendering sparklines in data grid control.
-    </p>
-	</div>
+    <div id="action-description">
+        <p>
+            This sample demonstrates rendering sparklines in data grid control.
+        </p>
+    </div>
 }
 @section Meta{
     <meta name="description" content="This demo for Essential JS2 Sparkline control demonstrates rendering sparklines in the data grid control." />
 }
 @section Description{
-	<div id="description">
-    <p>
-        In this example, you can see how to render sparkline inside the data grid control.
-    </p>
-	</div>
+    <div id="description">
+        <p>
+            In this example, you can see how to render sparkline inside the data grid control.
+        </p>
+    </div>
 }
 

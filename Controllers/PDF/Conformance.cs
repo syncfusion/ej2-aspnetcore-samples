@@ -11,6 +11,7 @@ using Syncfusion.Pdf.Graphics;
 using Microsoft.AspNetCore.Mvc;
 using Syncfusion.Drawing;
 using System.IO;
+using Syncfusion.Pdf.Interactive;
 
 namespace EJ2CoreSampleBrowser.Controllers.PDF
 {
@@ -24,46 +25,78 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
             return View();
         }
         [HttpPost]
-        public ActionResult Conformance(string InsideBrowser)
+        public ActionResult Conformance(string InsideBrowser, string radioButton)
         {
             string basePath = _hostingEnvironment.WebRootPath;
             string dataPath = string.Empty;
             dataPath = basePath + @"/PDF/";
 
-            //Create a new PDF document
-            PdfDocument document = new PdfDocument(PdfConformanceLevel.Pdf_A1B);
+            PdfDocument document = null;
 
-            //Add a page
+            if (radioButton == "Pdf_A1B")
+            {
+                //Create a new document with PDF/A standard.
+                document = new PdfDocument(PdfConformanceLevel.Pdf_A1B);
+            }
+            else if (radioButton == "Pdf_A2B")
+            {
+                document = new PdfDocument(PdfConformanceLevel.Pdf_A2B);
+            }
+            else if (radioButton == "Pdf_A3B")
+            {
+                document = new PdfDocument(PdfConformanceLevel.Pdf_A3B);
+
+                //Read the file
+                FileStream file = new FileStream(dataPath + "Text1.txt", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+
+                //Creates an attachment
+                PdfAttachment attachment = new PdfAttachment("Text1.txt", file);
+                
+                attachment.Relationship = PdfAttachmentRelationship.Alternative;
+                attachment.ModificationDate = DateTime.Now;
+
+                attachment.Description = "PDF_A";
+
+                attachment.MimeType = "application/xml";
+
+                document.Attachments.Add(attachment);
+            }
+
+           
+            //Add a page to the document.
             PdfPage page = document.Pages.Add();
+            //Create PDF graphics for the page.
+            PdfGraphics graphics = page.Graphics;
+
+            FileStream imageStream=new FileStream(dataPath + "AdventureCycle.jpg", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            //Load the image from the disk.
+            PdfImage img = PdfImage.FromStream(imageStream);
+            //Draw the image in the specified location and size.
+            graphics.DrawImage(img, new RectangleF(150, 30, 200, 100));
+
 
             //Create font
             FileStream fontFileStream = new FileStream(dataPath + "arial.ttf", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             PdfFont font = new PdfTrueTypeFont(fontFileStream, 14);
 
-            //Text to draw
-            string text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+ 
+            PdfTextElement textElement = new PdfTextElement("Adventure Works Cycles, the fictitious company on which the AdventureWorks sample databases are based," +
+                                " is a large, multinational manufacturing company. The company manufactures and sells metal and composite bicycles to North American, " +
+                                "European and Asian commercial markets. While its base operation is located in Bothell, Washington with 290 employees, several regional" +
+                                " sales teams are located throughout their market base.")
+            {
+                Font = font
+            };
+            PdfLayoutResult layoutResult = textElement.Draw(page, new RectangleF(0, 150, page.GetClientSize().Width, page.GetClientSize().Height));
 
-            //Create a brush
-            PdfBrush brush = new PdfSolidBrush(new PdfColor(0, 0, 0));
-            PdfPen pen = new PdfPen(new PdfColor(0, 0, 0));
-            RectangleF rect = new RectangleF(0, 0, page.Graphics.ClientSize.Width, page.Graphics.ClientSize.Height);
-
-            //Set the property text
-            PdfStringFormat format = new PdfStringFormat();
-            format.Alignment = PdfTextAlignment.Justify;
-            format.ParagraphIndent = 35f;
-
-            //Draw text.
-            page.Graphics.DrawString(text, font, brush, rect, format);
             MemoryStream stream = new MemoryStream();
             document.Save(stream);
             document.Close();
             stream.Position = 0;
             //Download the PDF document in the browser.
             FileStreamResult fileStreamResult = new FileStreamResult(stream, "application/pdf");
-            fileStreamResult.FileDownloadName = "PDF_A1b.pdf";
+            fileStreamResult.FileDownloadName = "PDF_A.pdf";
             return fileStreamResult;
         }
-
     }
 }

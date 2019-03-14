@@ -7,6 +7,14 @@
     <div class="control-section" align="center">
         <div id="container">
             <ejs-stockchart id="stockchartband" load="stockload" title="Plot Band on Y axis" seriesType="series" indicatorType="indicator">
+                <e-stockchart-border width="0"></e-stockchart-border>
+                <e-stockchart-primaryxaxis>
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                </e-stockchart-primaryxaxis>
+                <e-stockchart-primaryyaxis interval="40">
+                    <e-linestyle color="transparent"></e-linestyle>
+                    <e-majorticklines width="0" color="transparent"></e-majorticklines>
+                </e-stockchart-primaryyaxis>
                 <e-stockchart-series-collection>
                     <e-stockchart-series type='Line' xName='x' yName='close' name='google'> </e-stockchart-series>
                 </e-stockchart-series-collection>
@@ -18,25 +26,24 @@
         var data = aman;
 
         function stockload(args) {
+            @*custom code start*@
             letselectedTheme: string = location.hash.split('/')[1];
             selectedTheme = selectedTheme ? selectedTheme : 'Material';
             args.stockChart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/dark/i, "Dark").replace(/light/i, "Light");
+            @*custom code end*@
             args.stockChart.series[0].dataSource = data;
-            args.stockChart.border = { width: 0 };
             args.stockChart.primaryXAxis = { majorGridLines: { width: 0 } },
                 args.stockChart.primaryYAxis = {
                     stripLines: [{ start: 340, end: 380, color: '#3CB371', opacity: 0.1 }],
-                    interval: 40, lineStyle: { color: 'transparent' },
-                    majorTickLines: { color: 'transparent', width: 0 }
                 }
         }
     </script>
 }
-
+@*custom code start*@
 @section Scripts {
 
 }
-
+@*custom code end*@
 @section ActionDescription{
     <p>
         This sample visualizes stock chart with plot band on y axis.

@@ -1,0 +1,69 @@
+﻿@using Syncfusion.EJ2.Gantt;
+@section ControlsSection{
+    <div class="control-section">
+        <div class="row">
+            <div class="col-md-12">
+                <ejs-gantt id='TaskbarTemplate' dataSource="ViewBag.dataSource" allowSorting="true" dateFormat="MMM dd, y"
+                           treeColumnIndex="0" height="450px" allowSelection="true" highlightWeekends="true" 
+                           projectStartDate="Fri Mar 26 2019 00:00:00 GMT-0700 (Pacific Daylight Time)" projectEndDate="Tue Jul 06 2019 00:00:00 GMT-0700 (Pacific Daylight Time)">
+                    <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate"
+                           endDate="EndDate" duration="Duration" progress="Progress" dependency="Predecessor"
+                    child="SubTasks"></e-gantt-taskfields>
+                    <e-gantt-columns>
+                        <e-gantt-column field="TaskName" headerText="Task Name" width="250" clipMode="EllipsisWithTooltip"></e-gantt-column>
+                        <e-gantt-column field="StartDate"></e-gantt-column>
+                        <e-gantt-column field="EndDate"></e-gantt-column>
+                        <e-gantt-column field="Duration"></e-gantt-column>
+                        <e-gantt-column field="Progress"></e-gantt-column>
+                        <e-gantt-column field="Predecessor"></e-gantt-column>
+                    </e-gantt-columns>
+                   <e-gantt-timelinesettings>
+                        <e-timelinesettings-toptier unit="Week" format="MMM dd, y"></e-timelinesettings-toptier>
+                        <e-timelinesettings-bottomtier unit="Day" count="1"></e-timelinesettings-bottomtier>
+                    </e-gantt-timelinesettings>
+                    <e-gantt-labelsettings leftLabel="TaskName"></e-gantt-labelsettings>
+                    <e-gantt-eventmarkers>
+                        <e-gantt-eventmarker day="marker1" label="Research phase"></e-gantt-eventmarker>
+                        <e-gantt-eventmarker day="marker2" label="Design Phase"></e-gantt-eventmarker>
+                        <e-gantt-eventmarker day="marker3" label="Production Phase"></e-gantt-eventmarker>
+                        <e-gantt-eventmarker day="marker4" label="Sales and marketing phase"></e-gantt-eventmarker>
+                    </e-gantt-eventmarkers>
+                </ejs-gantt>
+            </div>
+        </div>
+    </div>
+
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample visualizes the various phases involved in a manufacturing process of a product which transforms from
+            a conceptual model to sellable product.
+        </p>
+    </div>
+}
+@section Description{
+
+    <div id="description">
+        <p>
+            In this example, you can see how to render a Gantt chart with the provided data source. The default timeline
+            view week-day mode is applied to Gantt chart. The dependency lines are enabled in this example to represent the
+            execution order or the hierarchy between the phases.
+            Tooltip is enabled for all the UI in this example. To see the tooltip in action, hover the mouse over or tap
+            taskbars, timeline units and dependency lines in touch enabled devices.
+        </p>
+        <br />
+        <p style="font-weight: 500">Injecting Module</p>
+        <p>
+            Gantt component features are segregated into individual feature-wise modules. To use a selection, inject the
+            Selection module using the <code>Gantt.Inject(Selection)</code> method, and use a sort by injecting the Sort
+            module using
+            the <code>Gantt.Inject(Sort)</code> method. To use markers, inject the
+            DayMarkers module using the <code>Gantt.Inject(DayMarkers)</code> method.
+        </p>
+    </div>
+}
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Heatmap control shows the heat map control displayed with minimum configuration." />
+}

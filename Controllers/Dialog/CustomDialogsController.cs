@@ -12,26 +12,26 @@ namespace EJ2CoreSampleBrowser.Controllers.Dialog
         {
             ViewBag.alertbutton = new
             {
-                content = "DISMISS",
+                content = "Dismiss",
                 isPrimary = true
             };
             ViewBag.confirmbutton = new
             {
-                content = "YES",
+                content = "Yes",
                 isPrimary = true
             };
             ViewBag.confirmbutton1 = new
             {
-                content = "NO",
+                content = "No",
             };
             ViewBag.promptbutton = new
             {
-                content = "CONNECT",
+                content = "Connect",
                 isPrimary = true
             };
             ViewBag.promptbutton1 = new
             {
-                content = "CANCEL",
+                content = "Cancel",
             };
             return View();
         }

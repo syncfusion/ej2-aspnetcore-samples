@@ -1,0 +1,91 @@
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+<div class=" control-section">
+    <div class="col-lg-8  control-section">
+        <ejs-filemanager id="file" view="LargeIcons">
+            <e-filemanager-ajaxsettings url="https://ej2services.syncfusion.com/production/web-services/api/FileManager/FileOperations"></e-filemanager-ajaxsettings>
+            <e-filemanager-navigationpanesettings visible="false"></e-filemanager-navigationpanesettings>
+            <e-filemanager-toolbarsettings visible="true"></e-filemanager-toolbarsettings>
+        </ejs-filemanager>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties">
+            <tbody>
+                <tr>
+                    <td style="width: 50%">
+                        <div>Toolbar</div>
+                    </td>
+                    <td style="width: 50%;padding-right: 10px">
+                        <div>
+                            <ejs-checkbox id="toolbar" checked="true" name="toolbar" change="onToolbarChange"></ejs-checkbox>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+   
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This sample demonstrates the properties of FileManager component from the property pane. Select any properties from the property pane to customize the FileManager.</p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>The File Manager component is used to explore a file system through a web application, similar to the windows explorer for windows. It supports the basic file operations such as create, rename, delete.</p>
+    </div>
+}
+@section Scripts{
+    <script>
+        var hostUrl = 'https://ej2services.syncfusion.com/production/web-services/';
+        var fileObject = document.getElementById('file').ej2_instances[0];
+        fileObject.ajaxSettings.url = hostUrl + 'api/FileManager/FileOperations';
+        fileObject.ajaxSettings.getImageUrl = hostUrl + 'api/FileManager/GetImage',
+        fileObject.ajaxSettings.uploadUrl = hostUrl + 'api/FileManager/Upload';
+        fileObject.ajaxSettings.downloadUrl = hostUrl + 'api/FileManager/Download';
+    </script>
+}
+
+<script>
+
+    function onToolbarChange(args) {
+        fileObject.toolbarSettings.visible = args.checked;
+    }
+
+    function onNavigationChange(args) {
+        fileObject.navigationPaneSettings.visible = args.checked;
+    }
+</script>
+<style>
+
+    .property-panel-table div {
+        padding-left: 0;
+        padding-top: 0;
+    }
+
+    #navPane {
+        padding-top: 5px;
+    }
+
+    #property tr{
+        height: 50px;
+    }
+
+    #tool {
+        padding-top: 5px;
+    }
+
+    #navPane_toggle,
+    #tool_toggle {
+        width: 100px;
+    }
+</style>
+
+
+
+

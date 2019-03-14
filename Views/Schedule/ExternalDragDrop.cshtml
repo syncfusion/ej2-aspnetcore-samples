@@ -7,7 +7,7 @@
                 <div class="title-container">
                     <h1 class="title-text">Doctor's Appointments</h1>
                 </div>
-                <ejs-schedule id="schedule" width="100%" height="650px" cssClass="schedule-drag-drop" resourceHeaderTemplate="#resource-template" currentView="TimelineDay" selectedDate="new DateTime(2018, 7, 1)" startHour="08:00" endHour="18:00" actionBegin="onActionBegin" drag="onItemDrag">
+                <ejs-schedule id="schedule" width="100%" height="650px" cssClass="schedule-drag-drop" resourceHeaderTemplate="#resource-template" currentView="TimelineDay" selectedDate="new DateTime(2018, 7, 1)" actionBegin="onActionBegin" drag="onItemDrag">
                     <e-schedule-group enableCompactView="false" resources="@ViewBag.Resources"></e-schedule-group>
                     <e-schedule-resources>
                         <e-schedule-resource dataSource="@ViewBag.Departments" field="DepartmentID" title="Department" name="Departments" textField="text" idField="id" colorField="color"></e-schedule-resource>
@@ -17,6 +17,7 @@
                         <e-schedule-view option="TimelineDay"></e-schedule-view>
                         <e-schedule-view option="TimelineMonth"></e-schedule-view>
                     </e-schedule-views>
+                    <e-schedule-workhours highlight="true" start="08:00" end="18:00"></e-schedule-workhours>
                     <e-schedule-eventsettings dataSource="@ViewBag.datasource">
                         <e-eventsettings-fields>
                             <e-field-subject name="Name" title="Patient Name"></e-field-subject>
@@ -38,6 +39,7 @@
         </div>
     </div>
     <style>
+        /* custom code start*/
         .content-wrapper {
             display: -ms-flexbox;
             display: flex;
@@ -56,6 +58,13 @@
             padding-bottom: 10px;
         }
 
+        .title-text {
+            font-size: 18px;
+            margin: 0px;
+            font-weight: bold;
+            text-align: center;
+        }
+        /* custom code end*/
         .treeview-external-drag #waiting {
             height: 100%;
             padding: 0;
@@ -175,13 +184,6 @@
             padding: 0 10px
         }
 
-        .title-text {
-            font-size: 18px;
-            margin: 0px;
-            font-weight: bold;
-            text-align: center;
-        }
-
         .e-schedule.schedule-drag-drop .e-resource-cells.e-child-node .specialist-category .specialist-image {
             width: 45px;
             height: 40px;
@@ -217,6 +219,7 @@
         }
 
         @@media (max-width: 550px) {
+            /* custom code start*/
             .content-wrapper {
                 display: block;
             }
@@ -224,6 +227,7 @@
             .schedule-container {
                 padding-bottom: 10px
             }
+            /* custom code end*/
 
             .treeview-external-drag.e-treeview,
             .e-bigger .treeview-external-drag.e-treeview {
@@ -356,9 +360,11 @@
         }
     </script>
 }
+@*custom code start*@
 @section Meta{
     <meta name="description" content="This example shows how to drag and drop the events from an external source into ASP.NET Core scheduler." />
 }
+@*custom code end*@
 @section ActionDescription{
     <div id="action-description">
         <p>

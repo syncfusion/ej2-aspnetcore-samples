@@ -2,7 +2,7 @@
 @using Newtonsoft.Json
 @section ControlsSection{
     <div class="col-lg-12 control-section" style="min-height: auto;">
-        <ejs-querybuilder id="querybuilder" width="100%" rule="ViewBag.rule" dataSource="ViewBag.dataSource" maxGroupCount=5 conditionChanged="updateRule" fieldChanged="updateRule" valueChanged="updateRule" operatorChanged="updateRule" ruleDelete="updateRule" groupDelete="updateRule" ruleInsert="updateRule" groupInsert="updateRule">
+        <ejs-querybuilder id="querybuilder" width="100%" rule="ViewBag.rule" dataSource="ViewBag.dataSource" maxGroupCount=5 change="updateRule">
             <e-querybuilder-columns>
                 <e-querybuilder-column field="TaskID" label="Task ID" type="number"></e-querybuilder-column>
                 <e-querybuilder-column field="Name" label="Name" type="string"></e-querybuilder-column>
@@ -29,6 +29,7 @@
         </div>
     </div>
 }
+
 @section Meta{
     <meta name="description" content="This sample demonstrates the integration of Grid component to showcase the data population based on the created filters using Query Builder component." />
 }
@@ -52,12 +53,23 @@
         </p>
     </div>
 }
-
+@*custom code start*@
 @section Scripts {
     <script>
         updateRule();
     </script>
 }
+
+<style>
+    #grid {
+        margin: 0 auto;
+    }
+
+    .e-querybuilder {
+        margin: 4% auto;
+    }
+</style>
+@*custom code end*@
 <script>
     function updateRule() {
         var dataManagerQuery
@@ -82,12 +94,3 @@
             grid.refresh();
     }
 </script>
-<style>
-    #grid {
-        margin: 0 auto;
-    }
-
-    .e-querybuilder {
-        margin: 4% auto;
-    }
-</style>

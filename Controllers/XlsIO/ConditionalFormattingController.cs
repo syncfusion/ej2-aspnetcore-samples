@@ -139,26 +139,12 @@ namespace EJ2CoreSampleBrowser.Controllers.XlsIO
 
                 #endregion
 
-                #region Color Scale
+                #region Duplicate
                 formats = sheet.Range["D7:D46"].ConditionalFormats;
                 format = formats.AddCondition();
-                format.FormatType = ExcelCFType.ColorScale;
-                IColorScale colorScale = format.ColorScale;
+                format.FormatType = ExcelCFType.Duplicate;
 
-                //Sets 3 - color scale.
-                colorScale.SetConditionCount(3);
-
-                colorScale.Criteria[0].FormatColorRGB = Color.FromArgb(230, 197, 218);
-                colorScale.Criteria[0].Type = ConditionValueType.LowestValue;
-                colorScale.Criteria[0].Value = "0";
-
-                colorScale.Criteria[1].FormatColorRGB = Color.FromArgb(244, 210, 178);
-                colorScale.Criteria[1].Type = ConditionValueType.Percentile;
-                colorScale.Criteria[1].Value = "50";
-
-                colorScale.Criteria[2].FormatColorRGB = Color.FromArgb(245, 247, 171);
-                colorScale.Criteria[2].Type = ConditionValueType.HighestValue;
-                colorScale.Criteria[2].Value = "0";
+                format.BackColorRGB = Color.FromArgb(255, 199, 206);
                 #endregion
             }
             else

@@ -216,7 +216,7 @@
                 document.getElementById('currentPointerValue').innerHTML = 'Current Value <span>    ' + value + '</span>';
                 gauge.refresh();
             };
-
+        @* custom code start *@
         var selectedTheme = location.hash.split('/')[1];
         var color;
         if (selectedTheme === 'bootstrap') {
@@ -228,6 +228,7 @@
         else {
             color = '#ff4081';
         }
+        @* custom code end *@
         var exisLine = document.getElementById('usage_line');
         var currentLine = document.getElementById('random_line');
         exisLine.style.background = color;
@@ -273,9 +274,11 @@
         return customGauge2;
     }
     window.gaugeload = function (args) {
+        @* custom code start *@
         var theme = location.hash.split('/')[1];
         theme = theme ? theme : 'Material';
         args.gauge.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+        @* custom code end *@
         if (window.gaugeLoaded)
             return;
         window.gaugeLoaded = true;

@@ -1,0 +1,112 @@
+@using Syncfusion.EJ2
+
+@{
+    var button = new Syncfusion.EJ2.Inputs.UploaderButtonsProps { Browse = "Choose file" };
+}
+
+@section ControlsSection{
+    <div class="col-lg-9 control-section">
+        <div class="schedule-wrapper">
+            <ejs-schedule id="schedule" width="100%" height="650px" selectedDate="new DateTime(2019, 1, 10)">
+                <e-schedule-views>
+                    <e-schedule-view option="Day"></e-schedule-view>
+                    <e-schedule-view option="Week"></e-schedule-view>
+                    <e-schedule-view option="WorkWeek"></e-schedule-view>
+                    <e-schedule-view option="Month"></e-schedule-view>
+                    <e-schedule-view option="Agenda"></e-schedule-view>
+                </e-schedule-views>
+                <e-schedule-eventsettings dataSource="@ViewBag.appointments"></e-schedule-eventsettings>
+            </ejs-schedule>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id='property' title='Properties' class='property-panel-table' style="width: 100%;">
+            <tbody>
+                <tr style="height: 50px">
+                    <td style="width: 50%">
+                        <div>Export as iCalendar</div>
+                    </td>
+                    <td style="width: 50%;">
+                        <div width='300px'>
+                            <ejs-button id="ics-export" content="Export"></ejs-button>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td style="width: 50%">
+                        <div>Import iCalendar file</div>
+                    </td>
+                    <td style="width: 50%;">
+                        <div width='300px' class='upload_wrapper'>
+                            <ejs-uploader id="ics-import" allowedExtensions=".ics" cssClass="calendar-import" showFileList="false" selected="onSelected" buttons="button" multiple="false"></ejs-uploader>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    @*custom code start*@
+    <style>
+        .calendar-import.e-upload {
+            border: 0;
+            padding-left: 0 !important;
+        }
+
+        .calendar-import.e-upload .e-file-select-wrap {
+            padding: 0
+        }
+
+        .calendar-import.e-upload .e-file-select-wrap .e-file-drop {
+            display: none;
+        }
+    </style>
+    @*custom code end*@
+
+    <script type="text/javascript">
+        window.onload = function (args) {
+            var uploaderObj = document.getElementById("ics-import").ej2_instances[0];
+            uploaderObj.setProperties({
+                buttons: {
+                    browse: 'Choose file',
+                }
+            })
+        }
+            document.getElementById("ics-export").addEventListener('click', function () {
+                var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+                scheduleObj.exportToICalendar();
+            });
+            function onSelected(args) {
+                var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+                scheduleObj.importICalendar(args.event.target.files[0]);
+            }
+    </script>
+}
+
+@*custom code start*@
+@section Meta{
+    <meta name="description" content="This example shows how to export the Scheduler events to a calendar file, and also how to import events from an .ics file into our Essential JS2 Scheduler." />
+}
+@*custom code end*@
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This example showcases how to export the Scheduler events to a calendar (.ics) file, as well as how to import
+            events from an .ics file (downloaded from any of the calendars like Google or Outlook) into our Scheduler.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this example, the Scheduler events can be exported to a calendar (.ics) file by making use of the
+            <code>exportToICalendar</code> public method. By default,
+            the calendar is exported with a file name <code>Calendar.ics</code>.
+            To change this file name on export, pass the custom string value as <code>fileName</code> to get the file
+            downloaded with this provided name.
+            The events from external calendars can also be imported into Scheduler by making use of the
+            <code>importICalendar</code> method. This method accepts the blob object of an .ics file to be imported as a
+            mandatory argument.
+        </p>
+    </div>
+}

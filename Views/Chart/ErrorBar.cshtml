@@ -85,11 +85,12 @@
     </div>
     <script src="~/scripts/chart/financial-data.js"></script>
     <script>
+    @*custom code start*@
         window.onChartLoad = function (args) {
             var selectedTheme = location.hash.split("/")[1];
             selectedTheme = selectedTheme ? selectedTheme : "Material";
             args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/dark/i, "Dark").replace(/light/i, "Light"));
-        }
+        }  
         function pointRender(args) {
             var selectedTheme = location.hash.split('/')[1];
             if (selectedTheme && selectedTheme.indexOf('fabric') > -1) {
@@ -105,6 +106,7 @@
                 args.fill = window.highContrastColors[args.point.index % 10];
             }
         };
+            @*custom code end*@  
         function type(args) {
             var chart = document.getElementById('container').ej2_instances[0];
             chart.series[0].errorBar.type = this.value;
@@ -143,7 +145,7 @@
     </script>
 
 }
-
+@*custom code start*@
 @section Scripts {
 
 }
@@ -156,6 +158,7 @@
 @section Meta{
     <meta name="description" content="This demo for Essential JS2 Chart control shows how to render and configure the error bars in charts." />
 }
+@*custom code end*@
 @section ActionDescription{
     <p>
         This sample visualizes the errors in sales distribution of a car for a certain period with error bar in the chart. In property panel, the options are available to change error bar type, drawing mode, and drawing direction of error bar by means of dropdown.

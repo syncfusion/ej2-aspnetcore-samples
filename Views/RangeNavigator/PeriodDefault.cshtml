@@ -47,7 +47,7 @@
                         <e-chart-primaryxaxis valueType="DateTime">
                             <e-majorgridlines width="0"></e-majorgridlines>
                         </e-chart-primaryxaxis>
-                        <e-chart-primaryyaxis opposedPosition="true" labelFormat="n0" title="Price">
+                        <e-chart-primaryyaxis opposedPosition="true" labelFormat="n0">
                             <e-linestyle width="0"></e-linestyle>
                         </e-chart-primaryyaxis>
                         <e-chart-annotations>
@@ -94,15 +94,19 @@
             chart.refresh();
 
         }
+           @*custom code start*@
         var selectedTheme = location.hash.split('/')[1];
         selectedTheme = selectedTheme ? selectedTheme : 'Material';
         var theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/dark/i, "Dark").replace(/light/i, "Light"));        
+           @*custom code end*@
         switchChange = function (args) {
             console.log(("123"))
         }
         rangeTopLoad = function (args) {
+               @*custom code start*@
             args.rangeNavigator.theme = theme;
             args.rangeNavigator.width = ej.base.Browser.isDevice ? "100%" : "80%";
+               @*custom code end*@
             args.rangeNavigator.dataSource = data;
         }
 
@@ -130,9 +134,11 @@
         }
 
         chartLoad = function (args) {
+               @*custom code start*@
             args.chart.theme = theme;
             args.chart.series[0].dataSource = data;
             args.chart.width = ej.base.Browser.isDevice ? "100%" : "80%";
+               @*custom code end*@
             args.chart.tooltip.format = args.chart.series[0].type === 'Candle' ?
                 '${point.x}<br/>High : <b>${point.high}</b><br/>Low : <b>${point.low}</b><br/>' +
                 'Open : <b>${point.open}</b><br/>Close : <b>${point.close}</b>' :
@@ -147,8 +153,10 @@
         }
 
         rangeBottomLoad = function (args) {
+               @*custom code start*@
             args.rangeNavigator.theme = theme;
             args.rangeNavigator.width = ej.base.Browser.isDevice ? "100%" : "80%";
+               @*custom code end*@
             args.rangeNavigator.series[0].dataSource = data;
             args.value = [new Date('2016-05-15'), new Date('2018-05-15')];
         }
@@ -209,7 +217,7 @@
 
     </script>
 }
-
+   @*custom code start*@
 @section Scripts {
 
 }
@@ -226,6 +234,7 @@
 @section Meta{
     <meta name="description" content="This demo for Essential JS2 Range Navigator control shows how to display the period selector for a range with specified periods." />
 }
+   @*custom code end*@
 @section ActionDescription{
     <p>
         This sample visualize the Bitcoin price change over the period with candle and line series. Period Selector show the information about the data.

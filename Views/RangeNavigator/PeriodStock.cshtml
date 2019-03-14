@@ -30,7 +30,7 @@
                 <e-majorgridlines width="0"></e-majorgridlines>
                 <e-crosshairtooltip enable="true"></e-crosshairtooltip>
             </e-chart-primaryxaxis>
-            <e-chart-primaryyaxis title="Price" rowIndex="1"
+            <e-chart-primaryyaxis rowIndex="1"
                                   labelFormat="n0" opposedPosition="true" rangePadding="None">
                 <e-majorgridlines width="0"></e-majorgridlines>
                 <e-crosshairtooltip enable="true"></e-crosshairtooltip>
@@ -70,16 +70,20 @@
     </div>
     <script src="~/scripts/chart/stock-chart-data.js"></script>
     <script>
+       @*custom code start*@
         var data = chartData; var initialData;
         var selectedTheme = location.hash.split('/')[1];
         selectedTheme = selectedTheme ? selectedTheme : 'Material';
         var theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/dark/i, "Dark").replace(/light/i, "Light"));
+           @*custom code end*@
         var pointColors = [];
         rangeLoad = function (args) {
             args.rangeNavigator.periodSelectorSettings.height =
                 document.body.className.indexOf('e-bigger') > -1 ? 56 : 42;
+               @*custom code start*@
             args.rangeNavigator.theme = theme;
             args.rangeNavigator.width = ej.base.Browser.isDevice ? "100%" : "80%";
+               @*custom code start*@
             args.rangeNavigator.dataSource = data;                       
         }
 
@@ -212,7 +216,7 @@
 
     </script>
 }
-
+   @*custom code start*@
 @section Scripts {
 
 }
@@ -234,6 +238,7 @@
 @section Meta{
     <meta name="description" content="This demo for Essential JS2 Range Navigator control shows how to render the stock charts with specified periods using period selector." />
 }
+   @*custom code end*@
 @section ActionDescription{
 <p>
     This sample illustrates a stock price for AAPL over a period. Period Selector show the information about the stock values without range navigator.

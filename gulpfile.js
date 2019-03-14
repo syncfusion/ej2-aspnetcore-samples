@@ -85,10 +85,12 @@ function generateSearchIndex(data) {
         var component = sampleCollection.name;
         var directory = sampleCollection.directory;
         var puid = sampleCollection.uid;
+        var hideOnDevice = sampleCollection.hideOnDevice;
         for (sample of sampleCollection.samples) {
             sample.component = component;
             sample.dir = directory;
             sample.parentId = puid;
+            sample.hideOnDevice = hideOnDevice;
             instance.addDoc(sample);
         }
     }
@@ -110,3 +112,36 @@ function getSamples(data, component) {
         }
     }
 }
+
+gulp.task('desValidation', function (done) {
+    var files = glob.sync('./Views/*/*', {
+        silent: true,
+        ignore: [
+            './Views/Shared/*', './Views/**/locale.json', './Views/**/fonts', './Views/**/icons', './Views/**/Index.cshtml', './Views/Grid/_DialogAddPartial.cshtml', './Views/Grid/_DialogEditPartial.cshtml'
+        ]
+    });
+    var reg = /.*meta name([\S\s]*?)\/.*/g;
+    var reg1 = /\"([^"]+)\"/g;
+    var error = "";
+    var des = "";
+    for (var i = 573; i < files.length; i++) {
+        var url = files[i].split('/')[2] + '/' + files[i].split('/')[3];
+        var cshtml = fs.readFileSync(files[i], 'utf8');
+        if (reg.test(cshtml)) {
+            cshtml = cshtml.match(reg)[0].match(reg1)[1].replace(/"/g, "");
+            if (!(cshtml.length >= 100) && (cshtml.length <= 160)) {
+                error = error + url + ' description length should be between 100 to 160 characters\n';
+            }
+        } else {
+            des = des + url + ' description needed\n';
+        }
+    }
+    if (error || des) {
+        if (!fs.existsSync('./cireports')) {
+            fs.mkdirSync('./cireports');
+        }
+         fs.writeFileSync('./cireports/logs/descriptionValidation.txt', error + des, 'utf-8');
+        done();
+    }
+});
+

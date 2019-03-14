@@ -9,7 +9,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Button
 {
     public partial class ButtonController : Controller
     {
-        public IActionResult DropDownButton()
+        public IActionResult DropdownButton()
         {
             List<object> items = new List<object>();
             items.Add(new

@@ -1,0 +1,69 @@
+﻿@using Syncfusion.EJ2
+
+
+@section ControlsSection{
+
+    <div class="control-section">
+        @{
+
+            List<object> toolbarItems = new List<object>();
+            toolbarItems.Add("ExpandAll");
+            toolbarItems.Add("CollapseAll");
+            toolbarItems.Add(new { text = "Quick Filter", tooltipText = "Quick Filter", id = "toolbarfilter" });
+        }
+        <ejs-treegrid id="TreeGrid" dataSource="ViewBag.dataSource" height="400" allowFiltering="true" toolbar=toolbarItems toolbarClick="toolbarClick" childMapping="Children" treeColumnIndex="1">
+            <e-treegrid-columns>
+                <e-treegrid-column field="TaskId" headerText="Task ID" textAlign="Right" width="90"></e-treegrid-column>
+                <e-treegrid-column field="TaskName" headerText="Task Name" width="140"></e-treegrid-column>
+                <e-treegrid-column field="StartDate" headerText=" Start Date" textAlign="Right" format="yMd" width="90"></e-treegrid-column>
+                <e-treegrid-column field="Duration" headerText="Duration" textAlign="Right" width="85"></e-treegrid-column>
+                <e-treegrid-column field="Progress" headerText="Progress" textAlign="Right" width="85"></e-treegrid-column>
+                <e-treegrid-column field="Priority" headerText="Priority" textAlign="Right" width="90"></e-treegrid-column>
+            </e-treegrid-columns>
+        </ejs-treegrid>
+    </div>
+
+    <script>
+        function toolbarClick(args) {
+            if (args.item.id === 'toolbarfilter') {
+                var treegrid = document.getElementById("TreeGrid").ej2_instances[0];
+                treegrid.filterByColumn("TaskName", "startswith", "Testing");;
+            }
+        }
+    </script>
+
+}
+
+@*custom code start*@
+
+@section Meta{
+    <meta name="description" content="This demo explains how to render custom template elements in a toolbar by which any custom operation can be performed in Syncfusion Essential JS2 TreeGrid." />
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        This demo explains how to render custom template elements in a toolbar by which any custom operation can be performed in Syncfusion Essential JS2 TreeGrid.
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            Custom toolbar items can be added by defining the toolbar as a collection of ItemModels.
+            Actions for this customized toolbar items are defined in the toolbarClick event.
+        </p>
+        <p>
+            In this sample, rendered the custom template element <code>Quick Filter</code> along with predefined
+            toolbar items ExpandAll and CollapseAll.
+            While click on the <code>Quick Filter</code> button the column "Task Name" is filtered with the value "Testing".
+        </p>
+        <p>
+            More information on the Toolbar Template can be found in
+            documentation section.
+        </p>
+    </div>
+
+
+}
+
+@*custom code end*@

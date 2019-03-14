@@ -112,8 +112,8 @@ namespace EJ2CoreSampleBrowser.Controllers.PdfViewer
         public IActionResult PrintImages([FromBody] Dictionary<string, string> jsonObject)
         {
             PdfRenderer pdfviewer = new PdfRenderer();
-            string pageImage = pdfviewer.GetPrintImage(jsonObject);
-            return Content(pageImage);
+			object pageImage = pdfviewer.GetPrintImage(jsonObject);
+            return Content(JsonConvert.SerializeObject(pageImage));
         }
         private string GetDocumentPath(string document)
         {

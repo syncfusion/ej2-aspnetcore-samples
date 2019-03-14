@@ -1,4 +1,4 @@
-﻿//Documentloader Implementation starts    
+﻿﻿//Documentloader Implementation starts    
 function loadDefault(defaultDocument) {
     documenteditor.open(JSON.stringify(defaultDocument));
 }

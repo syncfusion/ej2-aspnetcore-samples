@@ -32,12 +32,14 @@
     </div>
     <script src="~/scripts/chart/financial-data.js"></script>
     <script type="text/javascript">
+        @*custom code start*@
         window.onChartLoad = function (args) {
             var selectedTheme = location.hash.split('/')[1];
             selectedTheme = selectedTheme ? selectedTheme : 'Material';
             args.chart.width = ej.base.Browser.isDevice ? "100%" : "60%";
             args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/dark/i, "Dark").replace(/light/i, "Light"));
         }
+        @*custom code  end*@
         function axisLabelRender(args) {
             if (args.axis.name === 'primaryYAxis') {
                 args.text = '$' + Number(args.text) / 1000 + 'B';
@@ -78,6 +80,7 @@
         </p>
     </div>
 }
+    @*custom code start*@
 @section Scripts {
 }
 
@@ -105,3 +108,4 @@
         }
     }
     </style>
+    @*custom code end*@

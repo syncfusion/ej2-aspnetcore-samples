@@ -202,8 +202,8 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
             Palette.Add(new SymbolPalettePalette() { Id = "connectors", Expanded = true, Symbols = SymbolPaletteConnectors, IconCss = "e-ddb-icons1 e-connector", Title = "Connectors" });
 
             ViewBag.Palette = Palette;
-
             ViewBag.Spconnectors = SymbolPaletteConnectors;
+            ViewBag.getNodeDefaults = "getNodeDefaults";
 
             double[] intervals = { 1, 9, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75 };
             DiagramGridlines grIdLines = new DiagramGridlines()

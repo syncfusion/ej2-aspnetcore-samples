@@ -45,10 +45,7 @@ namespace EJ2CoreSampleBrowser.Controllers
                                             <p>Provides an option to customize quick toolbar for an image </p>
                                         </li>
                                     </ol>
-                                    <img alt = 'Logo' src ='../images/RichTextEditor/RTEImage-Feather.png' style='width: 300px'/>
-                                     </div>
-                                </div>
-                            </div>";
+                                   <img alt = 'Logo' src ="+ @Url.Content("~/Content/images/RichTextEditor/RTEImage-Feather.png") + " style='width: 300px'/></div></div></div>";
 
 
             ViewBag.tools = new[] { "Bold", "Italic", "Underline", "StrikeThrough",

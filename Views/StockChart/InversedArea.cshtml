@@ -8,8 +8,19 @@
     <div class="control-section" align="center">
         <div id="container">
             <ejs-stockchart id="stockchartinversed" load="stockload" seriesType="series" indicatorType="indicator" title="AAPL Stock Price">
+                <e-stockchart-border width="0"></e-stockchart-border>
+                <e-stockchart-primaryxaxis>
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                    <e-crosshairtooltip enable="true"></e-crosshairtooltip>
+                </e-stockchart-primaryxaxis>
+                <e-stockchart-primaryyaxis interval="40" isInversed="true">
+                    <e-linestyle width="0"></e-linestyle>
+                    <e-majorticklines width="0" color="transparent"></e-majorticklines>
+                    <e-crosshairtooltip enable="true"></e-crosshairtooltip>
+                </e-stockchart-primaryyaxis>
+                <e-stockchart-crosshairsettings enable="true"></e-stockchart-crosshairsettings>
                 <e-stockchart-series-collection>
-                    <e-stockchart-series xName="x"  yName= 'high' type= 'Area' name='google' fill='#BDEDE9'>
+                    <e-stockchart-series xName="x" yName='high' type='Area' name='google' fill='#BDEDE9'>
                     </e-stockchart-series>
                 </e-stockchart-series-collection>
             </ejs-stockchart>
@@ -19,25 +30,20 @@
     <script>
         var data = googl;
         function stockload(args) {
+            @*custom code start*@
             letselectedTheme: string = location.hash.split('/')[1];
             selectedTheme = selectedTheme ? selectedTheme : 'Material';
             args.stockChart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/dark/i, "Dark").replace(/light/i, "Light");
+            @*custom code end*@
             args.stockChart.series[0].dataSource = data;
-            args.stockChart.border = { width: 0 };
-            args.stockChart.crosshair = { enable: true };
-            args.stockChart.primaryXAxis = { majorGridLines: { width: 0 }, crosshairTooltip: { enable: true } },
-                args.stockChart.primaryYAxis = {
-                    interval: 40, lineStyle: { color: 'transparent' }, isInversed: true,
-                    majorTickLines: { color: 'transparent', width: 0 }, crosshairTooltip: { enable: true }
-                }
         }
     </script>
 }
-
+@*custom code start*@
 @section Scripts {
 
 }
-
+@*custom code end*@
 @section ActionDescription{
     <p>
         This sample visualizes stock data with inversed axis. Period and range selector help us to navigate different of data.

@@ -86,17 +86,21 @@
     <script>
         var dateTimeData = exportData;
         var zoomFactor, zoomPosition;
+        @*custom code start*@
         var selectedTheme = location.hash.split('/')[1];
         selectedTheme = selectedTheme ? selectedTheme : 'Material';
         var theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/dark/i, "Dark").replace(/light/i, "Light"));
+              @*custom code end*@
         var themes = ['Material', 'Fabric', 'Bootstrap', 'Highcontrast']
         var borderColor = ['#FF4081', '#007897', '#428BCA', '#FFD939'];
         var regionColor = ['rgba(255, 64, 129, 0.3)', ' rgba(0, 120, 151, 0.3)',
             'rgba(66, 139, 202, 0.3)', 'rgba(255, 217, 57, 0.3)'];
         window.onChartLoad = function (args) {
+                   @*custom code start*@
             args.rangeNavigator.theme = theme;
             args.rangeNavigator.dataSource = dateTimeData;
             args.rangeNavigator.width = ej.base.Browser.isDevice ? "100%" : "80%";
+               @*custom code end*@
             args.rangeNavigator.value = [new Date('2013-05-01'), new Date('2013-08-01')];
 
         }
@@ -132,7 +136,7 @@
         };
     </script>
 }
-
+   @*custom code start*@
 
 @section Scripts {
 
@@ -159,6 +163,7 @@
 @section Meta{
     <meta name="description" content="This demo for Essential JS2 Range Navigator control shows how to print the charts and export the chart contents to SVG, PDF, JPEG, PNG, and Excel formats at client-side." />
 }
+   @*custom code end*@
 @section ActionDescription{
     <p>
         This sample illustrates the export feature in the range navigator. You can export the range navigator in PNG, SVG, PDF, or JPEG format by clicking Export. Print feature is also enabled in this sample.

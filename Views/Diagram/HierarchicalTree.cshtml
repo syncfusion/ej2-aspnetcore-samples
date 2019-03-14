@@ -154,17 +154,21 @@
         document.getElementById('appearance').onclick = function (args) {
             var target = args.target;
             var diagram = document.getElementById("diagram").ej2_instances[0];
+            @*custom code start*@
             var selectedElement = document.getElementsByClassName('e-selected-style');
             if (selectedElement.length) {
                 selectedElement[0].classList.remove('e-selected-style');
             }
+            @*custom code end*@
             if (target.className === 'image-pattern-style') {
                 var id = target.id;
                 var orientation1 = id.substring(0, 1).toUpperCase() + id.substring(1, id.length);
                 diagram.layout.orientation = orientation1;
                 diagram.dataBind();
                 diagram.doLayout();
+                @*custom code start*@
                 target.classList.add('e-selected-style');
+                @*custom code end*@
             }
         };
     </script>

@@ -7,13 +7,24 @@
     }
 
     <div class="control-section" align="center">        
-            <ejs-stockchart id="stockchartmultiple" load="chartLoad" indicatorType="indicator" trendlineType="line" title="Multiple Series">
-                <e-stockchart-series-collection>
-                    <e-stockchart-series type='Line' xName='x' yName='close' name='Apple' >
-                    </e-stockchart-series>
-                    <e-stockchart-series type='Line' xName='x' yName='close' name='Google' ></e-stockchart-series>
-                </e-stockchart-series-collection>
-            </ejs-stockchart>
+        <ejs-stockchart id="stockchartmultiple" load="chartLoad" indicatorType="indicator" trendlineType="line" title="Multiple Series">
+            <e-stockchart-border width="0"></e-stockchart-border>
+            <e-stockchart-primaryxaxis>
+                <e-majorgridlines width="0"></e-majorgridlines>
+                <e-crosshairtooltip enable="true"></e-crosshairtooltip>
+            </e-stockchart-primaryxaxis>
+            <e-stockchart-primaryyaxis interval="40">
+                <e-linestyle color="transparent"></e-linestyle>
+                <e-majorticklines width="0" color="transparent"></e-majorticklines>
+                <e-crosshairtooltip enable="true"></e-crosshairtooltip>
+            </e-stockchart-primaryyaxis>
+            <e-stockchart-crosshairsettings enable="true"></e-stockchart-crosshairsettings>
+            <e-stockchart-series-collection>
+                <e-stockchart-series type='Line' xName='x' yName='close' name='Apple'>
+                </e-stockchart-series>
+                <e-stockchart-series type='Line' xName='x' yName='close' name='Google'></e-stockchart-series>
+            </e-stockchart-series-collection>
+        </ejs-stockchart>
         </div>
     <script src="~/scripts/StockChartData/goog.js"></script>
     <script src="~/scripts/StockChartData/googl.js"></script>
@@ -21,27 +32,22 @@
         var data1 = goog;
         var data2 = googl;
         function chartLoad(args) {
+            @*custom code start*@
             letselectedTheme: string = location.hash.split('/')[1];
             selectedTheme = selectedTheme ? selectedTheme : 'Material';
             args.stockChart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/dark/i, "Dark").replace(/light/i, "Light");
+           @*custom code end*@
             args.stockChart.series[0].dataSource = data1;
             args.stockChart.series[1].dataSource = data2;
-            args.stockChart.border = { width: 0 };
-            args.stockChart.crosshair = { enable: true };
-            args.stockChart.primaryXAxis = { majorGridLines: { width: 0 }, crosshairTooltip: { enable: true } },
-                args.stockChart.primaryYAxis =  {
-                interval: 40, lineStyle: { color: 'transparent' },
-                majorTickLines: { color: 'transparent', width: 0 }, crosshairTooltip: { enable: true }
-            }
         }
 
     </script>
 }
-
+@*custom code start*@
 @section Scripts {
 
 }
-
+@*custom code end*@
 @section ActionDescription{
     <p>
         This sample visualizes stock chart with multiple series.

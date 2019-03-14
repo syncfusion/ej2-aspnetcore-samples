@@ -11,6 +11,7 @@ using Syncfusion.DocIO.DLS;
 using Syncfusion.OfficeChart;
 using System.IO;
 using Microsoft.AspNetCore.Mvc;
+using Syncfusion.DocIORenderer;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -74,20 +75,30 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
             //Set label for primary catagory axis
             BarChart.PrimaryCategoryAxis.CategoryLabels = BarChart.ChartData[2, 1, 6, 1];
 
-            FormatType type = FormatType.Docx;
-            string filename = "Sample.docx";
-            string contenttype = "application/vnd.ms-word.document.12";
+            string filename = "";
+            string contenttype = "";
+            MemoryStream ms = new MemoryStream();
             #region Document SaveOption
-            //Save as .xml format            
-            if (Group1 == "WordML")
+            if (Group1 == "WordDocx")
             {
-                type = FormatType.WordML;
+                filename = "Sample.docx";
+                contenttype = "application/msword";
+                document.Save(ms, FormatType.Docx);
+            }
+            else if (Group1 == "WordML")
+            {
                 filename = "Sample.xml";
                 contenttype = "application/msword";
+                document.Save(ms, FormatType.WordML);
+            }
+            else
+            {
+                filename = "Sample.pdf";
+                contenttype = "application/pdf";
+                DocIORenderer renderer = new DocIORenderer();
+                renderer.ConvertToPDF(document).Save(ms);
             }
             #endregion Document SaveOption
-            MemoryStream ms = new MemoryStream();
-            document.Save(ms, type);
             document.Close();
             ms.Position = 0;
             return File(ms, contenttype, filename);

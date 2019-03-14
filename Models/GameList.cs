@@ -60,5 +60,20 @@ namespace EJ2CoreSampleBrowser.Models
             return chunk;
         }
     }
+    public class floatValues
+    {
+        public string floatValue { get; set; }
+
+        public string text { get; set; }
+
+        public List<floatValues> TextBoxModel()
+        {
+            List<floatValues> floatText = new List<floatValues>();
+            floatText.Add(new floatValues { floatValue = "Auto", text = "Auto" });
+            floatText.Add(new floatValues { floatValue = "Never", text = "Never" });
+            floatText.Add(new floatValues { floatValue = "Always", text = "Always" });
+            return floatText;
+        }
+    }
 }
 

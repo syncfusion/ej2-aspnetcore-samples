@@ -14,192 +14,216 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 1,
                 Subject = "Explosion of Betelgeuse Star",
-                StartTime = new DateTime(2018, 2, 11, 9, 30, 0),
-                EndTime = new DateTime(2018, 2, 11, 11, 0, 0),
+                Location = "Space Centre USA",
+                StartTime = new DateTime(2019, 1, 6, 9, 30, 0),
+                EndTime = new DateTime(2019, 1, 6, 11, 0, 0),
                 CategoryColor = "#1aaa55"
             });
             appData.Add(new AppointmentData
             {
                 Id = 2,
                 Subject = "Thule Air Crash Report",
-                StartTime = new DateTime(2018, 2, 12, 12, 0, 0),
-                EndTime = new DateTime(2018, 2, 12, 14, 0, 0),
+                Location = "Newyork City",
+                StartTime = new DateTime(2019, 1, 7, 12, 0, 0),
+                EndTime = new DateTime(2019, 1, 7, 14, 0, 0),
                 CategoryColor = "#357cd2"
             });
             appData.Add(new AppointmentData
             {
                 Id = 3,
                 Subject = "Blue Moon Eclipse",
-                StartTime = new DateTime(2018, 2, 13, 9, 30, 0),
-                EndTime = new DateTime(2018, 2, 13, 11, 0, 0),
+                Location = "Space Centre USA",
+                StartTime = new DateTime(2019, 1, 8, 9, 30, 0),
+                EndTime = new DateTime(2019, 1, 8, 11, 0, 0),
                 CategoryColor = "#7fa900"
             });
             appData.Add(new AppointmentData
             {
                 Id = 4,
                 Subject = "Meteor Showers in 2018",
-                StartTime = new DateTime(2018, 2, 14, 13, 0, 0),
-                EndTime = new DateTime(2018, 2, 14, 14, 30, 0),
+                Location = "Space Centre USA",
+                StartTime = new DateTime(2019, 1, 9, 13, 0, 0),
+                EndTime = new DateTime(2019, 1, 9, 14, 30, 0),
                 CategoryColor = "#ea7a57"
             });
             appData.Add(new AppointmentData
             {
                 Id = 5,
                 Subject = "Milky Way as Melting pot",
-                StartTime = new DateTime(2018, 2, 15, 12, 0, 0),
-                EndTime = new DateTime(2018, 2, 15, 14, 0, 0),
+                Location = "Space Centre USA",
+                StartTime = new DateTime(2019, 1, 10, 12, 0, 0),
+                EndTime = new DateTime(2019, 1, 10, 14, 0, 0),
                 CategoryColor = "#00bdae"
             });
             appData.Add(new AppointmentData
             {
                 Id = 6,
                 Subject = "Mysteries of Bermuda Triangle",
-                StartTime = new DateTime(2018, 2, 15, 9, 30, 0),
-                EndTime = new DateTime(2018, 2, 15, 11, 0, 0),
+                Location = "Bermuda",
+                StartTime = new DateTime(2019, 1, 10, 9, 30, 0),
+                EndTime = new DateTime(2019, 1, 10, 11, 0, 0),
                 CategoryColor = "#f57f17"
             });
             appData.Add(new AppointmentData
             {
                 Id = 7,
                 Subject = "Glaciers and Snowflakes",
-                StartTime = new DateTime(2018, 2, 16, 11, 0, 0),
-                EndTime = new DateTime(2018, 2, 16, 12, 30, 0),
+                Location = "Himalayas",
+                StartTime = new DateTime(2019, 1, 11, 11, 0, 0),
+                EndTime = new DateTime(2019, 1, 11, 12, 30, 0),
                 CategoryColor = "#1aaa55"
             });
             appData.Add(new AppointmentData
             {
                 Id = 8,
                 Subject = "Life on Mars",
-                StartTime = new DateTime(2018, 2, 17, 9, 0, 0),
-                EndTime = new DateTime(2018, 2, 17, 10, 0, 0),
+                Location = "Space Centre USA",
+                StartTime = new DateTime(2019, 1, 12, 9, 0, 0),
+                EndTime = new DateTime(2019, 1, 12, 10, 0, 0),
                 CategoryColor = "#357cd2"
             });
             appData.Add(new AppointmentData
             {
                 Id = 9,
                 Subject = "Alien Civilization",
-                StartTime = new DateTime(2018, 2, 19, 11, 0, 0),
-                EndTime = new DateTime(2018, 2, 19, 13, 0, 0),
+                Location = "Space Centre USA",
+                StartTime = new DateTime(2019, 1, 14, 11, 0, 0),
+                EndTime = new DateTime(2019, 1, 14, 13, 0, 0),
                 CategoryColor = "#7fa900"
             });
             appData.Add(new AppointmentData
             {
                 Id = 10,
                 Subject = "Wildlife Galleries",
-                StartTime = new DateTime(2018, 2, 21, 11, 0, 0),
-                EndTime = new DateTime(2018, 2, 21, 13, 0, 0),
+                Location = "Africa",
+                StartTime = new DateTime(2019, 1, 16, 11, 0, 0),
+                EndTime = new DateTime(2019, 1, 16, 13, 0, 0),
                 CategoryColor = "#ea7a57"
             });
             appData.Add(new AppointmentData
             {
                 Id = 11,
                 Subject = "Best Photography 2018",
-                StartTime = new DateTime(2018, 2, 22, 9, 30, 0),
-                EndTime = new DateTime(2018, 2, 22, 11, 0, 0),
+                Location = "London",
+                StartTime = new DateTime(2019, 1, 17, 9, 30, 0),
+                EndTime = new DateTime(2019, 1, 17, 11, 0, 0),
                 CategoryColor = "#00bdae"
             });
             appData.Add(new AppointmentData
             {
                 Id = 12,
                 Subject = "Smarter Puppies",
-                StartTime = new DateTime(2018, 2, 9, 10, 0, 0),
-                EndTime = new DateTime(2018, 2, 9, 11, 30, 0),
+                Location = "Sweden",
+                StartTime = new DateTime(2019, 1, 4, 10, 0, 0),
+                EndTime = new DateTime(2019, 1, 4, 11, 30, 0),
                 CategoryColor = "#f57f17"
             });
             appData.Add(new AppointmentData
             {
                 Id = 13,
                 Subject = "Myths of Andromeda Galaxy",
-                StartTime = new DateTime(2018, 2, 7, 10, 30, 0),
-                EndTime = new DateTime(2018, 2, 7, 12, 30, 0),
+                Location = "Space Centre USA",
+                StartTime = new DateTime(2019, 1, 2, 10, 30, 0),
+                EndTime = new DateTime(2019, 1, 2, 12, 30, 0),
                 CategoryColor = "#1aaa55"
             });
             appData.Add(new AppointmentData
             {
                 Id = 14,
                 Subject = "Aliens vs Humans",
-                StartTime = new DateTime(2018, 2, 5, 10, 0, 0),
-                EndTime = new DateTime(2018, 2, 5, 11, 30, 0),
+                Location = "Research Centre of USA",
+                StartTime = new DateTime(2019, 1, 1, 10, 0, 0),
+                EndTime = new DateTime(2019, 1, 1, 11, 30, 0),
                 CategoryColor = "#357cd2"
             });
             appData.Add(new AppointmentData
             {
                 Id = 15,
                 Subject = "Facts of Humming Birds",
-                StartTime = new DateTime(2018, 2, 20, 9, 30, 0),
-                EndTime = new DateTime(2018, 2, 20, 11, 0, 0),
+                Location = "California",
+                StartTime = new DateTime(2019, 1, 15, 9, 30, 0),
+                EndTime = new DateTime(2019, 1, 15, 11, 0, 0),
                 CategoryColor = "#7fa900"
             });
             appData.Add(new AppointmentData
             {
                 Id = 16,
                 Subject = "Sky Gazers",
-                StartTime = new DateTime(2018, 2, 23, 11, 0, 0),
-                EndTime = new DateTime(2018, 2, 23, 13, 0, 0),
+                Location = "Alaska",
+                StartTime = new DateTime(2019, 1, 18, 11, 0, 0),
+                EndTime = new DateTime(2019, 1, 18, 13, 0, 0),
                 CategoryColor = "#ea7a57"
             });
             appData.Add(new AppointmentData
             {
                 Id = 17,
                 Subject = "The Cycle of Seasons",
-                StartTime = new DateTime(2018, 2, 12, 5, 30, 0),
-                EndTime = new DateTime(2018, 2, 12, 7, 30, 0),
+                Location = "Research Centre of USA",
+                StartTime = new DateTime(2019, 1, 7, 5, 30, 0),
+                EndTime = new DateTime(2019, 1, 7, 7, 30, 0),
                 CategoryColor = "#00bdae"
             });
             appData.Add(new AppointmentData
             {
                 Id = 18,
                 Subject = "Space Galaxies and Planets",
-                StartTime = new DateTime(2018, 2, 12, 17, 0, 0),
-                EndTime = new DateTime(2018, 2, 12, 18, 30, 0),
+                Location = "Space Centre USA",
+                StartTime = new DateTime(2019, 1, 7, 17, 0, 0),
+                EndTime = new DateTime(2019, 1, 7, 18, 30, 0),
                 CategoryColor = "#f57f17"
             });
             appData.Add(new AppointmentData
             {
                 Id = 19,
                 Subject = "Lifecycle of Bumblebee",
-                StartTime = new DateTime(2018, 2, 15, 6, 0, 0),
-                EndTime = new DateTime(2018, 2, 15, 7, 30, 0),
+                Location = "San Fransisco",
+                StartTime = new DateTime(2019, 1, 10, 6, 0, 0),
+                EndTime = new DateTime(2019, 1, 10, 7, 30, 0),
                 CategoryColor = "#7fa900"
             });
             appData.Add(new AppointmentData
             {
                 Id = 20,
                 Subject = "Alien Civilization",
-                StartTime = new DateTime(2018, 2, 15, 16, 0, 0),
-                EndTime = new DateTime(2018, 2, 15, 18, 0, 0),
+                Location = "Space Centre USA",
+                StartTime = new DateTime(2019, 1, 10, 16, 0, 0),
+                EndTime = new DateTime(2019, 1, 10, 18, 0, 0),
                 CategoryColor = "#ea7a57"
             });
             appData.Add(new AppointmentData
             {
                 Id = 21,
                 Subject = "Alien Civilization",
-                StartTime = new DateTime(2018, 2, 11, 14, 0, 0),
-                EndTime = new DateTime(2018, 2, 11, 16, 0, 0),
+                Location = "Space Centre USA",
+                StartTime = new DateTime(2019, 1, 6, 14, 0, 0),
+                EndTime = new DateTime(2019, 1, 6, 16, 0, 0),
                 CategoryColor = "#ea7a57"
             });
             appData.Add(new AppointmentData
             {
                 Id = 22,
                 Subject = "The Cycle of Seasons",
-                StartTime = new DateTime(2018, 2, 13, 14, 30, 0),
-                EndTime = new DateTime(2018, 2, 13, 16, 0, 0),
+                Location = "Research Centre of USA",
+                StartTime = new DateTime(2019, 1, 8, 14, 30, 0),
+                EndTime = new DateTime(2019, 1, 8, 16, 0, 0),
                 CategoryColor = "#00bdae"
             });
             appData.Add(new AppointmentData
             {
                 Id = 23,
                 Subject = "Sky Gazers",
-                StartTime = new DateTime(2018, 2, 16, 14, 30, 0),
-                EndTime = new DateTime(2018, 2, 16, 16, 0, 0),
+                Location = "Greenland",
+                StartTime = new DateTime(2019, 1, 11, 14, 30, 0),
+                EndTime = new DateTime(2019, 1, 11, 16, 0, 0),
                 CategoryColor = "#ea7a57"
             });
             appData.Add(new AppointmentData
             {
                 Id = 24,
                 Subject = "Facts of Humming Birds",
-                StartTime = new DateTime(2018, 2, 17, 12, 30, 0),
-                EndTime = new DateTime(2018, 2, 17, 14, 30, 0),
+                Location = "California",
+                StartTime = new DateTime(2019, 1, 12, 12, 30, 0),
+                EndTime = new DateTime(2019, 1, 12, 14, 30, 0),
                 CategoryColor = "#7fa900"
             });
             return appData;
@@ -6296,13 +6320,132 @@ namespace EJ2CoreSampleBrowser.Models
             return waitingData;
         }
 
+        public List<ResourceSampleData> GetResourceSampleData()
+        {
+            List<ResourceSampleData> resourceSampleData = new List<ResourceSampleData>();
+            resourceSampleData.Add(new ResourceSampleData
+            {
+                Id = 1,
+                Subject = "Burning Man",
+                StartTime = new DateTime(2018, 6, 1, 15, 0, 0),
+                EndTime = new DateTime(2018, 6, 1, 17, 30, 0),
+                OwnerId = 1
+            });
+            resourceSampleData.Add(new ResourceSampleData
+            {
+                Id = 2,
+                Subject = "Marketing Forum",
+                StartTime = new DateTime(2018, 6, 3, 10, 0, 0),
+                EndTime = new DateTime(2018, 6, 3, 11, 30, 0),
+                OwnerId = 2
+            });
+            resourceSampleData.Add(new ResourceSampleData
+            {
+                Id = 3,
+                Subject = "Business Factory",
+                StartTime = new DateTime(2018, 6, 3, 13, 30, 0),
+                EndTime = new DateTime(2018, 6, 3, 15, 0, 0),
+                OwnerId = 3
+            });
+            resourceSampleData.Add(new ResourceSampleData
+            {
+                Id = 4,
+                Subject = "Burning Man",
+                StartTime = new DateTime(2018, 6, 4, 11, 30, 0),
+                EndTime = new DateTime(2018, 6, 4, 13, 0, 0),
+                OwnerId = 1
+            });
+            resourceSampleData.Add(new ResourceSampleData
+            {
+                Id = 5,
+                Subject = "Funnel Hacking",
+                StartTime = new DateTime(2018, 6, 5, 9, 30, 0),
+                EndTime = new DateTime(2018, 6, 5, 11, 0, 0),
+                OwnerId = 3
+            });
+            resourceSampleData.Add(new ResourceSampleData
+            {
+                Id = 6,
+                Subject = "The human gathering",
+                StartTime = new DateTime(2018, 6, 5, 13, 0, 0),
+                EndTime = new DateTime(2018, 6, 5, 14, 30, 0),
+                OwnerId = 2
+            });
+            resourceSampleData.Add(new ResourceSampleData
+            {
+                Id = 7,
+                Subject = "Techweek",
+                StartTime = new DateTime(2018, 6, 6, 11, 0, 0),
+                EndTime = new DateTime(2018, 6, 6, 12, 30, 0),
+                OwnerId = 2
+            });
+            resourceSampleData.Add(new ResourceSampleData
+            {
+                Id = 8,
+                Subject = "Grow Conference",
+                StartTime = new DateTime(2018, 6, 7, 10, 0, 0),
+                EndTime = new DateTime(2018, 6, 7, 11, 30, 0),
+                OwnerId = 1
+            });
+            resourceSampleData.Add(new ResourceSampleData
+            {
+                Id = 9,
+                Subject = "Data Science Conference",
+                StartTime = new DateTime(2018, 6, 7, 13, 30, 0),
+                EndTime = new DateTime(2018, 6, 7, 15, 0, 0),
+                OwnerId = 1
+            });
+            resourceSampleData.Add(new ResourceSampleData
+            {
+                Id = 10,
+                Subject = "Blogcademy",
+                StartTime = new DateTime(2018, 6, 8, 12, 0, 0),
+                EndTime = new DateTime(2018, 6, 8, 13, 30, 0),
+                OwnerId = 3
+            });
+            resourceSampleData.Add(new ResourceSampleData
+            {
+                Id = 11,
+                Subject = "World Domination Summit",
+                StartTime = new DateTime(2018, 6, 9, 9, 30, 0),
+                EndTime = new DateTime(2018, 6, 9, 11, 0, 0),
+                OwnerId = 2
+            });
+            resourceSampleData.Add(new ResourceSampleData
+            {
+                Id = 12,
+                Subject = "Content Marketing",
+                StartTime = new DateTime(2018, 6, 9, 13, 0, 0),
+                EndTime = new DateTime(2018, 6, 9, 14, 30, 0),
+                OwnerId = 1
+            });
+            resourceSampleData.Add(new ResourceSampleData
+            {
+                Id = 13,
+                Subject = "Mobile World Conference",
+                StartTime = new DateTime(2018, 6, 15, 18, 0, 0),
+                EndTime = new DateTime(2018, 6, 15, 20, 0, 0),
+                OwnerId = 1
+            });
+            return resourceSampleData;
+        }
         public class AppointmentData
+        {
+            public int Id { get; set; }
+            public string Subject { get; set; }
+            public string Location { get; set; }
+            public DateTime StartTime { get; set; }
+            public DateTime EndTime { get; set; }
+            public string CategoryColor { get; set; }
+        }
+
+        public class ResourceSampleData
         {
             public int Id { get; set; }
             public string Subject { get; set; }
             public DateTime StartTime { get; set; }
             public DateTime EndTime { get; set; }
-            public string CategoryColor { get; set; }
+            public int OwnerId { get; set; }
         }
 
         public class BlockData

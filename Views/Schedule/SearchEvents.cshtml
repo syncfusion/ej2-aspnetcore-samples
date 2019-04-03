@@ -127,8 +127,11 @@
         })
 
         document.getElementById("clear").addEventListener("click", function () {
+            var instances = [];
+            var elementList = document.querySelectorAll('.event-search .e-control:not(button)');
             document.getElementById('schedule').style.display = 'block';
-            document.getElementById('form-search').reset();
+            elementList.forEach(obj => instances.push(obj.ej2_instances[0]));
+            instances.forEach(i => { i.value = ''; i.dataBind(); });
             showSearchEvents('hide');
         })
 

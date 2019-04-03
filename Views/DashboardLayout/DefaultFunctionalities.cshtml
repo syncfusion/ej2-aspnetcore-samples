@@ -9,7 +9,7 @@
 
     <div class=" control-section">
 
-        <div style="padding:5px;text-align: end;">
+        <div style="padding:5px;text-align: right;">
             <button id="add" class="e-btn e-info">Add Panel</button>
         </div>
 
@@ -79,12 +79,14 @@
                 'id': count.toString() + '_layout', 'sizeX': 1, 'sizeY': 1, 'row': 0, 'col': 0,
                 content: '<span id="close" class="e-template-icon e-clear-icon"></span><div class="text-align">' + count.toString() + '</div>'
             }];
-            count = count + 1;
             dashboardObject.addPanel(panel[0]);
+            var closeIcon = document.getElementById(count.toString() + '_layout').querySelector('.e-clear-icon');
+            closeIcon.addEventListener('click', onCloseIconHandler);
+            count = count + 1;
         };
-        function onCloseIconHandler() {
-            if (event.target.closest('.e-panel')) {
-                dashboardObject.removePanel(event.target.closest('.e-panel').id);
+        function onCloseIconHandler(event) {
+            if (event.target.offsetParent) {
+                dashboardObject.removePanel(event.target.offsetParent.id);
             }
 
         }
@@ -142,7 +144,7 @@
 @section ActionDescription{
     <div id="action-description">
         <p>
-            This sample demonstrates the properties of DashboardLayout component from the property pane. Select any combination of properties from the property pane to customize the Dashboardlayout.
+            The following sample demonstrates the default functionalities of the DashboardLayout component. Click the <code>Add Panel</code> button to add panels dynamically to the dashboard layout.
         </p>
     </div>
 
@@ -151,7 +153,7 @@
 @section Description{
     <div id="description">
         <p>
-            This sample allows to configure the cellSize, cellSpacing, allowFloating and allowPushing properties of the dashboardlayout component.
+            The DashboardLayout component provides the capability to arrange, resize and reorder the panels within the dashboard layout.
         </p>
     </div>
 

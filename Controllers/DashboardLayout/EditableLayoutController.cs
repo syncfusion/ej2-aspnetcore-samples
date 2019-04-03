@@ -100,7 +100,7 @@ namespace EJ2CoreSampleBrowser.Controllers
                 }
             };
             ViewBag.lineSource2 = LineChartData2;
-            ViewBag.pallets = new string[] { "#00bdaed1", "#357cd2bf", "#e56691e8" };
+            ViewBag.pallets = new string[] { "#00bdae", "#357cd2", "#e56691" };
             List<SplineData> SplineChartData1 = new List<SplineData>
             {
                 new SplineData { x =  new DateTime(2002, 1, 1), y =  2.2 }, new SplineData { x =  new DateTime(2003, 1, 1), y =  3.4 },

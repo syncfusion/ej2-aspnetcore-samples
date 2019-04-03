@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using EJ2CoreSampleBrowser.Models;
 using Syncfusion.EJ2.QueryBuilder;
 
 namespace EJ2CoreSampleBrowser.Controllers.QueryBuilder
@@ -14,14 +15,14 @@ namespace EJ2CoreSampleBrowser.Controllers.QueryBuilder
             QueryBuilderRule rule = new QueryBuilderRule()
             {
                 Condition = "and",
-                Rules = new List<QueryBuilderRules>()
+                Rules = new List<QueryBuilderRule>()
                 {
-                    new QueryBuilderRules { Label="Category", Field="Category", Type="string", Operator="equal", Value = new string[] { "Clothing" } },
-                    new QueryBuilderRules { Condition="or", Rules = new List<QueryBuilderRules>() {
-                        new QueryBuilderRules { Label="Transaction Type", Field="TransactionType", Type="boolean", Operator="equal", Value = "Income" },
-                        new QueryBuilderRules { Label="Payment Mode", Field="PaymentMode", Type="string", Operator="equal", Value = "Cash" }
+                    new QueryBuilderRule { Label="Category", Field="Category", Type="string", Operator="equal", Value = new string[] { "Clothing" } },
+                    new QueryBuilderRule { Condition="or", Rules = new List<QueryBuilderRule>() {
+                        new QueryBuilderRule { Label="Transaction Type", Field="TransactionType", Type="boolean", Operator="equal", Value = "Income" },
+                        new QueryBuilderRule { Label="Payment Mode", Field="PaymentMode", Type="string", Operator="equal", Value = "Cash" }
                     } },
-                    new QueryBuilderRules { Label="Amount", Field="Amount", Type="number", Operator="equal", Value = 10 }
+                    new QueryBuilderRule { Label="Amount", Field="Amount", Type="number", Operator="equal", Value = 10 }
                 }
             };
 
@@ -35,9 +36,7 @@ namespace EJ2CoreSampleBrowser.Controllers.QueryBuilder
 
             List<object> paymentOperator = new List<object> {
                 new { key = "Equal", value = "equal" },
-                new { key = "Not Equal", value = "notequal" },
-                new { key = "In", value = "in" },
-                new { key = "Not In", value = "notin" }
+                new { key = "Not Equal", value = "notequal" }
             };
 
             List<object> transactionOperator = new List<object> {
@@ -59,6 +58,7 @@ namespace EJ2CoreSampleBrowser.Controllers.QueryBuilder
             ViewBag.transactionOperator = transactionOperator;
             ViewBag.amountOperator = amountOperator;
             ViewBag.template = template;
+            ViewBag.dataSource = QueryBuilderData.expenseData;
             return View();
         }
     }

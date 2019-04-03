@@ -30,7 +30,6 @@
                 <e-lineargauge-axes>
                     <e-lineargauge-axis  maximum="10" minimum="0">
                         <e-axis-line offset="140"></e-axis-line>
-                        <e-axis-labelstyle offset="48"></e-axis-labelstyle>
                     </e-lineargauge-axis>
                     <e-lineargauge-axis opposedPosition="true" minimum="0" maximum="25"></e-lineargauge-axis>
                 </e-lineargauge-axes>
@@ -42,8 +41,7 @@
      var gauge;
     window.gaugeLoad = function (args) {
         @* custom code start *@
-        var theme = location.hash.split('/')[1];
-        theme = theme ? theme : 'Material';
+        var theme = themeName ? themeName : 'Material';
         args.gauge.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
         @* custom code end *@
          gauge = args.gauge;
@@ -91,7 +89,7 @@
              }];
 
          var annotation = gauge.annotations[0];
-         annotation.content = '<div id="first"><h1 style="font-size:15px">Inches</h1></div>',             
+        annotation.content = '<div id="first"><h1 style="font-size:15px;color: #686868">Inches</h1></div>',             
          annotation.x = 35;
          annotation.zIndex = '1';
          annotation.y = -58;
@@ -101,7 +99,7 @@
          args.gauge.annotations[1] = new ej.lineargauge.Annotation(args.gauge);
          annotation = args.gauge.annotations[1];
          annotation.propName = "annotations";
-         annotation.content = '<div id="second"><h1 style="font-size:15px">Centimeters</h1></div>';
+        annotation.content = '<div id="second"><h1 style="font-size:15px;color: #686868">Centimeters</h1></div>';
          annotation.axisIndex = 1;
          annotation.axisValue = 16.5;
          annotation.y = 52;
@@ -114,7 +112,11 @@
          }
          else {
              gaugeDesktopSize();
-         }
+        }
+        if (args.gauge.theme.toLowerCase().indexOf('dark') > 1 || args.gauge.theme.toLowerCase() === 'highcontrast') {
+            args.gauge.annotations[0].content = '<div id="first"><h1 style="font-size:15px; color: #DADADA">Inches</h1></div>';
+            args.gauge.annotations[1].content = '<div id="second"><h1 style="font-size:15px; color: #DADADA">Centimeters</h1></div>';
+        }
                 
     }
     function renderTooltip(args) {

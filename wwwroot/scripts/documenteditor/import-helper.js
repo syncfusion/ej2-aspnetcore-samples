@@ -74,7 +74,7 @@ function initializeTitleBar(isShareNeeded, isRtl) {
     titleBarDiv.appendChild(documentTitleContentEditor);
     documentTitleContentEditor.setAttribute('title', documentTileText);
     var btnStyles = 'float:right;background: transparent;box-shadow:none; font-family: inherit;border-color: transparent;' +
-        'border-radius: 2px;color:inherit;font-size:12px;text-transform:capitalize;margin-top:4px;height:28px;font-weight:400';
+        'border-radius: 2px;color:inherit;font-size:12px;text-transform:capitalize;margin-top:4px;height:28px;font-weight:400;margin-top: 2px;';
     print = addButton('e-de-icon-Print e-de-padding-right', printText, btnStyles, 'de-print', printToolTip, false);
     openBtn = addButton('e-de-icon-Open e-de-padding-right', openText, btnStyles, 'de-open', openText, false);
     var items = [

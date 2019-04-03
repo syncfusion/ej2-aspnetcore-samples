@@ -1812,6 +1812,16 @@ window.samplesList = [
           "dir": "Chart",
           "parentId": "02"
       },
+	  {
+          "url": "PieRadius",
+          "name": "Pie with Various Radius",
+          "category": "Accumulation Chart",
+          "uid": "002296",
+          "order": 8,
+          "component": "Chart",
+          "dir": "Chart",
+          "parentId": "02"
+      },
       {
           "url": "Donut",
           "name": "Donut",
@@ -4027,9 +4037,59 @@ window.samplesList = [
         "uid": "030"
     },
     {
+        "name": "In-place Editor",
+        "directory": "InPlaceEditor",
+        "category": "Editors",
+        "samples": [
+            {
+                "url": "DefaultFunctionalities",
+                "name": "Overview",
+                "category": "In-place Editor",
+                "order": 0,
+                "component": "InPlaceEditor",
+                "dir": "InPlaceEditor",
+                "parentId": "033",
+                "uid": "0033330"
+            },
+            {
+                "url": "DropDowns",
+                "name": "DropDown Components",
+                "category": "In-place Editor",
+                "order": 0,
+                "component": "InPlaceEditor",
+                "dir": "InPlaceEditor",
+                "parentId": "033",
+                "uid": "0033331"
+            },
+            {
+                "url": "Pickers",
+                "name": "Date Components",
+                "category": "In-place Editor",
+                "order": 0,
+                "component": "InPlaceEditor",
+                "dir": "InPlaceEditor",
+                "parentId": "033",
+                "uid": "0033332"
+            },
+            {
+                "url": "EditPost",
+                "name": "Edit Post",
+                "category": "Use Case",
+                "order": 1,
+                "component": "InPlaceEditor",
+                "dir": "InPlaceEditor",
+                "parentId": "033",
+                "uid": "0033333"
+            }
+        ],
+        "order": 3,
+        "uid": "033"
+    },
+    {
         "name": "DocumentEditor",
         "directory": "DocumentEditor",
         "category": "Editors",
+        "type": "update",
         "ftName": "document-editor",
         "hideOnDevice": true,
         "samples": [
@@ -4137,6 +4197,7 @@ window.samplesList = [
                 "url": "Print",
                 "name": "Print",
                 "category": "Print",
+                "type": "update",
                 "order": 2,
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
@@ -4152,6 +4213,17 @@ window.samplesList = [
                 "dir": "DocumentEditor",
                 "parentId": "035",
                 "uid": "0036353"
+            },
+            {
+                "url": "CustomContextMenu",
+                "name": "Custom Context Menu",
+                "category": "Customization",
+                "type": "new",
+                "order": 4,
+                "component": "DocumentEditor",
+                "dir": "DocumentEditor",
+                "parentId": "035",
+                "uid": "0036354"
             }
         ],
         "order": 4,
@@ -4496,7 +4568,7 @@ window.samplesList = [
                 "parentId": "012"
             },
             {
-                "url": "Resources",
+                "url": "FareCalendar",
                 "name": "Fare Calendar",
                 "category": "Multiple Resources",
                 "uid": "0012132",
@@ -4548,7 +4620,7 @@ window.samplesList = [
             },
             {
                 "url": "AdaptiveRows",
-                "name": "Adaptive Rows",
+                "name": "Row Auto Height",
                 "category": "Multiple Resources",
                 "uid": "0012167",
                 "order": 5,
@@ -4691,7 +4763,7 @@ window.samplesList = [
                 "url": "ContextMenu",
                 "name": "Context Menu",
                 "category": "Customization",
-                "uid": "0012162",
+                "uid": "0012168",
                 "order": 9,
                 "component": "Schedule",
                 "dir": "Schedule",
@@ -4782,7 +4854,7 @@ window.samplesList = [
                 "name": "Excel Exporting",
                 "category": "Exporting",
                 "uid": "0012165",
-                "order": 12,
+                "order": 10,
                 "component": "Schedule",
                 "dir": "Schedule",
                 "parentId": "012",
@@ -4793,7 +4865,7 @@ window.samplesList = [
                 "name": "Export and Import ICS",
                 "category": "Exporting",
                 "uid": "0012158",
-                "order": 12,
+                "order": 10,
                 "type": "new",
                 "component": "Schedule",
                 "dir": "Schedule",
@@ -4804,7 +4876,7 @@ window.samplesList = [
                 "name": "Rule Generator",
                 "category": "Recurrence Editor",
                 "uid": "0012159",
-                "order": 10,
+                "order": 11,
                 "component": "Schedule",
                 "dir": "Schedule",
                 "parentId": "012"
@@ -4814,7 +4886,7 @@ window.samplesList = [
                 "name": "Populate Rule",
                 "category": "Recurrence Editor",
                 "uid": "0012160",
-                "order": 10,
+                "order": 11,
                 "component": "Schedule",
                 "dir": "Schedule",
                 "parentId": "012"
@@ -4824,7 +4896,7 @@ window.samplesList = [
                 "name": "Keyboard Interaction",
                 "category": "Miscellaneous",
                 "uid": "0012161",
-                "order": 11,
+                "order": 12,
                 "component": "Schedule",
                 "dir": "Schedule",
                 "parentId": "012",
@@ -4835,7 +4907,7 @@ window.samplesList = [
                 "name": "Events",
                 "category": "Miscellaneous",
                 "uid": "0012162",
-                "order": 11,
+                "order": 12,
                 "component": "Schedule",
                 "dir": "Schedule",
                 "parentId": "012"
@@ -4911,7 +4983,27 @@ window.samplesList = [
             "component": "Gantt",
             "dir": "Gantt",
             "parentId": "050"
-        }
+        },
+        {
+            "url": "TaskbarTemplate",
+            "name": "Taskbar Template",
+            "category": "Gantt",
+            "uid": "00757",
+            "order": 0,
+            "component": "Gantt",
+            "dir": "Gantt",
+            "parentId": "050"
+        },
+        {
+            "url": "UnscheduledTask",
+            "name": "Unscheduled Tasks",
+            "category": "Gantt",
+            "uid": "00758",
+            "order": 0,
+            "component": "Gantt",
+            "dir": "Gantt",
+            "parentId": "050"
+        },
         ]
     },
     {
@@ -5714,6 +5806,66 @@ window.samplesList = [
         "uid": "021"
     },
     {
+        "name": "List Box",
+        "directory": "ListBox",
+        "category": "Dropdowns",
+        "type": "preview",
+        "samples": [
+            {
+                "url": "DefaultFunctionalities",
+                "name": "Default Functionalities",
+                "category": "List Box",
+                "uid": "0055550",
+                "order": 0,
+                "component": "ListBox",
+                "dir": "ListBox",
+                "parentId": "055"
+            },
+            {
+                "url": "DualListBox",
+                "name": "Dual ListBox",
+                "category": "List Box",
+                "uid": "0055551",
+                "order": 0,
+                "component": "ListBox",
+                "dir": "ListBox",
+                "parentId": "055"
+            },
+            {
+                "url": "DragAndDrop",
+                "name": "Drag And Drop",
+                "category": "List Box",
+                "uid": "0055552",
+                "order": 0,
+                "component": "ListBox",
+                "dir": "ListBox",
+                "parentId": "055"
+            },
+            {
+                "url": "Checkbox",
+                "name": "Checkbox",
+                "category": "List Box",
+                "uid": "0055553",
+                "order": 0,
+                "component": "ListBox",
+                "dir": "ListBox",
+                "parentId": "055"
+            },
+            {
+                "url": "Api",
+                "name": "API",
+                "category": "List Box",
+                "uid": "0055554",
+                "order": 0,
+                "component": "ListBox",
+                "dir": "ListBox",
+                "parentId": "055"
+            }
+        ],
+        "order": 3,
+        "uid": "055"
+    },
+    {
         "name": "Accordion",
         "directory": "Accordion",
         "category": "Navigation",
@@ -5754,6 +5906,26 @@ window.samplesList = [
         "uid": "043"
     },
     {
+        "name": "ContextMenu",
+        "directory": "ContextMenu",
+        "category": "Navigation",
+        "ftName": "context-menu",
+        "samples": [
+            {
+                "url": "DefaultFunctionalities",
+                "name": "DefaultFunctionalities",
+                "category": "ContextMenu",
+                "uid": "0042420",
+                "order": 0,
+                "component": "ContextMenu",
+                "dir": "ContextMenu",
+                "parentId": "042"
+            }
+        ],
+        "order": 6,
+        "uid": "042"
+    },
+	 {
         "name": "File Manager",
         "directory": "FileManager",
         "category": "Navigation",
@@ -5796,26 +5968,6 @@ window.samplesList = [
     ],
     "order": 6,
     "uid": "054"
-    },
-    {
-        "name": "ContextMenu",
-        "directory": "ContextMenu",
-        "category": "Navigation",
-        "ftName": "context-menu",
-        "samples": [
-            {
-                "url": "DefaultFunctionalities",
-                "name": "DefaultFunctionalities",
-                "category": "ContextMenu",
-                "uid": "0042420",
-                "order": 0,
-                "component": "ContextMenu",
-                "dir": "ContextMenu",
-                "parentId": "042"
-            }
-        ],
-        "order": 6,
-        "uid": "042"
     },
     {
         "name": "Menu Bar",
@@ -5868,16 +6020,6 @@ window.samplesList = [
                 "name": "API",
                 "category": "Menu Bar",
                 "uid": "0048484",
-                "order": 0,
-                "component": "Menu",
-                "dir": "Menu",
-                "parentId": "030"
-            },
-            {
-                "url": "ToolbarIntegration",
-                "name": "Toolbar Integration",
-                "category": "Menu Bar",
-                "uid": "0048485",
                 "order": 0,
                 "component": "Menu",
                 "dir": "Menu",
@@ -6876,6 +7018,66 @@ window.samplesList = [
         "uid": "034"
     },
     {
+        "name": "Dashboard Layout",
+        "directory": "DashboardLayout",
+        "category": "Layout",
+        "type": "preview",
+        "samples": [
+            {
+                "url": "DefaultFunctionalities",
+                "name": "Default Functionalities",
+                "category": "Dashboard Layout",
+                "uid": "0050500",
+                "order": 0,
+                "component": "DashboardLayout",
+                "dir": "DashboardLayout",
+                "parentId": "050"
+            },
+            {
+                "url": "PredefinedLayouts",
+                "name": "Predefined Layouts",
+                "category": "Dashboard Layout",
+                "uid": "0050501",
+                "order": 0,
+                "component": "DashboardLayout",
+                "dir": "DashboardLayout",
+                "parentId": "050"
+            },
+            {
+                "url": "API",
+                "name": "API",
+                "category": "Dashboard Layout",
+                "uid": "0050502",
+                "order": 0,
+                "component": "DashboardLayout",
+                "dir": "DashboardLayout",
+                "parentId": "050"
+            },
+            {
+                "url": "EditableLayout",
+                "name": "Editable Dahboard",
+                "category": "Dashboard Layout",
+                "uid": "0050503",
+                "order": 0,
+                "component": "DashboardLayout",
+                "dir": "DashboardLayout",
+                "parentId": "050"
+            },
+            {
+                "url": "SEOAnalytics",
+                "name": "SEO Analytics Dahboard",
+                "category": "Use Case",
+                "uid": "0050504",
+                "order": 1,
+                "component": "DashboardLayout",
+                "dir": "DashboardLayout",
+                "parentId": "050"
+            },
+        ],
+        "order": 4,
+        "uid": "050"
+    },
+    {
         "name": "Dialog",
         "directory": "Dialog",
         "category": "Layout",
@@ -7227,115 +7429,6 @@ window.samplesList = [
         ],
         "order": 5,
         "uid": "049"
-    },
-    {
-        "name": "Dashboard Layout",
-        "directory": "DashboardLayout",
-        "category": "Layout",
-        "type": "preview",
-        "samples": [
-            {
-                "url": "DefaultFunctionalities",
-                "name": "Default Functionalities",
-                "category": "Dashboard Layout",
-                "uid": "0050500",
-                "order": 0,
-                "component": "DashboardLayout",
-                "dir": "DashboardLayout",
-                "parentId": "050"
-            },
-            {
-                "url": "PredefinedLayouts",
-                "name": "Predefined Layouts",
-                "category": "Dashboard Layout",
-                "uid": "0050501",
-                "order": 0,
-                "component": "DashboardLayout",
-                "dir": "DashboardLayout",
-                "parentId": "050"
-            },
-            {
-                "url": "API",
-                "name": "API",
-                "category": "Dashboard Layout",
-                "uid": "0050502",
-                "order": 0,
-                "component": "DashboardLayout",
-                "dir": "DashboardLayout",
-                "parentId": "050"
-            },
-            {
-                "url": "EditableLayout",
-                "name": "Editable Dahboard",
-                "category": "Dashboard Layout",
-                "uid": "0050503",
-                "order": 0,
-                "component": "DashboardLayout",
-                "dir": "DashboardLayout",
-                "parentId": "050"
-            },
-            {
-                "url": "SEOAnalytics",
-                "name": "SEO Analytics Dahboard",
-                "category": "Use Case",
-                "uid": "0050504",
-                "order": 1,
-                "component": "DashboardLayout",
-                "dir": "DashboardLayout",
-                "parentId": "050"
-            },
-        ],
-        "order": 4,
-        "uid": "050"
-    },
-    {
-        "name": "In-place Editor",
-        "directory": "InPlaceEditor",
-        "category": "Editors",
-        "samples": [
-            {
-                "url": "DefaultFunctionalities",
-                "name": "Overview",
-                "category": "In-place Editor",
-                "order": 0,
-                "component": "InPlaceEditor",
-                "dir": "InPlaceEditor",
-                "parentId": "033",
-                "uid": "0033330"
-            },
-            {
-                "url": "DropDowns",
-                "name": "DropDown Components",
-                "category": "In-place Editor",
-                "order": 0,
-                "component": "InPlaceEditor",
-                "dir": "InPlaceEditor",
-                "parentId": "033",
-                "uid": "0033331"
-            },
-            {
-                "url": "Pickers",
-                "name": "Date Components",
-                "category": "In-place Editor",
-                "order": 0,
-                "component": "InPlaceEditor",
-                "dir": "InPlaceEditor",
-                "parentId": "033",
-                "uid": "0033332"
-            },
-            {
-                "url": "EditPost",
-                "name": "Edit Post",
-                "category": "Use Case",
-                "order": 1,
-                "component": "InPlaceEditor",
-                "dir": "InPlaceEditor",
-                "parentId": "033",
-                "uid": "0033333"
-            }
-        ],
-        "order": 4,
-        "uid": "033"
     },
     {
         "name": "Query Builder",

@@ -32,6 +32,13 @@
         .e-icon-btn .e-md-preview::before {
             content: '\e345';
         }
+        .bootstrap4 .e-icon-btn.e-active .e-md-preview::before {
+         content: '\e790';
+        }
+
+        .bootstrap4 .e-icon-btn .e-md-preview::before {
+         content: '\e787';
+        }
 
         .e-rte-content .e-content {
             float: right;
@@ -92,7 +99,7 @@
     function created () {
         defaultRTE = this;
         textArea = defaultRTE.contentModule.getEditPanel();
-        textArea.addEventListener('keyup', function (e) { markDownConversion(); });
+        textArea.addEventListener('keyup', function (e) { MarkDownConversion(); });
         var rteObj = defaultRTE;
         mdsource = document.getElementById('preview-code');
         mdsource.addEventListener('click', function (e) {
@@ -135,11 +142,11 @@
                 mdSplit.classList.remove('e-active');
                 mdsource.classList.remove('e-active');
             }
-            markDownConversion();
+            MarkDownConversion();
         }
         setTimeout(function () { defaultRTE.toolbarModule.refreshToolbarOverflow(); }, 400);
     }
-    function markDownConversion() {
+    function MarkDownConversion() {
         if (mdSplit.classList.contains('e-active')) {
             var id = defaultRTE.getID() + 'html-preview';
             var htmlPreview = defaultRTE.element.querySelector('#' + id);

@@ -49,7 +49,6 @@ namespace EJ2CoreSampleBrowser.Controllers.Gantt
             public static List<TimelineUnit> GetUnits()
             {
                 List<TimelineUnit> units = new List<TimelineUnit>();
-                units.Add(new TimelineUnit() { Id = "None", Unit = "None" });
                 units.Add(new TimelineUnit() { Id = "Year", Unit = "Year" });
                 units.Add(new TimelineUnit() { Id = "Month", Unit = "Month" });
                 units.Add(new TimelineUnit() { Id = "Week", Unit = "Week" });

@@ -2,7 +2,7 @@
 @using Newtonsoft.Json
 @section ControlsSection{
     <div class="col-lg-12 control-section" style="min-height: auto;">
-        <ejs-querybuilder id="querybuilder" width="100%" rule="ViewBag.rule" dataSource="ViewBag.dataSource" maxGroupCount=5 change="updateRule">
+        <ejs-querybuilder id="querybuilder" width="100%" rule="ViewBag.rule" dataSource="ViewBag.dataSource" maxGroupCount=5 ruleChange="updateRule">
             <e-querybuilder-columns>
                 <e-querybuilder-column field="TaskID" label="Task ID" type="number"></e-querybuilder-column>
                 <e-querybuilder-column field="Name" label="Name" type="string"></e-querybuilder-column>
@@ -56,7 +56,8 @@
 @*custom code start*@
 @section Scripts {
     <script>
-        updateRule();
+    var qryBldrObj = ej.base.getComponent(document.getElementById("querybuilder"), 'query-builder');
+    updateRule({rule: qryBldrObj.getValidRules(qryBldrObj.rule)});
     </script>
 }
 
@@ -71,10 +72,10 @@
 </style>
 @*custom code end*@
 <script>
-    function updateRule() {
+    function updateRule(args) {
         var dataManagerQuery
         var qryBldrObj = ej.base.getComponent(document.getElementById("querybuilder"), 'query-builder');
-        var predicate = qryBldrObj.getPredicate(qryBldrObj.rule);
+        var predicate = qryBldrObj.getPredicate(args.rule);
         if (ej.base.isNullOrUndefined(predicate)) {
             dataManagerQuery = new ej.data.Query().select(['TaskID', 'Name', 'Category', 'SerialNo', 'InvoiceNo', 'Status']);
          } else {

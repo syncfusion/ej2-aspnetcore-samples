@@ -5,7 +5,7 @@
             <div id="container">
                 <ejs-gantt id='Timeline' dataSource="ViewBag.DataSource" projectStartDate="02/03/2019"
                            projectEndDate="03/23/2019"
-                           height="450px" highlightWeekends="true"
+                           height="450px" highlightWeekends="true" treeColumnIndex="1"
                            resourceIDMapping="resourceId" resourceNameMapping="resourceName" resources="ViewBag.Resources">
                     <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate"
                                           endDate="EndDate" duration="Duration" progress="Progress" dependency="Predecessor"
@@ -32,6 +32,16 @@
             </colgroup>
             <tr>
                 <td style="width:30%">
+                    <div>Unit width</div>
+                </td>
+                <td style="width:70%">
+                    <div style="padding-top: 0px">
+                        <ejs-numerictextbox id="unitWidthNumObj" change="UnitWidthChange" min="10" value="33" format="n"></ejs-numerictextbox>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:30%">
                     <div><b>Top tier</b></div>
                 </td>
                 <td style="width:70%">
@@ -46,7 +56,7 @@
                 </td>
                 <td style="width:70%">
                     <div>
-                        <ejs-numerictextbox id="TopTierCount" change="TopCountChange" min="1" value="1" max="50" format="##"></ejs-numerictextbox>
+                        <ejs-numerictextbox id="TopTierCount" change="TopCountChange" min="1" value="1" max="50" format="n"></ejs-numerictextbox>
                     </div>
                 </td>
             </tr>
@@ -94,7 +104,7 @@
                 </td>
                 <td style="width:70%">
                     <div id='numericbox'>
-                        <ejs-numerictextbox id="BottomTierCount" change="BottomCountChange" min="1" value="1" max="50" format="##"></ejs-numerictextbox>
+                        <ejs-numerictextbox id="BottomTierCount" change="BottomCountChange" min="1" value="1" max="50" format="n"></ejs-numerictextbox>
                     </div>
                 </td>
             </tr>
@@ -206,6 +216,8 @@
                 topFormatDropDown.dataSource = hourformat;
             }
             topFormatDropDown.refresh();
+            updateUnitWidth(unit, 'top');
+            gantt.timelineSettings.topTier.unit = unit;
         }
 
         function BottomUnitChange(args) {
@@ -225,7 +237,47 @@
                 bottomFormatDropDown.dataSource = hourformat;
             }
             bottomFormatDropDown.refresh();
+            updateUnitWidth(unit, 'bottom');
+            gantt.timelineSettings.bottomTier.unit = unit;
         }
+
+        function UnitWidthChange(args) {
+            var gantt = document.getElementById("Timeline").ej2_instances[0];
+            var width = args.value;
+            gantt.timelineSettings.timelineUnitSize = width;
+        }
+
+        function updateUnitWidth(unit, tier) {
+            var gantt = document.getElementById("Timeline").ej2_instances[0];
+            var topUnit = tier === 'top' ? unit : gantt.timelineSettings.topTier.unit;
+            var bottomUnit = tier === 'bottom' ? unit : gantt.timelineSettings.bottomTier.unit;
+            var units = ['None', 'Hour', 'Day', 'Week', 'Month', 'Year'];
+            var bootomCellUnit;
+            var unitWidth;
+            if (units.indexOf(topUnit) === 0 && units.indexOf(bottomUnit) === 0) {
+                bootomCellUnit = 'Day';
+            } else if (units.indexOf(topUnit) === 0 && units.indexOf(bottomUnit) > 0) {
+                bootomCellUnit = bottomUnit;
+            } else if (units.indexOf(topUnit) > 0 && units.indexOf(bottomUnit) === 0) {
+                bootomCellUnit = topUnit;
+            } else if (units.indexOf(topUnit) <= units.indexOf(bottomUnit)) {
+                bootomCellUnit = topUnit;
+            } else {
+                bootomCellUnit = bottomUnit;
+            }
+            if (bootomCellUnit === 'Year') {
+                unitWidth = 2000;
+            } else if (bootomCellUnit === 'Month') {
+                unitWidth = 300;
+            } else if (bootomCellUnit === 'Week') {
+                unitWidth = 150;
+            } else if (bootomCellUnit === 'Day') {
+                unitWidth = 33;
+            } else if (bootomCellUnit === 'Hour') {
+                unitWidth = 25;
+            }
+            unitWidthNumObj.value = unitWidth;
+        }  
 
         var yearformat = [
             { Id: 'MMM "yy', Format: 'Jan "18' },
@@ -285,14 +337,6 @@
         <p>
             Tooltip is enabled by default for the timeline headers, to see the tooltip in action, hover a point or tap on a
             point in touch enabled devices.
-        </p>
-        <p style="font-weight: 500">Injecting Module:</p>
-        <p>
-            Gantt component features are segregated into individual feature-wise modules. To use a selection, inject the
-            Selection module using the <code>Gantt.Inject(Selection)</code> method, and use a sort by injecting the Sort
-            module using
-            the <code>Gantt.Inject(Sort)</code> method. To use markers, inject the
-            DayMarkers module using the <code>Gantt.Inject(DayMarkers)</code> method.
         </p>
     </div>
 }

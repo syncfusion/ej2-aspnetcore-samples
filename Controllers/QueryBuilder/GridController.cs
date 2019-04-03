@@ -15,9 +15,9 @@ namespace EJ2CoreSampleBrowser.Controllers.QueryBuilder
             QueryBuilderRule rule = new QueryBuilderRule()
             {
                 Condition = "or",
-                Rules = new List<QueryBuilderRules>()
+                Rules = new List<QueryBuilderRule>()
                 {
-                    new QueryBuilderRules { Label="Category", Field="Category", Type="string", Operator="equal", Value = "Laptop" }
+                    new QueryBuilderRule { Label="Category", Field="Category", Type="string", Operator="equal", Value = "Laptop" }
                 }
             };
 

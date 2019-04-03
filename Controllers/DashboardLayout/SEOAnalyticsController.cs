@@ -49,7 +49,7 @@ namespace EJ2CoreSampleBrowser.Controllers
 
         public object getDataSource()
         {
-            string allText = System.IO.File.ReadAllText("./wwwroot/scripts/MapsData/salescontinent.js");
+            string allText = System.IO.File.ReadAllText("./wwwroot/scripts/MapsData/defaultdata.js");
             return JsonConvert.DeserializeObject(allText);
         }
         public IActionResult SEOAnalytics()

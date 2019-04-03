@@ -64,7 +64,7 @@
                 <e-maps-zoomsettings enable="false"></e-maps-zoomsettings>
                 <e-maps-legendsettings visible="true" position="@LegendPosition.Bottom" height="10" width="80%" mode="@LegendMode.Interactive">
                     <e-legendsettings-title text="Inches"></e-legendsettings-title>
-                    <e-legendsettings-titlestyle size="18px" fontStyle="Medium" fontFamily="Roboto, Noto, Sans-serif" opacity="0.5"></e-legendsettings-titlestyle>
+                    <e-legendsettings-titlestyle size="18px"></e-legendsettings-titlestyle>
                 </e-maps-legendsettings>
                 <e-maps-layers>
                     <e-maps-layer dataSource="ViewBag.dataSource" shapeData="ViewBag.mapdata" shapePropertyPath="propertyPath" shapeDataPath="State">
@@ -140,8 +140,7 @@
     @* custom code start *@
     function onMapLoad(args) {
         maps = args.maps;
-        var theme = location.hash.split("/")[1];
-        theme = theme ? theme : "Material";
+        var theme = themeName ? themeName : "Material";
         args.maps.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
     }
     @* custom code end *@

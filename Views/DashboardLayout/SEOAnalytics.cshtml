@@ -3,7 +3,6 @@
     ViewData["Title"] = "SEOAnalytics";
 }
 @using Syncfusion.EJ2.Maps;
-@using Syncfusion.EJ2.Charts;
 @model EJ2CoreSampleBrowser.Controllers.Space
 
 @section ControlsSection{
@@ -157,7 +156,7 @@ new { latitude = 51.5326602, longitude = -0.1262422, name = "London"}
             <e-maps-zoomsettings enable="false"></e-maps-zoomsettings>
             <e-maps-legendsettings visible="false"></e-maps-legendsettings>
             <e-maps-layers>
-                <e-maps-layer dataSource="ViewBag.dataSource" shapeData="ViewBag.mapdata" shapePropertyPath="propertyPath" shapeDataPath="continent">
+                <e-maps-layer dataSource="ViewBag.mapdataSource" shapeData="ViewBag.mapdata" shapePropertyPath="propertyPath" shapeDataPath="continent">
                     <e-layersettings-tooltipsettings valuePath="name" visible="true"></e-layersettings-tooltipsettings>
                     <e-layersettings-shapesettings colorValuePath="color"></e-layersettings-shapesettings>
                     <e-layersettings-markers>
@@ -198,7 +197,7 @@ new { latitude = 51.5326602, longitude = -0.1262422, name = "London"}
                         <e-series-datalabel visible="false"></e-series-datalabel>
                     </e-series-marker>
                 </e-series>
-                <e-series dataSource="ViewBag.columnData1" xName='x' yName='y' name='Mobile' fill="#db3673c4" width=2 type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                <e-series dataSource="ViewBag.columnData1" xName='x' yName='y' name='Mobile' fill="#e36593" width=2 type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
                     <e-series-marker>
                         <e-series-datalabel visible="false">
                         </e-series-datalabel>
@@ -238,7 +237,7 @@ new { latitude = 51.5326602, longitude = -0.1262422, name = "London"}
             <e-accumulationchart-legendsettings visible="false">
             </e-accumulationchart-legendsettings>
             <e-accumulation-series-collection>
-                <e-accumulation-series dataSource="ViewBag.pieData" xName="x" yName="y" name="Revennue" explodeIndex="0" explode="true" explodeOffset="10%">
+                <e-accumulation-series dataSource="ViewBag.pieData" xName="x" yName="y" name="Revennue" explodeIndex="2" explode="true" explodeOffset="10%">
                     <e-accumulationseries-datalabel name="text" visible="true">
                         <e-font fontWeight="600" color="white"></e-font>
                     </e-accumulationseries-datalabel>
@@ -262,7 +261,7 @@ new { latitude = 51.5326602, longitude = -0.1262422, name = "London"}
                 <e-chartarea-border width="0"></e-chartarea-border>
             </e-chart-chartarea>
             <e-series-collection>
-                <e-series dataSource="ViewBag.LineData" fill="#db3673c4" name="Jan" xName="x" opacity=0.5 width=2 yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.SplineArea">
+                <e-series dataSource="ViewBag.LineData" fill="rgb(239, 183, 202)" name="Jan" xName="x" opacity=0.5 width=2 yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.SplineArea">
                     <e-series-border color="transparent"></e-series-border>
                 </e-series>
                 <e-series dataSource="ViewBag.LineData1" fill="rgb(14, 64, 152, .6)" name="Feb" xName="x" opacity=0.5 width=2 yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.SplineArea">
@@ -299,7 +298,7 @@ new { latitude = 51.5326602, longitude = -0.1262422, name = "London"}
 @section Description{
     <div id="description">
         <p>
-            The sample demonstrates the realtime SEO data analytics dasboard layout.
+            The sample demonstrates the realtime SEO data analytics dashboard layout.
         </p>
     </div>
 
@@ -492,7 +491,6 @@ new { latitude = 51.5326602, longitude = -0.1262422, name = "London"}
     }
 
     .analysis {
-      margin-left: 13px;
       font-size: 18px;
       padding: 12px;
       text-align: left;
@@ -518,7 +516,7 @@ new { latitude = 51.5326602, longitude = -0.1262422, name = "London"}
 
     .card-content.text {
       font-size: 15px;
-      text-align: end;
+      text-align: right;
       color: #66696b;
     }
 
@@ -529,7 +527,7 @@ new { latitude = 51.5326602, longitude = -0.1262422, name = "London"}
 
     .card-content.number {
       font-size: 16px;
-      text-align: end;
+      text-align: right;
       padding-top: 10px;
     }
 
@@ -566,13 +564,12 @@ new { latitude = 51.5326602, longitude = -0.1262422, name = "London"}
 
     .searchContent {
       display: inline-block;
-      margin-left: 5px;
       position: absolute;
-      left: 7%;
+      left: 60px;
     }
 
     .e-panel-content {
-      height: calc(100% - 35px);
+      height: calc(100% - 35px) !important;
       width: 100%;
     }
 
@@ -622,6 +619,13 @@ new { latitude = 51.5326602, longitude = -0.1262422, name = "London"}
 
     .dashboardParent {
       width: 100%;
+    }
+
+     .markerTemplate {
+        font-size: 12px;
+        color: white;
+        text-shadow: 0px 1px 1px black;
+        font-weight: 500
     }
     </style>
 

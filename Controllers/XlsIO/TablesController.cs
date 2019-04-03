@@ -112,6 +112,7 @@ namespace EJ2CoreSampleBrowser.Controllers.XlsIO
 
             sheet.UsedRange.AutofitColumns();
             sheet.SetColumnWidth(2, 12.43);
+            sheet.SetColumnWidth(4, 12.43);
 
             try
             {

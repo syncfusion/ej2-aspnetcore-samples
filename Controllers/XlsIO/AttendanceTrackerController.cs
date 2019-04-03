@@ -46,18 +46,45 @@ namespace samplebrowser.Controllers.XlsIO
             IWorkbook workbook = application.Workbooks.Create(1);
             IWorksheet worksheet = workbook.Worksheets[0];
 
-            DateTime dateTime = new DateTime(2019, 01, 1);
+            DateTime dateTime = DateTime.Now;
             string monthName = dateTime.ToString("MMM", CultureInfo.InvariantCulture);
-            worksheet.Name = monthName + "-" + 2019;
-            worksheet.Range["A1:AL1"].CellStyle.Font.Bold = true;
+            worksheet.Name = monthName + "-" + dateTime.Year;
 
             CreateHeaderRow(worksheet);//Format header row
             FillAttendanceDetails(worksheet);
             ApplyConditionFormatting(worksheet);
-            worksheet.UsedRange.AutofitColumns();
-            worksheet.Range["A2:B31"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignLeft;
-            worksheet.Range["C2:G31"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignRight;
-			#endregion
+
+            #region Apply Styles
+            worksheet.Range["A1:AL1"].RowHeight = 24;
+            worksheet.Range["A2:AL31"].RowHeight = 20;
+            worksheet.Range["A1:B1"].ColumnWidth = 20;
+            worksheet.Range["C1:G1"].ColumnWidth = 16;
+            worksheet.Range["H1:AL31"].ColumnWidth = 4;
+
+            worksheet.Range["A1:AL31"].CellStyle.Font.Bold = true;
+            worksheet.Range["A1:AL31"].CellStyle.Font.Size = 12;
+            worksheet.Range["A2:AL31"].CellStyle.Font.RGBColor = Color.FromArgb(64, 64, 64);
+            worksheet.Range["A1:AL31"].CellStyle.VerticalAlignment = ExcelVAlign.VAlignCenter;
+
+            worksheet.Range["A1:AL1"].CellStyle.Font.Color = ExcelKnownColors.White;
+            worksheet.Range["A1:AL1"].CellStyle.FillBackgroundRGB = Color.FromArgb(58, 56, 56);
+
+            worksheet.Range["A1:B31"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignLeft;
+            worksheet.Range["C2:G31"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
+            worksheet.Range["H1:AL31"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
+
+            worksheet.Range["A2:B31"].CellStyle.IndentLevel = 1;
+            worksheet.Range["A1:G1"].CellStyle.IndentLevel = 1;
+
+            worksheet.Range["A1:AL1"].BorderAround(ExcelLineStyle.Medium, Color.LightGray);
+            worksheet.Range["A1:AL1"].BorderInside(ExcelLineStyle.Medium, Color.LightGray);
+
+            worksheet.Range["A2:G31"].BorderAround(ExcelLineStyle.Medium, Color.LightGray);
+            worksheet.Range["A2:G31"].BorderInside(ExcelLineStyle.Medium, Color.LightGray);
+
+            worksheet.Range["H2:AL31"].BorderInside(ExcelLineStyle.Medium, ExcelKnownColors.White);
+            #endregion
+            #endregion
 
             try
             {
@@ -90,57 +117,57 @@ namespace samplebrowser.Controllers.XlsIO
             leaveCondition.FormatType = ExcelCFType.CellValue;
             leaveCondition.Operator = ExcelComparisonOperator.Equal;
             leaveCondition.FirstFormula = "\"L\"";
-            leaveCondition.BackColor = ExcelKnownColors.Orange;
+            leaveCondition.BackColorRGB = Color.FromArgb(253, 167, 92);
 
             IConditionalFormat absentCondition = statusCondition.AddCondition();
             absentCondition.FormatType = ExcelCFType.CellValue;
             absentCondition.Operator = ExcelComparisonOperator.Equal;
             absentCondition.FirstFormula = "\"A\"";
-            absentCondition.BackColor = ExcelKnownColors.Red;
+            absentCondition.BackColorRGB = Color.FromArgb(255, 105, 124);
 
             IConditionalFormat presentCondition = statusCondition.AddCondition();
             presentCondition.FormatType = ExcelCFType.CellValue;
             presentCondition.Operator = ExcelComparisonOperator.Equal;
             presentCondition.FirstFormula = "\"P\"";
-            presentCondition.BackColor = ExcelKnownColors.Green;
+            presentCondition.BackColorRGB = Color.FromArgb(67, 233, 123);
 
             IConditionalFormat weekendCondition = statusCondition.AddCondition();
             weekendCondition.FormatType = ExcelCFType.CellValue;
             weekendCondition.Operator = ExcelComparisonOperator.Equal;
             weekendCondition.FirstFormula = "\"WE\"";
-            weekendCondition.BackColor = ExcelKnownColors.Brown;
+            weekendCondition.BackColorRGB = Color.FromArgb(240, 240, 240);
 
             IConditionalFormats presentSummaryCF = worksheet["C2:C31"].ConditionalFormats;
             IConditionalFormat presentCountCF = presentSummaryCF.AddCondition();
             presentCountCF.FormatType = ExcelCFType.DataBar;
             IDataBar dataBar = presentCountCF.DataBar;
-            dataBar.BarColor = Color.Blue;
+            dataBar.BarColor = Color.FromArgb(61, 242, 142);
 
             IConditionalFormats leaveSummaryCF = worksheet["D2:D31"].ConditionalFormats;
             IConditionalFormat leaveCountCF = leaveSummaryCF.AddCondition();
             leaveCountCF.FormatType = ExcelCFType.DataBar;
             dataBar = leaveCountCF.DataBar;
-            dataBar.BarColor = Color.Orange;
+            dataBar.BarColor = Color.FromArgb(242, 71, 23);
 
             IConditionalFormats absentSummaryCF = worksheet["E2:E31"].ConditionalFormats;
             IConditionalFormat absentCountCF = absentSummaryCF.AddCondition();
             absentCountCF.FormatType = ExcelCFType.DataBar;
             dataBar = absentCountCF.DataBar;
-            dataBar.BarColor = Color.Red;
+            dataBar.BarColor = Color.FromArgb(255, 10, 69);
 
             IConditionalFormats unplannedSummaryCF = worksheet["F2:F31"].ConditionalFormats;
             IConditionalFormat unplannedCountCF = unplannedSummaryCF.AddCondition();
             unplannedCountCF.FormatType = ExcelCFType.DataBar;
             dataBar = unplannedCountCF.DataBar;
             dataBar.MaxPoint.Type = ConditionValueType.HighestValue;
-            dataBar.BarColor = Color.Red;
+            dataBar.BarColor = Color.FromArgb(142, 142, 142);
 
             IConditionalFormats plannedSummaryCF = worksheet["G2:G31"].ConditionalFormats;
             IConditionalFormat plannedCountCF = plannedSummaryCF.AddCondition();
             plannedCountCF.FormatType = ExcelCFType.DataBar;
             dataBar = plannedCountCF.DataBar;
             dataBar.MaxPoint.Type = ConditionValueType.HighestValue;
-            dataBar.BarColor = Color.BlueViolet;
+            dataBar.BarColor = Color.FromArgb(56, 136, 254);
 
         }
         /// <summary>
@@ -184,7 +211,6 @@ namespace samplebrowser.Controllers.XlsIO
 
             worksheet["I1:AL1"].Formula = "=H1+1";
             worksheet["H1:AL1"].NumberFormat = "d";
-            worksheet["A1:AL31"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
         }
         #endregion
 

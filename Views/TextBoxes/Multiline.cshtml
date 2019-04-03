@@ -11,13 +11,7 @@
     <div class="col-lg-4 property-section">
         <table id="property" class="multiline-property" title="Properties">
             <tr>
-                <td class="left-side">Value :</td>
-                <td>
-                    <ejs-textbox id="textvalue" placeholder="Enter a value" multiline="true" change="valueHandler"></ejs-textbox>
-                </td>
-            </tr>
-            <tr>
-                <td class="left-side">Float Label Type :</td>
+                <td class="left-side">Float Label Type</td>
                 <td>
                     <ejs-dropdownlist id="floatText" dataSource="@ViewBag.data" placeholder="Select float type" text="Auto" popupHeight="220px" change="floatHandler">
                         <e-dropdownlist-fields text="text" value="floatValue"></e-dropdownlist-fields>
@@ -25,19 +19,19 @@
                 </td>
             </tr>
             <tr>
-                <td class="left-side">Enabled :</td>
+                <td class="left-side">Disabled</td>
                 <td>
-                    <ejs-checkbox id="sample" checked="true" change="enabledHandler"></ejs-checkbox>
+                    <ejs-checkbox id="sample" cssClass="multiline" checked="false" change="enabledHandler"></ejs-checkbox>
                 </td>
             </tr>
             <tr>
-                <td class="left-side">Read only :</td>
+                <td class="left-side">Read only</td>
                 <td>
-                    <ejs-checkbox id="sample1" checked="false" change="readonlyHandler"></ejs-checkbox>
+                    <ejs-checkbox id="sample1" cssClass="multiline" checked="false" change="readonlyHandler"></ejs-checkbox>
                 </td>
             </tr>
             <tr>
-                <td class="left-side">Rows :</td>
+                <td class="left-side">Rows</td>
                 <td>
                     <ejs-numerictextbox id="rowvalue" format="##" value="2" min="1" max="20" step="1" Type="text" change="rowHandler"></ejs-numerictextbox>
                 </td>
@@ -57,15 +51,15 @@
         padding: 8px;
         width: 50%;
     }
+    .multiline-property.property-panel-table div.multiline {
+        padding-left: 0px;
+    }
+
 </style>
 @*custom code end*@
 
 @section PreScripts {
     <script>
-        function valueHandler(args) {
-            var textareaObj = document.getElementById("default")
-            textareaObj.ej2_instances[0].value = args.value;
-        }
         function floatHandler(args) {
             var textareaObj = document.getElementById("default")
             switch (args.value) {
@@ -82,7 +76,7 @@
         }
         function enabledHandler(args) {
             var textareaObj = document.getElementById("default")
-            textareaObj.ej2_instances[0].enabled = args.checked;
+            textareaObj.ej2_instances[0].enabled = !args.checked;
         }
         function readonlyHandler(args) {
             var textareaObj = document.getElementById("default")

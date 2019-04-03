@@ -23,9 +23,19 @@
         function getAbsoluteURL() {
             return "@Url.Content("~/")";
         };
-            var baseurl = window.baseurl = getAbsoluteURL();
-
-        var themeName = location.hash.split('#/')[1];
+        var baseurl = window.baseurl = getAbsoluteURL();
+        if (location.hash) {
+            themeName = location.hash.split('#/')[1];
+            location.href = location.href.replace(location.hash, '') + '?theme=' + themeName;
+        }
+           function getParam(name) {
+            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(location.href);
+            if (!results) {
+                return null;
+            }
+            return decodeURI(results[1]) || 0;
+        }
+        var themeName = getParam('theme');
         themeName = themeName ? themeName : 'material';
             document.write('<link href="' + baseurl + 'styles/' + themeName + '.css" rel="stylesheet" />');
 
@@ -152,10 +162,10 @@
                         <span class='sb-icons sb-theme-select sb-icon-icon-selection'></span>
                         <span class="switch-text">Bootstrap</span>
                     </li>
-                   @*<li class="e-list" id="bootstrap4" role="listitem">
+                   <li class="e-list" id="bootstrap4" role="listitem">
                         <span class='sb-icons sb-theme-select sb-icon-icon-selection'></span>
                         <span class="switch-text">Bootstrap v4</span>
-                   </li>*@
+                   </li>
                     <li class="e-list" id="highcontrast">
                         <span class='sb-icons sb-theme-select sb-icon-icon-selection'></span>
                         <span class="switch-text">High Contrast</span>
@@ -179,7 +189,7 @@
                                 <option value="material">Material</option>
                                 <option value="fabric">Fabric</option>
                                 <option value="bootstrap">Bootstrap</option>
-                                @*<option value="bootstrap4">Bootstrap v4</option>*@
+                                <option value="bootstrap4">Bootstrap v4</option>
                                 <option value="highcontrast">High Contrast</option>
                             </select>
                         </div>

@@ -1,0 +1,175 @@
+﻿@using Syncfusion.EJ2
+@using Newtonsoft.Json
+@section ControlsSection{
+    <div class="col-lg-12 control-section">
+        <div id="drag-drop-wrapper">
+            <div class="listbox-control">
+                <h4>Group A</h4>
+                <ejs-listbox id="listbox1" scope="combined-list" allowDragAndDrop="true" drop="onDropGroupA" created="groupACreated" height="330px">
+                    <e-listbox-fields text="Name"></e-listbox-fields>
+                </ejs-listbox>
+            </div>
+            <span class="e-swap-icon"></span>
+            <div class="listbox-control">
+                <h4>Group B</h4>
+                <ejs-listbox id="listbox2" scope="combined-list" allowDragAndDrop="true" drop="onDropGroupB" created="groupBCreated" height="330px">
+                    <e-listbox-fields text="Name"></e-listbox-fields>
+                </ejs-listbox>
+                <ejs-button id="savechange" content="Update"></ejs-button>
+            </div>
+        </div>
+    </div>
+}
+
+@section Meta{
+    <meta name="description" content="This example demonstrates how to drag and drop within the Syncfusion ASP.NET Core ListBox and between two list boxes." />
+}
+@section ActionDescription{
+    <div id="action-description">
+        <p>This sample demonstrates the drag and drop functionalities of a ListBox. Drag an item or a group of selected items and drop it within the same list box or into another list box.</p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>The ListBox component allows the user to drag and drop a desired item from one list box into another list box. The drag and drop feature can be enabled by using the following properties,</p>
+        <ul>
+            <li>To drag and drop a desired item within the ListBox, the <a target="_blank" href="https://help.syncfusion.com/cr/cref_files/aspnetcore-js2/Syncfusion.EJ2~Syncfusion.EJ2.DropDowns.ListBox~AllowDragAndDrop.html"><code>allowDragAndDrop</code></a> property should be set to <code>true.</code></li>
+            <li>To drag and drop between two listboxes, the <a target="_blank" href="https://help.syncfusion.com/cr/cref_files/aspnetcore-js2/Syncfusion.EJ2~Syncfusion.EJ2.DropDowns.ListBox~Scope.html"><code>scope</code></a> property should be set to both the listboxes.</li>
+        </ul>
+        <p>
+            In this sample, a list of countries is loaded in Group A and another list of countries is loaded in Group B. You can drag and drop an item or multiple items from
+            Group A to Group B, and vice versa. By clicking update button, user can save the changes to the corresponding JSON using Datamanager <a target="_blank" href="https://ej2.syncfusion.com/documentation/api/data/dataManager/#savechanges"><code>saveChanges</code></a> method.
+        </p>
+        <p>
+            More information about drag and drop functionalities in the ListBox can be found in the
+            <a href="https://ej2.syncfusion.com/aspnetcore/documentation/list-box/drag-and-drop" target="_blank"> documentation section</a>.
+        </p>
+    </div>
+}
+<script>
+    var listbox1; var listbox2;
+    var modifiedDataA = { addedRecords: [], deletedRecords: [], changedRecords: [] };
+    var modifiedDataB = { addedRecords: [], deletedRecords: [], changedRecords: [] };
+
+    var dataA = new ej.data.DataManager({
+        json: @Html.Raw(JsonConvert.SerializeObject(@ViewBag.groupA))
+    });
+
+    var dataB = new ej.data.DataManager({
+        json: @Html.Raw(JsonConvert.SerializeObject(@ViewBag.groupB))
+    });
+
+    function groupACreated() {
+        listbox1 = ej.base.getComponent(document.querySelector('#listbox1'), 'listbox');
+        listbox1.dataSource = dataA;
+        listbox1.dataBind();
+    }
+
+    function groupBCreated() {
+        listbox2 = ej.base.getComponent(document.querySelector('#listbox2'), 'listbox');
+        listbox2.dataSource = dataB;
+        listbox2.dataBind();
+    }
+
+    function onDropGroupA(args) {
+        args.items.forEach(function (item) {
+            if (!listbox1.getDataByValue(item["Name"])) {/*Preventing item manipulation while doing drag and drop within same list box.*/
+                modifiedDataB.addedRecords.push(item);
+                modifiedDataA.deletedRecords.push(item);
+            }
+        });
+    }
+
+    function onDropGroupB(args) {
+        args.items.forEach(function (item) {
+            if (!listbox2.getDataByValue(item["Name"])) {
+                modifiedDataA.addedRecords.push(item);
+                modifiedDataB.deletedRecords.push(item);
+            }
+        });
+    }
+</script>
+
+@section Scripts {
+    <script>
+        document.getElementById("savechange").onclick = () => {
+            // Saving the manipulated records in to data manager.
+            dataA.saveChanges(modifiedDataA, "Name");
+            dataB.saveChanges(modifiedDataB, "Name");
+            modifiedDataA.addedRecords = []; modifiedDataB.addedRecords = [];
+        };
+    </script>
+}
+
+@*custom code start*@
+
+<style>
+    @@font-face {
+        font-family: 'swap-icon';
+        src: url(data:application/x-font-ttf;charset=utf-8;base64,AAEAAAAKAIAAAwAgT1MvMj1tSfIAAAEoAAAAVmNtYXDnEOdVAAABiAAAADZnbHlmXID+ZgAAAcgAAAA4aGVhZBR5I0cAAADQAAAANmhoZWEIVQQDAAAArAAAACRobXR4CAAAAAAAAYAAAAAIbG9jYQAcAAAAAAHAAAAABm1heHABDgAZAAABCAAAACBuYW1ltM6mlQAAAgAAAAI9cG9zdFSIYnYAAARAAAAALgABAAAEAAAAAFwEAAAAAAAD+AABAAAAAAAAAAAAAAAAAAAAAgABAAAAAQAARPvYwl8PPPUACwQAAAAAANixb1gAAAAA2LFvWAAAAAAD+AOaAAAACAACAAAAAAAAAAEAAAACAA0AAgAAAAAAAgAAAAoACgAAAP8AAAAAAAAAAQQAAZAABQAAAokCzAAAAI8CiQLMAAAB6wAyAQgAAAIABQMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUGZFZABA5wDnAAQAAAAAXAQAAAAAAAABAAAAAAAABAAAAAQAAAAAAAACAAAAAwAAABQAAwABAAAAFAAEACIAAAAEAAQAAQAA5wD//wAA5wD//wAAAAEABAAAAAEAAAAAAAAAHAAAAAIAAAAAA/gDmgAFAAwAABMhBxcBITUxBTUhNycIA1HcLAFP/BAD8Pyv2ysBYs4uATy9AUDOLgAAAAASAN4AAQAAAAAAAAABAAAAAQAAAAAAAQAJAAEAAQAAAAAAAgAHAAoAAQAAAAAAAwAJABEAAQAAAAAABAAJABoAAQAAAAAABQALACMAAQAAAAAABgAJAC4AAQAAAAAACgAsADcAAQAAAAAACwASAGMAAwABBAkAAAACAHUAAwABBAkAAQASAHcAAwABBAkAAgAOAIkAAwABBAkAAwASAJcAAwABBAkABAASAKkAAwABBAkABQAWALsAAwABBAkABgASANEAAwABBAkACgBYAOMAAwABBAkACwAkATsgRm9udCBTd2FwUmVndWxhckZvbnQgU3dhcEZvbnQgU3dhcFZlcnNpb24gMS4wRm9udCBTd2FwRm9udCBnZW5lcmF0ZWQgdXNpbmcgU3luY2Z1c2lvbiBNZXRybyBTdHVkaW93d3cuc3luY2Z1c2lvbi5jb20AIABGAG8AbgB0ACAAUwB3AGEAcABSAGUAZwB1AGwAYQByAEYAbwBuAHQAIABTAHcAYQBwAEYAbwBuAHQAIABTAHcAYQBwAFYAZQByAHMAaQBvAG4AIAAxAC4AMABGAG8AbgB0ACAAUwB3AGEAcABGAG8AbgB0ACAAZwBlAG4AZQByAGEAdABlAGQAIAB1AHMAaQBuAGcAIABTAHkAbgBjAGYAdQBzAGkAbwBuACAATQBlAHQAcgBvACAAUwB0AHUAZABpAG8AdwB3AHcALgBzAHkAbgBjAGYAdQBzAGkAbwBuAC4AYwBvAG0AAAAAAgAAAAAAAAAKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAQIBAwAEU3dhcAAAAAA=) format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    .e-swap-icon {
+        font-family: 'swap-icon' !important;
+        speak: none;
+        font-size: 40px;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        align-self: center;
+        margin: 0 10px;
+        transform: rotateX(180deg);
+    }
+
+    #drag-drop-wrapper .e-swap-icon:before {
+        content: '\e700';
+    }
+
+    .control-section {
+        min-height: 450px;
+    }
+
+    #drag-drop-wrapper {
+        width: 85%;
+        margin: auto;
+        display: flex;
+    }
+
+    #savechange {
+        margin-top: 15px;
+        float: right;
+        margin-bottom: -43px;
+    }
+
+    .e-bigger #savechange {
+        margin-bottom: -51px;
+    }
+
+    .listbox-control {
+        width: 40%;
+        margin: auto;
+    }
+
+    @@media screen and (max-width: 590px) {
+        .listbox-control,
+        #drag-drop-wrapper {
+            width: 100%;
+        }
+
+        .e-swap-icon {
+            font-size: 30px;
+        }
+    }
+
+    #right-pane {
+        transform: none !important;
+    }
+</style>
+
+@*custom code end*@

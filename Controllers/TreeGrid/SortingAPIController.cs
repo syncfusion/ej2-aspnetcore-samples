@@ -18,7 +18,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Grid
             var columns = new List<object>() {
                new { id= "TaskId", name= "Task ID" },
                new { id= "TaskName", name= "Task Name" },
-               new { id= "progress", name= "Progress" },
+               new { id= "Progress", name= "Progress" },
                new { id= "Duration", name= "Duration" }
             };
             ViewBag.columnsdata = columns;

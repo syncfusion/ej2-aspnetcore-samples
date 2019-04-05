@@ -2,9 +2,9 @@
 
 @section ControlsSection{
 <div class="col-lg-8 control-section">
-    <ejs-querybuilder id="querybuilder" width="100%" rule="ViewBag.rule" dataSource="ViewBag.dataSource" maxGroupCount=5 conditionChanged="updateRule" fieldChanged="updateRule" valueChanged="updateRule" operatorChanged="updateRule" ruleDelete="updateRule" groupDelete="updateRule" ruleInsert="updateRule" groupInsert="updateRule">
+    <ejs-querybuilder id="querybuilder" width="100%" rule="ViewBag.rule" dataSource="ViewBag.dataSource" maxGroupCount=5 ruleChange="updateRule">
         <e-querybuilder-columns>
-            <e-querybuilder-column field="Category" label="Category" type="string" template="ViewBag.template[0]"></e-querybuilder-column>
+            <e-querybuilder-column field="Category" label="Category" type="string"></e-querybuilder-column>
             <e-querybuilder-column field="PaymentMode" label="Payment Mode" type="string" template="ViewBag.template[1]" operators="ViewBag.paymentOperator"></e-querybuilder-column>
             <e-querybuilder-column field="TransactionType" label="Transaction Type" type="boolean" template="ViewBag.template[2]" operators="ViewBag.transactionOperator"></e-querybuilder-column>
             <e-querybuilder-column field="Description" label="Description" type="string"></e-querybuilder-column>
@@ -36,6 +36,7 @@
     </table>
 </div>
 }
+
 @section Meta{
     <meta name="description" content="This sample demonstrates the default functionalities of the Query Builder component. Click the plus button to add group or rules." />
 }
@@ -79,65 +80,16 @@
     <script>
         var element = document.getElementById('ruleContent');
         var qryBldrObj = ej.base.getComponent(document.getElementById("querybuilder"), 'query-builder');
-        element.textContent = JSON.stringify({
-            condition: qryBldrObj.rule.condition,
-            rules: qryBldrObj.rule.rules
-        }, null, 4);
+        element.textContent = JSON.stringify(qryBldrObj.getValidRules(qryBldrObj.rule), null, 4);
     </script>
     }
 <script>
-    function categoryCreate() {
-        var elem = document.createElement('input');
-        elem.setAttribute('type', 'text');
-        return elem;
-
-    }
-    function categoryDestroy(args) {
-        var multiSelect = ej.base.getComponent(document.getElementById(args.elementId), 'multiselect');
-        if (multiSelect) {
-            multiSelect.destroy();
-        }
-        var textBox = ej.base.getComponent(document.getElementById(args.elementId), 'textbox');
-        if (textBox) {
-            textBox.destroy();
-        }
-    }
-    function categoryWrite(args) {
-        var qryBldrObj = ej.base.getComponent(document.getElementById("querybuilder"), 'query-builder');
-        var inOperators = ['in', 'notin'];
-        if (inOperators.indexOf(args.operator) > -1) {
-            var multiSelectObj = new ej.dropdowns.MultiSelect({
-                dataSource: ['Food', 'Travel', 'Shopping', 'Mortgage', 'Salary', 'Clothing', 'Bills'],
-                value: args.values,
-                mode: 'CheckBox',
-                placeholder: 'Select category',
-                change: function (e) {
-                    qryBldrObj.notifyChange(e.value, e.element);
-                }
-            });
-            multiSelectObj.appendTo('#' + args.elements.id);
-        } else {
-            var inputobj = new ej.inputs.TextBox({
-                placeholder: 'Value',
-                input: function (e) {
-                    qryBldrObj.notifyChange(e.value, e.event.target);
-                }
-            });
-            inputobj.appendTo('#' + args.elements.id);
-            inputobj.value = args.values;
-            inputobj.dataBind();
-        }
-    }
     function paymentCreate() {
         var elem = document.createElement('input');
         elem.setAttribute('type', 'text');
         return elem;
     }
     function paymentDestroy(args) {
-        var selectObj = ej.base.getComponent(document.getElementById(args.elementId), 'multiselect');
-        if (selectObj) {
-            selectObj.destroy();
-        }
         var dropdown = ej.base.getComponent(document.getElementById(args.elementId), 'dropdownlist');
         if (dropdown) {
             dropdown.destroy();
@@ -145,21 +97,7 @@
     }
     function paymentWrite(args) {
         var ds = ['Cash', 'Debit Card', 'Credit Card', 'Net Banking', 'Wallet'];
-        var inOperators = ['in', 'notin'];
         var qryBldrObj = ej.base.getComponent(document.getElementById("querybuilder"), 'query-builder');
-        if (inOperators.indexOf(args.operator) > -1) {
-            var multiSelectObj = new ej.dropdowns.MultiSelect({
-                dataSource: ds,
-                value: args.values,
-                mode: 'CheckBox',
-                placeholder: 'Select Transaction',
-                change: function (e) {
-                    qryBldrObj.notifyChange(e.value, e.element);
-                }
-            });
-            multiSelectObj.appendTo('#' + args.elements.id);
-        }
-        else {
             var dropDownObj = new ej.dropdowns.DropDownList({
                 dataSource: ds,
                 value: args.values ? args.values : ds[0],
@@ -168,7 +106,6 @@
                 }
             });
             dropDownObj.appendTo('#' + args.elements.id);
-        }
 
     }
     function transactionCreate() {
@@ -224,39 +161,34 @@
 
     function changeValue() {
         var qryBldrObj = ej.base.getComponent(document.getElementById("querybuilder"), 'query-builder');
+        var validRule = qryBldrObj.getValidRules(qryBldrObj.rule);
         var element = document.getElementById('ruleContent');
         if (ej.base.getComponent(document.getElementById("radio2"), 'radio').checked) {
-            element.textContent = qryBldrObj.getSqlFromRules(qryBldrObj.rule);
+            element.textContent = qryBldrObj.getSqlFromRules(validRule);
         } else {
-            element.textContent = JSON.stringify({
-                condition: qryBldrObj.rule.condition,
-                rules: qryBldrObj.rule.rules
-            }, null, 4);
+            element.textContent = JSON.stringify(validRule, null, 4);
         }
     }
 
-    function updateRule() {
+    function updateRule(args) {
         var element = document.getElementById('ruleContent');
         var qryBldrObj = ej.base.getComponent(document.getElementById("querybuilder"), 'query-builder');
         if (ej.base.getComponent(document.getElementById("radio2"), 'radio').checked) {
-            element.textContent = qryBldrObj.getSqlFromRules(qryBldrObj.rule);
+            element.textContent = qryBldrObj.getSqlFromRules(args.rule);
         } else {
-            element.textContent = JSON.stringify({
-                condition: qryBldrObj.rule.condition,
-                rules: qryBldrObj.rule.rules
-            }, null, 4);
+            element.textContent = JSON.stringify(args.rule, null, 4);
         }
     }
 
     function onScroll() {
-        var slider = [document.getElementsByClassName('ticks_slider')[0].ej2_instances[0]];
-        slider.forEach(function (slider) {
-            // Refreshing each slider tooltip object position
-            slider.refreshTooltip();
-        });
+        var slider = document.getElementsByClassName('ticks_slider'), sliderObj;
+		for (var i = 0, len = slider.length; i < len; i++) {
+			sliderObj = slider[i].ej2_instances[0];
+            sliderObj.refreshTooltip();
+        }
     }
 </script>
-
+@*custom code start*@
 <style>
    .e-control-wrapper.e-slider-container.e-horizontal {
         height: 0;
@@ -287,3 +219,4 @@
 	}
 
 </style>
+@*custom code end*@

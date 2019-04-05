@@ -19,14 +19,14 @@
                     <e-majorgridlines width="0"></e-majorgridlines>
                     <e-crosshairtooltip enable="true"></e-crosshairtooltip>
                 </e-chart-primaryxaxis>
-                <e-chart-primaryyaxis rangePadding="Normal"
+                <e-chart-primaryyaxis rangePadding="Normal" labelFormat="{value}%"
                                       minimum="82"
                                       maximum="87"
                                       interval="1">
                     <e-linestyle width="0"></e-linestyle>
                     <e-majorticklines width="0"></e-majorticklines>
                 </e-chart-primaryyaxis>
-                <e-chart-tooltipsettings enable="true" shared="true" header="<b>England<b>" format: "${point.x} : <b>${point.y}<b>"></e-chart-tooltipsettings>
+                <e-chart-tooltipsettings enable="true" shared="true" header="<b>England<b>" format="${point.x} : <b>${point.y}<b>"></e-chart-tooltipsettings>
                 <e-chart-chartarea>
                     <e-chartarea-border color="Transparent" width="0"></e-chartarea-border>
                 </e-chart-chartarea>
@@ -40,8 +40,7 @@
     <script>
         var data = axesData;
         var zoomFactor, zoomPosition;
-        var selectedTheme = location.hash.split('/')[1];
-        selectedTheme = selectedTheme ? selectedTheme : 'Material';
+        var selectedTheme = themeName ? themeName : 'Material';
         var theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/dark/i, "Dark").replace(/light/i, "Light"));
         var themes = ['Material', 'Fabric', 'Bootstrap', 'Highcontrast']
         var borderColor = ['#00bdae', '#4472c4', '#a16ee5', '#79ECE4'];
@@ -68,9 +67,10 @@
             }
         }
         window.load = function (args) {
-
+              @*custom code start*@
             args.chart.theme = theme;
             args.chart.width = ej.base.Browser.isDevice ? "100%" : "80%";
+               @*custom code end*@
             args.chart.series[0].border = { width: 2, color: borderColor[themes.indexOf(theme)] };
             args.chart.series[0].fill = 'url(#' + theme.toLowerCase() + '-gradient-chart)';
             args.chart.series[0].dataSource = data;
@@ -79,6 +79,7 @@
         }
     </script>
 }
+   @*custom code start*@
 @section Scripts {
 }
 <style>
@@ -111,6 +112,7 @@
         stop-opacity: 0.3;
     }
 </style>
+   @*custom code end*@
 <svg style="height: 0">
     <defs>
         <linearGradient id="material-gradient-chart" style="opacity: 0.75" class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
@@ -131,9 +133,11 @@
         </linearGradient>
     </defs>
 </svg>
+   @*custom code start*@
 @section Meta{
     <meta name="description" content="This demo for Essential JS2 Range Navigator control shows how to invert an axis in the range navigator." />
 }
+   @*custom code end*@
 @section ActionDescription{
     <p>
         This sample illustrates RTL in the range navigator.

@@ -12,7 +12,7 @@
     <div class="col-lg-12 control-section">
         <div class="control_wrapper">
             <div class="pane1">
-                <ejs-splitter id="splitter1" height="493px" width="100%" created="onLoad">
+                <ejs-splitter id="splitter1" height="493px" width="100%" created="onLoad" resizeStop="onSplitterResize">
                     <e-splitter-panes>
                         <e-splitter-pane size="28%" min="27%" content="<div><div class='content'><div id='tree'></div></div></div>"></e-splitter-pane>
                         <e-splitter-pane size="33%" min="23%" content="<div><div class='content'><div id='groupedList' tabindex='1'></div></div></div>"></e-splitter-pane>
@@ -34,11 +34,12 @@
     table {
         width: 100%;
     }
-
+    /* custom code start */
     #target {
         margin: 20px auto;
         max-width: 820px;
     }
+    /* custom code end */
 
     td {
         padding: 2px;
@@ -68,6 +69,9 @@
         padding-left: 3px;
         padding-right: 4px;
     }
+	#splitter1 #tree ul.e-list-parent.e-ul {
+		padding: 0 0 0 16px;
+	}
 </style>
 
 <script id="treeTemplate" type="text/x-template">
@@ -114,6 +118,7 @@
     ];
 
     function onLoad() {
+        var rteObj;
         var inputobj1 = new ej.inputs.TextBox({});
         inputobj1.appendTo('#firstname');
         var inputobj2 = new ej.inputs.TextBox({});
@@ -151,8 +156,16 @@
         button1.appendTo('#rteSubmit');
         var button2 = new ej.buttons.Button();
         button2.appendTo('#rteCancel');
-        var defaultRTE = new ej.richtexteditor.RichTextEditor({ height: '262px' });
+        var defaultRTE = new ej.richtexteditor.RichTextEditor({ height: '262px', created: onRteCreate });
         defaultRTE.appendTo('#defaultRTE');
+    }
+
+    function onRteCreate() {
+        rteObj = this;
+    }
+
+    function onSplitterResize() {
+        rteObj.refresh();
     }
 </script>
 
@@ -173,3 +186,11 @@
         </p>
     </div>
 }
+
+@*custom code start*@
+
+@section Meta{
+    <meta name="description" content="The example explains how to construct an outlook style layout using ASP.NET Core Splitter, TreeView, ListView, and Rich Text Editor with multiple panes." />
+}
+
+@*custom code end*@

@@ -1,7 +1,7 @@
 ﻿@using Syncfusion.EJ2
 @section ControlsSection{
-     <div class="control-section" align="center">
-        <ejs-chart id="container" load="window.onChartLoad" title="Inflation - Consumer Price" >
+    <div class="control-section" align="center">
+        <ejs-chart id="container" load="window.onChartLoad" title="Inflation - Consumer Price">
             <e-chart-tooltipsettings enable="true">
             </e-chart-tooltipsettings>
             <e-chart-primaryxaxis valueType="DateTime"
@@ -31,19 +31,19 @@
             </e-series-collection>
         </ejs-chart>
     </div>
+
+}
+@*custom code start*@
+@section Scripts {
     <script>
         window.onChartLoad = function (args) {
-            var selectedTheme = location.hash.split('/')[1];
-            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            var selectedTheme = themeName ? themeName : 'Material';
             args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/dark/i, "Dark").replace(/light/i, "Light"));
             args.chart.width = ej.base.Browser.isDevice ? "100%" : "60%";
         }
     </script>
 }
 
-@section Scripts {
-
-}
 
 <style>
     #control-container {
@@ -51,8 +51,9 @@
     }
 </style>
 @section Meta{
-    <meta name="description" content="This demo for Essential ASP.NET  Chart control shows how to render the line series." />
+    <meta name="description" content="This demo for Essential ASP.NET Chart control shows how to render the line series." />
 }
+@*custom code end*@
 @section ActionDescription{
     <p>
         This sample visualizes the consumer price data with default line series in the chart.
@@ -71,6 +72,6 @@
 
     <p>
         More information on the line series can be found in this
-        <a target="_blank" href="http://ej2.syncfusion.com/documentation/chart/api-series.html#type-chartseriestype">documentation section</a>.
+        <a target="_blank" href="https://ej2.syncfusion.com/documentation/api/chart/series/#type">documentation section</a>.
     </p>
 }

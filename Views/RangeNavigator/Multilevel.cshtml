@@ -20,16 +20,17 @@
             data.push(point);
         }
         window.onChartLoad = function (args) {
-            var selectedTheme = location.hash.split('/')[1];
-            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+               @*custom code start*@
+            var selectedTheme = themeName ? themeName : 'Material';
             args.rangeNavigator.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/dark/i, "Dark").replace(/light/i, "Light"));
             args.rangeNavigator.width = ej.base.Browser.isDevice ? "100%" : "80%";
+               @*custom code end*@
             args.rangeNavigator.dataSource = data;
             args.rangeNavigator.value = [new Date('2001-01-01'), new Date('2002-01-01')];      
         }
     </script>
 }
-
+   @*custom code start*@
 @section Scripts {
 
 }
@@ -42,6 +43,7 @@
 @section Meta{
     <meta name="description" content="This demo for Essential JS2 Range Navigator control shows how to display the second level labels." />
 }
+   @*custom code end*@
 @section ActionDescription{
 <p>
     Axis labels are placed based on the values of the start and end ranges. You can add higher level of labels to the range navigator using multilevel labels.

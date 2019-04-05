@@ -4,9 +4,9 @@
 }
 @section ControlsSection{
 
-    <div class="control-section" style="overflow:auto">
+    <div class="col-lg-9 control-section" style="overflow:auto">
         <div class="content-wrapper">
-            <ejs-pivotview id="pivotview" width="100%" height="300" dataBound="onDataBound">
+            <ejs-pivotview id="pivotview" width="100%" height="300" showFieldList="true">
                 <e-datasource data="@ViewBag.data" expandAll="false" enableSorting="true">
                     <e-rows>
                         <e-field name="Country"></e-field>
@@ -17,142 +17,46 @@
                         <e-field name="Order_Source" caption="Order Source"></e-field>
                     </e-columns>
                     <e-values>
-                        <e-field name="In_Stock" caption="In Stock"></e-field>
-                        <e-field name="Sold" caption="Units Sold"></e-field>
+                        <e-field name="Amount" caption="Sales Amount"></e-field>
                     </e-values>
+                    <e-formatsettings>
+                        <e-field name="Amount" format="C" maximumsignificantdigits="10" minimumsignificantdigits="1" usegrouping="true"></e-field>
+                    </e-formatsettings>
                     <e-filters>
                         <e-field name="Product_Categories" caption="Product Categories"></e-field>
                     </e-filters>
                 </e-datasource>
-                <e-gridSettings columnWidth="120"></e-gridSettings>
+                <e-chartSettings title="Sales Analysis" load="onChartLoad"></e-chartSettings>
+                <e-displayOption view="Chart"></e-displayOption>
             </ejs-pivotview>
         </div>
-        <br />
-        <br />
-        <div id="chart" style="height: 450px;"></div>
-        <div id='ddldiv' style="float: right;margin-right: 10px">
-            <select id="measures" name="ddl-view-mode">
-                <option value='In Stock' selected>In Stock</option>
-                <option value='Unit Sold'>Units Sold</option>
-            </select>
-        </div>
     </div>
- 
-    <style>
-        #ddldiv {
-            margin-top: -446px;
-        }
 
-        .e-bigger #ddldiv {
-            margin-top: -452px;
-        }
-
-        @@media only screen and (max-width: 400px) {
-            #ddldiv {
-                margin-top: -490px !important;
-            }
-        }
-    </style>
+        <div class="col-lg-3 property-section">
+        <table id='property' title='Properties' class='property-panel-table' style="width: 100%;">
+            <tbody>
+                <tr style="height: 50px">
+                    <td>
+                        <div>
+                            <ejs-dropdownlist id="charttypes" dataSource="@ViewBag.chartTypes" change="onddlChange" index="0" floatLabelType="Auto" placeholder="Chart Types">
+                                <e-dropdownlist-fields text="Name" value="Value"></e-dropdownlist-fields>
+                            </ejs-dropdownlist>
+                        </div>
+                    </td>
+                </tr>                
+            </tbody>
+        </table>
+    </div>
     <script>
-        var onInit = true;
-        var measure = 'In Stock';
-        var engineModule;
-        var chart;
-        function onDataBound(args) {
-            if (onInit) {
-                onChartLoad();
-            }
-        }
-        var measuresddl = new ej.dropdowns.DropDownList({
-            change: function (args) {
-                measure = args.value.toString();
-                onChartLoad();
-            }
-        });
-        measuresddl.appendTo('#measures');
-        function onChartLoad() {
+        function onddlChange(args){
             var pivotGridObj = document.getElementById('pivotview').ej2_instances[0];
-            if (onInit) {
-                onInit = false;
-                engineModule = ej.base.extend({}, pivotGridObj.engineModule, null, true);
-            }
-            if (engineModule) {
-                var valuesContent = engineModule.valueContent;
-                var data = [];
-                for (var cCnt = 0; cCnt < valuesContent.length; cCnt++) {
-                    if (!valuesContent[cCnt][0].type) {
-                        data[cCnt] = valuesContent[cCnt];
-                    }
-                }
-                var chartSeries = void 0;
-                for (var cCnt = 0; cCnt < 1; cCnt++) {
-                    if (data[cCnt]) {
-                        for (var rCnt = measure === 'In Stock' ? 1 : 2; rCnt < Object.keys(data[cCnt]).length; rCnt++) {
-                            if (data[cCnt][rCnt] && !engineModule.pivotValues[0][rCnt].type && !data[cCnt][rCnt].type && rCnt > 0) {
-                                var colText = engineModule.pivotValues[0][rCnt].formattedText;
-                                if (!chartSeries) {
-                                    chartSeries = [{
-                                        dataSource: data,
-                                        xName: cCnt + '.valueSort.levelName',
-                                        yName: rCnt + '.value',
-                                        type: 'Column',
-                                        name: colText
-                                    }];
-                                }
-                                else {
-                                    chartSeries.push({
-                                        dataSource: data,
-                                        xName: cCnt + '.valueSort.levelName',
-                                        yName: rCnt + '.value',
-                                        type: 'Column',
-                                        name: colText
-                                    });
-                                }
-                                rCnt++;
-                            }
-                        }
-                    }
-                }
-                if (chart && chart.element) {
-                    chart.primaryYAxis = {
-                        title: measure
-                    };
-                    chart.primaryXAxis = {
-                        valueType: 'Category',
-                        title: 'Country',
-                        labelIntersectAction: 'Rotate45'
-                    };
-                    chart.series = chartSeries;
-                    chart.refresh();
-                }
-                else {
-                    ej.charts.Chart.Inject(ej.charts.ColumnSeries, ej.charts.LineSeries, ej.charts.Legend, ej.charts.Tooltip, ej.charts.Category);
-                    chart = new ej.charts.Chart({
-                        title: 'Sales Analysis',
-                        legendSettings: {
-                            visible: true
-                        },
-                        tooltip: {
-                            enable: true
-                        },
-                        primaryYAxis: {
-                            title: measure,
-                        },
-                        primaryXAxis: {
-                            valueType: 'Category',
-                            title: 'Country',
-                            labelIntersectAction: 'Rotate45'
-                        },
-                        series: chartSeries,
-                        load: function (args) {
-                            var selectedTheme = location.hash.split('/')[1];
-                            selectedTheme = selectedTheme ? selectedTheme : 'Material';
-                            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1));
-                        }
-                    }, '#chart');
-                }
-            }
-        }
+          pivotGridObj.chartSettings.chartSeries.type = args.value;   
+        }   
+        function onChartLoad(args){
+            var selectedTheme = location.hash.split("/")[1];
+            selectedTheme = selectedTheme ? selectedTheme : "Material";
+            args.chart.theme = selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1);
+        } 
     </script>
 }
 
@@ -163,22 +67,48 @@
 }
 
 @section ActionDescription{
-   <div id="action-description">
-       <p>This sample demonstrates the integration of pivotgrid data into a simple chart widget.</p>
-    </div>
+<div id="action-description">
+    <p>This sample demonstrates the basic rendering of the Chart control using pivot data. PivotTable Field List is also enabled to change the report at runtime.</p>
+</div>
 }
 
 @section Description{
-    <div id="description">
-        <p>
-            In this sample, the stock and sales of certain products, across different countries over certain fiscal years are acquired
-            from the pivotgrid and plotted in the chart widget as series. The
-            <b>stock</b> and
-            <b>sales</b> values can be switched using the drop-down list located on the top-right corner of the chart widget.
-        </p>
-        <p>
-            Since we have only a simple chart now, we have bound the aggregated pivotgrid data alone without any UI interactions. On
-            pivotchart implementation in the near future, we will provide rich UI interactions.
-        </p>
-    </div>
+<div id="description">
+    <p>
+        In this sample, the Pivot View component plots a chart widget based on the pivot report bound to it.
+        This can be achieved by setting the property <code>displayOption.view</code> to <code>Chart</code>.
+        The built-in options are:<br><br>
+
+        <code>Table</code> -> Renders grid widget only, which is the default.<br>
+        <code>Chart</code> -> Renders chart widget only.<br>
+        <code>Both</code> -> Renders both grid and chart widget.<br>
+    </p>
+    <p>
+        You can change the chart type using the Chart Types drop-down list separately.
+        The chart types can be set using the <code>chartSettings.chartSeries.type</code>property.
+        The built-in chart types are:<br><br>
+
+        <code>Column</code><br>
+        <code>Line</code><br>
+        <code>Spline</code><br>
+        <code>Bar</code><br>
+        <code>Area</code><br>
+        <code>StepArea</code><br>
+        <code>SplineArea</code><br>
+        <code>StackingColumn</code><br>
+        <code>StackingArea</code><br>
+        <code>StackingBar</code><br>
+        <code>StepLine</code><br>
+        <code>Pareto</code><br>
+        <code>Bubble</code><br>
+        <code>Scatter</code><br>
+        <code>StackingColumn100</code><br>
+        <code>StackingBar100</code><br>
+        <code>StackingArea100</code><br>
+        <code>Polar</code><br>
+        <code>Radar</code><br><br>
+
+        In the sample, the field list option is enabled, through which you can see the result in the chart by altering the report dynamically.
+    </p>
+</div>
 }

@@ -9,19 +9,19 @@ namespace EJ2CoreSampleBrowser.Controllers
 {
     public partial class ButtonController : Controller
     {
-        public IActionResult CheckBoxFor()
+        public IActionResult CheckboxFor()
         {
-            CheckBoxModel model = new CheckBoxModel();
+            CheckboxModel model = new CheckboxModel();
             model.check = true;
             return View(model);
         }
         [HttpPost]
-        public IActionResult CheckBoxFor(CheckBoxModel model)
+        public IActionResult CheckboxFor(CheckboxModel model)
         {
             return View(model);
         }
     }
-    public class CheckBoxModel
+    public class CheckboxModel
     {
         [Range(typeof(bool), "true", "true", ErrorMessage = "You need to agree to the Terms and Conditions")]
         public bool check { get; set; }

@@ -7,12 +7,13 @@ namespace EJ2CoreSampleBrowser.Controllers
 {
     public partial class DocumentEditorController : Controller
     {
-        public IActionResult Print()
+        public ActionResult Print()
         {
+            this.StatusBar();
             return View();
         }
 
-        public IActionResult Index()
+        public PartialViewResult StatusBar()
         {
             List<object> zoomItems = new List<object>();
             zoomItems.Add(new { text = "200%" });

@@ -15,10 +15,10 @@ namespace EJ2CoreSampleBrowser.Controllers.QueryBuilder
             QueryBuilderRule rule = new QueryBuilderRule()
             {
                 Condition = "and",
-                Rules = new List<QueryBuilderRules>()
+                Rules = new List<QueryBuilderRule>()
                 {
-                    new QueryBuilderRules { Label="Employee ID", Field="EmployeeID", Type="number", Operator="equal", Value = 1 },
-                    new QueryBuilderRules { Label="Title", Field="Title", Type="string", Operator="equal", Value = "Sales Manager" }
+                    new QueryBuilderRule { Label="Employee ID", Field="EmployeeID", Type="number", Operator="equal", Value = 1 },
+                    new QueryBuilderRule { Label="Title", Field="Title", Type="string", Operator="equal", Value = "Sales Manager" }
                 }
             };
 

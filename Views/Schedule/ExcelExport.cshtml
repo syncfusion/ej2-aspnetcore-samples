@@ -1,0 +1,74 @@
+﻿@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="control-section">
+        <div class="content-wrapper">
+            <div class="schedule-container">
+                <ejs-schedule id="schedule" width="100%" height="650px" selectedDate="new DateTime(2019, 1, 10)" actionBegin="onActionBegin">
+                    <e-schedule-eventsettings dataSource="@ViewBag.appointments"></e-schedule-eventsettings>
+                    <e-schedule-views>
+                        <e-schedule-view option="Week"></e-schedule-view>
+                    </e-schedule-views>
+                </ejs-schedule>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .e-schedule .e-schedule-toolbar .e-icon-schedule-excel-export::before {
+            content: '\e242';
+        }
+
+        .e-schedule-toolbar .e-toolbar-item.e-today {
+            display: none;
+        }
+    </style>
+
+    <script type="text/javascript">
+        function onActionBegin(args) {
+            if (args.requestType === 'toolbarItemRendering') {
+                var exportItem = {
+                    align: 'Right', showTextOn: 'Both', prefixIcon: 'e-icon-schedule-excel-export',
+                    text: 'Excel Export', cssClass: 'e-excel-export', click: onExportClick
+                };
+                args.items.push(exportItem);
+            }
+        }
+
+        function onExportClick() {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            var exportValues = {
+                fields: ['Id', 'Subject', 'StartTime', 'EndTime', 'Location']
+            };
+            scheduleObj.exportToExcel(exportValues);
+        }
+    </script>
+}
+
+@section Meta{
+    <meta name="description" content="This example demonstrates how to export the Essential JS2 Scheduler events to the excel file format at client-side." />
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This example demonstrates how to export the Scheduler events to an Excel file format at client-side.</p>
+    </div>
+
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            In this example, the Scheduler events data are exported to an Excel file by making use of the public method
+            <code>exportToExcel</code>. By default, the whole event collection bound to the Scheduler gets exported as an excel file. To
+            export only specific events of Scheduler, you need to pass the custom data collection as a parameter to the
+            <code>exportToExcel</code> method. This method accepts the export options as its arguments such as fileName, exportType,
+            fields, customData, and includeOccurrences. The fileName denotes the name to be given for the exported file and
+            the <code>exportType</code> allows you to set the format of the excel file to be exported either as .xlsx or .csv. The custom
+            or specific field collection of event dataSource to be exported can be provided through <code>fields</code> option and the
+            custom data collection can be exported by passing them through the <code>customData</code> option. There also exists option
+            to export individual instances of the recurring events to an excel file, by setting true or false to the
+            <code>includeOccurrences</code> option, denoting either to include or exclude the occurrences as separate instances on an
+            exported excel file.
+        </p>
+    </div>
+}

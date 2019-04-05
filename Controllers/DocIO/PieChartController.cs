@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Xml;
 using System;
+using Syncfusion.DocIORenderer;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -61,27 +62,30 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
             pieChart.ChartArea.Border.LinePattern = OfficeChartLinePattern.None;
             pieChart.PrimaryCategoryAxis.CategoryLabels = pieChart.ChartData[2, 1, 11, 1];
 
-            FormatType type = FormatType.Docx;
-            string filename = "Sample.docx";
-            string contenttype = "application/vnd.ms-word.document.12";
+            string filename = "";
+            string contenttype = "";
+            MemoryStream ms = new MemoryStream();
             #region Document SaveOption
-            //Save as .doc format
-            if (Group1 == "WordDoc")
+            if (Group1 == "WordDocx")
             {
-                type = FormatType.Doc;
-                filename = "Sample.doc";
+                filename = "Sample.docx";
                 contenttype = "application/msword";
+                document.Save(ms, FormatType.Docx);
             }
-            //Save as .xml format
             else if (Group1 == "WordML")
             {
-                type = FormatType.WordML;
                 filename = "Sample.xml";
                 contenttype = "application/msword";
+                document.Save(ms, FormatType.WordML);
+            }
+            else
+            {
+                filename = "Sample.pdf";
+                contenttype = "application/pdf";
+                DocIORenderer renderer = new DocIORenderer();
+                renderer.ConvertToPDF(document).Save(ms);
             }
             #endregion Document SaveOption
-            MemoryStream ms = new MemoryStream();
-            document.Save(ms, type);
             document.Close();
             ms.Position = 0;
             return File(ms, contenttype, filename);
@@ -234,7 +238,7 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
                             pieChart.ChartData.SetValue(i + 2, 1, reader.ReadElementContentAsString());
                             break;
                         case "Sum":
-                            pieChart.ChartData.SetValue(i + 2, 2, reader.ReadElementContentAsString());
+                            pieChart.ChartData.SetValue(i + 2, 2, Convert.ToDouble(reader.ReadElementContentAsString()));
                             break;
                         default:
                             reader.Skip();

@@ -21,7 +21,7 @@ namespace EJ2CoreSampleBrowser.Controllers
                 new CategoryData { x = "Brazil", y = 139.1, country = "BRZ: 139.1" },
                 new CategoryData { x = "India", y = 462.1, country = "IND: 462.1" },
                 new CategoryData { x = "China", y = 721.4, country = "CHN: 721.4" },
-                new CategoryData { x = "United States of America", y = 286.9, country = "USA: 286.9" },
+                new CategoryData { x = "United States<br>of America", y = 286.9, country = "USA: 286.9" },
                 new CategoryData { x = "Great Britain", y = 115.1, country = "GBR: 115.1" },
                 new CategoryData { x = "Nigeria", y = 97.2, country = "NGR: 97.2" },
              };

@@ -20,7 +20,7 @@ namespace EJ2CoreSampleBrowser.Controllers
                 Items = new List<MenuItem>()
                 {
                     new MenuItem { Text= "Open", IconCss= "em-icons e-open" },
-                    new MenuItem { Text= "Save", IconCss= "e-icons e-save" },
+                    new MenuItem { Text= "Save", IconCss= "em-icons e-save" },
                     new MenuItem { Separator= true },
                     new MenuItem { Text= "Exit" }
                 }

@@ -44,18 +44,19 @@
                 y: Math.floor(Math.random() * (80 - 30 + 1)) + 30
             });
         }
-        var selectedTheme = location.hash.split('/')[1];
-        selectedTheme = selectedTheme ? selectedTheme : 'Material';
+        var selectedTheme = themeName ? themeName : 'Material';
         var theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1));
         var themes = ['Material', 'Fabric', 'Bootstrap', 'Highcontrast']
         var borderColor = ['#00bdae', '#4472c4', '#a16ee5', '#79ECE4'];
         var regionColor = ['rgba(0, 189, 174, 0.3)', 'rgba(68, 114, 196, 0.3)',
             'rgba(161, 110, 229, 0.3)', 'rgba(121, 236, 228, 0.3)'];
         window.onChartLoad = function (args) {
+               @*custom code start*@
             var selectedTheme = location.hash.split('/')[1];
             selectedTheme = selectedTheme ? selectedTheme : 'Material';
             args.rangeNavigator.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/dark/i, "Dark").replace(/light/i, "Light"));
             args.rangeNavigator.width = ej.base.Browser.isDevice ? "100%" : "80%";
+               @*custom code end*@
             args.rangeNavigator.series[0].dataSource = data;
             args.rangeNavigator.value = [4, 6];            
         }
@@ -89,7 +90,7 @@
         }
     </script>
 }
-
+   @*custom code start*@
 @section Scripts {
 
 }
@@ -123,6 +124,7 @@
         stop-opacity: 0.3;
     }
 </style>
+   @*custom code end*@
 <svg style="height: 0">
     <defs>
         <linearGradient id="material-gradient-chart" style="opacity: 0.75" class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
@@ -143,9 +145,11 @@
         </linearGradient>
     </defs>
 </svg>
+   @*custom code start*@
 @section Meta{
     <meta name="description" content="This demo for Essential JS2 Range Navigator control shows how to visualize the logarithmic scale when data has values with both lower (e.g.: 10^-6) and higher (e.g.: 10^6) orders of magnitude." />
 }
+   @*custom code end*@
 @section ActionDescription{
     <p>
         This sample demonstrates the rendering of logarithmic axis in the range navigator.

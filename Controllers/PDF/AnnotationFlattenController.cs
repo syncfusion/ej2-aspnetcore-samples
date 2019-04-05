@@ -104,7 +104,7 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
             freeText.AnnotationFlags = PdfAnnotationFlags.Default;
             freeText.Text = "Free Text";
             freeText.Color = new PdfColor(Color.Yellow);
-            PointF[] Freetextpoints = { new PointF(365, 605), new PointF(379, 534), new PointF(401, 534), new PointF(401, 534) };
+            PointF[] Freetextpoints = { new PointF(365, 580), new PointF(379, 534), new PointF(405, 534) };
             freeText.CalloutLines = Freetextpoints;
             page.Graphics.DrawString("FreeText Annotation", font, brush, new PointF(400, 510));
             page.Annotations.Add(freeText);
@@ -171,6 +171,28 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
             page.Graphics.DrawString("Line Measurement Annotation", font, brush, new PointF(370, 410));
             page.Annotations.Add(lineMeasureAnnot);
 			
+			PdfPage secondPage = document.Pages.Add();
+			//Creates a new Freetext annotation.
+            RectangleF freetextrect0 = new RectangleF(80, 130, 100, 50);
+            PdfFreeTextAnnotation freeText0 = new PdfFreeTextAnnotation(freetextrect0);
+            freeText0.MarkupText = "Free Text with Callouts";
+            freeText0.TextMarkupColor = new PdfColor(Color.Green);
+            freeText0.Font = new PdfStandardFont(PdfFontFamily.Helvetica, 7f);
+            freeText0.BorderColor = new PdfColor(Color.Blue);
+            freeText0.Border = new PdfAnnotationBorder(.5f);
+            freeText0.AnnotationFlags = PdfAnnotationFlags.Default;
+            freeText0.Text = "Free Text";
+            freeText0.Rotate = PdfAnnotationRotateAngle.RotateAngle90;
+            freeText0.Color = new PdfColor(Color.Yellow);
+            PointF[] Freetextpoints0 = { new PointF(45, 190), new PointF(60, 145), new PointF(80, 145) };
+            freeText0.CalloutLines = Freetextpoints0;
+            secondPage.Graphics.DrawString("Rotated FreeText Annotation", font, brush, new PointF(40, 110));
+            if (checkboxFlatten == "Flatten")
+            {
+                freeText0.Flatten = true;
+            }
+            secondPage.Annotations.Add(freeText0);
+
             MemoryStream SourceStream = new MemoryStream();
             document.Save(SourceStream);
             document.Close(true);

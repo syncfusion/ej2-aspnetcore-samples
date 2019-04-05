@@ -7,7 +7,7 @@ using EJ2CoreSampleBrowser.Models;
 
 namespace EJ2CoreSampleBrowser.Controllers.TreeGrid
 {
-    public class TreeGridController : Controller
+    public partial class TreeGridController : Controller
     {
         public IActionResult ColumnFormatting()
         {

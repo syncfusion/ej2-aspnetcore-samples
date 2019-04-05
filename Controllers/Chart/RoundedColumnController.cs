@@ -13,11 +13,11 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
         {
             List<RoundedColumnChartData> chartData = new List<RoundedColumnChartData>
             {
-                  new RoundedColumnChartData { x= "BGD", y= 106, text= "Bangaladesh" },
-                  new RoundedColumnChartData { x= "BTN", y= 103, text= "Bhutn" },
-                  new RoundedColumnChartData { x= "NPL", y= 198, text= "Nepal" },
-                  new RoundedColumnChartData { x= "THA", y= 189, text= "Thiland" },
-                  new RoundedColumnChartData { x= "MYS", y= 250, text= "Malaysia" }
+                  new RoundedColumnChartData { x= "Egg", y= 106, text= "Egg" },
+                  new RoundedColumnChartData { x= "Fish", y= 103, text= "Fish" },
+                  new RoundedColumnChartData { x= "Misc", y= 198, text= "Misc" },
+                  new RoundedColumnChartData { x= "Tea", y= 189, text= "Tea" },
+                  new RoundedColumnChartData { x= "Fruits", y= 250, text= "Fruits" }
             };
             ViewBag.dataSource = chartData;
             return View();

@@ -54,10 +54,11 @@
     <script>
         var data = GetDateTimeData(new Date('2018-01-01'), new Date('2019-01-01'));
         window.onChartLoad = function (args) {
-            var selectedTheme = location.hash.split('/')[1];
-            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+               @*custom code start*@
+            var selectedTheme = themeName ? themeName : 'Material';
             args.rangeNavigator.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/dark/i, "Dark").replace(/light/i, "Light"));
             args.rangeNavigator.width = ej.base.Browser.isDevice ? "100%" : "80%";
+               @*custom code end*@
             args.rangeNavigator.navigatorStyleSettings.thumb.type = "Rectangle";
             args.rangeNavigator.dataSource = data;
             args.rangeNavigator.value = [new Date('2018-06-01'), new Date('2018-07-01')];            
@@ -79,7 +80,7 @@
         }
     </script>
 }
-
+   @*custom code start*@
 @section Scripts {
 
 }
@@ -96,6 +97,7 @@
 @section Meta{
     <meta name="description" content="This demo for Essential JS2 Range Navigator control shows the rendering of light-weight range navigator." />
 }
+   @*custom code end*@
 @section ActionDescription{
     <p>
         This sample represents the total number of business and weekend days in a selected period.

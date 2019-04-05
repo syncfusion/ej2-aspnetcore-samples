@@ -1,13 +1,36 @@
 ﻿@using Syncfusion.EJ2
 @section ControlsSection{
-    <div class="control-section">
+    <div class="col-lg-8 control-section">
         <div class="control_wrapper">
             <ejs-treeview id="treedata" showCheckBox="true">
                 <e-treeview-fields dataSource="ViewBag.dataSource" id="id" parentId="pid" text="name" hasChildren="hasChild" expanded="expanded"></e-treeview-fields>
             </ejs-treeview>
         </div>
     </div>
+    <div class="col-lg-4 property-section" id="all-option-table">
+        <table id="property" title="Properties">
+            <tbody>
+                <tr>
+                    <td style="padding-right: 10px">
+                        <div style="padding-left: 0;padding-top: 0">
+                            <ejs-checkbox id="select" label="Auto Check" checked="true" change="onChange"></ejs-checkbox>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 }
+
+@section PreScripts {
+    <script>      
+        function onChange (args) {
+            var treeObj = document.getElementById("treedata")
+            treeObj.ej2_instances[0].autoCheck = args.checked;
+        }
+    </script>
+}
+
 @section Meta{
     <meta name="description" content="This demo demonstrates the tree view with checkbox functionality, this allows the user to check more than one tree nodes." />
 }
@@ -34,6 +57,7 @@
         </p>
     </div>
 }
+@*custom code start*@
 <style>
     .control_wrapper {
         max-width: 500px;
@@ -42,3 +66,4 @@
         border-radius: 3px;
     }
 </style>
+@*custom code end*@

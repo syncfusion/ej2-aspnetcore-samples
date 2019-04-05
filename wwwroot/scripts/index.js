@@ -10,7 +10,7 @@ var searchInstance;
 var headerThemeSwitch = document.getElementById('header-theme-switcher');
 var settingElement = ej.base.select('.sb-setting-btn');
 var themeList = document.getElementById('themelist');
-var themeCollection = ['material', 'fabric', 'bootstrap', 'highcontrast'];
+var themeCollection = ['material', 'fabric', 'bootstrap', 'bootstrap4', 'highcontrast'];
 var themeDropDown;
 var contentTab;
 var sourceTab;
@@ -26,6 +26,8 @@ var sbHeader = ej.base.select('#sample-header');
 var resetSearch = ej.base.select('.sb-reset-icon');
 var urlRegex = /(npmci\.syncfusion\.com|ej2\.syncfusion\.com)(\/)(development|production)*/;
 var sampleRegex = /#\/(([^\/]+\/)+[^\/\.]+)/;
+//Regex for removing hidden
+var reg = /.*custom code start([\S\s]*?)custom code end.*/g;
 var sbArray = ['angular', 'react', 'typescript', 'javascript', 'aspnetmvc', 'vue'];
 var sbObj = {
     'angular': 'angular',
@@ -43,7 +45,7 @@ var setResponsiveElement = ej.base.select('.setting-responsive');
 var isMobile = window.matchMedia('(max-width:550px)').matches;
 var isTablet = window.matchMedia('(min-width:600px) and (max-width: 850px)').matches;
 var isPc = window.matchMedia('(min-width:850px)').matches;
-var selectedTheme = location.hash.split('/')[1] || 'material';
+var selectedTheme = getParam('theme') || 'material';
 var toggleAnim = new ej.base.Animation({ duration: 500, timingFunction: 'ease' });
 var controlSampleData = {};
 var samplesList = getSampleList();
@@ -142,6 +144,7 @@ function renderSbPopups() {
             }
             var sourceEle = document.querySelector('#sb-source-tab > .e-content > #e-content_' + e.selectedIndex).children[0];
             sourceEle.innerHTML = items[e.selectedIndex].data;
+            sourceEle.innerHTML = sourceEle.innerHTML.replace(reg, '');
             sourceEle.classList.add('sb-src-code');
             hljs.highlightBlock(sourceEle);
         }
@@ -208,6 +211,7 @@ function dynamicTabCreation(obj){
     }
     var  blockEle = tabObj.element.querySelector('#e-content_' + tabObj.selectedItem).children[0];
     blockEle.innerHTML = tabObj.items[tabObj.selectedItem].data;
+    blockEle.innerHTML = blockEle.innerHTML.replace(reg, '');
     blockEle.classList.add('sb-src-code');
     if (blockEle) {
         hljs.highlightBlock(blockEle);
@@ -311,12 +315,11 @@ function changeTheme(e) {
     switchTheme(themeName);
 }
 
-function switchTheme(str) {
-    var hash = location.hash.split('/');
-    if (hash[1] !== str) {
-        hash[1] = str;
-        localStorage.setItem('ej2-switch', ej.base.select('.sb-responsive-section .active').id);
-        location.hash = hash.join('/');
+function switchTheme(curTheme) {
+    var prevTheme = getParam('theme');
+    if (prevTheme !== curTheme) {
+        localStorage.setItem('ej2-theme', curTheme);
+        updateQueryString(location.href, 'theme', curTheme)
     }
 }
 
@@ -338,8 +341,18 @@ function onsearchInputChange(e) {
         expand: true,
         boolean: 'AND'
     });
-    if (val.length) {
-        var data = new ej.data.DataManager(val);
+    var value = [];
+    if (ej.base.Browser.isDevice) {
+        for (var j = 0; j < val.length; j++) {
+            if (val[j].doc.hideOnDevice !== true) {
+                value = value.concat(val);
+            }
+        }
+    }
+    var searchVal = ej.base.Browser.isDevice ? value : val;
+    if (searchVal.length) {
+        var data = new ej.data.DataManager(searchVal);
+
         var controls = data.executeLocal(new ej.data.Query().take(10).select('doc'));
         var controlsAccess = [];
         for (var i = 0, controls = controls; i < controls.length; i++) {
@@ -418,9 +431,8 @@ function onNextPrevButtonClick(arg) {
     if (inx !== -1) {
         var prevhref = samplesAr[inx];
         var curhref = (this.id === 'next-sample' || this.id === 'mobile-next-sample') ? samplesAr[inx + 1] : samplesAr[inx - 1];
-        location.href = location.origin + getPathName() + curhref + '#/' + theme;
+        updateQueryString(location.origin + getPathName() + curhref, 'theme', theme);
     }
-    window.hashString = location.origin + getPathName() + curhref + '#/' + theme;
     setSelectList();
 }
 
@@ -668,9 +680,6 @@ function loadTheme(theme) {
     }
     elasticlunr.clearStopWords();
     searchInstance = elasticlunr.Index.load(window.searchIndex);
-    hasher.initialized.add(parseHash);
-    hasher.changed.add(parseHash);
-    hasher.init();
 }
 
 function toggleMobileOverlay() {
@@ -785,12 +794,33 @@ function viewMobilePropPane() {
 function getSampleList() {
     if (ej.base.Browser.isDevice) {
         var tempList = ej.base.extend([], window.samplesList);
+        var sampleList = [];
         for (var i = 0; i < tempList.length; i++) {
             var temp = tempList[i];
+            if (temp.hideOnDevice == true) {
+                if (temp.name == location.href.split('/').splice(-3, 1).join('/')) {
+                    var toastObj = new ej.notifications.Toast({
+                        position: {
+                            X: 'Right'
+                        }
+                    });
+                    toastObj.appendTo('#sb-home');
+                    setTimeout(function () {
+                        toastObj.show({
+                            content: location.href.split('/').splice(-3, 1)[0] + ' component not supported in mobile device'
+                        });
+                    }, 200);
+                    setTimeout(function () {
+                        location.href = location.origin + getPathName() + 'grid/gridOverview'
+                    }, 2000)
+                }
+                continue;
+            }
             var data = new ej.data.DataManager(temp.samples);
             temp.samples = data.executeLocal(new ej.data.Query().where('hideOnDevice', 'notEqual', true));
+            sampleList = sampleList.concat(temp);
         }
-        return tempList;
+        return sampleList;
     }
     return window.samplesList;
 }
@@ -813,7 +843,7 @@ function renderLeftPaneComponents() {
             '${else}${if(type)}<span class="e-badge sb-badge e-samplestatus ${type} tree tree-badge">${type}</span>${/if}${/if}</div>'
     }, '#controlTree');
     var controlList = new ej.lists.ListView({
-        dataSource: controlSampleData[location.pathname.split('/').slice(-2)[0]] || controlSampleData.Button,
+        dataSource: controlSampleData[location.pathname.split('/').slice(-2)[0]] || controlSampleData.button,
         fields: { id: 'uid', text: 'name', groupBy: 'order', htmlAttributes: 'data' },
         select: controlSelect,
         template: '<div class="e-text-content e-icon-wrapper"> <span class="e-list-text" role="listitem">${name}' +
@@ -846,11 +876,11 @@ function getTreeviewList(list) {
             name: list[i].name,
             type: list[i].type,
             url: {
-                'data-path': list[i].directory + '/' + list[i].samples[0].url,
-                'control-name': list[i].directory,
+                'data-path': (list[i].directory + '/' + list[i].samples[0].url).toLowerCase(),
+                'control-name': list[i].directory.toLowerCase(),
             }
         });
-        controlSampleData[list[i].directory] = getSamples(list[i].samples);
+        controlSampleData[list[i].directory.toLowerCase()] = getSamples(list[i].samples);
     }
     return tempList;
 }
@@ -859,18 +889,34 @@ function getSamples(samples) {
     var tempSamples = [];
     for (var i = 0; i < samples.length; i++) {
         tempSamples[i] = samples[i];
-        tempSamples[i].data = { 'sample-name': samples[i].url, 'data-path': samples[i].dir + '/' + samples[i].url };
+        tempSamples[i].data = { 'sample-name': samples[i].url.toLowerCase(), 'data-path': ('/' + samples[i].dir + '/' + samples[i].url).toLowerCase() };
     }
     return tempSamples;
 }
 
 function getThemeName() {
-    return location.hash.split('/')[1] ? location.hash.split('/')[1] : 'material';
+    var themeName = getParam('theme');
+    return themeName ? themeName : 'material';
 }
 
 function getPathName() {
     var samplePath = getSamplePath();
-    return location.pathname.replace(samplePath, '');
+    return location.pathname.replace(samplePath, '').toLowerCase();
+}
+
+function updateQueryString (uriPath, param, value) {
+    var i = uriPath.indexOf('#');
+    var hash = i === -1 ? ''  : uriPath.substr(i);
+    uriPath = i === -1 ? uriPath : uriPath.substr(0, i);
+
+    var regex = new RegExp("([?&])" + param + "=.*?(&|$)", "i");
+    var separator = uriPath.indexOf('?') !== -1 ? "&" : "?";
+    if (uriPath.match(regex)) {
+        uriPath = uriPath.replace(regex, '$1' + param + "=" + value + '$2');
+    } else {
+        uriPath = uriPath + separator + param + "=" + value;
+    }
+    location.href = uriPath.toLowerCase() + hash;
 }
 
 function getSamplePath() {
@@ -879,14 +925,12 @@ function getSamplePath() {
 
 function controlSelect(arg) {
     var path = (arg.node || arg.item).getAttribute('data-path');
-    if (path === null) {
-        path = arg.data.dir + '/' + arg.data.url;
-    }
     var curHashCollection = '/' + location.href.split('/').slice(3).join('/');
     var theme = getThemeName();
     if (!arg.item || path.split('/')[1] === curHashCollection.split('/').slice(-2)[1]) {
         controlListRefresh(arg.node || arg.item);
     }
+    path = path.toLowerCase();
     if (path) {
         if (curHashCollection.indexOf(path) === -1) {
             sampleOverlay();
@@ -897,11 +941,8 @@ function controlSelect(arg) {
 
             if (arg.data) {
                 var pathName = location.pathname.replace(getSamplePath(), '');
-                location.href = location.origin + pathName + arg.data.dir + '/' + arg.data.url + '#/' + theme;
+                updateQueryString(location.origin + pathName + arg.data.dir + '/' + arg.data.url, 'theme', theme);
             }
-        } else {
-            var hashName = location.hash.length ? '' : '#/' + theme
-            location.href = location.href + hashName;
         }
     }
 }
@@ -959,7 +1000,7 @@ function setSelectList() {
     var control = ej.base.select('[control-name="' + controlName + '"]');
 
     if (control) {
-        var selectSample = ej.base.select('[sample-name="' + sampleName.replace('#', '') + '"]') || ej.base.select('[sample-name="' + list.localData[0].url + '"]');
+        var selectSample = ej.base.select('[sample-name="' + sampleName.replace('#', '') + '"]') || ej.base.select('[sample-name="' + list.localData[0].url.toLowerCase() + '"]');
         if (selectSample) {
             if (ej.base.select('#controlTree').style.display !== 'none') {
                 showHideControlTree();
@@ -1012,11 +1053,10 @@ function sampleArray() {
         var dataManager = new ej.data.DataManager(samplesList[node].samples);
         var samples = dataManager.executeLocal(new ej.data.Query().sortBy('order', 'ascending'));
         for (var sample in samples) {
-            var selectedTheme = location.hash.split('/')[1] ? location.hash.split('/')[1] : 'material';
             var control = samplesList[node].directory;
             var sampleUrl = samples[sample].url;
             var loc = control + '/' + sampleUrl;
-            samplesAr.push(loc);
+            samplesAr.push(loc.toLowerCase());
         }
     }
 }
@@ -1031,9 +1071,8 @@ function addRoutes(samplesList) {
             samplePath = samplePath.concat(control + '/' + sample);
             var sampleName = node.name + ' / ' + ((node.name !== subNode.category) ?
                 (subNode.category + ' / ') : '') + subNode.url;
-            var selectedTheme = location.hash.split('/')[1] ? location.hash.split('/')[1] : 'material';
             var urlString = control + '/' + sample;
-            if (getSamplePath() == urlString) {
+            if (getSamplePath() == urlString.toLowerCase()) {
                 var dataSourceLoad = document.getElementById(node.dataSourcePath);
                 if (node.dataSourcePath && !dataSourceLoad) {
                     var dataAjax = new ej.base.Ajax(node.dataSourcePath, 'GET', true);
@@ -1083,7 +1122,7 @@ function onDataSourceLoad(node, subNode, control, sample, sampleName) {
         breadCrumbSubCategory.style.display = 'none';
         breadCrumSeperator.style.display = 'none';
     }
-    if (location.pathname.indexOf('/' + subNode.dir + '/' + subNode.url) !== -1) {
+    if (location.pathname.indexOf(('/' + subNode.dir + '/' + subNode.url).toLowerCase()) !== -1) {
         breadCrumbSample.innerHTML = subNode.name;
     }
     var title = document.querySelector('title');
@@ -1103,7 +1142,7 @@ function onDataSourceLoad(node, subNode, control, sample, sampleName) {
         add[file].send().then(function (value) {
             var content;
             if (/html/g.test(name[subfile])) {
-                value = value.replace(/@section (ActionDescription|Description){[^}]*}/g, '');
+                value = value.replace(/@section (ActionDescription|Description|Meta){[^}]*}/g, '');
                 content = value.replace(/&/g, '&amp;')
                     .replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
             }
@@ -1199,29 +1238,6 @@ function mobNavOverlay(isOverlay) {
         }
     }
 }
-
-
-function parseHash(newHash, oldHash) {
-    var newTheme = newHash.split('/')[0];
-    var control = newHash.split('/')[1];
-    if (newTheme !== selectedTheme && themeCollection.indexOf(newTheme) !== -1) {
-        location.reload();
-        crossroads.parse(newHash);
-    }
-    /* if (newHash.length && !ej.base.select('#' + control + '-common') && checkSampleLength(control)) {
-         var scriptElement = document.createElement('script');
-         scriptElement.src = 'src/' + control + '/common.js';
-         scriptElement.id = control + '-common';
-         scriptElement.type = 'text/javascript';
-         scriptElement.onload = function () {
-             crossroads.parse(newHash);
-         };
-         document.getElementsByTagName('head')[0].appendChild(scriptElement);
-     }*/
-
-    crossroads.parse(newHash);
-}
-
 
 function processDeviceDependables() {
     if (ej.base.Browser.isDevice) {

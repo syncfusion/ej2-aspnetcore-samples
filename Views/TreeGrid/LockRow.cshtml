@@ -9,14 +9,14 @@
                     var dict = new Dictionary<string, object>();
                     dict.Add("number", true);
                     dict.Add("min", 0);
-                    var dropValue = new List<int>(){ 2, 6 };
+                    var dropValue = new List<int>() { 2, 6 };
                     var editparams = new { @params = new { format = "n" } };
                 }
-                <ejs-treegrid id="TreeGrid" dataSource="ViewBag.dataSource" allowPaging="true" enableHover="false" childMapping="Children" 
+                <ejs-treegrid id="TreeGrid" dataSource="ViewBag.dataSource" allowPaging="true" enableHover="false" childMapping="Children"
                     rowDataBound="onrowDataBound" beginEdit="onBeginEdit"
-                    treeColumnIndex="1" toolbar="@(new List<string>() { "Add", "Delete", "Update", "Cancel" })">
-                    <e-treegrid-pagesettings pageSize="2" pageSizeMode="Root"/>
-                    <e-treegrid-editsettings allowEditing="true" allowAdding="true" ></e-treegrid-editsettings>
+                    treeColumnIndex="1" toolbar="@(new List<string>() { "Edit", "Update", "Cancel" })">
+                    <e-treegrid-pagesettings pageSize="2" pageSizeMode="Root" />
+                    <e-treegrid-editsettings allowEditing="true" allowAdding="true" mode="Row"></e-treegrid-editsettings>
                     <e-treegrid-columns>
                         <e-treegrid-column field="TaskId" headerText="Task ID" isPrimaryKey="true" validationRules="@(new { required=true, number=true})" textAlign="Right" width="100"></e-treegrid-column>
                         <e-treegrid-column field="TaskName" headerText="Task Name" validationRules="@(new { required=true})" editType="stringedit" width="210"></e-treegrid-column>
@@ -24,26 +24,26 @@
                         <e-treegrid-column field="Duration" headerText="Duration" validationRules="@(dict)" editType="numericedit" textAlign="Right" edit="editparams" width="120"></e-treegrid-column>
                     </e-treegrid-columns>
                 </ejs-treegrid>
-                </div>
             </div>
         </div>
+    </div>
     <div class="col-lg-3 property-section">
-    <table id="property" title="Properties" style="width: 100%">
-        <tr style="height: 50px">
-            <td style="width: 30%">
-                <div>Disable Rows</div>
-            </td>
-            <td style="width: 50%;padding-right: 10px">
-                <div id='columnddl'>
-                    <ejs-multiselect  id="DisableRows" width="148" popupHeight="350" select="onChange" removed="onRemove" dataSource="ViewBag.dropdata" value=@(dropValue) 
-                       showDropDownIcon="true" mode="CheckBox">
-                        <e-multiselect-fields text="text" value="value"></e-multiselect-fields>
-                    </ejs-multiselect >
-               </div>
-            </td>
-         </tr>
-    </table>
-</div>
+        <table id="property" title="Properties" style="width: 100%">
+            <tr style="height: 50px">
+                <td style="width: 30%">
+                    <div>Disable Rows</div>
+                </td>
+                <td style="width: 50%;padding-right: 10px">
+                    <div id='columnddl'>
+                        <ejs-multiselect id="DisableRows" width="148" popupHeight="350" select="onChange" removed="onRemove" dataSource="ViewBag.dropdata" value=@(dropValue)
+                                         showDropDownIcon="true" mode="CheckBox">
+                            <e-multiselect-fields text="text" value="value"></e-multiselect-fields>
+                        </ejs-multiselect>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
     <script>
         function onChange(e) {
             var treeGridObj = document.getElementById("TreeGrid").ej2_instances[0];
@@ -57,7 +57,7 @@
             var treeGridObj = document.getElementById("TreeGrid").ej2_instances[0];
             var dropdownObj = document.getElementById("DisableRows").ej2_instances[0];
             if (dropdownObj.value.indexOf(args.data['TaskId'].toString()) !== -1 || dropdownObj.value.indexOf(args.data['TaskId']) !== -1)
-                ejs.base.addClass([args.row], 'disableRow'); 
+                ejs.base.addClass([args.row], 'disableRow');
             else
                 ejs.base.removeClass([args.row], 'disableRow');
         }
@@ -68,21 +68,32 @@
         }
     </script>
     <style>
-        .material .disableRow .e-rowcell{
+        .material .disableRow .e-rowcell {
             color: rgba(0, 0, 0, .38);
         }
-        .fabric .disableRow .e-rowcell{
+    </style>
+
+    @*custom code start*@
+
+    <style>
+        .fabric .disableRow .e-rowcell {
             color: #c8c8c8;
         }
-        .bootstrap .disableRow .e-rowcell{
+
+        .bootstrap .disableRow .e-rowcell {
             color: rgba(0, 0, 0, .35);
         }
-        .highcontrast .disableRow .e-rowcell{
+
+        .highcontrast .disableRow .e-rowcell {
             color: #757575;
         }
     </style>
 
+    @*custom code end*@
+
 }
+
+@*custom code start*@
 
 @section Meta{
     <meta name="description" content="This demo explains how to disable editing for specific rows dynamically in Syncfusion Essential JS2 TreeGrid control." />
@@ -115,4 +126,4 @@
     </div>
 }
 
-
+@*custom code end*@

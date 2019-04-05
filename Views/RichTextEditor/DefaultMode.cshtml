@@ -26,9 +26,25 @@
         .e-icon-btn .e-md-preview::before {
             content: '\e345';
         }
+        .bootstrap4 .e-icon-btn.e-active .e-md-preview::before {
+         content: '\e790';
+        }
+
+        .bootstrap4 .e-icon-btn .e-md-preview::before {
+         content: '\e787';
+        }
+
     </style>
 
 }
+
+@*custom code start*@
+
+@section Meta{
+    <meta name="description" content="This demo for Essential JS 2  rich text editor control shows the markdown editing in the rich text editor with complete features."/>
+}
+
+@*custom code end*@
 
 @section ActionDescription{
     <div id="action-description">
@@ -61,7 +77,7 @@
         defaultRTE = this;
         textArea = defaultRTE.contentModule.getEditPanel();
         textArea.addEventListener('keyup', function (e) {
-            markDownConversion();
+            MarkDownConversion();
         });
         mdsource = document.getElementById('preview-code');
         mdsource.addEventListener('click', function (e) {
@@ -82,7 +98,7 @@
         script.src = 'https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.19/marked.js';
         document.getElementsByTagName('head')[0].appendChild(script);
     }
-    function markDownConversion() {
+    function MarkDownConversion() {
         if (mdsource.classList.contains('e-active')) {
             var id = defaultRTE.getID() + 'html-preview';
             var htmlPreview = defaultRTE.element.querySelector('#' + id);

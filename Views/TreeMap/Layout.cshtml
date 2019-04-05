@@ -8,7 +8,7 @@
     }
     <div class="col-lg-9 control-section">
         <div id="container">
-            <ejs-treemap id="container" load="treeMapLoad" dataSource="ViewBag.dataSource" weightValuePath="GDP" rangeColorValuePath="GDP">
+            <ejs-treemap id="container" load="treeMapLoad" renderDirection="TopLeftBottomRight" dataSource="ViewBag.dataSource" weightValuePath="GDP" rangeColorValuePath="GDP">
                 <e-treemap-titlesettings text="Top 10 countries by GDP Nominal - 2015"></e-treemap-titlesettings>
                 <e-treemap-leafitemsettings colorMapping="colorMaps" labelPath="State" labelFormat="${State}<br>$${GDP} Trillion<br>(${percentage} %)" border="leafBorder"></e-treemap-leafitemsettings>
                 <e-treemap-tooltipsettings visible="true" format="${State}<br>Rank : ${Rank}"></e-treemap-tooltipsettings>
@@ -23,16 +23,33 @@
             <table id="property" title="Properties" style="width: 100%">
                 <tbody>
                     <tr style="height: 50px">
-                        <td style="width: 30%">
-                            <div>Layout Type</div>
+                        <td style="width: 60%">
+                            <div class="property-text" style="padding-top: 0px !important">Layout Type</div>
                         </td>
-                        <td style="width: 80%;">
-                            <select name="selectIndex" autocomplete="off" id="layoutMode" style="width:80%;">
-                                <option value="Squarified" selected>Squarified</option>
-                                <option value="SliceAndDiceHorizontal">Horizontal</option>
-                                <option value="SliceAndDiceVertical">Vertical</option>
-                                <option value="SliceAndDiceAuto">Auto</option>
-                            </select>
+                        <td style="width: 60%;">
+                            <div style="margin-left:10px">
+                                <select name="selectIndex" autocomplete="off" id="layoutMode" style="width:60%;">
+                                    <option value="Squarified" selected>Squarified</option>
+                                    <option value="SliceAndDiceHorizontal">Horizontal</option>
+                                    <option value="SliceAndDiceVertical">Vertical</option>
+                                    <option value="SliceAndDiceAuto">Auto</option>
+                                </select>
+                                </div>
+                        </td>
+                    </tr>
+                    <tr style="height: 50px">
+                        <td style="width: 60%">
+                            <div class="property-text" style="padding-top: 0px !important">Render Direction</div>
+                        </td>
+                        <td style="width: 60%;">
+                            <div style="margin-left:10px">
+                                <select name="direction" autocomplete="off" id="directionMode" style="width:60%;">
+                                    <option value="TopLeftBottomRight" selected>TopLeftBottomRight</option>
+                                    <option value="TopRightBottomLeft">TopRightBottmLeft</option>
+                                    <option value="BottomLeftTopRight">BottomLeftTopRight</option>
+                                    <option value="BottomRightTopLeft">BottomRightTopLeft</option>
+                                </select>
+                                </div>
                         </td>
                     </tr>
                 </tbody>
@@ -40,13 +57,13 @@
         </div>
 }
 <script>
-
+    @* custom code start *@
     function treeMapLoad(args) {
         window.treemap = args.treemap;
-        var theme = location.hash.split('/')[1];
-        theme = theme ? theme : 'Material';
+        var theme = themeName ? themeName : 'Material';
         args.treemap.theme = theme.charAt(0).toUpperCase() + theme.slice(1);
     }
+    @* custom code end *@
     window.onload = function () {
         window.layoutMode = new ej.dropdowns.DropDownList({
             index: 0,
@@ -57,6 +74,15 @@
             }
         });
         window.layoutMode.appendTo('#layoutMode');
+        window.directionMode = new ej.dropdowns.DropDownList({
+            index: 0,
+            width: 115,
+            change: function () {
+                window.treemap.renderDirection = window.directionMode.value;
+                window.treemap.refresh();
+            }
+        });
+        window.directionMode.appendTo('#directionMode');
     };
 </script>
 @section Meta{

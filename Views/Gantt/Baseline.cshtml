@@ -1,0 +1,90 @@
+﻿@using Syncfusion.EJ2.Gantt;
+@section ControlsSection{
+    <div class="control-section">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="content-wrapper">
+                    <ejs-gantt id='Baseline' dataSource="ViewBag.dataSource" height="450px"
+                        renderBaseline="true" includeWeekend="true" allowSelection="true"
+                        durationUnit="Minute" dateFormat="hh:mm a"
+                        projectStartDate="03/05/2018 09:30:00 AM"
+                        projectEndDate="03/05/2018 07:00:00 PM">
+                        <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate"
+                            endDate="EndDate" baselineEndDate="BaselineEndDate" baselineStartDate="BaselineStartDate">
+                        </e-gantt-taskfields>
+                        <e-gantt-columns>
+                            <e-gantt-column field="TaskName" headerText="Service Name" width="250" clipMode="EllipsisWithTooltip"></e-gantt-column>
+                            <e-gantt-column field="BaselineStartDate" headerText="Planned start time"></e-gantt-column>
+                            <e-gantt-column field="BaselineEndDate" headerText="Planned end time"></e-gantt-column>
+                            <e-gantt-column field="StartDate" headerText="Start time"></e-gantt-column>
+                            <e-gantt-column field="EndDate" headerText="End time"></e-gantt-column>
+                        </e-gantt-columns>
+                        <e-gantt-timelinesettings timelineUnitSize="65">
+                            <e-timelinesettings-toptier unit="None"></e-timelinesettings-toptier>
+                            <e-timelinesettings-bottomtier unit="Minutes" format="hh:mm a" count="15">
+                            </e-timelinesettings-bottomtier>
+                        </e-gantt-timelinesettings>
+                        <e-gantt-tooltipsettings taskbar="#tooltip">
+                        </e-gantt-tooltipsettings>
+                        <e-gantt-dayworkingtimecollection>
+                            <e-gantt-dayworkingtime from="0" to="24"></e-gantt-dayworkingtime>
+                        </e-gantt-dayworkingtimecollection>
+                    </ejs-gantt>
+                </div>
+                <div style="float: right; margin:10px 10px 0px 0px;">
+                    Source:
+                    <a href="https://en.wikipedia.org/wiki/Service_(motor_vehicle)" target='_blank'>https://en.wikipedia.org/</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/x-jsrender" id="tooltip">
+        <table>
+            <tbody>
+                <tr><td colspan="3">${TaskName}</td></tr>
+                <tr>
+                    <td> Start Time </td>
+                    <td>:</td>
+                    <td>${this.getFormatedDate(StartDate)}</td>
+                </tr>
+                <tr>
+                    <td> End Time</td>
+                    <td>:</td>
+                    <td>${this.getFormatedDate(EndDate)}</td>
+                </tr>
+                <tr>
+                    <td> Planned start time</td>
+                    <td>:</td>
+                    <td>${this.getFormatedDate(BaselineStartDate)}</td>
+                </tr>
+                <tr>
+                    <td> Planned end time</td>
+                    <td>:</td>
+                    <td>${this.getFormatedDate(BaselineEndDate)}</td>
+                </tr>
+            </tbody>
+        </table>
+    </script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample visualizes the complete service schedule for a car. Baselines are enabled to view the deviation between the planned dates and actual dates.
+        </p>
+    </div>
+}
+@section Description{
+    <p>
+        The baseline feature enables the user to view the deviation between the planned dates and the actual dates of
+        the tasks in a project. Baselines can be enabled in Gantt chart by enabling the <code>RenderBaseline</code>
+        property along
+        with mapping the data source values for <code>BaselineStartDate</code> and <code>BaselineEndDate</code>
+        properties.
+        The baseline will appear for all type of tasks in the project such as child tasks, parent tasks and also for
+        milestones. You can change the color for the baselines using <code>BaselineColor</code> property.
+    </p>
+}
+@section Meta{
+    <meta name="description" content="Baselines are enabled to view the deviation between the planned dates of tasks and actual progress of task dates" />
+}

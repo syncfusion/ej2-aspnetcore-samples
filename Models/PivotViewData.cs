@@ -3101,7 +3101,7 @@ namespace EJ2CoreSampleBrowser.Models
                 data[ln].Year = "FY " + dtYr;
                 data[ln].Quarter = dtdv <= 1 ? "Q1 " + ("FY " + dtYr) : dtdv <= 2 ? "Q2 " + ("FY " + dtYr) :
                 dtdv <= 3 ? "Q3 " + ("FY " + dtYr) : "Q4 " + ("FY " + dtYr);
-                data[ln].HalfYear = (dtMn) / 6 <= 1 ? "H1 " + ("FY " + dtYr) : "H2" + ("FY " + dtYr);
+                data[ln].HalfYear = (dtMn) / 6 <= 1 ? "H1 " + ("FY " + dtYr) : "H2 " + ("FY " + dtYr);
                 renewableEnergy.Add(new RenewableData
                 {
                     Sector = data[ln].Sector,
@@ -5676,6 +5676,96 @@ namespace EJ2CoreSampleBrowser.Models
             return defaultData;
         }
 
+		
+		public List<HeatMapData> GetHeatMapData()
+        {
+            List<HeatMapData> heatmapData = new List<HeatMapData>();
+            heatmapData.Add(new HeatMapData { Amount = 33073, Products = "Cakes", Month = "January" });
+            heatmapData.Add(new HeatMapData { Amount = 32345, Products = "Cakes", Month = "February" });
+            heatmapData.Add(new HeatMapData { Amount = 43312, Products = "Cakes", Month = "March" });
+            heatmapData.Add(new HeatMapData { Amount = 54895, Products = "Cakes", Month = "April" });
+            heatmapData.Add(new HeatMapData { Amount = 59099, Products = "Cakes", Month = "May" });
+            heatmapData.Add(new HeatMapData { Amount = 62789, Products = "Cakes", Month = "June" });
+            heatmapData.Add(new HeatMapData { Amount = 50988, Products = "Cakes", Month = "July" });
+            heatmapData.Add(new HeatMapData { Amount = 62300, Products = "Cakes", Month = "August" });
+            heatmapData.Add(new HeatMapData { Amount = 63010, Products = "Cakes", Month = "September" });
+            heatmapData.Add(new HeatMapData { Amount = 45670, Products = "Cakes", Month = "October" });
+            heatmapData.Add(new HeatMapData { Amount = 40500, Products = "Cakes", Month = "November" });
+            heatmapData.Add(new HeatMapData { Amount = 65000, Products = "Cakes", Month = "December" });
+            heatmapData.Add(new HeatMapData { Amount = 43421, Products = "Chocolates", Month = "January" });
+            heatmapData.Add(new HeatMapData { Amount = 32090, Products = "Chocolates", Month = "February" });
+            heatmapData.Add(new HeatMapData { Amount = 45450, Products = "Chocolates", Month = "March" });
+            heatmapData.Add(new HeatMapData { Amount = 56890, Products = "Chocolates", Month = "April" });
+            heatmapData.Add(new HeatMapData { Amount = 60250, Products = "Chocolates", Month = "May" });
+            heatmapData.Add(new HeatMapData { Amount = 32750, Products = "Chocolates", Month = "June" });
+            heatmapData.Add(new HeatMapData { Amount = 35670, Products = "Chocolates", Month = "July" });
+            heatmapData.Add(new HeatMapData { Amount = 40125, Products = "Chocolates", Month = "August" });
+            heatmapData.Add(new HeatMapData { Amount = 62500, Products = "Chocolates", Month = "September" });
+            heatmapData.Add(new HeatMapData { Amount = 45050, Products = "Chocolates", Month = "October" });
+            heatmapData.Add(new HeatMapData { Amount = 57500, Products = "Chocolates", Month = "November" });
+            heatmapData.Add(new HeatMapData { Amount = 62500, Products = "Chocolates", Month = "December" });
+            heatmapData.Add(new HeatMapData { Amount = 40680, Products = "Energy Drinks", Month = "January" });
+            heatmapData.Add(new HeatMapData { Amount = 32560, Products = "Energy Drinks", Month = "February" });
+            heatmapData.Add(new HeatMapData { Amount = 41250, Products = "Energy Drinks", Month = "March" });
+            heatmapData.Add(new HeatMapData { Amount = 57400, Products = "Energy Drinks", Month = "April" });
+            heatmapData.Add(new HeatMapData { Amount = 63500, Products = "Energy Drinks", Month = "May" });
+            heatmapData.Add(new HeatMapData { Amount = 59000, Products = "Energy Drinks", Month = "June" });
+            heatmapData.Add(new HeatMapData { Amount = 55400, Products = "Energy Drinks", Month = "July" });
+            heatmapData.Add(new HeatMapData { Amount = 40025, Products = "Energy Drinks", Month = "August" });
+            heatmapData.Add(new HeatMapData { Amount = 47500, Products = "Energy Drinks", Month = "September" });
+            heatmapData.Add(new HeatMapData { Amount = 37400, Products = "Energy Drinks", Month = "October" });
+            heatmapData.Add(new HeatMapData { Amount = 51200, Products = "Energy Drinks", Month = "November" });
+            heatmapData.Add(new HeatMapData { Amount = 59750, Products = "Energy Drinks", Month = "December" });
+            heatmapData.Add(new HeatMapData { Amount = 34250, Products = "Biscuits", Month = "January" });
+            heatmapData.Add(new HeatMapData { Amount = 44250, Products = "Biscuits", Month = "February" });
+            heatmapData.Add(new HeatMapData { Amount = 52500, Products = "Biscuits", Month = "March" });
+            heatmapData.Add(new HeatMapData { Amount = 38500, Products = "Biscuits", Month = "April" });
+            heatmapData.Add(new HeatMapData { Amount = 57500, Products = "Biscuits", Month = "May" });
+            heatmapData.Add(new HeatMapData { Amount = 45750, Products = "Biscuits", Month = "June" });
+            heatmapData.Add(new HeatMapData { Amount = 65000, Products = "Biscuits", Month = "July" });
+            heatmapData.Add(new HeatMapData { Amount = 33500, Products = "Biscuits", Month = "August" });
+            heatmapData.Add(new HeatMapData { Amount = 41750, Products = "Biscuits", Month = "September" });
+            heatmapData.Add(new HeatMapData { Amount = 39400, Products = "Biscuits", Month = "October" });
+            heatmapData.Add(new HeatMapData { Amount = 50450, Products = "Biscuits", Month = "November" });
+            heatmapData.Add(new HeatMapData { Amount = 43000, Products = "Biscuits", Month = "December" });
+            heatmapData.Add(new HeatMapData { Amount = 35600, Products = "Bread", Month = "January" });
+            heatmapData.Add(new HeatMapData { Amount = 42300, Products = "Bread", Month = "February" });
+            heatmapData.Add(new HeatMapData { Amount = 51700, Products = "Bread", Month = "March" });
+            heatmapData.Add(new HeatMapData { Amount = 59800, Products = "Bread", Month = "April" });
+            heatmapData.Add(new HeatMapData { Amount = 34275, Products = "Bread", Month = "May" });
+            heatmapData.Add(new HeatMapData { Amount = 64500, Products = "Bread", Month = "June" });
+            heatmapData.Add(new HeatMapData { Amount = 43000, Products = "Bread", Month = "July" });
+            heatmapData.Add(new HeatMapData { Amount = 63000, Products = "Bread", Month = "August" });
+            heatmapData.Add(new HeatMapData { Amount = 55000, Products = "Bread", Month = "September" });
+            heatmapData.Add(new HeatMapData { Amount = 32500, Products = "Bread", Month = "October" });
+            heatmapData.Add(new HeatMapData { Amount = 34899, Products = "Bread", Month = "November" });
+            heatmapData.Add(new HeatMapData { Amount = 55030, Products = "Bread", Month = "December" });
+            heatmapData.Add(new HeatMapData { Amount = 64500, Products = "Nutella", Month = "January" });
+            heatmapData.Add(new HeatMapData { Amount = 33400, Products = "Nutella", Month = "February" });
+            heatmapData.Add(new HeatMapData { Amount = 58700, Products = "Nutella", Month = "March" });
+            heatmapData.Add(new HeatMapData { Amount = 35700, Products = "Nutella", Month = "April" });
+            heatmapData.Add(new HeatMapData { Amount = 63050, Products = "Nutella", Month = "May" });
+            heatmapData.Add(new HeatMapData { Amount = 52500, Products = "Nutella", Month = "June" });
+            heatmapData.Add(new HeatMapData { Amount = 40500, Products = "Nutella", Month = "July" });
+            heatmapData.Add(new HeatMapData { Amount = 37500, Products = "Nutella", Month = "August" });
+            heatmapData.Add(new HeatMapData { Amount = 57500, Products = "Nutella", Month = "September" });
+            heatmapData.Add(new HeatMapData { Amount = 42500, Products = "Nutella", Month = "October" });
+            heatmapData.Add(new HeatMapData { Amount = 62050, Products = "Nutella", Month = "November" });
+            heatmapData.Add(new HeatMapData { Amount = 34000, Products = "Nutella", Month = "December" });
+            heatmapData.Add(new HeatMapData { Amount = 32000, Products = "Jam", Month = "January" });
+            heatmapData.Add(new HeatMapData { Amount = 33400, Products = "Jam", Month = "February" });
+            heatmapData.Add(new HeatMapData { Amount = 39500, Products = "Jam", Month = "March" });
+            heatmapData.Add(new HeatMapData { Amount = 42500, Products = "Jam", Month = "April" });
+            heatmapData.Add(new HeatMapData { Amount = 40500, Products = "Jam", Month = "May" });
+            heatmapData.Add(new HeatMapData { Amount = 57500, Products = "Jam", Month = "June" });
+            heatmapData.Add(new HeatMapData { Amount = 60500, Products = "Jam", Month = "July" });
+            heatmapData.Add(new HeatMapData { Amount = 62500, Products = "Jam", Month = "August" });
+            heatmapData.Add(new HeatMapData { Amount = 64250, Products = "Jam", Month = "September" });
+            heatmapData.Add(new HeatMapData { Amount = 52500, Products = "Jam", Month = "October" });
+            heatmapData.Add(new HeatMapData { Amount = 48500, Products = "Jam", Month = "November" });
+            heatmapData.Add(new HeatMapData { Amount = 57500, Products = "Jam", Month = "December" });
+            return heatmapData;
+        }
         public List<VirtualData> GetVirtualData()
         {
             List<VirtualData> data = new List<VirtualData>();
@@ -5777,6 +5867,12 @@ namespace EJ2CoreSampleBrowser.Models
             public string City { get; set; }
             public int Year { get; set; }
             public string CustomerName { get; set; }
+        }
+		public class HeatMapData
+        {
+            public double Amount { get; set; }
+            public string Products { get; set; }
+            public string Month { get; set; }
         }
     }
 }

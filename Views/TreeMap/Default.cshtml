@@ -5,24 +5,22 @@
         var palette = new string[] { "#C33764", "#AB3566", "#993367", "#853169", "#742F6A", "#632D6C", "#532C6D", "#412A6F", "#312870", "#1D2671" };
     }
     <div class="control-section">
-        <div class="row">
             <div class="col-md-12">
                 <ejs-treemap id="container" load="treemapLoad" itemMove="dataChange" itemClick="dataChange" palette="palette" dataSource="ViewBag.dataSource" weightValuePath="Sales" format="n" useGroupingSeparator="true">
-                    <e-treemap-legendsettings visible="true" position="@Syncfusion.EJ2.TreeMap.LegendPosition.Top" shape="@Syncfusion.EJ2.TreeMap.LegendShape.Rectangle">
+                    <e-treemap-legendsettings visible="false" position="@Syncfusion.EJ2.TreeMap.LegendPosition.Top" shape="@Syncfusion.EJ2.TreeMap.LegendShape.Rectangle">
                     </e-treemap-legendsettings>
-                    <e-treemap-tooltipsettings visible="true" format="Country: ${Continent}<br>Company: ${Company}<br>Sales: ${Sales}"></e-treemap-tooltipsettings>
-                    <e-treemap-titlesettings text="Car Sales by Country - 2017"></e-treemap-titlesettings>
+                    <e-treemap-tooltipsettings visible="true" format=" ${Size}<br>${Name}<br>"></e-treemap-tooltipsettings>
+                    <e-treemap-titlesettings text="List of countries by unemployment rate"></e-treemap-titlesettings>
                     <e-treemap-leafitemsettings labelPath="Company" border="border"></e-treemap-leafitemsettings>
                     <e-treemap-levels>
-                        <e-treemap-level groupPath="Continent" fill="#336699" border="border">
+                        <e-treemap-level groupPath="Continent" fill="#3498DB" border="border">
                         </e-treemap-level>
                     </e-treemap-levels>
                 </ejs-treemap>
                 <div style="float: right; margin-right: 10px;">
                     Source:
-                    <a href=" https://www.factorywarrantylist.com/car-sales-by-country.html/" target="_blank"> www.factorywarrantylist.com</a>
+                    <a href="https://www.indexmundi.com/facts/visualizations/treemap#SL.UEM.TOTL.ZS:SL.UEM.TOTL.ZS" target="_blank">www.indexmundi.com</a>
                 </div>
-            </div>
         </div>
     </div>
 }
@@ -32,12 +30,12 @@
         args.treemap.tooltipSettings.format = args.item['groupIndex'] === 0 ? 'Country: ${Continent}<br>Sales: ${Sales}' :
             'Country: ${Continent}<br>Company: ${Company}<br>Sales: ${Sales}';
     }
-
+    @* custom code start *@
     function treemapLoad(args) {
-        var theme = location.hash.split('/')[1];
-        theme = theme ? theme : 'Material';
+        var theme = themeName ? themeName : 'Material';
         args.treemap.theme = theme.charAt(0).toUpperCase() + theme.slice(1);
     }
+    @* custom code end *@
 </script>
 @section Meta{
     <meta name="description" content="This demo for Essential JS2 TreeMap control visualizes the sales of cars across various countries in 2017." />

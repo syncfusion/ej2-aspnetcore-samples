@@ -216,10 +216,12 @@
         document.getElementById('appearance').onclick = function (args) {
             let target = args.target;
             var diagram = document.getElementById("container").ej2_instances[0];
+            @*custom code start*@
             let selectedElement = document.getElementsByClassName('e-selected-style');
             if (selectedElement.length) {
                 selectedElement[0].classList.remove('e-selected-style');
             }
+            @*custom code end*@
             if (target.className === 'image-pattern-style') {
                 switch (target.id) {
                     case 'straightConnector':
@@ -259,7 +261,9 @@
                         applyConnectorStyle(true, true, false, 'Straight');
                         break;
                 }
+                @*custom code start*@
                 target.classList.add('e-selected-style');
+                @*custom code end*@
             }
         };
         function applyConnectorStyle(dashedLine, sourceDec, isRounded, type, target, strokeWidth) {

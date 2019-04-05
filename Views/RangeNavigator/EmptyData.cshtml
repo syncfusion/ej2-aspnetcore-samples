@@ -62,17 +62,19 @@
                 (data[i]).open = null;
             }
         }
-        var selectedTheme = location.hash.split('/')[1];
-        selectedTheme = selectedTheme ? selectedTheme : 'Material';
+        @*custom code start*@
+        var selectedTheme = themeName ? themeName : 'Material';
         var theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/dark/i, "Dark").replace(/light/i, "Light"));
         var themes = ['Material', 'Fabric', 'Bootstrap', 'Highcontrast']
+        @*custom code end*@
         var borderColor = ['#00bdae', '#4472c4', '#a16ee5', '#79ECE4'];
         var regionColor = ['rgba(0, 189, 174, 0.3)', 'rgba(68, 114, 196, 0.3)',
             'rgba(161, 110, 229, 0.3)', 'rgba(121, 236, 228, 0.3)'];
         window.onChartLoad = function (args) {
-
+           @*custom code start*@
             args.rangeNavigator.theme = theme;
             args.rangeNavigator.width = ej.base.Browser.isDevice ? "100%" : "80%";
+           @*custom code end*@
             args.rangeNavigator.series[0].dataSource = data;
             args.rangeNavigator.series[0].border = { width: 2, color: borderColor[themes.indexOf(theme)] };
             args.rangeNavigator.series[0].fill = 'url(#' + theme.toLowerCase() + '-gradient-chart)';
@@ -100,7 +102,7 @@
         }
     </script>
 }
-
+@*custom code start*@
 @section Scripts {
 
 }
@@ -134,6 +136,7 @@
         stop-opacity: 0.3;
     }
 </style>
+@*custom code end*@
 <svg style="height: 0">
     <defs>
         <linearGradient id="material-gradient-chart" style="opacity: 0.75" class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
@@ -154,9 +157,11 @@
         </linearGradient>
     </defs>
 </svg>
+@*custom code start*@
 @section Meta{
     <meta name="description" content="This demo for Essential JS2 Range Navigator control shows how to render the empty points in the range navigator." />
 }
+@*custom code end*@
 @section ActionDescription{
 <p>
     This sample illustrates the functionality of empty points in the range navigator series.

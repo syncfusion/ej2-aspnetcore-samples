@@ -26,7 +26,7 @@
         <e-chart-annotations>
             <e-chart-annotation content="<div id='exchangeRate'></div>" coordinateUnits="Pixel" region="Chart" x="85%" y="15%"></e-chart-annotation>
         </e-chart-annotations>
-        <e-chart-tooltipsettings enable="true" shared="true"></e-chart-tooltipsettings>
+        <e-chart-tooltipsettings enable="false" shared="false"></e-chart-tooltipsettings>
         <e-chart-chartarea>
             <e-chartarea-border color="transparent" width="0"></e-chartarea-border>
         </e-chart-chartarea>
@@ -46,18 +46,21 @@
         rangeLoad = function (args) {
             args.rangeNavigator.series[0].dataSource = aus;
             args.rangeNavigator.series[1].dataSource = sl;
-            var selectedTheme = location.hash.split('/')[1];
-            args.rangeNavigator.value = [31, 50]
-            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.rangeNavigator.value = [31, 50];
+            @*custom code start*@
+            var selectedTheme = themeName ? themeName : 'Material';
             args.rangeNavigator.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/dark/i, "Dark").replace(/light/i, "Light"));
             args.rangeNavigator.width = ej.base.Browser.isDevice ? "100%" : "80%";
+            @*custom code end*@
         }
 
         chartLoad = function (args) {
+            @*custom code start*@
             var selectedTheme = location.hash.split('/')[1];
             selectedTheme = selectedTheme ? selectedTheme : 'Material';
             args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1));
             args.chart.width = ej.base.Browser.isDevice ? "100%" : "80%";
+            @*custom code end*@
             args.chart.series[0].dataSource = aus;
             args.chart.series[1].dataSource = sl;
             var backgroundColor = args.chart.theme === 'Highcontrast' ? 'black' : 'white';
@@ -108,7 +111,7 @@
         }
     </script>
 }
-
+@*custom code start*@
 @section Scripts {
 
 }
@@ -121,6 +124,7 @@
 @section Meta{
     <meta name="description" content="This demo for Essential JS2 Range Navigator control shows how to plot numeric data values in the range navigator." />
 }
+@*custom code end*@
 @section ActionDescription{
 <p>
     This sample depicts the cricket match data between two countries with the help of numeric axis in range navigator.

@@ -54,17 +54,18 @@
         </div>
     </div>
     <script src="~/scripts/chart/financial-data.js"></script>
+    @*custom code start*@
     <script type="text/javascript">
         var onChartLoad = function (args) {
-            var selectedTheme = location.hash.split('/')[1];
-            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            var selectedTheme = themeName ? themeName : 'Material';
             args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/dark/i, "Dark").replace(/light/i, "Light"));
             args.chart.series[0].dataSource = window.chartData;
             args.chart.width = ej.base.Browser.isDevice ? "100%" : "80%";
         }
     </script>
+    @*custom code end*@
 }
-
+@*custom code start*@
 @section Scripts {
 
 }
@@ -76,6 +77,7 @@
 @section Meta{
     <meta name="description" content="This demo for Essential JS2 Chart control shows how to render and configure the moving average convergence divergence indicator." />
 }
+@*custom code end*@
 @section ActionDescription{
     <p>
         This sample illustrates a stock chart with candle series and a Moving Average Convergence Divergence indicator. Trackball shows the information about the stock, signalline, Macdline, and Histogram value of a day.

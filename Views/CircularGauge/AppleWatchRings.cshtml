@@ -1,0 +1,356 @@
+@using Syncfusion.EJ2;
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Circular Gauge control illustrates the default rendering of circular gauge." />
+}
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample resembles the appearance of Apple watch rings. This functions similar to an activity tracker that denotes the move, exercise, and stand details.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this example, you can see how to make the circular gauge look like the Apple watch rings. Ranges are rendered with rounded corners and annotations are placed to denote the move, exercise, and stand values.
+        </p>
+        <p>
+            For more information on ranges, refer to this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/circular-gauge/gauge-ranges/">documentation section</a>.
+        </p>
+    </div>
+}
+@section ControlsSection{
+    <style>
+        .panel {
+            width: 105% !important;
+            height: 80px !important;
+            margin-left: 5% !important;
+            margin-top: 15% !important;
+            border-color: lightgray;
+            float: left;
+            background-color: transparent;
+        }
+
+        .content {
+            float: left !important;
+            margin-left: 62px !important;
+            margin-top: 6% !important;
+            text-align: left !important;
+            position: absolute;
+        }
+
+        .col-lg-3.col-md-3 {
+            margin-top: 3% !important;
+        }
+    </style>
+    @*custom code start*@
+    <style type="text/css" media="screen and (max-width:1185px)">
+        .panel {
+            width: 115% !important;
+        }
+
+        .firstcontent {
+            font-size: 13px !important;
+        }
+
+        .secondcontent {
+            font-size: 14px !important;
+        }
+    </style>
+
+    <style type="text/css" media="screen and (max-width:990px)">
+        .panel {
+            width: 50% !important;
+            height: 80px !important;
+            margin-left: 27% !important;
+            margin-top: 0% !important;
+        }
+
+        .subgauge {
+            margin-left: 8% !important;
+            margin-top: 1% !important;
+        }
+
+        .content {
+            margin-left: 18% !important;
+            margin-top: 2% !important;
+        }
+
+        .firstcontent {
+            font-size: 16px !important;
+        }
+
+        .secondcontent {
+            font-size: 16px !important;
+        }
+    </style>
+
+    <style type="text/css" media="screen and (max-width:410px)">
+        #column1 {
+            margin-left: -9% !important;
+        }
+
+        .subgauge {
+            margin-left: 3% !important;
+        }
+
+        .panel {
+            width: 52% !important;
+        }
+
+        .content {
+            margin-top: 3% !important;
+        }
+    </style>
+    @*custom code end*@
+
+    @{
+        var font = new
+        {
+            FontFamily = "Roboto",
+            Size = "0px",
+            Color = "white",
+            FontStyle = "Regular"
+        };
+    }
+    <div class="col-lg-9 col-md-9 control-section" id="column1" style="margin-left: -5%" align="center">
+        <ejs-circulargauge id="gauge1" load="gaugeload1" width="400px" height="400px">
+            <e-circulargauge-axes>
+                <e-circulargauge-axis startAngle="0" endAngle="360" minimum="0" maximum="100">
+                    <e-axis-linestyle width="0"></e-axis-linestyle>
+                    <e-axis-labelstyle useRangeColor="true" position="Inside"></e-axis-labelstyle>
+                </e-circulargauge-axis>
+            </e-circulargauge-axes>
+        </ejs-circulargauge>
+    </div>
+    <div class="col-lg-3 col-md-3" style="margin-left: -9%">
+        <div class="panel" id="panel1" align="center">
+            <div class="subgauge" style="float: left;margin-top: 3%">
+                <ejs-circulargauge id="gauge2" load="gaugeload2" width="65px" height="65px">
+                    <e-circulargauge-axes>
+                        <e-circulargauge-axis startAngle="0" endAngle="360" minimum="0" maximum="100">
+                            <e-axis-linestyle width="0"></e-axis-linestyle>
+                            <e-axis-labelstyle useRangeColor="true" position="Inside"></e-axis-labelstyle>
+                        </e-circulargauge-axis>
+                    </e-circulargauge-axes>
+                </ejs-circulargauge>
+            </div>
+            <div class="content">
+                <span class="firstcontent" style="font-size: 17px;">MOVE</span>
+                <span class="firstcontent" style="font-size: 17px;color: #E7092E">65%</span><br />
+                <span class="secondcontent" style="color: #E7092E; font-size: 19px">338/520 CAL</span>
+            </div>
+        </div>
+        <div class="panel" id="panel2" align="center">
+            <div class="subgauge" style="float: left;margin-top: 3%">
+                <ejs-circulargauge id="gauge3" load="gaugeload3" width="65px" height="65px">
+                    <e-circulargauge-axes>
+                        <e-circulargauge-axis startAngle="0" endAngle="360" minimum="0" maximum="100">
+                            <e-axis-linestyle width="0"></e-axis-linestyle>
+                            <e-axis-labelstyle useRangeColor="true" position="Inside"></e-axis-labelstyle>
+                        </e-circulargauge-axis>
+                    </e-circulargauge-axes>
+                </ejs-circulargauge>
+            </div>
+            <div class="content">
+                <span class="firstcontent" style="font-size: 17px;">EXERCISE</span>
+                <span class="firstcontent" style="font-size: 17px;color: #52E908">43%</span><br />
+                <span class="secondcontent" style="color: #52E908; font-size: 19px">13/30 MIN</span>
+            </div>
+        </div>
+        <div class="panel" id="panel3" align="center">
+            <div class="subgauge" style="float: left;margin-top: 3%">
+                <ejs-circulargauge id="gauge4" load="gaugeload4" width="65px" height="65px">
+                    <e-circulargauge-axes>
+                        <e-circulargauge-axis startAngle="0" endAngle="360" minimum="0" maximum="100">
+                            <e-axis-linestyle width="0"></e-axis-linestyle>
+                            <e-axis-labelstyle useRangeColor="true" position="Inside"></e-axis-labelstyle>
+                        </e-circulargauge-axis>
+                    </e-circulargauge-axes>
+                </ejs-circulargauge>
+            </div>
+            <div class="content">
+                <span class="firstcontent" style="font-size: 17px;">STAND</span>
+                <span class="firstcontent" style="font-size: 17px;color: #04CBF3">58%</span><br />
+                <span class="secondcontent" style="color: #04CBF3; font-size: 19px">7/12 HR</span>
+            </div>
+        </div>
+    </div>
+}
+<script>
+    window.gaugeload1 = function (args) {
+        @* custom code start *@
+        var theme = themeName ? themeName : 'Material';
+        args.gauge.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+        @* custom code end *@
+        var axis = args.gauge.axes[0];
+        axis.labelStyle.font.size = "0px";
+        axis.majorTicks.height = 0;
+        axis.minorTicks.height = 0;
+        axis.ranges = [
+            {
+                start: 0, end: 100, radius: "90%",
+                startWidth: 40, endWidth: 40, color: "#E30219", opacity: 0.2
+            },
+            {
+                start: 0, end: 100, radius: "68%",
+                startWidth: 40, endWidth: 40, color: "#3EDE00", opacity: 0.2
+            },
+            {
+                start: 0, end: 100, radius: "46%",
+                startWidth: 40, endWidth: 40, color: "#18F8F6", opacity: 0.2
+            }
+        ];
+        axis.pointers = [
+            {
+                roundedCornerRadius: 25, value: 65, type: 'RangeBar',
+                radius: '90%', color: '#E2011A', animation: { enable: true },
+                pointerWidth: 40
+            },
+            {
+                roundedCornerRadius: 25, value: 43, type: 'RangeBar',
+                radius: '68%', color: '#3FE000', animation: { enable: true },
+                pointerWidth: 40
+            },
+            {
+                roundedCornerRadius: 25, value: 58, type: 'RangeBar',
+                radius: '46%', color: '#00C9E6', animation: { enable: true },
+                pointerWidth: 40
+            }
+        ];
+        axis.annotations = [
+            {
+                angle: 8, radius: '80%', zIndex: '1',
+                content: '<div id="annotation1"><img style="width:22px;height:22px;" src="../styles/images/circulargauge/image1.svg" /></div>'
+            },
+            {
+                angle: 11, radius: '58%', zIndex: '1',
+                content: '<div id="annotation2"><img style="width:20px;height:20px;" src="../styles/images/circulargauge/image2.svg" /></div>'
+            },
+            {
+                angle: 16, radius: '36%', zIndex: '1',
+                content: '<div id="annotation3"><img style="width:22px;height:22px;" src="../styles/images/circulargauge/image3.svg" /></div>'
+            }
+        ]
+    };
+    window.gaugeload2 = function (args) {
+        @* custom code start *@
+        var theme = location.hash.split('/')[1];
+        theme = theme ? theme : 'Material';
+        args.gauge.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+        @* custom code end *@        
+        var axis = args.gauge.axes[0];
+        axis.labelStyle.font.size = "0px";
+        axis.majorTicks.height = 0;
+        axis.minorTicks.height = 0;
+        axis.ranges = [
+            {
+                start: 0, end: 100,
+                radius: '100%',
+                startWidth: 8, endWidth: 8,
+                color: '#E30219', opacity: 0.2
+            }
+        ];
+        axis.pointers = [
+            {
+                roundedCornerRadius: 5,
+                value: 65,
+                type: 'RangeBar',
+                radius: '100%',
+                color: '#E2011A',
+                animation: { enable: true },
+                pointerWidth: 8
+            }
+        ];
+        axis.annotations = [
+            {
+                angle: 0, radius: '0%', zIndex: '1',
+                content: '<div id="annotation4"><img style="width:17px;height:17px;" src="../styles/images/circulargauge/image1.svg" /></div>'
+            }
+        ];
+        if (theme === 'highcontrast') {
+            args.gauge.axes[0].annotations[0].content = '<div id="annotation7"><img style="width:17px;height:17px;" src="../styles/images/circulargauge/image4.svg" /></div>';
+        }
+    };
+    window.gaugeload3 = function (args) {
+        @* custom code start *@
+        var theme = location.hash.split('/')[1];
+        theme = theme ? theme : 'Material';
+        args.gauge.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+        @* custom code end *@
+        
+        var axis = args.gauge.axes[0];
+        axis.labelStyle.font.size = "0px";
+        axis.majorTicks.height = 0;
+        axis.minorTicks.height = 0;
+        axis.ranges = [
+            {
+                start: 0, end: 100,
+                radius: '100%',
+                startWidth: 8, endWidth: 8,
+                color: '#3EDE00', opacity: 0.2
+            }
+        ];
+        axis.pointers = [
+            {
+                roundedCornerRadius: 5,
+                value: 43,
+                type: 'RangeBar',
+                radius: '100%',
+                color: '#3FE000',
+                animation: { enable: true },
+                pointerWidth: 8
+            }
+        ];
+        axis.annotations = [
+            {
+                angle: 0, radius: '0%', zIndex: '1',
+                content: '<div id="annotation5"><img style="width:15px;height:15px;" src="../styles/images/circulargauge/image2.svg" /></div>'
+            }
+        ];
+        if (theme === 'highcontrast') {
+            args.gauge.axes[0].annotations[0].content = '<div id="annotation8"><img style="width:15px;height:15px;" src="../styles/images/circulargauge/image5.svg" /></div>';
+        }
+    };
+    window.gaugeload4 = function (args) {
+        @* custom code start *@
+        var theme = location.hash.split('/')[1];
+        theme = theme ? theme : 'Material';
+        args.gauge.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+        @* custom code end *@
+        
+        var axis = args.gauge.axes[0];
+        axis.labelStyle.font.size = "0px";
+        axis.majorTicks.height = 0;
+        axis.minorTicks.height = 0;
+        axis.ranges = [
+            {
+                start: 0, end: 100,
+                radius: '100%',
+                startWidth: 8, endWidth: 8,
+                color: '#18F8F6', opacity: 0.2
+            }
+        ];
+        axis.pointers = [
+            {
+                roundedCornerRadius: 5,
+                value: 58,
+                type: 'RangeBar',
+                radius: '100%',
+                color: '#00C9E6',
+                animation: { enable: true },
+                pointerWidth: 8
+            }
+        ];
+        axis.annotations = [
+            {
+                angle: 0, radius: '0%', zIndex: '1',
+                content: '<div id="annotation6"><img style="width:17px;height:17px;" src="../styles/images/circulargauge/image3.svg" /></div>'
+            }
+        ];
+        if (theme === 'highcontrast') {
+            args.gauge.axes[0].annotations[0].content = '<div id="annotation9"><img style="width:17px;height:17px;" src="../styles/images/circulargauge/image6.svg" /></div>';
+        }
+    }
+</script>

@@ -131,7 +131,7 @@
         var sourceID;
         var targetID;
         var nodeData = [];
-
+        @*custom code start*@
         function dlgButtonClick(args) {
             diagram = document.getElementById('diagram').ej2_instances[0];
             dialog = document.getElementById("editDialog").ej2_instances[0];
@@ -180,7 +180,7 @@
             }
             dialog.hide();
         };
-
+        @*custom code end*@
         //Set node default properties.
         function nodeDefaults(obj, diagram) {
             obj.width = 100;
@@ -203,7 +203,7 @@
             };
             return connector;
         }
-
+        @*custom code start*@
          //Displays nodes name in dropdown.
         function sourceDropdownCreate(args) {
             var sourceDropdown = document.getElementById('SourceId').ej2_instances[0];
@@ -232,7 +232,7 @@
         function toolbarCreate(args) {
             enableToolbarItems(false);
         }
-
+        @*custom code end*@
         //Disable or Enable the toolbar items based on element selection.
         function selectionChange(args) {
             if (args.state === 'Changing') {
@@ -252,7 +252,7 @@
                 }
             }
         }
-
+        @*custom code start*@
         //Enable or disable the toolbar items.
         function enableToolbarItems(isEnableItem) {
             toolbarObj = document.getElementById("toolbar").ej2_instances[0];
@@ -260,6 +260,7 @@
             toolbarObj.enableItems(document.getElementById(toolbarObj.items[2].id).parentElement, isEnableItem);
             toolbarObj.enableItems(document.getElementById(toolbarObj.items[4].id).parentElement, isEnableItem);
         }
+        @*custom code end*@
         function connectionChange(args) {
             if (args.state === 'Completed') {
                 if (!args.connector.targetID || !args.connector.sourceID) {
@@ -278,7 +279,7 @@
                 obj.constraints = ej.diagrams.NodeConstraints.Default & ~ej.diagrams.NodeConstraints.Delete;
             }
         }
-
+        @*custom code start*@
         //Opens a dialog with textbox and dropdown control based on toolbar clicked items.
         function toolbarClick(args) {
             diagram = document.getElementById('diagram').ej2_instances[0];
@@ -342,7 +343,7 @@
             }
             dialog.show();
         }
-
+        @*custom code end*@
         //Returns an node text collection in diagram.
         function getDataSource() {
             diagram = document.getElementById('diagram').ej2_instances[0];

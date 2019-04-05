@@ -32,6 +32,13 @@
         .e-icon-btn .e-md-preview::before {
             content: '\e345';
         }
+        .bootstrap4 .e-icon-btn.e-active .e-md-preview::before {
+         content: '\e790';
+        }
+
+        .bootstrap4 .e-icon-btn .e-md-preview::before {
+         content: '\e787';
+        }
 
         .e-rte-content .e-content {
             float: right;
@@ -49,13 +56,21 @@
         .highcontrast .e-richtexteditor textarea.e-content {
             border-right: 1px solid #fff;
         }
-
+        /* custom code start */
         .sb-header {
             z-index: 100;
         }
+        /* custom code end */
     </style>
 }
 
+@*custom code start*@
+
+@section Meta{
+    <meta name="description" content="This demo for Essential JS 2  rich text editor control shows the users to switch between editing content and its visual preview in Markdown Editor."/>
+}
+
+@*custom code end*@
 
 @section ActionDescription{
     <div id="action-description">
@@ -74,6 +89,7 @@
     </p>
 </div>
 }
+
 <script>
     var defaultRTE;
     var textArea;
@@ -83,7 +99,7 @@
     function created () {
         defaultRTE = this;
         textArea = defaultRTE.contentModule.getEditPanel();
-        textArea.addEventListener('keyup', function (e) { markDownConversion(); });
+        textArea.addEventListener('keyup', function (e) { MarkDownConversion(); });
         var rteObj = defaultRTE;
         mdsource = document.getElementById('preview-code');
         mdsource.addEventListener('click', function (e) {
@@ -126,11 +142,11 @@
                 mdSplit.classList.remove('e-active');
                 mdsource.classList.remove('e-active');
             }
-            markDownConversion();
+            MarkDownConversion();
         }
         setTimeout(function () { defaultRTE.toolbarModule.refreshToolbarOverflow(); }, 400);
     }
-    function markDownConversion() {
+    function MarkDownConversion() {
         if (mdSplit.classList.contains('e-active')) {
             var id = defaultRTE.getID() + 'html-preview';
             var htmlPreview = defaultRTE.element.querySelector('#' + id);

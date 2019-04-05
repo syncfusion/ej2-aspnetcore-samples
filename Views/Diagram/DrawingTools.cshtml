@@ -133,10 +133,12 @@
 
         document.getElementById('appearance').onclick = function (args) {
             var target = args.target;
+            @*custom code start*@
             var selectedElement = document.getElementsByClassName('e-selected-style');
             if (selectedElement.length && target.id !== '' && target.id !== 'checked') {
                 selectedElement[0].classList.remove('e-selected-style');
             }
+            @*custom code end*@
             if (target.className === 'image-pattern-style') {
                 switch (target.id) {
                     case 'shape1':
@@ -173,7 +175,7 @@
                         };
                         break;
                     case 'image':
-                        drawingObject = { shape: { type: 'Image', source: '/images/diagram/employees/Clayton.png' } };
+                        drawingObject = { shape: { type: 'Image', source: '../images/diagram/employees/Clayton.png' } };
                         break;
                     case 'svg':
                         drawingObject = { shape: { type: 'Native', content: getNativeContent() } };
@@ -187,13 +189,15 @@
                     var checkBoxObj = document.getElementById("checked").ej2_instances[0];
                     diagram.tool = checkBoxObj.checked ? ej.diagrams.DiagramTools.ContinuousDraw : ej.diagrams.DiagramTools.DrawOnce;
                     diagram.dataBind();
+                    @*custom code start*@
                     target.classList.add('e-selected-style');
+                    @*custom code end*@
                 }
             }
         };
 
 
-
+        @*custom code start*@
         function getNativeContent() {
             var str = '<svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="350.000000pt" ' +
                 'height="229.000000pt" viewBox="0 0 350.000000 229.000000" ' +
@@ -217,6 +221,7 @@
                 '</g> </svg>';
             return str;
         }
+        @*custom code end*@
     </script>
 }
 

@@ -1,0 +1,491 @@
+﻿
+@{
+    ViewData["Title"] = "EditableLayout";
+}
+
+@model EJ2CoreSampleBrowser.Controllers.Space
+
+@section ControlsSection{
+
+<div class="control-section">
+    <div style="width:100%;height: 30px">
+        <ejs-button id="togglebtn" isToggle="true" iconCss="edit"  content="EDIT" cssClass='toggle e-outline e-flat e-primary'></ejs-button>
+    </div>
+
+    <div style="padding:5px;text-align: end;">
+        <div class="add-widget-button e-control e-btn e-lib" id="dialogBtn">
+            Add New Widget
+        </div>
+    </div>
+
+    <ejs-dashboardlayout id="editableLayout" columns="2" resizeStop="onPanelResize" allowDragging="false" cellSpacing="@Model.cellSpacing">
+        <e-dashboardlayout-panels>
+            <e-dashboardlayout-panel sizeX="1" sizeY="1" row="0" col="0" header="<div>Line chart</div>" content="#lineContainer">
+            </e-dashboardlayout-panel>
+            <e-dashboardlayout-panel sizeX="1" sizeY="1" row="0" col="1" content="#pieContainer" header="<div>Pie chart</div>">
+            </e-dashboardlayout-panel>
+            <e-dashboardlayout-panel sizeX="2" sizeY="1" row="2" col="0"  header="<div>Spline chart</div>" content="#splineContainer">
+            </e-dashboardlayout-panel>
+        </e-dashboardlayout-panels>
+    </ejs-dashboardlayout>
+</div>
+
+    @*dashboard layout*@
+
+   
+
+    @*Dialog*@
+
+    <div id="target">
+        <ejs-dialog id="dialog" width="435px" target="#target" header="Add a Widget" zIndex="2000" showCloseIcon="true" isModal="true" visible="false" height="250px" content="<div><div id='linetemplate'><p class='dialog-text'>Linechart (1x1) </p></div><div id='pietemplate'><p class='dialog-text'>Piechart (1x1) </p></div><div id='splinetemplate'><p class='dialog-text'>Splinechart (2x1) </p></div></div>">
+            <e-dialog-animationsettings effect="Zoom"></e-dialog-animationsettings>
+        </ejs-dialog>
+    </div>
+
+    @*column chart*@
+    <div id="lineContainer" class="edit-content">
+        <ejs-chart style="height: 100%; width: 100%" id="linechart" load="window.onChartLoad" width="99%" height="100%">
+            <e-chart-tooltipsettings enable="true">
+            </e-chart-tooltipsettings>
+            <e-chart-primaryxaxis valueType="Category" interval=1>
+                <e-majorgridlines width="0"></e-majorgridlines>
+            </e-chart-primaryxaxis>
+            <e-chart-primaryyaxis>
+                <e-majorgridlines width="0"></e-majorgridlines>
+                <e-majorticklines width="0"></e-majorticklines>
+                <e-linestyle width="0"></e-linestyle>
+                <e-labelstyle color="transparent"></e-labelstyle>
+            </e-chart-primaryyaxis>
+            <e-chart-chartarea>
+                <e-chartarea-border width="0"></e-chartarea-border>
+            </e-chart-chartarea>
+            <e-series-collection>
+                <e-series dataSource="ViewBag.lineSource1" xName='x' yName='y' name='Jan' width=2 fill="#00bdae" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                    <e-series-marker>
+                        <e-series-datalabel visible="false" position="Top"></e-series-datalabel>
+                    </e-series-marker>
+                </e-series>
+                <e-series dataSource="ViewBag.lineSource" xName='x' yName='y' name='Feb' fill="#e56691" width=2 type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                    <e-series-marker>
+                        <e-series-datalabel visible="false" position="Top">
+                        </e-series-datalabel>
+                    </e-series-marker>
+                </e-series>
+                <e-series dataSource="ViewBag.lineSource2" xName='x' yName='y' name='Mar' fill="#357cd2" width=2 type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                    <e-series-marker>
+                        <e-series-datalabel visible="false" position="Top">
+                        </e-series-datalabel>
+                    </e-series-marker>
+                </e-series>
+            </e-series-collection>
+        </ejs-chart>
+    </div>
+
+
+    @*pie chart*@
+    <div id="pieContainer" class="edit-content">
+        <ejs-accumulationchart style="height: 100%; width: 100%" id="pie" enableAnimation="true" enableSmartLabels="true" width="99%" height="100%">
+            <e-accumulationchart-tooltipsettings enable="true" header="<b>${point.x}</b>" format="Composition : <b>${point.y}%</b>"></e-accumulationchart-tooltipsettings>
+            <e-accumulationchart-legendsettings visible="false">
+            </e-accumulationchart-legendsettings>
+            <e-accumulation-series-collection>
+                <e-accumulation-series dataSource="ViewBag.pieSource" xName="x" yName="y" innerRadius="40%" radius="100%" name="Earnings" palettes="ViewBag.pallets">
+                    <e-accumulationseries-datalabel name="value" visible="true" position="Inside">
+                    </e-accumulationseries-datalabel>
+                </e-accumulation-series>
+            </e-accumulation-series-collection>
+        </ejs-accumulationchart>
+    </div>
+
+
+    @*spline chart*@
+    <div id="splineContainer" class="edit-content">
+        <ejs-chart id="spline" style="height: 100%; width: 100%" load="window.onChartLoad" height="100%" width="99%">
+            <e-chart-primaryxaxis valueType="DateTime" labelFormat="MMM" intervalType="Months" edgeLabelPlacement="Shift">
+                <e-majorgridlines width="0"></e-majorgridlines>
+            </e-chart-primaryxaxis>
+            <e-chart-primaryyaxis minimum="0" maximum="4" interval="1" labelFormat="{value}%">
+                <e-linestyle width="0"></e-linestyle>
+                <e-majorticklines width="0"></e-majorticklines>
+            </e-chart-primaryyaxis>
+            <e-chart-chartarea>
+                <e-chartarea-border width="0"></e-chartarea-border>
+            </e-chart-chartarea>
+            <e-series-collection>
+                <e-series dataSource="ViewBag.splineSource1" fill="rgb(239, 183, 202)" name="Jan" xName="x" opacity=0.5 width=2 yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.SplineArea">
+                    <e-series-border color="transparent"></e-series-border>
+                </e-series>
+                <e-series dataSource="ViewBag.splineSource2" fill="rgb(0, 189, 174)" name="Feb" xName="x" opacity=0.5 width=2 yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.SplineArea">
+                    <e-series-border color="transparent"></e-series-border>
+                </e-series>
+            </e-series-collection>
+        </ejs-chart>
+    </div>
+
+    <div id="content"></div>
+}
+
+<script>
+    window.onChartLoad = function (args) {
+        var selectedTheme = location.hash.split('/')[1];
+        selectedTheme = selectedTheme ? selectedTheme : 'Material';
+        args.chart.theme = (selectedTheme.charAt(0).toUpperCase() +
+            selectedTheme.slice(1)).replace(/-dark/i, 'Dark');
+        if (selectedTheme === 'highcontrast') {
+            args.chart.series[0].marker.dataLabel.font.color = '#000000';
+            args.chart.series[1].marker.dataLabel.font.color = '#000000';
+            args.chart.series[2].marker.dataLabel.font.color = '#000000';
+        }
+    }
+
+    function onPanelResize(args) {
+        var dashboardObject = document.getElementById("editableLayout").ej2_instances[0];
+        if (args.element && args.element.querySelector('.e-panel-container .e-panel-content div') &&
+            dashboardObject.element.querySelector('.e-holder')) {
+            let chartObj = (args.element.querySelector('.e-panel-container .e-panel-content div')).ej2_instances[0];
+            let holderElementHeight = parseInt((dashboardObject.element.querySelector('.e-holder')).style.height, 10);
+            let panelContanierElement = args.element.querySelector('.e-panel-content');
+            panelContanierElement.style.height = holderElementHeight - 35 + 'px';
+            chartObj.height = '95%';
+            chartObj.width = '100%';
+            chartObj.refresh();
+        }
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+        var lineObj = document.getElementById('linechart').ej2_instances[0];
+        var pieObj = document.getElementById('pie').ej2_instances[0];
+        var splineObj = document.getElementById('spline').ej2_instances[0];
+        var dashboardObject = document.getElementById("editableLayout").ej2_instances[0];
+        lineObj.refresh(); pieObj.refresh(); splineObj.refresh();
+        var count = 3;
+
+        document.getElementById('dialogBtn').onclick = function () {
+            var dialogObj = document.getElementById("dialog").ej2_instances[0];
+            dialogObj.show();
+            document.getElementById('linetemplate').onclick = function (e) {
+                var countValue = count.toString();
+                var panel = [{
+                    'id': '_layout' + countValue, 'sizeX': 1, 'sizeY': 1, 'row': 0, 'col': 0,
+                    header: '<div>Line Chart</div>', content: '<div id=_line' + countValue + ' style="height:100%; width:100%"></div>'
+                }];
+                count = count + 1;
+                dashboardObject.addPanel(panel[0]);
+
+                var linechartObj = new ej.charts.Chart({
+                    //Initializing Primary X Axis
+                    primaryXAxis: {
+                        valueType: 'Category', interval: 1, majorGridLines: { width: 0 }
+                    },
+                    chartArea: { border: { width: 0 } },
+                    width: '99%',
+                    height: '100%',
+                    //Initializing Primary X Axis
+                    primaryYAxis: {
+                        majorGridLines: { width: 0 },
+                        majorTickLines: { width: 0 }, lineStyle: { width: 0 }, labelStyle: { color: 'transparent' }
+                    },
+                    //Initializing Chart Series
+                    series: [
+                        {
+                            type: 'Column', xName: 'x', width: 2, yName: 'y', name: 'Jan', fill: '#00bdae',
+                            dataSource: [{ x: 'Jan', y: 46 }, { x: 'Feb', y: 27 }, { x: 'Mar', y: 26 }],
+                            marker: {
+                                dataLabel: {
+                                    visible: false, position: 'Top', font: {
+                                        fontWeight: '600', color: '#ffffff'
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            type: 'Column', xName: 'x', width: 2, yName: 'y', name: 'Feb', fill: '#e56691',
+                            dataSource: [{ x: 'Jan', y: 37 }, { x: 'Feb', y: 23 }, { x: 'Mar', y: 18 }],
+                            marker: { dataLabel: { visible: false, position: 'Top', font: { fontWeight: '600', color: '#ffffff' } } }
+                        },
+                        {
+                            type: 'Column', xName: 'x', width: 2, yName: 'y', name: 'Mar', fill: '#357cd2',
+                            dataSource: [{ x: 'Jan', y: 38 }, { x: 'Feb', y: 17 }, { x: 'Mar', y: 26 }],
+                            marker: { dataLabel: { visible: false, position: 'Top', font: { fontWeight: '600', color: '#ffffff' } } }
+                        }
+                    ],
+                    load: function (args) {
+                        var selectedTheme = location.hash.split('/')[1];
+                        selectedTheme = selectedTheme ? selectedTheme : 'Material';
+                        args.chart.theme = (selectedTheme.charAt(0).toUpperCase() +
+                            selectedTheme.slice(1)).replace(/-dark/i, 'Dark');
+                        if (selectedTheme === 'highcontrast') {
+                            args.chart.series[0].marker.dataLabel.font.color = '#000000';
+                            args.chart.series[1].marker.dataLabel.font.color = '#000000';
+                            args.chart.series[2].marker.dataLabel.font.color = '#000000';
+                        }
+                    }
+                });
+                linechartObj.appendTo('#' + '_line' + countValue);
+                linechartObj.refresh();
+                dialogObj.hide();
+            };
+            document.getElementById('pietemplate').onclick = function (e) {
+                var countValue = count.toString();
+                var panel = [{
+                    'id': '_layout' + countValue, 'sizeX': 1, 'sizeY': 1, 'row': 0, 'col': 0,
+                    header: '<div>Pie Chart</div>', content: '<div id=_pie' + countValue + ' style="height:100%; width:100%"></div>'
+                }];
+                count = count + 1;
+                dashboardObject.addPanel(panel[0]);
+                var pie = new ej.charts.AccumulationChart({
+                    series: [
+                        {
+                            dataSource: [
+                                { 'x': 'Jan', y: 12.5, text: 'January' },
+                                { 'x': 'Feb', y: 25, text: 'February' },
+                                { 'x': 'Mar', y: 50, text: 'March' },
+                            ],
+                            palettes: ['#00bdae', '#357cd2', '#e56691'],
+                            radius: '100%', xName: 'x', yName: 'y', startAngle: 0, endAngle: 360, innerRadius: '40%', name: 'Earnings',
+                            dataLabel: {
+                                visible: true,
+                                name: 'value',
+                                position: 'Inside'
+                            }
+                        }
+
+                    ],
+                    tooltip: {
+                        enable: true,
+                        header: '<b>${point.x}</b>',
+                        format: 'Composition : <b>${point.y}%</b>'
+                    },
+
+                    legendSettings: {
+                        visible: false, toggleVisibility: false
+                    },
+                    width: '99%',
+                    height: '100%'
+                });
+                pie.appendTo('#' + '_pie' + countValue);
+                pie.refresh();
+                dialogObj.hide();
+            };
+            document.getElementById('splinetemplate').onclick = function (e) {
+                var countValue = count.toString();
+                var panel = [{
+                    'id': '_layout' + countValue, 'sizeX': 2, 'sizeY': 1, 'row': 0, 'col': 0,
+                    header: '<div>Spline Chart</div>', content: '<div id=_spline' + countValue + ' style="height:100%; width:100%"></div>'
+                }];
+                count = count + 1;
+                dashboardObject.addPanel(panel[0]);
+                var chart = new ej.charts.Chart({
+                    //Initializing Primary X Axis
+                    primaryXAxis: {
+                        valueType: 'DateTime',
+                        labelFormat: 'MMM',
+                        majorGridLines: { width: 0 },
+                        intervalType: 'Months',
+                        edgeLabelPlacement: 'Shift'
+                    },
+                    //Initializing Primary Y Axis
+                    primaryYAxis: {
+                        maximum: 4, interval: 1,
+                        labelFormat: '{value}',
+                        lineStyle: { width: 0 },
+                        majorTickLines: { width: 0 },
+                        minorTickLines: { width: 0 }
+                    },
+                    chartArea: {
+                        border: {
+                            width: 0
+                        }
+                    },
+                    //Initializing Chart Series
+                    series: [
+                        {
+                            dataSource: [
+                                { x: new Date(2002, 0, 1), y: 2.2 }, { x: new Date(2003, 0, 1), y: 3.4 },
+                                { x: new Date(2004, 0, 1), y: 2.8 }, { x: new Date(2005, 0, 1), y: 1.6 },
+                                { x: new Date(2006, 0, 1), y: 2.3 }, { x: new Date(2007, 0, 1), y: 2.5 },
+                                { x: new Date(2008, 0, 1), y: 2.9 }, { x: new Date(2009, 0, 1), y: 3.8 },
+                                { x: new Date(2010, 0, 1), y: 1.4 }, { x: new Date(2011, 0, 1), y: 3.1 }
+                            ],
+                            name: 'Jan', xName: 'x', yName: 'y', type: 'SplineArea',
+                            border: { color: 'transparent' },
+                            fill: 'rgb(239, 183, 202)',
+                            opacity: 0.5
+                        },
+                        {
+                            dataSource: [
+                                { x: new Date(2002, 0, 1), y: 2 }, { x: new Date(2003, 0, 1), y: 1.7 },
+                                { x: new Date(2004, 0, 1), y: 1.8 }, { x: new Date(2005, 0, 1), y: 2.1 },
+                                { x: new Date(2006, 0, 1), y: 2.3 }, { x: new Date(2007, 0, 1), y: 1.7 },
+                                { x: new Date(2008, 0, 1), y: 1.5 }, { x: new Date(2009, 0, 1), y: 2.8 },
+                                { x: new Date(2010, 0, 1), y: 1.5 }, { x: new Date(2011, 0, 1), y: 2.3 }
+                            ],
+                            name: 'Feb', xName: 'x', yName: 'y', type: 'SplineArea',
+                            border: { color: 'transparent' },
+                            fill: 'rgb(0, 189, 174)',
+                            opacity: 0.5
+                        }
+                    ],
+                    load: function (args) {
+                        var selectedTheme = location.hash.split('/')[1];
+                        selectedTheme = selectedTheme ? selectedTheme : 'Material';
+                        args.chart.theme = (selectedTheme.charAt(0).toUpperCase() +
+                            selectedTheme.slice(1)).replace(/-dark/i, 'Dark');
+                    },
+                    width: '99%',
+                    height: '100%'
+                });
+                chart.appendTo('#' + '_spline' + countValue);
+                chart.refresh();
+                dialogObj.hide();
+            };
+        };
+        document.getElementById('togglebtn').onclick = function () {
+            var edit = document.getElementById("togglebtn").ej2_instances[0];
+            if (this.classList.contains('e-active')) {
+                dashboardObject.allowResizing = true;
+                dashboardObject.allowDragging = true;
+                document.getElementById('dialogBtn').style.display = 'block';
+                edit.content = "SAVE";
+                edit.iconCss = "save";
+            } else {
+                dashboardObject.allowResizing = false;
+                dashboardObject.allowDragging = false;
+                document.getElementById('dialogBtn').style.display = 'none';
+                edit.content = "EDIT";
+                edit.iconCss = "edit";
+            }
+        }
+    });
+</script>
+
+<style>
+    #dialogBtn {
+        display: none;
+    }
+
+    .e-btn,
+    .e-css.e-btn {
+        display: block;
+    }
+
+    .dialog-text {
+        height: 35px;
+        border: 1px solid #80808029;
+        vertical-align: middle;
+        line-height: 35px;
+        border-radius: 4px;
+        padding-left: 12px;
+        margin-bottom: 5%;
+        cursor: pointer;
+    }
+
+    @@media (max-width: 650px) {
+        #togglebtn{
+            display: none;
+        }
+    }
+
+    .add-widget-button {
+        padding: 10px;
+        text-align: center;
+        margin-bottom: 10px;
+        cursor: pointer;
+        font-size: 15px;
+    }
+
+    .e-dashboardlayout.e-control .e-panel:hover span {
+        display: block;
+    }
+
+    .e-dashboardlayout.e-control .e-panel .e-panel-container .e-panel-header {
+        padding: 10px;
+        border-bottom: 2px solid #e6e9ed !important;
+        height: 35px;
+        margin: 0 15px 0 15px;
+    }
+
+    .sb-demo-section .container-fluid {
+        background: #E5E5E5;
+    }
+
+    .e-panel-content {
+        height: calc(100% - 35px) !important;
+        overflow: hidden;
+        width:100%;
+    }
+
+    .e-dashboardlayout.e-control .e-panel,
+    .e-dashboardlayout.e-control .e-panel:hover,
+    .e-dashboardlayout.e-control .e-panel:active {
+        border: 1px solid #bbb;
+    }
+
+    .e-dialog .e-dlg-header-content {
+        border-bottom: none;
+        padding: 18px 18px 18px 20px;
+    }
+
+    .edit::before {
+        content: '\e501';
+        font-family: 'e-sb-icons';
+        margin-left: -7px;
+        vertical-align: middle;
+    }
+
+    .save::before {
+        content: '\e500';
+        font-family: 'e-sb-icons';
+        margin-left: -7px;
+        vertical-align: middle;
+    }
+
+    @@font-face {
+        font-family: 'e-sb-icons';
+        src: url(data:application/x-font-ttf;charset=utf-8;base64,AAEAAAAKAIAAAwAgT1MvMjttR/MAAAEoAAAAVmNtYXDlEOVaAAABjAAAADhnbHlmAM1kuQAAAcwAAAD8aGVhZBRipc8AAADQAAAANmhoZWEIUQQEAAAArAAAACRobXR4DAAAAAAAAYAAAAAMbG9jYQA6AH4AAAHEAAAACG1heHABEQA4AAABCAAAACBuYW1lWD3y/QAAAsgAAAIlcG9zdNvk7cwAAATwAAAANQABAAAEAAAAAFwEAAAAAAAD9AABAAAAAAAAAAAAAAAAAAAAAwABAAAAAQAApr5cCV8PPPUACwQAAAAAANioMG8AAAAA2KgwbwAAAAAD9AP0AAAACAACAAAAAAAAAAEAAAADACwABAAAAAAAAgAAAAoACgAAAP8AAAAAAAAAAQQAAZAABQAAAokCzAAAAI8CiQLMAAAB6wAyAQgAAAIABQMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUGZFZABA5QDlAQQAAAAAXAQAAAAAAAABAAAAAAAABAAAAAQAAAAEAAAAAAAAAgAAAAMAAAAUAAMAAQAAABQABAAkAAAABAAEAAEAAOUB//8AAOUA//8AAAABAAQAAAABAAIAAAAAADoAfgAEAAAAAAP0A/MAAwALABkAIwAAAREhEQEVMzUzFSE1IxEhETMVMxEjESERIxEjERUhESM1IzUhAx79xAEeR0j+m0gB9I9HR/02SEcD6EdI/KcBcf7iAR4CPI+P19f+4gEeSPzuAWb+mgNa/KZHA1lIRwAAAAMAAAAAA/QD9AADAAgAKwAACQEnCQEDJQEnNwcXPwc1Lw8PBgLH/ko2Abb9uT4BGQJC2m0/2z8HBgUFAwMCAQIEBQcICQoLDA0NDw8PEA0NDQwLCwsCkf5KNgG2/l7+5z4CQ9puP9s/CgsLCwwNDQ0QDw8PDQ0MCwoJCAcFBAIBAQEDAwUFBgAAABIA3gABAAAAAAAAAAEAAAABAAAAAAABAAcAAQABAAAAAAACAAcACAABAAAAAAADAAcADwABAAAAAAAEAAcAFgABAAAAAAAFAAsAHQABAAAAAAAGAAcAKAABAAAAAAAKACwALwABAAAAAAALABIAWwADAAEECQAAAAIAbQADAAEECQABAA4AbwADAAEECQACAA4AfQADAAEECQADAA4AiwADAAEECQAEAA4AmQADAAEECQAFABYApwADAAEECQAGAA4AvQADAAEECQAKAFgAywADAAEECQALACQBIyBlai1pY29uUmVndWxhcmVqLWljb25lai1pY29uVmVyc2lvbiAxLjBlai1pY29uRm9udCBnZW5lcmF0ZWQgdXNpbmcgU3luY2Z1c2lvbiBNZXRybyBTdHVkaW93d3cuc3luY2Z1c2lvbi5jb20AIABlAGoALQBpAGMAbwBuAFIAZQBnAHUAbABhAHIAZQBqAC0AaQBjAG8AbgBlAGoALQBpAGMAbwBuAFYAZQByAHMAaQBvAG4AIAAxAC4AMABlAGoALQBpAGMAbwBuAEYAbwBuAHQAIABnAGUAbgBlAHIAYQB0AGUAZAAgAHUAcwBpAG4AZwAgAFMAeQBuAGMAZgB1AHMAaQBvAG4AIABNAGUAdAByAG8AIABTAHQAdQBkAGkAbwB3AHcAdwAuAHMAeQBuAGMAZgB1AHMAaQBvAG4ALgBjAG8AbQAAAAACAAAAAAAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMBAgEDAQQABHNhdmUEZWRpdAAAAAAA) format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    [class^="sf-icon-"],
+    [class*=" sf-icon-"] {
+        font-family: 'e-sb-icons' !important;
+        speak: none;
+        font-size: 55px;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    #togglebtn {
+        float: right;
+        width: 70px;
+    }
+</style>
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            The following sample demonstrates a editable dashboard layout. Initially the DashboardLayout component doesn't
+            allow to drag, resize or reorder the panels. After clicking the edit button, the layout becomes editable which
+            allows to drag and reorder the
+            panels as per the requirement and also you can add new panels to the layout with predefined templates by
+            clicking the add new button and reorder them by dragging and placing in the required position. Drag and resizing
+            of the panles are not applicable in mobile resolution.
+        </p>
+    </div>
+
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            The following sample demonstrates about using the dashboard layout as an editable layout.
+        </p>
+    </div>
+
+}
+

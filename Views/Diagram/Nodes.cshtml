@@ -134,10 +134,12 @@
         document.getElementById('appearance').onclick = function (args) {
             var target = args.target;
             var diagram = document.getElementById("container").ej2_instances[0];
+            @*custom code start*@
             var selectedElement = document.getElementsByClassName('e-selected-style');
             if (selectedElement.length) {
                 selectedElement[0].classList.remove('e-selected-style');
             }
+            @*custom code end*@
             if (target.className === 'image-pattern-style') {
                 for (var i = 0; i < diagram.nodes.length; i++) {
                     node = diagram.nodes[i];
@@ -158,7 +160,9 @@
                             applyStyle(node, 2, '5 5', ej.diagrams.NodeConstraints.Shadow, undefined);
                             break;
                     }
+                    @*custom code start*@
                     target.classList.add('e-selected-style');
+                    @*custom code end*@
                 }
             }
         };

@@ -4,14 +4,14 @@
         <div class="slider-content-wrapper content-wrapper">
             <div class="sliderwrap">
                 <label class="labeltext userselect">Background color</label>
-                <ejs-slider id="default" type="Range" tooltipChange="tooltipChangeHandler" renderingTicks="renderingTicksHandler" created="onCreated" value=ViewBag.timeValue min="1373693400000" max="1373736600000" step="600000">
+                <ejs-slider id="default" type="Range" tooltipChange="tooltipChangeHandler" renderingTicks="renderingTicksHandler" value=ViewBag.timeValue min="1373693400000" max="1373736600000" step="600000">
                     <e-slider-tooltipdata placement="Before" isVisible="true" cssClass="e-tooltip-cutomization"></e-slider-tooltipdata>
                     <e-slider-ticksdata placement="After" largeStep="10800000" smallStep="3600000" showSmallTicks="true"></e-slider-ticksdata>
                 </ejs-slider>
             </div>
             <div class="sliderwrap">
                 <label class="labeltext userselect">Color and text</label>
-                <ejs-slider id="out" type="MinRange" tooltipChange="tooltipChangeHandler" renderingTicks="renderingTicksHandler"  value=1373715000000  min="1373693400000" max="1373736600000" step="600000">
+                <ejs-slider id="out" type="MinRange" tooltipChange="tooltipChangeHandler" renderingTicks="renderingTicksHandler"  created="onCreated" value=1373715000000  min="1373693400000" max="1373736600000" step="600000">
                     <e-slider-tooltipdata placement="Before" isVisible="true" cssClass="e-tooltip-cutomization"></e-slider-tooltipdata>
                     <e-slider-ticksdata placement="After" largeStep="10800000" smallStep="3600000" showSmallTicks="true"></e-slider-ticksdata>
                 </ejs-slider>
@@ -21,7 +21,7 @@
 }
 
 @section Meta{
-    <meta name="description" content="Demo of Essential JS 2 slider control customization of slider tooltip text and background color with formatted text values." />
+    <meta name="description" content="This example demonstrates how to customize Syncfusion ASP.NET Core slider tooltip's text and background color with formatted text values." />
 }
 
 @section ActionDescription{
@@ -64,8 +64,8 @@
         margin-bottom: 40px;
     }
 
-    #default .e-material-handle,
-    #out .e-material-handle,
+    #default .e-handle,
+    #out .e-handle,
     .bootstrap #out .e-handle,
     .bootstrap #default .e-handle,
     .fabric #out .e-handle,
@@ -77,7 +77,7 @@
         z-index: 1;
     }
 
-    .e-bigger .slider-content-wrapper.content-wrapper {
+    .e-bigger .content-wrapper {
         width: 80%;
     }
 
@@ -106,16 +106,15 @@
         color: #333;
     }
 
-    .e-slider-tooltip.e-tooltip-wrap.e-popup.e-material-range .e-arrow-tip-inner {
+    .e-tooltip-cutomization.e-slider-tooltip.e-tooltip-wrap.e-popup .e-arrow-tip-inner{
         color: #ffd939;
     }
 
-    .e-slider-tooltip.e-tooltip-wrap.e-popup.e-material-range.e-slider-horizontal-before .e-arrow-tip-outer {
+    .e-tooltip-cutomization.e-slider-tooltip.e-tooltip-wrap.e-popup .e-arrow-tip-outer {
         border-top-color: #ffd939;
-
     }
 
-    .e-slider-tooltip.e-tooltip-wrap.e-popup.e-material-range.e-slider-horizontal-after .e-arrow-tip-outer {
+    .e-tooltip-cutomization.e-slider-tooltip.e-tooltip-wrap.e-popup .e-arrow-tip-outer {
         border-bottom-color: #ffd939;
     }
 
@@ -124,9 +123,9 @@
         background-color: #0375be;
         z-index: unset;
     }
-
-    .e-slider-tooltip.e-tooltip-wrap.e-popup.e-material-range,
-    .e-slider-tooltip.e-tooltip-wrap.e-popup {
+    .e-tooltip-cutomization.e-slider-tooltip.e-tooltip-wrap.e-popup.e-material-default.e-slider-horizontal-after,
+    .e-tooltip-cutomization.e-slider-tooltip.e-tooltip-wrap.e-popup.e-material-default.e-slider-horizontal-before,
+    .e-tooltip-cutomization.e-slider-tooltip.e-tooltip-wrap.e-popup {
         background-color: #ffd939;
         border-color: #ffd939;
     }
@@ -179,20 +178,20 @@
     let source;
     let outObj;
     function onCreated() {
-        timeObj = document.getElementById("default").ej2_instances[0];
+        outObj = document.getElementById("out").ej2_instances[0];
         if(document.getElementById('right-pane')) {
         document.getElementById('right-pane').addEventListener('scroll', onScroll);
         }
-        timeObj.keyUp({ keyCode: 9, target: timeObj.secondHandle });
-        timeObj.secondHandle.focus();
+        outObj.keyUp({ keyCode: 9, target: outObj.firstHandle });
+        outObj.firstHandle.focus();
     }
 
     // Handler used to reposition the tooltip on page scroll
     function onScroll() {
         timeObj = document.getElementById("default").ej2_instances[0];
         outObj = document.getElementById("out").ej2_instances[0];
-        timeObj.refreshTooltip();
-        outObj.refreshTooltip();
+        timeObj.refreshTooltip(timeObj.tooltipTarget);
+        outObj.refreshTooltip(outObj.tooltipTarget);
     }
 
 

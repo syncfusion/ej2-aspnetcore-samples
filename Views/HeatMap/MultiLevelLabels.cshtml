@@ -58,8 +58,7 @@
     </div>
     <script type="text/javascript">
         window.onHeatmapLoad = function (args) {
-            var selectedTheme = location.hash.split('/')[1];
-            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            var selectedTheme = themeName ? themeName : 'Material';
             args.heatmap.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1));
             selectedTheme = selectedTheme.toLowerCase();
             args.heatmap.xAxis.multiLevelLabels[0].categories = [{ start: 0, end: 2, text: 'Electronics', },
@@ -71,17 +70,17 @@
             { start: 6, end: 8, text: 'Q3' },
             { start: 9, end: 11, text: 'Q4' }
             ];
-            if (selectedTheme === 'material' || selectedTheme === 'fabric' || selectedTheme === 'bootstrap') {
-                args.heatmap.xAxis.textStyle.color = 'Black';
-                args.heatmap.yAxis.textStyle.color = 'Black';
-                args.heatmap.xAxis.multiLevelLabels[0].textStyle.color = 'Black';
-                args.heatmap.yAxis.multiLevelLabels[0].textStyle.color = 'Black';
-            }
-            else {
+            if (selectedTheme === 'highcontrast') {
                 args.heatmap.xAxis.textStyle.color = 'White';
                 args.heatmap.yAxis.textStyle.color = 'White';
                 args.heatmap.xAxis.multiLevelLabels[0].textStyle.color = 'White';
                 args.heatmap.yAxis.multiLevelLabels[0].textStyle.color = 'White';
+            }
+            else {
+                args.heatmap.xAxis.textStyle.color = 'Black';
+                args.heatmap.yAxis.textStyle.color = 'Black';
+                args.heatmap.xAxis.multiLevelLabels[0].textStyle.color = 'Black';
+                args.heatmap.yAxis.multiLevelLabels[0].textStyle.color = 'Black';
             }
         }
         window.onHeatmapTooltipRender = function (args) {

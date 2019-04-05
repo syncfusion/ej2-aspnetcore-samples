@@ -2,34 +2,90 @@
 
 @section ControlsSection{
     @{
-        var palette = new string[]{ "#9999ff", "#CCFF99", "#FFFF99", "#FF9999", "#FF99FF", "#FFCC66" };
+        var palette = new string[] { "#9999ff", "#CCFF99", "#FFFF99", "#FF9999", "#FF99FF", "#FFCC66" };
         var levelBorder = new TreeMapBorder { Color = "black", Width = 0.5 };
-        var border = new TreeMapBorder{ Color = "black", Width = 0.5 };
+        var border = new TreeMapBorder { Color = "black", Width = 0.5 };
         var labelStyle = new TreeMapFont { Size = "0px" };
     }
-    <div class="control-section">
-        <div class="row">
-            <div class="col-md-12">
-                <ejs-treemap id="container" load="treemapLoad" tooltipRendering="tooltipChange" drillStart="drillDownChange" format="n" useGroupingSeparator="true" palette="palette" dataSource="ViewBag.dataSource" enableDrillDown="true" weightValuePath="Population">
-                    <e-treemap-titlesettings text="List of countries by population"></e-treemap-titlesettings>
-                    <e-treemap-leafitemsettings showLabels="false" labelPath="Name" border="levelBorder"></e-treemap-leafitemsettings>
-                    <e-treemap-tooltipsettings visible="true" format="${Name} : ${Population}"></e-treemap-tooltipsettings>
-                    <e-treemap-levels>
-                        <e-treemap-level groupPath="Continent" fill="#336699" border="levelBorder"></e-treemap-level>
-                        <e-treemap-level groupPath="States" fill="#336699" border="levelBorder"></e-treemap-level>
-                        <e-treemap-level groupPath="Region" fill="#336699" headerStyle="labelStyle" border="levelBorder"></e-treemap-level>
-                    </e-treemap-levels>
-                </ejs-treemap>
-                <div style="float: right; margin-right: 10px;">
-                    Source:
-                    <a href="https://en.wikipedia.org/wiki/List_of_continents_by_population" target="_blank">en.wikipedia.org</a>
-                </div>  
-            </div>
-        </div>
+<div class="col-lg-9 control-section">
+    <ejs-treemap id="container" load="treemapLoad" tooltipRendering="tooltipChange" drillStart="drillDownChange" format="n" useGroupingSeparator="true" palette="palette" dataSource="ViewBag.dataSource" enableDrillDown="true" weightValuePath="Population">
+        <e-treemap-titlesettings text="List of countries by population"></e-treemap-titlesettings>
+        <e-treemap-leafitemsettings showLabels="false" labelPath="Name" border="levelBorder"></e-treemap-leafitemsettings>
+        <e-treemap-tooltipsettings visible="true" format="${Name} : ${Population}"></e-treemap-tooltipsettings>
+        <e-treemap-levels>
+            <e-treemap-level groupPath="Continent" fill="#336699" border="levelBorder"></e-treemap-level>
+            <e-treemap-level groupPath="States" fill="#336699" border="levelBorder"></e-treemap-level>
+            <e-treemap-level groupPath="Region" fill="#336699" headerStyle="labelStyle" border="levelBorder"></e-treemap-level>
+        </e-treemap-levels>
+    </ejs-treemap>
+    <div style="float: right; margin-right: 10px;">
+        Source:
+        <a href="https://en.wikipedia.org/wiki/List_of_continents_by_population" target="_blank">en.wikipedia.org</a>
+    </div>
+</div>
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties" style="width: 100%">
+            <tbody>
+                <tr>
+                    <td style="width: 60%">
+                        <div> Drill Down View</div>
+                    </td>
+                    <td style="width: 40%;">
+                        <ejs-checkbox id="drillView" change="drillViewChange" ></ejs-checkbox>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 60%">
+                        <div> Enable Bread Crumb </div>
+                    </td>
+                    <td style="width: 40%;">
+                        <ejs-checkbox id="enablebread" change="enablebreadChange" ></ejs-checkbox>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td style="width: 40%">
+                        <div>BreadCrumb Connector</div>
+                    </td>
+                    <td style="width: 60%;">
+                          <input type="text" value=" - "  id="breadcrumbText" disabled="true" style="width: 70px; margin-left: 10px">
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td style="width: 30%">
+                        <div>Header Alignment</div>
+                    </td>
+                    <td style="width: 80%;">
+                        <select name="selectIndex" autocomplete="off" id="headerAlignment" style="width:80%;">
+                            <option value="Near" selected>Near</option>
+                            <option value="Far">Far</option>
+                            <option value="Center">Center</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td style="width: 30%">
+                        <div>Label Alignment</div>
+                    </td>
+                    <td style="width: 80%;">
+                        <select name="direction" autocomplete="off" id="labelAlignment" style="width:80%;">
+                            <option value="Near" selected>Near</option>
+                            <option value="Far">Far</option>
+                            <option value="Center">Center</option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 }
 <script>
-
+    @* custom code start *@
+    function treemapLoad(args) {
+        window.treemap = args.treemap;
+        var theme = themeName ? themeName : 'Material';
+        args.treemap.theme = theme.charAt(0).toUpperCase() + theme.slice(1);
+    }
+    @* custom code end *@
     function drillDownChange(args) {
         if (args.item[Object.keys(args.item)[0]].length === 1) {
             args.treemap.levels[2].showHeader = true;
@@ -44,28 +100,70 @@
         }
     }
 
-    function treemapLoad(args) {
-        var theme = location.hash.split('/')[1];
-        theme = theme ? theme : 'Material';
-        args.treemap.theme = theme.charAt(0).toUpperCase() + theme.slice(1);
+    function drillViewChange(args) {
+            window.treemap.drillDownView = args.checked;
+            window.treemap.refresh();
     }
+
+    function enablebreadChange(args) {
+        var value = document.getElementById('breadcrumbText').value;
+        window.treemap.enableBreadcrumb = args.checked;
+        var breadCrumbText = document.getElementById('breadcrumbText');
+        if (args.checked) {
+            breadCrumbText.disabled = false;
+        } else {
+            breadCrumbText.disabled = true;
+        }
+            window.treemap.refresh();
+    }
+
+    window.onload = function () {
+        window.headerAlignment = new ej.dropdowns.DropDownList({
+            index: 0,
+            width: 120,
+            change: function () {
+                for (var i= 0; i < treemap.levels.length - 1; i++) {
+                    window.treemap.levels[i].headerAlignment = window.headerAlignment.value;
+                }
+                window.treemap.refresh();
+            }
+        });
+        window.headerAlignment.appendTo('#headerAlignment');
+
+        window.labelAlignment = new ej.dropdowns.DropDownList({
+            index: 0,
+            width: 120,
+            change: function () {
+                window.treemap.levels[2].headerAlignment = window.labelAlignment.value;
+                window.treemap.refresh();
+            }
+        });
+        window.labelAlignment.appendTo('#labelAlignment');
+
+        document.getElementById('breadcrumbText').onchange = () => {
+            var value = (window.document.getElementById('breadcrumbText')).value;
+            window.treemap.breadcrumbConnector = value;
+            window.treemap.refresh();
+        }
+    }
+    
 </script>
 @section Meta{
     <meta name="description" content="This demo for Essential JS2 TreeMap control demonstrates drill-down with the continents at the top level followed by regions and countries." />
 }
 @section ActionDescription{
     <div id="action-description">
-    <p>
-        This sample demonstrates drill down with the continents in top level, followed by regions and countries. By clicking a continent, you can view the items available in that continent more clearly.
-    </p>
-</div>
+        <p>
+            This sample demonstrates drill down with the continents in top level, followed by regions and countries. By clicking a continent, you can view the items available in that continent more clearly.
+        </p>
+    </div>
 }
 @section Description{
-<div id="description">
-    <p>
-        In this example you can see how to render treemap with multiple items and drill it further.Tooltip is enabled in this example. To see the tooltip in action, hover the mouse over an item or tap an item in touch enabled devices.
-    </p>
-</div>
+    <div id="description">
+        <p>
+            In this example you can see how to render treemap with multiple items and drill it further.Tooltip is enabled in this example. To see the tooltip in action, hover the mouse over an item or tap an item in touch enabled devices.
+        </p>
+    </div>
 }
 
 

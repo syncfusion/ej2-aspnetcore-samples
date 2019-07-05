@@ -3,8 +3,13 @@
 @section ControlsSection{
     <div class=" control-section">
         <div class="sample-container">
-            <ejs-filemanager id="filemanager" view="Details">
-                <e-filemanager-ajaxsettings url="https://ej2services.syncfusion.com/production/web-services/api/FileManager/FileOperations"></e-filemanager-ajaxsettings>
+             <!-- File Manager full functionalities sample -->
+            <ejs-filemanager id="filemanager" view="@Syncfusion.EJ2.FileManager.ViewType.Details">
+                <e-filemanager-ajaxsettings url="/FileManager/FileOperations"
+                                            downloadUrl="/FileManager/Download"
+                                            uploadUrl="/FileManager/Upload"
+                                            getImageUrl="/FileManager/GetImage">
+                </e-filemanager-ajaxsettings>
             </ejs-filemanager>
         </div>
     </div>
@@ -24,17 +29,15 @@
         <p>
             The <b>File Manager</b> component is used to explore a file system through a web application, similar to the windows explorer for windows. It supports all the basic file operations such as create, rename, delete, refresh and so on.
         </p>
+        <p>
+            <b>Note: </b>File Manager's upload functionality is restricted in the online demo. If you need to test upload functionality, please install
+            <a target="_blank" href="https://www.syncfusion.com/downloads">Syncfusion Essential Studio </a>on your machine and run the demo.
+        </p>
+
     </div>
 }
 
-@section Scripts{
-    <script>
-        var hostUrl = 'https://ej2services.syncfusion.com/production/web-services/';
-        var fileObj = document.getElementById('filemanager').ej2_instances[0];
-        fileObj.ajaxSettings.url = hostUrl + 'api/FileManager/FileOperations';
-        fileObj.ajaxSettings.getImageUrl = hostUrl + 'api/FileManager/GetImage',
-        fileObj.ajaxSettings.uploadUrl = hostUrl + 'api/FileManager/Upload';
-        fileObj.ajaxSettings.downloadUrl = hostUrl + 'api/FileManager/Download';
-    </script>
-}
+@section Meta{
 
+    <meta content="This example demonstrates full view of the File Manager like a windows explorer UI in a ASP.NET Core File Manager." />
+}

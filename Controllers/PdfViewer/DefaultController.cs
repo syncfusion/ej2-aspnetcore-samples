@@ -69,6 +69,16 @@ namespace EJ2CoreSampleBrowser.Controllers.PdfViewer
 
         [AcceptVerbs("Post")]
         [HttpPost]
+        [Route("api/[controller]/RenderAnnotationComments")]
+        public IActionResult RenderAnnotationComments([FromBody] Dictionary<string, string> jsonObject)
+        {
+            PdfRenderer pdfviewer = new PdfRenderer();
+            object jsonResult = pdfviewer.GetAnnotationComments(jsonObject);
+            return Content(JsonConvert.SerializeObject(jsonResult));
+        }
+
+        [AcceptVerbs("Post")]
+        [HttpPost]
         [Route("api/[controller]/Unload")]
         public IActionResult Unload([FromBody] Dictionary<string, string> jsonObject)
         {

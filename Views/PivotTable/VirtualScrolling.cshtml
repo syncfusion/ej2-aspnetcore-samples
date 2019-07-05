@@ -1,0 +1,173 @@
+@using Syncfusion.EJ2.PivotView
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 ASP.NET Core Pivot Table control shows virtual scrolling option available vertically and horizontally to load large records" />
+}
+@section ControlsSection{
+
+    <div class="control-section" style="overflow:auto">
+        <div style="margin-bottom:5px">
+            <ejs-button id="load-btn" content="Load 100K Data" isPrimary="true" cssClass="e-info"></ejs-button>
+            <span id="popup">
+            <span id="gif" className="image"></span>
+            </span>
+            <span id="performanceTime">Time Taken: 0 sec</span>
+        </div>
+        <div class="content-wrapper">
+            <ejs-pivotview id="pivotview" width="860" height="300" enablevirtualization="true" dataBound="onDataBound">
+                <e-datasourcesettings expandall="true" enablesorting="false">
+                    <e-formatsettings>
+                        <e-field name="Price" format="C0" maximumsignificantdigits="10" minimumsignificantdigits="1" usegrouping="true"></e-field>
+                    </e-formatsettings>
+                    <e-rows>
+                        <e-field name="ProductID"></e-field>
+                    </e-rows>
+                    <e-columns>
+                        <e-field name="Year"></e-field>
+                    </e-columns>
+                    <e-values>
+                        <e-field name="Price" caption="Unit Price"></e-field>
+                        <e-field name="Sold" caption="Unit Sold"></e-field>
+                    </e-values>
+                </e-datasourcesettings>
+                <e-gridsettings columnwidth="140"></e-gridsettings>
+            </ejs-pivotview>
+        </div>
+    </div>
+
+    <style>
+        #pivotview {
+            width: 100%;
+            height: 100%;
+        }
+        .image {
+            position: absolute;
+            background-repeat: no-repeat;
+            background-image: url('/Content/images/Employees/spinner.gif');
+            background-position: center;
+            width: 16px;
+            height: 28px;
+        }
+
+        .e-bigger .image {
+            height: 36px;
+        }
+        
+        #popup {
+            position: absolute;
+            background-color: transparent;
+            display: none;
+            z-index: 100;
+        }
+        .div-button{
+            margin: 5px 5px 5px 0;
+        }
+        #performanceTime {
+            float: right;
+            margin-top: 3px;
+            margin-right: 27px;
+        }
+
+        .e-bigger #performanceTime{
+            margin-top: 8px;
+        }
+    </style>
+    <script>
+        var customername = ['TOM', 'Hawk', 'Jon', 'Chandler', 'Monica', 'Rachel', 'Phoebe', 'Gunther',
+            'Ross', 'Geller', 'Joey', 'Bing', 'Tribbiani', 'Janice', 'Bong', 'Perk', 'Green', 'Ken', 'Adams'];
+        var city = ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Philadelphia', 'Phoenix', 'San Antonio', 'Austin',
+            'San Francisco', 'Columbus', 'Washington', 'Portland', 'Oklahoma', 'Las Vegas', 'Virginia', 'St. Louis', 'Birmingham'];
+        var date1;
+        var date2;
+        var isInit;
+        var dt = 0;
+        var data = function (count) {
+            var result = [];
+            for (var i = 1; i < (count + 1); i++) {
+                dt++;
+                var round = void 0;
+                var toString_1 = i.toString();
+                if (toString_1.length === 1) {
+                    round = '0000' + (i);
+                }
+                else if (toString_1.length === 2) {
+                    round = '000' + i;
+                }
+                else if (toString_1.length === 3) {
+                    round = '00' + i;
+                }
+                else if (toString_1.length === 4) {
+                    round = '0' + i;
+                }
+                else {
+                    round = toString_1;
+                }
+                result.push({
+                    ProductID: 'PRO-' + round,
+                    City: city[Math.round(Math.random() * city.length)] || city[0],
+                    Year: "FY " + (dt + 2013),
+                    CustomerName: customername[Math.round(Math.random() * customername.length)] || customername[0],
+                    Price: Math.round(Math.random() * 5000) + 5000,
+                    Sold: Math.round(Math.random() * 80) + 10,
+                });
+                if (dt / 4 == 1)
+                    dt = 0;
+
+            }
+            return result;
+        };
+
+        function show() {
+            document.getElementById('popup').style.display = 'inline-block';
+        }
+
+        function onDataBound(args) {
+            var pivotObj = document.getElementById('pivotview').ej2_instances[0];
+            if ((pivotObj.dataSourceSettings.dataSource).length > 0) {
+                var button = document.getElementById('load-btn').ej2_instances[0];
+                if (date1 && isInit) {
+                    date2 = new Date().getTime();
+                    document.getElementById('performanceTime').innerHTML = 'Time Taken: ' + (date2 - date1) / 1000 + ' sec';
+                }
+                isInit = false;
+                button.disabled = true;
+                document.getElementById('popup').style.display = 'none';
+            }
+        }
+
+        document.getElementById("load-btn").addEventListener('click', function () {
+            var pivotObj = document.getElementById('pivotview').ej2_instances[0];
+            show();
+            isInit = true;
+            pivotObj.dataSourceSettings.dataSource = data(100000);
+            date1 = new Date().getTime();
+        });
+    </script>
+}
+
+@section PreScripts {
+    <script>
+        ej.base.enableRipple(false);
+    </script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the virtual scrolling option available for vertically and horizontally loading records and showing a large number of records with ease.
+        </p>
+    </div>
+}
+
+@section Description{
+   <div id="description">
+        <p>The pivot table provides an optimized way to render rows and columns inside the view-port alone without
+            calculating the value of the entire pivot.
+            To enable virtual scrolling, set <code>enableVirtualization</code> property to true.
+        </p>
+        <p>
+            <strong>NOTE:</strong> The <code>height</code> and <code>width</code> properties must be defined when enabling
+            virtual
+            scrolling option.
+        </p>
+    </div>
+}

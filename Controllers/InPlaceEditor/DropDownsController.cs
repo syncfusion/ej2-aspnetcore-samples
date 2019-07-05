@@ -18,9 +18,9 @@ namespace EJ2CoreSampleBrowser.Controllers
             string[] data = new string[] { "Australia", "Bermuda", "Canada", "Cameroon", "Denmark", "Finland", "Greenland", "Poland" };
             ViewBag.popupSettings = new  InPlaceEditorPopupSettings { Model = new { width= "auto" }  };
             ViewBag.multiSelectData = new { placeholder = "Choose the countries", dataSource = data, mode = "Box" };
-            ViewBag.dropdownData = new { placeholder = "Find a countries", dataSource = data };
-            ViewBag.autocompleteData = new { placeholder = "Type to search countries", dataSource = data };
-            ViewBag.comboData = new { placeholder = "Find a countries", dataSource = data };
+            ViewBag.dropdownData = new { placeholder = "Find a country", dataSource = data };
+            ViewBag.autocompleteData = new { placeholder = "Type to search country", dataSource = data };
+            ViewBag.comboData = new { placeholder = "Find a country", dataSource = data };
             ViewBag.modeData = new string[] { "Inline", "Popup" };
             return View();
         }

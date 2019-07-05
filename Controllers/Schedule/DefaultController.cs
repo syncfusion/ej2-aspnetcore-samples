@@ -9,7 +9,7 @@ namespace EJ2CoreSampleBrowser.Controllers
 
         public IActionResult Default()
         {
-            ViewBag.appointments = new ScheduleData().GetScheduleData();
+            ViewBag.appointments = new ScheduleEvents().GetAppointmentData();
             return View();
         }
     }

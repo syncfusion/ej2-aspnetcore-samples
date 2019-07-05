@@ -75,9 +75,11 @@
     var defaultRTE, textArea, mdsource;
     function created() { 
         defaultRTE = this;
+        defaultRTE.formatter = new ej.richtexteditor.MarkdownFormatter({ listTags: { 'OL': '1., 2., 3.' } });
+        defaultRTE.dataBind();
         textArea = defaultRTE.contentModule.getEditPanel();
         textArea.addEventListener('keyup', function (e) {
-            MarkDownConversion();
+            markdownConversion();
         });
         mdsource = document.getElementById('preview-code');
         mdsource.addEventListener('click', function (e) {
@@ -98,7 +100,7 @@
         script.src = 'https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.19/marked.js';
         document.getElementsByTagName('head')[0].appendChild(script);
     }
-    function MarkDownConversion() {
+    function markdownConversion() {
         if (mdsource.classList.contains('e-active')) {
             var id = defaultRTE.getID() + 'html-preview';
             var htmlPreview = defaultRTE.element.querySelector('#' + id);

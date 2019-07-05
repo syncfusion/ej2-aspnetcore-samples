@@ -1,11 +1,12 @@
 @using Syncfusion.EJ2;
 @section ControlsSection{
     <div class="control-section">
+        @{Html.BeginForm("WorksheetToHTML", "XlsIO", FormMethod.Post);
         <p style="font-weight:normal">
             Click the button below to view the converted HTML document using Essential XlsIO.
         </p>
         <br />
-        
+
         <div class="celldiv">
             <table>
                 <tr>
@@ -16,34 +17,24 @@
                     &nbsp;&nbsp;&nbsp;
                     </td>
                     <td>
-                        @Html.EJS().RadioButton("radio1").Label("Workbook").Name("select").Value("Workbook").Checked(true).Render()
+                        @Html.EJS().RadioButton("radio1").Label("Workbook").Name("SaveOption").Value("Workbook").Checked(true).Render()
                     </td>
                     <td>
                         &nbsp;&nbsp;&nbsp;
                     </td>
                     <td>
-                        @Html.EJS().RadioButton("radio2").Label("Worksheet").Name("select").Value("Worksheet").Checked(false).Render()
+                        @Html.EJS().RadioButton("radio2").Label("Worksheet").Name("SaveOption").Value("Worksheet").Checked(false).Render()
                     </td>
                 </tr>
             </table>
         </div>
         <br />
         <div class="celldiv">
-            <input id="inputbtn" class="e-btn" type="submit" name="inputbtn" value="Input Template" style="width:150px;padding-left:0.5em"/>
-            <input id="convertbtn" class="e-btn" type="submit" name="convertbtn" value="Convert" style="width:150px;padding-left:0.5em"/>
+            <input id="inputbtn" class="e-btn" type="submit" name="button" value="Input Template" style="width:150px;padding-left:0.5em"/>
+            <input id="convertbtn" class="e-btn" type="submit" name="button" value="Convert" style="width:150px;padding-left:0.5em"/>
         </div>
-    </div>
-    <script>
-    document.getElementById('inputbtn').onclick = function () {
-        location.href = '@Html.Raw(@Url.Action("WorksheetToHTML", new { button= "Input Template", SaveOption = "Workbook" }))';
-    };
-    document.getElementById('convertbtn').onclick = function () {
-        if (document.getElementById('radio1').checked == true)
-            location.href = '@Html.Raw(@Url.Action("WorksheetToHTML", new { button = "Convert To HTML", SaveOption = "Workbook" }))';
-        else
-            location.href = '@Html.Raw(@Url.Action("WorksheetToHTML", new { button = "Convert To HTML", SaveOption = "Worksheet" }))';
-        };
-    </script>
+            }
+    </div>   
 }
 }
 @section ActionDescription{

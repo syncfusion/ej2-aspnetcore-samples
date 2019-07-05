@@ -3,14 +3,14 @@
 
 @section ControlsSection{
     <div class="col-lg-9 control-section">
-        <ejs-grid id="Grid" dataSource="ViewBag.dataSource" load="load"  toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })" allowPaging="true" actionBegin="actionBegin">
+        <ejs-grid id="Grid" dataSource="ViewBag.dataSource" toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })" allowPaging="true" actionBegin="actionBegin">
             <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" newRowPosition="Top"></e-grid-editSettings>
             <e-grid-pagesettings pageCount="5"></e-grid-pagesettings>
             <e-grid-columns>
                 <e-grid-column field="OrderID" headerText="Order ID" isPrimaryKey="true" validationRules="@(new { required=true, number=true})" width="140"></e-grid-column>
                 <e-grid-column field="CustomerID" headerText="Customer Name" validationRules="@(new { required=true})" width="150"></e-grid-column>
                 <e-grid-column field="Freight" headerText="Freight" validationRules="@(new { required=true})" textAlign="Right" editType="numericedit" format="C2" width="140"></e-grid-column>
-                <e-grid-column field="OrderDate" headerText="Order Date" editType="datetimepickeredit" width="160"></e-grid-column>
+                <e-grid-column field="OrderDate" headerText="Order Date" editType="datetimepickeredit" customFormat="@(new {type = "datetime", format = "M/d/y hh:mm a" })" width="160"></e-grid-column>
                 <e-grid-column field="ShipCountry" headerText="Ship Country" editType="dropdownedit" width="150"></e-grid-column>
                 <e-grid-column field="Verified" headerText="Verified" editType="booleanedit" displayAsCheckBox="true" type="boolean" width="100"></e-grid-column>
             </e-grid-columns>
@@ -58,17 +58,6 @@
         }
     </style>
 }
-<script>
-    function load() {
-        var gridObj = document.getElementById("Grid").ej2_instances[0];
-        for (i = 0; i < gridObj.columnModel.length; i++) {
-            if (gridObj.columnModel[i].field == "OrderDate") {
-                gridObj.columnModel[i].format = { type: 'dateTime', format: 'M/d/y hh:mm a' };
-            }
-        }
-
-    }
-</script>
 @section ActionDescription{
 	<div id="action-description">
 		<p>This sample demonstrates CRUD operations in Grid. You can perform CRUD operations as follows,</p>

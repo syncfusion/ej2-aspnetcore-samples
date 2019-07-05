@@ -68,7 +68,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('remove').onclick = function (e) {
             var dashboardObject = document.getElementById('dynamicLayout').ej2_instances[0];
-            if (dashboardObject.panels.length != 0) {
+            if (dashboardObject.panels.length > 0) {
                 for (var i = dashboardObject.panels.length - 1; i < dashboardObject.panels.length; i++) {
                     dashboardObject.removePanel(dashboardObject.panels[dashboardObject.panels.length - 1 - i].id);
                 }
@@ -94,18 +94,10 @@
     function onChange(args) {
         var dashboardObject = document.getElementById('dynamicLayout').ej2_instances[0];
         if (args.event.currentTarget.id === "floating") {
-            if (args.checked) {
-                dashboardObject.allowFloating = true;
-            } else {
-                dashboardObject.allowFloating = false;
-            }
+            dashboardObject.allowFloating = args.checked;
         }
         if (args.event.currentTarget.id === "resizing") {
-            if (args.checked) {
-                dashboardObject.allowResizing = true;
-            } else {
-                dashboardObject.allowResizing = false;
-            }
+            dashboardObject.allowResizing = args.checked;
         }
     }
 
@@ -113,8 +105,7 @@
 
 <style>
     #sizeX,
-    #sizeY,
-    #cellspacing {
+    #sizeY {
         height: 18px !important;
     }
 
@@ -124,7 +115,6 @@
         line-height: 1.5;
         font-size: 13px;
         font-weight: 500;
-        color: rgba(0, 0, 0, 0.61);
     }
 
     .e-panel-header {
@@ -142,9 +132,6 @@
         text-align: center;
     }
 
-    .e-dashboardlayout.e-control .e-panel .e-panel-container .e-panel-header {
-        color: rgba(0, 0, 0, 0.61);
-    }
 
     .e-panel-content {
         height: calc(100% - 28px);
@@ -160,9 +147,6 @@
         border-bottom: 1px solid #888383;
     }
 
-    .e-dashboard-layout.e-control .e-panel:hover {
-        border: 0px;
-    }
 
     .e-dashboardlayout.e-control .e-panel .e-panel-header {
         font-size: 15px;
@@ -171,7 +155,7 @@
         padding: 10px;
         vertical-align: middle;
         /* text-align: left; */
-        border-bottom: 0.5px solid rgba(0, 0, 0, .125);
+        border-bottom: 0.5px solid #e3e3e3;
     }
 
     .image-pattern-style {
@@ -259,11 +243,6 @@
         border: 1px solid lightgray;
     }
 
-    .e-dashboardlayout.e-control .e-panel,
-    .e-dashboardlayout.e-control .e-panel:hover,
-    .e-dashboardlayout.e-control .e-panel:active {
-        border: 1px solid rgba(0, 0, 0, .125);
-    }
 </style>
 
 @section ActionDescription{

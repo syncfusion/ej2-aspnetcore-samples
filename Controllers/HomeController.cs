@@ -10,7 +10,7 @@ namespace EJ2CoreSampleBrowser.Controllers
     {
         public IActionResult Index()
         {
-            return RedirectToAction("gridoverview", "grid");
+            return RedirectToAction("GridOverview", "Grid");
         }
     }
 }

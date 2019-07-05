@@ -23,8 +23,25 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
                  new DateTimeData { xValue = new DateTime(2005, 1, 1), yValue1 = 12800, yValue2 = 4800 }
             };
             ViewBag.dataSource = chartData;
+            List<ChartStripLine> xAxisStrips = new List<ChartStripLine>
+            {
+                new ChartStripLine {
+                    StartFromAxis = true, Size = 5, SizeType=Syncfusion.EJ2.Charts.SizeType.Years,
+                    IsRepeat = true, RepeatEvery = "10", Visible = true , Color="rgba(167,169,171, 0.1)"
+                }
+            };
 
-           
+            List<ChartStripLine> yAxisStrips = new List<ChartStripLine>
+            {
+                new ChartStripLine {
+                    StartFromAxis = true, Size = 2000,
+                    IsRepeat = true, RepeatEvery = "4000", Visible = true , Color="rgba(167,169,171, 0.1)"
+                }
+            };
+            ViewBag.xAxisStrips = xAxisStrips;
+            ViewBag.yAxisStrips = yAxisStrips;
+
+
             return View();
         }
 

@@ -1,7 +1,7 @@
 @using Syncfusion.EJ2
 
 @section ControlsSection{
-    <div class="control-section">
+    <div class="col-lg-9 control-section">
         <div class="schedule-wrapper">
             <ejs-schedule id="schedule" height="650" selectedDate="new DateTime(2018, 2, 20)" eventRendered="onEventRendered">
                 <e-schedule-eventsettings dataSource="@ViewBag.appointments"></e-schedule-eventsettings>
@@ -13,11 +13,27 @@
             </ejs-schedule>
         </div>
     </div>
+
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties" style="width: 100%">
+            <tbody>
+                <tr style="height: 50%">
+                    <td style="width: 100%">
+                        <ejs-checkbox id="editFollowingEvents" change="onChange" checked="false" label="Enable Following Events"></ejs-checkbox>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
     <script src="~/scripts/schedule/applyCategoryColor.js"></script>
     <script type="text/javascript">
         function onEventRendered(args) {
             var scheduleObj = document.getElementById('schedule').ej2_instances[0];
             applyCategoryColor(args, scheduleObj.currentView);
+        }
+        function onChange(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            scheduleObj.eventSettings.editFollowingEvents = args.checked;
         }
     </script>
 }

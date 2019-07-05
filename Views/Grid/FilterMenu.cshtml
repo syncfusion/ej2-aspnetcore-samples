@@ -9,13 +9,13 @@
     <div class="col-lg-8 control-section">
         <div class="control-wrapper">
             <div class="control-section">
-                <ejs-grid id="Grid" dataSource="ViewBag.datasource" allowFiltering="true" load="load" allowPaging="true">
+                <ejs-grid id="Grid" dataSource="ViewBag.datasource" allowFiltering="true" allowPaging="true">
                     <e-grid-filterSettings type="Menu"></e-grid-filterSettings>
                     <e-grid-pagesettings pageCount="5"></e-grid-pagesettings>
                     <e-grid-columns>
                         <e-grid-column field="OrderID" headerText="Order ID" isPrimaryKey="true" textAlign="Right" width="120"></e-grid-column>
                         <e-grid-column field="CustomerID" headerText="Customer Name" width="150"></e-grid-column>
-                        <e-grid-column field="OrderDate" headerText="Order Date"  width="130"></e-grid-column>
+                        <e-grid-column field="OrderDate" headerText="Order Date" customFormat="@(new {type = "datetime", format = "M/d/y hh:mm a" })" width="130"></e-grid-column>
                         <e-grid-column field="Freight" headerText="Freight" textAlign="Right" format="C2" width="120"></e-grid-column>
                     </e-grid-columns>
 
@@ -43,15 +43,6 @@
         function onChange() {
             var gridObj = document.getElementById("Grid").ej2_instances[0], dropdpwnObj = document.getElementById("filtertype").ej2_instances[0];
             gridObj.filterSettings.type = dropdpwnObj.value;
-    }
-    function load() {
-        var gridObj = document.getElementById("Grid").ej2_instances[0];
-        for (i = 0; i < gridObj.columnModel.length; i++) {
-            if (gridObj.columnModel[i].field == "OrderDate") {
-                gridObj.columnModel[i].format = { type: 'dateTime', format: 'M/d/y hh:mm a' };
-            }
-        }
-
     }
 </script>
 }

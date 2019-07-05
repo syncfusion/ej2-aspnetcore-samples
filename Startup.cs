@@ -10,6 +10,7 @@ using Microsoft.Extensions.FileProviders;
 using System.IO;
 using Microsoft.AspNetCore.StaticFiles;
 using Syncfusion.Licensing;
+using EJ2ScheduleSample.Controllers;
 
 namespace EJ2CoreSampleBrowser
 {
@@ -35,7 +36,7 @@ namespace EJ2CoreSampleBrowser
  {
      x.SerializerSettings.ContractResolver = null;
  });
-
+            services.AddSignalR();
             services.AddDirectoryBrowser();
         }
 
@@ -81,6 +82,11 @@ namespace EJ2CoreSampleBrowser
             Path.Combine(Directory.GetCurrentDirectory(), "Views")),
                 RequestPath = "/Views"
             });
+            app.UseSignalR(routes =>  // <-- SignalR 
+            {
+                routes.MapHub<ScheduleHub>("/scheduleHub");
+            });
+
         }
     }
 }

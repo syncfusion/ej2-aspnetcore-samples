@@ -84,7 +84,7 @@
 
     @*pie chart*@
     <div id="pieContainer" class="edit-content">
-        <ejs-accumulationchart style="height: 100%; width: 100%" id="pie" enableAnimation="true" enableSmartLabels="true" width="99%" height="100%">
+        <ejs-accumulationchart style="height: 100%; width: 100%" id="pie" load="onPieload" enableAnimation="true" enableSmartLabels="true" width="99%" height="100%">
             <e-accumulationchart-tooltipsettings enable="true" header="<b>${point.x}</b>" format="Composition : <b>${point.y}%</b>"></e-accumulationchart-tooltipsettings>
             <e-accumulationchart-legendsettings visible="false">
             </e-accumulationchart-legendsettings>
@@ -131,11 +131,12 @@
         selectedTheme = selectedTheme ? selectedTheme : 'Material';
         args.chart.theme = (selectedTheme.charAt(0).toUpperCase() +
             selectedTheme.slice(1)).replace(/-dark/i, 'Dark');
-        if (selectedTheme === 'highcontrast') {
-            args.chart.series[0].marker.dataLabel.font.color = '#000000';
-            args.chart.series[1].marker.dataLabel.font.color = '#000000';
-            args.chart.series[2].marker.dataLabel.font.color = '#000000';
-        }
+    }
+
+    function onPieload(args) {
+        var indexedTheme = location.hash.split('/')[1];
+        indexedTheme = indexedTheme ? indexedTheme : 'Material';
+        args.accumulation.theme = (indexedTheme.charAt(0).toUpperCase() + indexedTheme.slice(1).replace(/dark/i, "Dark").replace(/light/i, "Light"));
     }
 
     function onPanelResize(args) {
@@ -213,11 +214,6 @@
                         selectedTheme = selectedTheme ? selectedTheme : 'Material';
                         args.chart.theme = (selectedTheme.charAt(0).toUpperCase() +
                             selectedTheme.slice(1)).replace(/-dark/i, 'Dark');
-                        if (selectedTheme === 'highcontrast') {
-                            args.chart.series[0].marker.dataLabel.font.color = '#000000';
-                            args.chart.series[1].marker.dataLabel.font.color = '#000000';
-                            args.chart.series[2].marker.dataLabel.font.color = '#000000';
-                        }
                     }
                 });
                 linechartObj.appendTo('#' + '_line' + countValue);
@@ -260,7 +256,12 @@
                         visible: false, toggleVisibility: false
                     },
                     width: '99%',
-                    height: '100%'
+                    height: '100%',
+                    load: function (args) {
+                        var indexedTheme = location.hash.split('/')[1];
+                        indexedTheme = indexedTheme ? indexedTheme : 'Material';
+                        args.accumulation.theme = (indexedTheme.charAt(0).toUpperCase() + indexedTheme.slice(1).replace(/dark/i, "Dark").replace(/light/i, "Light"));
+                    }
                 });
                 pie.appendTo('#' + '_pie' + countValue);
                 pie.refresh();
@@ -462,7 +463,6 @@
 
     #togglebtn {
         float: right;
-        width: 70px;
     }
 </style>
 

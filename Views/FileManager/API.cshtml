@@ -3,10 +3,14 @@
 @section ControlsSection{
     <div class="col-lg-8 control-section">
         <div class="control_wrapper">
-            <ejs-filemanager id="file" view="LargeIcons">
-                <e-filemanager-ajaxsettings url="https://ej2services.syncfusion.com/production/web-services/api/FileManager/FileOperations"></e-filemanager-ajaxsettings>
+             <!-- File Manager API sample -->
+            <ejs-filemanager id="filemanager" view="@Syncfusion.EJ2.FileManager.ViewType.LargeIcons">
+                <e-filemanager-ajaxsettings url="/FileManager/FileOperations"
+                                            downloadUrl="/FileManager/Download"
+                                            uploadUrl="/FileManager/Upload"
+                                            getImageUrl="/FileManager/GetImage">
+                </e-filemanager-ajaxsettings>
                 <e-filemanager-navigationpanesettings visible="false"></e-filemanager-navigationpanesettings>
-                <e-filemanager-toolbarsettings visible="true"></e-filemanager-toolbarsettings>
             </ejs-filemanager>
         </div>
     </div>
@@ -39,29 +43,28 @@
 @section Description{
     <div id="description">
         <p>The File Manager component is used to explore a file system through a web application, similar to the windows explorer for windows. It supports the basic file operations such as create, rename, delete.</p>
+
+        <p>
+            <b>Note: </b>File Manager's upload functionality is restricted in the online demo. If you need to test upload functionality, please install
+            <a target="_blank" href="https://www.syncfusion.com/downloads">Syncfusion Essential Studio </a>on your machine and run the demo.
+        </p>
     </div>
 }
-@section Scripts{
+@section PreScripts{
     <script>
-        var hostUrl = 'https://ej2services.syncfusion.com/production/web-services/';
-        var fileObject = document.getElementById('file').ej2_instances[0];
-        fileObject.ajaxSettings.url = hostUrl + 'api/FileManager/FileOperations';
-        fileObject.ajaxSettings.getImageUrl = hostUrl + 'api/FileManager/GetImage',
-        fileObject.ajaxSettings.uploadUrl = hostUrl + 'api/FileManager/Upload';
-        fileObject.ajaxSettings.downloadUrl = hostUrl + 'api/FileManager/Download';
+
+        function onToolbarChange(args) {
+            var fileObject = document.getElementById('filemanager').ej2_instances[0];
+            fileObject.toolbarSettings.visible = args.checked;
+        }
     </script>
 }
 
-<script>
+@section Meta{
 
-    function onToolbarChange(args) {
-        fileObject.toolbarSettings.visible = args.checked;
-    }
+    <meta content="This example demonstrates how to render the File Manager without the navigation pane in a ASP.NET Core File Manager." />
+}
 
-    function onNavigationChange(args) {
-        fileObject.navigationPaneSettings.visible = args.checked;
-    }
-</script>
 <style>
 
     .property-panel-table div {
@@ -85,7 +88,6 @@
     #tool_toggle {
         width: 100px;
     }
-
 </style>
 
 

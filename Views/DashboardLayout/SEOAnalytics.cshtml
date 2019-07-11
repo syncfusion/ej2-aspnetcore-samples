@@ -102,7 +102,7 @@ new { latitude = 51.5326602, longitude = -0.1262422, name = "London"}
                                 </e-dashboardlayout-panel>
                                 <e-dashboardlayout-panel sizeX="4" sizeY="2" row="3" col="2" content="#visitorContainer" header="<div>Traffic History</div>">
                                 </e-dashboardlayout-panel>
-                                <e-dashboardlayout-panel sizeX="2" sizeY="2" row="3" col="0" content="#pieChartContainer" header="<div>Useage Statistics</div>">
+                                <e-dashboardlayout-panel sizeX="2" sizeY="2" row="3" col="0" content="#pieChartContainer" header="<div>Usage Statistics</div>">
                                 </e-dashboardlayout-panel>
                             </e-dashboardlayout-panels>
                         </ejs-dashboardlayout>
@@ -152,7 +152,7 @@ new { latitude = 51.5326602, longitude = -0.1262422, name = "London"}
 
     @*map*@
     <div id="mapContainer" class="edit-content">
-        <ejs-maps id="maps" style="height:100%; width:100%">
+        <ejs-maps id="maps" load="window.onMapLoad" style="height:100%; width:100%">
             <e-maps-zoomsettings enable="false"></e-maps-zoomsettings>
             <e-maps-legendsettings visible="false"></e-maps-legendsettings>
             <e-maps-layers>
@@ -175,7 +175,7 @@ new { latitude = 51.5326602, longitude = -0.1262422, name = "London"}
 
     @*column chart*@
     <div id="columnContaier" class="edit-content">
-        <ejs-chart style="height:100%; width:100%" id="linechart" width="100%" height="100%">
+        <ejs-chart style="height:100%; width:100%" id="linechart" load="window.onChartLoad">
             <e-chart-margin top="30"></e-chart-margin>
             <e-chart-tooltipsettings enable="true">
             </e-chart-tooltipsettings>
@@ -216,7 +216,7 @@ new { latitude = 51.5326602, longitude = -0.1262422, name = "London"}
 
     @*pie chart*@
     <div id="pieContainer" class="edit-content">
-        <ejs-accumulationchart style="height:100%; width:100%" id="pie1" enableSmartLabels="true" enableAnimation="true" width="100%" height="100%">
+        <ejs-accumulationchart style="height:100%; width:100%" id="pie1" load="loadPiechart" enableSmartLabels="true" enableAnimation="true" width="100%" height="100%">
             <e-accumulationchart-tooltipsettings enable="true" header="<b>${point.x}</b>" format="Composition : <b>${point.y}%</b>"></e-accumulationchart-tooltipsettings>
             <e-accumulationchart-legendsettings visible="false">
             </e-accumulationchart-legendsettings>
@@ -232,7 +232,7 @@ new { latitude = 51.5326602, longitude = -0.1262422, name = "London"}
 
     @*pie chart*@
     <div id="pieChartContainer" class="edit-content">
-        <ejs-accumulationchart style="height:100%; width:100%" id="pie" enableSmartLabels="true" enableAnimation="true" width="100%" height="100%">
+        <ejs-accumulationchart style="height:100%; width:100%" id="pie" load="loadPiechart" enableSmartLabels="true" enableAnimation="true" width="100%" height="100%">
             <e-accumulationchart-tooltipsettings enable="true" header="<b>${point.x}</b>" format="Composition : <b>${point.y}%</b>"></e-accumulationchart-tooltipsettings>
             <e-accumulationchart-legendsettings visible="false">
             </e-accumulationchart-legendsettings>
@@ -249,7 +249,7 @@ new { latitude = 51.5326602, longitude = -0.1262422, name = "London"}
 
     @*spline chart*@
     <div id="visitorContainer" class="edit-content">
-        <ejs-chart id="spline" style="height:100%; width:100%" height="100%" width="100%">
+        <ejs-chart id="spline" style="height:100%; width:100%" load="window.onChartLoad">
             <e-chart-primaryxaxis valueType="DateTime" labelFormat="MMM" intervalType="Months" edgeLabelPlacement="Shift">
                 <e-majorgridlines width="0"></e-majorgridlines>
             </e-chart-primaryxaxis>
@@ -273,18 +273,7 @@ new { latitude = 51.5326602, longitude = -0.1262422, name = "London"}
 
     <div id="content"></div>
 }
-@section Scripts {
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var lineObj = document.getElementById('linechart').ej2_instances[0];
-            var pieObj = document.getElementById('pie').ej2_instances[0];
-            var mapObj = document.getElementById('maps').ej2_instances[0];
-            var pieObj1 = document.getElementById('pie1').ej2_instances[0];
-            var splineObj = document.getElementById('spline').ej2_instances[0];
-            lineObj.refresh(); pieObj.refresh(); pieObj1.refresh(); splineObj.refresh(); mapObj.refresh();
-        });
-    </script>
-}
+
 @section ActionDescription{
     <div id="action-description">
         <p>
@@ -303,7 +292,36 @@ new { latitude = 51.5326602, longitude = -0.1262422, name = "London"}
     </div>
 
 }
-    <style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var lineObj = document.getElementById('linechart').ej2_instances[0];
+        var pieObj = document.getElementById('pie').ej2_instances[0];
+        var mapObj = document.getElementById('maps').ej2_instances[0];
+        var pieObj1 = document.getElementById('pie1').ej2_instances[0];
+        var splineObj = document.getElementById('spline').ej2_instances[0];
+        lineObj.refresh(); pieObj.refresh(); pieObj1.refresh(); splineObj.refresh(); mapObj.refresh();
+    });
+
+    window.onMapLoad = function (args) {
+        var theme = location.hash.split("/")[1];
+        theme = theme ? theme : "Material";
+        args.maps.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+    }
+
+    window.onChartLoad = function (args) {
+        var selectedTheme = location.hash.split('/')[1];
+        selectedTheme = selectedTheme ? selectedTheme : 'Material';
+        args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/dark/i, "Dark").replace(/light/i, "Light"));
+    }
+
+    function loadPiechart(args) {
+        var indexedTheme = location.hash.split('/')[1];
+        indexedTheme = indexedTheme ? indexedTheme : 'Material';
+        args.accumulation.theme = (indexedTheme.charAt(0).toUpperCase() + indexedTheme.slice(1).replace(/dark/i, "Dark").replace(/light/i, "Light"));
+    }
+</script>
+<style>
    .sidebar-content {
       padding: 10px;
       width: calc(100% - 60px);
@@ -341,7 +359,7 @@ new { latitude = 51.5326602, longitude = -0.1262422, name = "London"}
 
       #pieChart, #colChart, #visitorsChart, #pie, #map{
           width: 100% !important;
-          height: 40% !important;
+          height: 100% !important;
       }
     }
 
@@ -627,7 +645,27 @@ new { latitude = 51.5326602, longitude = -0.1262422, name = "London"}
         text-shadow: 0px 1px 1px black;
         font-weight: 500
     }
-    </style>
+
+    /* styles for highcontrast theme */
+
+    body.highcontrast #sidebar-section{
+        border: 1px solid #969696;
+    }
+
+    body.highcontrast .header{
+        border-bottom: 1px solid #969696;
+    }
+
+    body.highcontrast #dockSidebar .e-icons::before {
+        color: #fff;
+    }
+
+    body.highcontrast #dockSidebar li.sidebar-item.filterHover,
+    body.highcontrast #dockSidebar {
+        background: #000;
+    }
+
+</style>
 
 
 

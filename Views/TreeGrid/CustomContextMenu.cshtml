@@ -29,8 +29,9 @@
         function onOpen(args) {
             var treegrid = document.getElementById("TreeGrid").ej2_instances[0];
             var elem = args.event.target;
-            var uid = elem.closest('.e-row').getAttribute('data-uid');
-            if (ejs.base.isNullOrUndefined(ejs.base.getValue('hasChildRecords', treegrid.grid.getRowObjectFromUID(uid).data))) {
+            var row = elem.closest('.e-row');
+            var uid = row && row.getAttribute('data-uid');
+            if (ejs.base.isNullOrUndefined(uid) || ejs.base.isNullOrUndefined(ejs.base.getValue('hasChildRecords', treegrid.grid.getRowObjectFromUID(uid).data))) {
                 args.cancel = true;
             } else {
                 var flag = ejs.base.getValue('expanded', treegrid.grid.getRowObjectFromUID(uid).data);
@@ -60,7 +61,7 @@
 @section ActionDescription{
     <div id="action-description">
         <p>
-            This sample demonstrates the usage of custom context menu in TreeGrid component. Right click anywhere on the TreeGrid to view custom context menu.
+            This sample demonstrates the usage of custom context menu in TreeGrid component. Right click anywhere on a parent row in the TreeGrid to view custom context menu. 
         </p>
 
     </div>

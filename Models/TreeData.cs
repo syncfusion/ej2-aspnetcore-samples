@@ -123,7 +123,7 @@ namespace EJ2CoreSampleBrowser.Models
                 Duration = 5,
                 Progress = 100,
                 Approved = true,
-                Priority= "Low",
+                Priority = "Low",
                 FilterStartDate = new DateTime(2017, 02, 03),
                 FilterEndDate = new DateTime(2017, 02, 07),
             };
@@ -1133,6 +1133,152 @@ namespace EJ2CoreSampleBrowser.Models
             public List<ShipmentData> Children { get; set; }
 
         }
+    }
+
+    
+    public class VirtualDataFormat
+    {
+        public int TaskID { get; set; }
+        public string FIELD1 { get; set; }
+        public int FIELD2 { get; set; }
+        public int FIELD3 { get; set; }
+        public int FIELD4 { get; set; }
+        public List<VirtualDataFormat> Children { get; set; }
+
+
+
+        public static List<VirtualDataFormat> GetVirtualData()
+        {
+
+            List<VirtualDataFormat> DataCollection = new List<VirtualDataFormat>();
+
+            for(var i = 1; i <= 1000; i++)
+            {
+
+            VirtualDataFormat Parent1 = new VirtualDataFormat()
+            {
+                TaskID = 1,
+                FIELD1 = "VINET",
+                FIELD2 = 1967,
+                FIELD3 = 395,
+                FIELD4 = 87,
+                Children = new List<VirtualDataFormat>()
+            };
+
+            VirtualDataFormat Child1 = new VirtualDataFormat()
+            {
+                TaskID = 2,
+                FIELD1 = "TOMSP",
+                FIELD2 = 1968,
+                FIELD3 = 295,
+                FIELD4 = 44
+            };
+
+            VirtualDataFormat Child2 = new VirtualDataFormat()
+            {
+                TaskID = 3,
+                FIELD1 = "HANAR",
+                FIELD2 = 1969,
+                FIELD3 = 376,
+                FIELD4 = 22
+            };
+            VirtualDataFormat Child3 = new VirtualDataFormat()
+            {
+                TaskID = 4,
+                FIELD1 = "VICTE",
+                FIELD2 = 1970,
+                FIELD3 = 123,
+                FIELD4 = 35
+            };
+            VirtualDataFormat Child4 = new VirtualDataFormat()
+            {
+                TaskID = 5,
+                FIELD1 = "SUPRD",
+                FIELD2 = 1971,
+                FIELD3 = 567,
+                FIELD4 = 98
+            };
+            VirtualDataFormat Child5 = new VirtualDataFormat()
+            {
+                TaskID = 6,
+                FIELD1 = "RICSU",
+                FIELD2 = 1972,
+                FIELD3 = 378,
+                FIELD4 = 56
+            };
+                VirtualDataFormat Parent2 = new VirtualDataFormat()
+                {
+                    TaskID = 1,
+                    FIELD1 = "TOMSP",
+                    FIELD2 = 1968,
+                    FIELD3 = 295,
+                    FIELD4 = 44,
+                    Children = new List<VirtualDataFormat>()
+                };
+
+                VirtualDataFormat Child6 = new VirtualDataFormat()
+                {
+                    TaskID = 2,
+                    FIELD1 = "VINET",
+                    FIELD2 = 1967,
+                    FIELD3 = 395,
+                    FIELD4 = 87
+                };
+
+                VirtualDataFormat Child7 = new VirtualDataFormat()
+                {
+                    TaskID = 3,
+                    FIELD1 = "VICTE",
+                    FIELD2 = 1970,
+                    FIELD3 = 123,
+                    FIELD4 = 35
+                };
+                VirtualDataFormat Child8 = new VirtualDataFormat()
+                {
+                    TaskID = 4,
+                    FIELD1 = "RICSU",
+                    FIELD2 = 1972,
+                    FIELD3 = 378,
+                    FIELD4 = 56
+                };
+                VirtualDataFormat Child9 = new VirtualDataFormat()
+                {
+                    TaskID = 5,
+                    FIELD1 = "HANAR",
+                    FIELD2 = 1969,
+                    FIELD3 = 376,
+                    FIELD4 = 22
+                };
+                VirtualDataFormat Child10 = new VirtualDataFormat()
+                {
+                    TaskID = 6,
+                    FIELD1 = "SUPRD",
+                    FIELD2 = 1971,
+                    FIELD3 = 567,
+                    FIELD4 = 98
+                };
+            Parent1.Children.Add(Child1);
+            Parent1.Children.Add(Child2);
+            Parent1.Children.Add(Child3);
+            Parent1.Children.Add(Child4);
+            Parent1.Children.Add(Child5);
+
+            Parent2.Children.Add(Child6);
+            Parent2.Children.Add(Child7);
+            Parent2.Children.Add(Child8);
+            Parent2.Children.Add(Child9);
+            Parent2.Children.Add(Child10);
+
+
+
+                DataCollection.Add(Parent1);
+                DataCollection.Add(Parent2);
+
+            }
+            return DataCollection;
+
+        }
+
     }
     public class TreeDataFormat
     {

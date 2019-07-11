@@ -1,0 +1,196 @@
+﻿@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class=" control-section">
+        <div class="control-wrapper">
+   <div id="rteSection">
+    <ejs-richtexteditor id="customtool" created="created">
+        <e-richtexteditor-toolbarsettings items="@ViewBag.items"></e-richtexteditor-toolbarsettings>
+        <e-content-template>
+            <p>
+                The custom command 'insert special character' is configured as the last item of the toolbar.
+                Click on the command and choose the special character you want to include from the popup.
+            </p>
+        </e-content-template>
+    </ejs-richtexteditor>
+</div>
+</div>
+</div>
+    
+<ejs-dialog id="customTbarDialog" visible="false" header='Special Characters' created="onDialogCreate" zIndex="1000" showCloseIcon="false" isModal="true" overlayClick="dialogOverlay">
+    <e-dialog-buttons>
+        <e-dialog-dialogbutton buttonModel="ViewBag.button" click="onInsert"></e-dialog-dialogbutton>
+        <e-dialog-dialogbutton buttonModel="ViewBag.button1" click="dialogOverlay"></e-dialog-dialogbutton>
+    </e-dialog-buttons>
+    <e-content-template>
+        <div id="rteSpecial_char">
+            <div class="char_block" title="^">^</div>
+            <div class="char_block" title="_">_</div>
+            <div class="char_block" title="`">`</div>
+            <div class="char_block" title="{">{</div>
+            <div class="char_block" title="|">|</div>
+            <div class="char_block" title="}">}</div>
+            <div class="char_block" title="~">~</div>
+            <div class="char_block" title="&nbsp;">&nbsp;</div>
+            <div class="char_block" title="¡">¡</div>
+            <div class="char_block" title="¢">¢</div>
+            <div class="char_block" title="£">£</div>
+            <div class="char_block" title="¤">¤</div>
+            <div class="char_block" title="¥">¥</div>
+            <div class="char_block" title="₹">₹</div>
+            <div class="char_block" title="¦">¦</div>
+            <div class="char_block" title="§">§</div>
+            <div class="char_block" title="¨">¨</div>
+            <div class="char_block" title="©">©</div>
+            <div class="char_block" title="ª">ª</div>
+            <div class="char_block" title="«">«</div>
+            <div class="char_block" title="¬">¬</div>
+            <div class="char_block" title="­-">-­</div>
+            <div class="char_block" title="®">®</div>
+            <div class="char_block" title="¯">¯</div>
+            <div class="char_block" title="°">°</div>
+            <div class="char_block" title="±">±</div>
+            <div class="char_block" title="²">²</div>
+            <div class="char_block" title="³">³</div>
+            <div class="char_block" title="´">´</div>
+            <div class="char_block" title="µ">µ</div>
+            <div class="char_block" title="¶">¶</div>
+            <div class="char_block" title="·">·</div>
+            <div class="char_block" title="¸">¸</div>
+            <div class="char_block" title="¹">¹</div>
+            <div class="char_block" title="º">º</div>
+            <div class="char_block" title="»">»</div>
+            <div class="char_block" title="¼">¼</div>
+            <div class="char_block" title="½">½</div>
+            <div class="char_block" title="¾">¾</div>
+            <div class="char_block" title="¿">¿</div>
+            <div class="char_block" title="À">À</div>
+            <div class="char_block" title="Á">Á</div>
+            <div class="char_block" title="Â">Â</div>
+            <div class="char_block" title="Ã">Ã</div>
+        </div>
+    </e-content-template>
+</ejs-dialog>
+   
+   <script>
+    var defaultRTE, selection, ranges, dialog;
+
+    function onDialogCreate() {
+        dialog = this;
+       dialog.element.style.maxHeight = '300px';
+    }
+    function onInsert() {
+        var activeEle = dialog.element.querySelector('.char_block.e-active');
+        if (defaultRTE.formatter.getUndoRedoStack().length === 0) {
+            defaultRTE.formatter.saveData();
+        }
+        defaultRTE.executeCommand('insertText', activeEle.textContent);
+        defaultRTE.formatter.saveData();
+        defaultRTE.formatter.enableUndo(defaultRTE);
+        dialogOverlay();
+    }
+    function dialogOverlay() {
+        var activeEle = dialog.element.querySelector('.char_block.e-active');
+        if (activeEle) {
+            activeEle.classList.remove('e-active');
+        }
+        dialog.hide();
+    }
+    function created() {
+        defaultRTE = this;
+        selection = new ej.richtexteditor.NodeSelection();
+        var customBtn = defaultRTE.element.querySelector('#custom_tbar');
+        customBtn.onclick = function (e) {
+            dialog.element.style.display = '';
+            ranges = selection.getRange(document);
+            dialog.width = defaultRTE.element.offsetWidth * 0.5;
+            dialog.dataBind();
+            dialog.show();
+            var dialogCtn = document.getElementById('rteSpecial_char');
+            dialogCtn.onclick = function (e) {
+                var target = e.target;
+                var activeEle = dialog.element.querySelector('.char_block.e-active');
+                if (target.classList.contains('char_block')) {
+                    target.classList.add('e-active');
+                    if (activeEle) {
+                        activeEle.classList.remove('e-active');
+                    }
+                }
+            };
+            customBtn.onclick = function (e) {
+                defaultRTE.focusIn();
+                dialog.element.style.display = '';
+                ranges = selection.getRange(document);
+                dialog.width = defaultRTE.element.offsetWidth * 0.5;
+                dialog.dataBind();
+                dialog.show();
+            };
+        };
+    }
+</script>
+    <style>
+    #customTbarDialog #special_char,
+    #customTbarDialog .char_block {
+        display: inline-block;
+    }
+
+    #custom_tbar,
+    #custom_tbar div {
+        cursor: pointer;
+    }
+
+    #rteSpecial_char {
+        padding: 15px 0 15px 0;
+    }
+
+    #customTbarDialog .char_block.e-active {
+        outline: 1px solid #e3165b;
+        border-color: #e3165b;
+    }
+
+    #customTbarDialog .char_block {
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        margin: 0 5px 5px 0;
+        text-align: center;
+        vertical-align: middle;
+        border: 1px solid #DDDDDD;
+        font-size: 20px;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    #custom_tbar .rtecustomtool {
+        font-size: 18px;
+    }
+</style>
+}
+
+@*custom code start*@
+
+@section Meta{
+    <meta name="description" content="This demo for Essential JS 2  rich text editor control shows the users to add their commands to the toolbar along with the built-in commands."/>
+}
+
+@*custom code end*@
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample shows how to add your own commands to toolbar of the rich text editor.
+            The <code>“Ω” </code>  command is added to insert special characters in the editor.
+            Click the “Ω” command to show the special characters list, and then choose the character to be inserted in the editor.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            The rich text editor allows you to configure your own commands to its toolbar using <code>toolbarSettings</code> property.
+            The command can be plain text, icon, or HTML template.
+            You can also define the order and group where the command should be included.
+            Bind the action to the command by getting its instance.
+        </p>
+    </div>
+}
+

@@ -36,6 +36,32 @@ namespace EJ2CoreSampleBrowser.Controllers.DocumentEditor
             document.Dispose();
             return json;
         }
+
+        [AcceptVerbs("Post")]
+        [HttpPost]
+        [Route("SystemClipboard")]
+        public string SystemClipboard([FromBody]CustomParameter param)
+        {
+            if (param.content != null && param.content != "")
+            {
+                WordDocument document = WordDocument.LoadString(param.content, GetFormatType(param.type.ToLower()));
+                string json = Newtonsoft.Json.JsonConvert.SerializeObject(document);
+                document.Dispose();
+                return json;
+            }
+            return "";
+        }
+
+        [AcceptVerbs("Post")]
+        [HttpPost]
+        [Route("RestrictEditing")]
+        public string[] RestrictEditing([FromBody]CustomRestrictParameter param)
+        {
+            if (param.passwordBase64 == "" && param.passwordBase64 == null)
+                return null;
+            return WordDocument.ComputeHash(param.passwordBase64, param.saltBase64, param.spinCount);
+        }
+
         internal static FormatType GetFormatType(string format)
         {
             if (string.IsNullOrEmpty(format))
@@ -51,11 +77,15 @@ namespace EJ2CoreSampleBrowser.Controllers.DocumentEditor
                 case "doc":
                     return FormatType.Doc;
                 case "rtf":
+                case ".rtf":
                     return FormatType.Rtf;
                 case "txt":
                     return FormatType.Txt;
                 case "xml":
                     return FormatType.WordML;
+                case "html":
+                case ".html":
+                    return FormatType.Html;
                 default:
                     throw new NotSupportedException("EJ2 Document editor does not support this file format.");
             }
@@ -75,5 +105,18 @@ namespace EJ2CoreSampleBrowser.Controllers.DocumentEditor
             stream.Dispose();
             return document;
         }
+    }
+
+    public class CustomParameter
+    {
+        public string content { get; set; }
+        public string type { get; set; }
+    }
+
+    public class CustomRestrictParameter
+    {
+        public string passwordBase64 { get; set; }
+        public string saltBase64 { get; set; }
+        public int spinCount { get; set; }
     }
 }

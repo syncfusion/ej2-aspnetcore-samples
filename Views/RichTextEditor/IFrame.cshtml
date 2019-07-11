@@ -18,27 +18,17 @@
             iframeRTE = this;
         }
         function handleFullScreen(e) {
-            var leftBar;
-            var transformElement;
-            if (ej.base.Browser.isDevice) {
-                leftBar = document.querySelector('#right-sidebar');
-                transformElement = document.querySelector('.sample-browser.e-view.e-content-animation');
-            }
-            else {
-                leftBar = document.querySelector('.sb-left-pane');
-                transformElement = document.querySelector('#right-pane');
-            }
+            var sbCntEle = document.querySelector('.sb-content.e-view');
+            var sbHdrEle = document.querySelector('.sb-header.e-view');
             if (e.targetItem === 'Maximize') {
-                ej.base.addClass([leftBar], ['e-close']);
-                ej.base.removeClass([leftBar], ['e-open']);
-                transformElement.style.transform = 'inherit';
+                if (ej.base.Browser.isDevice && ej.base.Browser.isIos) {
+                    ej.base.addClass([sbCntEle, sbHdrEle], ['hide-header']);
+                }
             }
             else if (e.targetItem === 'Minimize') {
-                ej.base.removeClass([leftBar], ['e-close']);
-                if (!ej.base.Browser.isDevice) {
-                    ej.base.addClass([leftBar], ['e-open']);
+                if (ej.base.Browser.isDevice && ej.base.Browser.isIos) {
+                    ej.base.removeClass([sbCntEle, sbHdrEle], ['hide-header']);
                 }
-                transformElement.style.transform = 'translateX(0px)';
             }
         }
         function actionCompleteHandler() {
@@ -53,6 +43,14 @@
         /* custom code start */
         .sb-header {
             z-index: 100;
+        }
+
+        .sb-content.e-view.hide-header {
+            top: 0 !important;
+        }
+
+        .sb-header.e-view.hide-header {
+            display: none;
         }
         /* custom code end */
     </style>

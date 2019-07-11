@@ -23,19 +23,9 @@
         function getAbsoluteURL() {
             return "@Url.Content("~/")";
         };
-        var baseurl = window.baseurl = getAbsoluteURL();
-        if (location.hash) {
-            themeName = location.hash.split('#/')[1];
-            location.href = location.href.replace(location.hash, '') + '?theme=' + themeName;
-        }
-           function getParam(name) {
-            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(location.href);
-            if (!results) {
-                return null;
-            }
-            return decodeURI(results[1]) || 0;
-        }
-        var themeName = getParam('theme');
+            var baseurl = window.baseurl = getAbsoluteURL();
+
+        var themeName = location.hash.split('#/')[1];
         themeName = themeName ? themeName : 'material';
             document.write('<link href="' + baseurl + 'styles/' + themeName + '.css" rel="stylesheet" />');
 

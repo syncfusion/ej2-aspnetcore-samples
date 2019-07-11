@@ -3,8 +3,13 @@
 @section ControlsSection{
     <div class=" control-section">
         <div class="sample-container">
-            <ejs-filemanager id="file" view="LargeIcons" showThumbnail="false">
-                <e-filemanager-ajaxsettings url="https://ej2services.syncfusion.com/production/web-services/api/FileManager/FileOperations"></e-filemanager-ajaxsettings>
+             <!-- File Manager custom thumbnail sample -->
+            <ejs-filemanager id="filemanager" showThumbnail="false">
+                <e-filemanager-ajaxsettings url="/FileManager/FileOperations"
+                                            downloadUrl="/FileManager/Download"
+                                            uploadUrl="/FileManager/Upload"
+                                            getImageUrl="/FileManager/GetImage">
+                </e-filemanager-ajaxsettings>
             </ejs-filemanager>
         </div>
     </div>
@@ -19,21 +24,19 @@
 @section Description{
     <div id="description">
         <p>The File Manager component is used to explore a file system through a web application, similar to the windows explorer for windows. It supports all the basic file operations such as create, rename, delete and so on.</p>
-    </div>
 
+        <p>
+            <b>Note: </b>File Manager's upload functionality is restricted in the online demo. If you need to test upload functionality, please install
+            <a target="_blank" href="https://www.syncfusion.com/downloads">Syncfusion Essential Studio </a>on your machine and run the demo.
+        </p>
     </div>
 }
 
-@section Scripts{
-    <script>
-        var hostUrl = 'https://ej2services.syncfusion.com/production/web-services/';
-        var fileObj = document.getElementById('file').ej2_instances[0];
-        fileObj.ajaxSettings.url = hostUrl + 'api/FileManager/FileOperations';
-        fileObj.ajaxSettings.getImageUrl = hostUrl + 'api/FileManager/GetImage',
-            fileObj.ajaxSettings.uploadUrl = hostUrl + 'api/FileManager/Upload';
-        fileObj.ajaxSettings.downloadUrl = hostUrl + 'api/FileManager/Download';
-    </script>
+@section Meta{
+
+    <meta content="This example demonstrates how to use the custom thumbnails in a ASP.NET Core File Manager." />
 }
+
 <style>
     .e-filemanager .e-large-icons .e-fe-image {
         background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMzIgMzIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDMyIDMyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PHN0eWxlIHR5cGU9InRleHQvY3NzIj4uc3Qwe2ZpbGw6I0ZGOTI5Mjt9LnN0MXtmaWxsOiNFODdFN0U7fS5zdDJ7ZmlsbDojRkZDM0MzO30uc3Qze2ZpbGw6IzkxRDRGRTt9LnN0NHtmaWxsOiM2M0E3RDM7fS5zdDV7ZmlsbDojQzFFN0ZGO30uc3Q2e2ZpbGw6I0ZGRkZGRjt9LnN0N3tmaWxsOiM4M0Q2Qjk7fS5zdDh7ZmlsbDojNDZDNjhDO30uc3Q5e2ZpbGw6I0JCRThEODt9LnN0MTB7ZmlsbDojRkVCMTdEO30uc3QxMXtmaWxsOiNERDk2NjY7fS5zdDEye2ZpbGw6I0ZFRDRCNzt9LnN0MTN7ZmlsbDojRjJBMkEyO30uc3QxNHtmaWxsOiNGMUM1QzU7fS5zdDE1e2ZpbGw6I0RCQjY2Mzt9LnN0MTZ7ZmlsbDojQ0VBMTUxO30uc3QxN3tmaWxsOiNFQkQ3QTk7fS5zdDE4e2ZpbGw6I0NFQ0VDRTt9LnN0MTl7ZmlsbDojQjdCN0I3O30uc3QyMHtmaWxsOiNFNEU0RTQ7fS5zdDIxe2ZpbGw6IzY1QUFEMTt9LnN0MjJ7ZmlsbDojRTU3QTdBO30uc3QyM3tmaWxsOiNFNkE2RTg7fS5zdDI0e2ZpbGw6I0Q2OEFENjt9LnN0MjV7ZmlsbDojRkZDQ0ZFO30uc3QyNntmaWxsOiM5OENFNUY7fS5zdDI3e2ZpbGw6IzhDQUYyQzt9LnN0Mjh7ZmlsbDojQzZFM0E3O30uc3QyOXtmaWxsOiNGRkI1Nzg7fS5zdDMwe2ZpbGw6I0VEOUY2NDt9LnN0MzF7ZmlsbDojRkZENkI1O30uc3QzMntmaWxsOiNGNEExRUY7fS5zdDMze2ZpbGw6I0REODdERDt9LnN0MzR7ZmlsbDojRjlDQkY2O30uc3QzNXtmaWxsOiNBOEEyRjQ7fS5zdDM2e2ZpbGw6Izg4ODVFODt9LnN0Mzd7ZmlsbDojQ0ZDQ0Y4O30uc3QzOHtmaWxsOiNCQ0JDQkM7fS5zdDM5e2ZpbGw6I0E4QThBODt9LnN0NDB7ZmlsbDojREFEQURBO30uc3Q0MXtmaWxsOiM3N0NDREI7fS5zdDQye2ZpbGw6IzREQkNDMTt9LnN0NDN7ZmlsbDojQjRFM0VCO30uc3Q0NHtmaWxsOiNGRkI3QTQ7fS5zdDQ1e2ZpbGw6I0Y2OUE3Qjt9LnN0NDZ7ZmlsbDojRkZEN0NEO30uc3Q0N3tmaWxsOiM3MUM4RjQ7fS5zdDQ4e2ZpbGw6IzhEQzk3Nzt9LnN0NDl7ZmlsbDojN0NBODUxO30uc3Q1MHtvcGFjaXR5OjAuNDU7ZmlsbDojRkZGRkZGO308L3N0eWxlPjxnPjxnPjxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0yMS41LDAuNWgtMTdjLTEuMSwwLTIsMC45LTIsMnYyN2MwLDEuMSwwLjksMiwyLDJoMjNjMS4xLDAsMi0wLjksMi0ydi0yMUwyMS41LDAuNXoiLz48cGF0aCBjbGFzcz0ic3QxIiBkPSJNMjcuNSwzMmgtMjNDMy4xLDMyLDIsMzAuOSwyLDI5LjV2LTI3QzIsMS4xLDMuMSwwLDQuNSwwaDE3LjJMMzAsOC4zdjIxLjJDMzAsMzAuOSwyOC45LDMyLDI3LjUsMzJ6IE00LjUsMUMzLjcsMSwzLDEuNywzLDIuNXYyN0MzLDMwLjMsMy43LDMxLDQuNSwzMWgyM2MwLjgsMCwxLjUtMC43LDEuNS0xLjVWOC43TDIxLjMsMUg0LjV6Ii8+PC9nPjxnPjxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0yMS41LDAuNXY3YzAsMC42LDAuNCwxLDEsMWg3TDIxLjUsMC41eiIvPjxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0yOS41LDloLTdDMjEuNyw5LDIxLDguMywyMSw3LjV2LTdjMC0wLjIsMC4xLTAuNCwwLjMtMC41YzAuMi0wLjEsMC40LDAsMC41LDAuMWw4LDhDMzAsOC4zLDMwLDguNSwzMCw4LjdDMjkuOSw4LjksMjkuNyw5LDI5LjUsOXogTTIyLDEuN3Y1LjhDMjIsNy44LDIyLjIsOCwyMi41LDhoNS44TDIyLDEuN3oiLz48L2c+PC9nPjxnPjxwb2x5Z29uIGNsYXNzPSJzdDYiIHBvaW50cz0iNSwyNCAxMC42LDE3LjIgMTQuOCwyMS44IDIxLjQsMTMgMjcsMjQgIi8+PC9nPjwvc3ZnPg==");

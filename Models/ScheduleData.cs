@@ -2124,7 +2124,7 @@ namespace EJ2CoreSampleBrowser.Models
                 Subject = "Quality Analysis",
                 StartTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, dateNow.AddHours(1).Hour, 0, 0),
                 EndTime = new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, dateNow.AddHours(3).Hour, 0, 0),
-                IsReadonly = true
+                IsReadonly = false
             });
             readonlyEventsData.Add(new ReadonlyEventsData
             {

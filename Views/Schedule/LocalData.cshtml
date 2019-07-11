@@ -10,7 +10,15 @@
     <script type="text/javascript">
         function onEventRendered(args) {
             var scheduleObj = document.getElementById('schedule').ej2_instances[0];
-            applyCategoryColor(args, scheduleObj.currentView);
+            var categoryColor = args.data.CategoryColor;
+            if (!args.element || !categoryColor) {
+                return;
+            }
+            if (scheduleObj.currentView === 'Agenda') {
+                (args.element.firstChild).style.borderLeftColor = categoryColor;
+            } else {
+                args.element.style.backgroundColor = categoryColor;
+            }
         }
     </script>
 }
@@ -24,7 +32,7 @@
 @section ActionDescription{
     <div id="action-description">
         <p>
-            This demo shows the way of binding an array of JavaScript objects (local JSON datasource) to Schedule.
+            This demo shows the way of binding an array of JavaScript objects (local JSON datasource) to Scheduler.
         </p>
     </div>
 }
@@ -37,5 +45,6 @@
             <code>dataSource</code> property available within the
             <code>eventSettings</code> needs to be assigned with the valid local JSON data.
         </p>
+        <p>The <code>eventRendered</code> event is used to customize the events. In this sample, background color of the event is changed based on the custom field 'CategoryColor'</p>
     </div>
 }

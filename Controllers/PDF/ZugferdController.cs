@@ -347,9 +347,9 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
                     {
                         ProductID = c.Element("Productid").Value,
                         productName = c.Element("Product").Value,
-                        Price = float.Parse(c.Element("Price").Value),
-                        Quantity = float.Parse(c.Element("Quantity").Value),
-                        Total = float.Parse(c.Element("Total").Value)
+                        Price = float.Parse(c.Element("Price").Value, System.Globalization.CultureInfo.InvariantCulture),
+                        Quantity = float.Parse(c.Element("Quantity").Value, System.Globalization.CultureInfo.InvariantCulture),
+                        Total = float.Parse(c.Element("Total").Value, System.Globalization.CultureInfo.InvariantCulture)
                     });
             }
         }
@@ -365,8 +365,8 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
             for (int i = 0; i < grid.Rows.Count; i++)
             {
                 string cellValue = grid.Rows[i].Cells[grid.Columns.Count - 1].Value.ToString();
-                float result;
-                Total += float.TryParse(cellValue, out result) ? result : 0;
+                float result = float.Parse(cellValue, System.Globalization.CultureInfo.InvariantCulture);
+                Total +=  result;
             }
             return Total;
 

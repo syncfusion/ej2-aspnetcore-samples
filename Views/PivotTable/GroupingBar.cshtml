@@ -1,0 +1,128 @@
+@using Syncfusion.EJ2.PivotView
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 ASP.NET Core Pivot Table control demonstrate the grouping bar feature of the pivot table" />
+}
+@section ControlsSection{
+
+    <div class="col-lg-9 control-section" id="pivot-table-section">
+        <div class="content-wrapper">
+            <ejs-pivotview id="pivotview" showGroupingBar="true" showFieldList="true" width="100%" height="450">
+                <e-datasourcesettings dataSource="@ViewBag.data" expandAll="false" enableSorting="true">
+                    <e-formatsettings>
+                        <e-field name="Amount" format="C0" maximumSignificantDigits="10" minimumSignificantDigits="1" useGrouping="true"></e-field>
+                    </e-formatsettings>
+                    <e-rows>
+                        <e-field name="Country"></e-field>
+                        <e-field name="Products"></e-field>
+                    </e-rows>
+                    <e-columns>
+                        <e-field name="Year"></e-field>
+                        <e-field name="Order_Source" caption="Order Source"></e-field>
+                    </e-columns>
+                    <e-values>
+                        <e-field name="In_Stock" caption="In Stock"></e-field>
+                        <e-field name="Sold" caption="Units Sold"></e-field>
+                        <e-field name="Amount" caption="Sold Amount"></e-field>
+                    </e-values>
+                    <e-filters>
+                        <e-field name="Product_Categories" caption="Product Categories"></e-field>
+                    </e-filters>
+                </e-datasourcesettings>
+                <e-gridSettings columnWidth="140"></e-gridSettings>
+            </ejs-pivotview>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties" style="width: 100%;height:100%;">
+            <tbody>
+                <tr style="height: 50px">
+                    <td>
+                        <div>
+                            <ejs-checkbox id="filter" checked="true" label="Show Filter Icon" change="onChange"></ejs-checkbox>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td>
+                        <div>
+                            <ejs-checkbox id="sort" checked="true" label="Show Sort Icon" change="onChange"></ejs-checkbox>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td>
+                        <div>
+                            <ejs-checkbox id="summary" checked="true" label="Show Value Type Icon" change="onChange"></ejs-checkbox>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td>
+                        <div>
+                            <ejs-checkbox id="remove" checked="true" label="Show Remove Icon" change="onChange"></ejs-checkbox>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <style>
+        #pivotview {
+            width: 100%;
+            height: 100%;
+        }
+
+        @@media only screen and (max-width: 400px) {
+            #pivot-table-section {
+                overflow: auto;
+            }
+        }
+    </style>
+    <script>
+        function onChange(args) {
+            var pivotObj = document.getElementById('pivotview').ej2_instances[0];
+            if (args.event.target.id === 'filter') {
+                pivotObj.groupingBarSettings.showFilterIcon = args.checked;
+            }
+            else if (args.event.target.id === 'sort') {
+                pivotObj.groupingBarSettings.showSortIcon = args.checked;
+            }
+            else if (args.event.target.id === 'remove') {
+                pivotObj.groupingBarSettings.showRemoveIcon = args.checked;
+            } else {
+                pivotObj.groupingBarSettings.showValueTypeIcon = args.checked;
+            }
+        }
+    </script>
+}
+
+@section PreScripts {
+    <script>
+        ej.base.enableRipple(false);
+    </script>
+}
+
+@section ActionDescription{
+   <div id="action-description">
+       <p>
+           This sample demonstrates the grouping feature of the pivot table. The pivot fields are automatically populated from the bound data source, and they can be dragged and dropped to alter the report at runtime. The pivot fields can be sorted, filtered, and removed dynamically as well.
+       </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            The pivot table grouping bar option automatically populates fields from the bound data source and allows end users
+            to drag fields between different axes such as columns, rows, values, and filters, and create pivot table at runtime.
+            To enable grouping bar, set the
+            <code>showGroupingBar</code> property as true.
+        </p>
+        <p>
+            Filter and sort icons allow displaying selective records and ordering them in ascending or descending order. The value type icon
+            allows to display values based on selected aggregate type. The remove icon
+            allows the user to remove the field from the report.
+        </p>
+    </div>
+}

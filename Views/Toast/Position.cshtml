@@ -7,7 +7,7 @@
 
     <div class="col-lg-12 control-section toast-pos-section">
         <div class="control_wrapper" id="toast_pos_target">
-            <ejs-toast id="toast_pos" title="Matt sent you a friend request" width="350" content="You have a friend request yet to accept." icon="e-laura" close="onclose" beforeOpen="onBeforeOpen">
+            <ejs-toast id="toast_pos" title="Matt sent you a friend request" width="350" content="You have a friend request yet to accept." icon="e-laura" close="onclose" beforeOpen="onBeforeOpen" created="onCreate">
                 <e-toast-position X="Right" Y="Bottom"></e-toast-position>
             </ejs-toast>
 
@@ -78,13 +78,7 @@
         </div>
     </div>
     <script type="text/javascript">
-        setTimeout(
-            () => {
-                toastObj = document.getElementById('toast_pos').ej2_instances[0];
-                toastObj.show({
-                    target: document.body
-                });
-            }, 500);
+        var toastObj;
 
         function toastShow(timeOutDelay) {
             setTimeout(
@@ -114,6 +108,13 @@
                 toastObj.hide('All');
             }
         };
+
+        function onCreate() {
+            toastObj = document.getElementById('toast_pos').ej2_instances[0];
+            setTimeout(() => {
+                toastObj.show({ target: document.body });
+            }, 500);
+        }
 
         function onclose(e) {
             if (e.toastContainer.childElementCount === 0) {

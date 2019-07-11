@@ -15,8 +15,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
     {
         public IActionResult CRUD()
         {
-
-            CRUDAction nodeCrud = new CRUDAction()
+            DiagramCrudAction nodeCrud = new DiagramCrudAction()
             {
                 //Define URL to perform CRUD operations with nodes records in database.
                 Read = "https://js.syncfusion.com/demos/ejServices/api/Diagram/GetNodes",
@@ -25,15 +24,14 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
                 Destroy = "https://js.syncfusion.com/demos/ejServices/api/Diagram/DeleteNodes",
                 CustomFields = new object[] { "Id", "Description", "Color" },
             };
-
             ViewBag.NodeCrud = nodeCrud;
-
-
             ConnectionDataSource dataSource = new ConnectionDataSource()
+
             {
                 Id = "Name",
                 SourceID = "SourceNode",
                 TargetID = "TargetNode",
+                CustomFields = new object[] { "Id" },
                 CrudAction = new CRUDAction()
                 {
                     //Define URL to perform CRUD operations with connector records in database.
@@ -44,7 +42,14 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
                     CustomFields = new object[] { "Id" },
                 }
             };
+
             ViewBag.DataSource = dataSource;
+
+            DiagramDataSource DataSourceSettings = new DiagramDataSource();
+            DataSourceSettings.Id = "Name";
+            DataSourceSettings.CrudAction = nodeCrud;
+            DataSourceSettings.ConnectionDataSource = dataSource;
+            ViewBag.DataSourceSettings = DataSourceSettings;
 
             ViewBag.button = new
             {
@@ -85,7 +90,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
         public object[] CustomFields { get; set; }
     }
 
-    public class ConnectionDataSource
+    public class ConnectionDataSource : DiagramConnectionDataSource
     {
         [DefaultValue(null)]
         [HtmlAttributeName("id")]
@@ -96,6 +101,11 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
         [HtmlAttributeName("sourceID")]
         [JsonProperty("sourceID")]
         public string SourceID { get; set; }
+
+        [DefaultValue(null)]
+        [HtmlAttributeName("customFields")]
+        [JsonProperty("customFields")]
+        public object[] CustomFields { get; set; }
 
         [DefaultValue(null)]
         [HtmlAttributeName("targetID")]

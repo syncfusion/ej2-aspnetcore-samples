@@ -9,6 +9,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Syncfusion.DocIO;
 using Syncfusion.DocIO.DLS;
+using Syncfusion.DocIORenderer;
+using Syncfusion.Pdf;
 using System.IO;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -124,20 +126,36 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
             para.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
             para.AppendText("Release").ApplyCharacterFormat(new WCharacterFormat(doc) { Bold = true, TextColor = Syncfusion.Drawing.Color.White, FontSize = 12, FontName = "Verdana" });
 
-            FormatType type = FormatType.Docx;
-            string filename = "Sample.docx";
-            string contenttype = "application/vnd.ms-word.document.12";
+            
+            string filename = "";
+            string contenttype = "";
+            MemoryStream ms = new MemoryStream();
             #region Document SaveOption
-            //Save as .xml format           
-            if (Group1 == "WordML")
+            //Save as .docx format
+            if (Group1 == "WordDocx")
             {
-                type = FormatType.WordML;
+                filename = "Sample.docx";
+                contenttype = "application/vnd.ms-word.document.12";
+                doc.Save(ms, FormatType.Docx);
+            }
+            //Save as .xml format           
+            else if (Group1 == "WordML")
+            {
                 filename = "Sample.xml";
                 contenttype = "application/msword";
+                doc.Save(ms, FormatType.WordML);
+            }
+            //Save as .pdf format
+            else if (Group1 == "Pdf")
+            {
+                filename = "Sample.pdf";
+                contenttype = "application/pdf";
+                DocIORenderer renderer = new DocIORenderer();
+                PdfDocument pdfDoc = renderer.ConvertToPDF(doc);
+                pdfDoc.Save(ms);
+                pdfDoc.Close();
             }
             #endregion Document SaveOption
-            MemoryStream ms = new MemoryStream();
-            doc.Save(ms, type);
             doc.Close();
             ms.Position = 0;
             return File(ms, contenttype, filename);

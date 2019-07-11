@@ -2,6 +2,7 @@
 
 @section ControlsSection{
     <div class="control-section">
+        @{Html.BeginForm("WorksheetToImage", "XlsIO", FormMethod.Post);
         <p style="font-weight:normal">
             Click the button to convert an Excel spreadsheet to image using Essential XlsIO. Please
             note that a picture viewer is required to view the resultant image.
@@ -18,34 +19,24 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </td>
                     <td>
-                        @Html.EJS().RadioButton("radio1").Label("PNG").Name("select").Value("png").Checked(true).Render()
+                        @Html.EJS().RadioButton("radio1").Label("PNG").Name("SaveOption").Value("png").Checked(true).Render()
                     </td>
                     <td>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </td>
                     <td>
-                        @Html.EJS().RadioButton("radio2").Label("JPEG").Name("select").Value("jpeg").Checked(false).Render()
+                        @Html.EJS().RadioButton("radio2").Label("JPEG").Name("SaveOption").Value("jpeg").Checked(false).Render()
                     </td>
                 </tr>
             </table>
         </div>
         <br />
         <div class="celldiv">
-            <input id="inputbtn" class="e-btn" type="submit" name="inputbtn" value="Input Template" style="width:135px;padding-left:0.5em"/>
-            <input id="convertbtn" class="e-btn" type="submit" name="convertbtn" value="Convert" style="width:145px;padding-left:0.5em"/>
+            <input id="inputbtn" class="e-btn" type="submit" name="button" value="Input Template" style="width:135px;padding-left:0.5em"/>
+            <input id="convertbtn" class="e-btn" type="submit" name="button" value="Convert" style="width:145px;padding-left:0.5em"/>
         </div>
-    </div>
-    <script>
-    document.getElementById('inputbtn').onclick = function () {
-        location.href = '@Html.Raw(@Url.Action("WorksheetToImage", new { button= "Input Template", SaveOption = "png" }))';
-    };
-    document.getElementById('convertbtn').onclick = function () {
-        if (document.getElementById('radio1').checked == true)
-            location.href = '@Html.Raw(@Url.Action("WorksheetToImage", new { button = "Convert To Image", SaveOption = "png" }))';
-        else
-            location.href = '@Html.Raw(@Url.Action("WorksheetToImage", new { button = "Convert To Image", SaveOption = "jpeg" }))';
-        };
-    </script>
+            }
+    </div>   
 }
 }
 @section ActionDescription{

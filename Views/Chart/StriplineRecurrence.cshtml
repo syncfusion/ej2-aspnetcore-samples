@@ -2,27 +2,24 @@
 @section ControlsSection{
     @{
         var Vertical = "Vertical";
+      
     }
     <div class="control-section col-md-8" align="center">
         <ejs-chart id="container" title="World Pollution Report" load="load" dataSource="ViewBag.dataSource">
-            <e-chart-primaryxaxis valueType="DateTime" interval="5" intervalType="Years"
+            <e-chart-primaryxaxis valueType="DateTime" interval="5" intervalType="Years" stripLines="ViewBag.xAxisStrips"
                                   edgeLabelPlacement="Shift" minimum="new DateTime(1965, 1, 1)" maximum="new DateTime(2010, 1, 1)">
                 <e-majorgridlines width="0"></e-majorgridlines>
-                <e-primaryxaxis-striplines>
-                    <e-primaryxaxis-stripline startFromAxis="true" size="5" isRepeat="true" sizeType="Years" repeatEvery="10" visible="true" color="rgba(167,169,171,0.1)"></e-primaryxaxis-stripline>
-                </e-primaryxaxis-striplines>
+               
             </e-chart-primaryxaxis>
             <e-chart-chartarea>
                 <e-chartarea-border width="0"></e-chartarea-border>
             </e-chart-chartarea>
-            <e-chart-primaryyaxis minimum="0" maximum="18000" interval="2000">
+            <e-chart-primaryyaxis minimum="0" maximum="18000" interval="2000" stripLines="ViewBag.yAxisStrips">
                 <e-majorgridlines color="rgba(167,169,171, 0.3)"></e-majorgridlines>
                 <e-majorticklines width="0"></e-majorticklines>
                 <e-linestyle width="0"></e-linestyle>
                 <e-labelstyle color="transparent"></e-labelstyle>
-                <e-primaryyaxis-striplines>
-                    <e-primaryyaxis-stripline startFromAxis="true" size="2000" isRepeat="true" repeatEvery="4000" visible="true" color="rgba(167,169,171,0.1)"></e-primaryyaxis-stripline>
-                </e-primaryyaxis-striplines>
+               
             </e-chart-primaryyaxis>
             <e-series-collection>
                 <e-series xName="xValue" yName="yValue1" type="Column" name="All sources"></e-series>
@@ -60,12 +57,14 @@
     </div>
 
 <script>
-@*custom code start*@
+
     window.load = function (args) {
-        var selectedTheme = themeName ? themeName : 'Material';
+        var selectedTheme = location.hash.split('/')[1];
+        selectedTheme = selectedTheme ? selectedTheme : 'Material';
         args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/dark/i, "Dark").replace(/light/i, "Light"));
+        
     }
-@*custom code end*@
+
     document.getElementById('xIndex').onchange = () => {
         var chart = document.getElementById('container').ej2_instances[0];
         chart.animateSeries = false;

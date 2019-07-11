@@ -1,27 +1,34 @@
 ﻿@using Syncfusion.EJ2
 @section ControlsSection{
-   
-  <div class="control-section" align='center'>
-        <ejs-accumulationchart id="container" enableAnimation="true" enableSmartLabels="true">
+
+    <div class="control-section" align='center'>
+        <ejs-accumulationchart id="container" enableAnimation="true" enableSmartLabels="true" load="load">
             <e-accumulationchart-tooltipsettings enable="true"></e-accumulationchart-tooltipsettings>
             <e-accumulationchart-legendsettings visible="true">
             </e-accumulationchart-legendsettings>
             <e-accumulation-series-collection>
-                <e-accumulation-series dataSource="ViewBag.dataSource" xName="xValue" yName="yValue"  innerRadius="20%" radius="r">
+                <e-accumulation-series dataSource="ViewBag.dataSource" xName="xValue" yName="yValue" innerRadius="20%" radius="r">
                     <e-accumulationseries-datalabel name="xValue" visible="true" position="Outside">
                     </e-accumulationseries-datalabel>
                 </e-accumulation-series>
             </e-accumulation-series-collection>
         </ejs-accumulationchart>
     </div>
-
-}
-}
     @*custom code start*@
+    <script>
+        function load(args) {
+            var indexedTheme = themeName ? themeName : 'Material';
+            args.accumulation.theme = (indexedTheme.charAt(0).toUpperCase() + indexedTheme.slice(1).replace(/dark/i, "Dark").replace(/light/i, "Light"));
+        }
+    </script>
+    @*custom code end*@
+}
+}
+@*custom code start*@
 @section Meta{
     <meta name="description" content="This demo for Essential JS2 Chart control shows how to render and configure the legends in pie charts." />
 }
-    @*custom code end*@
+@*custom code end*@
 @section ActionDescription{
 
     <div id="action-description">

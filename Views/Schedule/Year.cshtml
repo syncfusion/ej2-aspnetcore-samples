@@ -1,0 +1,71 @@
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+    <div class="col-lg-9 control-section">
+        <div class="schedule-wrapper">
+            <ejs-schedule id="schedule" width="100%" height="650px" currentView="TimelineYear" eventRendered="onEventRendered">
+                <e-schedule-views>
+                    <e-schedule-view option="TimelineYear"></e-schedule-view>
+                </e-schedule-views>
+                <e-schedule-eventsettings dataSource="@ViewBag.datasource"></e-schedule-eventsettings>
+            </ejs-schedule>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id='property' title='Properties' class='property-panel-table' style="width: 100%;">
+            <tbody>
+                <tr style="height: 50px">
+                    <td style="width: 30%">
+                        <div>
+                            Orientation
+                        </div>
+                    </td>
+                    <td style="width: 70%;">
+                        <div>
+                            <ejs-dropdownlist id="orientation" dataSource="@ViewBag.orientation" change="onOrientationChange" value="@{"Horizontal"}" popupWidth="180px">
+                                <e-dropdownlist-fields text="Name" value="Value"></e-dropdownlist-fields>
+                            </ejs-dropdownlist>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="~/scripts/schedule/applyCategoryColor.js"></script>
+    <script type="text/javascript">
+        function onOrientationChange(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            scheduleObj.views = [{ option: 'TimelineYear', orientation: args.value }];
+            scheduleObj.dataBind();
+        }
+        function onEventRendered(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            applyCategoryColor(args, scheduleObj.currentView);
+        }
+    </script>
+}
+
+@*custom code start*@
+@section Meta{
+    <meta name="description" content="This example for Essential JS2 Scheduler control shows the layout of Horizontal and Vertical Year views and how it works." />
+}
+@*custom code end*@
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This demo showcases how the scheduler looks like in Year view with its default set of configurations.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            This demo showcases how the scheduler looks like in Year view with its default set of configurations. In this demo, the active view of Scheduler is set to
+            <code>Vertical Year</code> and <code>Horizontal Year</code> view options are provided to
+            <code>views</code> property.
+        </p>
+    </div>
+}

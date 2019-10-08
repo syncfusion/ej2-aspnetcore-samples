@@ -28,14 +28,15 @@ var urlRegex = /(npmci\.syncfusion\.com|ej2\.syncfusion\.com)(\/)(development|pr
 var sampleRegex = /#\/(([^\/]+\/)+[^\/\.]+)/;
 //Regex for removing hidden
 var reg = /.*custom code start([\S\s]*?)custom code end.*/g;
-var sbArray = ['angular', 'react', 'typescript', 'javascript', 'aspnetmvc', 'vue'];
+var sbArray = ['angular', 'react', 'typescript', 'javascript', 'aspnetmvc', 'vue', 'blazor'];
 var sbObj = {
     'angular': 'angular',
     'typescript': '',
     'react': 'react',
     'javascript': 'javascript',
     'aspnetmvc': 'aspnetmvc',
-    'vue': 'vue'
+    'vue': 'vue',
+    'blazor': 'blazor'
 };
 var searchEle = ej.base.select('#search-popup');
 var inputele = ej.base.select('#search-input');
@@ -1121,8 +1122,6 @@ function onDataSourceLoad(node, subNode, control, sample, sampleName) {
     if (location.pathname.indexOf('/' + subNode.dir + '/' + subNode.url) !== -1) {
         breadCrumbSample.innerHTML = subNode.name;
     }
-    var title = document.querySelector('title');
-    title.innerHTML = node.name + ' · ' + subNode.url + ' · Syncfusion ASP.NET Core UI Controls ';
     if (subNode.sourceFiles) {
         add=[];
         name=[];

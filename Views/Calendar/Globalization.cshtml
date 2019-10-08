@@ -28,7 +28,11 @@
 <script>
     function startDate(args) {
         /*Displays selected date in the label*/
-        (document.getElementById('date_label')).textContent = 'Selected Value: ' + args.value.toLocaleDateString();
+        globalize = new ej.base.Internationalization(calendarObject.locale);
+        if (args.value) {
+            var dateString = globalize.formatDate(args.value);
+            (document.getElementById('date_label')).textContent = 'Selected Value: ' + dateString;
+        }
     }
 
     function onLocaleChange(args) {

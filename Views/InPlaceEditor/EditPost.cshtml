@@ -18,21 +18,21 @@
                         <label class="col-sm-6 control-label" style="text-align: left;font-size: 14px;">
                             Title
                         </label>
-                        <ejs-inplaceeditor id="inplace_title_editor" data-underline='false' mode="Inline" emptyText="Enter your question title" name="Title" validationRules="ViewBag.titleValidation" value="ViewBag.titleValue" model="ViewBag.titleData">
+                        <ejs-inplaceeditor id="inplace_title_editor" data-underline='false' mode="Inline" emptyText="Enter your question title" name="Title" validationRules="ViewBag.titleValidation" value="ViewBag.titleValue" model="ViewBag.titleData" created="titleCreated">
                         </ejs-inplaceeditor>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-6 control-label" style="text-align: left;font-size: 14px;">
                             Comments
                         </label>
-                        <ejs-inplaceeditor id="inplace_comment_editor" data-underline='false' mode="Inline" type="RTE" editableOn="EditIconClick" submitOnEnter="false" emptyText="Enter your comment" name="rte" validationRules="ViewBag.commentValidation" value="ViewBag.commentValue" model="ViewBag.commentData">
+                        <ejs-inplaceeditor id="inplace_comment_editor" data-underline='false' mode="Inline" type="RTE" editableOn="EditIconClick" submitOnEnter="false" emptyText="Enter your comment" name="rte" validationRules="ViewBag.commentValidation" value="ViewBag.commentValue" model="ViewBag.commentData" created="commentCreated">
                         </ejs-inplaceeditor>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-6 control-label" style="text-align: left;font-size: 14px;">
                             Tags
                         </label>
-                        <ejs-inplaceeditor id="inplace_tag_editor" data-underline='false' mode="Inline" type="MultiSelect" emptyText="Enter your tags" name="Tag" validationRules="ViewBag.tagValidation" value="ViewBag.tagValue" model="ViewBag.tagData" popupSettings="ViewBag.tagPopup" created="editorCreated" actionSuccess="actionSuccess">
+                        <ejs-inplaceeditor id="inplace_tag_editor" data-underline='false' mode="Inline" type="MultiSelect" emptyText="Enter your tags" name="Tag" validationRules="ViewBag.tagValidation" value="ViewBag.tagValue" model="ViewBag.tagData" popupSettings="ViewBag.tagPopup" created="tagCreated" actionSuccess="actionSuccess">
                         </ejs-inplaceeditor>
                     </div>
                 </form>
@@ -79,13 +79,13 @@
         margin: 0 20px;
     }
 
-    .inplace-editor-control-section.form-layout .form-horizontal .form-group > * {
-        width: 100%;
-    }
-     
-    .inplace-editor-control-section.form-layout .form-horizontal .form-group:last-child {
-        padding-bottom: 40px;
-     }
+        .inplace-editor-control-section.form-layout .form-horizontal .form-group > * {
+            width: 100%;
+        }
+
+        .inplace-editor-control-section.form-layout .form-horizontal .form-group:last-child {
+            padding-bottom: 40px;
+        }
 
     .inplace-editor-control-section.form-layout .form-title {
         width: 100%;
@@ -127,29 +127,28 @@
 
 @section PreScripts {
     <script>
-
-        function editorCreated() {
+        var titleObj, tagObj, commentObj;
+        function titleCreated() {
+            titleObj = this;
+        }
+        function commentCreated() {
+            commentObj = this;
+        }
+        function tagCreated() {
+            tagObj = this;
             chipOnCreate();
         }
 
         function changeEditorMode(e) {
-            var titleObj = document.getElementById("inplace_title_editor").ej2_instances[0];
-            var tagObj = document.getElementById("inplace_comment_editor").ej2_instances[0];
-            var rteObj = document.getElementById("inplace_tag_editor").ej2_instances[0];
-            titleObj.mode = tagObj.mode = rteObj.mode = 'Popup';
-            titleObj.dataBind();
-            tagObj.dataBind();
-            rteObj.dataBind();
+            titleObj.mode = tagObj.mode = commentObj.mode = e.itemData.value;
         }
         function actionSuccess(e) {
             e.value = chipCreation(e.value.split(','));
         }
 
         function chipOnCreate() {
-            var tagEle = document.getElementById("inplace_tag_editor");
-            var rteObj = document.getElementById("inplace_comment_editor").ej2_instances[0];
-            rteObj.popupSettings.model = { width: document.querySelector('#inplace-editor-control.form-layout ').offsetWidth }
-            tagEle.querySelector('.e-editable-value').innerHTML = chipCreation(tagEle.ej2_instances[0].value);
+            commentObj.popupSettings.model = { width: document.querySelector('#inplace-editor-control.form-layout').offsetWidth }
+            tagObj.element.querySelector('.e-editable-value').innerHTML = chipCreation(tagObj.value);
         }
         function chipCreation(data) {
             var value = '<div class="e-chip-list">';
@@ -159,18 +158,15 @@
             value += '</div>';
             return value;
         }
-         document.getElementById('right-pane').onscroll = function () {
+        document.getElementById('right-pane').onscroll = function () {
             var mode = document.getElementById("editorMode");
-            var editEle1 = document.getElementById("inplace_title_editor");
-            var editEle2 = document.getElementById("inplace_comment_editor");
-            var editEle3 = document.getElementById("inplace_tag_editor");
             if (mode.ej2_instances[0].value === 'Inline') { return; }
-            if (editEle1.querySelectorAll('.e-editable-open').length > 0)
-                editEle1.ej2_instances[0].enableEditMode = false;
-            if (editEle2.querySelectorAll('.e-editable-open').length > 0)
-                editEle2.ej2_instances[0].enableEditMode = false;
-            if (editEle3.querySelectorAll('.e-editable-open').length > 0)
-                editEle3.ej2_instances[0].enableEditMode = false;
+            if (titleObj.element.querySelectorAll('.e-editable-open').length > 0)
+                titleObj.enableEditMode = false;
+            if (commentObj.element.querySelectorAll('.e-editable-open').length > 0)
+                commentObj.enableEditMode = false;
+            if (tagObj.element.querySelectorAll('.e-editable-open').length > 0)
+                tagObj.enableEditMode = false;
         }
     </script>
 }
@@ -197,7 +193,7 @@
         </ul>
     </p>
     <p>
-        More information on the <code>In-place Editor</code> instantiation can be found in the <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/inplace-editor/getting-started-asp-core/">
+        More information on the <code>In-place Editor</code> instantiation can be found in the <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/in-place-editor/getting-started/">
             documentation section
         </a>.
     </p>

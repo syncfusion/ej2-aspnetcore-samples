@@ -11,6 +11,7 @@ namespace EJ2CoreSampleBrowser.Controllers
     {
         public IActionResult Image()
         {
+            ViewBag.data = new FormatOption().SaveFormat();
             object tools1 = new
             {
                 tooltipText = "Rotate Left",
@@ -23,8 +24,7 @@ namespace EJ2CoreSampleBrowser.Controllers
             };
             ViewBag.image = new[] {
                 "Replace", "Align", "Caption", "Remove", "InsertLink", "OpenImageLink", "-",
-                "EditImageLink", "RemoveImageLink", "Display", "AltText", "Dimension",tools1
-                , tools2
+                "EditImageLink", "RemoveImageLink", "Display", "AltText", "Dimension", tools1, tools2
             };
             return View();
         }

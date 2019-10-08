@@ -71,9 +71,11 @@
             var chart = document.getElementById('container').ej2_instances[0];
             var cross = document.getElementById("number").ej2_instances[0];
             if (this.value === "xAxis") {
-                chart.primaryXAxis.crossesAt = cross.value;
+                line.checked = chart.primaryXAxis.placeNextToAxisLine;
+                cross.value = +chart.primaryXAxis.crossesAt;
             } else if (this.value === "yAxis") {
-                chart.primaryYAxis.crossesAt = cross.value;
+                line.checked = chart.primaryYAxis.placeNextToAxisLine;
+                cross.value = +chart.primaryYAxis.crossesAt;
             }
             chart.dataBind();
 
@@ -93,10 +95,10 @@
         line.onchange = () => {
             var axis = document.getElementById("axis").ej2_instances[0];
             var chart = document.getElementById("container").ej2_instances[0];
-            if (axis.value === "xAxis") {
-                chart.primaryXAxis.placeNextToAxisLine = line.checked;
-            } else {
+            if (axis.value === "yAxis") {
                 chart.primaryYAxis.placeNextToAxisLine = line.checked;
+            } else {
+                chart.primaryXAxis.placeNextToAxisLine = line.checked;
             }
             chart.dataBind();
         }

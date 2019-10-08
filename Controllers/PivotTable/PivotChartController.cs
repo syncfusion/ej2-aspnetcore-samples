@@ -15,7 +15,6 @@ namespace EJ2CoreSampleBrowser.Controllers
         {
             ViewBag.data = new PivotTableData().GetPivot_Data();
             ViewBag.chartTypes = GetChartTypes();
-            ViewBag.drilledMembers = new string[] { "FY 2015" };
             return View();
         }
 

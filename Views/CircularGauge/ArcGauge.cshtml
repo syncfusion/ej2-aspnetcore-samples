@@ -1,4 +1,4 @@
-﻿@using Syncfusion.EJ2;
+@using Syncfusion.EJ2;
 @section Meta{
     <meta name="description" content="This demo for Essential JS2 Circular Gauge control illustrates the Arc Circular gauge." />
 }
@@ -89,12 +89,11 @@
                     <e-circulargauge-axis startAngle="200" endAngle="160" minimum="0" maximum="100" radius="80%" majorTicks="major" minorTicks="minor">
                         <e-axis-linestyle width="0"></e-axis-linestyle>
                         <e-axis-labelstyle position="Inside" useRangeColor="true">
-                            <e-axis-labelstyle-font size="0px" fontweight="Regular" fontfamily="Roboto"></e-axis-labelstyle-font>
                         </e-axis-labelstyle>
-                        <e-axis-annotations>
-                            <e-axis-annotation content="<div id=pointervalue style=font-size:35px;width:120px;text-align:center>60/100</div>" angle="0" zIndex="1.0" radius="0%"></e-axis-annotation>
-                            <e-axis-annotation content="<div id=slider style=height:70px;width:250px;></div>" angle="0" zIndex="1.0" radius="-100%"></e-axis-annotation>
-                        </e-axis-annotations>
+                        <e-circulargauge-annotations>
+                            <e-circulargauge-annotation content="<div id=pointervalue style=font-size:35px;width:120px;text-align:center>60/100</div>" angle="0" zIndex="1.0" radius="0%"></e-circulargauge-annotation>
+                            <e-circulargauge-annotation content="<div id=slider style=height:70px;width:250px;></div>" angle="0" zIndex="1.0" radius="-100%"></e-circulargauge-annotation>
+                        </e-circulargauge-annotations>
                     </e-circulargauge-axis>
                 </e-circulargauge-axes>
             </ejs-circulargauge>
@@ -155,6 +154,11 @@
         args.gauge.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
         @* custom code end *@
         var axis = args.gauge.axes[0];
+        axis.labelStyle.font = {
+            fontFamily: "Roboto",
+            size: "0px",
+            fontWeight: "Regular"
+        };
         axis.pointers = [{
             roundedCornerRadius: 20,
             value: 60,

@@ -19,5 +19,13 @@ namespace EJ2CoreSampleBrowser.Models
             formattingOption.Add(new FormatOption { Id = "cleanFormatting", Format = "Clean Format" });
             return formattingOption;
         }
+         public List<FormatOption> SaveFormat()
+        {
+            List<FormatOption> saveFormats = new List<FormatOption>();
+            saveFormats.Add(new FormatOption { Id = "Blob", Format = "Blob" });
+            saveFormats.Add(new FormatOption { Id = "Base64", Format = "Base64" });
+            return saveFormats;
+        }
+        
     }
 }

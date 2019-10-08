@@ -2,12 +2,37 @@
 @section ControlsSection{
     <div class="col-lg-8 control-section">
         <div class="content-wrapper" id="all-option-sample">
-            <div class="control-section">
-                <ejs-richtexteditor id="types" height="720px" value="@ViewBag.value" created="created" actionBegin="handleFullScreen"
-                        actionComplete="actionCompleteHandler" >
-                    <e-richtexteditor-toolbarsettings type="Expand" enableFloating="false" items="@ViewBag.items"></e-richtexteditor-toolbarsettings>
-                </ejs-richtexteditor>
-            </div>
+            <ejs-richtexteditor id="types" height="720px" created="created" actionBegin="handleFullScreen"
+                                actionComplete="actionCompleteHandler">
+                <e-content-template>
+                    <div>
+                        <p>The rich text editor is WYSIWYG ('what you see is what you get') editor useful to create and edit content, and return the valid HTML markup or markdown of the content</p>
+                        <p><b> Toolbar </b></p>
+                        <ol>
+                            <li> <p>Toolbar contains commands to align the text, insert link, insert image, insert list, undo / redo operations, HTML view, etc </p></li>
+                            <li> <p>Toolbar is fully customizable </p></li>
+                        </ol>
+                        <p><b> Links </b></p>
+                        <ol>
+                            <li><p>You can insert a hyperlink with its corresponding dialog</p> </li>
+                            <li> <p>Attach a hyperlink to the displayed text. </p></li>
+                            <li><p>Customize the quick toolbar based on the hyperlink </p> </li>
+                        </ol>
+                        <p><b> Validation </b></p>
+                        <ul><li><p>The editor’s content can be validated on form submission by applying validation rules and validation message </p></li></ul>
+                        <p><b> Locale.</p></b></p>
+                        <ul><li><p>The editor provides an option to localize its static strings to adapt the editor to a local language.</p></li></ul>
+                        <p><b> Image.</p></b></p>
+                        <ol>
+                            <li><p>Allows you to insert images from an online source as well as the local computer</p> </li>
+                            <li><p>You can upload an image</p></li>
+                            <li> <p>Provides an option to customize quick toolbar for an image </p> </li>
+                        </ol>
+                        <img alt='Logo' src='@Url.Content("~/images/RichTextEditor/RTEImage-Feather.png")' />
+                    </div>
+                </e-content-template>
+                <e-richtexteditor-toolbarsettings type="Expand" enableFloating="false" items="@ViewBag.items"></e-richtexteditor-toolbarsettings>
+            </ejs-richtexteditor>
         </div>
     </div>
 
@@ -27,7 +52,7 @@
                 <tr>
                     <td>
                         <div>
-                            <ejs-checkbox id="float"checked="false" label="Enable Floating" change="checkchange"></ejs-checkbox>
+                            <ejs-checkbox id="float" checked="false" label="Enable Floating" change="checkchange"></ejs-checkbox>
                         </div>
                     </td>
                 </tr>
@@ -42,6 +67,7 @@
         .sb-header {
             z-index: 100;
         }
+
         .property-panel-table div {
             padding-left: 0;
         }
@@ -55,6 +81,45 @@
         }
         /* custom code end */
     </style>
+    <script type="text/javascript">
+        var rteObj, dropdownInstance;
+        function created() {
+            rteObj = this;
+        }
+        function dropcreated() {
+            dropdownInstance = this;
+        }
+        function onChange() {
+            switch (dropdownInstance.value) {
+                case 1:
+                    rteObj.toolbarSettings.type = ej.richtexteditor.ToolbarType.Expand;
+                    break;
+                case 2:
+                    rteObj.toolbarSettings.type = ej.richtexteditor.ToolbarType.MultiRow;
+                    break;
+            }
+        }
+        function handleFullScreen(e) {
+            var sbCntEle = document.querySelector('.sb-content.e-view');
+            var sbHdrEle = document.querySelector('.sb-header.e-view');
+            if (e.targetItem === 'Maximize') {
+                if (ej.base.Browser.isDevice && ej.base.Browser.isIos) {
+                    ej.base.addClass([sbCntEle, sbHdrEle], ['hide-header']);
+                }
+            }
+            else if (e.targetItem === 'Minimize') {
+                if (ej.base.Browser.isDevice && ej.base.Browser.isIos) {
+                    ej.base.removeClass([sbCntEle, sbHdrEle], ['hide-header']);
+                }
+            }
+        }
+        function actionCompleteHandler() {
+            setTimeout(function () { rteObj.toolbarModule.refreshToolbarOverflow(); }, 400);
+        }
+        function checkchange(args) {
+            rteObj.toolbarSettings.enableFloating = args.checked;
+        }
+    </script>
 }
 
 @section ActionDescription{
@@ -66,7 +131,7 @@
 @*custom code start*@
 
 @section Meta{
-    <meta name="description" content="This demo for Essential JS 2  rich text editor control demonstrates the different behavior of toolbar support in the rich text editor."/>
+    <meta name="description" content="This demo for Essential JS 2  rich text editor control demonstrates the different behavior of toolbar support in the rich text editor." />
 }
 
 @*custom code end*@
@@ -84,47 +149,3 @@
         </ul>
     </div>
 }
-
-<script type="text/javascript">
-    var defaultRTE;
-    var dropdownInstance;
-    function created() {
-        defaultRTE = this;
-    }
-    function dropcreated() {
-        dropdownInstance = this;
-    }
-    function onChange() {
-        switch (dropdownInstance.value) {
-            case 1:
-                defaultRTE.toolbarSettings.type = ej.richtexteditor.ToolbarType.Expand;
-                break;
-            case 2:
-                defaultRTE.toolbarSettings.type = ej.richtexteditor.ToolbarType.MultiRow;
-                break;
-        }
-        defaultRTE.dataBind();
-    }
-    function handleFullScreen(e) {
-        var sbCntEle = document.querySelector('.sb-content.e-view');
-        var sbHdrEle = document.querySelector('.sb-header.e-view');
-        if (e.targetItem === 'Maximize') {
-            if (ej.base.Browser.isDevice && ej.base.Browser.isIos) {
-                ej.base.addClass([sbCntEle, sbHdrEle], ['hide-header']);
-            }
-        }
-        else if (e.targetItem === 'Minimize') {
-            if (ej.base.Browser.isDevice && ej.base.Browser.isIos) {
-                ej.base.removeClass([sbCntEle, sbHdrEle], ['hide-header']);
-            }
-        }
-    }
-    function actionCompleteHandler() {
-        setTimeout(function () { defaultRTE.toolbarModule.refreshToolbarOverflow(); }, 400);
-    }
-    function checkchange(args) {
-        defaultRTE.toolbarSettings.enableFloating = args.checked;
-        defaultRTE.dataBind();
-    }
-
-</script>

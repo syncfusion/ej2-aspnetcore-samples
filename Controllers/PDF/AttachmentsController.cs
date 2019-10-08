@@ -6,6 +6,7 @@ using Syncfusion.Pdf.Graphics;
 using Syncfusion.Pdf.Interactive;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using Syncfusion.Pdf.Security;
 
 namespace EJ2CoreSampleBrowser.Controllers.PDF
 {
@@ -19,15 +20,15 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
             return View();
         }
         [HttpPost]
-        public ActionResult Attachments(string Browser)
+        public ActionResult Attachments(string encrypt, string password)
         {
-             //Creates a new PDF document.
-             PdfDocument doc = new PdfDocument();
+            //Creates a new PDF document.
+            PdfDocument doc = new PdfDocument();
 
-             //Add a page
-             PdfPage  page = doc.Pages.Add();
+            //Add a page
+            PdfPage page = doc.Pages.Add();
 
-             //Set the font
+            //Set the font
             PdfStandardFont font = new PdfStandardFont(PdfFontFamily.Helvetica, 18f, PdfFontStyle.Bold);
 
             //Create new PDF color
@@ -55,7 +56,7 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
             FileStream file = new FileStream(dataPath + "Text1.txt", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 
             //Creates an attachment
-            PdfAttachment attachment = new PdfAttachment("Text1.txt",file);
+            PdfAttachment attachment = new PdfAttachment("Text1.txt", file);
 
             attachment.ModificationDate = DateTime.Now;
 
@@ -67,9 +68,9 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
             doc.Attachments.Add(attachment);
 
             file = new FileStream(dataPath + "Autumn Leaves.jpg", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            
+
             //Creates an attachment
-            attachment = new PdfAttachment("Autumn Leaves.jpg",file);
+            attachment = new PdfAttachment("Autumn Leaves.jpg", file);
 
             attachment.ModificationDate = DateTime.Now;
 
@@ -82,7 +83,7 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
             file = new FileStream(dataPath + "Text2.txt", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 
             //Creates an attachment
-            attachment = new PdfAttachment("Text2.txt",file);
+            attachment = new PdfAttachment("Text2.txt", file);
 
             attachment.ModificationDate = DateTime.Now;
 
@@ -92,6 +93,15 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
 
             doc.Attachments.Add(attachment);
 
+            //Set Encryption password
+            if (!string.IsNullOrEmpty(encrypt) && !string.IsNullOrEmpty(password))
+            {
+                PdfSecurity security = doc.Security;
+                security.UserPassword = password;
+                security.Algorithm = PdfEncryptionAlgorithm.AES;
+                security.EncryptionOptions = PdfEncryptionOptions.EncryptOnlyAttachments;
+            }
+
             //Set document viewerpreference.
             doc.ViewerPreferences.HideWindowUI = false;
             doc.ViewerPreferences.HideMenubar = false;
@@ -99,8 +109,8 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
             doc.ViewerPreferences.FitWindow = false;
             doc.ViewerPreferences.DisplayTitle = false;
             doc.ViewerPreferences.PageMode = PdfPageMode.UseAttachments;
-			
-			//Disable the default appearance.
+
+            //Disable the default appearance.
             doc.Form.SetDefaultAppearance(false);
 
             //Create pdfbuttonfield.

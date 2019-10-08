@@ -51,16 +51,39 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
             {
                 textMarkupAnnot.Flatten = true;
             }
-            //Add comment as user query
-            PdfPopupAnnotation userQuery = AddComment(textMarkupAnnot, "Adventure Works Cycles", "Can you please change South Asian to Asian?", new DateTime(2015, 1, 18));
-            //Add review as rejected
-            AddReview(userQuery, "John", PdfAnnotationState.Rejected, PdfAnnotationStateModel.Review, new DateTime(2015, 1, 18));
-            //Add comment as user answer
-            PdfPopupAnnotation userAnswer = AddComment(textMarkupAnnot, "Adventure Works Cycles", "South Asian has changed as Asian", new DateTime(2015, 1, 19));
-            //Add review as completed
-            AddReview(userAnswer, "Smith", PdfAnnotationState.Completed, PdfAnnotationStateModel.Review, new DateTime(2015, 1, 19));
-            //Add review as accepted
-            AddReview(userAnswer, "John", PdfAnnotationState.Accepted, PdfAnnotationStateModel.Review, new DateTime(2015, 1, 19));
+            //Create a new comment.
+            PdfPopupAnnotation userQuery = new PdfPopupAnnotation();
+            userQuery.Author = "John";
+            userQuery.Text = "Can you please change South Asian to Asian?";
+            userQuery.ModifiedDate = new DateTime(2015, 1, 18);
+            //Add comment to the annotation
+            textMarkupAnnot.Comments.Add(userQuery);
+
+            //Creates a new comment
+            PdfPopupAnnotation userAnswer = new PdfPopupAnnotation();
+            userAnswer.Author = "Smith";
+            userAnswer.Text = "South Asian has changed as Asian";
+            userAnswer.ModifiedDate = new DateTime(2015, 1, 18);
+            //Add comment to the annotation
+            textMarkupAnnot.Comments.Add(userAnswer);
+
+            //Creates a new review
+            PdfPopupAnnotation userAnswerReview = new PdfPopupAnnotation();
+            userAnswerReview.Author = "Smith";
+            userAnswerReview.State = PdfAnnotationState.Completed;
+            userAnswerReview.StateModel = PdfAnnotationStateModel.Review;
+            userAnswerReview.ModifiedDate = new DateTime(2015, 1, 18);
+            //Add review to the comment
+            userAnswer.ReviewHistory.Add(userAnswerReview);
+
+            //Creates a new review
+            PdfPopupAnnotation userAnswerReviewJohn = new PdfPopupAnnotation();
+            userAnswerReviewJohn.Author = "John";
+            userAnswerReviewJohn.State = PdfAnnotationState.Accepted;
+            userAnswerReviewJohn.StateModel = PdfAnnotationStateModel.Review;
+            userAnswerReviewJohn.ModifiedDate = new DateTime(2015, 1, 18);
+            //Add review to the comment
+            userAnswer.ReviewHistory.Add(userAnswerReviewJohn);
 
             //Add annotation to the page
             page.Annotations.Add(textMarkupAnnot);
@@ -152,7 +175,7 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
             //Creates a new TextMarkup annotation.
             string s = "This is TextMarkup annotation!!!";
             secondPage.Graphics.DrawString(s, font, brush, new PointF(30, 70));
-            PdfTextMarkupAnnotation textannot = new PdfTextMarkupAnnotation("sample", "Highlight", s, new PointF(30, 70), font);
+            PdfTextMarkupAnnotation textannot = new PdfTextMarkupAnnotation("sample", "Strikeout", s, new PointF(30, 70), font);
             textannot.Author = "Annotation";
             textannot.Opacity = 1.0f;
             textannot.Subject = "pdftextmarkupannotation";
@@ -161,6 +184,10 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
             textannot.TextMarkupColor = new PdfColor(Color.Yellow);
             textannot.InnerColor = new PdfColor(Color.Red);
             textannot.Color = new PdfColor(Color.Yellow);
+            if (checkboxFlatten == "Flatten")
+            {
+                textannot.Flatten = true;
+            }
             secondPage.Graphics.DrawString("TextMarkup Annotation", font, brush, new PointF(30, 40));
             secondPage.Annotations.Add(textannot);
 
@@ -228,11 +255,13 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
 
             //Creates a new Loaded document.
             PdfLoadedDocument lDoc = new PdfLoadedDocument(SourceStream);
-            PdfLoadedPage lpage = lDoc.Pages[0] as PdfLoadedPage;
+            PdfLoadedPage lpage1 = lDoc.Pages[0] as PdfLoadedPage;
+            PdfLoadedPage lpage2 = lDoc.Pages[1] as PdfLoadedPage;
 
             if (checkboxFlatten == "Flatten")
             {
-                lpage.Annotations.Flatten = true;
+                lpage1.Annotations.Flatten = true;
+                lpage2.Annotations.Flatten = true;
             }
 
             //Save the PDF to the MemoryStream
@@ -249,30 +278,6 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
             FileStreamResult fileStreamResult = new FileStreamResult(ms, "application/pdf");
             fileStreamResult.FileDownloadName = "Annotation.pdf";
             return fileStreamResult;
-        }
-		//Add review to the comments
-		public void AddReview(PdfPopupAnnotation userComment, string author, PdfAnnotationState reviewState, PdfAnnotationStateModel stateModel, DateTime modifiedDate)
-        {
-            //Creates a new review history
-            PdfPopupAnnotation userReview = new PdfPopupAnnotation();
-            userReview.Author = author;
-            userReview.State = reviewState;
-            userReview.StateModel = stateModel;
-            userReview.ModifiedDate = modifiedDate;
-            //Add review to the comment
-            userComment.ReviewHistory.Add(userReview);
-        }
-		//Add comment to the annotations
-        public PdfPopupAnnotation AddComment(PdfTextMarkupAnnotation annotation, string author, string comment, DateTime modifiedDate)
-        {
-            //Creates a new comment
-            PdfPopupAnnotation userComment = new PdfPopupAnnotation();
-            userComment.Author = author;
-            userComment.Text = comment;
-            userComment.ModifiedDate = modifiedDate;
-            //Add comment to the annotation
-            annotation.Comments.Add(userComment);
-            return userComment;
         }
     }
 

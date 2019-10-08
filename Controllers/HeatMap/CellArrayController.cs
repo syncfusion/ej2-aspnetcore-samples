@@ -24,12 +24,7 @@ namespace EJ2CoreSampleBrowser.Controllers.HeatMap
                 {9, 0, 14.31}, {9, 1, 42.87}, {9, 2, 77.28}, {9, 3, 77.82}, {9, 4, 81.44}, {9, 5, 81.92}, {9, 6, 83.75},
                 {10, 0, 25.5}, {10, 1, 35.5}, {10, 2, 40.5}, {10, 3, 45.05}, {10, 4, 50.5}, {10, 5, 75.5}, {10, 6, 90.58}
             };
-            object dataSource = new {
-                isJsonData = false,
-                adaptorType = "Cell",
-                data = cellData
-            };
-            ViewBag.dataSource = dataSource;
+            ViewBag.dataSource = cellData;
             return View();
         }
     }

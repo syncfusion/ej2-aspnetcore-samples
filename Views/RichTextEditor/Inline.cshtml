@@ -2,14 +2,19 @@
 @section ControlsSection{
     <div class="col-lg-8 control-section">
         <div class="control-wrapper">
-            <div class="control-section">
-                <ejs-richtexteditor id="inline" created="created" value="@ViewBag.value">
-                    <e-richtexteditor-format width="auto"></e-richtexteditor-format>
-                    <e-richtexteditor-inlinemode enable="true" onSelection="true"></e-richtexteditor-inlinemode>
-                    <e-richtexteditor-fontfamily width="auto"></e-richtexteditor-fontfamily>
-                    <e-richtexteditor-toolbarsettings items="@ViewBag.items"></e-richtexteditor-toolbarsettings>
-                </ejs-richtexteditor>
-            </div>
+            <ejs-richtexteditor id="inline" created="created">
+                <e-content-template>
+                    <p>
+                        The sample is configured with inline mode of editor. Initially, the editor is rendered without a
+                        <a href='https://ej2.syncfusion.com/aspnetcore/Toolbar/DefaultFunctionalities#/material'>toolbar</a>.
+                        The toolbar becomes visible only when the content is selected.
+                    </p>
+                </e-content-template>
+                <e-richtexteditor-format width="auto"></e-richtexteditor-format>
+                <e-richtexteditor-inlinemode enable="true" onSelection="true"></e-richtexteditor-inlinemode>
+                <e-richtexteditor-fontfamily width="auto"></e-richtexteditor-fontfamily>
+                <e-richtexteditor-toolbarsettings items="@ViewBag.items"></e-richtexteditor-toolbarsettings>
+            </ejs-richtexteditor>
         </div>
     </div>
     <div class="col-lg-4 property-section" id="all-option-table">
@@ -30,12 +35,22 @@
             padding-top: 35px;
         }
     </style>
+
+    <script type="text/javascript">
+        var rteObj;
+        function created() {
+            rteObj = this;
+        }
+        function select_onChange(args) {
+            rteObj.inlineMode.onSelection = args.checked;
+        }
+    </script>
 }
 
 @*custom code start*@
 
 @section Meta{
-    <meta name="description" content="This demo for Essential JS 2  rich text editor control demonstrates on how to activate the editor on demand while editing the content."/>
+    <meta name="description" content="This demo for Essential JS 2  rich text editor control demonstrates on how to activate the editor on demand while editing the content." />
 }
 
 @*custom code end*@
@@ -56,15 +71,4 @@
         </p>
     </div>
 }
-
-<script>
-    var defaultRTE;
-    function created() {
-        defaultRTE = this;
-    }
-    function select_onChange(args) {
-        defaultRTE.inlineMode.onSelection = args.checked;
-        defaultRTE.dataBind();
-    }
-</script>
 

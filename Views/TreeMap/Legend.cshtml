@@ -1,19 +1,20 @@
-﻿@using Syncfusion.EJ2.TreeMap;
+@using Syncfusion.EJ2.TreeMap;
 
 
 @section ControlsSection{
     @{
         var leafBorder = new TreeMapBorder { Color = "black", Width = 0.5 };
-        var colorMaps = new[]{
-               new { value="Trump", color ="#D84444" },
-               new { value="Clinton", color ="#316DB5" }
-            };
     }
     <div class="col-lg-9 control-section">
         <div id="container">
             <ejs-treemap id="container" load="treeMapLoad" dataSource="ViewBag.dataSource" weightValuePath="Population" rangeColorValuePath="WinPercentage" equalColorValuePath="Winner" format="n" useGroupingSeparator="true">
                 <e-treemap-titlesettings text="US presidential election result - 2016"></e-treemap-titlesettings>
-                <e-treemap-leafitemsettings colorMapping="colorMaps" labelPath="State" fill="#6699cc" border="leafBorder"></e-treemap-leafitemsettings>
+                <e-treemap-leafitemsettings labelPath="State" fill="#6699cc" border="leafBorder">
+                    <e-leafitemsettings-colormappings>
+                        <e-leafitemsettings-colormapping value="Trump" color="@("#D84444")"></e-leafitemsettings-colormapping>
+                        <e-leafitemsettings-colormapping value="Clinton" color="@("#316DB5")"></e-leafitemsettings-colormapping>
+                    </e-leafitemsettings-colormappings>
+                </e-treemap-leafitemsettings>
                 <e-treemap-legendsettings height="10" visible="true" position="@LegendPosition.Top" shape="@LegendShape.Rectangle"></e-treemap-legendsettings>
                 <e-treemap-tooltipsettings visible="true" format="<b>${Winner}</b><br>State : ${State}<br>Trump : ${Trump} %<br>Clinton : ${Clinton} %"></e-treemap-tooltipsettings>
             </ejs-treemap>

@@ -7,8 +7,8 @@
     <div class="col-lg-12 control-section" id="target">
         <ejs-button id="dialogBtn" cssClass="dlgbtn" content="Open Dialog"></ejs-button>
 
-        <ejs-dialog id="defaultDialog" animationSettings="defaultanimation" width="452px" target="#target" open="dialogOpen"
-                    close="dialogClose" showCloseIcon="true" footerTemplate=@Html.Raw("<span id='posvalue' style='float:left;margin-left:8px;padding:10px;'> Position: { X: 'Center', Y: 'Center' }</span>") header="Choose a Dialog Position">
+        <ejs-dialog id="positioningDialog" animationSettings="defaultanimation" width="452px" target="#target" open="dialogOpen"
+                    close="dialogClose" created="created" showCloseIcon="true" footerTemplate=@Html.Raw("<span id='posvalue' style='float:left;margin-left:8px;padding:10px;'> Position: { X: 'Center', Y: 'Center' }</span>") header="Choose a Dialog Position">
             <e-dialog-position X="center" Y="center"></e-dialog-position>
             <e-content-template>
                 <table style="width:405px;" id="poschange">
@@ -35,15 +35,17 @@
 
 @section PreScripts{
     <script>
-        var dialog = document.getElementById('defaultDialog');
+        var dialogObj;
+        function created() {
+            dialogObj = this;
+        }
         var onChangeHandler = function (args) {
-            dialog.ej2_instances[0].position.X = args.value.split(" ")[0];
-            dialog.ej2_instances[0].position.Y = args.value.split(" ")[1];
+            dialogObj.position.X = args.value.split(" ")[0];
+            dialogObj.position.Y = args.value.split(" ")[1];
             var txt = args.event.target.parentElement.querySelector('.e-label').innerText.split(" ");
             document.getElementById("posvalue").innerHTML = 'Position: { X: "' + txt[0] + '", Y: "' + txt[1] + '" }';
         };
         document.getElementById('dialogBtn').onclick = function () {
-            var dialogObj = document.getElementById('defaultDialog').ej2_instances[0];
             dialogObj.show();
         };
         function dialogClose() {
@@ -71,9 +73,9 @@
         width: 100%;
     }
 
-    #defaultDialog table,
-    #defaultDialog th,
-    #defaultDialog td {
+    #positioningDialog table,
+    #positioningDialog th,
+    #positioningDialog td {
         border: 1px solid #D8D8D8;
         border-collapse: collapse;
     }
@@ -82,7 +84,7 @@
         height: 365px;
     }
 
-    #defaultDialog .e-dialog .e-footer-content {
+    #positioningDialog .e-dialog .e-footer-content {
         padding:  0px 10px 10px;
     }
 

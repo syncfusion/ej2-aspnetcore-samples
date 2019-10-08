@@ -10,7 +10,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Splitter
     {
         public IActionResult AccordionMenu()
         {
-            List<object> data = new List<object>();
+			List<object> data = new List<object>();
             data.Add(new { text = "Grid", id = "1" });
             data.Add(new { text = "Schedule", id = "2" });
             data.Add(new { text = "Chart", id = "7" });

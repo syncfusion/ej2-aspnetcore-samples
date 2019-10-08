@@ -1,19 +1,16 @@
-﻿@using Syncfusion.EJ2.TreeMap;
+@using Syncfusion.EJ2.TreeMap;
 @section ControlsSection{
-    @{
-        var colormapping = new[]
-        {
-            new  { from= 100000, to= 250000, label= "0.1M - 0.25M", color= "#547C84" },
-             new   { from= 250000, to= 550000, label= "0.25M - 0.55M", color= "#37AFAB" },
-             new   { from= 550000, to= 750000, label= "0.55M - 0.75M", color= "#A4D6AD" },
-              new  { from= 750000, to= 2250000, label= "0.75M - 2M", color= "#DEEBAE" }
-        };
-    }
     <div class="col-lg-9 control-section">
         <div id="treemap">
             <ejs-treemap id="container" format="n" useGroupingSeparator="true" rangeColorValuePath="Area" load="treeMapLoad" dataSource="ViewBag.dataSource" weightValuePath="Area">
                 <e-treemap-titlesettings text="Top 10 largest islands in the World"></e-treemap-titlesettings>
-                <e-treemap-leafitemsettings labelPath="Name" colorMapping="colormapping">
+                <e-treemap-leafitemsettings labelPath="Name">
+                    <e-leafitemsettings-colormappings>
+                        <e-leafitemsettings-colormapping from="100000" to="250000" label="0.1M - 0.25M" color="@("#547C84")"></e-leafitemsettings-colormapping>
+                        <e-leafitemsettings-colormapping from="250000" to="550000" label="0.25M - 0.55M" color="@("#37AFAB")"></e-leafitemsettings-colormapping>
+                        <e-leafitemsettings-colormapping from="550000" to="750000" label="0.55M - 0.75M" color="@("#A4D6AD")"></e-leafitemsettings-colormapping>
+                        <e-leafitemsettings-colormapping from="750000" to="2250000" label="0.75M - 2M" color="@("#DEEBAE")"></e-leafitemsettings-colormapping>
+                    </e-leafitemsettings-colormappings>
                     <e-leafitemsettings-border color="white" width="0.5"></e-leafitemsettings-border>
                 </e-treemap-leafitemsettings>
                 <e-treemap-tooltipsettings visible="true" format="Name: ${Name}<br>Area: ${Area} per square kms<br>Continent: ${Location}" opacity="0.8"></e-treemap-tooltipsettings>

@@ -2,10 +2,21 @@
 @section ControlsSection{
     <div class="col-lg-8 control-section">
         <div class="content-wrapper" id="all-option-sample">
-            <div class="control-section">
-                <ejs-richtexteditor id="api" created="created" value="@ViewBag.value"
-                                    showCharCount="true" maxLength="1000"></ejs-richtexteditor>
-            </div>
+            <ejs-richtexteditor id="api" created="created" showCharCount="true" maxLength="1000">
+                <e-content-template>
+                    <p>RichTextEditor is a WYSIWYG editing control which will reduce the effort for users while trying to express their formatting word content as HTML or Markdown format.</p>
+                    <p><b>API’s:</b></p>
+                    <ul>
+                        <li><p>maxLength - allows to restrict the maximum length to be entered.</p></li>
+                        <li><p>readOnly - allows to change it as non-editable state.</p></li>
+                        <li><p>enabled - enable or disable the RTE component.</p></li>
+                        <li><p>enableHtmlEncode - Get the encoded string value through value property and source code panel</p></li>
+                        <li><p>getValue - get the value of RTE.</p></li>
+                        <li><p>getSelection - get the selected text of RTE.</p></li>
+                        <li><p>selectAll - select all content in RTE.</p></li>
+                    </ul>
+                </e-content-template>
+            </ejs-richtexteditor>
         </div>
     </div>
 
@@ -56,7 +67,7 @@
                     <td></td>
                     <td>
                         <div>
-                            <button id="getVal" class="btn btn-default">Get Value</button>
+                            <ejs-button id="getVal" cssClass="btn btn-default" content="Get Value"></ejs-button>
                         </div>
                     </td>
                 </tr>
@@ -64,7 +75,7 @@
                     <td></td>
                     <td>
                         <div>
-                            <button id="selectHtml" class="btn btn-default">Get Selection</button>
+                            <ejs-button id="selectHtml" cssClass="btn btn-default" content="Get Selection"></ejs-button>
                         </div>
                     </td>
                 </tr>
@@ -72,19 +83,50 @@
                     <td></td>
                     <td>
                         <div>
-                            <button id="selectall" class="btn btn-default">Select All </button>
+                            <ejs-button id="selectall" cssClass="btn btn-default" content="Select All"></ejs-button>
                         </div>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
+    <script type="text/javascript">
+        var rteObj;
+        document.getElementById('getVal').onclick = function () {
+            alert(rteObj.value);
+        };
+        document.getElementById('selectHtml').onclick = function () {
+            alert(rteObj.getSelection());
+        };
+        document.getElementById('selectall').onclick = function () {
+            rteObj.selectAll();
+        };
+        function created() {
+            rteObj = this;
+        }
+
+        function maxlength_onChange(args) {
+            rteObj.maxLength = args.value;
+        }
+
+        function readOnly_onChange(args) {
+            rteObj.readonly = args.checked;
+        }
+
+        function enabled_onChange(args) {
+            rteObj.enabled = args.checked;
+        }
+
+        function enablehtml_onChange(args) {
+            rteObj.enableHtmlEncode = args.checked;
+        }
+    </script>
 }
 
 @*custom code start*@
 
 @section Meta{
-    <meta name="description" content="This demo for Essential JS 2  rich text editor control demonstrate the usage of API."/>
+    <meta name="description" content="This demo for Essential JS 2  rich text editor control demonstrate the usage of API." />
 }
 
 @*custom code end*@
@@ -112,41 +154,3 @@
         </ul>
     </div>
 }
-@section Scripts{
-    <script>
-        document.getElementById('getVal').onclick = function () {
-            alert(defaultAPI.value);
-        };
-        document.getElementById('selectHtml').onclick = function () {
-            alert(defaultAPI.getSelection());
-        };
-        document.getElementById('selectall').onclick = function () {
-            defaultAPI.selectAll();
-        };
-
-        </script>
-
-}
-
-        <script>
-            var defaultAPI;
-            function created() {
-                defaultAPI = this;
-            }
-            
-            function maxlength_onChange(args) {
-                defaultAPI.maxLength = args.value;
-            }
-
-            function readOnly_onChange(args) {
-                defaultAPI.readonly = args.checked;
-            }
-
-            function enabled_onChange(args) {
-                defaultAPI.enabled = args.checked;
-            }
-
-            function enablehtml_onChange(args) {
-                defaultAPI.enableHtmlEncode = args.checked;
-            }
-    </script>

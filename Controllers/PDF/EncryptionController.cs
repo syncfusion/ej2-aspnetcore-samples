@@ -7,19 +7,23 @@ using Syncfusion.Pdf.Security;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using System;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 
 namespace EJ2CoreSampleBrowser.Controllers.PDF
 {
     public partial class PdfController : Controller
-    {        
-        
+    {
+        List<string> styleList = new List<string>();
+
         public ActionResult Encryption()
         {
+            ViewBag.data = new string[] { "Encrypt all contents", "Encrypt all contents except metadata", "Encrypt only attachments [For AES only]" };
             return View();
         }
        
         [HttpPost]
-        public ActionResult Encryption(string InsideBrowser, string encryptionType)
+        public ActionResult Encryption(string InsideBrowser, string encryptionType, string encryptOption)
         {
             PdfDocument document = new PdfDocument();
             PdfPage page = document.Pages.Add();
@@ -61,6 +65,33 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
                 security.KeySize = PdfEncryptionKeySize.Key256BitRevision6;
                 security.Algorithm = PdfEncryptionAlgorithm.AES;
             }
+            //set Encryption options
+            if (encryptOption == "Encrypt only attachments [For AES only]")
+            {
+                string basePath = _hostingEnvironment.WebRootPath;
+                string dataPath = basePath + @"/PDF/";
+
+                //Read the file
+                FileStream xmlStream = new FileStream(dataPath + "Products.xml", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+
+                //Creates an attachment
+                PdfAttachment attachment = new PdfAttachment("Products.xml", xmlStream);
+
+                attachment.ModificationDate = DateTime.Now;
+
+                attachment.Description = "About Syncfusion";
+
+                attachment.MimeType = "application/txt";
+
+                //Adds the attachment to the document
+                document.Attachments.Add(attachment);
+
+                security.EncryptionOptions = PdfEncryptionOptions.EncryptOnlyAttachments;
+            }
+            else if (encryptOption == "Encrypt all contents except metadata")
+                security.EncryptionOptions = PdfEncryptionOptions.EncryptAllContentsExceptMetadata;
+            else
+                security.EncryptionOptions = PdfEncryptionOptions.EncryptAllContents;
 
             security.OwnerPassword = "syncfusion";
             security.Permissions = PdfPermissionsFlags.Print | PdfPermissionsFlags.FullQualityPrint;

@@ -1,4 +1,4 @@
-﻿@using Syncfusion.EJ2;
+@using Syncfusion.EJ2;
 @section Meta{
     <meta name="description" content="This demo for Essential JS2 Circular Gauge control illustrates the semi-circular of circular gauge." />
 }
@@ -12,9 +12,9 @@
 }
 @section Description{
      <div id="description">
-        <p>
-            In this example, you can see how to render the circular gauge with modified start and end angles to form semi or quarter circular gauges. By enabling the radius based on angle option, the radius of circular gauge will be calculated based on the start and end angles.
-        </p>
+         <p>
+             In this example, you can see how to render the circular gauge with modified start and end angles to form semi or quarter circular gauges. By enabling the radius based on angle option, the radius of circular gauge will be calculated based on the start and end angles. You can also hide the intersect labels using `hideIntersectingLabel` property.
+         </p>
         <p>
             For more information on ranges, refer to this
             <a target="_blank" href="http://ej2.syncfusion.com/documentation">documentation</a> section.
@@ -28,23 +28,21 @@
             fontWeight = "normal"
         };
     }
-    <div class="col-lg-9 control-section">
+    <div class="col-lg-8 control-section">
     <div id="gauge">
         <ejs-circulargauge id="circular" load="gaugeload">
             <e-circulargauge-axes>
-                <e-circulargauge-axis startAngle="270" endAngle="90" minimum="0" maximum="100" radius="80%">
+                <e-circulargauge-axis startAngle="270" endAngle="90" minimum="0" maximum="100" radius="80%" hideIntersectingLabel="true">
                     <e-axis-linestyle width="0" color="#0450C2"></e-axis-linestyle>
-                    <e-axis-labelstyle position="Outside" autoAngle="true">
-                        <e-axis-labelstyle-font fontweight="Normal"></e-axis-labelstyle-font>
-                    </e-axis-labelstyle>
-                    <e-axis-majorticks position="Inside" width="2" height="12" interval="20"></e-axis-majorticks>
+                    <e-axis-labelstyle position="Outside" autoAngle="true"></e-axis-labelstyle>
+                    <e-axis-majorticks position="Inside" width="2" height="12" interval="4"></e-axis-majorticks>
                     <e-axis-minorticks position="Inside" height="5" width="1" interval="2"></e-axis-minorticks>
                 </e-circulargauge-axis>
             </e-circulargauge-axes>
         </ejs-circulargauge>
     </div>
 </div>
-<div class="col-lg-3 property-section">
+<div class="col-lg-4 property-section">
     <table id="property" title="Properties" style="width: 100%">
         <tr style="height: 50px">
             <td>
@@ -107,7 +105,16 @@
                 </div>
             </td>
         </tr>
-
+        <tr>
+            <td>
+                <div id="enablehide"> Hide intersecting labels</span> </div>
+            </td>
+            <td>
+                <div>
+                    <input type="checkbox" id="hidelabel" checked>
+                </div>
+            </td>
+        </tr>
     </table>
   </div>
 }
@@ -120,6 +127,9 @@
         args.gauge.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
         @* custom code end *@
         var axis = args.gauge.axes[0];
+        axis.labelStyle.font = {
+            fontWeight: "Normal"
+        };
         axis.pointers = [{
             animation: { enable: false },
             radius: '75%',
@@ -154,6 +164,14 @@
                 },
                 checked: false,
             }, '#angle');
+        var hidelabelCheckBox = new ej.buttons.CheckBox(
+            {
+                change: (args) => {
+                    circulargauge.axes[0].hideIntersectingLabel = args.checked;
+                    circulargauge.refresh();
+                },
+                checked: true,
+            }, '#hidelabel');
         document.getElementById('start').onpointermove = document.getElementById('start').ontouchmove =
             document.getElementById('start').onchange = () => {
          var min = parseInt((document.getElementById('start')).value, 10);
@@ -193,5 +211,6 @@
             circulargauge.refresh();
         }
     };
+   
     };
 </script>

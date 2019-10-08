@@ -69,19 +69,27 @@ function initializeTitleBar(isShareNeeded, isRtl) {
         documentTileText = 'اسم المستند. انقر أو اضغط لأعاده تسميه هذا المستند';
     }
     documentTitle = ej.base.createElement('label', { id: 'documenteditor_title_name', styles: 'font-weight:400;text-overflow:ellipsis;white-space:pre;overflow:hidden;user-select:none;cursor:text' });
-    documentTitleContentEditor = ej.base.createElement('div', { id: 'documenteditor_title_contentEditor', className: 'single-line' });
+    var iconCss = 'e-de-padding-right';
+    var btnFloatStyle = 'float:right;';
+    var titleCss = '';
+    if (isRtl) {
+        iconCss = 'e-de-padding-right-rtl';
+        btnFloatStyle = 'float:left;';
+        titleCss = 'float:right;';
+    }
+    documentTitleContentEditor = ej.base.createElement('div', { id: 'documenteditor_title_contentEditor', className: 'single-line', styles: titleCss });
     documentTitleContentEditor.appendChild(documentTitle);
     titleBarDiv.appendChild(documentTitleContentEditor);
     documentTitleContentEditor.setAttribute('title', documentTileText);
-    var btnStyles = 'float:right;background: transparent;box-shadow:none; font-family: inherit;border-color: transparent;' +
+    var btnStyles = btnFloatStyle + 'background: transparent;box-shadow:none; font-family: inherit;border-color: transparent;' +
         'border-radius: 2px;color:inherit;font-size:12px;text-transform:capitalize;margin-top:4px;height:28px;font-weight:400';
-    print = addButton('e-de-icon-Print e-de-padding-right', printText, btnStyles, 'de-print', printToolTip, false);
-    openBtn = addButton('e-de-icon-Open e-de-padding-right', openText, btnStyles, 'de-open', openText, false);
+    print = addButton('e-de-icon-Print ' + iconCss, printText, btnStyles, 'de-print', printToolTip, false);
+    openBtn = addButton('e-de-icon-Open ' + iconCss, openText, btnStyles, 'de-open', openText, false);
     var items = [
         { text: 'Microsoft Word (.docx)', id: 'word' },
         { text: 'Syncfusion Document Text (.sfdt)', id: 'sfdt' },
     ];
-    download = addButton('e-de-icon-Download e-de-padding-right', downloadText, btnStyles, 'documenteditor-share', downloadToolTip, true, items);
+    download = addButton('e-de-icon-Download ' + iconCss, downloadText, btnStyles, 'documenteditor-share', downloadToolTip, true, items);
     if (!isShareNeeded) {
         download.element.style.display = 'none';
     }

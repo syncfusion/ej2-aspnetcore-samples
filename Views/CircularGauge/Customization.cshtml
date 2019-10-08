@@ -1,4 +1,4 @@
-﻿@using Syncfusion.EJ2;
+@using Syncfusion.EJ2;
 @section Meta{
     <meta name="description" content="This demo for Essential JS2 Circular Gauge control shows the properties required to customize the pointers." />
 }
@@ -25,20 +25,20 @@
 }
 @section ControlsSection{
     <div class="col-md-8 control-section">
-        <div class="content-wrapper">
+        <div class="content-wrapper" id="circular" style="display: block">
             <ejs-circulargauge id="circular" load="gaugeload" centerY='70%'>
                 <e-circulargauge-axes>
                     <e-circulargauge-axis startAngle="300" endAngle="60" minimum="999" maximum="2000" radius="80%">
                         <e-axis-linestyle width="8" color="transparent"></e-axis-linestyle>
-                        <e-axis-labelstyle offset="-5">
-                            <e-axis-labelstyle-font fontfamily="Roboto" size="12px" fontweight="Regular" color="transparent"></e-axis-labelstyle-font>
-                        </e-axis-labelstyle>
+                        <e-axis-labelstyle offset="-5"></e-axis-labelstyle>
                         <e-axis-majorticks width="0" color="transparent"></e-axis-majorticks>
                         <e-axis-minorticks width="0" color="transparent"></e-axis-minorticks>
                     </e-circulargauge-axis>
                 </e-circulargauge-axes>
             </ejs-circulargauge>
         </div>
+		<div class="content-wrapper" id="circular1" style="display: none">
+			<ejs-circulargauge id="circular1"></ejs-circulargauge></div>
     </div>
     <div class="col-md-4 property-section">
         <table id="property" title="Properties" style="width: 100%">
@@ -113,7 +113,8 @@
     var random, usage;
     window.addEventListener("load", function (event) {
         random = document.getElementById('circular').ej2_instances[0];
-        usage = new ej.circulargauge.CircularGauge(customGauge2());
+		usage = new ej.circulargauge.CircularGauge(customGauge2());
+		usage.appendTo('#circular1');
         var gauge = random;
         var isUsage = false;
         var barColor;
@@ -152,8 +153,8 @@
         });
         pointerColor.appendTo('#pointerColor');
         document.getElementById('usage').onclick = function () {
-            random.destroy();
-            usage.appendTo('#circular');
+			document.getElementById('circular').style.display = 'none';
+			document.getElementById('circular1').style.display = 'block';
             gauge = usage;
             isUsage = true;
             var element = document.getElementById('currentValue');
@@ -175,8 +176,8 @@
             exisLine.style.display = 'none';
         };
         document.getElementById('random').onclick = function () {
-            usage.destroy();
-            random.appendTo('#circular');
+			document.getElementById('circular1').style.display = 'none';
+			document.getElementById('circular').style.display = 'block';
             gauge = random;
             isUsage = false;
             var currentElement = document.getElementById('random');
@@ -275,6 +276,12 @@
             return;
         window.gaugeLoaded = true;
         var axis = args.gauge.axes[0];
+        axis.labelStyle.font = {
+            fontFamily: "Roboto",
+            size: "12px",
+            fontWeight: "Regular",
+            color: "transparent"
+        };
         axis.pointers = [{
             type: 'RangeBar',
             value: 1800, radius: '90%',

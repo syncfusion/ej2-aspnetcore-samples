@@ -1,0 +1,109 @@
+﻿@using Syncfusion.EJ2
+@using Syncfusion.EJ2.Spreadsheet
+
+@section ControlsSection{
+    <div class="control-section">
+        <ejs-spreadsheet id="spreadsheet" showRibbon=false dataBound="dataBoundEvent">
+            <e-sheets>
+                <e-sheet name="Stock Details" selectedRange="F15">
+                    <e-rangesettings>
+                        <e-rangesetting dataSource="ViewBag.formulaData"></e-rangesetting>
+                    </e-rangesettings>
+                    <e-rows>
+                        <e-row height=40>
+                            <e-cells>
+                                <e-cell index=3 value="High (+)"></e-cell>
+                                <e-cell value="Low (-)"></e-cell>
+                            </e-cells>
+                        </e-row>
+                        <e-row index=11 height=25>
+                            <e-cells>
+                                <e-cell index=3 value="Average profit:"></e-cell>
+                                <e-cell index=5 formula="=AVERAGE(F2:F11)" format="0.00"></e-cell>
+                            </e-cells>
+                        </e-row>
+                        <e-row height=25>
+                            <e-cells>
+                                <e-cell index=3 value="Maximum stock value:"></e-cell>
+                                <e-cell index=5 formula="=MAX(D2:D11)" format="0.00"></e-cell>
+                            </e-cells>
+                        </e-row>
+                        <e-row height=25>
+                            <e-cells>
+                                <e-cell index=3 value="Minimum stock value:"></e-cell>
+                                <e-cell index=5 formula="=MIN(E2:E11)"></e-cell>
+                            </e-cells>
+                        </e-row>
+                        <e-row height=25>
+                            <e-cells>
+                                <e-cell index=3 value="Non-profitable days:"></e-cell>
+                                <e-cell index=5 formula="=COUNTIF(F2:F11,'<=0')"></e-cell>
+                            </e-cells>
+                        </e-row>
+                    </e-rows>
+                    <e-columns>
+                        <e-column width=100></e-column>
+                        <e-column width=130></e-column>
+                        <e-column width=140></e-column>
+                        <e-column width=140></e-column>
+                        <e-column width=130></e-column>
+                        <e-column width=130></e-column>
+                    </e-columns>
+                </e-sheet>
+            </e-sheets>
+        </ejs-spreadsheet>
+    </div>
+}
+
+@section Meta{
+    <meta name="description" content="This demo for Essential ASP.NET Core Spreadsheet control shows the way of using basic formulas with minimum configuration." />
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the analysis of a company's stock value for a certain period with formula feature.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            The <code>Spreadsheet</code> component provides a built-in calculation library that supports most commonly used
+            formulas.
+            In this demo, a formula is specified to a cell using the <code>formula</code> property.
+        </p>
+        <p>
+            More information about formula support can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/spreadsheet/getting-started">
+                documentation
+            </a> section.
+        </p>
+    </div>
+}
+
+<script>
+    function dataBoundEvent() {
+        if (this.activeSheetTab === 1 && this.sheets[this.activeSheetTab - 1].name === 'Stock Details') {
+            this.cellFormat({ fontWeight: 'bold', backgroundColor: '#4ECDC4', textAlign: 'center', fontSize: '14px' }, 'A1:F1');
+            this.cellFormat({ backgroundColor: '#F2F2F2' }, 'A2:F11');
+            this.cellFormat({ fontWeight: 'bold', backgroundColor: '#C6EFCE' }, 'A12:F15');
+            this.numberFormat('0.00', 'F2:F11');
+        }
+    }
+</script>
+
+@*custom code start*@
+
+<style>
+
+    .control-section {
+        height: 550px;
+    }
+    #sb-content .e-spreadsheet .e-tab .e-tab-text {
+        display: inherit;
+    }
+</style>
+
+@*custom code end*@

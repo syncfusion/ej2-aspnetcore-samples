@@ -6,14 +6,20 @@
 @section ControlsSection {
     <div class="col-lg-12 control-section" id="target">
         <ejs-button id="dialogBtn" cssClass="dlgbtn" content="Open Dialog"></ejs-button>
-        <ejs-dialog id="defaultDialog" animationSettings="defaultanimation" width="330px" visible="true" height="260px" target="#target" open="dialogOpen" Content="<p>This is the first dialog and acts as a parent dialog, you can open the second (child) dialog by clicking 'Next'.</p>"
-                    close="dialogClose" showCloseIcon="true" header="First Dialog">
+        <ejs-dialog id="firstDialog" animationSettings="defaultanimation" width="330px" visible="true" height="260px" target="#target" open="dialogOpen"
+                    close="dialogClose" showCloseIcon="true" header="First Dialog" created="firstDlgCreated">
+            <e-content-template>
+                <p>This is the first dialog and acts as a parent dialog, you can open the second (child) dialog by clicking 'Next'.</p>
+            </e-content-template>
             <e-dialog-buttons>
                 <e-dialog-dialogbutton buttonModel="ViewBag.defaultbutton" click="dlgButtonClick"></e-dialog-dialogbutton>
             </e-dialog-buttons>
         </ejs-dialog>
-        <ejs-dialog id="secondDialog" header="Second Dialog" visible="false" isModal="true" animationSettings="defaultanimation" width="285px" height="215px" target="#target" open="dialogOpen" Content="<p>This is the second dialog and act as a child dialog.</p>"
-                    close="dialogClose2" showCloseIcon="true">
+        <ejs-dialog id="secondDialog" header="Second Dialog" visible="false" isModal="true" animationSettings="defaultanimation" width="285px" height="215px" target="#target" open="dialogOpen"
+                    close="dialogClose2" showCloseIcon="true" created="secondDlgCreated">
+            <e-content-template>
+                <p>This is the second dialog and act as a child dialog.</p>
+            </e-content-template>
             <e-dialog-buttons>
                 <e-dialog-dialogbutton buttonModel="ViewBag.defaultbutton1" click="dlg2ButtonClick"></e-dialog-dialogbutton>
             </e-dialog-buttons>
@@ -23,19 +29,22 @@
 
 @section PreScripts{
     <script>
+         var firstDialogObj, secondDialogObj;
+        function firstDlgCreated() {
+            firstDialogObj = this;
+        }
+        function secondDlgCreated() {
+            secondDialogObj = this;
+        }
         document.getElementById('dialogBtn').onclick = function () {
-            var dialogObj = document.getElementById('defaultDialog').ej2_instances[0];
-            var dialogObj1 = document.getElementById('secondDialog').ej2_instances[0];
-            dialogObj.show();
-            dialogObj1.hide();
+            firstDialogObj.show();
+            secondDialogObj.hide();
         };
         function dlgButtonClick() {
-            var dialogObj = document.getElementById('secondDialog').ej2_instances[0];
-            dialogObj.show();
+            secondDialogObj.show();
         }
         function dlg2ButtonClick() {
-            var dialogObj = document.getElementById('secondDialog').ej2_instances[0];
-            dialogObj.hide();
+            secondDialogObj.hide();
         }
         function dialogClose() {
             document.getElementById('dialogBtn').style.display = 'block';

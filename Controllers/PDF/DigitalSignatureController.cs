@@ -22,7 +22,7 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
         }
 
         [HttpPost]
-        public ActionResult DigitalSignature(string Browser, string password, string Reason, string Location, string Contact, string RadioButtonList2, string NewPDF, string submit, IFormFile pdfdocument, IFormFile certificate)
+        public ActionResult DigitalSignature(string Browser, string password, string Reason, string Location, string Contact, string RadioButtonList2, string NewPDF, string submit, string Cryptographic,string Digest_Algorithm, IFormFile pdfdocument, IFormFile certificate)
         {
             string basePath = _hostingEnvironment.WebRootPath;
             string dataPath = string.Empty;
@@ -40,6 +40,8 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
                     signature.ContactInfo = Contact;
                     signature.LocationInfo = Location;
                     signature.Reason = Reason;
+                    SetCryptographicStandard(Cryptographic, signature);
+                    SetDigest_Algorithm(Digest_Algorithm, signature);
                     MemoryStream stream = new MemoryStream();
                     ldoc.Save(stream);
                     stream.Position = 0;
@@ -67,7 +69,7 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
                 PdfSolidBrush brush = new PdfSolidBrush(Color.Black);
                 PdfPen pen = new PdfPen(brush, 0.2f);
                 PdfFont font = new PdfStandardFont(PdfFontFamily.Courier, 12, PdfFontStyle.Regular);
-                PdfCertificate pdfCert = new PdfCertificate(pfxFile, "syncfusion");
+                PdfCertificate pdfCert = new PdfCertificate(pfxFile, "password123");
                 PdfSignature signature = new PdfSignature(page, pdfCert, "Signature");
                 FileStream jpgFile = new FileStream(dataPath + "logo.png", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
                 PdfBitmap bmp = new PdfBitmap(jpgFile);
@@ -75,7 +77,8 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
                 signature.ContactInfo = "johndoe@owned.us";
                 signature.LocationInfo = "Honolulu, Hawaii";
                 signature.Reason = "I am author of this document.";
-
+                SetCryptographicStandard(Cryptographic, signature);
+                SetDigest_Algorithm(Digest_Algorithm, signature);
                 if (RadioButtonList2 == "Standard")
                     signature.Certificated = true;
                 else
@@ -107,8 +110,44 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
                 FileStreamResult fileStreamResult = new FileStreamResult(stream, "application/pdf");
                 fileStreamResult.FileDownloadName = "SignedPDF.pdf";
                 return fileStreamResult;
-
                 return View();
+            }
+        }
+
+        private void SetCryptographicStandard(string cryptographic, PdfSignature signature)
+        {
+            if (cryptographic != null)
+            {
+                if (cryptographic == "CAdES")
+                    signature.Settings.CryptographicStandard = CryptographicStandard.CADES;
+                else
+                    signature.Settings.CryptographicStandard = CryptographicStandard.CMS;
+            }
+            
+        }
+
+        private void SetDigest_Algorithm(string digest_Algorithm, PdfSignature signature)
+        {
+            if (digest_Algorithm != null)
+            {
+                switch (digest_Algorithm)
+                {
+                    case "SHA1":
+                        signature.Settings.DigestAlgorithm = DigestAlgorithm.SHA1;
+                        break;
+                    case "SHA384":
+                        signature.Settings.DigestAlgorithm = DigestAlgorithm.SHA384;
+                        break;
+                    case "SHA512":
+                        signature.Settings.DigestAlgorithm = DigestAlgorithm.SHA512;
+                        break;
+                    case "RIPEMD160":
+                        signature.Settings.DigestAlgorithm = DigestAlgorithm.RIPEMD160;
+                        break;
+                    default:
+                        signature.Settings.DigestAlgorithm = DigestAlgorithm.SHA256;
+                        break;
+                }
             }
         }
     }

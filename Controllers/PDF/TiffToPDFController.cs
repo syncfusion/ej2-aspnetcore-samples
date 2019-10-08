@@ -36,7 +36,7 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
                 document.PageSettings.Margins.All = 0;
 
                 //Load Multiframe Tiff image
-                PdfBitmap tiffImage = new PdfBitmap(imageFileStream);
+                PdfTiffImage tiffImage = new PdfTiffImage(imageFileStream);
 
                 //Get the frame count
                 int frameCount = tiffImage.FrameCount;

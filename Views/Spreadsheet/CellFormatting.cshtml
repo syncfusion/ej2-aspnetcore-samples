@@ -1,0 +1,162 @@
+﻿@using Syncfusion.EJ2
+@using Syncfusion.EJ2.Spreadsheet
+
+@section ControlsSection{
+    <div class="control-section">
+        <ejs-spreadsheet id="spreadsheet" showRibbon=false showFormulaBar=false beforeDataBound="beforeDataBound" beforeCellRender="beforeCellRender">
+            <e-sheets>
+                <e-sheet name="Order Details" showGridLines=false>
+                    <e-rangesettings>
+                        <e-rangesetting dataSource="ViewBag.orderDetails"></e-rangesetting>
+                    </e-rangesettings>
+                    <e-rows>
+                        <e-row height=36>
+                            <e-cells>
+                                <e-cell value="Order ID">
+                                    <e-style textAlign="Right"></e-style>
+                                </e-cell>
+                                <e-cell value="Customer Name">
+                                    <e-style textIndent="2pt"></e-style>
+                                </e-cell>
+                                <e-cell value="Order Date">
+                                    <e-style textAlign="Right"></e-style>
+                                </e-cell>
+                                <e-cell>
+                                    <e-style textIndent="2pt"></e-style>
+                                </e-cell>
+                                <e-cell index=5 value="Postal Code">
+                                    <e-style textAlign="Right"></e-style>
+                                </e-cell>
+                                <e-cell index=7>
+                                    <e-style textAlign="Center"></e-style>
+                                </e-cell>
+                                <e-cell>
+                                    <e-style textAlign="Right"></e-style>
+                                </e-cell>
+                                <e-cell>
+                                    <e-style textIndent="2pt"></e-style>
+                                </e-cell>
+                            </e-cells>
+                        </e-row>
+                        <e-row height=42></e-row>
+                        <e-row height=42></e-row>
+                        <e-row height=42></e-row>
+                        <e-row height=42></e-row>
+                        <e-row height=42></e-row>
+                        <e-row height=42></e-row>
+                        <e-row height=42></e-row>
+                        <e-row height=42></e-row>
+                        <e-row height=42></e-row>
+                        <e-row height=42></e-row>
+                        <e-row height=42></e-row>
+                        <e-row height=42></e-row>
+                        <e-row height=42></e-row>
+                        <e-row height=42></e-row>
+                        <e-row height=42></e-row>
+                    </e-rows>
+                    <e-columns>
+                        <e-column width=80></e-column>
+                        <e-column width=140></e-column>
+                        <e-column width=100></e-column>
+                        <e-column width=232></e-column>
+                        <e-column width=120></e-column>
+                        <e-column width=100></e-column>
+                        <e-column width=100></e-column>
+                        <e-column width=120></e-column>
+                        <e-column width=80></e-column>
+                    </e-columns>
+                </e-sheet>
+            </e-sheets>
+        </ejs-spreadsheet>
+    </div>
+}
+
+@section Meta{
+    <meta name="description" content="This demo for Essential ASP.NET Core Spreadsheet control shows the way of cell formatting with minimum configuration." />
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the <code>Spreadsheet</code> cell formatting feature by applying different styles to a range of cells.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            Cell formatting allows you to highlight cell data that appears in the Spreadsheet. It can be enabled
+            or disabled using the <code>
+                <a target="_blank" href="https://help.syncfusion.com/cr/cref_files/aspnetcore-js2/Syncfusion.EJ2~Syncfusion.EJ2.Spreadsheet.Spreadsheet~AllowCellFormatting.html">allowCellFormatting</a>
+            </code> property.
+        </p>
+        <p>
+            In this sample, gridlines are hidden using the <code>showGridLines</code> property and the styles are
+            applied using the <code>
+                <a target="_blank" href="https://help.syncfusion.com/cr/cref_files/aspnetcore-js2/Syncfusion.EJ2~Syncfusion.EJ2.Spreadsheet.Cell~Style.html">style</a>
+            </code> property and <code>
+                <a target="_blank" href="https://ej2.syncfusion.com/documentation/api/spreadsheet/#cellFormat">cellFormat</a>
+            </code> method.
+        </p>
+        <p>
+            More information about <code>cell formatting</code> can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/spreadsheet/getting-started">
+                documentation
+            </a> section.
+        </p>
+    </div>
+}
+
+<script>
+    function beforeDataBound() {
+        if (this.activeSheetTab === 1 && this.sheets[this.activeSheetTab - 1].name === 'Order Details') {
+            // Skip setting cell formatting for other sheets
+            if (this.sheets[this.activeSheetTab - 1].name !== 'Order Details') { return; }
+            // Applying cell formatting dynamically using cellFormat method
+            this.cellFormat({ fontWeight: 'bold', backgroundColor: '#4b5366', color: '#ffffff', fontSize: '12pt' }, 'A1:I1');
+            this.cellFormat({ fontWeight: 'bold', textIndent: '2pt' }, 'B2:B16');
+            this.cellFormat({ fontStyle: 'italic', textIndent: '2pt' }, 'D2:D16');
+            this.cellFormat({ textIndent: '2pt' }, 'E1:E16');
+            this.cellFormat({ textIndent: '2pt' }, 'G1:G16');
+            this.cellFormat({ textAlign: 'center', fontWeight: 'bold' }, 'H2:H16');
+            this.cellFormat({ fontFamily: 'Helvetica New', verticalAlign: 'middle' }, 'A1:I16');
+        }
+    }
+
+    function beforeCellRender(args) {
+        if (this.activeSheetTab === 1 && this.sheets[this.activeSheetTab - 1].name === 'Order Details') {
+            if (args.cell && args.cell.value) {
+                // Applying cell formatting before rendering the particular cell
+                switch (args.cell.value) {
+                    case 'Delivered':
+                        this.cellFormat({ color: '#10c469', textDecoration: 'line-through' }, args.address);
+                        break;
+                    case 'Shipped':
+                        this.cellFormat({ color: '#62c9e8' }, args.address);
+                        break;
+                    case 'Pending':
+                        this.cellFormat({ color: '#FFC107', textDecoration: 'underline' }, args.address);
+                        break;
+                    case 'Cancelled':
+                        this.cellFormat({ color: '#ff5b5b' }, args.address);
+                        break;
+                }
+            }
+        }
+    }
+</script>
+
+@*custom code start*@
+
+<style>
+
+    .control-section {
+        height: 550px;
+    }
+    #sb-content .e-spreadsheet .e-tab .e-tab-text {
+        display: inherit;
+    }
+</style>
+
+@*custom code end*@

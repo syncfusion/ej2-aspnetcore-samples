@@ -54,7 +54,8 @@
         var documenteditorElement = document.getElementById("container");
         documenteditorElement.style.height = "590px";
         documenteditorElement.style.width = "100%";
-        documenteditor = documenteditorElement.ej2_instances[0].documentEditor;
+        var container = documenteditorElement.ej2_instances[0];
+        documenteditor = container.documentEditor;
         documenteditorElement.ej2_instances[0].serviceUrl = window.baseurl + 'api/documenteditor/';
         documenteditor.serviceUrl = window.baseurl + 'api/documenteditor/';
         var ajax = new ej.base.Ajax("@Url.Content("~/scripts/documenteditor/data-document-protection.json")", 'GET', true);
@@ -64,11 +65,12 @@
             documenteditor.documentName = 'Document Protection';
             updateDocumentTitle();
         };
-        documenteditor.documentChange = function (args) {
+        container.documentChange = function (args) {
             updateDocumentTitle();
         };
         titleBarDiv = document.getElementById('documenteditor_titlebar');
         initComponentAndWireEvent();
+        documenteditorElement.ej2_instances[0].showPropertiesPane = false;
         documenteditor.currentUser = "engineer@mycompany.com";
         var userMenu = document.getElementById("ddlelement").ej2_instances[0];
         userMenu.change = function(e) {

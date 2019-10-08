@@ -7,18 +7,18 @@
         <div class="control_wrapper">
             <div class="row">
                 <div id="reminder">
-                    <button class="e-btn" id="toast_mail_remainder"> Mail Reminder</button>
-                    <button class="e-btn" id="Alarm_turn_on"> Turn on Alarm</button>
+                    <ejs-button id="toast_mail_remainder" content="Mail Reminder" cssClass="e-btn"></ejs-button>
+                    <ejs-button id="Alarm_turn_on" content="Turn on Alarm" cssClass="e-btn"></ejs-button>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
-                    <ejs-toast id="toast_custom" newestOnTop="true" showCloseButton="true" timeOut="0">
+                    <ejs-toast id="toast_custom" newestOnTop="true" showCloseButton="true" timeOut="0" created="customCreated">
                         <e-toast-position X="Right"></e-toast-position>
                     </ejs-toast>
                 </div>
                 <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
-                    <ejs-toast id="toast_template" extendedTimeout="0" timeOut="120000" open="onOpenToast" close="onToastClose" beforeOpen="onToastBeforeOpen"></ejs-toast>
+                    <ejs-toast id="toast_template" extendedTimeout="0" timeOut="120000" open="onOpenToast" close="onToastClose" beforeOpen="onToastBeforeOpen" created="templateCreated"></ejs-toast>
                     <div id="toast_template_target">
                     </div>
                 </div>
@@ -69,102 +69,92 @@
             ${/if}
         </div>
     </script>
+
     <script type="text/javascript">
-        var toastData = [
-            { from: ' Anjolie Stokes', subject: 'Networking Referral', image: { url: './../css/Toast/laura.png' }, },
-            { from: ' Ila Russo', subject: 'Business dinner invitation', image: { url: './../css/Toast/janat.png' }, },
-            { from: ' Camden Mcmillan', subject: 'Reference Request - Cameran Hester', image: { url: './../css/Toast/michael.png' }, },
-            { from: ' Chase Solomon', subject: 'New business relationship confirmation', image: { url: './../css/Toast/janat.png' }, },
-            {
-                from: ' Inga Scott', subject: 'Application for Sales Associate', image: { url: './../css/Toast/michael.png' },
-            }];
-        var toastFlag = 0;
-
-        // Toast Dynamic template with TemplateEngine compiler
-        var cardTemplateFn = ej.base.compile(document.getElementById('toastEmail_template').innerHTML.trim());
-
-        setTimeout(function () {
-            var toastObjEmail = document.getElementById('toast_custom').ej2_instances[0];
-            toastObjEmail.animation = { hide: { effect: 'SlideRightOut' }, show: { effect: 'SlideRightIn' } };
-            toastObjEmail.show({ template: cardTemplateFn(toastData[toastFlag])[0].outerHTML, target: document.body });
-            ++toastFlag;
-        }, 500)
-
-
-        var btnEle = document.getElementById('toast_mail_remainder');
-        var alarm = document.getElementById('Alarm_turn_on');
-        var snoozeFlag = false;
-
-        document.onclick = function (e) {
-            var closestEle = ej.base.closest(e.target, '.e-toast-container');
-            var toastObjEmail = document.getElementById('toast_custom').ej2_instances[0];
-            var toastObj = document.getElementById('toast_template').ej2_instances[0];
-            if (e.target !== alarm && e.target !== btnEle && closestEle !== toastObj.element && closestEle !== toastObjEmail.element) {
-                toastObj.hide('All');
-                toastObjEmail.hide('All');
-            }
-        };
-
-        btnEle.onclick = function () {
-            var toastObjEmail = document.getElementById('toast_custom').ej2_instances[0];
-            toastObjEmail.show({ template: cardTemplateFn(toastData[toastFlag])[0].outerHTML });
-            ++toastFlag;
-            if (toastFlag === (toastData.length)) {
-                toastFlag = 0;
-            }
-        };
-        alarm.onclick = function () {
-            var toastObj = document.getElementById('toast_template').ej2_instances[0];
-            toastObj.show({ template: document.getElementById('template_toast_ele').innerHTML });
-        };
-        var listObj = new ej.dropdowns.DropDownList({
-            // set the placeholder to DropDownList input element
-            placeholder: 'Select a snooze time',
-            // set the height of the popup element
-            popupHeight: '200px',
-            change: listChange
-        });
-
-        function listChange(e) {
-            var toastObj = document.getElementById('toast_template').ej2_instances[0];
+        var customObj, templateObj;
+    var toastData = [
+        { from: ' Anjolie Stokes', subject: 'Networking Referral', image: { url: './../css/Toast/laura.png' }, },
+        { from: ' Ila Russo', subject: 'Business dinner invitation', image: { url: './../css/Toast/janat.png' }, },
+        { from: ' Camden Mcmillan', subject: 'Reference Request - Cameran Hester', image: { url: './../css/Toast/michael.png' }, },
+        { from: ' Chase Solomon', subject: 'New business relationship confirmation', image: { url: './../css/Toast/janat.png' }, },
+        { from: ' Inga Scott', subject: 'Application for Sales Associate', image: { url: './../css/Toast/michael.png' },
+        }];
+    var toastFlag = 0;
+    // Toast Dynamic template with TemplateEngine compiler
+    var cardTemplateFn = ej.base.compile(document.getElementById('toastEmail_template').innerHTML.trim());
+    setTimeout(function () {
+        customObj.animation = { hide: { effect: 'SlideRightOut' }, show: { effect: 'SlideRightIn' } };
+        customObj.show({ template: cardTemplateFn(toastData[toastFlag])[0].outerHTML, target: document.body });
+        ++toastFlag;
+    }, 500)
+    var btnEle = document.getElementById('toast_mail_remainder');
+    var alarm = document.getElementById('Alarm_turn_on');
+    var snoozeFlag = false;
+    document.onclick = function (e) {
+        var closestEle = ej.base.closest(e.target, '.e-toast-container');
+        var templateObj = document.getElementById('toast_template').ej2_instances[0];
+        if (e.target !== alarm && e.target !== btnEle && closestEle !== templateObj.element && closestEle !== customObj.element) {
+            templateObj.hide('All');
+            customObj.hide('All');
+        }
+    };
+    btnEle.onclick = function () {
+        customObj.show({ template: cardTemplateFn(toastData[toastFlag])[0].outerHTML });
+        ++toastFlag;
+        if (toastFlag === (toastData.length)) {
+            toastFlag = 0;
+        }
+    };
+    alarm.onclick = function () {
+        templateObj.show({ template: document.getElementById('template_toast_ele').innerHTML });
+    };
+    var listObj = new ej.dropdowns.DropDownList({
+        // set the placeholder to DropDownList input element
+        placeholder: 'Select a snooze time',
+        // set the height of the popup element
+        popupHeight: '200px',
+        change: listChange
+    });
+    function customCreated() {
+        customObj = this;
+    }
+    function templateCreated() {
+        templateObj = this;
+    }
+    function listChange(e) {
+        snoozeFlag = true;
+        templateObj.hide();
+    }
+    // Toast Open Event Function
+    function onOpenToast(e) {
+        var dismisBtn = document.getElementById('dismiss');
+        var snooze = document.getElementById('snooze');
+        snooze.onclick = () => {
             snoozeFlag = true;
-            toastObj.hide();
+            templateObj.hide();
+        };
+        dismisBtn.onclick = () => {
+            templateObj.hide();
+        };
+    }
+    // Toast Close Event Function
+    function onToastClose(e) {
+        alarm.style.display = 'inline-block';
+        if (snoozeFlag) {
+            templateObj.show({ timeOut: (parseInt(listObj.value.toString(), 10) * 60000) });
+            snoozeFlag = false;
         }
-
-        // Toast Open Event Function
-        function onOpenToast(e) {
-            var dismisBtn = document.getElementById('dismiss');
-            var snooze = document.getElementById('snooze');
-            var toastObj = document.getElementById('toast_template').ej2_instances[0];
-            snooze.onclick = () => {
-                snoozeFlag = true;
-                toastObj.hide();
-            };
-            dismisBtn.onclick = () => {
-                toastObj.hide();
-            };
-        }
-        // Toast Close Event Function
-        function onToastClose(e) {
-            var toastObj = document.getElementById('toast_template').ej2_instances[0];
-            alarm.style.display = 'inline-block';
-            if (snoozeFlag) {
-                toastObj.show({ timeOut: (parseInt(listObj.value.toString(), 10) * 60000) });
-                snoozeFlag = false;
-            }
-        }
-        // Toast BeforeOpen Event Function
-        function onToastBeforeOpen(e) {
-            alarm.style.display = 'none';
-            listObj.appendTo(e.element.querySelector('#snoozeDD'));
-        }
-
-        setTimeout(function () {
-            var toastObj = document.getElementById('toast_template').ej2_instances[0];
-            toastObj.target = !ej.base.Browser.isDevice ? document.body : '#toast_template_target';
-            toastObj.position = !ej.base.Browser.isDevice ? { X: 'Right', Y: 'Bottom' } : { X: 'Center', Y: 'Top' };
-            toastObj.show({ template: document.getElementById('template_toast_ele').innerHTML });
-        }, 500);
+    }
+    // Toast BeforeOpen Event Function
+    function onToastBeforeOpen(e) {
+        alarm.style.display = 'none';
+        listObj.appendTo(e.element.querySelector('#snoozeDD'));
+    }
+    setTimeout(function () {
+        templateObj.target = !ej.base.Browser.isDevice ? document.body : '#toast_template_target';
+        templateObj.position = !ej.base.Browser.isDevice ? { X: 'Right', Y: 'Bottom' } : { X: 'Center', Y: 'Top' };
+        templateObj.show({ template: document.getElementById('template_toast_ele').innerHTML });
+    }, 500);
 
     </script>
     <style>
@@ -206,9 +196,9 @@
         #toast_custom .e-toast .e-toast-title,
         #toast_custom .e-toast .e-toast-message,
         #toast_custom .e-toast .e-toast-message .e-toast-content,
-        #toast_custom .e-toast .e-toast-close-icon {
-        color: #fff;
-        } 
+        #toast_custom .e-toast .e-toast-close-icon  {
+            color:   #fff;
+        }
 
         #toast_custom .e-toast-container .e-toast .e-toast-message .e-toast-content {
             padding: 14px 0 0 0;
@@ -351,21 +341,21 @@
 @section Description{
 
 
-  <div id="description">
-    <p>This sample illustrates the way to display the template content on the toast. With the usage of Template, the user can format and structure the HTML content to be displayed on the toast as per their application needs.</p><br />
-    <ul>
-        <li>
-            Alarm toast is integrated with button and drop-down list that allows to set timeOut for toast and close it.
-        </li>
-        <li>
-            Dynamic toast opened based on the data source given to add mail reminder notifications and it can be hidden using the close button available.
-        </li>
-    </ul>
-    <p>
-        More information about Toast can be found in this
-        <a href="https://ej2.syncfusion.com/aspnetcore/documentation/toast/getting-started-asp-core/" target="_blank"> documentation section</a>.
-    </p>
-</div>
+    <div id="description">
+        <p>This sample illustrates the way to display the template content on the toast. With the usage of Template, the user can format and structure the HTML content to be displayed on the toast as per their application needs.</p><br />
+        <ul>
+            <li>
+                Alarm toast is integrated with button and drop-down list that allows to set timeOut for toast and close it.
+            </li>
+            <li>
+                Dynamic toast opened based on the data source given to add mail reminder notifications and it can be hidden using the close button available.
+            </li>
+        </ul>
+        <p>
+            More information about Toast can be found in this
+            <a href="https://ej2.syncfusion.com/aspnetcore/documentation/toast/getting-started/" target="_blank"> documentation section</a>.
+        </p>
+    </div>
 
 
 }

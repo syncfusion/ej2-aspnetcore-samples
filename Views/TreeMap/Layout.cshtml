@@ -1,16 +1,17 @@
-﻿@using Syncfusion.EJ2.TreeMap;
+@using Syncfusion.EJ2.TreeMap;
 @section ControlsSection{
     @{
         var leafBorder = new TreeMapBorder{ Color = "black", Width = 0.5 };
-        var colorMaps = new[]{
-               new {from = 1550, to = 17946, color = "#9cbb59", minOpacity=0.5, maxOpacity=1 }
-            };
     }
     <div class="col-lg-9 control-section">
         <div id="container">
             <ejs-treemap id="container" load="treeMapLoad" renderDirection="TopLeftBottomRight" dataSource="ViewBag.dataSource" weightValuePath="GDP" rangeColorValuePath="GDP">
                 <e-treemap-titlesettings text="Top 10 countries by GDP Nominal - 2015"></e-treemap-titlesettings>
-                <e-treemap-leafitemsettings colorMapping="colorMaps" labelPath="State" labelFormat="${State}<br>$${GDP} Trillion<br>(${percentage} %)" border="leafBorder"></e-treemap-leafitemsettings>
+                <e-treemap-leafitemsettings labelPath="State" labelFormat="${State}<br>$${GDP} Trillion<br>(${percentage} %)" border="leafBorder">
+                    <e-leafitemsettings-colormappings>
+                        <e-leafitemsettings-colormapping from="1550" to="17946" color="@("#9cbb59")" minOpacity="0.5" maxOpacity="1"></e-leafitemsettings-colormapping>
+                    </e-leafitemsettings-colormappings>
+                </e-treemap-leafitemsettings>
                 <e-treemap-tooltipsettings visible="true" format="${State}<br>Rank : ${Rank}"></e-treemap-tooltipsettings>
             </ejs-treemap>
         </div>

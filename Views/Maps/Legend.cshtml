@@ -29,16 +29,16 @@
         };
         var propertyPath = new[] { "name" };
     }
-    <div class="col-lg-9 control-section">
+    <div class="col-lg-8 control-section">
         <div>
             <ejs-maps id="maps" load="window.onMapLoad" tooltipRender="tooltipRender">
-                <e-maps-titleSettings alignment="@Syncfusion.EJ2.Maps.Alignment.Center" text="Population density (per square kilometers) - 2015" textStyle="titleStyle"></e-maps-titleSettings>
+                <e-maps-titleSettings alignment="@Syncfusion.EJ2.Maps.Alignment.Center" text="Population density (per square kilometer) - 2015" textStyle="titleStyle"></e-maps-titleSettings>
                 <e-maps-zoomsettings enable="false"></e-maps-zoomsettings>
                 <e-maps-legendsettings visible="true" position="@LegendPosition.Top"></e-maps-legendsettings>
                 <e-maps-layers>
                     <e-maps-layer shapeData="ViewBag.mapdata" shapeDataPath="name" shapePropertyPath="propertyPath" dataSource="ViewBag.population">
                         <e-layersettings-shapesettings colorValuePath="density" fill="#E5E5E5" colorMapping="colormapping"></e-layersettings-shapesettings>
-                        <e-layersettings-tooltipsettings visible="true" valuePath="name" format="${name} : ${density} per square kms"></e-layersettings-tooltipsettings>
+                        <e-layersettings-tooltipsettings visible="true" valuePath="name" format="${name} : ${density}"></e-layersettings-tooltipsettings>
                     </e-maps-layer>
                 </e-maps-layers>
             </ejs-maps>
@@ -48,12 +48,12 @@
             <a href="https://simple.wikipedia.org/wiki/List_of_countries_by_population_density" target="_blank">simple.wikipedia.org</a>
         </div>
     </div>
-    <div class="col-lg-3 property-section">
+    <div class="col-lg-4 property-section">
         <table id="property" title="Properties" style="width: 100%">
             <tbody>
                 <tr style="height: 50px">
                     <td style="width: 10%">
-                        <div class="property-text" style="padding: 0px;">Type</div>
+                        <div class="property-text" style="padding: 0px;">Legend mode</div>
                     </td>
                     <td style="width: 30%;">
                         <select name="selectIndex" autocomplete="off" id="legendMode" style="width:60%;">
@@ -64,7 +64,7 @@
                 </tr>
                 <tr style="height: 50px">
                     <td style="width: 10%">
-                        <div class="property-text" style="padding: 0px;">Position</div>
+                        <div class="property-text" style="padding: 0px;">Legend position</div>
                     </td>
                     <td style="width: 30%">
                         <select name="legendPos" autocomplete="off" id="legendPosition" style="width:60%;">
@@ -76,12 +76,22 @@
                     </td>
                 </tr>
                 <tr style="height: 50px">
-                    <td style="width: 10%">
-                        <div class="property-text" style="padding: 0px;">Remaining items in data source</div>
+                    <td style="width: 70%">
+                        <div class="property-text" style="padding: 0px;">Show legend for remaining data source items</div>
                     </td>
                     <td style="width: 30%">
-                        <div>
+                        <div style="padding-top:0px">
                             <input type="checkbox" id="opacity" />
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td style="width: 70%">
+                        <div class="property-text" style="padding: 0px;">Show population density when the legend item is toggled</div>
+                    </td>
+                    <td style="width: 30%">
+                        <div style="padding-top:0px">
+                            <input type="checkbox" id="togglelegend" />
                         </div>
                     </td>
                 </tr>
@@ -169,7 +179,17 @@
                 },
                 checked: false
             },
-          '#opacity');
+            '#opacity');
+
+        var toggleCheckBox = new ej.buttons.CheckBox(
+            {
+                change: (args) => {
+                    maps.legendSettings.toggleLegendSettings.enable = args.checked;
+                    maps.refresh();
+                },
+                checked: false
+            },
+          '#togglelegend');
 
     }
 </script>
@@ -188,16 +208,11 @@
 
     <div id="description">
         <p>
-            In this example, you can see how to render a legend in the maps. A legend item denotes the value of a shape. Any number of legend items can be added to the legend. You can bind the desired colors to the shapes, if its values are within the specified range using the <code>ColorMapping</code> property.
+            In this example, you can see how to render a legend in the maps. A legend item denotes the value of a shape. Any number of legend items can be added to the legend. You can bind the desired colors to the shapes, if its values are within the specified range using the <code>ColorMapping</code> property. You can also show or hide color mapping related to population density when toggling the legend item
 
         </p>
         <p>
             Tooltip is enabled in this example. To see the tooltip in action, hover the mouse over a shape or tap a shape in touch enabled devices.
-        </p>
-        <br />
-        <p style="font-weight: 500">Injecting Module</p>
-        <p>
-            Maps component features are segregated into individual feature-wise modules. To use a legend, inject the <code>Legend</code> module using the <code>Maps.Inject(Legend)</code> method.
         </p>
     </div>
 }

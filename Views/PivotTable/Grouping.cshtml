@@ -166,9 +166,9 @@
                 data[ln].Sold = data[ln].Sold * (date.getFullYear() === 2015 ? 3 : date.getFullYear() === 2016 ? 4 : date.getFullYear() === 2017 ? 2 : 5);
                 data[ln].Amount = ((date.getFullYear() === 2018 ? 2 : 0) + data[ln].Sold) * amount[data[ln].Product_ID - 1000];
             }
-            args.dataSourceSettings.groupSettings = [{ name: 'Date', type: 'Date', groupInterval: ['Years', 'Months', 'Days'] },
+            args.pivotview.dataSourceSettings.groupSettings = [{ name: 'Date', type: 'Date', groupInterval: ['Years', 'Months', 'Days'] },
             { name: 'Product_ID', type: 'Number', rangeInterval: 4 }];
-            args.dataSourceSettings.dataSource = ej.base.extend([], data, null, true);
+            args.pivotview.setProperties({ dataSourceSettings: { dataSource: ej.base.extend([], data, null, true) } }, true);
         }
 
         function beforeColumnsRender(args) {

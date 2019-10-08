@@ -48,7 +48,8 @@
         var documenteditorElement = document.getElementById("container");
         documenteditorElement.style.height = "590px";
         documenteditorElement.style.width = "100%";
-         var container = documenteditorElement.ej2_instances[0];
+        var container = documenteditorElement.ej2_instances[0];
+        container.showPropertiesPane = true;
         documenteditor = container.documentEditor;
         documenteditorElement.ej2_instances[0].serviceUrl = window.baseurl + 'api/documenteditor/';
         documenteditor.serviceUrl = window.baseurl + 'api/documenteditor/';
@@ -59,13 +60,10 @@
             documenteditor.documentName = 'Auto Save';
             updateDocumentTitle();
         };
-        documenteditor.documentChange = function (args) {
-            updateDocumentTitle();
-        };
         titleBarDiv = document.getElementById('documenteditor_titlebar');
         initComponentAndWireEvent();
 
-        container.documentEditor.documentChange = function () {
+        container.documentChange = function () {
             updateDocumentTitle();
             documenteditor.focusIn();
         };

@@ -7,7 +7,12 @@
 
     <div class="col-lg-12 control-section toast-pos-section">
         <div class="control_wrapper" id="toast_pos_target">
-            <ejs-toast id="toast_pos" title="Matt sent you a friend request" width="350" content="You have a friend request yet to accept." icon="e-laura" close="onclose" beforeOpen="onBeforeOpen" created="onCreate">
+            <ejs-toast id="toast_pos" title="Matt sent you a friend request" width="350" icon="e-laura" close="onclose" beforeOpen="onBeforeOpen" created="onCreate">
+                <e-content-template>
+                    <div>
+                        You have a friend request yet to accept.
+                    </div>
+                </e-content-template>
                 <e-toast-position X="Right" Y="Bottom"></e-toast-position>
             </ejs-toast>
 
@@ -71,8 +76,8 @@
                     </tbody>
                 </table>
                 <div id="toast_btn" style="padding-top: 25px">
-                    <button class="e-btn e-control" id="show_Toast" style="margin-right: 15px"> Show Toasts </button>
-                    <button class="e-btn e-control" id="hideTosat"> Hide All </button>
+                    <ejs-button id="show_Toast" content="Show Toasts" cssClass="e-btn e-control e-show-toast"></ejs-button>
+                    <ejs-button id="hideTosat" content="Hide All" cssClass="e-btn e-control"></ejs-button>
                 </div>
             </div>
         </div>
@@ -109,8 +114,8 @@
             }
         };
 
-        function onCreate() {
-            toastObj = document.getElementById('toast_pos').ej2_instances[0];
+    function onCreate() {
+        toastObj = this;
             setTimeout(() => {
                 toastObj.show({ target: document.body });
             }, 500);
@@ -258,7 +263,7 @@
     </ul>
     <p>
         More information about Toast can be found in this
-        <a href="https://ej2.syncfusion.com/aspnetcore/documentation/toast/getting-started-asp-core/" target="_blank"> documentation section</a>.
+        <a href="https://ej2.syncfusion.com/aspnetcore/documentation/toast/getting-started/" target="_blank"> documentation section</a>.
     </p>
 </div>
 

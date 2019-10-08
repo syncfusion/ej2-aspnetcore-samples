@@ -3,24 +3,25 @@
 @section ControlsSection{
     <div class="col-lg-12 control-section toast-default-section">
         <div class="control_wrapper">
-            <ejs-toast id="toast_type" close="onclose" beforeOpen="onBeforeOpen">
+            <ejs-toast id="toast_type" close="onclose" beforeOpen="onBeforeOpen" created="created">
                 <e-toast-position X="Right"></e-toast-position>
             </ejs-toast>
             <div id="toast_types">
                 <div>
-                    <button class="e-btn e-control e-info" id="info_Toast"> Info Message </button>
-                    <button class="e-btn e-control e-success" id="success_Toast"> Success Message </button>
-                    <button class="e-btn e-control e-warning" id="warning_Toast"> Warning Message </button>
-                    <button class="e-btn e-control e-danger" id="error_Toast"> Danger Message </button>
+                    <ejs-button id="info_Toast" content="Info Message" cssClass="e-btn e-control e-info"></ejs-button>
+                    <ejs-button id="success_Toast" content="Success Message" cssClass="e-btn e-control e-success"></ejs-button>
+                    <ejs-button id="warning_Toast" content="Warning Message" cssClass="e-btn e-control e-warning"></ejs-button>
+                    <ejs-button id="error_Toast" content="Danger Message" cssClass="e-btn e-control e-danger"></ejs-button>
                 </div>
                 <div style="padding-top: 15px">
-                    <button class="e-btn e-control" id="hideToast"  style="display: none"> Hide All </button>
+                    <ejs-button id="hideToast" content="Hide All" cssClass="e-btn e-control e-hide"></ejs-button>
                 </div>
             </div>
-            </div>
         </div>
+    </div>
     <script type="text/javascript">
-        var toasts = [
+        var toastObj;
+    var toasts = [
             { title: 'Warning!', content: 'There was a problem with your network connection.', cssClass: 'e-toast-warning', icon: 'e-warning toast-icons' },
             { title: 'Success!', content: 'Your message has been sent successfully.', cssClass: 'e-toast-success', icon: 'e-success toast-icons' },
             { title: 'Error!', content: 'A problem has been occurred while submitting your data.', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' },
@@ -28,53 +29,45 @@
         var btnEleHide = document.getElementById('hideToast');
         setTimeout(
             () => {
-                var toastObj = document.getElementById('toast_type').ej2_instances[0];
                 toastObj.target = document.body;
                 toastObj.show(toasts[3]);
             }, 500);
+    function created() {
+        toastObj = this;
+    }
         var infoBtn = document.getElementById('info_Toast');
         var warnBtn = document.getElementById('warning_Toast');
         var successBtn = document.getElementById('success_Toast');
         var errorBtn = document.getElementById('error_Toast');
         document.onclick = function (e) {
-            var toastObj = document.getElementById('toast_type').ej2_instances[0];
             if (e.target !== infoBtn && e.target !== warnBtn && e.target !== successBtn && e.target !== errorBtn) {
                 toastObj.hide('All');
             }
         };
 
         document.getElementById('hideToast').onclick = function () {
-            var toastObj = document.getElementById('toast_type').ej2_instances[0];
             toastObj.hide('All');
         };
         infoBtn.onclick = function () {
-            var toastObj = document.getElementById('toast_type').ej2_instances[0];
             toastObj.show(toasts[3]);
         };
         warnBtn.onclick = function () {
-            var toastObj = document.getElementById('toast_type').ej2_instances[0];
             toastObj.show(toasts[0]);
         };
         successBtn.onclick = function () {
-            var toastObj = document.getElementById('toast_type').ej2_instances[0];
             toastObj.show(toasts[1]);
         };
         errorBtn.onclick = function () {
-            var toastObj = document.getElementById('toast_type').ej2_instances[0];
             toastObj.show(toasts[2]);
         };
-
-     
         function onclose(e) {
             if (e.toastContainer.childElementCount === 0) {
                 btnEleHide.style.display = 'none';
             }
         }
-
         function onBeforeOpen() {
             btnEleHide.style.display = 'inline-block';
         }
-       
     </script>
     <style>
   @@font-face {
@@ -162,7 +155,7 @@
     </ul>
     <p>
         More information about Toast can be found in this
-        <a href="https://ej2.syncfusion.com/aspnetcore/documentation/toast/getting-started-asp-core/" target="_blank"> documentation section</a>.
+        <a href="https://ej2.syncfusion.com/aspnetcore/documentation/toast/getting-started/" target="_blank"> documentation section</a>.
     </p>
 </div>
 

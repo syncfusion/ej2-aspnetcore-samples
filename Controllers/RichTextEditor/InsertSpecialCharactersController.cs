@@ -20,12 +20,12 @@ namespace EJ2CoreSampleBrowser.Controllers
         "UnorderedList", "|", "CreateLink", "Image", "CreateTable", "|", "SourceCode", tools
         , "|", "Undo", "Redo"
             };
-            ViewBag.button = new
+            ViewBag.insertBtn = new
             {
                 content = "Insert",
                 isPrimary = true
             };
-            ViewBag.button1 = new
+            ViewBag.cancelBtn = new
             {
                 content = "Cancel"
             };

@@ -2,18 +2,26 @@
 @section ControlsSection{
     <div class="control-section">
         <div class="control-wrapper">
-            <div class="control-section">
-                <ejs-richtexteditor id="ajax" created="onCreated"></ejs-richtexteditor>
-            </div>
+            <ejs-richtexteditor id="ajax" created="onCreated"></ejs-richtexteditor>
         </div>
     </div>
-
+    <script type="text/javascript">
+        var rteObj;
+        function onCreated() {
+            rteObj = this;
+            var ajax = new ej.base.Ajax('../Views/RichTextEditor/Ajax_content.html', 'GET', true);
+            ajax.send().then();
+            ajax.onSuccess = function (data) {
+                rteObj.setProperties({ value: data });
+            };
+        }
+    </script>
 }
 
 @*custom code start*@
 
 @section Meta{
-    <meta name="description" content="This demo for Essential JS 2  rich text editor control demonstrates how to load content to the editor from an external source using Ajax library."/>
+    <meta name="description" content="This demo for Essential JS 2  rich text editor control demonstrates how to load content to the editor from an external source using Ajax library." />
 }
 
 @*custom code end*@
@@ -30,16 +38,3 @@
         </p>
     </div>
 }
-
-<script>
-    var defaultRTE;
-
-    function onCreated() {
-        defaultRTE = this;
-        var ajax = new ej.base.Ajax('../Views/RichTextEditor/Ajax_content.html', 'GET', true);
-        ajax.send().then();
-        ajax.onSuccess = function (data) {
-            defaultRTE.setProperties({ value: data });
-        };
-    }
-</script>

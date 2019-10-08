@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,14 +21,14 @@ namespace EJ2CoreSampleBrowser.Controllers
         // Accessing the File Operations from File Manager package
         public PhysicalFileProvider operation;
         public string basePath;
-        string root = "wwwroot\\Files";
+        string root = "wwwroot"+ Path.DirectorySeparatorChar +"Files";
         public FileManagerController(IHostingEnvironment hostingEnvironment)
         {
             // Map the path of the files to be accessed with the host
             this.basePath = hostingEnvironment.ContentRootPath;
             this.operation = new PhysicalFileProvider();
             // Assign the mapped path as root folder
-            this.operation.RootFolder(this.basePath + "\\" + this.root);
+            this.operation.RootFolder(this.basePath + Path.DirectorySeparatorChar + this.root);
         }
         public object FileOperations([FromBody] FileManagerDirectoryContent args)
         {
@@ -54,19 +55,19 @@ namespace EJ2CoreSampleBrowser.Controllers
                     return this.operation.ToCamelCase(this.operation.GetFiles(args.Path, args.ShowHiddenItems));
                 case "delete":
                     // Path - Current path where of the folder to be deleted; Names - Name of the files to be deleted
-                    return this.operation.ToCamelCase(this.operation.Remove(args.Path, args.Names));
+                    return this.operation.ToCamelCase(this.operation.Delete(args.Path, args.Names));
                 case "copy":
                     //  Path - Path from where the file was copied; TargetPath - Path where the file/folder is to be copied; RenameFiles - Files with same name in the copied location that is confirmed for renaming; TargetData - Data of the copied file
-                    return this.operation.ToCamelCase(this.operation.CopyTo(args.Path, args.TargetPath, args.Names, args.RenameFiles, args.TargetData));
+                    return this.operation.ToCamelCase(this.operation.Copy(args.Path, args.TargetPath, args.Names, args.RenameFiles, args.TargetData));
                 case "move":
                     // Path - Path from where the file was cut; TargetPath - Path where the file/folder is to be moved; RenameFiles - Files with same name in the moved location that is confirmed for renaming; TargetData - Data of the moved file
-                    return this.operation.ToCamelCase(this.operation.MoveTo(args.Path, args.TargetPath, args.Names, args.RenameFiles, args.TargetData));
+                    return this.operation.ToCamelCase(this.operation.Move(args.Path, args.TargetPath, args.Names, args.RenameFiles, args.TargetData));
                 case "details":
                     // Path - Current path where details of file/folder is requested; Name - Names of the requested folders
-                    return this.operation.ToCamelCase(this.operation.GetDetails(args.Path, args.Names));
+                    return this.operation.ToCamelCase(this.operation.Details(args.Path, args.Names, args.Data));
                 case "create":
                     // Path - Current path where the folder is to be created; Name - Name of the new folder
-                    return this.operation.ToCamelCase(this.operation.CreateFolder(args.Path, args.Name));
+                    return this.operation.ToCamelCase(this.operation.Create(args.Path, args.Name));
                 case "search":
                     // Path - Current path where the search is performed; SearchString - String typed in the searchbox; CaseSensitive - Boolean value which specifies whether the search must be casesensitive
                     return this.operation.ToCamelCase(this.operation.Search(args.Path, args.SearchString, args.ShowHiddenItems, args.CaseSensitive));

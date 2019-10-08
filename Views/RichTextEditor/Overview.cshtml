@@ -2,11 +2,10 @@
 @section ControlsSection{
     <div class="control-section">
         <div class="control-wrapper">
-            <div class="control-section">
-                <ejs-richtexteditor id="defaultRTE" showCharCount="true" actionBegin="handleFullScreen"
-                                    actionComplete="actionCompleteHandler" maxLength="2000" created="created">
-                                                       <e-content-template>
-                       <div> <p>The rich text editor is WYSIWYG ('what you see is what you get') editor useful to create and edit content, and return the valid <a href='https://ej2.syncfusion.com/aspnetcore/documentation/rich-text-editor/formation/?no-cache=1#markdown-editor'>HTML markup</a> or <a href='https://ej2.syncfusion.com/aspnetcore/documentation/rich-text-editor/formation/?no-cache=1#html-editor'>markdown</a> of the content</p>
+            <ejs-richtexteditor id="defaultRTE" showCharCount="true" actionBegin="handleFullScreen" actionComplete="actionCompleteHandler" maxLength="2000" created="created">
+                <e-content-template>
+                    <div>
+                        <p>The rich text editor is WYSIWYG ('what you see is what you get') editor useful to create and edit content, and return the valid <a href='https://ej2.syncfusion.com/aspnetcore/documentation/rich-text-editor/formation/?no-cache=1#markdown-editor'>HTML markup</a> or <a href='https://ej2.syncfusion.com/aspnetcore/documentation/rich-text-editor/formation/?no-cache=1#html-editor'>markdown</a> of the content</p>
                         <p><b> Toolbar </b></p>
                         <ol>
                             <li>
@@ -41,13 +40,12 @@
                             </li>
                         </ol>
                         <img alt='Logo' src="@Url.Content("~/images/RichTextEditor/RTEImage-Feather.png")" style='width: 300px' />
-            </div>
-    </e-content-template>
-    <e-richtexteditor-toolbarsettings items="@ViewBag.tools">
-    </e-richtexteditor-toolbarsettings>
-    </ejs-richtexteditor>
-    </div>
-    </div>
+                    </div>
+                </e-content-template>
+                <e-richtexteditor-toolbarsettings items="@ViewBag.tools">
+                </e-richtexteditor-toolbarsettings>
+            </ejs-richtexteditor>
+        </div>
     </div>
     <link href="~/css/richtexteditor/codemirror.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.js" type="text/javascript"></script>
@@ -81,20 +79,15 @@
         }
     </style>
     <script type="text/javascript">
-        var defaultRTE;
-        var divPreview;
-        var myCodeMirror;
-        var textArea
-        divPreview = document.getElementById('DIV_Preview');
+        var rteObj, myCodeMirror, textArea;
         function created() {
-            defaultRTE = this;
-            textArea = defaultRTE.contentModule.getEditPanel();
-
+            rteObj = this;
+            textArea = rteObj.contentModule.getEditPanel();
         }
         function mirrorConversion(e) {
-            var id = defaultRTE.getID() + 'mirror-view';
-            var mirrorView = defaultRTE.element.querySelector('#' + id);
-            var charCount = defaultRTE.element.querySelector('.e-rte-character-count');
+            var id = rteObj.getID() + 'mirror-view';
+            var mirrorView = rteObj.element.querySelector('#' + id);
+            var charCount = rteObj.element.querySelector('.e-rte-character-count');
             if (e.targetItem === 'Preview') {
                 textArea.style.display = 'block';
                 mirrorView.style.display = 'none';
@@ -144,7 +137,7 @@
                 mirrorConversion(e);
             }
             else {
-                setTimeout(function () { defaultRTE.toolbarModule.refreshToolbarOverflow(); }, 400);
+                setTimeout(function () { rteObj.toolbarModule.refreshToolbarOverflow(); }, 400);
             }
         }
     </script>
@@ -153,7 +146,7 @@
 @*custom code start*@
 
 @section Meta{
-    <meta name="description" content="This demo for Essential JS 2  rich text editor control shows the overview of an HTML and markdown editor."/>
+    <meta name="description" content="This demo for Essential JS 2  rich text editor control shows the overview of an HTML and markdown editor." />
 }
 
 @*custom code end*@

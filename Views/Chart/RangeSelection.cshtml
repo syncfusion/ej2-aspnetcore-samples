@@ -36,6 +36,14 @@
                         <ejs-dropdownlist id="data" dataSource="@ViewBag.data" change="onChange" value="DragXY" popupHeight="220px"></ejs-dropdownlist>
                     </td>
                 </tr>
+                <tr id="" style="height: 50px">
+                    <td>
+                        <div> Enable Multi Selection:</div>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="select" style="margin-top: 15px">
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -50,8 +58,18 @@
         function onChange(args) {
             var chart = document.getElementById('container').ej2_instances[0];
             chart.selectionMode = this.value;
+            chart.series[0].animation.enable = false;
+            chart.series[1].animation.enable = false;
             chart.refresh();
         }
+        document.getElementById('select').onchange = () => {
+            var chart = document.getElementById('container').ej2_instances[0];
+            var element = (document.getElementById('select'));
+            chart.allowMultiSelection = element.checked;
+            chart.series[0].animation.enable = false;
+            chart.series[1].animation.enable = false;
+            chart.refresh();
+        };
     </script>
 
 }
@@ -76,7 +94,7 @@
             Tap to select a point or series, double tap and drag to enable rectangular selection in touch enabled devices.
         </p>
         <p>
-            Chart supports five mode of selection which can be set using <code>SelectionMode</code> property.
+            Chart supports seven mode of selection which can be set using <code>SelectionMode</code> property.
         </p>
         <ul>
             <li><code>Series</code> - Select the series in chart.</li>
@@ -85,6 +103,7 @@
             <li><code>DragXY</code> - Rectangular selection with respect to both axis.</li>
             <li><code>DragX</code> - Rectangular selection with respect to horizontal axis.</li>
             <li><code>DragY</code> - Rectangular selection with respect to vertical axis.</li>
+            <li><code>Lasso</code> - Select free form of selection area points.</li>
         </ul>
         <br />
       

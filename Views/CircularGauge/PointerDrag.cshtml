@@ -1,4 +1,4 @@
-﻿@using Syncfusion.EJ2;
+@using Syncfusion.EJ2;
 @section Meta{
     <meta name="description" content="This demo for Essential JS2 Circular Gauge control visualizes the pointer drag support and its options." />
 }
@@ -69,7 +69,8 @@
 }
 <script>
     
-    window.gaugeload = function (args) {
+	window.gaugeload = function (args) {
+
         @* custom code start *@
         var theme = themeName ? themeName : 'Material';
         args.gauge.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
@@ -82,7 +83,7 @@
         axis.pointers = [{
             type: 'Marker', value: 70,
             markerShape: 'InvertedTriangle',
-            radius: '110%',
+            radius: '115%',
             markerHeight: 20,
             color: '#E5C31C',
             markerWidth: 20
@@ -134,16 +135,18 @@
         
         content = '<div style="font-size: 14px;color:' + color + ';font-weight: lighter;font-style: oblique;"><span>';
         circulargauge.axes[0].annotations[0].content = (content + pointerValue + ' MPH</span></div>');
-        circulargauge.refresh();
+       circulargauge.refresh();
     }
 
     window.dragMove = function (args) {
-        pointerValue = Math.round(args.currentValue);
+		pointerValue = Math.round(args.currentValue);
         document.getElementById('pointerValue').innerHTML = 'Pointer Value <span>    ' + pointerValue;
         document.getElementById('value').value = pointerValue.toString();
         circulargauge.axes[0].annotations[0].content = (content + pointerValue + ' MPH</span></div>');
         circulargauge.axes[0].pointers[0].animation.enable = false;
-        circulargauge.axes[0].pointers[1].animation.enable = false;
+		circulargauge.axes[0].pointers[1].animation.enable = false;
+		circulargauge.axes[0].pointers[1].value = pointerValue;
+        circulargauge.axes[0].pointers[0].value = pointerValue;
         circulargauge.refresh();
     }
     window.dragEnd = function (args) {

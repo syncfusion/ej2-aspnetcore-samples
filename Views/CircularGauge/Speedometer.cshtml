@@ -1,4 +1,4 @@
-﻿@using Syncfusion.EJ2;
+@using Syncfusion.EJ2;
 @section Meta{
     <meta name="description" content="This demo for Essential JS2 Circular Gauge control illustrates the speedometer of circular gauge." />
 }
@@ -57,13 +57,12 @@
                 <e-circulargauge-axis startAngle="270" endAngle="90" minimum="0" maximum="120" radius="120%" pointers="pointer">
                     <e-axis-linestyle width="0" color="#E0E0E0"></e-axis-linestyle>
                     <e-axis-labelstyle useRangeColor="false" position="Outside" autoAngle="true">
-                        <e-axis-labelstyle-font size="13px" fontFamily="Roboto"></e-axis-labelstyle-font>
                     </e-axis-labelstyle>
                     <e-axis-majorticks color="transparent"></e-axis-majorticks>
                     <e-axis-minorticks color="transparent"></e-axis-minorticks>
-                    <e-axis-annotations>
-                        <e-axis-annotation content="#pointerValue" angle="0" zIndex="1.0" radius="30%"></e-axis-annotation>
-                    </e-axis-annotations>
+                    <e-circulargauge-annotations>
+                        <e-circulargauge-annotation content="#pointerValue" angle="0" zIndex="1.0" radius="30%"></e-circulargauge-annotation>
+                    </e-circulargauge-annotations>
                 </e-circulargauge-axis>
             </e-circulargauge-axes>
         </ejs-circulargauge>
@@ -122,6 +121,10 @@
         @* custom code end *@
         if (!circulargauge) {
             circulargauge = sender.gauge;
+            sender.gauge.axes[0].labelStyle.font = {
+                size: "13px",
+                fontFamily: "Roboto"
+            };
             sender.gauge.axes[0].lineStyle.width = 0;
             sender.gauge.axes[0].labelStyle = {
                 useRangeColor: false, position: 'Outside', autoAngle: true,

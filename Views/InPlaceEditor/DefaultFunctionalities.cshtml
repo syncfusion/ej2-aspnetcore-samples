@@ -138,7 +138,7 @@
         You can cancel the edit request by pressing the Esc key.
     </p>
     <p>
-        More information on the <code>In-place Editor</code> instantiation can be found in the <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/inplace-editor/getting-started-asp-core/">
+        More information on the <code>In-place Editor</code> instantiation can be found in the <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/in-place-editor/getting-started/">
             documentation section
         </a>.
     </p>
@@ -155,64 +155,53 @@
 @*custom code end*@
 
 @section PreScripts {
-    <script type="text/javascript">
-        var editObj;
-        var numericObj;
-        var maskObj;
-        function editorCreated() {
-            editObj = document.getElementById("inplace_editor").ej2_instances[0];
-        }
+<script type="text/javascript">
+    var editObj, numericObj, maskObj;
+    function editorCreated() {
+        editObj = this;
+    }
 
-        function numericCreated() {
-            numericObj = document.getElementById("numericTextBoxEle").ej2_instances[0];
-        }
+    function numericCreated() {
+        numericObj = this;
+    }
 
-        function maskCreated() {
-            maskObj = document.getElementById("maskedTextBoxEle").ej2_instances[0];
-        }
+    function maskCreated() {
+        maskObj = this;
+    }
 
-        // Change event funtion for DropDownList component
-        function changeEditorMode(e) {
-            editObj.mode = numericObj.mode = maskObj.mode = e.itemData.value;
-            editObj.dataBind();
-            numericObj.dataBind();
-            maskObj.dataBind();
-        }
+    // Change event funtion for DropDownList component
+    function changeEditorMode(e) {
+        editObj.mode = numericObj.mode = maskObj.mode = e.itemData.value;
+    }
 
-        // Change event funtion for DropDownList component
-        function onEditableOn(e) {
-            var val = e.itemData.value;
-            if (val === 'Double Click') {
-                val = 'DblClick'
-            } else if (val === 'Edit Icon Click') {
-                val = 'EditIconClick'
-            }
-            editObj.editableOn = numericObj.editableOn = maskObj.editableOn = val;
-            editObj.dataBind();
-            numericObj.dataBind();
-            maskObj.dataBind();
+    // Change event funtion for DropDownList component
+    function onEditableOn(e) {
+        var val = e.itemData.value;
+        if (val === 'Double Click') {
+            val = 'DblClick'
+        } else if (val === 'Edit Icon Click') {
+            val = 'EditIconClick'
         }
+        editObj.editableOn = numericObj.editableOn = maskObj.editableOn = val;
+    }
 
-        function onChange(args) {
-            editObj.showButtons = numericObj.showButtons = maskObj.showButtons = args.checked;
-        }
+    function onChange(args) {
+        editObj.showButtons = numericObj.showButtons = maskObj.showButtons = args.checked;
+    }
 
-        function onChangeEnable(args) {
-            editObj.disabled = numericObj.disabled = maskObj.disabled = args.checked;
-        }
-        document.getElementById('right-pane').onscroll = function () {
-            var mode = document.getElementById("editorMode");
-            var editEle1 = document.getElementById("inplace_editor");
-            var editEle2 = document.getElementById("numericTextBoxEle");
-            var editEle3 = document.getElementById("maskedTextBoxEle");
-            if (mode.ej2_instances[0].value === 'Inline') { return; }
-            if (editEle1.querySelectorAll('.e-editable-open').length > 0)
-                editEle1.ej2_instances[0].enableEditMode = false;
-            if (editEle2.querySelectorAll('.e-editable-open').length > 0)
-                editEle2.ej2_instances[0].enableEditMode = false;
-            if (editEle3.querySelectorAll('.e-editable-open').length > 0)
-                editEle3.ej2_instances[0].enableEditMode = false;
-        }
+    function onChangeEnable(args) {
+        editObj.disabled = numericObj.disabled = maskObj.disabled = args.checked;
+    }
+    document.getElementById('right-pane').onscroll = function () {
+        var mode = document.getElementById("editorMode");
+        if (mode.ej2_instances[0].value === 'Inline') { return; }
+        if (editObj.element.querySelectorAll('.e-editable-open').length > 0)
+            editObj.enableEditMode = false;
+        if (numericObj.element.querySelectorAll('.e-editable-open').length > 0)
+            numericObj.enableEditMode = false;
+        if (maskObj.element.querySelectorAll('.e-editable-open').length > 0)
+            maskObj.enableEditMode = false;
+    }
     </script>
 }
 

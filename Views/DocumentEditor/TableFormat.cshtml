@@ -34,7 +34,9 @@
         var documenteditorElement = document.getElementById("container");
         documenteditorElement.style.height = "590px";
         documenteditorElement.style.width = "100%";
-        documenteditor = documenteditorElement.ej2_instances[0].documentEditor;
+        var container = documenteditorElement.ej2_instances[0];
+        container.showPropertiesPane = true;
+        documenteditor = container.documentEditor;
         documenteditorElement.ej2_instances[0].serviceUrl = window.baseurl + 'api/documenteditor/';
         documenteditor.serviceUrl = window.baseurl + 'api/documenteditor/';
         var ajax = new ej.base.Ajax("@Url.Content("~/scripts/documenteditor/data-table-formatting.json")", 'GET', true);
@@ -44,7 +46,7 @@
             documenteditor.documentName = 'Table Formatting';
             updateDocumentTitle();
         };      
-        documenteditor.documentChange = function (args) {            
+        container.documentChange = function (args) {            
             updateDocumentTitle();
         };
         titleBarDiv = document.getElementById('documenteditor_titlebar');

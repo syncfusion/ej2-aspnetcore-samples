@@ -18,7 +18,7 @@
                         </label>
                     </td>
                     <td>
-                        <ejs-inplaceeditor id="datePickerEle" mode="Inline" type="Date" value="ViewBag.dateValue" model="ViewBag.dateData">
+                        <ejs-inplaceeditor id="datePickerEle" mode="Inline" type="Date" value="ViewBag.dateValue" model="ViewBag.dateData" created="dateCreated">
                         </ejs-inplaceeditor>
                     </td>
                 </tr>
@@ -29,7 +29,7 @@
                         </label>
                     </td>
                     <td>
-                        <ejs-inplaceeditor id="timePickerEle" mode="Inline" type="Time" value="ViewBag.dateValue" model="ViewBag.timeData">
+                        <ejs-inplaceeditor id="timePickerEle" mode="Inline" type="Time" value="ViewBag.dateValue" model="ViewBag.timeData" created="timeCreated">
                         </ejs-inplaceeditor>
                     </td>
                 </tr>
@@ -40,7 +40,7 @@
                         </label>
                     </td>
                     <td>
-                        <ejs-inplaceeditor id="dateTimePickerEle" mode="Inline" type="DateTime" value="ViewBag.dateValue" model="ViewBag.dateTimeData">
+                        <ejs-inplaceeditor id="dateTimePickerEle" mode="Inline" type="DateTime" value="ViewBag.dateValue" model="ViewBag.dateTimeData" created="dateTimeCreated">
                         </ejs-inplaceeditor>
                     </td>
                 </tr>
@@ -51,7 +51,7 @@
                         </label>
                     </td>
                     <td>
-                        <ejs-inplaceeditor id="dateRangePickerEle" mode="Inline" type="DateRange" value="ViewBag.daterangeValue" model="ViewBag.dateRangeData">
+                        <ejs-inplaceeditor id="dateRangePickerEle" mode="Inline" type="DateRange" value="ViewBag.daterangeValue" model="ViewBag.dateRangeData" created="dateRangeCreated">
                         </ejs-inplaceeditor>
                     </td>
                 </tr>
@@ -80,19 +80,19 @@
         max-width: 400px;
     }
 
-   .inplace-control-section.pickers-layout .control_wrapper table {
-        margin: auto;
-   }
+        .inplace-control-section.pickers-layout .control_wrapper table {
+            margin: auto;
+        }
 
-   .inplace-control-section.pickers-layout .control_wrapper table td {
-       width: 200px;
-       height: 100px;
-   }
+            .inplace-control-section.pickers-layout .control_wrapper table td {
+                width: 200px;
+                height: 100px;
+            }
 
-   .inplace-control-section.pickers-layout .control_wrapper table td .control-label {
-      margin-bottom: 0px;
-   }
-   /* custom code end */
+                .inplace-control-section.pickers-layout .control_wrapper table td .control-label {
+                    margin-bottom: 0px;
+                }
+    /* custom code end */
 
     #pickerProperty table td {
         width: 50%;
@@ -102,7 +102,8 @@
         padding-left: 10px;
         padding-top: 10px;
     }
-	.e-inplaceeditor-tip .e-editable-component .e-input-group .e-clear-icon.e-clear-icon-hide,
+
+    .e-inplaceeditor-tip .e-editable-component .e-input-group .e-clear-icon.e-clear-icon-hide,
     .inplace-control-section.pickers-layout .e-inplaceeditor .e-editable-component .e-clear-icon-hide {
         display: block;
         visibility: hidden;
@@ -126,28 +127,33 @@
 
 @section PreScripts {
     <script>
-        var dateEle = document.getElementById("datePickerEle");
-        var timeEle = document.getElementById("timePickerEle");
-        var dateTimeEle = document.getElementById("dateTimePickerEle");
-        var dateRangeEle = document.getElementById("dateRangePickerEle");
+        var dateObj, timeObj, dateTimeObj, dateRangeObj;
+        function dateCreated() {
+            dateObj = this;
+        }
+        function timeCreated() {
+            timeObj = this;
+        }
+        function dateTimeCreated() {
+            dateTimeObj = this;
+        }
+        function dateRangeCreated() {
+            dateRangeObj = this;
+        }
         function changeEditorMode(e) {
-            dateEle.ej2_instances[0].mode = timeEle.ej2_instances[0].mode = dateTimeEle.ej2_instances[0].mode = dateRangeEle.ej2_instances[0].mode = e.itemData.value;
-            dateEle.ej2_instances[0].dataBind();
-            timeEle.ej2_instances[0].dataBind();
-            dateTimeEle.ej2_instances[0].dataBind();
-            dateRangeEle.ej2_instances[0].dataBind();
+            dateObj.mode = timeObj.mode = dateTimeObj.mode = dateRangeObj.mode = e.itemData.value;
         }
         document.getElementById('right-pane').onscroll = function () {
             var mode = document.getElementById("editorMode")
             if (mode.ej2_instances[0].value === 'Inline') { return; }
-            if (dateEle.querySelectorAll('.e-editable-open').length > 0)
-                dateEle.ej2_instances[0].enableEditMode = false;
-            if (timeEle.querySelectorAll('.e-editable-open').length > 0)
-                timeEle.ej2_instances[0].enableEditMode = false;
-            if (dateTimeEle.querySelectorAll('.e-editable-open').length > 0)
-                dateTimeEle.ej2_instances[0].enableEditMode = false;
-            if (dateRangeEle.querySelectorAll('.e-editable-open').length > 0)
-                dateRangeEle.ej2_instances[0].enableEditMode = false;
+            if (dateObj.element.querySelectorAll('.e-editable-open').length > 0)
+                dateObj.enableEditMode = false;
+            if (timeObj.element.querySelectorAll('.e-editable-open').length > 0)
+                timeObj.enableEditMode = false;
+            if (dateTimeObj.element.querySelectorAll('.e-editable-open').length > 0)
+                dateTimeObj.enableEditMode = false;
+            if (dateRangeObj.element.querySelectorAll('.e-editable-open').length > 0)
+                dateRangeObj.enableEditMode = false;
         }
     </script>
 }
@@ -186,7 +192,7 @@
     </p>
     <p>
         More information on the <code>In-place Editor</code> instantiation can be found in the <a target="_blank"
-                                                                                                  href="https://ej2.syncfusion.com/aspnetcore/documentation/inplace-editor/getting-started-asp-core/">
+                                                                                                  href="https://ej2.syncfusion.com/aspnetcore/documentation/in-place-editor/getting-started/">
             documentation section
         </a>.
     </p>

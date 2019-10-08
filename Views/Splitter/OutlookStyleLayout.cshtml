@@ -1,22 +1,87 @@
 ﻿@using Syncfusion.EJ2
 
 @{
-    var paneContent = "<div ><div class='content'><div style = 'width: 100%; padding: 15px;'><table><tr><td><button class='e-btn e-flat e-outline'>To...</button></td>" +
-                      "<td><input id='firstname'/></td></tr><tr><td><button class='e-btn e-flat e-outline'>Cc...</button></td><td><input id ='lastname'/></td>" +
-                      "</tr><tr><td><div id='subject-text'>Subject</div></td><td><input id='subject'/></td></tr></table></div>" +
-                      "<div class='forum'><div id='createpostholder'><div id='defaultRTE'></div><div id='buttonSection'><button class='e-btn e-primary' id='send'>Send</button>" +
-                      "<button class='e-btn' id='discard'>Discard</button></div></div></div></div></div>";
+   var template = "<div class='settings e-list-wrapper e-list-multi-line e-list-avatar'>"
+                        + "<span class='e-list-item-header'>${Name}</span>"
+                        + "<div class='e-list-content'>"
+    + "<div class='status'>${Content1}</div><div id='list-message'>${Content2}</div>"
+    + "</span>"
+    + "</div>";
+        var groupTemplate = "<div class='e-list-wrapper'><span class='e-list-item-content'></span></div>";
 }
 
 @section ControlsSection{
     <div class="col-lg-12 control-section">
         <div class="control_wrapper">
             <div class="pane1">
-                <ejs-splitter id="splitter1" height="493px" width="100%" created="onLoad" resizeStop="onSplitterResize">
+                <ejs-splitter id="splitter1" height="493px" width="100%" resizeStop="onSplitterResize">
                     <e-splitter-panes>
-                        <e-splitter-pane size="28%" min="27%" content="<div><div class='content'><div id='tree'></div></div></div>"></e-splitter-pane>
-                        <e-splitter-pane size="33%" min="23%" content="<div><div class='content'><div id='groupedList' tabindex='1'></div></div></div>"></e-splitter-pane>
-                        <e-splitter-pane size="37%" min="30%" content=@paneContent></e-splitter-pane>
+                        <e-splitter-pane size="28%" min="27%">
+                            <e-content-template>
+                                <div>
+                                    <div class='content'>
+                                        <ejs-treeview id="tree" nodeTemplate="@Html.Raw("<div><div class=\"treeviewdiv\"><div style=\"float:left\"><span class=\"treeName\">${name}</span></div>${if(count)}<div style=\"margin-right: 5px; float:right\"><span class=\"treeCount e-badge e-badge-primary\" >${count}</span></div>  ${/if} </div></div>")">
+                                            <e-treeview-fields dataSource="ViewBag.treeData" id="id" parentId="pid" text="name" hasChildren="hasChild"></e-treeview-fields>
+                                        </ejs-treeview>
+                                    </div>
+                                </div>
+                            </e-content-template>
+                        </e-splitter-pane>
+                        <e-splitter-pane size="33%" min="23%">
+                            <e-content-template>
+                                <div>
+                                    <div class='content'>
+                                        <ejs-listview id="groupedList" dataSource="ViewBag.listData" cssClass="e-list-template"
+                                                      groupTemplate=@groupTemplate template=@template>
+                                            <e-listview-fieldsettings groupBy="order" text="Name"> </e-listview-fieldsettings>
+                                        </ejs-listview>
+                                    </div>
+                                </div>
+                            </e-content-template>
+                        </e-splitter-pane>
+                        <e-splitter-pane size="37%" min="30%">
+                            <e-content-template>
+                                <div>
+                                    <div class='content'>
+                                        <div style='width: 100%; padding: 15px;'>
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <ejs-button id="toBtn" content="To..." cssClass='e-btn e-flat e-outline'></ejs-button>
+                                                    </td>
+                                                    <td>
+                                                        <ejs-textbox id="firstname"></ejs-textbox>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <ejs-button id="ccBtn" content="Cc..." cssClass='e-btn e-flat e-outline'></ejs-button>
+                                                    </td>
+                                                    <td>
+                                                        <ejs-textbox id="lastname"></ejs-textbox>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><div id='subject-text'>Subject</div></td>
+                                                    <td>
+                                                        <ejs-textbox id="subject"></ejs-textbox>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class='forum'>
+                                            <div id='createpostholder'>
+                                                <ejs-richtexteditor id="defaultRTE" height="262px" created="onCreated"></ejs-richtexteditor>
+                                                <div id='buttonSection'>
+                                                    <ejs-button id='send' content="Send" cssClass='e-btn e-primary'></ejs-button>
+                                                    <ejs-button id='discard' content="Discard" cssClass='e-btn'></ejs-button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </e-content-template>
+                        </e-splitter-pane>
                     </e-splitter-panes>
                 </ejs-splitter>
             </div>
@@ -69,101 +134,16 @@
         padding-left: 3px;
         padding-right: 4px;
     }
-	#splitter1 #tree ul.e-list-parent.e-ul {
-		padding: 0 0 0 16px;
-	}
+
+    #splitter1 #tree ul.e-list-parent.e-ul {
+        padding: 0 0 0 16px;
+    }
 </style>
 
-<script id="treeTemplate" type="text/x-template">
-    <div>
-        <div class="treeviewdiv">
-            <div style="float:left">
-                <span class="treeName">${name}</span>
-            </div>
-            ${if(count)}
-            <div style="margin-right: 5px; float:right">
-                <span class="treeCount e-badge e-badge-primary">${count}</span>
-            </div>
-            ${/if}
-        </div>
-    </div>
-</script>
-
 <script>
-    var mailBox = [
-        { id: 1, name: 'Favorites', hasChild: true },
-        { id: 2, pid: 1, name: 'Sales Reports', count: '4' },
-        { id: 3, pid: 1, name: 'Sent Items' },
-        { id: 4, pid: 1, name: 'Marketing Reports ', count: '6' },
-        { id: 5, name: 'Andrew Fuller', hasChild: true, expanded: true },
-        { id: 6, pid: 5, name: 'Inbox', selected: true, count: '20' },
-        { id: 7, pid: 5, name: 'Drafts', count: '5' },
-        { id: 15, pid: 5, name: 'Archive' },
-        { id: 8, pid: 5, name: 'Deleted Items' },
-        { id: 9, pid: 5, name: 'Sent Items' },
-        { id: 10, pid: 5, name: 'Sales Reports', count: '4' },
-        { id: 11, pid: 5, name: 'Marketing Reports', count: '6' },
-        { id: 12, pid: 5, name: 'Outbox' },
-        { id: 13, pid: 5, name: 'Junk Email' },
-        { id: 14, pid: 5, name: 'RSS Feed' },
-        { id: 15, pid: 5, name: 'Trash' }
-    ];
-
-    var dataSource = [
-        { Name: 'Selma Tally', content: '<div><div class="status">Apology marketing email</div><div id="list-message">Hello Ananya Singleton</div>', id: '1', order: 0 },
-        { Name: 'Illa Russo', content: '<div><div class="status">Annual conference</div><div id="list-message">Hi jeani Moresa</div></div>', id: '4', order: 0 },
-        { Name: 'Camden Macmellon', content: '<div><div class="status">Reference request- Camden hester</div><div id="list-message">Hello Kerry Best,</div></div>', order: 0 },
-        { Name: 'Garth Owen', content: '<div><div class="status">Application for job Title</div><div id="list-message">Hello Illa Russo</div></div>', id: '2', order: 0 },
-        { Name: 'Ursula Patterson', content: '<div><div class="status">Programmaer Position Applicant</div><div id="list-message">Hello Kerry best,</div></div>', id: '2', order: 0 }
-    ];
-
-    function onLoad() {
-        var rteObj;
-        var inputobj1 = new ej.inputs.TextBox({});
-        inputobj1.appendTo('#firstname');
-        var inputobj2 = new ej.inputs.TextBox({});
-        inputobj2.appendTo('#lastname');
-        var inputobj3 = new ej.inputs.TextBox({});
-        inputobj3.appendTo('#subject');
-
-        // Render the TreeView using template option
-        var treeObj = new ej.navigations.TreeView({
-            fields: { dataSource: mailBox, id: 'id', parentID: 'pid', text: 'name', hasChildren: 'hasChild' },
-            nodeTemplate: '#treeTemplate',
-        });
-        treeObj.appendTo('#tree');
-        // tslint:disable:max-line-length
-        //Define an array of JSON data
-
-        // Initialize ListView component
-        var listObj = new ej.lists.ListView({
-            //Set defined data to dataSource property
-            dataSource: dataSource,
-            cssClass: 'e-list-template',
-            //Map the appropriate columns to fields property
-            fields: { text: 'Name', groupBy: 'order' },
-            //Set customized group-header template
-            groupTemplate: '<div class="e-list-wrapper"><span class="e-list-item-content"></span></div>',
-            //Set customized list template
-            template: '<div class="settings e-list-wrapper e-list-multi-line e-list-avatar">' +
-            '<span class="e-list-item-header">${Name}</span>' +
-            '<span class="e-list-content">${content}</span>' +
-            '</div>'
-        });
-        //Render initialized ListView component
-        listObj.appendTo('#groupedList');
-        var button1 = new ej.buttons.Button({ isPrimary: true });
-        button1.appendTo('#rteSubmit');
-        var button2 = new ej.buttons.Button();
-        button2.appendTo('#rteCancel');
-        var defaultRTE = new ej.richtexteditor.RichTextEditor({ height: '262px', created: onRteCreate });
-        defaultRTE.appendTo('#defaultRTE');
-    }
-
-    function onRteCreate() {
+    function onCreated() {
         rteObj = this;
     }
-
     function onSplitterResize() {
         rteObj.refresh();
     }

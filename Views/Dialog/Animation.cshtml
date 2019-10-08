@@ -22,8 +22,11 @@
                 <ejs-button id="FlipYRight" isPrimary="true" cssClass="e-outline" content="FlipY Right"></ejs-button>
             </div>
         </div>
-        <ejs-dialog id="defaultDialog" allowDragging="true" visible="true" isModal="true" animationSettings="defaultanimation" width="285px" target="#target" Content="<span>The dialog is configured with animation effect. It is opened or closed with 'Zoom In or Out' animation.</span>"
-                    showCloseIcon="true" header="Animation Dialog">
+        <ejs-dialog id="animationDialog" allowDragging="true" visible="true" isModal="true" animationSettings="defaultanimation" width="285px" target="#target"
+                    showCloseIcon="true" header="Animation Dialog" created="created">
+            <e-content-template>
+                <span>The dialog is configured with animation effect. It is opened or closed with 'Zoom In or Out' animation.</span>
+            </e-content-template>
             <e-dialog-buttons>
                 <e-dialog-dialogbutton buttonModel="ViewBag.defaultbutton" click="dlgButtonClick"></e-dialog-dialogbutton>
             </e-dialog-buttons>
@@ -33,7 +36,10 @@
 
 @section PreScripts{
     <script>
-        var dialog = document.getElementById('defaultDialog');
+        var dialogObj;
+        function created() {
+            dialogObj = this;
+        }
         var list = document.getElementsByClassName('animate');
         for (var i = 0; i < list.length; i++) {
             list[i].addEventListener('click', function (e) {
@@ -44,12 +50,11 @@
             var effects = e.target.id;
             var txt = e.target.parentElement.innerText;
             txt = (txt == "Zoom In/Out") ? "Zoom In or Out" : txt;
-            dialog.ej2_instances[0].content = 'The dialog is configured with animation effect. It is opened or closed with "' + txt + '" animation.';
-            dialog.ej2_instances[0].animationSettings = { effect: effects, duration: 400 };
-            dialog.ej2_instances[0].show();
+            dialogObj.content = 'The dialog is configured with animation effect. It is opened or closed with "' + txt + '" animation.';
+            dialogObj.animationSettings = { effect: effects, duration: 400 };
+            dialogObj.show();
         }
         function dlgButtonClick() {
-            var dialogObj = document.getElementById('defaultDialog').ej2_instances[0];
             dialogObj.hide();
         }
     </script>

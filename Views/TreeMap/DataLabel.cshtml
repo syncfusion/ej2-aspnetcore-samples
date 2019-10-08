@@ -1,19 +1,20 @@
-﻿@using Syncfusion.EJ2.TreeMap;
+@using Syncfusion.EJ2.TreeMap;
 
 @section ControlsSection{
     @{
-        var colorMaps = new Object[]{
-               new {from = 100000000, to = 10000000000, color = "#4B134F", label="200M - 1.3M" },
-               new {from = 20000000, to = 100000000, color = "#8C304D", label="20M - 200M" },
-               new {from = 100000, to = 20000000, color = "#C84B4B", label="0.1M - 20M" }
-            };
         var levelBorder = new { color = "black", width = 0.5 };
     }
     <div class="col-lg-9 control-section">
         <div id="container">
             <ejs-treemap id="container" load="treeMapLoad" dataSource="ViewBag.dataSource" format="n" useGroupingSeparator="true" rangeColorValuePath="Population" weightValuePath="Population">
                 <e-treemap-titlesettings text="Countries ordered based on Population - 2017"></e-treemap-titlesettings>
-                <e-treemap-leafitemsettings labelPath="Country" colorMapping="colorMaps"></e-treemap-leafitemsettings>
+                <e-treemap-leafitemsettings labelPath="Country">
+                    <e-leafitemsettings-colormappings>
+                        <e-leafitemsettings-colormapping from="100000000" to="10000000000" color="@("#4B134F")" label="200M - 1.3M"></e-leafitemsettings-colormapping>
+                        <e-leafitemsettings-colormapping from="20000000" to="100000000" color="@("#8C304D")" label="20M - 200M"></e-leafitemsettings-colormapping>
+                        <e-leafitemsettings-colormapping from="100000" to="20000000" color="@("#C84B4B")" label="0.1M - 20M"></e-leafitemsettings-colormapping>
+                    </e-leafitemsettings-colormappings>
+                </e-treemap-leafitemsettings>
                 <e-treemap-tooltipsettings visible="true" format="${Country} : ${Population}"></e-treemap-tooltipsettings>
                 <e-treemap-legendsettings visible="true" width="300px" height="10px" mode="@LegendMode.Interactive" position="@Syncfusion.EJ2.TreeMap.LegendPosition.Top" shape="@Syncfusion.EJ2.TreeMap.LegendShape.Rectangle"></e-treemap-legendsettings>
             </ejs-treemap>

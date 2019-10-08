@@ -64,7 +64,7 @@ namespace EJ2CoreSampleBrowser.Controllers
 
              };
             ViewBag.dataSource = chartData;
-            ViewBag.data = new String[] { "DragXY", "DragX", "DragY" };
+            ViewBag.data = new String[] { "DragXY", "DragX", "DragY", "Lasso" };
             return View();
         }
         public class RangeSelectionData

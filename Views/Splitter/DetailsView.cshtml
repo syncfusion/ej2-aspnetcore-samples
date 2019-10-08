@@ -1,27 +1,45 @@
-﻿@using Syncfusion.EJ2
+﻿﻿@using Syncfusion.EJ2
 
-@{
-var pane1Cotent = "<div><div id='content'><div class='profile-name'>Margeret Peacock</div><table><tr><td class='e-bold'>Title</td>" +
-    "<td>Sales Representative</td></tr><tr><td class='e-bold'>HireDate</td><td>11/15/1994</td></tr><tr><td class='e-bold'>Address</td>" +
-    "<td>507 - 20th Ave. E. Apt. 2A</td></tr><tr><td class='e-bold'>City</td><td>Seattle</td></tr><tr><td class='e-bold'>Phone</td>"+
-    "<td>(206) 555-9857</td></tr></table></div>";
+
+@{var template =  "<div class='e-list-wrapper e-list-avatar'>"
+                + "<span class='e-avatar e-avatar-circle hideUI ${icon}'"
+                + ">${icon}</span>"
+                + "<img class='e-avatar e-avatar-circle showUI' src=${imgUrl}/>"
+                + "<span class='e-list-content'>${name}</span></div>";
 }
+
+
 
 @section ControlsSection{
     <div class="col-lg-12 control-section">
         <div class="control_wrapper">
             <div class="pane1">
-                <ejs-splitter id="splitter" height="292px" width="100%" created="onLoad">
+                <ejs-splitter id="splitter" height="292px" width="100%">
                     <e-splitter-panes>
-                        <e-splitter-pane size="35%" min="25%" content="<div><div id='ui-list'></div></div>"></e-splitter-pane>
-                        <e-splitter-pane size="65%" min="45%" content=@pane1Cotent></e-splitter-pane>
+                        <e-splitter-pane size="35%" min="25%">
+                            <e-content-template>
+                                <div>
+                                    <ejs-listview id="listview_template" dataSource="ViewBag.dataSource" cssClass="e-list-template"
+                                                  template=@template actionComplete="actionComplete" enableVirtualization="true" height="289" select="onSelect" created="created">
+                                    </ejs-listview>
+                                </div>
+                            </e-content-template>
+                        </e-splitter-pane>
+                        <e-splitter-pane size="65%" min="45%">
+                            <e-content-template>
+                                <div>
+                                    <div id="content">
+                                    </div>
+                                </div>
+                            </e-content-template>
+                        </e-splitter-pane>
                     </e-splitter-panes>
                 </ejs-splitter>
             </div>
         </div>
     </div>
 }
- 
+
 <style>
     #splitter .e-avatar.e-avatar-xlarge {
         font-size: 22px;
@@ -96,57 +114,10 @@ var pane1Cotent = "<div><div id='content'><div class='profile-name'>Margeret Pea
         text-align: center;
     }
 </style>
-
-
 @section PreScripts {
     <script>
-       function onLoad() {
-        var commonData = [];
-        var dataSource = {};
-        var startTime;
-        var endTime;
-        var listObj;
-        var liElement;
-
-        commonData = [
-            { name: 'Margaret', imgUrl: '@Url.Content("~/splitter/images/margaret.png")', id: '1' },
-            { name: 'Laura', imgUrl: '@Url.Content("~/splitter/images/laura.png")', id: '2' },
-            { name: 'Robert', imgUrl: '@Url.Content("~/splitter/images/robert.png")', id: '3' },
-            { name: 'Michale', imgUrl: '@Url.Content("~/splitter/images/michale.png")', id: '4' },
-            { name: 'Albert', imgUrl: '@Url.Content("~/splitter/images/albert.png")', id: '5' },
-        ];
-
-        liElement = document.getElementById('ui-list');
-
-        [[1010, 'data1'], [5010, 'data5'], [10010, 'data10'], [25010, 'data25']].forEach(function (ds) {
-            var data = commonData.slice();
-            dataSource[ds[1]] = data;
-        });
-
-        if (ej.base.Browser.isDevice) {
-            liElement.classList.add('ui-mobile');
-        }
-
-        var template = '<div class="e-list-wrapper e-list-avatar">' +
-            '<span class="e-avatar e-avatar-circle ${icon} ${$imgUrl ? \'hideUI\' : \'showUI\' }">' +
-            '${icon}</span> <img class="e-avatar e-avatar-circle ${$imgUrl ? \'showUI\' : \'hideUI\' }" ' +
-            'src="${$imgUrl ?  $imgUrl : \' \' }" />' +
-            '<span class="e-list-content">${name}</span></div>';
-
-
-        listObj = new ej.lists.ListView({
-            dataSource: dataSource.data1,
-            enableVirtualization: true,
-            height: 289,
-            cssClass: 'e-list-template',
-            template: template,
-            select: onSelect,
-            actionComplete: function () {
-                listObj.selectItem(dataSource.data1[0]);
-            }
-
-        });
-        listObj.appendTo('#ui-list');
+        function actionComplete() {
+            this.selectItem(this.dataSource[0]);
         }
 
         function onSelect(e) {
@@ -172,13 +143,11 @@ var pane1Cotent = "<div><div id='content'><div class='profile-name'>Margeret Pea
     </script>
 }
 
-
 @section ActionDescription{
     <div id="action-description">
         <p>This example demonstrates the Splitter control that is used to design details view page. Select the employee from left pane to display the corresponding employee details on the right pane</p>
     </div>
 }
-
 @section Description{
     <div id="description">
         <p>
@@ -187,11 +156,8 @@ var pane1Cotent = "<div><div id='content'><div class='profile-name'>Margeret Pea
 
     </div>
 }
-
 @*custom code start*@
-
 @section Meta{
     <meta name="description" content="The example demonstrates how to create employee details view layout using panes of ASP.NET Core Splitter and ListView with navigation." />
 }
-
 @*custom code end*@

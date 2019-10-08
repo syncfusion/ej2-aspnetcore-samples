@@ -2,13 +2,35 @@
 @section ControlsSection{
     <div class="col-lg-8 control-section">
         <div class="control-wrapper">
-            <div class="control-section">
-                <ejs-richtexteditor id="defaultRTE" value="@ViewBag.value"
-                                    created="created" actionBegin="actionBegin" actionComplete="actionComplete"
-                                    focus="focus" blur="blur" change="change" toolbarClick="toolbarClick">
-									<e-richtexteditor-toolbarsettings items="@ViewBag.items"></e-richtexteditor-toolbarsettings>
+                <ejs-richtexteditor id="defaultRTE"
+                created="created" actionBegin="actionBegin" actionComplete="actionComplete"
+                focus="focus" blur="blur" change="change" toolbarClick="toolbarClick" beforeDialogOpen="beforeDialogOpen" dialogOpen="dialogOpen" dialogClose="dialogClose"
+                 beforeQuickToolbarOpen="beforeQuickToolbarOpen" quickToolbarOpen="quickToolbarOpen" quickToolbarClose="quickToolbarClose" imageSelected="imageSelected"
+        imageUploading="imageUploading" imageUploadSuccess="imageUploadSuccess" imageUploadFailed="imageUploadFailed" imageRemoving="imageRemoving"
+        destroyed="destroyed" beforeSanitizeHtml="beforeSanitizeHtml" resizing="resizing" resizeStart="resizeStart" resizeStop="resizeStop">
+					<e-richtexteditor-toolbarsettings items="@ViewBag.items"></e-richtexteditor-toolbarsettings>
+					<e-content-template>
+                    <div>
+                        <p>
+                            The rich text editor component is WYSIWYG ('what you see is what you get') editor that provides the best user experience to create and update the content.
+                            Users can format their content using standard toolbar commands.
+                        </p>
+                        <p><b> Key features:</b></p>
+                        <ul>
+                            <li><p> Provides IFRAME and DIV modes </p></li>
+                            <li><p> Capable of handling markdown editing.</p></li>
+                            <li><p> Contains a modular library to load the necessary functionality on demand.</p></li>
+                            <li><p> Provides a fully customizable toolbar.</p></li>
+                            <li><p> Provides HTML view to edit the source directly for developers.</p></li>
+                            <li><p> Supports third - party library integration.</p></li>
+                            <li><p> Allows preview of modified content before saving it.</p></li>
+                            <li><p> Handles images, hyperlinks, video, hyperlinks, uploads, etc.</p></li>
+                            <li><p> Contains undo / redo manager.</p></li>
+                            <li><p> Creates bulleted and numbered lists.</p></li>
+                        </ul>
+                    </div>
+                </e-content-template>
 				</ejs-richtexteditor>
-            </div>
         </div>
     </div>
     <div class="col-lg-4 property-section">
@@ -33,12 +55,12 @@
     </div>
 
     <script>
-        var defaultRTE;
+        var rteObj;
         document.getElementById('clear').onclick = function () {
             document.getElementById('EventLog').innerHTML = '';
         };
         function created() {
-            defaultRTE = this;
+            rteObj = this;
             appendElement('RichTextEditor <b>create</b> event called<hr>');
         }
         function actionBegin(args) {
@@ -56,10 +78,73 @@
             appendElement('RichTextEditor <b>blur</b> event called<hr>');
         }
         function change() {
-            appendElement('RidhTextEditor <b>change</b> event called<hr>');
+            appendElement('RichTextEditor <b>change</b> event called<hr>');
         }
         function toolbarClick() {
-            appendElement('RidhTextEditor <b>toolbar click</b> event called<hr>');
+            appendElement('RichTextEditor <b>toolbar click</b> event called<hr>');
+        }
+         function beforeDialogOpen() {
+        appendElement('RichTextEditor <b>beforeDialogOpen</b> event called<hr>');
+        }
+
+        function dialogOpen() {
+            appendElement('RichTextEditor <b>dialogOpen</b> event called<hr>');
+        }
+
+        function dialogClose() {
+            appendElement('RichTextEditor <b>dialogClose</b> event called<hr>');
+        }
+
+        function beforeQuickToolbarOpen() {
+            appendElement('RichTextEditor <b>beforeQuickToolbarOpen</b> event called<hr>');
+        }
+
+        function quickToolbarOpen() {
+            appendElement('RichTextEditor <b>quickToolbarOpen</b> event called<hr>');
+        }
+
+        function quickToolbarClose() {
+            appendElement('RichTextEditor <b>quickToolbarClose</b> event called<hr>');
+        }
+
+        function imageSelected() {
+            appendElement('RichTextEditor <b>imageSelected</b> event called<hr>');
+        }
+
+        function imageUploading() {
+            appendElement('RichTextEditor <b>imageUploading</b> event called<hr>');
+        }
+
+        function imageUploadSuccess() {
+            appendElement('RichTextEditor <b>imageUploadSuccess</b> event called<hr>');
+        }
+
+        function imageUploadFailed() {
+            appendElement('RichTextEditor <b>imageUploadFailed</b> event called<hr>');
+        }
+
+        function imageRemoving() {
+            appendElement('RichTextEditor <b>imageRemoving</b> event called<hr>');
+        }
+
+        function destroyed() {
+            appendElement('RichTextEditor <b>destroyed</b> event called<hr>');
+        }
+
+        function beforeSanitizeHtml() {
+            appendElement('RichTextEditor <b>beforeSanitizeHtml</b> event called<hr>');
+        }
+
+        function resizing() {
+            appendElement('RichTextEditor <b>resizing</b> event called<hr>');
+        }
+
+        function resizeStart() {
+            appendElement('RichTextEditor <b>resizeStart</b> event called<hr>');
+        }
+
+        function resizeStop() {
+            appendElement('RichTextEditor <b>resizeStop</b> event called<hr>');
         }
         function appendElement(html) {
             var span = document.createElement('span');
@@ -82,8 +167,9 @@
             }
         }
         function actionCompleteHandler() {
-            setTimeout(function () { defaultRTE.toolbarModule.refreshToolbarOverflow(); }, 400);
+            setTimeout(function () { rteObj.toolbarModule.refreshToolbarOverflow(); }, 400);
         }
+
     </script>
 
     <style>
@@ -120,13 +206,14 @@
             display: none;
         }
         /* custom code end */
+
     </style>
 }
 
 @*custom code start*@
 
 @section Meta{
-    <meta name="description" content="This demo for Essential JS 2  rich text editor control shows the events that have been triggered during the rich text editor operations."/>
+    <meta name="description" content="This demo for Essential JS 2  rich text editor control shows the events that have been triggered during the rich text editor operations." />
 }
 
 @*custom code end*@
@@ -144,13 +231,28 @@
             The events can be used as an extension point to perform custom operations.
         </p>
         <ul>
-            <li><code>change</code> - Triggers when the editor gets blurred and changes are made to the content.</li>
+           <li><code>change</code> - Triggers when the editor gets blurred and changes are made to the content.</li>
             <li><code>focus</code> - Triggers when the editor is in focus.</li>
             <li><code>blur</code> - Triggers when focused out of the editor.</li>
             <li><code>actionBegin</code> - Triggers before the execution of command.</li>
             <li><code>actionComplete</code> - Triggers after the execution of command.</li>
             <li><code>created</code> - Triggers when the component is created.</li>
+            <li><code>beforeDialogOpen</code> – Event triggers when the dialog is being opened..</li>
+            <li><code>dialogOpen</code> – Event triggers when a dialog is opened.</li>
+            <li><code>dialogClose</code> – Event triggers after the dialog has been closed.</li>
+            <li><code>beforeQuickToolbarOpen</code> – Event triggers when the quick toolbar is being opened.</li>
+            <li><code>quickToolbarOpen</code> – Event triggers when a quick toolbar is opened.</li>
+            <li><code>quickToolbarClose</code> – Event triggers after the quick toolbar has been closed.</li>
+            <li><code>imageSelected</code> – Event triggers when the image is selected or dragged into the insert image dialog</li>
+            <li><code>imageUploading</code> – Event triggers when the selected image begins to upload in the insert image dialog</li>
+            <li><code>imageUploadSuccess</code> – Event triggers when the image is successfully uploaded to the server side</li>
+            <li><code>imageUploadFailed</code> – Event triggers when there is an error in the image upload</li>
+            <li><code>imageRemoving</code> – Event triggers when the selected image is cleared from the insert image dialog</li>
             <li><code>destroyed</code> – Triggers when the component is destroyed.</li>
+            <li><code>beforeSanitizeHtml</code> – Event triggers before sanitize the value. It's only applicable to editorMode as `HTML`</li>
+            <li><code>resizing</code> – Triggers only when resizing the image</li>
+            <li><code>resizeStart</code> –Triggers only when start resize the image</li>
+            <li><code>resizeStop</code> – Triggers only when stop resize the image</li>
         </ul>
     </div>
 }

@@ -15,6 +15,7 @@ using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.Xml;
 using System;
+using Syncfusion.Drawing;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,7 +24,7 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
     public partial class DocIOController : Controller
     {
         #region Table Styles
-        public ActionResult TableStyles(string Group1)
+        public ActionResult TableStyles(string Group1, string Group2)
         {
             if (Group1 == null)
                 return View();
@@ -38,15 +39,195 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
 
             //Create MailMergeDataTable
             MailMergeDataTable mailMergeDataTable = GetMailMergeDataTable();
-            // Execute Mail Merge with groups.
+            //Execute Mail Merge with groups.
             document.MailMerge.ExecuteGroup(mailMergeDataTable);
 
-            #region Built-in table styles
-            //Get table to apply style.
-            WTable table = (WTable)document.LastSection.Tables[0];
+            #region Built-in Style
+            if (Group1 == "Built-in")
+            {
+                //Get table to apply style.
+                WTable table = (WTable)document.LastSection.Tables[0];
+                //Apply built-in table style to the table.
+                table.ApplyStyle(BuiltinTableStyle.MediumShading1Accent5);
+            }
+            #endregion Built-in Style
 
-            //Apply built-in table style to the table.
-            table.ApplyStyle(BuiltinTableStyle.MediumShading1Accent5);
+            #region Custom Style
+            else
+            {
+                #region Custom table styles
+                //Get table to apply style
+                WTable table = (WTable)document.LastSection.Tables[0];
+                #region Apply Table style
+                WTableStyle tableStyle = document.AddTableStyle("Tablestyle") as WTableStyle;
+                Color borderColor = Color.WhiteSmoke;
+                Color firstRowBackColor = Color.Blue;
+                Color backColor = Color.WhiteSmoke;
+                ConditionalFormattingStyle firstRowStyle, lastRowStyle, firstColumnStyle, lastColumnStyle, oddColumnBandingStyle, oddRowBandingStyle, evenRowBandingStyle;
+
+                #region Table Properties
+                tableStyle.TableProperties.RowStripe = 1;
+                tableStyle.TableProperties.ColumnStripe = 1;
+                tableStyle.TableProperties.LeftIndent = 0;
+
+                tableStyle.TableProperties.Paddings.Top = 0;
+                tableStyle.TableProperties.Paddings.Bottom = 0;
+                tableStyle.TableProperties.Paddings.Left = 5.4f;
+                tableStyle.TableProperties.Paddings.Right = 5.4f;
+
+                tableStyle.TableProperties.Borders.Top.BorderType = BorderStyle.Single;
+                tableStyle.TableProperties.Borders.Top.LineWidth = 1f;
+                tableStyle.TableProperties.Borders.Top.Color = Color.AliceBlue;
+                tableStyle.TableProperties.Borders.Top.Space = 0;
+
+                tableStyle.TableProperties.Borders.Bottom.BorderType = BorderStyle.Single;
+                tableStyle.TableProperties.Borders.Bottom.LineWidth = 1f;
+                tableStyle.TableProperties.Borders.Bottom.Color = borderColor;
+                tableStyle.TableProperties.Borders.Bottom.Space = 0;
+
+                tableStyle.TableProperties.Borders.Left.BorderType = BorderStyle.Single;
+                tableStyle.TableProperties.Borders.Left.LineWidth = 1f;
+                tableStyle.TableProperties.Borders.Left.Color = borderColor;
+                tableStyle.TableProperties.Borders.Left.Space = 0;
+
+                tableStyle.TableProperties.Borders.Right.BorderType = BorderStyle.Single;
+                tableStyle.TableProperties.Borders.Right.LineWidth = 1f;
+                tableStyle.TableProperties.Borders.Right.Color = borderColor;
+                tableStyle.TableProperties.Borders.Right.Space = 0;
+
+                tableStyle.TableProperties.Borders.Horizontal.BorderType = BorderStyle.Single;
+                tableStyle.TableProperties.Borders.Horizontal.LineWidth = 1f;
+                tableStyle.TableProperties.Borders.Horizontal.Color = borderColor;
+                tableStyle.TableProperties.Borders.Horizontal.Space = 0;
+                #endregion
+
+                #region Conditional Formatting Properties
+                #region First Row Conditional Formatting Style
+                firstRowStyle = tableStyle.ConditionalFormattingStyles.Add(ConditionalFormattingType.FirstRow);
+
+                #region Character format
+                firstRowStyle.CharacterFormat.Bold = true;
+                firstRowStyle.CharacterFormat.BoldBidi = true;
+                firstRowStyle.CharacterFormat.TextColor = Color.FromArgb(255, 255, 255, 255);
+                #endregion
+
+                #region Table Cell Properties
+                firstRowStyle.CellProperties.Borders.Top.BorderType = BorderStyle.Single;
+                firstRowStyle.CellProperties.Borders.Top.LineWidth = 1f;
+                firstRowStyle.CellProperties.Borders.Top.Color = borderColor;
+                firstRowStyle.CellProperties.Borders.Top.Space = 0;
+
+                firstRowStyle.CellProperties.Borders.Bottom.BorderType = BorderStyle.Single;
+                firstRowStyle.CellProperties.Borders.Bottom.LineWidth = 1f;
+                firstRowStyle.CellProperties.Borders.Bottom.Color = borderColor;
+                firstRowStyle.CellProperties.Borders.Bottom.Space = 0;
+
+                firstRowStyle.CellProperties.Borders.Left.BorderType = BorderStyle.Single;
+                firstRowStyle.CellProperties.Borders.Left.LineWidth = 1f;
+                firstRowStyle.CellProperties.Borders.Left.Color = borderColor;
+                firstRowStyle.CellProperties.Borders.Left.Space = 0;
+
+                firstRowStyle.CellProperties.Borders.Right.BorderType = BorderStyle.Single;
+                firstRowStyle.CellProperties.Borders.Right.LineWidth = 1f;
+                firstRowStyle.CellProperties.Borders.Right.Color = borderColor;
+                firstRowStyle.CellProperties.Borders.Right.Space = 0;
+
+                firstRowStyle.CellProperties.Borders.Horizontal.BorderType = BorderStyle.Cleared;
+
+                firstRowStyle.CellProperties.Borders.Vertical.BorderType = BorderStyle.Cleared;
+
+                firstRowStyle.CellProperties.BackColor = firstRowBackColor;
+                firstRowStyle.CellProperties.ForeColor = Color.FromArgb(0, 255, 255, 255);
+                firstRowStyle.CellProperties.TextureStyle = TextureStyle.TextureNone;
+                #endregion
+                #endregion
+
+                #region Last Row Conditional Formatting Style
+                lastRowStyle = tableStyle.ConditionalFormattingStyles.Add(ConditionalFormattingType.LastRow);
+
+                #region Character format
+                lastRowStyle.CharacterFormat.Bold = true;
+                lastRowStyle.CharacterFormat.BoldBidi = true;
+                #endregion
+
+                #region Table Cell Properties
+                lastRowStyle.CellProperties.Borders.Top.BorderType = BorderStyle.Double;
+                lastRowStyle.CellProperties.Borders.Top.LineWidth = .75f;
+                lastRowStyle.CellProperties.Borders.Top.Color = borderColor;
+                lastRowStyle.CellProperties.Borders.Top.Space = 0;
+
+                lastRowStyle.CellProperties.Borders.Bottom.BorderType = BorderStyle.Single;
+                lastRowStyle.CellProperties.Borders.Bottom.LineWidth = 1f;
+                lastRowStyle.CellProperties.Borders.Bottom.Color = borderColor;
+                lastRowStyle.CellProperties.Borders.Bottom.Space = 0;
+
+                lastRowStyle.CellProperties.Borders.Left.BorderType = BorderStyle.Single;
+                lastRowStyle.CellProperties.Borders.Left.LineWidth = 1f;
+                lastRowStyle.CellProperties.Borders.Left.Color = borderColor;
+                lastRowStyle.CellProperties.Borders.Left.Space = 0;
+
+                lastRowStyle.CellProperties.Borders.Right.BorderType = BorderStyle.Single;
+                lastRowStyle.CellProperties.Borders.Right.LineWidth = 1f;
+                lastRowStyle.CellProperties.Borders.Right.Color = borderColor;
+                lastRowStyle.CellProperties.Borders.Right.Space = 0;
+
+                lastRowStyle.CellProperties.Borders.Horizontal.BorderType = BorderStyle.Cleared;
+
+                lastRowStyle.CellProperties.Borders.Vertical.BorderType = BorderStyle.Cleared;
+                #endregion
+                #endregion
+
+                #region First Column Conditional Formatting Style
+                firstColumnStyle = tableStyle.ConditionalFormattingStyles.Add(ConditionalFormattingType.FirstColumn);
+                #region Character format
+                firstColumnStyle.CharacterFormat.Bold = true;
+                firstColumnStyle.CharacterFormat.BoldBidi = true;
+                #endregion
+                #endregion
+
+                #region Last Column Conditional Formatting Style
+                lastColumnStyle = tableStyle.ConditionalFormattingStyles.Add(ConditionalFormattingType.LastColumn);
+                #region Character format
+                lastColumnStyle.CharacterFormat.Bold = true;
+                lastColumnStyle.CharacterFormat.BoldBidi = true;
+                #endregion
+                #endregion
+
+                #region Odd Column Banding Conditional Formatting Style
+                oddColumnBandingStyle = tableStyle.ConditionalFormattingStyles.Add(ConditionalFormattingType.OddColumnBanding);
+                #region Table Cell Properties
+                oddColumnBandingStyle.CellProperties.BackColor = backColor;
+                oddColumnBandingStyle.CellProperties.ForeColor = Color.FromArgb(0, 255, 255, 255);
+                oddColumnBandingStyle.CellProperties.TextureStyle = TextureStyle.TextureNone;
+                #endregion
+                #endregion
+
+                #region Odd Row Banding Conditional Formatting Style
+                oddRowBandingStyle = tableStyle.ConditionalFormattingStyles.Add(ConditionalFormattingType.OddRowBanding);
+                #region Table Cell Properties
+                oddRowBandingStyle.CellProperties.Borders.Horizontal.BorderType = BorderStyle.Cleared;
+
+                oddRowBandingStyle.CellProperties.Borders.Vertical.BorderType = BorderStyle.Cleared;
+
+                oddRowBandingStyle.CellProperties.BackColor = backColor;
+                oddRowBandingStyle.CellProperties.ForeColor = Color.FromArgb(0, 255, 255, 255);
+                oddRowBandingStyle.CellProperties.TextureStyle = TextureStyle.TextureNone;
+                #endregion
+                #endregion
+
+                #region Even Row Banding Conditional Formatting Style
+                evenRowBandingStyle = tableStyle.ConditionalFormattingStyles.Add(ConditionalFormattingType.EvenRowBanding);
+                #region Table Cell Properties
+                evenRowBandingStyle.CellProperties.Borders.Horizontal.BorderType = BorderStyle.Cleared;
+                evenRowBandingStyle.CellProperties.Borders.Vertical.BorderType = BorderStyle.Cleared;
+                #endregion
+                #endregion
+                #endregion
+                #endregion
+                table.ApplyStyle("Tablestyle");
+                #endregion
+            }
+            #endregion Custom Style
             #endregion
 
             FormatType type = FormatType.Docx;
@@ -54,7 +235,7 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
             string contenttype = "application/vnd.ms-word.document.12";
             #region Document SaveOption            
             //Save as .xml format
-            if (Group1 == "WordML")
+            if (Group2 == "WordML")
             {
                 type = FormatType.WordML;
                 filename = "Sample.xml";
@@ -67,7 +248,7 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
             ms.Position = 0;
             return File(ms, contenttype, filename);
         }
-        #endregion Table Styles
+        
         /// <summary>
         /// Gets the mail merge data table.
         /// </summary>

@@ -18,45 +18,73 @@
             Width = 2
         };
     }
-    <div class="control-section">
-        <div class="row">
-            <div class="col-md-12" align="center">
-                <ejs-maps id="maps" width="100%" load="window.onMapLoad" format="n" useGroupingSeparator="true">
-                    <e-maps-zoomsettings enable="false"></e-maps-zoomsettings>
-                    <e-maps-titlesettings alignment="@Syncfusion.EJ2.Maps.Alignment.Center" text="Top 25 populated cities in the world" textStyle="titleStyle"></e-maps-titlesettings>
-                    <e-maps-layers>
-                        <e-maps-layer dataSource="ViewBag.marker" shapeData="ViewBag.mapdata">
-                            <e-layersettings-shapesettings fill="#C3E6ED"></e-layersettings-shapesettings>
-                            <e-layersettings-markers>
-                                <e-layersettings-marker visible="true" shape="Circle" fill="white" width="7" height="7" dataSource="ViewBag.marker" tooltipSettings="tooltip" border="markerborder"></e-layersettings-marker>
-                            </e-layersettings-markers>
-                        </e-maps-layer>
-                    </e-maps-layers>
-                </ejs-maps>
-                <div style="float: right; margin-right: 10px;">
-                    Source:
-                    <a href="http://www.citymayors.com/statistics/largest-cities-population-125.html" target="_blank">www.citymayors.com</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="template" style="display:none">
-        <div class="toolback">
-            <div class="listing2">
-                <center>
-                    ${name}
-                </center>
-            </div>
-            <hr style="margin-top: 2px;margin-bottom:5px;border:0.5px solid #DDDDDD">
-            <div>
-                <span class="listing1">Country : </span><span class="listing2">${Country}</span>
-            </div>
-            <div>
-                <span class="listing1">Population : </span><span class="listing2">${population}</span>
-            </div>
-        </div>
 
+<div class="col-lg-9 control-section">
+    <div>
+        <ejs-maps id="maps" width="100%" load="window.onMapLoad" format="n" useGroupingSeparator="true" loaded="onCreated">
+            <e-maps-zoomsettings enable="false"></e-maps-zoomsettings>
+            <e-maps-titlesettings alignment="@Syncfusion.EJ2.Maps.Alignment.Center" text="Top 25 populated cities in the world" textStyle="titleStyle"></e-maps-titlesettings>
+            <e-maps-layers>
+                <e-maps-layer dataSource="ViewBag.marker" shapeData="ViewBag.mapdata">
+                    <e-layersettings-shapesettings fill="#C3E6ED"></e-layersettings-shapesettings>
+                    <e-layersettings-markers>
+                        <e-layersettings-marker visible="true" animationDuration="0" shape="Circle" fill="white" width="10" height="10" dataSource="ViewBag.marker" tooltipSettings="tooltip" border="markerborder"></e-layersettings-marker>
+                    </e-layersettings-markers>
+                </e-maps-layer>
+            </e-maps-layers>
+        </ejs-maps>
     </div>
+    <div style="float: right; margin-right: 10px;">
+        Source:
+        <a href="http://www.citymayors.com/statistics/largest-cities-population-125.html" target="_blank">www.citymayors.com</a>
+    </div>
+</div>
+<div class="col-lg-3 property-section">
+    <table id="property" title="Properties" style="width: 100%">
+        <tbody>
+            <tr style="height: 70px">
+                <td style="width: 10%">
+                    <div class="property-text" style="padding: 0px;">Bind markers shape from data source</div>
+                </td>
+                <td style="width: 30%">
+                    <div>
+                        <input type="checkbox" id="shape" />
+                    </div>
+                </td>
+            </tr>
+            <tr style="height: 50px">
+                <td style="width: 10%">
+                    <div class="property-text" style="padding: 0px;">Bind markers color from data source</div>
+                </td>
+                <td style="width: 30%">
+                    <div>
+                        <input type="checkbox" id="color" />
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div id="template" style="display:none">
+    <div class="toolback">
+        <div class="listing2">
+            <center>
+                ${name}
+            </center>
+        </div>
+        <hr style="margin-top: 2px;margin-bottom:5px;border:0.5px solid #DDDDDD">
+        <div>
+            <span class="listing1">Country : </span><span class="listing2">${Country}</span>
+        </div>
+        <div>
+            <span class="listing1">Continent : </span><span class="listing2">${Continent}</span>
+        </div>
+        <div>
+            <span class="listing1">Population : </span><span class="listing2">${population}</span>
+        </div>
+    </div>
+</div>
 }
 <style>
     .toolback {
@@ -85,15 +113,47 @@
 </style>
 @*custom code start*@
 <script>
+    function onCreated() {
+        maps = document.getElementById('maps').ej2_instances[0];
+    }
     function onMapLoad(args) {
         var theme = themeName ? themeName : "Material";
         args.maps.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
     }
+    window.onload = function () {
+        window.maps = maps;
+    var shapeCheckBox = new ej.buttons.CheckBox(
+        {
+            change: (args) => {
+                if (args.checked) {
+                    maps.layers[0].markerSettings[0].shapeValuePath = "shape";
+                } else {
+                    maps.layers[0].markerSettings[0].shapeValuePath = null;
+                }
+                maps.refresh();
+            },
+            checked: false
+        },
+        '#shape');
+    var colorCheckBox = new ej.buttons.CheckBox(
+        {
+            change: (args) => {
+                if (args.checked) {
+                    maps.layers[0].markerSettings[0].colorValuePath = "color";
+                } else {
+                    maps.layers[0].markerSettings[0].colorValuePath = null;
+                }
+                maps.refresh();
+            },
+            checked: false
+        },
+        '#color');
+    }
 </script>
 @*custom code end*@
 @section Meta{
-    <meta name="description" content="This demo for Essential JS2 Maps control shows the top 25 populated cities in the world by displaying the markers in their locations." />
-}
+                    <meta name="description" content="This example demonstrates the Marker in ASP.NET Core Maps control. Explore here for more details."/>
+                }
 @section ActionDescription{
 
     <div id="action-description">
@@ -105,7 +165,10 @@
 @section Description{
     <div id="description">
         <p>
-            In this example, you can see how to render the markers in a map. Markers are used to indicate or mark a particular location on the map with desired symbols.
+                    In this example, you can see how to render the markers in a map. Markers are used to indicate or mark a
+        particular location on the map with desired symbols.
+        And also you can apply continent based color and shape to marker from datasource of marker. This can be acheived
+        through <code>shapeValuePath</code> and <code>colorValuePath</code> properties of marker.
 
         </p>
         <p>
@@ -118,3 +181,9 @@
         </p>
     </div>
 }
+@section Title{
+                 <title>ASP.NET Core Maps Marker Example - Syncfusion Demos </title>
+             }
+@section Header{
+                <h1 class='sb-sample-text'>Example for Marker in ASP.NET Core Maps Control</h1>
+            }

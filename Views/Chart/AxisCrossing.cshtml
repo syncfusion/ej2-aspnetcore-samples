@@ -1,4 +1,4 @@
-﻿@using Syncfusion.EJ2
+@using Syncfusion.EJ2
 @section ControlsSection{
     @{
        var xAxis = "xAxis";
@@ -71,11 +71,9 @@
             var chart = document.getElementById('container').ej2_instances[0];
             var cross = document.getElementById("number").ej2_instances[0];
             if (this.value === "xAxis") {
-                line.checked = chart.primaryXAxis.placeNextToAxisLine;
-                cross.value = +chart.primaryXAxis.crossesAt;
+                chart.primaryXAxis.crossesAt = cross.value;
             } else if (this.value === "yAxis") {
-                line.checked = chart.primaryYAxis.placeNextToAxisLine;
-                cross.value = +chart.primaryYAxis.crossesAt;
+                chart.primaryYAxis.crossesAt = cross.value;
             }
             chart.dataBind();
 
@@ -95,10 +93,10 @@
         line.onchange = () => {
             var axis = document.getElementById("axis").ej2_instances[0];
             var chart = document.getElementById("container").ej2_instances[0];
-            if (axis.value === "yAxis") {
-                chart.primaryYAxis.placeNextToAxisLine = line.checked;
-            } else {
+            if (axis.value === "xAxis") {
                 chart.primaryXAxis.placeNextToAxisLine = line.checked;
+            } else {
+                chart.primaryYAxis.placeNextToAxisLine = line.checked;
             }
             chart.dataBind();
         }
@@ -107,8 +105,8 @@
 }
 @*custom code start*@
 @section Meta{
-    <meta name="description" content="This demo for Essential JS2 Chart control demonstrates the axis crossing behavior in chart." />
-}
+                    <meta name="description" content="This example demonstrates the Axis Crossing in ASP.NET Core Chart control. Explore here for more details."/>
+                }
 @*custom code end*@
 @section ActionDescription{
     <div id="action-description">
@@ -134,3 +132,9 @@
         </p>
     </div>
 }
+@section Title{
+                 <title>ASP.NET Core Chart Axis Crossing Example - Syncfusion Demos </title>
+             }
+@section Header{
+                <h1 class='sb-sample-text'>Example for Axis Crossing in ASP.NET Core Chart Control</h1>
+            }

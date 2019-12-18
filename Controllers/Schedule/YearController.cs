@@ -73,5 +73,5 @@ namespace EJ2CoreSampleBrowser.Controllers
         public DateTime EndTime { get; set; }
         public bool IsAllDay { get; set; }
         public string CategoryColor { get; set; }
-    }
+    }     
 }

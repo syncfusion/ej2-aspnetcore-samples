@@ -1,4 +1,3 @@
-﻿
 @{
     ViewData["Title"] = "EditableLayout";
 }
@@ -7,32 +6,135 @@
 
 @section ControlsSection{
 
-<div class="control-section">
-    <div style="width:100%;height: 30px">
-        <ejs-button id="togglebtn" isToggle="true" iconCss="edit"  content="EDIT" cssClass='toggle e-outline e-flat e-primary'></ejs-button>
-    </div>
-
-    <div style="padding:5px;text-align: end;">
-        <div class="add-widget-button e-control e-btn e-lib" id="dialogBtn">
-            Add New Widget
+    <div class="control-section">
+        <div style="width:100%;height: 30px">
+            <ejs-button id="togglebtn" isToggle="true" iconCss="edit" content="EDIT" cssClass='toggle e-outline e-flat e-primary'></ejs-button>
         </div>
+
+        <div style="padding:5px;text-align: end;">
+            <div class="add-widget-button e-control e-btn e-lib" id="dialogBtn">
+                Add New Widget
+            </div>
+        </div>
+
+        <ejs-dashboardlayout id="editableLayout" columns="2" resizeStop="onPanelResize" allowDragging="false" cellSpacing="@Model.cellSpacing">
+            <e-dashboardlayout-panels>
+                <e-dashboardlayout-panel sizeX="1" sizeY="1" row="0" col="0">
+                    <e-content-template>
+                        <div>
+                            <div class="e-panel-container">
+                                <div class="e-panel-header">
+                                    <div>
+                                        Line chart
+                                    </div>
+                                </div>
+                               <div class="e-panel-content">
+                                    @*column chart*@
+                                    <ejs-chart style="height: 100%; width: 100%" id="linechart" load="window.onChartLoad" width="99%" height="100%">
+                                        <e-chart-tooltipsettings enable="true">
+                                        </e-chart-tooltipsettings>
+                                        <e-chart-primaryxaxis valueType="Category" interval=1>
+                                            <e-majorgridlines width="0"></e-majorgridlines>
+                                        </e-chart-primaryxaxis>
+                                        <e-chart-primaryyaxis>
+                                            <e-majorgridlines width="0"></e-majorgridlines>
+                                            <e-majorticklines width="0"></e-majorticklines>
+                                            <e-linestyle width="0"></e-linestyle>
+                                            <e-labelstyle color="transparent"></e-labelstyle>
+                                        </e-chart-primaryyaxis>
+                                        <e-chart-chartarea>
+                                            <e-chartarea-border width="0"></e-chartarea-border>
+                                        </e-chart-chartarea>
+                                        <e-series-collection>
+                                            <e-series dataSource="ViewBag.lineSource1" xName='x' yName='y' name='Jan' width=2 fill="#00bdae" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                                                <e-series-marker>
+                                                    <e-series-datalabel visible="false" position="Top"></e-series-datalabel>
+                                                </e-series-marker>
+                                            </e-series>
+                                            <e-series dataSource="ViewBag.lineSource" xName='x' yName='y' name='Feb' fill="#e56691" width=2 type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                                                <e-series-marker>
+                                                    <e-series-datalabel visible="false" position="Top">
+                                                    </e-series-datalabel>
+                                                </e-series-marker>
+                                            </e-series>
+                                            <e-series dataSource="ViewBag.lineSource2" xName='x' yName='y' name='Mar' fill="#357cd2" width=2 type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                                                <e-series-marker>
+                                                    <e-series-datalabel visible="false" position="Top">
+                                                    </e-series-datalabel>
+                                                </e-series-marker>
+                                            </e-series>
+                                        </e-series-collection>
+                                    </ejs-chart>
+                                </div>
+                            </div>
+                        </div>
+                    </e-content-template>
+                </e-dashboardlayout-panel>
+                <e-dashboardlayout-panel sizeX="1" sizeY="1" row="0" col="1">
+                    <e-content-template>
+                        <div>
+                            <div class="e-panel-container">
+                                <div class="e-panel-header">
+                                    <div>Pie chart</div>
+                                </div>
+                                <div class="e-panel-content">
+                                    @*pie chart*@
+
+                                    <ejs-accumulationchart style="height: 100%; width: 100%" id="pie" load="onPieload" enableAnimation="true" enableSmartLabels="true" width="99%" height="100%">
+                                        <e-accumulationchart-tooltipsettings enable="true" header="<b>${point.x}</b>" format="Composition : <b>${point.y}%</b>"></e-accumulationchart-tooltipsettings>
+                                        <e-accumulationchart-legendsettings visible="false">
+                                        </e-accumulationchart-legendsettings>
+                                        <e-accumulation-series-collection>
+                                            <e-accumulation-series dataSource="ViewBag.pieSource" xName="x" yName="y" innerRadius="40%" radius="100%" name="Earnings" palettes="ViewBag.pallets">
+                                                <e-accumulationseries-datalabel name="value" visible="true" position="Inside">
+                                                </e-accumulationseries-datalabel>
+                                            </e-accumulation-series>
+                                        </e-accumulation-series-collection>
+                                    </ejs-accumulationchart>
+
+                                </div>
+                            </div>
+                        </div>
+                    </e-content-template>
+                </e-dashboardlayout-panel>
+                <e-dashboardlayout-panel sizeX="2" sizeY="1" row="2" col="0">
+                    <e-content-template>
+                        <div>
+                            <div class="e-panel-container">
+                                <div class="e-panel-header">
+                                    <div>Spline chart</div>
+                                </div>
+                                <div class="e-panel-content">
+                                    @*spline chart*@
+                                    <ejs-chart id="spline" style="height: 100%; width: 100%" load="window.onChartLoad" height="100%" width="99%">
+                                        <e-chart-primaryxaxis valueType="DateTime" labelFormat="MMM" intervalType="Months" edgeLabelPlacement="Shift">
+                                            <e-majorgridlines width="0"></e-majorgridlines>
+                                        </e-chart-primaryxaxis>
+                                        <e-chart-primaryyaxis minimum="0" maximum="4" interval="1" labelFormat="{value}%">
+                                            <e-linestyle width="0"></e-linestyle>
+                                            <e-majorticklines width="0"></e-majorticklines>
+                                        </e-chart-primaryyaxis>
+                                        <e-chart-chartarea>
+                                            <e-chartarea-border width="0"></e-chartarea-border>
+                                        </e-chart-chartarea>
+                                        <e-series-collection>
+                                            <e-series dataSource="ViewBag.splineSource1" fill="rgb(239, 183, 202)" name="Jan" xName="x" opacity=0.5 width=2 yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.SplineArea">
+                                                <e-series-border color="transparent"></e-series-border>
+                                            </e-series>
+                                            <e-series dataSource="ViewBag.splineSource2" fill="rgb(0, 189, 174)" name="Feb" xName="x" opacity=0.5 width=2 yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.SplineArea">
+                                                <e-series-border color="transparent"></e-series-border>
+                                            </e-series>
+                                        </e-series-collection>
+                                    </ejs-chart>
+                                    <div id="content"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </e-content-template>
+                </e-dashboardlayout-panel>
+            </e-dashboardlayout-panels>
+        </ejs-dashboardlayout>
     </div>
-
-    <ejs-dashboardlayout id="editableLayout" columns="2" resizeStop="onPanelResize" allowDragging="false" cellSpacing="@Model.cellSpacing">
-        <e-dashboardlayout-panels>
-            <e-dashboardlayout-panel sizeX="1" sizeY="1" row="0" col="0" header="<div>Line chart</div>" content="#lineContainer">
-            </e-dashboardlayout-panel>
-            <e-dashboardlayout-panel sizeX="1" sizeY="1" row="0" col="1" content="#pieContainer" header="<div>Pie chart</div>">
-            </e-dashboardlayout-panel>
-            <e-dashboardlayout-panel sizeX="2" sizeY="1" row="2" col="0"  header="<div>Spline chart</div>" content="#splineContainer">
-            </e-dashboardlayout-panel>
-        </e-dashboardlayout-panels>
-    </ejs-dashboardlayout>
-</div>
-
-    @*dashboard layout*@
-
-   
 
     @*Dialog*@
 
@@ -42,87 +144,6 @@
         </ejs-dialog>
     </div>
 
-    @*column chart*@
-    <div id="lineContainer" class="edit-content">
-        <ejs-chart style="height: 100%; width: 100%" id="linechart" load="window.onChartLoad" width="99%" height="100%">
-            <e-chart-tooltipsettings enable="true">
-            </e-chart-tooltipsettings>
-            <e-chart-primaryxaxis valueType="Category" interval=1>
-                <e-majorgridlines width="0"></e-majorgridlines>
-            </e-chart-primaryxaxis>
-            <e-chart-primaryyaxis>
-                <e-majorgridlines width="0"></e-majorgridlines>
-                <e-majorticklines width="0"></e-majorticklines>
-                <e-linestyle width="0"></e-linestyle>
-                <e-labelstyle color="transparent"></e-labelstyle>
-            </e-chart-primaryyaxis>
-            <e-chart-chartarea>
-                <e-chartarea-border width="0"></e-chartarea-border>
-            </e-chart-chartarea>
-            <e-series-collection>
-                <e-series dataSource="ViewBag.lineSource1" xName='x' yName='y' name='Jan' width=2 fill="#00bdae" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
-                    <e-series-marker>
-                        <e-series-datalabel visible="false" position="Top"></e-series-datalabel>
-                    </e-series-marker>
-                </e-series>
-                <e-series dataSource="ViewBag.lineSource" xName='x' yName='y' name='Feb' fill="#e56691" width=2 type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
-                    <e-series-marker>
-                        <e-series-datalabel visible="false" position="Top">
-                        </e-series-datalabel>
-                    </e-series-marker>
-                </e-series>
-                <e-series dataSource="ViewBag.lineSource2" xName='x' yName='y' name='Mar' fill="#357cd2" width=2 type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
-                    <e-series-marker>
-                        <e-series-datalabel visible="false" position="Top">
-                        </e-series-datalabel>
-                    </e-series-marker>
-                </e-series>
-            </e-series-collection>
-        </ejs-chart>
-    </div>
-
-
-    @*pie chart*@
-    <div id="pieContainer" class="edit-content">
-        <ejs-accumulationchart style="height: 100%; width: 100%" id="pie" load="onPieload" enableAnimation="true" enableSmartLabels="true" width="99%" height="100%">
-            <e-accumulationchart-tooltipsettings enable="true" header="<b>${point.x}</b>" format="Composition : <b>${point.y}%</b>"></e-accumulationchart-tooltipsettings>
-            <e-accumulationchart-legendsettings visible="false">
-            </e-accumulationchart-legendsettings>
-            <e-accumulation-series-collection>
-                <e-accumulation-series dataSource="ViewBag.pieSource" xName="x" yName="y" innerRadius="40%" radius="100%" name="Earnings" palettes="ViewBag.pallets">
-                    <e-accumulationseries-datalabel name="value" visible="true" position="Inside">
-                    </e-accumulationseries-datalabel>
-                </e-accumulation-series>
-            </e-accumulation-series-collection>
-        </ejs-accumulationchart>
-    </div>
-
-
-    @*spline chart*@
-    <div id="splineContainer" class="edit-content">
-        <ejs-chart id="spline" style="height: 100%; width: 100%" load="window.onChartLoad" height="100%" width="99%">
-            <e-chart-primaryxaxis valueType="DateTime" labelFormat="MMM" intervalType="Months" edgeLabelPlacement="Shift">
-                <e-majorgridlines width="0"></e-majorgridlines>
-            </e-chart-primaryxaxis>
-            <e-chart-primaryyaxis minimum="0" maximum="4" interval="1" labelFormat="{value}%">
-                <e-linestyle width="0"></e-linestyle>
-                <e-majorticklines width="0"></e-majorticklines>
-            </e-chart-primaryyaxis>
-            <e-chart-chartarea>
-                <e-chartarea-border width="0"></e-chartarea-border>
-            </e-chart-chartarea>
-            <e-series-collection>
-                <e-series dataSource="ViewBag.splineSource1" fill="rgb(239, 183, 202)" name="Jan" xName="x" opacity=0.5 width=2 yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.SplineArea">
-                    <e-series-border color="transparent"></e-series-border>
-                </e-series>
-                <e-series dataSource="ViewBag.splineSource2" fill="rgb(0, 189, 174)" name="Feb" xName="x" opacity=0.5 width=2 yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.SplineArea">
-                    <e-series-border color="transparent"></e-series-border>
-                </e-series>
-            </e-series-collection>
-        </ejs-chart>
-    </div>
-
-    <div id="content"></div>
 }
 
 <script>
@@ -377,7 +398,7 @@
     }
 
     @@media (max-width: 650px) {
-        #togglebtn{
+        #togglebtn {
             display: none;
         }
     }
@@ -408,7 +429,7 @@
     .e-panel-content {
         height: calc(100% - 35px) !important;
         overflow: hidden;
-        width:100%;
+        width: 100%;
     }
 
     .e-dashboardlayout.e-control .e-panel,
@@ -466,7 +487,7 @@
     <div id="action-description">
         <p>
             The following sample demonstrates a editable dashboard layout. Initially the DashboardLayout component doesn't
-            allow to <a href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2~Syncfusion.EJ2.Layouts.DashboardLayout~AllowDragging.html" target="_blank">drag</a>, 
+            allow to <a href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2~Syncfusion.EJ2.Layouts.DashboardLayout~AllowDragging.html" target="_blank">drag</a>,
             <a href="https://help.syncfusion.com/cr/cref_files/aspnetcore-js2/Syncfusion.EJ2~Syncfusion.EJ2.Layouts.DashboardLayout~AllowResizing.html" target="_blank">resize</a> or reorder the panels.
             After clicking the edit button, the layout becomes editable which
             allows to drag and reorder the
@@ -486,4 +507,12 @@
     </div>
 
 }
-
+@section Title{
+                 <title>ASP.NET Core Dashboard Layout Editable Dashboard Example - Syncfusion Demos </title>
+             }
+@section Meta{
+                <meta name="description" content="This example demonstrates the Editable Dashboard in ASP.NET Core Dashboard Layout control. Explore here for more details."/>
+            }
+@section Header{
+                <h1 class='sb-sample-text'>Example for Editable Dashboard in ASP.NET Core Dashboard Layout Control</h1>
+            }

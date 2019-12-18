@@ -30,7 +30,8 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
             //Create ZugFerd invoice PDF
             PdfDocument document = new PdfDocument(PdfConformanceLevel.Pdf_A3B);
 
-            document.ZugferdConformanceLevel = ZugferdConformanceLevel.Basic;
+            document.ZugferdVersion = ZugferdVersion.ZugferdVersion2_0;
+            document.ZugferdConformanceLevel = ZugferdConformanceLevel.Extended;
 
             CreateZugFerdInvoicePDF(document);
 

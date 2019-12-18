@@ -146,6 +146,24 @@ namespace EJ2CoreSampleBrowser.Controllers.XlsIO
 
                 format.BackColorRGB = Color.FromArgb(255, 199, 206);
                 #endregion
+
+                #region TopBottom and AboveBelowAverage
+                sheet = workbook.Worksheets[1];
+                formats = sheet.Range["N6:N35"].ConditionalFormats;
+                format = formats.AddCondition();
+                format.FormatType = ExcelCFType.TopBottom;
+                format.TopBottom.Type = ExcelCFTopBottomType.Bottom;
+
+                format.BackColorRGB = Color.FromArgb(51, 153, 102);
+
+                formats = sheet.Range["M6:M35"].ConditionalFormats;
+                format = formats.AddCondition();
+                format.FormatType = ExcelCFType.AboveBelowAverage;
+                format.AboveBelowAverage.AverageType = ExcelCFAverageType.Below;
+ 
+                format.FontColorRGB = Color.FromArgb(255, 255, 255);
+                format.BackColorRGB = Color.FromArgb(166, 59, 38);
+                #endregion 
             }
             else
             {

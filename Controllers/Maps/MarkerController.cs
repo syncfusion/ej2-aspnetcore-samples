@@ -17,7 +17,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Maps
         }
         public object getmarker()
         {
-            string allText = System.IO.File.ReadAllText("./wwwroot/scripts/MapsData/markerlocation.js");
+            string allText = System.IO.File.ReadAllText("./wwwroot/scripts/MapsData/population.js");
             return JsonConvert.DeserializeObject(allText);
         }
     }

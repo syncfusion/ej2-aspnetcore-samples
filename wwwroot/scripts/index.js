@@ -61,7 +61,7 @@ var breadCrumbSubCategory = document.querySelector('.sb-bread-crumb-text>.compon
 var breadCrumbSample = document.querySelector('.sb-bread-crumb-text>.crumb-sample');
 var hsplitter = '<div class="sb-toolbar-splitter sb-custom-item"></div>';
 var openNewTemplate = "<div class=\"sb-custom-item sb-open-new-wrapper\"><a id=\"openNew\" target=\"_blank\">\n<div class=\"sb-icons sb-icon-Popout\"></div></a></div>";
-var sampleNavigation = "<div class=\"sb-custom-item sample-navigation\"><button id='prev-sample' class=\"sb-navigation-prev\" \n    aria-label=\"previous sample\">\n<span class='sb-icons sb-icon-Previous'></span>\n</button>\n<button  id='next-sample' class=\"sb-navigation-next\" aria-label=\"next sample\">\n<span class='sb-icons sb-icon-Next'></span>\n</button>\n</div>";
+var sampleNavigation = "<div class=\"sb-custom-item sample-navigation\"><button type='button' id='prev-sample' class=\"sb-navigation-prev\" \n    aria-label=\"previous sample\">\n<span class='sb-icons sb-icon-Previous'></span>\n</button>\n<button  type='button' id='next-sample' class=\"sb-navigation-next\" aria-label=\"next sample\">\n<span class='sb-icons sb-icon-Next'></span>\n</button>\n</div>";
 var contentToolbarTemplate = '<div class="sb-desktop-setting"><button id="open-plnkr" class="sb-custom-item sb-plnr-section">' +
     '</button>' + hsplitter + hsplitter +
     '</div>' + sampleNavigation + '<div class="sb-icons sb-mobile-setting"></div>';
@@ -143,7 +143,7 @@ function renderSbPopups() {
             if (e.isSwiped) {
                 e.cancel = true;
             }
-            var sourceEle = document.querySelector('#sb-source-tab > .e-content > #e-content_' + e.selectedIndex).children[0];
+            var sourceEle = document.querySelector('#sb-source-tab > .e-content > #e-content' + this.tabId + '_' + e.selectedIndex).children[0];
             sourceEle.innerHTML = items[e.selectedIndex].data;
             sourceEle.innerHTML = sourceEle.innerHTML.replace(reg, '');
             sourceEle.classList.add('sb-src-code');
@@ -206,11 +206,11 @@ function dynamicTabCreation(obj){
     if (obj) {
         tabObj = obj;
     } else { tabObj = this; }
-    var contentEle = tabObj.element.querySelector('#e-content_' + tabObj.selectedItem);
+    var contentEle = tabObj.element.querySelector('#e-content' + tabObj.tabId + '_' + tabObj.selectedItem);
     if (!contentEle) {
         return;
     }
-    var  blockEle = tabObj.element.querySelector('#e-content_' + tabObj.selectedItem).children[0];
+    var blockEle = tabObj.element.querySelector('#e-content' + tabObj.tabId + '_' + tabObj.selectedItem).children[0];
     blockEle.innerHTML = tabObj.items[tabObj.selectedItem].data;
     blockEle.innerHTML = blockEle.innerHTML.replace(reg, '');
     blockEle.classList.add('sb-src-code');
@@ -915,7 +915,7 @@ function getSamplePath() {
 
 function controlSelect(arg) {
     var path = (arg.node || arg.item).getAttribute('data-path');
-    if (path === null) {
+    if (path === null && arg.data) {
         path = arg.data.dir + '/' + arg.data.url;
     }
     var curHashCollection = '/' + location.href.split('/').slice(3).join('/');
@@ -1107,7 +1107,7 @@ function onDataSourceLoad(node, subNode, control, sample, sampleName) {
     var name = [cshtml, cs];
     //var p2 = loadScriptfile('src/' + control + '/' + sample + '.js');
     //var ajaxJs = new ej.base.Ajax('src/' + control + '/' + sample + '.js', 'GET', true);
-    sampleNameElement.innerHTML = node.name;
+    //sampleNameElement.innerHTML = node.name;
     sourceTab.selectedItem = 0;
     contentTab.selectedItem = 0;
     breadCrumbComponent.innerHTML = node.name;
@@ -1137,7 +1137,7 @@ function onDataSourceLoad(node, subNode, control, sample, sampleName) {
         add[file].send().then(function (value) {
             var content;
             if (/html/g.test(name[subfile])) {
-                value = value.replace(/@section (ActionDescription|Description|Meta){[^}]*}/g, '');
+                value = value.replace(/@section (ActionDescription|Title|Description|Meta|Header){[^}]*}/g, '').trim();
                 content = value.replace(/&/g, '&amp;')
                     .replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
             }

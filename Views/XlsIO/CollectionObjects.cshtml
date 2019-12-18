@@ -1,0 +1,68 @@
+@using Syncfusion.EJ2
+
+@section ActionDescription{
+    This sample demonstrates how to use Collection  Objects in spreadsheets using XlsIO.
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Collection Objects in ASP.NET Core XlsIO control. Explore here for more details."/>
+                }
+@section Description{
+    Essential XlsIO allows you to import/export data from/to Collection Objects. Collection object usually holds a set of instance variables or properties, also known as attributes.
+    <br />
+    <br />This sample demonstrates the usage of Collection  objects using Essential XlsIO.
+    <br />
+}
+@section ControlsSection{
+    <div class="control-section">
+        @{Html.BeginForm("CollectionObjects", "XlsIO", FormMethod.Post);
+        <div class="rowdiv">
+            <p>
+                Click the 'Import From Excel' button to import data from nested class into the ListView. 
+                The 'Export To Excel' button will generate a new Microsoft Excel document by exporting the nested class data from the ListView using Essential XlsIO. 
+                Please note that you need to have a MS Excel viewer installed in order to view the generated excel file.
+            </p>
+            @Html.EJS().Grid("Export").AllowPaging(true).DataSource(dataManger =>
+       {
+           dataManger.Url("/XlsIO/UrlDatasource").UpdateUrl("/XlsIO/Update").Adaptor("UrlAdaptor");
+       }).Columns(col =>
+       {
+           col.Field("ID").HeaderText("ID").IsPrimaryKey(true).Visible(false).TextAlign(Syncfusion.EJ2.Grids.TextAlign.Left).Width("40").Add();
+           col.Field("BrandName").HeaderText("Brand").Width("70").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Left).Add();
+           col.Field("VehicleType.VehicleName").HeaderText("Vehicle Type").Width("70").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Left).Add();
+           col.Field("VehicleType.Model.ModelName").HeaderText("Model").Width("70").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Left).Add();
+       }).Width("550").Height("250").EditSettings(edit => { edit.AllowAdding(true).AllowEditing(true).AllowDeleting(true).Mode(Syncfusion.EJ2.Grids.EditMode.Normal); }).Render()
+
+            <div class="rowdiv">
+                <div class="celldiv">
+                    <label>
+                        <strong> Save As :</strong>
+                    </label>
+                     @Html.EJS().RadioButton("radio1").Label("XLS").Name("SaveOption").Value("Xls").Checked(false).Render()
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     @Html.EJS().RadioButton("radio2").Label("XLSX").Name("SaveOption").Value("Xlsx").Checked(true).Render()
+                  </div>
+                <br />
+                <div class="celldiv">
+                    <input id="input"  class="e-btn" type="submit" name="button" value="Input Template" style="width:162px;" />
+                    <input id="import"  class="e-btn" type="submit" name="button" value="Import From Excel" style="width:162px;" />
+                    <input id="export"  class="e-btn" @ViewBag.exportButtonState type="submit" name="button" value="Export To Excel" style="width:162px;" />
+                </div>
+            </div>
+
+        </div>
+        <script type="text/javascript">
+
+            function EnableExport() {
+                document.getElementById('export').prop("disabled", false);
+
+            }
+        </script>
+        }
+    </div>
+}
+@section Title{
+                 <title>ASP.NET Core XlsIO Collection Objects Example - Syncfusion Demos </title>
+             }
+@section Header{
+                <h1 class='sb-sample-text'>Example for Collection Objects in ASP.NET Core XlsIO Control</h1>
+            }

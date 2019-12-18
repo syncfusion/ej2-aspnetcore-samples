@@ -56,14 +56,14 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
             builder.AppendLine("Signature is " + result.SignatureStatus);
          
             builder.AppendLine("--------Validation Summary--------");
-            
+
             //Checks whether the document is modified or not
             bool isModified = result.IsDocumentModified;
             if (isModified)
                 builder.AppendLine("The document has been altered or corrupted since the signature was applied.");
             else
                 builder.AppendLine("The document has not been modified since the signature was applied.");
-           
+
             //Signature details
             builder.AppendLine("Digitally signed by " + lSigFld.Signature.Certificate.IssuerName);
             builder.AppendLine("Valid From : " + lSigFld.Signature.Certificate.ValidFrom);

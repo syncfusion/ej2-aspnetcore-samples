@@ -1,4 +1,3 @@
-﻿
 @{
     ViewData["Title"] = "SEOAnalytics";
 }
@@ -16,18 +15,17 @@
         var data6 = new[] { new { latitude = -6.64607562172573, longitude = -54.54687499999999 } };
         var data = new[]
         {
-new { latitude = 37.6276571, longitude = -122.4276688, name = "San Bruno"},
-new { latitude = 33.5302186, longitude = -117.7418381, name = "Laguna Niguel"},
-new { latitude = 40.7424509, longitude = -74.0081468, name = "New York"},
-new { latitude = -23.5268201, longitude = -46.6489927, name = "Bom Retiro"},
-new { latitude = 43.6533855, longitude = -79.3729994, name = "Toronto"},
-new { latitude = 48.8773406, longitude = 2.3299627, name = "Paris"},
-new { latitude = 52.4643089, longitude = 13.4107368, name = "Berlin"},
-new { latitude = 19.1555762, longitude = 72.8849595, name = "Mumbai"},
-new { latitude = 35.6628744, longitude = 139.7345469, name = "Minato"},
-new { latitude = 51.5326602, longitude = -0.1262422, name = "London"}
-
-};
+            new { latitude = 37.6276571, longitude = -122.4276688, name = "San Bruno"},
+            new { latitude = 33.5302186, longitude = -117.7418381, name = "Laguna Niguel"},
+            new { latitude = 40.7424509, longitude = -74.0081468, name = "New York"},
+            new { latitude = -23.5268201, longitude = -46.6489927, name = "Bom Retiro"},
+            new { latitude = 43.6533855, longitude = -79.3729994, name = "Toronto"},
+            new { latitude = 48.8773406, longitude = 2.3299627, name = "Paris"},
+            new { latitude = 52.4643089, longitude = 13.4107368, name = "Berlin"},
+            new { latitude = 19.1555762, longitude = 72.8849595, name = "Mumbai"},
+            new { latitude = 35.6628744, longitude = 139.7345469, name = "Minato"},
+            new { latitude = 51.5326602, longitude = -0.1262422, name = "London"}
+        };
         var tooltip = new MapsTooltipSettings
         {
             Visible = true,
@@ -88,21 +86,237 @@ new { latitude = 51.5326602, longitude = -0.1262422, name = "London"}
                     <div class="dashboardParent">
                         <ejs-dashboardlayout id="editLayout" columns="6" cellSpacing="@Model.cellSpacing">
                             <e-dashboardlayout-panels>
-                                <e-dashboardlayout-panel sizeX="2" sizeY="1" row="0" col="0" content="#card1">
+                                <e-dashboardlayout-panel sizeX="2" sizeY="1" row="0" col="0">
+                                    <e-content-template>
+                                        <div>
+                                            <div class="e-panel-container">
+                                                <div class="e-panel-content">
+                                                    <div class="card">
+                                                        <span class="e-icons session"></span>
+                                                        <div class="card-content text">
+                                                            Session
+                                                        </div>
+                                                        <div class="card-content number">
+                                                            124,444
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </e-content-template>
                                 </e-dashboardlayout-panel>
-                                <e-dashboardlayout-panel sizeX="2" sizeY="1" row="0" col="2" content="#card2">
+                                <e-dashboardlayout-panel sizeX="2" sizeY="1" row="0" col="2">
+                                    <e-content-template>
+                                        <div>
+                                            <div class="e-panel-container">
+                                                <div class="e-panel-content">
+                                                    <div class="card">
+                                                        <span class="e-icons profile"></span>
+                                                        <div class="card-content text">
+                                                            Users
+                                                        </div>
+                                                        <div class="card-content number">
+                                                            64,496
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </e-content-template>
                                 </e-dashboardlayout-panel>
-                                <e-dashboardlayout-panel sizeX="2" sizeY="1" row="2" col="4" content="#card3">
+                                <e-dashboardlayout-panel sizeX="2" sizeY="1" row="2" col="4">
+                                    <e-content-template>
+                                        <div>
+                                            <div class="e-panel-container">
+                                                <div class="e-panel-content">
+                                                    <div class="card">
+                                                        <span class="e-icons views"></span>
+                                                        <div class="card-content text">
+                                                            Views
+                                                        </div>
+                                                        <div class="card-content number">
+                                                            442,278
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </e-content-template>
                                 </e-dashboardlayout-panel>
-                                <e-dashboardlayout-panel sizeX="2" sizeY="2" row="1" col="0" content="#pieContainer" header="<div>Active Visitors</div>">
+                                <e-dashboardlayout-panel sizeX="2" sizeY="2" row="1" col="0">
+                                    <e-content-template>
+                                        <div>
+                                            <div class="e-panel-container">
+                                                <div class="e-panel-header">
+                                                    <div>
+                                                        Active Visitors
+                                                    </div>
+                                                </div>
+                                                <div class="e-panel-content">
+
+                                                    <ejs-accumulationchart style="height:100%; width:100%" id="pie1" load="loadPiechart" enableSmartLabels="true" enableAnimation="true" width="100%" height="100%">
+                                                        <e-accumulationchart-tooltipsettings enable="true" header="<b>${point.x}</b>" format="Composition : <b>${point.y}%</b>"></e-accumulationchart-tooltipsettings>
+                                                        <e-accumulationchart-legendsettings visible="false">
+                                                        </e-accumulationchart-legendsettings>
+                                                        <e-accumulation-series-collection>
+                                                            <e-accumulation-series dataSource="ViewBag.Datasource" xName="Device" yName="Amount" innerRadius="35%" radius="100%" name="Revenue" palettes="ViewBag.pallets">
+                                                                <e-accumulationseries-datalabel name="text" visible="true">
+                                                                    <e-font color="white" fontWeight="600" size="14px"></e-font>
+                                                                </e-accumulationseries-datalabel>
+                                                            </e-accumulation-series>
+                                                        </e-accumulation-series-collection>
+                                                    </ejs-accumulationchart>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </e-content-template>
                                 </e-dashboardlayout-panel>
-                                <e-dashboardlayout-panel sizeX="2" sizeY="2" row="1" col="2" content="#mapContainer" header="<div>Regional Map</div>">
+                                <e-dashboardlayout-panel sizeX="2" sizeY="2" row="1" col="2">
+                                    <e-content-template>
+                                        <div>
+                                            <div class="e-panel-container">
+                                                <div class="e-panel-header">
+                                                    <div>
+                                                        Regional Map
+                                                    </div>
+                                                </div>
+                                                <div class="e-panel-content">
+                                                    <ejs-maps id="maps" load="window.onMapLoad" style="height:100%; width:100%">
+                                                        <e-maps-zoomsettings enable="false"></e-maps-zoomsettings>
+                                                        <e-maps-legendsettings visible="false"></e-maps-legendsettings>
+                                                        <e-maps-layers>
+                                                            <e-maps-layer dataSource="ViewBag.mapdataSource" shapeData="ViewBag.mapdata" shapePropertyPath="propertyPath" shapeDataPath="continent">
+                                                                <e-layersettings-tooltipsettings valuePath="name" visible="true"></e-layersettings-tooltipsettings>
+                                                                <e-layersettings-shapesettings colorValuePath="color"></e-layersettings-shapesettings>
+                                                                <e-layersettings-markers>
+                                                                    <e-layersettings-marker visible="true" dataSource="data" shape="@MarkerType.Image" imageUrl="../styles/images/maps/ballon.png" height="20" width="20" animationDuration="0" tooltipSettings="tooltip" offset="new { x = 1, y = -10 }"></e-layersettings-marker>
+                                                                    <e-layersettings-marker visible="true" template="<div class='markerTemplate' id='marker1' style='font - size: 12px; color: white'>Asia</div>" dataSource="data1"></e-layersettings-marker>
+                                                                    <e-layersettings-marker visible="true" template="<div class='markerTemplate' id='marker2' style='font - size: 12px; color: white'>Australia</div>" dataSource="data2"></e-layersettings-marker>
+                                                                    <e-layersettings-marker visible="true" template="<div class='markerTemplate' id='marker3' style='font - size: 12px; color: white'>Africa</div>" dataSource="data3"></e-layersettings-marker>
+                                                                    <e-layersettings-marker visible="true" template="<div class='markerTemplate' id='marker4' style='font - size: 12px; color: white'>Europe</div>" dataSource="data4"></e-layersettings-marker>
+                                                                    <e-layersettings-marker visible="true" template="<div class='markerTemplate' id='marker5' style='font - size: 12px; color: white; width:50px;'>North America</div>" dataSource="data5"></e-layersettings-marker>
+                                                                    <e-layersettings-marker visible="true" template="<div class='markerTemplate' id='marker6' style='font - size: 12px; color: white; width: 50px;'>South America</div>" dataSource="data6"></e-layersettings-marker>
+                                                                </e-layersettings-markers>
+                                                            </e-maps-layer>
+                                                        </e-maps-layers>
+                                                    </ejs-maps>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </e-content-template>
                                 </e-dashboardlayout-panel>
-                                <e-dashboardlayout-panel sizeX="2" sizeY="2" row="1" col="4" content="#columnContaier" header="<div>Visitors by Type</div>">
+                                <e-dashboardlayout-panel sizeX="2" sizeY="2" row="1" col="4">
+                                    <e-content-template>
+                                        <div>
+                                            <div class="e-panel-container">
+                                                <div class="e-panel-header">
+                                                    <div>
+                                                        Visitors by Type
+                                                    </div>
+                                                </div>
+                                                <div class="e-panel-content">
+                                                    <ejs-chart style="height:100%; width:100%" id="linechart" load="window.onChartLoad">
+                                                        <e-chart-margin top="30"></e-chart-margin>
+                                                        <e-chart-tooltipsettings enable="true">
+                                                        </e-chart-tooltipsettings>
+                                                        <e-chart-primaryxaxis valueType="Category" interval=1>
+                                                            <e-majorgridlines width="0"></e-majorgridlines>
+                                                        </e-chart-primaryxaxis>
+                                                        <e-chart-primaryyaxis>
+                                                            <e-majorgridlines width="0"></e-majorgridlines>
+                                                            <e-majorticklines width="0"></e-majorticklines>
+                                                            <e-linestyle width="0"></e-linestyle>
+                                                            <e-labelstyle color="transparent"></e-labelstyle>
+                                                        </e-chart-primaryyaxis>
+                                                        <e-chart-chartarea>
+                                                            <e-chartarea-border width="0"></e-chartarea-border>
+                                                        </e-chart-chartarea>
+                                                        <e-series-collection>
+                                                            <e-series dataSource="ViewBag.columnData" xName='x' yName='y' name='Desktop' width=2 type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                                                                <e-series-marker>
+                                                                    <e-series-datalabel visible="false"></e-series-datalabel>
+                                                                </e-series-marker>
+                                                            </e-series>
+                                                            <e-series dataSource="ViewBag.columnData1" xName='x' yName='y' name='Mobile' fill="#e36593" width=2 type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                                                                <e-series-marker>
+                                                                    <e-series-datalabel visible="false">
+                                                                    </e-series-datalabel>
+                                                                </e-series-marker>
+                                                            </e-series>
+                                                            <e-series dataSource="ViewBag.columnData2" xName='x' yName='y' name='Tablet' width=2 type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                                                                <e-series-marker>
+                                                                    <e-series-datalabel visible="false">
+                                                                    </e-series-datalabel>
+                                                                </e-series-marker>
+                                                            </e-series>
+                                                        </e-series-collection>
+                                                    </ejs-chart>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </e-content-template>
                                 </e-dashboardlayout-panel>
-                                <e-dashboardlayout-panel sizeX="4" sizeY="2" row="3" col="2" content="#visitorContainer" header="<div>Traffic History</div>">
+                                <e-dashboardlayout-panel sizeX="4" sizeY="2" row="3" col="2">
+                                    <e-content-template>
+                                        <div>
+                                            <div class="e-panel-container">
+                                                <div class="e-panel-header">
+                                                    <div>
+                                                        Traffic History
+                                                    </div>
+                                                </div>
+                                                <div class="e-panel-content">
+                                                    <ejs-chart id="spline" style="height:100%; width:100%" load="window.onChartLoad">
+                                                        <e-chart-primaryxaxis valueType="DateTime" labelFormat="MMM" intervalType="Months" edgeLabelPlacement="Shift">
+                                                            <e-majorgridlines width="0"></e-majorgridlines>
+                                                        </e-chart-primaryxaxis>
+                                                        <e-chart-primaryyaxis minimum="0" maximum="4" interval="1" labelFormat="{value}%">
+                                                            <e-linestyle width="0"></e-linestyle>
+                                                            <e-majorticklines width="0"></e-majorticklines>
+                                                        </e-chart-primaryyaxis>
+                                                        <e-chart-chartarea>
+                                                            <e-chartarea-border width="0"></e-chartarea-border>
+                                                        </e-chart-chartarea>
+                                                        <e-series-collection>
+                                                            <e-series dataSource="ViewBag.LineData" fill="rgb(239, 183, 202)" name="Jan" xName="x" opacity=0.5 width=2 yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.SplineArea">
+                                                                <e-series-border color="transparent"></e-series-border>
+                                                            </e-series>
+                                                            <e-series dataSource="ViewBag.LineData1" fill="rgb(14, 64, 152, .6)" name="Feb" xName="x" opacity=0.5 width=2 yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.SplineArea">
+                                                                <e-series-border color="transparent"></e-series-border>
+                                                            </e-series>
+                                                        </e-series-collection>
+                                                    </ejs-chart>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </e-content-template>
                                 </e-dashboardlayout-panel>
-                                <e-dashboardlayout-panel sizeX="2" sizeY="2" row="3" col="0" content="#pieChartContainer" header="<div>Usage Statistics</div>">
+                                <e-dashboardlayout-panel sizeX="2" sizeY="2" row="3" col="0">
+                                    <e-content-template>
+                                        <div>
+                                            <div class="e-panel-container">
+                                                <div class="e-panel-header">
+                                                    <div>
+                                                        Usage Statistics
+                                                    </div>
+                                                </div>
+                                                <div class="e-panel-content">
+                                                    <ejs-accumulationchart style="height:100%; width:100%" id="pie" load="loadPiechart" enableSmartLabels="true" enableAnimation="true" width="100%" height="100%">
+                                                        <e-accumulationchart-tooltipsettings enable="true" header="<b>${point.x}</b>" format="Composition : <b>${point.y}%</b>"></e-accumulationchart-tooltipsettings>
+                                                        <e-accumulationchart-legendsettings visible="false">
+                                                        </e-accumulationchart-legendsettings>
+                                                        <e-accumulation-series-collection>
+                                                            <e-accumulation-series dataSource="ViewBag.pieData" xName="x" yName="y" name="Revennue" explodeIndex="2" explode="true" explodeOffset="10%">
+                                                                <e-accumulationseries-datalabel name="text" visible="true">
+                                                                    <e-font fontWeight="600" color="white"></e-font>
+                                                                </e-accumulationseries-datalabel>
+                                                            </e-accumulation-series>
+                                                        </e-accumulation-series-collection>
+                                                    </ejs-accumulationchart>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </e-content-template>
                                 </e-dashboardlayout-panel>
                             </e-dashboardlayout-panels>
                         </ejs-dashboardlayout>
@@ -113,163 +327,6 @@ new { latitude = 51.5326602, longitude = -0.1262422, name = "London"}
         </div>
     </div>
 
-    <!-- Templates of dashboard-->
-    <script id="card1" type="text/template">
-        <div class="card">
-            <span class="e-icons session"></span>
-            <div class="card-content text">
-                Session
-            </div>
-            <div class="card-content number">
-                124,444
-            </div>
-        </div>
-    </script>
-
-    <script id="card2" type="text/template">
-        <div class="card">
-            <span class="e-icons profile"></span>
-            <div class="card-content text">
-                Users
-            </div>
-            <div class="card-content number">
-                64,496
-            </div>
-        </div>
-    </script>
-
-    <script id="card3" type="text/template">
-        <div class="card">
-            <span class="e-icons views"></span>
-            <div class="card-content text">
-                Views
-            </div>
-            <div class="card-content number">
-                442,278
-            </div>
-        </div>
-    </script>
-
-    @*map*@
-    <div id="mapContainer" class="edit-content">
-        <ejs-maps id="maps" load="window.onMapLoad" style="height:100%; width:100%">
-            <e-maps-zoomsettings enable="false"></e-maps-zoomsettings>
-            <e-maps-legendsettings visible="false"></e-maps-legendsettings>
-            <e-maps-layers>
-                <e-maps-layer dataSource="ViewBag.mapdataSource" shapeData="ViewBag.mapdata" shapePropertyPath="propertyPath" shapeDataPath="continent">
-                    <e-layersettings-tooltipsettings valuePath="name" visible="true"></e-layersettings-tooltipsettings>
-                    <e-layersettings-shapesettings colorValuePath="color"></e-layersettings-shapesettings>
-                    <e-layersettings-markers>
-                        <e-layersettings-marker visible="true" dataSource="data" shape="@MarkerType.Image" imageUrl="../styles/images/maps/ballon.png" height="20" width="20" animationDuration="0" tooltipSettings="tooltip" offset="new { x = 1, y = -10 }"></e-layersettings-marker>
-                        <e-layersettings-marker visible="true" template="<div class='markerTemplate' id='marker1' style='font - size: 12px; color: white'>Asia</div>" dataSource="data1"></e-layersettings-marker>
-                        <e-layersettings-marker visible="true" template="<div class='markerTemplate' id='marker2' style='font - size: 12px; color: white'>Australia</div>" dataSource="data2"></e-layersettings-marker>
-                        <e-layersettings-marker visible="true" template="<div class='markerTemplate' id='marker3' style='font - size: 12px; color: white'>Africa</div>" dataSource="data3"></e-layersettings-marker>
-                        <e-layersettings-marker visible="true" template="<div class='markerTemplate' id='marker4' style='font - size: 12px; color: white'>Europe</div>" dataSource="data4"></e-layersettings-marker>
-                        <e-layersettings-marker visible="true" template="<div class='markerTemplate' id='marker5' style='font - size: 12px; color: white; width:50px;'>North America</div>" dataSource="data5"></e-layersettings-marker>
-                        <e-layersettings-marker visible="true" template="<div class='markerTemplate' id='marker6' style='font - size: 12px; color: white; width: 50px;'>South America</div>" dataSource="data6"></e-layersettings-marker>
-                    </e-layersettings-markers>
-                </e-maps-layer>
-            </e-maps-layers>
-        </ejs-maps>
-    </div>
-
-    @*column chart*@
-    <div id="columnContaier" class="edit-content">
-        <ejs-chart style="height:100%; width:100%" id="linechart" load="window.onChartLoad">
-            <e-chart-margin top="30"></e-chart-margin>
-            <e-chart-tooltipsettings enable="true">
-            </e-chart-tooltipsettings>
-            <e-chart-primaryxaxis valueType="Category" interval=1>
-                <e-majorgridlines width="0"></e-majorgridlines>
-            </e-chart-primaryxaxis>
-            <e-chart-primaryyaxis>
-                <e-majorgridlines width="0"></e-majorgridlines>
-                <e-majorticklines width="0"></e-majorticklines>
-                <e-linestyle width="0"></e-linestyle>
-                <e-labelstyle color="transparent"></e-labelstyle>
-            </e-chart-primaryyaxis>
-            <e-chart-chartarea>
-                <e-chartarea-border width="0"></e-chartarea-border>
-            </e-chart-chartarea>
-            <e-series-collection>
-                <e-series dataSource="ViewBag.columnData" xName='x' yName='y' name='Desktop' width=2 type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
-                    <e-series-marker>
-                        <e-series-datalabel visible="false"></e-series-datalabel>
-                    </e-series-marker>
-                </e-series>
-                <e-series dataSource="ViewBag.columnData1" xName='x' yName='y' name='Mobile' fill="#e36593" width=2 type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
-                    <e-series-marker>
-                        <e-series-datalabel visible="false">
-                        </e-series-datalabel>
-                    </e-series-marker>
-                </e-series>
-                <e-series dataSource="ViewBag.columnData2" xName='x' yName='y' name='Tablet' width=2 type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
-                    <e-series-marker>
-                        <e-series-datalabel visible="false">
-                        </e-series-datalabel>
-                    </e-series-marker>
-                </e-series>
-            </e-series-collection>
-        </ejs-chart>
-    </div>
-
-
-    @*pie chart*@
-    <div id="pieContainer" class="edit-content">
-        <ejs-accumulationchart style="height:100%; width:100%" id="pie1" load="loadPiechart" enableSmartLabels="true" enableAnimation="true" width="100%" height="100%">
-            <e-accumulationchart-tooltipsettings enable="true" header="<b>${point.x}</b>" format="Composition : <b>${point.y}%</b>"></e-accumulationchart-tooltipsettings>
-            <e-accumulationchart-legendsettings visible="false">
-            </e-accumulationchart-legendsettings>
-            <e-accumulation-series-collection>
-                <e-accumulation-series dataSource="ViewBag.Datasource" xName="Device" yName="Amount" innerRadius="35%" radius="100%" name="Revenue" palettes="ViewBag.pallets">
-                    <e-accumulationseries-datalabel name="text" visible="true">
-                        <e-font color="white" fontWeight="600" size="14px"></e-font>
-                    </e-accumulationseries-datalabel>
-                </e-accumulation-series>
-            </e-accumulation-series-collection>
-        </ejs-accumulationchart>
-    </div>
-
-    @*pie chart*@
-    <div id="pieChartContainer" class="edit-content">
-        <ejs-accumulationchart style="height:100%; width:100%" id="pie" load="loadPiechart" enableSmartLabels="true" enableAnimation="true" width="100%" height="100%">
-            <e-accumulationchart-tooltipsettings enable="true" header="<b>${point.x}</b>" format="Composition : <b>${point.y}%</b>"></e-accumulationchart-tooltipsettings>
-            <e-accumulationchart-legendsettings visible="false">
-            </e-accumulationchart-legendsettings>
-            <e-accumulation-series-collection>
-                <e-accumulation-series dataSource="ViewBag.pieData" xName="x" yName="y" name="Revennue" explodeIndex="2" explode="true" explodeOffset="10%">
-                    <e-accumulationseries-datalabel name="text" visible="true">
-                        <e-font fontWeight="600" color="white"></e-font>
-                    </e-accumulationseries-datalabel>
-                </e-accumulation-series>
-            </e-accumulation-series-collection>
-        </ejs-accumulationchart>
-    </div>
-
-
-    @*spline chart*@
-    <div id="visitorContainer" class="edit-content">
-        <ejs-chart id="spline" style="height:100%; width:100%" load="window.onChartLoad">
-            <e-chart-primaryxaxis valueType="DateTime" labelFormat="MMM" intervalType="Months" edgeLabelPlacement="Shift">
-                <e-majorgridlines width="0"></e-majorgridlines>
-            </e-chart-primaryxaxis>
-            <e-chart-primaryyaxis minimum="0" maximum="4" interval="1" labelFormat="{value}%">
-                <e-linestyle width="0"></e-linestyle>
-                <e-majorticklines width="0"></e-majorticklines>
-            </e-chart-primaryyaxis>
-            <e-chart-chartarea>
-                <e-chartarea-border width="0"></e-chartarea-border>
-            </e-chart-chartarea>
-            <e-series-collection>
-                <e-series dataSource="ViewBag.LineData" fill="rgb(239, 183, 202)" name="Jan" xName="x" opacity=0.5 width=2 yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.SplineArea">
-                    <e-series-border color="transparent"></e-series-border>
-                </e-series>
-                <e-series dataSource="ViewBag.LineData1" fill="rgb(14, 64, 152, .6)" name="Feb" xName="x" opacity=0.5 width=2 yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.SplineArea">
-                    <e-series-border color="transparent"></e-series-border>
-                </e-series>
-            </e-series-collection>
-        </ejs-chart>
-    </div>
 
     <div id="content"></div>
 }
@@ -666,8 +723,12 @@ new { latitude = 51.5326602, longitude = -0.1262422, name = "London"}
     }
 
 </style>
-
-
-
-
-
+@section Title{
+                 <title>ASP.NET Core Dashboard Layout SEO Analytics Dashboard Example - Syncfusion Demos </title>
+             }
+@section Meta{
+                <meta name="description" content="This example demonstrates the SEO Analytics Dashboard in ASP.NET Core Dashboard Layout control. Explore here for more details."/>
+            }
+@section Header{
+                <h1 class='sb-sample-text'>Example for SEO Analytics Dashboard in ASP.NET Core Dashboard Layout Control</h1>
+            }

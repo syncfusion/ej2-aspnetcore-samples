@@ -22,10 +22,11 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
 
         public ActionResult Conformance()
         {
+             ViewBag.data=new string[] { "PDF/A-1a", "PDF/A-1b", "PDF/A-2a", "PDF/A-2b", "PDF/A-2u", "PDF/A-3a", "PDF/A-3b", "PDF/A-3u" };
             return View();
         }
         [HttpPost]
-        public ActionResult Conformance(string InsideBrowser, string radioButton)
+        public ActionResult Conformance(string InsideBrowser, string conformance)
         {
             string basePath = _hostingEnvironment.WebRootPath;
             string dataPath = string.Empty;
@@ -33,19 +34,46 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
 
             PdfDocument document = null;
 
-            if (radioButton == "Pdf_A1B")
+            if (conformance == "PDF/A-1a")
+            {
+                //Create a new document with PDF/A standard.
+                document = new PdfDocument(PdfConformanceLevel.Pdf_A1A);
+            }
+            else if (conformance == "PDF/A-1b")
             {
                 //Create a new document with PDF/A standard.
                 document = new PdfDocument(PdfConformanceLevel.Pdf_A1B);
             }
-            else if (radioButton == "Pdf_A2B")
+            else if (conformance == "PDF/A-2a")
             {
+                //Create a new document with PDF/A standard.
+                document = new PdfDocument(PdfConformanceLevel.Pdf_A2A);
+            }
+            else if (conformance == "PDF/A-2b")
+            {
+                //Create a new document with PDF/A standard.
                 document = new PdfDocument(PdfConformanceLevel.Pdf_A2B);
             }
-            else if (radioButton == "Pdf_A3B")
+            else if (conformance == "PDF/A-2u")
             {
-                document = new PdfDocument(PdfConformanceLevel.Pdf_A3B);
+                //Create a new document with PDF/A standard.
+                document = new PdfDocument(PdfConformanceLevel.Pdf_A2U);
+            }
+            else 
+            {
+                if (conformance == "PDF/A-3a")
+                {
+                    document = new PdfDocument(PdfConformanceLevel.Pdf_A3A);
+                }
+                else if (conformance == "PDF/A-3b")
+                {
+                    document = new PdfDocument(PdfConformanceLevel.Pdf_A3B);
+                }
+                else if (conformance == "PDF/A-3u")
+                {
+                    document = new PdfDocument(PdfConformanceLevel.Pdf_A3U);
 
+                }
                 //Read the file
                 FileStream file = new FileStream(dataPath + "Text1.txt", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 

@@ -1,0 +1,121 @@
+@using Syncfusion.EJ2.Gantt;
+@section ControlsSection{
+
+    <div class="col-lg-8 control-section">
+        <div class="row">
+            <div class="col-md-12">
+                <ejs-gantt id='ShowHide' dataSource="ViewBag.dataSource" treeColumnIndex="1" height="450px" highlightWeekends="true"
+                           projectStartDate="03/24/2019" projectEndDate="07/06/2019">
+                    <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate"
+                           endDate="EndDate" duration="Duration" progress="Progress" dependency="Predecessor" child="SubTasks">
+                    </e-gantt-taskfields>
+                    <e-gantt-splitterSettings columnIndex="3"></e-gantt-splitterSettings>
+                    <e-gantt-labelSettings leftLabel="TaskName"></e-gantt-labelSettings>
+                </ejs-gantt>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 property-section">
+        <table id="property" title="Properties" style="width: 100%">
+            <tr style="height: 50px">
+                <td style="width: 30%">
+                    <div>Column</div>
+                </td>
+                <td style="width: 70%;padding-right: 10px">
+                    <ejs-dropdownlist id="Columns" dataSource="ViewBag.columns" index="0" popupHeight="220px" value="@("TaskId")" change="columnChange">
+                        <e-dropdownlist-fields text="text" value="value"></e-dropdownlist-fields>
+                    </ejs-dropdownlist>
+                </td>
+            </tr>
+            <tr>
+                <td class="left-side" style="width: 30%; padding-bottom:10px; padding-left: 10px;">
+                    <ejs-button id="hide" content="HIDE"></ejs-button>
+                </td>
+                <td style="padding-bottom:10px; width: 70%;">
+                    <ejs-button id="show" content="SHOW" disabled="true"></ejs-button>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 50%">
+                    <div style="padding-top: 10px">
+                        Hidden Columns
+                    </div>
+                </td>
+                <td style="width: 50%; padding:10px 10px 0px 0px">
+                    <textarea id="hiddencolumns" style="resize: none;height:65px;background-color: #fff; padding: 6px"
+                              class="form-control" readonly="readonly"></textarea>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        function columnChange(e) {
+            var ganttObj = document.getElementById("ShowHide").ej2_instances[0];
+            let columnName = e.value;
+            let column = ganttObj.treeGrid.grid.getColumnByField(columnName);
+            if (column.visible === undefined || column.visible) {
+                show.disabled = true;
+                hide.disabled = false;
+            } else {
+                hide.disabled = true;
+                show.disabled = false;
+            }
+        }
+        var hiddenColumns = document.getElementById('hiddencolumns');
+        document.getElementById('show').addEventListener('click', () => {
+            var ganttObj = document.getElementById("ShowHide").ej2_instances[0];
+            var dropDownListObject = document.getElementById("Columns").ej2_instances[0];
+            var dropValue = dropDownListObject.value;
+            var columnName = ganttObj.treeGrid.getColumnByField(dropValue).headerText;
+            ganttObj.showColumn(columnName);
+            show.disabled = true;
+            hide.disabled = false;
+            hiddenColumns.value = hiddenColumns.value.replace(columnName + '\n', '');
+        });
+        document.getElementById('hide').addEventListener('click', () => {
+            var ganttObj = document.getElementById("ShowHide").ej2_instances[0];
+            var dropDownListObject = document.getElementById("Columns").ej2_instances[0];
+            var dropValue = dropDownListObject.value;
+            var columnName = ganttObj.treeGrid.getColumnByField(dropValue).headerText;
+            ganttObj.hideColumn(columnName);
+            hide.disabled = true;
+            show.disabled = false;
+            hiddenColumns.value = hiddenColumns.value + columnName + '\n';
+        });
+    </script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates dynamic show/hide columns feature of Gantt. Select column name from the properties panel,
+            and then click hide/show to toggle visibility.
+        </p>
+    </div>
+}
+@section Description{
+
+    <div id="description">
+        <p>The Gantt column can be shown or hidden dynamically using the <code>showColumn</code> and <code>hideColumn</code> methods of the Gantt.</p>
+        <p>
+            In this demo, the columns can be shown and hidden by selecting the column name in dropdown. Click the Show or Hide button to toggle the visibility.
+            The visibility of column is toggled based on the
+            <code>columns -> headerText</code> value.
+        </p>
+        <br />
+        <p>
+            The <code>columns -> visible</code> property specifies the visibility of a column.
+            To hide a column at the initial rendering, set the <code>columns -> visible</code> property to false.
+        </p> <br />
+    </div>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Show or Hide Column in ASP.NET Core Gantt control. Explore here for more details."/>
+                }
+@section Title{
+                 <title>ASP.NET Core Gantt Show or Hide Column Example - Syncfusion Demos </title>
+             }
+@section Header{
+                <h1 class='sb-sample-text'>Example for Show or Hide Column in ASP.NET Core Gantt Control</h1>
+            }

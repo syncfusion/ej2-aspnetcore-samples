@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Syncfusion.Drawing;
 using System.IO;
 using System.Reflection;
+using Syncfusion.DocIORenderer;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -28,205 +29,27 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
             WordDocument document = new WordDocument();
             // Adding a new section to the document.
             IWSection section = document.AddSection();
+            section.PageSetup.Margins.All = 50;
             section.PageSetup.DifferentFirstPage = true;
             IWTextRange textRange;
             IWParagraph paragraph = section.AddParagraph();
-            // --------------------------------------------
-            // Table in page header 
-            // --------------------------------------------
-            IWParagraph hParagraph = new WParagraph(document);
-            hParagraph.AppendText("Header text\r\n").CharacterFormat.FontSize = 14;
-            section.HeadersFooters.FirstPageHeader.Paragraphs.Add(hParagraph);
-            IWTable hTable = document.LastSection.HeadersFooters.FirstPageHeader.AddTable();
-            hTable.TableFormat.Borders.BorderType = Syncfusion.DocIO.DLS.BorderStyle.Single;
-            hTable.TableFormat.Paddings.All = 5.4f;
-            hTable.ResetCells(2, 2);
 
-            hTable[0, 0].AddParagraph().AppendText("1");
-            hTable[0, 1].AddParagraph().AppendText("2");
-            hTable[1, 0].AddParagraph().AppendText("3");
-            hTable[1, 1].AddParagraph().AppendText("4");
-
-            // --------------------------------------------
-            // Tiny table
-            // --------------------------------------------
-            paragraph = section.AddParagraph();
-
-            paragraph.AppendText("Tiny table\r\n").CharacterFormat.FontSize = 14;
-            paragraph = section.AddParagraph();
-            WTextBody textBody = section.Body;
-            IWTable table = textBody.AddTable();
-            table.ResetCells(2, 2);
-            table.TableFormat.Borders.BorderType = Syncfusion.DocIO.DLS.BorderStyle.Single;
-            table.TableFormat.Paddings.All = 5.4f;
-            WTableRow row_0 = table.Rows[0];
-            row_0.Cells[0].AddParagraph().AppendText("A");
-            row_0.Cells[0].AddParagraph().AppendText("AA");
-            row_0.Cells[0].AddParagraph().AppendText("AAA");
-
-            WTableRow row_1 = table.Rows[1];
-            row_1.Cells[1].AddParagraph().AppendText("B");
-            row_1.Cells[1].AddParagraph().AppendText("BB\r\nBBB");
-            row_1.Cells[1].AddParagraph().AppendText("BBB");
-
-            textBody.AddParagraph().AppendText("Text after table...").CharacterFormat.FontSize = 14;
-
-            // --------------------------------------------
-            // Table with different formatting 
-            // --------------------------------------------
-
-            section.AddParagraph();
-            paragraph = section.AddParagraph();
-            paragraph.AppendText("Table with different formatting\r\n").CharacterFormat.FontSize = 14;
-            paragraph = section.AddParagraph();
-            textBody = section.Body;
-            table = textBody.AddTable();
-            table.ResetCells(3, 3);
-
-            /* ------- First Row -------- */
-
-            WTableRow row0 = table.Rows[0];
-
-            paragraph = (IWParagraph)row0.Cells[0].AddParagraph();
-            textRange = paragraph.AppendText("1");
-            paragraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Left;
-            textRange.CharacterFormat.FontName = "Arial";
-            textRange.CharacterFormat.Bold = true;
-            textRange.CharacterFormat.FontSize = 14f;
-            row0.Cells[0].CellFormat.Borders.LineWidth = 2f;
-            row0.Cells[0].CellFormat.Borders.Color = Syncfusion.Drawing.Color.Magenta;
-
-            paragraph = (IWParagraph)row0.Cells[1].AddParagraph();
-            textRange = paragraph.AppendText("2");
-            paragraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Right;
-            textRange.CharacterFormat.Emboss = true;
-            textRange.CharacterFormat.FontSize = 15f;
-            row0.Cells[1].CellFormat.Borders.LineWidth = 1.3f;
-            row0.Cells[1].CellFormat.Borders.BorderType = Syncfusion.DocIO.DLS.BorderStyle.DoubleWave;
-
-            paragraph = (IWParagraph)row0.Cells[2].AddParagraph();
-            textRange = paragraph.AppendText("3");
-            paragraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Left;
-            textRange.CharacterFormat.Engrave = true;
-            textRange.CharacterFormat.FontSize = 15f;
-            row0.Cells[2].CellFormat.Borders.BorderType = Syncfusion.DocIO.DLS.BorderStyle.Emboss3D;
-
-            /* ------- Second Row -------- */
-
-            WTableRow row1 = table.Rows[1];
-
-            paragraph = (IWParagraph)row1.Cells[0].AddParagraph();
-            textRange = paragraph.AppendText("4");
-            paragraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
-            textRange.CharacterFormat.SmallCaps = true;
-            textRange.CharacterFormat.FontName = "Comic Sans MS";
-            textRange.CharacterFormat.FontSize = 16;
-            row1.Cells[0].CellFormat.Borders.LineWidth = 2f;
-            row1.Cells[0].CellFormat.Borders.BorderType = Syncfusion.DocIO.DLS.BorderStyle.DashDotStroker;
-
-            paragraph = (IWParagraph)row1.Cells[1].AddParagraph();
-            textRange = paragraph.AppendText("5");
-            paragraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
-            textRange.CharacterFormat.FontName = "Times New Roman";
-            textRange.CharacterFormat.Shadow = true;
-            textRange.CharacterFormat.TextBackgroundColor = Syncfusion.Drawing.Color.Orange;
-            textRange.CharacterFormat.FontSize = 15f;
-            row1.Cells[1].CellFormat.Borders.LineWidth = 2f;
-            row1.Cells[1].CellFormat.Borders.Color = Syncfusion.Drawing.Color.Brown;
-
-            paragraph = (IWParagraph)row1.Cells[2].AddParagraph();
-            textRange = paragraph.AppendText("6");
-            paragraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
-            textRange.CharacterFormat.Bold = true;
-            textRange.CharacterFormat.FontSize = 14f;
-            row1.Cells[2].CellFormat.BackColor = Syncfusion.Drawing.Color.FromArgb(51, 51, 101);
-            row1.Cells[2].CellFormat.VerticalAlignment = VerticalAlignment.Middle;
-
-            /* ------- Third Row -------- */
-
-            WTableRow row2 = table.Rows[2];
-
-            paragraph = (IWParagraph)row2.Cells[0].AddParagraph();
-            textRange = paragraph.AppendText("7");
-            paragraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Right;
-            textRange.CharacterFormat.FontSize = 13f;
-            row2.Cells[0].CellFormat.Borders.LineWidth = 1.5f;
-            row2.Cells[0].CellFormat.Borders.BorderType = Syncfusion.DocIO.DLS.BorderStyle.DashLargeGap;
-
-            paragraph = (IWParagraph)row2.Cells[1].AddParagraph();
-            textRange = paragraph.AppendText("8");
-            textRange.CharacterFormat.TextColor = Syncfusion.Drawing.Color.Blue;
-            textRange.CharacterFormat.FontSize = 16f;
-            row2.Cells[1].CellFormat.Borders.LineWidth = 3f;
-            row2.Cells[1].CellFormat.Borders.BorderType = Syncfusion.DocIO.DLS.BorderStyle.Wave;
-
-            paragraph = (IWParagraph)row2.Cells[2].AddParagraph();
-            textRange = paragraph.AppendText("9");
-            paragraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Right;
-            row2.Cells[2].CellFormat.Borders.LineWidth = 2f;
-            row2.Cells[2].CellFormat.Borders.Color = Syncfusion.Drawing.Color.Cyan;
-            row2.Cells[2].CellFormat.Borders.Shadow = true;
-            row2.Cells[2].CellFormat.Borders.Space = 20;
-
-            // --------------------------------------------
-            // Table Cell Merging.
-            // --------------------------------------------
-
-            section.AddParagraph();
-            paragraph = section.AddParagraph();
-            paragraph.AppendText("Table Cell Merging...").CharacterFormat.FontSize = 14;
-            section.AddParagraph();
-            paragraph = section.AddParagraph();
-            textBody = section.Body;
-
-            // Adding a new Table to the textbody.
-            table = textBody.AddTable();
-
-            RowFormat format = new RowFormat();
-            format.Paddings.All = 5;
-            format.Borders.BorderType = Syncfusion.DocIO.DLS.BorderStyle.Dot;
-            format.Borders.LineWidth = 2;
-
-            // Inserting rows to the table.
-            table.ResetCells(6, 6, format, 80);
-
-            // Table formatting with cell merging.
-            table.Rows[0].Cells[0].CellFormat.HorizontalMerge = CellMerge.Start;
-            table.Rows[0].Cells[1].CellFormat.HorizontalMerge = CellMerge.Continue;
-            table.Rows[0].Cells[0].CellFormat.VerticalAlignment = VerticalAlignment.Middle;
-            table.Rows[0].Cells[0].CellFormat.BackColor = Syncfusion.Drawing.Color.FromArgb(218, 230, 246);
-            IWParagraph par = table.Rows[0].Cells[0].AddParagraph();
-            par.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
-            par.AppendText("Horizontal Merge").CharacterFormat.Bold = true;
-
-
-            table.Rows[2].Cells[3].CellFormat.VerticalMerge = CellMerge.Start;
-            table.Rows[3].Cells[3].CellFormat.VerticalMerge = CellMerge.Continue;
-
-            table.Rows[2].Cells[3].CellFormat.VerticalAlignment = VerticalAlignment.Middle;
-            par = table.Rows[2].Cells[3].AddParagraph();
-            table.Rows[2].Cells[3].CellFormat.BackColor = Syncfusion.Drawing.Color.FromArgb(252, 172, 85);
-            par.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
-            par.AppendText("Vertical Merge").CharacterFormat.Bold = true;
 
             #region Table Cell Spacing.
             // --------------------------------------------
             // Table Cell Spacing.
             // --------------------------------------------
-
-            section.AddParagraph();
-            paragraph = section.AddParagraph();
             paragraph.AppendText("Table Cell spacing...").CharacterFormat.FontSize = 14;
 
             section.AddParagraph();
             paragraph = section.AddParagraph();
-            textBody = section.Body;
+            WTextBody textBody = section.Body;
 
             // Adding a new Table to the textbody.
-            table = textBody.AddTable();
+            IWTable table = textBody.AddTable();
             table.TableFormat.Borders.BorderType = Syncfusion.DocIO.DLS.BorderStyle.Single;
             table.TableFormat.Paddings.All = 5.4f;
-            format = new RowFormat();
+            RowFormat format = new RowFormat();
 
             format.Paddings.All = 5;
             format.CellSpacing = 2;
@@ -265,6 +88,7 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
                 }
 				
             }
+            (table as WTable).AutoFit(AutoFitType.FitToContent);
             #endregion Table Cell Spacing.
 
             #region Nested Table
@@ -348,10 +172,11 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
                     text.CharacterFormat.Bold = true;
                 }
             }
+            (nestTable as WTable).AutoFit(AutoFitType.FitToContent);
+            (table as WTable).AutoFit(AutoFitType.FitToWindow);
             #endregion Nested Table
             #region Table with Images
-            
-            Assembly execAssem = typeof(DocIOController).GetTypeInfo().Assembly;           
+
             //Add a new section to the document.
             section = document.AddSection();
             //Add paragraph to the section.
@@ -408,7 +233,7 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
             int sno = 1;
             //Writing Sno, Product name and Product Images to the Table.
 
-            row1 = table.AddRow(false);
+            WTableRow row1 = table.AddRow(false);
 
             //Writing SNO to the table with formatting text.
             paragraph = (IWParagraph)row1.Cells[0].AddParagraph();
@@ -418,24 +243,24 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
             text.CharacterFormat.FontSize = 10f;
             row1.Cells[0].CellFormat.VerticalAlignment = VerticalAlignment.Middle;
             row1.Cells[0].CellFormat.Borders.BorderType = Syncfusion.DocIO.DLS.BorderStyle.Single;
-            row1.Cells[0].CellFormat.BackColor = Syncfusion.Drawing.Color.FromArgb(217, 223, 239);
+            row1.Cells[0].CellFormat.BackColor = Color.FromArgb(217, 223, 239);
             //Writing Product Name to the table with Formatting.
             paragraph = (IWParagraph)row1.Cells[1].AddParagraph();
             paragraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
             text = paragraph.AppendText("Apple Juice");
             text.CharacterFormat.Bold = true;
             text.CharacterFormat.FontSize = 10f;
-            text.CharacterFormat.TextColor = Syncfusion.Drawing.Color.FromArgb(50, 65, 124);
+            text.CharacterFormat.TextColor = Color.FromArgb(50, 65, 124);
             row1.Cells[1].CellFormat.VerticalAlignment = VerticalAlignment.Middle;
             row1.Cells[1].CellFormat.Borders.BorderType = Syncfusion.DocIO.DLS.BorderStyle.Single;
-            row1.Cells[1].CellFormat.BackColor = Syncfusion.Drawing.Color.FromArgb(217, 223, 239);
+            row1.Cells[1].CellFormat.BackColor = Color.FromArgb(217, 223, 239);
 
             //Writing Product Images to the Table.
             paragraph = (IWParagraph)row1.Cells[2].AddParagraph();
             string basePath = _hostingEnvironment.WebRootPath;
             FileStream imageStream = new FileStream(basePath + @"/images/DocIO/Apple Juice.png", FileMode.Open, FileAccess.Read);
             paragraph.AppendPicture(imageStream);
-            
+
             paragraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
             row1.Cells[2].CellFormat.VerticalAlignment = VerticalAlignment.Middle;
             row1.Cells[2].CellFormat.Borders.BorderType = Syncfusion.DocIO.DLS.BorderStyle.Single;
@@ -467,7 +292,7 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
             paragraph = (IWParagraph)row1.Cells[2].AddParagraph();
             imageStream = new FileStream(basePath + @"/images/DocIO/Grape Juice.png", FileMode.Open, FileAccess.Read);
             paragraph.AppendPicture(imageStream);
-           
+
             paragraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
             row1.Cells[2].CellFormat.VerticalAlignment = VerticalAlignment.Middle;
             row1.Cells[2].CellFormat.Borders.BorderType = Syncfusion.DocIO.DLS.BorderStyle.Single;
@@ -505,6 +330,7 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
             row1.Cells[2].CellFormat.Borders.BorderType = Syncfusion.DocIO.DLS.BorderStyle.Single;
             row1.Cells[2].CellFormat.BackColor = Syncfusion.Drawing.Color.FromArgb(217, 223, 239);
             sno++;
+            (table as WTable).AutoFit(AutoFitType.FixedColumnWidth);
             #endregion Table with Images
 
             FormatType type = FormatType.Docx;

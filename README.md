@@ -14,13 +14,13 @@ Essential JS 2 for ASP.NET Core UI Component library has range of awesome compon
     </tr>
     <tr>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/View/Grid">DataGrid</a>
+            <a href="Views/Grid">DataGrid</a>
         </td>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/PivotView">Pivot Table</a>
+            <a href="Views/PivotTable">Pivot Table</a>
         </td>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/View/TreeGrid">Tree Grid</a>
+            <a href="Views/TreeGrid">Tree Grid</a>
         </td>
     </tr>
     <tr>
@@ -30,46 +30,46 @@ Essential JS 2 for ASP.NET Core UI Component library has range of awesome compon
     </tr>
     <tr>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/Chart">Charts</a>
+            <a href="Views/Chart">Charts</a>
         </td>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/StockChart">Stock Chart</a>
+            <a href="Views/StockChart">Stock Chart</a>
         </td>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/CircularGauge">Circular Gauge</a>
+            <a href="Views/CircularGauge">Circular Gauge</a>
         </td>
     </tr>
     <tr>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/LinearGauge">Linear Gauge</a>
+            <a href="Views/LinearGauge">Linear Gauge</a>
         </td>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/Diagram">Diagram</a>
+            <a href="Views/Diagram">Diagram</a>
         </td>
          <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/HeatMap">HeatMap</a>
+            <a href="Views/HeatMap">HeatMap</a>
         </td>
     </tr>
     <tr>
          <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/Maps">Maps</a>
+            <a href="Views/Maps">Maps</a>
         </td>
          <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/RangeSelector">Range Selector</a>
+            <a href="Views/RangeNavigator">Range Selector</a>
         </td>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/SmithChart">Smith Chart</a>
+            <a href="Views/SmithChart">Smith Chart</a>
         </td>
     </tr>
     <tr>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/SparkLine">Spartline Chart</a>
+            <a href="Views/SparkLine">Spartline Chart</a>
         </td>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/Barcode Generator">Barcode Generator (Preview)</a>
+            <a href="Views/Barcode">Barcode Generator (Preview)</a>
         </td>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/TreeMap">TreeMap</a>
+            <a href="Views/TreeMap">TreeMap</a>
         </td>
     </tr>
     <tr>
@@ -79,10 +79,10 @@ Essential JS 2 for ASP.NET Core UI Component library has range of awesome compon
     </tr>
     <tr>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/RichTextEditor">Rich Text Editor</a>
+            <a href="Views/RichTextEditor">Rich Text Editor</a>
         </td>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/DocumentEditor">Word Processor</a>
+            <a href="Views/DocumentEditor">Word Processor</a>
         </td>
         <td></td>
     </tr>
@@ -93,29 +93,29 @@ Essential JS 2 for ASP.NET Core UI Component library has range of awesome compon
     </tr>
     <tr>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/Schedule">Scheduler</a>
+            <a href="Views/Schedule">Scheduler</a>
         </td>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/Gantt">Gantt Chart (Preview)</a>
+            <a href="Views/Gantt">Gantt Chart (Preview)</a>
         </td>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/Calendar">Calendar</a>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/DatePicker">Date Picker</a>
-        </td>
-        <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/DateRangePicker">DateRange Picker</a>
-        </td>
-        <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/DateTimePicker">DateTime Picker</a>
+            <a href="Views/Calendar">Calendar</a>
         </td>
     </tr>
     <tr>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/TimePicker">Time Picker</a>
+            <a href="Views/DatePicker">Date Picker</a>
+        </td>
+        <td>
+            <a href="Views/DateRangePicker">DateRange Picker</a>
+        </td>
+        <td>
+            <a href="Views/DateTimePicker">DateTime Picker</a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a href="Views/TimePicker">Time Picker</a>
         </td>
         <td></td>
         <td></td>
@@ -127,24 +127,24 @@ Essential JS 2 for ASP.NET Core UI Component library has range of awesome compon
     </tr>
     <tr>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/Button">Button</a>
+            <a href="Views/Button">Button</a>
         </td>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/Button">Button Group</a>
+            <a href="Views/Button">Button Group</a>
         </td>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/Button">Dropdown Menu</a>
+            <a href="Views/Button">Dropdown Menu</a>
         </td>
     </tr>
     <tr>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/Button">Progress Button</a>
+            <a href="Views/Button">Progress Button</a>
         </td>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/Button">Split Button</a>
+            <a href="Views/Button">Split Button</a>
         </td>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/Button">Chips Button</a>
+            <a href="Views/Button">Chips Button</a>
         </td>
     </tr>
     <tr>
@@ -154,18 +154,18 @@ Essential JS 2 for ASP.NET Core UI Component library has range of awesome compon
     </tr>
     <tr>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/AutoComplete">AutoComplete</a>
+            <a href="Views/AutoComplete">AutoComplete</a>
         </td>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/ComboBox">ComboBox</a>
+            <a href="Views/ComboBox">ComboBox</a>
         </td>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/DropDownList">Dropdown List</a>
+            <a href="Views/DropDownList">Dropdown List</a>
         </td>
     </tr>
     <tr>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/MultiSelect">MultiSelect Dropdown</a>
+            <a href="Views/MultiSelect">MultiSelect Dropdown</a>
         </td>
         <td></td>
         <td></td>
@@ -177,32 +177,32 @@ Essential JS 2 for ASP.NET Core UI Component library has range of awesome compon
     </tr>
     <tr>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/Accordion">Accordion</a>
+            <a href="Views/Accordion">Accordion</a>
         </td>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/ContextMenu">Context Menu</a>
+            <a href="Views/ContextMenu">Context Menu</a>
         </td>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/Menu">Menu Bar</a>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/Sidebar">Sidebar</a>
-        </td>
-        <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/Tab">Tabs</a>
-        </td>
-        <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/Toolbar">Toolbar</a>
+            <a href="Views/Menu">Menu Bar</a>
         </td>
     </tr>
     <tr>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/TreeView">TreeView</a>
+            <a href="Views/Sidebar">Sidebar</a>
         </td>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/FileManager">File Manager</a>
+            <a href="Views/Tab">Tabs</a>
+        </td>
+        <td>
+            <a href="Views/Toolbar">Toolbar</a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a href="Views/TreeView">TreeView</a>
+        </td>
+        <td>
+            <a href="Views/FileManager">File Manager</a>
         </td>
         <td></td>
     </tr>
@@ -213,35 +213,35 @@ Essential JS 2 for ASP.NET Core UI Component library has range of awesome compon
     </tr>
     <tr>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/TextBoxes">TextBox</a>
+            <a href="Views/TextBoxes">TextBox</a>
         </td>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/MaskedTextBox">Input Mask</a>
+            <a href="Views/MaskedTextBox">Input Mask</a>
         </td>
          <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/NumericTextBox">Numeric Textbox</a>
+            <a href="Views/NumericTextBox">Numeric Textbox</a>
         </td>
     </tr>
     <tr>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/Button">Radio Button</a>
+            <a href="Views/Button">Radio Button</a>
         </td>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/Button">Checkbox</a>
+            <a href="Views/Button">Checkbox</a>
         </td>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/ColorPicker">Color Picker</a>
+            <a href="Views/ColorPicker">Color Picker</a>
         </td>
     </tr>
     <tr>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/Uploader">File Upload</a>
+            <a href="Views/Uploader">File Upload</a>
         </td>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/Slider">Range Slider</a>
+            <a href="Views/Slider">Range Slider</a>
         </td>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/Button">Toggle Switch Button</a>
+            <a href="Views/Button">Toggle Switch Button</a>
         </td>
     </tr>
     <tr>
@@ -251,29 +251,29 @@ Essential JS 2 for ASP.NET Core UI Component library has range of awesome compon
     </tr>
     <tr>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/Avatar">Avatar</a>
+            <a href="Views/Avatar">Avatar</a>
         </td>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/Card">Card</a>
+            <a href="Views/Card">Card</a>
         </td>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/Dialog">Dialog</a>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/ListView">ListView</a>
-        </td>
-        <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/Tooltip">Tooltip</a>
-        </td>
-        <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/Splitter">Splitter</a>
+            <a href="Views/Dialog">Dialog</a>
         </td>
     </tr>
     <tr>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/DashbordLayout">Dashboard Layout</a>
+            <a href="Views/ListView">ListView</a>
+        </td>
+        <td>
+            <a href="Views/Tooltip">Tooltip</a>
+        </td>
+        <td>
+            <a href="Views/Splitter">Splitter</a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a href="Views/DashboardLayout">Dashboard Layout</a>
         </td>
         <td></td>
         <td></td>
@@ -285,10 +285,10 @@ Essential JS 2 for ASP.NET Core UI Component library has range of awesome compon
     </tr>
     <tr>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/Badge">Badge</a>
+            <a href="Views/Badge">Badge</a>
         </td>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/Toast">Toast</a>
+            <a href="Views/Toast">Toast</a>
         </td>
         <td></td>
     </tr>
@@ -299,10 +299,10 @@ Essential JS 2 for ASP.NET Core UI Component library has range of awesome compon
     </tr>
     <tr>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/InPlaceEditor">In-Place Editor</a>
+            <a href="Views/InPlaceEditor">In-Place Editor</a>
         </td>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/QueryBuilder">Query Builder UI</a>
+            <a href="Views/QueryBuilder">Query Builder UI</a>
         </td>
         <td></td>
     </tr>
@@ -313,7 +313,7 @@ Essential JS 2 for ASP.NET Core UI Component library has range of awesome compon
     </tr>
     <tr>
         <td>
-            <a href="https://github.com/syncfusion/ej2-aspnetcore-samples/tree/master/Views/PdfViewer">PDF Viewer</a>
+            <a href="Views/PdfViewer">PDF Viewer</a>
         </td>
         <td></td>
         <td></td>

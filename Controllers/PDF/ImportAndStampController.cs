@@ -24,9 +24,10 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
         [HttpPost]
         public ActionResult ImportAndStamp(string Browser, string Stamptext, IFormFile file)
         {
+            PdfLoadedDocument ldoc = null;
             if (file != null && file.Length > 0)
             {
-                PdfLoadedDocument ldoc = new PdfLoadedDocument(file.OpenReadStream());
+                ldoc = new PdfLoadedDocument(file.OpenReadStream());
 
                 PdfFont font = new PdfStandardFont(PdfFontFamily.Helvetica, 36f);
 
@@ -39,26 +40,27 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
                     graphics.DrawString(Stamptext, font, PdfPens.Red, PdfBrushes.Red, new PointF(-150, 450));
                     graphics.Restore(state);
                 }
-                MemoryStream stream = new MemoryStream();
-
-                //Save the PDF document
-                ldoc.Save(stream);
-
-                stream.Position = 0;
-
-                //Close the PDF document
-                ldoc.Close(true);
-
-                //Download the PDF document in the browser.
-                FileStreamResult fileStreamResult = new FileStreamResult(stream, "application/pdf");
-                fileStreamResult.FileDownloadName = "Stamp.pdf";
-                return fileStreamResult;
             }
-            else
+            else 
             {
                 ViewBag.lab = "NOTE: Please select PDF document.";
+                return View();
             }
-            return View();
+
+            MemoryStream stream = new MemoryStream();
+
+            //Save the PDF document
+            ldoc.Save(stream);
+
+            stream.Position = 0;
+
+            //Close the PDF document
+            ldoc.Close(true);
+
+            //Download the PDF document in the browser.
+            FileStreamResult fileStreamResult = new FileStreamResult(stream, "application/pdf");
+            fileStreamResult.FileDownloadName = "Stamp.pdf";
+            return fileStreamResult;
         }
     }
 }

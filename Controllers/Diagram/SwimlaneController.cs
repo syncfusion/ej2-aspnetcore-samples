@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Syncfusion.EJ2.Diagrams;
+using Syncfusion.EJ2.Navigations;
 using System.ComponentModel;
 using Newtonsoft.Json;
 
@@ -194,7 +195,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
              
 
             ViewBag.Palette = Palette;
-            ViewBag.Multiple = "Multiple";
+            ViewBag.Multiple = ExpandMode.Multiple;
             ViewBag.getConnectorDefaults = "getConnectorDefaults";
             return View();
         }

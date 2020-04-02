@@ -8,8 +8,8 @@ namespace EJ2CoreSampleBrowser.Controllers.Gantt
     {
         public IActionResult Resources()
         {
-            ViewBag.dataSource = GanttData.EditingData();
-            ViewBag.projectResources = GanttData.EditingResources();
+            ViewBag.dataSource = GanttData.ResourceData();
+            ViewBag.projectResources = GanttData.GetResources();
             return View();
         }
     }

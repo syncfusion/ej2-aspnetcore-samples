@@ -24,45 +24,138 @@
     </div>
     <div class="col-md-4 property-section">
         <table id="property" title="Properties" style="width: 100%">
-            <tbody>
-                <tr style="height: 50px">
-                    <td>
-                        <div>Selection Mode:</div>
-                    </td>
-                    <td>
-                        <ejs-dropdownlist id="selection" dataSource="@ViewBag.selection" change="onChange" value="Point" popupHeight="220px"></ejs-dropdownlist>
-                    </td>
-                </tr>
-                <tr id="" style="height: 50px">
-                    <td>
-                        <div> Enable Multi Selection:</div>
-                    </td>
-                    <td>
-                        <input type="checkbox" id="select" style="margin-top: 15px">
-                    </td>
-                </tr>
-            </tbody>
+            <tr style="height: 50px">
+                <td style="width: 60%">
+                    <div>Selection Mode:</div>
+                </td>
+                <td style="width: 40%;">
+                    <select name="selectIndex" autocomplete="off" id="selmode" style="margin-left: -25px">
+                        <option value="Point">Point</option>
+                        <option value="Series">Series</option>
+                        <option value="Cluster">Cluster</option>
+                    </select>
+                </td>
+            </tr>
+            <tr id='' style="height: 50px">
+                <td style="width: 80%">
+                    <div> Enable Multi-selection:</div>
+                </td>
+                <td>
+                    <input type="checkbox" id="select" style="margin-top: 15px">
+                </td>
+            </tr>
+            <tr style="height: 50px">
+                <td style="width: 60%">
+                    <div>Selection Patterns:</div>
+                </td>
+                <td style="width: 40%;">
+                    <select name="selectIndex" autocomplete="off" id="selpattern" style="margin-left: -25px; display: none;">
+                        <option value="None" selected>None</option>
+                        <option value="DiagonalForward">DiagonalForward</option>
+                        <option value="Chessboard">Chessboard</option>
+                        <option value="Triangle">Triangle</option>
+                        <option value="Box">Box</option>
+                        <option value="HorizontalDash">HorizontalDash</option>
+                    </select>
+                </td>
+            </tr>
+            <tr style="height: 50px">
+                <td style="width: 50%">
+                    <div> Enable Highlight:</div>
+                </td>
+                <td>
+                    <input type="checkbox" id="highlight" style="margin-top: 15px">
+                </td>
+            </tr>
+            <tr style="height: 50px">
+                <td style="width: 60%">
+                    <div>Highlight Patterns:</div>
+                </td>
+                <td style="width: 40%;">
+                    <select name="selectIndexpat" autocomplete="off" id="highpattern" style="margin-left: -25px; display: none;">
+                        <option value="None" selected>None</option>
+                        <option value="Dots">Dots</option>
+                        <option value="Chessboard">Chessboard</option>
+                        <option value="Triangle">Triangle</option>
+                        <option value="Tile">Tile</option>
+                        <option value="Grid">Grid</option>
+                    </select>
+                </td>
+            </tr>
         </table>
     </div>
     <script>
 
-    @*custom code start*@
+        @*custom code start*@
+        var highlightselect = document.getElementById('highlight');
+    
         onChartLoad = function (args) {
             var selectedTheme = location.hash.split('/')[1];
             selectedTheme = selectedTheme ? selectedTheme : 'Material';
             args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/dark/i, "Dark").replace(/light/i, "Light"));
         }
 @*custom code end*@
-        function onChange(args) {
-            var chart = document.getElementById("container").ej2_instances[0];
-            chart.selectionMode = this.value;
-
-        }
-
+      var mode = new ej.dropdowns.DropDownList({
+            index: 0,
+            placeholder: 'Select Range Bar Color',
+            width: 120,
+            change: function () {
+                chart.selectionMode = mode.value;
+                if (highlightselect.checked) {
+                    chart.highlightMode = mode.value;
+                }
+                else {
+                    chart.highlightMode = 'None';
+                }
+                chart.dataBind();
+            }
+        });
+        mode.appendTo('#selmode');
         document.getElementById('select').onchange = () => {
             var chart = document.getElementById('container').ej2_instances[0];
             var element = (document.getElementById('select'));
             chart.isMultiSelect = element.checked;
+        };
+        
+         var pattern = new ej.dropdowns.DropDownList({
+            index: 0,
+            placeholder: 'Select pattern values',
+            width: 120,
+             change: function () {
+                var chart = document.getElementById("container").ej2_instances[0];
+                chart.selectionPattern = pattern.value;
+                chart.dataBind();
+            }
+        });
+        pattern.appendTo('#selpattern');
+        var highLight = new ej.dropdowns.DropDownList({
+            index: 0,
+            placeholder: 'Select pattern values',
+            width: 120,
+            change: function () {
+                var chart = document.getElementById("container").ej2_instances[0];
+                if (highlightselect.checked) {
+                    chart.highlightPattern = highLight.value;
+                }
+                else {
+                    chart.highlightPattern = 'None';
+                }
+                chart.dataBind();
+            }
+        });
+        highLight.appendTo('#highpattern');
+        document.getElementById('highlight').onchange = function () {
+            var element = (document.getElementById('highlight'));
+            var chart = document.getElementById("container").ej2_instances[0];
+            if (element.checked) {
+                chart.highlightMode = mode.value;
+                chart.highlightPattern = highLight.value;
+            }
+            else {
+                chart.highlightMode = 'None';
+                chart.highlightPattern = 'None';
+            }
+            chart.dataBind();
         };
     </script>
 }
@@ -80,7 +173,7 @@
 @section ActionDescription{
     <div id="action-description">
         <p>
-            This sample illustrates the selection feature in chart. To select a specific point, click  the point. The selection mode can be changed by changing Selection Mode in panel. <code>Multiple selection</code> also can be enabled by <code>Enable MultipleSelection.</code>
+            This sample illustrates the selection feature in chart. To select a specific point, click  the point. The selection mode can be changed by changing Selection Mode in panel. <code>Multiple Selection</code> also can be enabled by <code>Enable Multiple Selection.</code>
         </p>
     </div>
 }
@@ -117,5 +210,5 @@
                  <title>ASP.NET Core Chart Selection Example - Syncfusion Demos </title>
              }
 @section Header{
-                <h1 class='sb-sample-text'>Example for Selection in ASP.NET Core Chart Control</h1>
+                <h1 class='sb-sample-text'>Example of Selection in ASP.NET Core Chart Control</h1>
             }

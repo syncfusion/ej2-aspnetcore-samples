@@ -10,7 +10,6 @@ namespace EJ2CoreSampleBrowser.Controllers.Gantt
         public IActionResult Timeline()
         {
             ViewBag.DataSource = GanttData.TimelineData();
-            ViewBag.Resources = GanttData.TimelineResources();
             ViewBag.WeekFormat = DayFormat.GetWeekFormat();
             ViewBag.DayFormat = DayFormat.GetDayFormat();
             ViewBag.Units = TimelineUnit.GetUnits();
@@ -36,8 +35,9 @@ namespace EJ2CoreSampleBrowser.Controllers.Gantt
             {
                 List<DayFormat> formats = new List<DayFormat>();
                 formats.Add(new DayFormat() { Id = "EEE, dd", Format = "Mon, 01" });
-                formats.Add(new DayFormat() { Id = "E", Format = "Mon" });
+                formats.Add(new DayFormat() { Id = "EEE", Format = "Mon" });
                 formats.Add(new DayFormat() { Id = "dd", Format = "01" });
+                formats.Add(new DayFormat() { Id = "E", Format = "M" });
                 return formats;
             }
         }

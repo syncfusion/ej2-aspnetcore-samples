@@ -5,11 +5,11 @@
         <ejs-spreadsheet id="spreadsheet" openUrl="RemoteDataOpen" saveUrl="RemoteDataSave" dataBound="dataBoundEvent">
             <e-spreadsheet-sheets>
                 <e-spreadsheet-sheet name="Shipment Details">
-                    <e-spreadsheet-rangesettings>
-                        <e-spreadsheet-rangesetting showFieldAsHeader=false startCell="A2" query="new ej.data.Query().select(['OrderID', 'CustomerID', 'ShipName', 'ShipCity', 'ShipCountry', 'Freight']).take(200)">
+                    <e-spreadsheet-ranges>
+                        <e-spreadsheet-range showFieldAsHeader=false startCell="A2" query="new ej.data.Query().select(['OrderID', 'CustomerID', 'ShipName', 'ShipCity', 'ShipCountry', 'Freight']).take(200)">
                             <e-data-manager url="https://js.syncfusion.com/demos/ejServices//wcf/Northwind.svc/Orders" crossdomain=true></e-data-manager>
-                        </e-spreadsheet-rangesetting>
-                    </e-spreadsheet-rangesettings>
+                        </e-spreadsheet-range>
+                    </e-spreadsheet-ranges>
                     <e-spreadsheet-rows>
                         <e-spreadsheet-row>
                             <e-spreadsheet-cells>
@@ -83,7 +83,7 @@
         </p>
         <p>
             In this demo, remote data is bound by assigning service data as an instance of <code>DataManager</code> to the
-            <code>dataSource</code> property under the rangeSettings of sheet.
+            <code>dataSource</code> property under the range of sheet.
         </p>
         <p>
             More information about remote data binding can be found in this
@@ -96,7 +96,8 @@
 
 <script>
     function dataBoundEvent() {
-        if (this.activeSheetTab === 1 && this.sheets[this.activeSheetTab - 1].name === 'Shipment Details') {
+        //Apply style to a range
+        if (this.activeSheetIndex === 0 && this.sheets[this.activeSheetIndex].name === 'Shipment Details') {
             this.cellFormat({ fontWeight: 'bold', textAlign: 'center' }, 'A1:G1');
         }
     }
@@ -119,5 +120,5 @@
                  <title>ASP.NET Core Spreadsheet Remote Data Binding Example - Syncfusion Demos </title>
              }
 @section Header{
-                <h1 class='sb-sample-text'>Example for Remote Data Binding in ASP.NET Core Spreadsheet Control</h1>
+                <h1 class='sb-sample-text'>Example of Remote Data Binding in ASP.NET Core Spreadsheet Control</h1>
             }

@@ -27,7 +27,6 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
                 // Gets the extension from file.
                 string extension = Path.GetExtension(Request.Form.Files[0].FileName).ToLower();
                 string output = Path.GetFileNameWithoutExtension(Request.Form.Files[0].FileName);
-                
                 // Compares extension with supported extensions.
                 if (extension == ".doc" || extension == ".docx" || extension == ".dot" || extension == ".dotx" || extension == ".dotm" || extension == ".docm"
                    || extension == ".xml" || extension == ".rtf")
@@ -49,7 +48,7 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
                         pdf.Close();
                         document.Close();
                         memoryStream.Position = 0;
-                        return File(memoryStream, "application/pdf", output + ".pdf");
+                        return File(memoryStream, "application/pdf",  output + ".pdf");
                     }
                     catch (Exception ex)
                     {

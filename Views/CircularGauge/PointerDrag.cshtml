@@ -1,7 +1,7 @@
 @using Syncfusion.EJ2;
 @section Meta{
-                    <meta name="description" content="This example demonstrates the PointerDrag in ASP.NET Core CircularGauge control. Explore here for more details."/>
-                }
+    <meta name="description" content="This example demonstrates the Pointer & Range Drag in ASP.NET Core CircularGauge control. Explore here for more details."/>
+}
 @section ActionDescription{
     <div id="action-description">
         <p>
@@ -28,7 +28,7 @@
 @section ControlsSection{
     <div class="col-md-8 control-section">
         <div class="content-wrapper">
-            <ejs-circulargauge id="circular" enablePointerDrag ="true" dragMove ="dragMove" dragEnd="dragEnd" load="gaugeload">
+            <ejs-circulargauge id="circular" enablePointerDrag="true" dragMove="dragMove" dragEnd="dragEnd" load="gaugeload">
                 <e-circulargauge-axes>
                     <e-circulargauge-axis startAngle="220" endAngle="140" minimum="0" maximum="120" radius="80%">
                         <e-axis-linestyle width="0" color="transparent"></e-axis-linestyle>
@@ -40,35 +40,45 @@
             </ejs-circulargauge>
         </div>
     </div>
-<div class="col-md-4 property-section">
-    <table id="property" title="Properties" style="width: 100%">
-        <tbody>
-            <tr style="height: 50px">
-                <td style="width: 30%">
-                    <div id="pointerValue">Pointer Value <span> &nbsp;&nbsp;&nbsp;70</span> </div>
-                </td>
-                <td style="width: 40%;">
-                    <div>
-                        <input type="range" id="value" value="70" min="0" max="120" style="width:90%">
-                    </div>
-                </td>
-            </tr>
-            <tr style="height: 50px">
-                <td style="width: 20%">
-                    <div id="enablePointer">Enable Drag</div>
-                </td>
-                <td style="width: 40%;">
-                    <div>
-                        <input type="checkbox" id="enable" checked="true" style="width:90%">
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+    <div class="col-md-4 property-section">
+        <table id="property" title="Properties" style="width: 100%">
+			<tbody>
+				<tr style="height: 50px">
+					<td style="width: 30%">
+						<div id="pointerValue">Pointer Value <span> &nbsp;&nbsp;&nbsp;70</span> </div>
+					</td>
+					<td style="width: 40%;">
+						<div>
+							<input type="range" id="value" value="70" min="0" max="120" style="width:90%">
+						</div>
+					</td>
+				</tr>
+				<tr style="height: 50px">
+					<td style="width: 20%">
+						<div id="enablePointer">Allow Pointer Drag</div>
+					</td>
+					<td style="width: 40%;">
+						<div>
+							<input type="checkbox" id="enable" checked="true" style="width:90%">
+						</div>
+					</td>
+				</tr>
+				<tr style="height: 50px">
+					<td style="width: 20%">
+						<div id="enablePointer">Allow Range Drag</div>
+					</td>
+					<td style="width: 40%;">
+						<div>
+							<input type="checkbox" id="enableRangeDrag" style="width:90%">
+						</div>
+					</td>
+				</tr>
+			</tbody>
+        </table>
+    </div>
 }
 <script>
-    
+
 	window.gaugeload = function (args) {
 
         @* custom code start *@
@@ -79,7 +89,8 @@
             return;
         window.gaugeLoaded = true;
         var axis = args.gauge.axes[0];
-        args.gauge.enablePointerDrag = "true";
+        args.gauge.enablePointerDrag = true;
+        args.gauge.enableRangeDrag = false;
         axis.pointers = [{
             type: 'Marker', value: 70,
             markerShape: 'InvertedTriangle',
@@ -132,30 +143,46 @@
         circulargauge.axes[0].pointers[1].cap.border.color = color;
         circulargauge.axes[0].pointers[1].value = pointerValue;
         circulargauge.axes[0].pointers[0].value = pointerValue;
-        
+
         content = '<div style="font-size: 14px;color:' + color + ';font-weight: lighter;font-style: oblique;"><span>';
         circulargauge.axes[0].annotations[0].content = (content + pointerValue + ' MPH</span></div>');
        circulargauge.refresh();
     }
 
-    window.dragMove = function (args) {
-		pointerValue = Math.round(args.currentValue);
-        document.getElementById('pointerValue').innerHTML = 'Pointer Value <span>    ' + pointerValue;
-        document.getElementById('value').value = pointerValue.toString();
-        circulargauge.axes[0].annotations[0].content = (content + pointerValue + ' MPH</span></div>');
-        circulargauge.axes[0].pointers[0].animation.enable = false;
+	window.dragMove = function (args) {
+		circulargauge.axes[0].pointers[0].animation.enable = false;
 		circulargauge.axes[0].pointers[1].animation.enable = false;
-		circulargauge.axes[0].pointers[1].value = pointerValue;
-        circulargauge.axes[0].pointers[0].value = pointerValue;
-        circulargauge.refresh();
-    }
-    window.dragEnd = function (args) {
-        pointerValue = Math.round(args.currentValue);
-        setPointersValue(circulargauge, pointerValue);
-    }
+		if (isNaN(args.rangeIndex)) {
+			pointerValue = Math.round(args.currentValue);
+			document.getElementById('pointerValue').innerHTML = 'Pointer Value <span>    ' + pointerValue;
+			document.getElementById('value').value = pointerValue.toString();
+			circulargauge.axes[0].annotations[0].content = (content + pointerValue + ' MPH</span></div>');
+			circulargauge.axes[0].pointers[1].value = pointerValue;
+			circulargauge.axes[0].pointers[0].value = pointerValue;
+			circulargauge.refresh();
+		}
+		if (!isNaN(args.rangeIndex)) {
+			circulargauge.axes[0].ranges[args.rangeIndex].value = args.currentValue;
+			circulargauge.refresh();
+		}
+	}
+	window.dragEnd = function (args) {
+		if (args.type !== 'rangeEnd') {
+			pointerValue = Math.round(args.currentValue);
+			setPointersValue(circulargauge, pointerValue);
+			pointerValue = Math.round(args.currentValue);
+			if (isNaN(args.rangeIndex)) {
+				setPointersValue(circulargauge, pointerValue);
+			}
+		}
+		if (!isNaN(args.rangeIndex)) {
+			circulargauge.axes[0].ranges[args.rangeIndex].value = args.currentValue;
+			circulargauge.refresh();
+		}
+	}
     var content = '<div style="font-size: 14px;color:#E5C31C;font-weight: lighter;font-style: oblique;"><span>';
     var circulargauge, pointerValue;
-    window.addEventListener('load', function () { 
+    window.addEventListener('load', function () {
         circulargauge = document.getElementById('circular').ej2_instances[0];
         document.getElementById('value').ontouchmove = document.getElementById('value').onpointermove =
             document.getElementById('value').onchange = function () {
@@ -167,11 +194,15 @@
             var value = document.getElementById('enable').checked;
             circulargauge.enablePointerDrag = value;
         };
+		document.getElementById('enableRangeDrag').onchange = function () {
+			var value = document.getElementById('enableRangeDrag').checked;
+			circulargauge.enableRangeDrag = value;
+		};
     });
 </script>
 @section Title{
-                 <title>ASP.NET Core CircularGauge PointerDrag Example - Syncfusion Demos </title>
-             }
+    <title>ASP.NET Core CircularGauge Pointer & Range Drag Example - Syncfusion Demos </title> 
+}
 @section Header{
-                <h1 class='sb-sample-text'>Example for PointerDrag in ASP.NET Core CircularGauge Control</h1>
-            }
+    <h1 class='sb-sample-text'>Example of Pointer & Range Drag in ASP.NET Core CircularGauge Control</h1>
+}

@@ -74,11 +74,64 @@ var samplesAr = [];
 var currentControlID;
 var currentSampleID;
 var currentControl;
+var cultureDropDown;
+var matchedCurrency = {
+    'en': 'USD',
+    'de': 'EUR',
+    'ar': 'AED',
+    'zh': 'CNY',
+    'fr-CH': 'CHF'
+};
+var newYear = new Date().getFullYear();
+var copyRight = document.querySelector('.sb-footer-copyright');
+copyRight.innerHTML = "Copyright &copy 2001 - " + newYear + " Syncfusion Inc.";
 function preventTabSwipe(e) {
     if (e.isSwiped) {
         e.cancel = true;
     }
 }
+
+function changeCulture(cul) {
+    if (cul === 'ar') {
+        changeRtl();
+    }  
+    ej.base.setCurrencyCode(sessionStorage.getItem("ej2-currency") || matchedCurrency[cul]);
+    ej.base.setCulture(cul);
+}
+
+function loadCulture() {
+    var cul = sessionStorage.getItem('ej2-culture') || 'en';
+	if (cul !== 'en') {
+		var locale = new ej.base.Ajax('../scripts/locale/' + cul + '.json', 'GET', false);
+		locale.send().then(function (value) {
+			ej.base.L10n.load(JSON.parse(value));
+		});
+
+		var ajax = new ej.base.Ajax('../scripts/cldr-data/main/' + cul + '/all.json', 'GET', false);
+		ajax.send().then(function (result) {
+			ej.base.loadCldr(JSON.parse(result));
+			changeCulture(cul);
+		});
+	}
+}
+
+function changeRtl() {
+	setTimeout(function() {
+		var elementlist = ej.base.selectAll('.e-control', document.getElementById('control-content'));
+		var propertylist =[...ej.base.selectAll('.property-section .e-control', document.getElementById('control-content'))];
+		for (var i = 0; i < elementlist.length; i++) {
+			var control = elementlist[i];
+			if (propertylist.indexOf(control) === -1) {
+				if (control.ej2_instances) {
+					for (var a = 0; a < control.ej2_instances.length; a++) {
+						var instance = control.ej2_instances[a];
+						instance.enableRtl = true;
+					}
+				}
+			}
+		}
+	}, 400);
+} 
 
 function renderSbPopups() {
     switcherPopup = new ej.popups.Popup(document.getElementById('sb-switcher-popup'), {
@@ -119,6 +172,25 @@ function renderSbPopups() {
         change: function (e) { switchTheme(e.value); }
     });
     themeDropDown.appendTo('#sb-setting-theme');
+    cultureDropDown = new ej.dropdowns.DropDownList({
+        value: sessionStorage.getItem('ej2-culture') || 'en',
+        change: function (e) {
+            sessionStorage.setItem('ej2-culture',e.value);
+            sessionStorage.removeItem('ej2-currency');
+            cultureDropDown.hidePopup();
+            location.reload();
+        },
+    });
+    currencyDropDown = new ej.dropdowns.DropDownList({
+        value: sessionStorage.getItem("ej2-currency") || matchedCurrency[cultureDropDown.value],
+        change: function (e) {
+            ej.base.setCurrencyCode(e.value);
+            sessionStorage.setItem('ej2-currency', e.value);
+            currencyDropDown.hidePopup();
+        }
+    });
+    cultureDropDown.appendTo('#sb-setting-culture');
+    currencyDropDown.appendTo('#sb-setting-currency');
     contentTab = new ej.navigations.Tab({
         selected: changeTab,
         selecting: preventTabSwipe,
@@ -521,6 +593,9 @@ function processResize(e) {
             toggleRightPane();
         }
     }
+    if (!switcherPopup.element.classList.contains('e-popup-close')) {
+        switcherPopup.hide();
+    }
 }
 
 function resetInput(arg) {
@@ -638,8 +713,8 @@ function setSbLink() {
             ele.href = 'http://ej2.syncfusion.com/aspnetmvc/';
         } else {
             ele.href = ((link) ? ('http://' + link[1] + '/' + (link[3] ? (link[3] + '/') : '')) :
-                ('http://ej2.syncfusion.com/')) + (sbObj[sb] ? (sb + '/') : '') +
-                'demos/#/' + (sample ? (sample[1] + (sb !== 'typescript' ? '' : '.html')) : '');
+                ('http://ej2.syncfusion.com/')) + (sbObj[sb] ? (sb + '/') : '') + ((sb === 'blazor') ? 'demos/' :
+                'demos/#/') + (sample ? (sample[1] + (sb !== 'typescript' ? '' : '.html')) : '');
         }
     }
 }
@@ -1310,5 +1385,6 @@ function loadJSON() {
     // localStorage.removeItem('ej2-switch');
     ej.base.enableRipple(selectedTheme === 'material' || !selectedTheme);
     loadTheme(selectedTheme);
+    loadCulture();
 }
 loadJSON();

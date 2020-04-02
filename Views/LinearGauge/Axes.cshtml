@@ -3,7 +3,7 @@
     <div class="content-wrapper">
         <ejs-lineargauge id="linear" load="gaugeLoad" orientation="Horizontal">
             <e-lineargauge-axes>
-                <e-lineargauge-axis>
+                <e-lineargauge-axis maximum="115">
                     <e-axis-line color="#9E9E9E"></e-axis-line>
                     <e-axis-labelstyle offset="48"></e-axis-labelstyle>
                 </e-lineargauge-axis>
@@ -13,91 +13,101 @@
 </div>
 <div class="col-md-4 property-section">
     <table id="property" title="Properties" style="width: 100%;">
-        <tbody>
-            <tr>
-                <td>
-                    <div id="minValue">
-                        Axis Minimum
-                        <span>&nbsp;&nbsp;&nbsp;0</span>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <input type="range" step="5" id="min" value="0" min="0" max="100" style="width:90%;">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div id="maxValue">
-                        Axis Maximum
-                        <span>&nbsp;&nbsp;&nbsp;100</span>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <input type="range" step="5" id="max" value="100" min="0" max="100" style="width:90%;">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div>Axis Inversed</div>
-                </td>
-                <td>
-                    <div>
-                        <input type="checkbox" id="axisInversed">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div>Axis Opposed</div>
-                </td>
-                <td>
-                    <div>
-                        <input type="checkbox" id="opposed">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div>Label Format</div>
-                </td>
-                <td>
-                    <div class="e-float-input" style="margin-top: 0px;">
-                        <input type="text" value="{value}" id="format" class="form-control" style="width:90%">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div>Pointer type</div>
-                </td>
-                <td>
-                    <div>
-                        <select name="selectIndex" autocomplete="off" id="pointerType" class="form-control" style="width:90%">
-                            <option value="Marker">Marker</option>
-                            <option value="Bar">Bar</option>
-                        </select>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div>Marker Placement</div>
-                </td>
-                <td>
-                    <div>
-                        <select name="selectIndex" autocomplete="off" id="pointerPlace" class="form-control" style="width:90%">
-                            <option value="Far">Far</option>
-                            <option value="Near">Near</option>
-                            <option value="Center">Center</option>
-                        </select>
-                    </div>
-                </td>
-            </tr>
-        </tbody>
+		<tbody>
+			<tr>
+				<td>
+					<div id="minValue">
+						Axis Minimum
+						<span>&nbsp;&nbsp;&nbsp;0</span>
+					</div>
+				</td>
+				<td>
+					<div>
+						<input type="range" step="5" id="min" value="0" min="0" max="115" style="width:90%;">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div id="maxValue">
+						Axis Maximum
+						<span>&nbsp;&nbsp;&nbsp;115</span>
+					</div>
+				</td>
+				<td>
+					<div>
+						<input type="range" step="5" id="max" value="115" min="0" max="115" style="width:90%;">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div>Axis Inversed</div>
+				</td>
+				<td>
+					<div>
+						<input type="checkbox" id="axisInversed">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div>Axis Opposed</div>
+				</td>
+				<td>
+					<div>
+						<input type="checkbox" id="opposed">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div>Show Last Label</div>
+				</td>
+				<td>
+					<div>
+						<input type="checkbox" id="lastlabel">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div>Label Format</div>
+				</td>
+				<td>
+					<div class="e-float-input" style="margin-top: 0px;">
+						<input type="text" value="{value}" id="format" class="form-control" style="width:90%">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div>Pointer Type</div>
+				</td>
+				<td>
+					<div>
+						<select name="selectIndex" autocomplete="off" id="pointerType" class="form-control" style="width:90%">
+							<option value="Marker">Marker</option>
+							<option value="Bar">Bar</option>
+						</select>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div>Marker Placement</div>
+				</td>
+				<td>
+					<div>
+						<select name="selectIndex" autocomplete="off" id="pointerPlace" class="form-control" style="width:90%">
+							<option value="Far">Far</option>
+							<option value="Near">Near</option>
+							<option value="Center">Center</option>
+						</select>
+					</div>
+				</td>
+			</tr>
+		</tbody>
     </table>
 </div>
 }
@@ -116,7 +126,7 @@
         var axis = args.gauge.axes[0];
 
         axis.pointers = [{
-            value: 10,
+            value: 20,
             height: 15,
             width: 15,
             color: '#757575',
@@ -124,7 +134,7 @@
         }];
         axis.majorTicks = {
             color: '#9E9E9E',
-            interval: 10
+            interval: 20
         };
         axis.minorTicks = {
             color: '#9E9E9E',
@@ -139,7 +149,7 @@
         annotation.content = '<div id="pointer" style="width:70px"><h1 style="font-size:14px;"' +
             '>${axes[0].pointers[0].currentValue} MPH</h1></div>';
         annotation.axisIndex = 0;
-        annotation.axisValue = 10;
+        annotation.axisValue = 20;
         annotation.y = 60;
         annotation.x = 10;
         annotation.zIndex = '1';
@@ -173,6 +183,11 @@
             gauge.axes[0].isInversed = ele.checked;
             gauge.refresh();
         };
+		document.getElementById('lastlabel').onchange = function (sender) {
+			var ele = document.getElementById('lastlabel');
+			gauge.axes[0].showLastLabel = ele.checked;
+			gauge.refresh();
+		};
         document.getElementById('min').ontouchmove = document.getElementById('min').onpointermove =
             document.getElementById('min').onchange = function () {
                 var min = document.getElementById('min');
@@ -265,8 +280,8 @@
     </div>
 }
 @section Title{
-                 <title>ASP.NET Core LinearGauge Axes and Pointers Example - Syncfusion Demos </title>
-             }
+                    <title>ASP.NET Core LinearGauge Axes and Pointers Example - Syncfusion Demos </title> 
+                }
 @section Header{
-                <h1 class='sb-sample-text'>Example for Axes and Pointers in ASP.NET Core LinearGauge Control</h1>
-            }
+                    <h1 class='sb-sample-text'>Example of Axes and Pointers in ASP.NET Core LinearGauge Control</h1>
+                }

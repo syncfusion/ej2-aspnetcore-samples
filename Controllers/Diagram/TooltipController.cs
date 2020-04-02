@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Syncfusion.EJ2.Diagrams;
+using Syncfusion.EJ2.Popups;
 
 
 namespace EJ2CoreSampleBrowser.Controllers.Diagram
@@ -61,7 +62,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
             };
 
             ViewBag.content = "Tooltip";
-            ViewBag.position = "TopLeft";
+            ViewBag.position = Position.TopLeft;
             ViewBag.animation = tooltipAnimation;
             ViewBag.modeValue = modeValue;
             ViewBag.positionValue = positionValue;

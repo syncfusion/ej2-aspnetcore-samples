@@ -12,7 +12,7 @@ namespace EJ2CoreSampleBrowser.Controllers
         public IActionResult EditPost()
         {
             ViewBag.titleValue = "Succinctly E-Book about TypeScript";
-            ViewBag.commentValue = "The extensive adoption of JavaScript for application development, and the ability to use HTML and JavaScript to create Windows Store apps, has made JavaScript a vital part of the Windows development ecosystem. Microsoft has done extensive work to make JavaScript easier to use.";
+            ViewBag.commentValue = "<p>The extensive adoption of JavaScript for application development, and the ability to use HTML and JavaScript to create Windows Store apps, has made JavaScript a vital part of the Windows development ecosystem. Microsoft has done extensive work to make JavaScript easier to use</p>.";
             ViewBag.popupSettings = new InPlaceEditorPopupSettings { Model = new { width = "document.querySelector('#inplace-editor-control.form-layout ').offsetWidth" } };
             ViewBag.tagValue = new string[] { "TypeScript", "JavaScript" };
             string[] data = new string[] { "Android", "JavaScript", "jQuery", "TypeScript", "Angular", "React", "Vue", "Ionic" };

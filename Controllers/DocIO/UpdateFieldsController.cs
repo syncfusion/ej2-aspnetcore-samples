@@ -23,7 +23,7 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
     public partial class DocIOController : Controller
     {
         #region Update Fields
-        public ActionResult UpdateFields(string Group1, string Button)
+        public ActionResult UpdateFields(string Group1, string Button, string UnlinkFields)
         {
             string basePath = _hostingEnvironment.WebRootPath;         
             string dataPath = basePath + @"/DocIO/TemplateUpdateFields.docx";
@@ -48,6 +48,10 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
             document.MailMerge.ExecuteGroup(mailMergeDataTableStock);
             //Update fields in the document.
             document.UpdateDocumentFields();
+
+            //Unlink the fields in Word document when UnlinkFields is enable.
+            if (UnlinkFields == "UnlinkFields")
+                UnlinkFieldsInDocument(document);
 
             FormatType type = FormatType.Docx;
             string filename = "Sample.docx";
@@ -76,6 +80,109 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
         }
         #endregion Update Fields
 
+        #region Iterates into document for removing field codes.       
+        /// <summary>
+        /// Iterates to document elements and get fields.
+        /// </summary>
+        /// <param name="document">Input Word document.</param>
+        /// <param name="fieldType">Type of the field to find in document.</param>
+        private void UnlinkFieldsInDocument(WordDocument document)
+        {
+            //Iterates each section and get the tables.
+            foreach (WSection section in document.Sections)
+            {
+                RemoveFieldCodesInTextBody(section.Body);
+            }
+        }
+
+        /// <summary>
+        /// Iterates into body items.
+        /// </summary>
+        private void RemoveFieldCodesInTextBody(WTextBody textBody)
+        {
+            for (int i = 0; i < textBody.ChildEntities.Count; i++)
+            {
+                //IEntity is the basic unit in DocIO DOM.                 
+                IEntity bodyItemEntity = textBody.ChildEntities[i];
+
+                //A Text body has 3 types of elements - Paragraph, Table, and Block Content Control
+                //Decides the element type by using EntityType
+                switch (bodyItemEntity.EntityType)
+                {
+                    case EntityType.Paragraph:
+                        WParagraph paragraph = bodyItemEntity as WParagraph;
+                        //Iterates into paragraph items.
+                        RemoveFieldCodesInParagraph(paragraph.Items);
+                        break;
+
+                    case EntityType.Table:
+                        //Table is a collection of rows and cells
+                        //Iterates through table's DOM                        
+                        RemoveFieldCodesInTable(bodyItemEntity as WTable);
+                        break;
+
+                    case EntityType.BlockContentControl:
+                        BlockContentControl blockContentControl = bodyItemEntity as BlockContentControl;
+                        //Iterates to the body items of Block Content Control.
+                        RemoveFieldCodesInTextBody(blockContentControl.TextBody);
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Iterates into paragraph items.
+        /// </summary>
+        /// <param name="paragraph">The paragraph.</param>
+        /// <param name="fieldType">Type of field.</param>
+        private void RemoveFieldCodesInParagraph(ParagraphItemCollection paraItems)
+        {
+            for (int i = 0; i < paraItems.Count; i++)
+            {
+                if (paraItems[i] is WField)
+                {
+                    WField field = paraItems[i] as WField;
+                    field.Unlink();
+                }
+                else if (paraItems[i] is WTextBox)
+                {
+                    //If paragraph item is textbox, iterates into textbody of textbox.
+                    WTextBox textBox = paraItems[i] as WTextBox;
+                    RemoveFieldCodesInTextBody(textBox.TextBoxBody);
+                }
+                else if (paraItems[i] is Shape)
+                {
+                    //If paragraph item is shape, iterates into textbody of shape.
+                    Shape shape = paraItems[i] as Shape;
+                    RemoveFieldCodesInTextBody(shape.TextBody);
+                }
+                else if (paraItems[i] is InlineContentControl)
+                {
+                    //If paragraph item is inline content control, iterates into its item.
+                    InlineContentControl inlineContentControl = paraItems[i] as InlineContentControl;
+                    RemoveFieldCodesInParagraph(inlineContentControl.ParagraphItems);
+                }
+            }
+        }
+        /// <summary>
+        /// Iterates into table.
+        /// </summary>
+        /// <param name="table">The table.</param>
+        /// <param name="fieldType">Type of Field.</param>
+        private void RemoveFieldCodesInTable(WTable table)
+        {
+            //Iterates the row collection in a table
+            foreach (WTableRow row in table.Rows)
+            {
+                //Iterates the cell collection in a table row
+                foreach (WTableCell cell in row.Cells)
+                {
+                    RemoveFieldCodesInTextBody(cell);
+                }
+            }
+        }
+        #endregion
+
         /// <summary>
         /// Gets the mail merge data table.
         /// </summary>       
@@ -89,7 +196,7 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
             while (reader.NodeType != XmlNodeType.Element)
                 reader.Read();
             if (reader.LocalName != "StockMarket")
-               throw new XmlException("Unexpected xml tag " + reader.LocalName);
+                throw new XmlException("Unexpected xml tag " + reader.LocalName);
             reader.Read();
             while (reader.NodeType == XmlNodeType.Whitespace)
                 reader.Read();
@@ -111,7 +218,7 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
                         break;
                 }
             }
-            MailMergeDataTable dataTable = new MailMergeDataTable("StockDetails", stockDetails);          
+            MailMergeDataTable dataTable = new MailMergeDataTable("StockDetails", stockDetails);
             reader.Dispose();
             fs.Dispose();
             return dataTable;

@@ -6,8 +6,8 @@
 
     <div class="control-section" id="pivot-table-section">
         <div class="content-wrapper">
-            <ejs-pivotview id="pivotview" allowExcelExport="true" allowConditionalFormatting="true" allowPdfExport="true" showToolbar="true" allowCalculatedField="true" showFieldList="true" width="100%" height="300" toolbar="@(new List<string>() {"New", "Save", "SaveAs", "Rename", "Remove", "Load",
-        "Grid", "Chart", "Export", "SubTotal", "GrandTotal", "ConditionalFormatting", "FieldList" })" saveReport="saveReport" loadReport="loadReport" fetchReport="fetchReport" renameReport="renameReport" removeReport="removeReport" newReport="newReport" toolbarRender="beforeToolbarRender">
+            <ejs-pivotview id="pivotview" allowExcelExport="true" allowNumberFormatting="true" allowConditionalFormatting="true" allowPdfExport="true" showToolbar="true" allowCalculatedField="true" showFieldList="true" width="100%" height="600" toolbar="@(new List<string>() {"New", "Save", "SaveAs", "Rename", "Remove", "Load",
+        "Grid", "Chart", "Export", "SubTotal", "GrandTotal", "Formatting", "FieldList" })" saveReport="saveReport" loadReport="loadReport" fetchReport="fetchReport" renameReport="renameReport" removeReport="removeReport" newReport="newReport" toolbarRender="beforeToolbarRender">
                 <e-datasourcesettings dataSource="@ViewBag.data" expandAll="false" enableSorting="true">
                     <e-formatsettings>
                         <e-field name="Amount" format="C0" maximumSignificantDigits="10" minimumSignificantDigits="1" useGrouping="true"></e-field>
@@ -21,7 +21,6 @@
                         <e-field name="Order_Source" caption="Order Source"></e-field>
                     </e-columns>
                     <e-values>
-                        <e-field name="In_Stock" caption="In Stock"></e-field>
                         <e-field name="Sold" caption="Units Sold"></e-field>
                         <e-field name="Amount" caption="Sold Amount"></e-field>
                     </e-values>
@@ -31,7 +30,7 @@
                 </e-datasourcesettings>
                 <e-gridSettings columnWidth="140"></e-gridSettings>
                 <e-displayOption view="Both"></e-displayOption>
-                <e-chartSettings load="onChartLoad"></e-chartSettings>
+                <e-chartSettings title="Sales Analysis" load="onChartLoad"></e-chartSettings>
             </ejs-pivotview>
         </div>
     </div>
@@ -46,6 +45,12 @@
             #pivot-table-section {
                 overflow: auto;
             }
+        }
+        .sb-sample-content-area {
+            min-height: 255px !important;
+        }
+        .control-section {
+            min-height: 255px !important;
         }
     </style>
     <script>
@@ -117,6 +122,13 @@
             var reportCollection = [];
             if (localStorage.pivotviewReports && localStorage.pivotviewReports !== "") {
                 reportCollection = JSON.parse(localStorage.pivotviewReports);
+            }
+            if (args.isReportExists) {
+                for (var i = 0; i < reportCollection.length; i++) {
+                    if (reportCollection[i].reportName === args.rename) {
+                        reportCollection.splice(i, 1);
+                    }
+                }
             }
             reportCollection.map(function (item) {
                 if (args.reportName === item.reportName) {
@@ -231,6 +243,12 @@
             </tr>
             <tr>
                 <td style="vertical-align: top;padding: 4px 0;">
+                    <code>Number formatting:</code>
+                </td>
+                <td>Allows user to dynamically apply number formatting to value fields.</td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top;padding: 4px 0;">
                     <code>PivotTable Field List:</code>
                 </td>
                 <td>Provides option to alter the report dynamically through UI.</td>
@@ -239,8 +257,8 @@
     </div>
 }
 @section Title{
-                 <title>ASP.NET Core Pivot Table Toolbar Example - Syncfusion Demos </title>
-             }
+                    <title>ASP.NET Core Pivot Table Toolbar Example - Syncfusion Demos </title> 
+                }
 @section Header{
-                <h1 class='sb-sample-text'>Example for Toolbar in ASP.NET Core Pivot Table Control</h1>
-            }
+                    <h1 class='sb-sample-text'>Example of Toolbar in ASP.NET Core Pivot Table Control</h1>
+                }

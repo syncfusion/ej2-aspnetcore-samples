@@ -19,10 +19,12 @@
 <script>
     function changeValue() {
         if (this.isMultiSelection) {
+            var globalize = new ej.base.Internationalization(this.locale);
             var element = document.getElementById('multiSelect')
             element.innerHTML = '';
             for (var index = 0; index < this.values.length; index++) {
-                element.insertBefore(document.createTextNode(this.values[index]), element.childNodes[0]);
+                var selectedValue = globalize.formatDate(this.values[index]);
+                element.insertBefore(document.createTextNode(selectedValue), element.childNodes[0]);
                 element.insertBefore(document.createElement('br'), element.childNodes[0]);
             }
         }
@@ -106,8 +108,8 @@
 </style>
 @*custom code end*@
 @section Title{
-                 <title>ASP.NET Core Calendar Multiple Selection Example - Syncfusion Demos </title>
-             }
+                    <title>ASP.NET Core Calendar Multiple Selection Example - Syncfusion Demos </title> 
+                }
 @section Header{
-                <h1 class='sb-sample-text'>Example for Multiple Selection in ASP.NET Core Calendar Control</h1>
-            }
+                    <h1 class='sb-sample-text'>Example of Multiple Selection in ASP.NET Core Calendar Control</h1>
+                }

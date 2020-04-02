@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Syncfusion.EJ2.Diagrams;
+using Syncfusion.EJ2.Navigations;
 
 namespace EJ2CoreSampleBrowser.Controllers.Diagram
 {
@@ -226,7 +227,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
 
             SymbolPaletteMargin margin = new SymbolPaletteMargin() { Left = 15, Right = 15, Bottom = 15, Top = 15 };
             ViewBag.margin = margin;
-            ViewBag.Multiple = "Multiple";
+            ViewBag.Multiple = ExpandMode.Multiple;
             ViewBag.getSymbolDefaults = "getSymbolDefaults";
             ViewBag.getNodeDefaults = "getNodeDefaults";
             ViewBag.getConnectorDefaults = "getConnectorDefaults";

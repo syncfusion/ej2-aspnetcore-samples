@@ -5,8 +5,7 @@
             <div id="container">
                 <ejs-gantt id='Timeline' dataSource="ViewBag.DataSource" projectStartDate="02/03/2019"
                            projectEndDate="03/23/2019"
-                           height="450px" highlightWeekends="true" treeColumnIndex="1"
-                           resourceIDMapping="resourceId" resourceNameMapping="resourceName" resources="ViewBag.Resources">
+                           height="450px" highlightWeekends="true" treeColumnIndex="1">
                     <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate"
                                           endDate="EndDate" duration="Duration" progress="Progress" dependency="Predecessor"
                                           child="SubTasks"></e-gantt-taskfields>
@@ -126,7 +125,7 @@
                 </td>
                 <td style="width:70%">
                     <div>
-                        <ejs-dropdownlist id="BottomTierFormat" dataSource="@ViewBag.DayFormat" change="BottomFormatChange">
+                        <ejs-dropdownlist id="BottomTierFormat" index="3" dataSource="@ViewBag.DayFormat" change="BottomFormatChange">
                             <e-dropdownlist-fields text="Format" value="Id"></e-dropdownlist-fields>
                         </ejs-dropdownlist>
                     </div>
@@ -190,6 +189,8 @@
 
         function BottomFormatChange(args) {
             var format = args.value;
+            if (format == 'E')
+                format = '';
             var gantt = document.getElementById("Timeline").ej2_instances[0];
             gantt.timelineSettings.bottomTier.format = format.toString();
         }
@@ -293,8 +294,9 @@
         ];
         var dayformat = [
             { Id: 'EEE, dd', Format: 'Mon, 01' },
-            { Id: 'E', Format: 'Mon' },
+            { Id: 'EEE', Format: 'Mon' },
             { Id: 'dd', Format: '01' },
+            { Id: 'E', Format: 'M' },
         ];
         var hourformat = [
             { Id: 'hh', Format: '00' },
@@ -341,8 +343,8 @@
                     <meta name="description" content="This example demonstrates the Timeline API in ASP.NET Core Gantt control. Explore here for more details."/>
                 }
 @section Title{
-                 <title>ASP.NET Core Gantt Timeline API Example - Syncfusion Demos </title>
-             }
+                    <title>ASP.NET Core Gantt Timeline API Example - Syncfusion Demos </title> 
+                }
 @section Header{
-                <h1 class='sb-sample-text'>Example for Timeline API in ASP.NET Core Gantt Control</h1>
-            }
+                    <h1 class='sb-sample-text'>Example of Timeline API in ASP.NET Core Gantt Control</h1>
+                }

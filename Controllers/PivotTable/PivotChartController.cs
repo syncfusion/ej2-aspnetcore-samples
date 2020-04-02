@@ -38,6 +38,8 @@ namespace EJ2CoreSampleBrowser.Controllers
             unitData.Add(new DropDownData { Name = "Scatter", Value = "Scatter" });
             unitData.Add(new DropDownData { Name = "Bubble", Value = "Bubble" });
             unitData.Add(new DropDownData { Name = "Pareto", Value = "Pareto" });
+            unitData.Add(new DropDownData { Name = "Polar", Value = "Polar" });
+            unitData.Add(new DropDownData { Name = "Radar", Value = "Radar" });
             return unitData;
         }
     }

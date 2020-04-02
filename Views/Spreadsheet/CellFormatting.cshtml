@@ -3,12 +3,12 @@
 
 @section ControlsSection{
     <div class="control-section">
-        <ejs-spreadsheet id="spreadsheet" showRibbon=false showFormulaBar=false beforeDataBound="beforeDataBound" beforeCellRender="beforeCellRender">
+        <ejs-spreadsheet id="spreadsheet" showRibbon=false showFormulaBar=false created="createdHandler" beforeCellRender="beforeCellRender">
             <e-spreadsheet-sheets>
                 <e-spreadsheet-sheet name="Order Details" showGridLines=false>
-                    <e-spreadsheet-rangesettings>
-                        <e-spreadsheet-rangesetting dataSource="ViewBag.orderDetails"></e-spreadsheet-rangesetting>
-                    </e-spreadsheet-rangesettings>
+                    <e-spreadsheet-ranges>
+                        <e-spreadsheet-range dataSource="ViewBag.orderDetails"></e-spreadsheet-range>
+                    </e-spreadsheet-ranges>
                     <e-spreadsheet-rows>
                         <e-spreadsheet-row height=36>
                             <e-spreadsheet-cells>
@@ -109,11 +109,11 @@
 }
 
 <script>
-    function beforeDataBound() {
-        if (this.activeSheetTab === 1 && this.sheets[this.activeSheetTab - 1].name === 'Order Details') {
-            // Skip setting cell formatting for other sheets
-            if (this.sheets[this.activeSheetTab - 1].name !== 'Order Details') { return; }
-            // Applying cell formatting dynamically using cellFormat method
+    function createdHandler() {
+        if (this.activeSheetIndex === 0 && this.sheets[this.activeSheetIndex].name === 'Order Details') {
+            //Skip setting cell formatting for other sheets
+            if (this.sheets[this.activeSheetIndex].name !== 'Order Details') { return; }
+            //Applying cell formatting dynamically using cellFormat method
             this.cellFormat({ fontWeight: 'bold', backgroundColor: '#4b5366', color: '#ffffff', fontSize: '12pt' }, 'A1:I1');
             this.cellFormat({ fontWeight: 'bold', textIndent: '2pt' }, 'B2:B16');
             this.cellFormat({ fontStyle: 'italic', textIndent: '2pt' }, 'D2:D16');
@@ -121,13 +121,17 @@
             this.cellFormat({ textIndent: '2pt' }, 'G1:G16');
             this.cellFormat({ textAlign: 'center', fontWeight: 'bold' }, 'H2:H16');
             this.cellFormat({ fontFamily: 'Helvetica New', verticalAlign: 'middle' }, 'A1:I16');
+            //Applying border to a range
+            this.setBorder({ border: '1px solid #e0e0e0' }, 'A1:I16', 'Outer');
+            this.setBorder({ border: '1px solid #e0e0e0' }, 'A2:I15', 'Horizontal');
+
         }
     }
 
     function beforeCellRender(args) {
-        if (this.activeSheetTab === 1 && this.sheets[this.activeSheetTab - 1].name === 'Order Details') {
+        if (this.activeSheetIndex === 0 && this.sheets[this.activeSheetIndex].name === 'Order Details') {
             if (args.cell && args.cell.value) {
-                // Applying cell formatting before rendering the particular cell
+                //Applying cell formatting before rendering the particular cell
                 switch (args.cell.value) {
                     case 'Delivered':
                         this.cellFormat({ color: '#10c469', textDecoration: 'line-through' }, args.address);
@@ -164,5 +168,5 @@
                  <title>ASP.NET Core Spreadsheet Cell Formatting Example - Syncfusion Demos </title>
              }
 @section Header{
-                <h1 class='sb-sample-text'>Example for Cell Formatting in ASP.NET Core Spreadsheet Control</h1>
+                <h1 class='sb-sample-text'>Example of Cell Formatting in ASP.NET Core Spreadsheet Control</h1>
             }

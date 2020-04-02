@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Syncfusion.EJ2.Diagrams;
+using Syncfusion.EJ2.Navigations;
 
 namespace EJ2CoreSampleBrowser.Controllers.Diagram
 {
@@ -871,7 +872,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
 
             ViewBag.Palette = palettes;
 
-            ViewBag.Multiple = "Multiple";
+            ViewBag.Multiple = ExpandMode.Multiple;
             ViewBag.getNodeDefaults = "getNodeDefaults";
             ViewBag.getConnectorDefaults = "getConnectorDefaults";
             ViewBag.getSymbolDefaults = "getSymbolDefaults";

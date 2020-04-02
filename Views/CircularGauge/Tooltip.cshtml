@@ -24,16 +24,27 @@
 @section ControlsSection{
     <div class="control-section" style="border-right:0px;">
         <div class="content-wrapper">
-            <ejs-circulargauge id="circular" title = 'Tooltip Customization' 
-                        enablePointerDrag = "true" load="gaugeload" tooltipRender="tooltipRender" dragEnd="dragEnd">                
+            <ejs-circulargauge id="circular" title= 'Tooltip Customization' 
+                        enablePointerDrag= "true" load="gaugeload" tooltipRender="tooltipRender" dragEnd="dragEnd">
                 <e-circulargauge-titlestyle size="15px" color="grey"></e-circulargauge-titlestyle>
                 <e-circulargauge-tooltip enable="true" enableAnimation="false" type='new string[]{"Pointer", "Range"}'></e-circulargauge-tooltip>
                 <e-circulargauge-axes>
                     <e-circulargauge-axis startAngle="240" endAngle="120" minimum="0" maximum="120" radius="90%">
                         <e-axis-linestyle width="0" color="transparent"></e-axis-linestyle>
-                        <e-axis-labelstyle useRangeColor="true"></e-axis-labelstyle>
                         <e-axis-majorticks color="white" offset="-5" height="12"></e-axis-majorticks>
-                        <e-axis-minorticks width="0" color="transparent"></e-axis-minorticks>
+                        <e-axis-minorticks width="0"></e-axis-minorticks>
+                        <e-circulargauge-pointers>
+                            <e-circulargauge-pointer value="70" radius="60%" color="#33BCBD">
+                                <e-pointer-cap radius="10">
+                                    <e-pointers-cap-border color="#33BCBD" width="5"></e-pointers-cap-border>
+                                </e-pointer-cap>
+                                <e-pointer-animation enable="true" duration="1500"></e-pointer-animation>
+                            </e-circulargauge-pointer>
+                        </e-circulargauge-pointers>
+                        <e-circulargauge-ranges>
+                            <e-circulargauge-range start="0" end="50" radius="102%" startWidth="10" endWidth="10" color="#3A5DC8"></e-circulargauge-range>
+                            <e-circulargauge-range start="50" end="120" radius="102%" startWidth="10" endWidth="10" color="#33BCBD"></e-circulargauge-range>
+                        </e-circulargauge-ranges>
                     </e-circulargauge-axis>
                 </e-circulargauge-axes>
             </ejs-circulargauge>
@@ -93,37 +104,13 @@
         var theme = themeName ? themeName : 'Material';
         args.gauge.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
         @* custom code end *@
-        if (!window.gaugeLoaded) {
-            window.gaugeLoaded = true;
-            var axis = args.gauge.axes[0];
-            axis.labelStyle.font = {
-                size: "13px",
-                color: "#424242",
-                fontFamily: "Roboto"
-            };
-            circulargauge = args.gauge;
-            axis.pointers = [{
-                value: 70,
-                radius: '60%',
-                color: '#33BCBD',
-                cap: { radius: 10, border: { color: '#33BCBD', width: 5 } },
-                animation: { enable: true, duration: 1500 }
-            }];
-            window.pointer = axis.pointers[0];
-            axis.ranges = [{
-                start: 0,
-                end: 50,
-                startWidth: 10, endWidth: 10,
-                radius: '102%',
-                color: '#3A5DC8',
-            }, {
-                start: 50,
-                end: 120,
-                radius: '102%',
-                startWidth: 10, endWidth: 10,
-                color: '#33BCBD',
-            }];
-        }
+        circulargauge = args.gauge;
+        var axis = args.gauge.axes[0];
+        axis.labelStyle.font = {
+            size: "13px",
+            color: "#424242",
+            fontFamily: "Roboto"
+        };
     }
 </script>
 <style>
@@ -145,8 +132,8 @@
     }
 </style>
 @section Title{
-                 <title>ASP.NET Core CircularGauge Tooltip Example - Syncfusion Demos </title>
-             }
+                    <title>ASP.NET Core CircularGauge Tooltip Example - Syncfusion Demos </title> 
+                }
 @section Header{
-                <h1 class='sb-sample-text'>Example for Tooltip in ASP.NET Core CircularGauge Control</h1>
-            }
+                    <h1 class='sb-sample-text'>Example of Tooltip in ASP.NET Core CircularGauge Control</h1>
+                }

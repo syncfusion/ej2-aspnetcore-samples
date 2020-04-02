@@ -21,8 +21,8 @@
 @section ActionDescription{
     <div id="action-description">
         <p>
-            This sample demonstrates the Template functionalities of the ListView. Click any news header or thumbnail to open the
-            complete article. To navigate back to the news list, click the back icon at the top left area.
+            This sample demonstrates the template functionalities of the ListView. Click any news header or thumbnail to open
+            the complete article. To navigate back to the news list, click the back icon at the top left area.
         </p>
 
     </div>
@@ -30,16 +30,9 @@
 
 @section Description{
     <div id="description">
-        <p>
-            The above template represents the customizability of the ListView component. Here, data is loaded from JSON and its value
-            is directly mapped to our ListView datasource to load the content.
-        </p>
+        <p>The above template represents the customizability of the ListView component. Here, list data is loaded and its value is directly mapped to your ListView datasource to load the content.</p>
 
-        <p>
-            This sample, also have the additional elements like bookmark, comments, and share that can be customized to perform the
-            appropriate action by adding our own events.
-        </p>
-
+        <p>This sample also have the additional elements such as bookmark, comments, and share that can be customized to perform the appropriate action by adding your own events.</p>
     </div>
 }
 
@@ -49,7 +42,6 @@
     let share = document.getElementsByClassName('share');
     let comments = document.getElementsByClassName('comments');
     let bookmark = document.getElementsByClassName('bookmark');
-    let description = document.getElementsByClassName('e-list-content');
     let timeStamp = document.getElementsByClassName('timeStamp');
 
     for (let i = 0; i < comments.length; i++) {
@@ -69,12 +61,6 @@
     for (let i = 0; i < share.length; i++) {
         share[i].setAttribute('title', 'We can customize this element to perform our own action');
         share[i].addEventListener('click', (event) => {
-            event.stopPropagation();
-        });
-    }
-
-    for (let i = 0; i < description.length; i++) {
-        description[i].addEventListener('click', (event) => {
             event.stopPropagation();
         });
     }
@@ -139,10 +125,16 @@
     margin-top: 2px;
     }
 
-    #listview_template.e-listview .e-list-header #list-logo {
+    .e-listview .e-list-header #list-logo {
         margin-top: 2.5px;
         position: absolute;
         right: 20px;
+    }
+
+    .e-listview.e-rtl .e-list-header #list-logo {
+        margin-top: 2.5px;
+        position: absolute;
+        right: 280px;
     }
 
     /* ListView template customization */
@@ -154,9 +146,15 @@
         font-style: normal;
     }
 
-    #listview_template.e-listview.e-list-template .e-list-wrapper.e-list-avatar:not(.e-list-badge) {
-        padding-left: 122px;
+    .e-listview.e-rtl.e-list-template .e-list-wrapper.e-list-avatar:not(.e-list-badge) {
+        padding-left: 1.0666em;
+        padding-right: 122px;
     }
+
+    .e-listview.e-list-template .e-list-wrapper.e-list-avatar:not(.e-list-badge) {
+       padding-left: 122px;
+       padding-right: 1.0666em;
+     }
 
     #listview_template.e-listview.e-list-template .e-list-wrapper.e-list-multi-line{
         padding-top: 16px;
@@ -185,7 +183,11 @@
         float: right;
     }
 
-    #listview_template.e-listview.e-list-template .clearfix.desc.e-list-wrapper {
+    .e-listview.e-rtl.e-list-template .clearfix.desc.e-list-wrapper {
+        padding-right: 16px;
+    }
+
+    .e-listview.e-list-template .clearfix.desc.e-list-wrapper {
         padding-left: 16px;
     }
 
@@ -288,6 +290,16 @@
         color: #fff;
     }
 
+    .highcontrast .e-listview.e-list-template .e-list-item.e-active .e-list-item-header,
+    .highcontrast .e-listview.e-list-template .e-list-item.e-active .e-list-content {
+        color: #fff;
+    }
+
+    .bootstrap4 .e-listview.e-list-template .e-list-item.e-active .e-list-item-header,
+    .bootstrap4 .e-listview.e-list-template .e-list-item.e-active .e-list-content {
+        color: #333333;
+    }
+
     /* Media query */
 
     @@media screen and (max-width: 450px) {
@@ -304,8 +316,8 @@
 
 </style>
 @section Title{
-                 <title>ASP.NET Core ListView Templates Example - Syncfusion Demos </title>
-             }
+                    <title>ASP.NET Core ListView Templates Example - Syncfusion Demos </title> 
+                }
 @section Header{
-                <h1 class='sb-sample-text'>Example for Templates in ASP.NET Core ListView Control</h1>
-            }
+                    <h1 class='sb-sample-text'>Example of Templates in ASP.NET Core ListView Control</h1>
+                }

@@ -8,8 +8,10 @@
                     Click the button to view the resultant PDF document being converted from Word document using Essential DocIO and Essential PDF. Please note that PDF viewer is required to view the resultant PDF.
                     <div style="margin-top: 10px">
                         <div>
-                            Select Document :
-                            @Html.TextBox("file", "", new { type = "file", accept = ".doc,.docx,.rtf,.dot,.dotm,.dotx,docm,.xml" }) <br />
+                            <input type="button" value="Choose File" onclick="openPage()">
+                            <input type="text" id="fileNameBox" value="WordtoPDF.docx" readonly="readonly" style="border:none" />
+                            <input type="file" name="file" id="fileUpload" accept=".doc,.docx,.rtf,.dot,.dotm,.dotx,docm,.xml" style="display:block;visibility:hidden;width:0;height:0;">
+                            <br />
                         </div>
                         <div style="margin-top: 8px">
                             PDF Options
@@ -47,7 +49,21 @@
             }
         }
     </div>
+
 }
+<script>
+    function openPage() {
+        document.getElementById('fileUpload').click();
+        document.getElementById('fileUpload').addEventListener('change', readFile, false);
+    }
+    function readFile(evt) {
+        var upoadedFiles = evt.target.files;
+
+        filename = upoadedFiles[0].name;
+        document.getElementById('fileNameBox').value = filename;
+    }
+</script>
+
 @section ActionDescription{
     <div>
         This sample illustrates how to convert Word document to PDF using Essential DocIO and Essential PDF.
@@ -75,8 +91,8 @@
                     <meta name="description" content="This example demonstrates the Word to PDF in ASP.NET Core DocIO control. Explore here for more details."/>
                 }
 @section Title{
-                 <title>ASP.NET Core DocIO Word to PDF Example - Syncfusion Demos </title>
-             }
+                    <title>ASP.NET Core DocIO Word to PDF Example - Syncfusion Demos </title> 
+                }
 @section Header{
-                <h1 class='sb-sample-text'>Example for Word to PDF in ASP.NET Core DocIO Control</h1>
-            }
+                    <h1 class='sb-sample-text'>Example of Word to PDF in ASP.NET Core DocIO Control</h1>
+                }

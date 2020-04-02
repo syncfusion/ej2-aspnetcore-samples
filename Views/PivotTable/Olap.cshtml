@@ -29,7 +29,7 @@
                 </e-datasourcesettings>
                 <e-gridSettings columnWidth="160"></e-gridSettings>
                 <e-displayOption view="Both"></e-displayOption>
-                <e-chartSettings load="onChartLoad"></e-chartSettings>
+                <e-chartSettings title="Sales Analysis" load="onChartLoad"></e-chartSettings>
             </ejs-pivotview>
         </div>
     </div>
@@ -109,6 +109,13 @@
             var reportCollection = [];
             if (localStorage.pivotviewReports && localStorage.pivotviewReports !== "") {
                 reportCollection = JSON.parse(localStorage.pivotviewReports);
+            }
+            if (args.isReportExists) {
+                for (var i = 0; i < reportCollection.length; i++) {
+                    if (reportCollection[i].reportName === args.rename) {
+                        reportCollection.splice(i, 1);
+                    }
+                }
             }
             reportCollection.map(function (item) {
                 if (args.reportName === item.reportName) {
@@ -245,8 +252,8 @@
     </div>
 }
 @section Title{
-                 <title>ASP.NET Core Pivot Table OLAP Example - Syncfusion Demos </title>
-             }
+                    <title>ASP.NET Core Pivot Table OLAP Example - Syncfusion Demos </title> 
+                }
 @section Header{
-                <h1 class='sb-sample-text'>Example for OLAP in ASP.NET Core Pivot Table Control</h1>
-            }
+                    <h1 class='sb-sample-text'>Example of OLAP in ASP.NET Core Pivot Table Control</h1>
+                }

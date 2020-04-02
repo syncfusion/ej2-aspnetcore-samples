@@ -90,6 +90,10 @@ namespace EJ2CoreSampleBrowser.Controllers.ListView
             data.Add(new { text = "Jaguar XJ220", id = "list-08" });
             data.Add(new { text = "McLaren P1", id = "list-09" });
             data.Add(new { text = "Ferrari LaFerrari", id = "list-10" });
+            data.Add(new { text = "Mercedes-Benz Aston Martin", id = "list-11" });
+            data.Add(new { text = "Zenvo ST1", id = "list-12" });
+            data.Add(new { text = "Lamborghini Veneno", id = "list-13" });
+
             ViewBag.groupData = listdata;
             ViewBag.dataSource = data;
             return View();

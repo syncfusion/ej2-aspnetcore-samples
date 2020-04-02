@@ -40,47 +40,61 @@
         </div>
         </div>
         <div class="col-lg-3 property-section">
-    <table id="property" title="Properties" style="width: 100%">
-        <tr style="height: 50px">
-            <td style="width: 40%">
-                <div>
-                    Export Type:
-                </div>
-            </td>
-            <td style="width: 50%;">
-                <div style="margin-left: -10px">
-                    <select id="mode">
-                        <option value='JPEG'>JPEG</option>
-                        <option value='PNG'>PNG</option>
-                        <option value='SVG'>SVG</option>
-                        <option value='PDF'>PDF</option>
-                    </select>
-                </div>
-            </td>
-        </tr>
-        <tr style="height: 50px">
-            <td style="width: 40%">
-                <div>File Name:</div>
-            </td>
-            <td style="width: 40%;">
-                <div class="e-float-input" style='margin-top: 0px;'>
-                    <input type="text" value="Maps" id="fileName" style="margin-left: -10px;width: 75px;">
-                </div>
-            </td>
-        </tr>
-        <tr id="button-control" style="height: 50px" align='center'>
-            <td>
-                <div style="margin-left:50%">
-                    <button id="togglebtn" style="width:80px">Export</button>
-                </div>
-            </td>
-        </tr>
-    </table>
+			<table id="property" title="Properties" style="width: 100%">
+				<tr style="height: 50px">
+					<td style="width: 40%">
+						<div>
+							Map Type:
+						</div>
+					</td>
+					<td style="width: 50%;">
+						<div style="margin-left: -10px">
+							<select id="layertype">
+								<option value='Geometry'>Geometry</option>
+								<option value='OSM'>OSM</option>
+							</select>
+						</div>
+					</td>
+				</tr>
+				<tr style="height: 50px">
+					<td style="width: 40%">
+						<div>
+							Export Type:
+						</div>
+					</td>
+					<td style="width: 50%;">
+						<div style="margin-left: -10px">
+							<input id="mode">
+						</div>
+					</td>
+				</tr>
+				<tr style="height: 50px">
+					<td style="width: 40%">
+						<div>File Name:</div>
+					</td>
+					<td style="width: 40%;">
+						<div class="e-float-input" style='margin-top: 0px;'>
+							<input type="text" value="Maps" id="fileName" style="margin-left: -10px;width: 75px;">
+						</div>
+					</td>
+				</tr>
+				<tr id="button-control" style="height: 50px" align='center'>
+					<td>
+						<div style="margin-left:50%">
+							<ejs-button id="togglebtn" content="Export" iconCss="e-icons e-play-icon" cssClass="e-flat" isPrimary=true></ejs-button>
+						</div>
+					</td>
+				</tr>
+			</table>
 </div>
     <style>
-        .e-play-icon::before {
-            content: '\e728';
-        }
+		.e-play-icon::before {
+			content: '\e728';
+		}
+		#button-control {
+			width: 100%;
+			text-align: center;
+		}
     </style>
 }
 <script>
@@ -92,15 +106,31 @@
     }
     @* custom code end *@
     window.onload = function () {
+		var modeData = ['JPEG', 'PNG', 'PDF', 'SVG'];
         window.exportType = new ej.dropdowns.DropDownList({
             index: 0,
+			dataSource: modeData,
             width: 75
         });
         window.exportType.appendTo("#mode");
-        window.togglebtn1 = new ej.buttons.Button({
-            cssClass: 'e-info', isPrimary: true
-        });
-        window.togglebtn1.appendTo("#togglebtn");
+		window.layerType = new ej.dropdowns.DropDownList({
+			index: 0,
+            width: 75,
+			change: () => {
+                if (layerType.value === 'OSM') {
+                    if (window.exportType.value === 'SVG') {
+                        window.exportType.value = modeData[0];
+                    }
+                    window.exportType.dataSource = modeData.slice(0, 3);
+				} else {
+					window.exportType.dataSource = modeData;
+				}
+				window.maps.layers[window.maps.layersCollection.length - 1].layerType = layerType.value;
+				window.maps.refresh();
+			}
+	
+			});
+			window.layerType.appendTo("#layertype");
         document.getElementById("togglebtn").onclick = () => {
             var fileName = document.getElementById("fileName").value;
             window.maps.export(window.exportType.value, fileName);
@@ -112,9 +142,9 @@
                 }
 @section ActionDescription{
     <div id="action-description">
-        <p>
-            This sample visualizes the continents in the world by rendering these in a map layer. Also marks the office locations of YouTube in the world using markers.
-        </p>
+		<p>
+			This sample illustrates the exporting feature in Maps. You can modify the map type to geometric or OSM using the Map type dropdown list in this sample. By clicking the Export button, you can export the map in PNG, JPEG, SVG or in PDF formats.
+		</p>
     </div>
 }
 @section Description{
@@ -134,8 +164,8 @@
     </div>
 }
 @section Title{
-                 <title>ASP.NET Core Maps Export Example - Syncfusion Demos </title>
-             }
+                    <title>ASP.NET Core Maps Export Example - Syncfusion Demos </title> 
+                }
 @section Header{
-                <h1 class='sb-sample-text'>Example for Export in ASP.NET Core Maps Control</h1>
-            }
+                    <h1 class='sb-sample-text'>Example of Export in ASP.NET Core Maps Control</h1>
+                }

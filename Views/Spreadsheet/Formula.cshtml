@@ -3,12 +3,12 @@
 
 @section ControlsSection{
     <div class="control-section">
-        <ejs-spreadsheet id="spreadsheet" showRibbon=false dataBound="dataBoundEvent">
+        <ejs-spreadsheet id="spreadsheet" showRibbon=false created="createdHandler">
             <e-spreadsheet-sheets>
                 <e-spreadsheet-sheet name="Stock Details" selectedRange="F15">
-                    <e-spreadsheet-rangesettings>
-                        <e-spreadsheet-rangesetting dataSource="ViewBag.formulaData"></e-spreadsheet-rangesetting>
-                    </e-spreadsheet-rangesettings>
+                    <e-spreadsheet-ranges>
+                        <e-spreadsheet-range dataSource="ViewBag.formulaData"></e-spreadsheet-range>
+                    </e-spreadsheet-ranges>
                     <e-spreadsheet-rows>
                         <e-spreadsheet-row height=40>
                             <e-spreadsheet-cells>
@@ -19,13 +19,13 @@
                         <e-spreadsheet-row index=11 height=25>
                             <e-spreadsheet-cells>
                                 <e-spreadsheet-cell index=3 value="Average profit:"></e-spreadsheet-cell>
-                                <e-spreadsheet-cell index=5 formula="=AVERAGE(F2:F11)" format="0.00"></e-spreadsheet-cell>
+                                <e-spreadsheet-cell index=5 formula="=AVERAGE(Profit)" format="0.00"></e-spreadsheet-cell>
                             </e-spreadsheet-cells>
                         </e-spreadsheet-row>
                         <e-spreadsheet-row height=25>
                             <e-spreadsheet-cells>
                                 <e-spreadsheet-cell index=3 value="Maximum stock value:"></e-spreadsheet-cell>
-                                <e-spreadsheet-cell index=5 formula="=MAX(D2:D11)" format="0.00"></e-spreadsheet-cell>
+                                <e-spreadsheet-cell index=5 formula="=MAX(High)" format="0.00"></e-spreadsheet-cell>
                             </e-spreadsheet-cells>
                         </e-spreadsheet-row>
                         <e-spreadsheet-row height=25>
@@ -37,7 +37,7 @@
                         <e-spreadsheet-row height=25>
                             <e-spreadsheet-cells>
                                 <e-spreadsheet-cell index=3 value="Non-profitable days:"></e-spreadsheet-cell>
-                                <e-spreadsheet-cell index=5 formula="=COUNTIF(F2:F11,'<=0')"></e-spreadsheet-cell>
+                                <e-spreadsheet-cell index=5 formula='=COUNTIF(F2:F11,"<=0")'></e-spreadsheet-cell>
                             </e-spreadsheet-cells>
                         </e-spreadsheet-row>
                     </e-spreadsheet-rows>
@@ -51,6 +51,10 @@
                     </e-spreadsheet-columns>
                 </e-spreadsheet-sheet>
             </e-spreadsheet-sheets>
+            <e-spreadsheet-definednames>
+                <e-spreadsheet-definedname name="Profit" refersTo="=F2:F11"></e-spreadsheet-definedname>
+                <e-spreadsheet-definedname name="High" refersTo="=D2:D11"></e-spreadsheet-definedname>
+            </e-spreadsheet-definednames>
         </ejs-spreadsheet>
     </div>
 }
@@ -62,7 +66,7 @@
 @section ActionDescription{
     <div id="action-description">
         <p>
-            This sample demonstrates the analysis of a company's stock value for a certain period with formula feature.
+            This sample demonstrates the analysis of a company's stock value for a certain period with formula and named range feature.
         </p>
     </div>
 }
@@ -72,10 +76,11 @@
         <p>
             The <code>Spreadsheet</code> component provides a built-in calculation library that supports most commonly used
             formulas.
-            In this demo, a formula is specified to a cell using the <code>formula</code> property.
+            In this demo, a formula is specified to a cell using the <code>formula</code> property. The ranges are specified
+            using its name and its defined using <code>definedNames</code> property.
         </p>
         <p>
-            More information about formula support can be found in this
+            More information about formula and named range support can be found in this
             <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/spreadsheet/getting-started-core">
                 documentation
             </a> section.
@@ -84,11 +89,11 @@
 }
 
 <script>
-    function dataBoundEvent() {
-        if (this.activeSheetTab === 1 && this.sheets[this.activeSheetTab - 1].name === 'Stock Details') {
-            this.cellFormat({ fontWeight: 'bold', backgroundColor: '#4ECDC4', textAlign: 'center', fontSize: '14px' }, 'A1:F1');
+    function createdHandler() {
+        if (this.activeSheetIndex === 0 && this.sheets[this.activeSheetIndex].name === 'Stock Details') {
+            this.cellFormat({ fontWeight: 'bold', backgroundColor: '#279377', color: '#fff', textAlign: 'center', fontSize: '14px' }, 'A1:F1');
             this.cellFormat({ backgroundColor: '#F2F2F2' }, 'A2:F11');
-            this.cellFormat({ fontWeight: 'bold', backgroundColor: '#C6EFCE' }, 'A12:F15');
+            this.cellFormat({ fontWeight: 'bold', backgroundColor: '#EEEEEE' }, 'A12:F15');
             this.numberFormat('0.00', 'F2:F11');
         }
     }
@@ -111,5 +116,5 @@
                  <title>ASP.NET Core Spreadsheet Formula Example - Syncfusion Demos </title>
              }
 @section Header{
-                <h1 class='sb-sample-text'>Example for Formula in ASP.NET Core Spreadsheet Control</h1>
+                <h1 class='sb-sample-text'>Example of Formula in ASP.NET Core Spreadsheet Control</h1>
             }

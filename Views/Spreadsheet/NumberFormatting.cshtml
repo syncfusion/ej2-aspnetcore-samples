@@ -6,9 +6,9 @@
         <ejs-spreadsheet id="spreadsheet" showRibbon=false showFormulaBar=false dataBound="dataBoundEvent">
             <e-spreadsheet-sheets>
                 <e-spreadsheet-sheet name="Restaurant Invoice" selectedRange="E17">
-                    <e-spreadsheet-rangesettings>
-                        <e-spreadsheet-rangesetting dataSource="ViewBag.numberFormatData" startCell="A3"></e-spreadsheet-rangesetting>
-                    </e-spreadsheet-rangesettings>
+                    <e-spreadsheet-ranges>
+                        <e-spreadsheet-range dataSource="ViewBag.numberFormatData" startCell="A3"></e-spreadsheet-range>
+                    </e-spreadsheet-ranges>
                     <e-spreadsheet-rows>
                         <e-spreadsheet-row height=30>
                             <e-spreadsheet-cells>
@@ -91,7 +91,7 @@
 
 <script>
     function dataBoundEvent() {
-        if (this.activeSheetTab === 1 && this.sheets[this.activeSheetTab - 1].name === 'Restaurant Invoice') {
+        if (this.activeSheetIndex === 0 && this.sheets[this.activeSheetIndex].name === 'Restaurant Invoice') {
             this.cellFormat({ fontWeight: 'bold' }, 'A1:E2');
             this.cellFormat({ textAlign: 'center', fontWeight: 'bold' }, 'A3:E3');
             this.cellFormat({ textAlign: 'center' }, 'A4:A14');
@@ -127,5 +127,5 @@
                  <title>ASP.NET Core Spreadsheet Number Formatting Example - Syncfusion Demos </title>
              }
 @section Header{
-                <h1 class='sb-sample-text'>Example for Number Formatting in ASP.NET Core Spreadsheet Control</h1>
+                <h1 class='sb-sample-text'>Example of Number Formatting in ASP.NET Core Spreadsheet Control</h1>
             }

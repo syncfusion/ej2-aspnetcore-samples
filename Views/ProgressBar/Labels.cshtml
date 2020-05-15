@@ -1,0 +1,131 @@
+@using Syncfusion.EJ2
+@section ControlsSection {
+    <div class="control-section">
+        <div class="row linear-parent">
+            <div id="percentage" class="linear-progress">
+                <ejs-progressbar id="percentage"
+                                 type='Linear'
+                                 height='60'
+                                 width='90%'
+                                 trackThickness=24
+                                 progressThickness=24
+                                 progressColor='#2BB20E'
+                                 minimum="0" maximum="100"
+                                 loaded="loaded1"
+                                 value=100 showProgressValue="true" cornerRadius="Round">
+
+                    <e-progressbar-animation enable=true duration=2000 delay=0></e-progressbar-animation>
+                </ejs-progressbar>
+            </div>
+            <div id="ratio" class="linear-progress">
+                <ejs-progressbar id="ratio"
+                                 type='Linear'
+                                 height='60'
+                                 width='90%'
+                                 trackThickness=24
+                                 progressThickness=24
+                                 progressColor='#8D8989'
+                                 loaded="loaded2"
+                                 minimum="0" maximum="100"
+                                 textRender="textRender1"
+                                 value=40 showProgressValue="true" cornerRadius="Round">
+                    <e-progressbar-animation enable=true duration=2000 delay=0></e-progressbar-animation>
+                </ejs-progressbar>
+            </div>
+            <div id="acutal" class="linear-progress">
+                <ejs-progressbar id="acutal"
+                                 type='Linear'
+                                 height='60'
+                                 width='90%'
+                                 trackThickness=24
+                                 progressThickness=24
+                                 progressColor='#E3165B'
+                                 trackColor="#F8C7D8"
+                                 loaded="loaded3"
+                                 textRender="textRender2"
+                                 minimum="0" maximum="100"
+                                 value=50 showProgressValue="true" cornerRadius="Round">
+                    <e-progressbar-animation enable=true duration=2000 delay=0></e-progressbar-animation>
+                </ejs-progressbar>
+            </div>
+        </div>
+        <div class="row linear-parent">
+            <button id="reLoad" class="e-control e-btn e-lib e-outline e-primary">Reload</button>
+        </div>
+    </div>
+    <style>
+        #control-container {
+            padding: 0px !important;
+        }
+
+        .linear-parent {
+            text-align: center;
+            margin-top: 2%;
+        }
+
+        .linear-progress {
+            width: 60%;
+            margin: auto;
+            margin-bottom: 3%;
+        }
+
+        #percentage_linearLabel {
+            fill: white;
+        }
+
+        #ratio_linearLabel {
+            fill: white;
+        }
+
+        #acutal_linearLabel {
+            fill: white;
+        }
+
+        #reLoad {
+            border-radius: 4px;
+            text-transform: capitalize;
+        }
+    </style>
+    <script>
+        var loaded1 = function (args) {
+            var text1 = document.getElementById('percentage_linearLabel');
+            text1.setAttribute('fill', 'white');
+        }
+        var loaded2 = function (args) {
+            var text2 = document.getElementById('ratio_linearLabel');
+            text2.setAttribute('fill', 'white');
+        }
+        var loaded3 = function (args) {
+            var text3 = document.getElementById('acutal_linearLabel');
+            text3.setAttribute('fill', 'white');
+        }
+        var textRender1 = function (args) {
+            args.text = '2/5';
+        }
+        var textRender2 = function (args) {
+            args.text = '50';
+        }
+
+        var replayBtn = document.getElementById('reLoad');
+        replayBtn.onclick = function () {
+            var PercentProgress = document.getElementById('percentage').ej2_instances[0];
+            var RatioProgress = document.getElementById('ratio').ej2_instances[0];
+            var ActualProgress = document.getElementById('acutal').ej2_instances[0];
+            PercentProgress.refresh();
+            ActualProgress.refresh();
+            RatioProgress.refresh();
+        };
+    </script>
+}
+@section ActionDescription{
+    <p>
+        This sample illustrates a linear progress bar to demonstrate different types of labels rendering.
+    </p>
+}
+@section Description{
+    <p>
+        This demo for Essential JS2 Progress Bar control shows the linear progress bar with different labels format with help of <code>textRender</code> event.
+    </p>
+
+}
+

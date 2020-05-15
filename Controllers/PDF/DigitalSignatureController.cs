@@ -51,7 +51,6 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
                     FileStreamResult fileStreamResult = new FileStreamResult(stream, "application/pdf");
                     fileStreamResult.FileDownloadName = "SignedPDF.pdf";
                     return fileStreamResult;
-                    return View();
                 }
                 else
                 {
@@ -83,7 +82,7 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
                     signature.Certificated = true;
                 else
                     signature.Certificated = false;
-                PdfGraphics graphics = signature.Appearence.Normal.Graphics;
+                PdfGraphics graphics = signature.Appearance.Normal.Graphics;
 
                 string validto = "Valid To: " + signature.Certificate.ValidTo.ToString();
                 string validfrom = "Valid From: " + signature.Certificate.ValidFrom.ToString();
@@ -110,7 +109,6 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
                 FileStreamResult fileStreamResult = new FileStreamResult(stream, "application/pdf");
                 fileStreamResult.FileDownloadName = "SignedPDF.pdf";
                 return fileStreamResult;
-                return View();
             }
         }
 

@@ -3,7 +3,7 @@
         <div id="panel" style="display:none">
             <input type="file" id="uploadfileButton" accept=".doc,.docx,.rtf,.txt,.htm,.html" style="position:fixed; left:-100em" />
             <div id='documenteditor_titlebar' class="e-de-ctn-title"></div>
-            <div id="documenteditor_container_panel" style="position:relative;height:100%;width:100%">
+            <div id="documenteditor_container_panel" style="position:relative;">
                 <ejs-documenteditor enablePrint=true id="container"></ejs-documenteditor>
             </div>
             <div id="documenteditor_statusbar"></div>
@@ -56,8 +56,6 @@
         document.addEventListener('DOMContentLoaded', function () {
             containerPanel = document.getElementById('documenteditor_container_panel');
             var documenteditorElement = document.getElementById("container");
-            documenteditorElement.style.height = "100%";
-            documenteditorElement.style.width = "100%";
             documenteditor = documenteditorElement.ej2_instances[0];
             documenteditor.pageOutline = '#E0E0E0';
             // Toolbar,titlebar and pane changes
@@ -129,8 +127,10 @@
 
         function updateContainerSize() {
             if (containerPanel) {
-                containerPanel.style.height = window.innerHeight - (document.getElementById('documenteditor_titlebar').offsetHeight
+			    var height = window.innerHeight - (document.getElementById('documenteditor_titlebar').offsetHeight
                     + document.getElementById('documenteditor_statusbar').offsetHeight) + 'px';
+                containerPanel.style.height = height;
+				documenteditor.height = height;
             }
         }
     </script>

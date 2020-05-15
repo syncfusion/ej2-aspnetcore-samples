@@ -7,7 +7,6 @@ window.samplesList = [
         "name": "Data Grid",
         "directory": "Grid",
         "category": "Grids",
-		"type": "update",
         "samples": [
             {
                 "url": "GridOverview",
@@ -105,7 +104,6 @@ window.samplesList = [
             "category": "Scrolling",
             "uid": "9999",
             "order": 1,
-        "type": "new",
             "component": "Data Grid",
             "dir": "Grid",
             "parentId": "00"
@@ -835,8 +833,7 @@ window.samplesList = [
     {
         "name": "Tree Grid",
         "directory": "TreeGrid",
-        "category": "Grids",
-        "type": "update",
+        "category": "Grids", 
         "samples": [
             {
                 "url": "Overview",
@@ -863,7 +860,6 @@ window.samplesList = [
                 "name": "Clipboard",
                 "category": "TreeGrid",
                 "uid": "00701",
-                "type": "new",
                 "order": 0,
                 "component": "TreeGrid",
                 "dir": "TreeGrid",
@@ -1094,7 +1090,6 @@ window.samplesList = [
                 "name": "Batch Editing",
                 "category": "Editing",
                 "uid": "00702",
-                "type": "new",
                 "order": 4,
                 "component": "TreeGrid",
                 "dir": "TreeGrid",

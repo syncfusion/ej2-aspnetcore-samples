@@ -1,0 +1,165 @@
+﻿@using Syncfusion.EJ2
+@section ControlsSection {
+    <div class="control-section">
+        <div class="row textAlign" style="align-items: center; text-align: center;">
+            <div class="col-lg-12 col-md-12" id="linearProcesscontainer" style="text-align: center">
+                <ejs-progressbar id="linearProcesscontainer"
+                                 type='Linear'
+                                 minimum="0"
+                                 maximum="100"
+                                 height='60'
+                                 width='90%'
+                                 value=30
+                                 trackThickness=2
+                                 progressThickness=4 cornerRadius="Round">
+                    <e-progressbar-animation enable="true" delay="0" duration="2000"></e-progressbar-animation>
+                </ejs-progressbar>
+            </div>
+        </div>
+
+        <table style="width: 100%">
+            <tr>
+                <td>
+                    <div class="row textAlign">
+                        <div class="col-sm-4">
+                            <button id="continuesLoad" class="e-btn e-custom-btn">Start Continuous loading bar</button>
+                        </div>
+                        <div class="col-sm-4">
+                            <button id="staticLoad" class="e-btn e-custom-btn">Start Static loading bar</button>
+                        </div>
+                        <div class="col-sm-4">
+                            <button id="complete" class="e-btn e-custom-btn">Start Complete</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="row textAlign second-height">
+                        <div class="col-sm-3">
+                            <button id="addten" class="e-btn e-custom-btn">Add 10%</button>
+                        </div>
+                        <div class="col-sm-3">
+                            <button id="addthirty" class="e-btn e-custom-btn">Add 30%</button>
+                        </div>
+                        <div class="col-sm-3">
+                            <button id="addfifty" class="e-btn e-custom-btn">Add 50%</button>
+                        </div>
+                        <div class="col-sm-3">
+                            <button id="colorchange" class="e-btn e-custom-btn">Change Color</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    @*custom code start*@
+    <style>
+        #control-container {
+            padding: 0px !important;
+        }
+
+        .textAlign {
+            text-align: center;
+        }
+
+        .btn-progress-api:hover {
+            cursor: pointer;
+        }
+
+        .e-btn.e-custom-btn {
+            border-radius: 100px;
+            .height: 40px;
+        }
+
+        .btn-progress-api {
+            width: fit-content;
+            background-color: #3C78EF;
+            color: aliceblue;
+            font-size: 24px;
+            width: auto;
+            margin: 20px;
+            border-radius: 2%;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .second-height {
+            width: 80%;
+            margin: auto;
+        }
+
+        tr {
+            height: 70px;
+        }
+    </style>
+    <script>
+        var continuesLoad = document.getElementById('continuesLoad');
+        var staticLoad = document.getElementById('staticLoad');
+        var complete = document.getElementById('complete');
+        var addten = document.getElementById('addten');
+        var addthrity = document.getElementById('addthirty');
+        var addfifty = document.getElementById('addfifty');
+        var colorchange = document.getElementById('colorchange');
+        var count = 1;
+        continuesLoad.onclick = function () {
+            var linearProcess = document.getElementById("linearProcesscontainer").ej2_instances[0];
+            linearProcess.value += 20;
+            linearProcess.value = linearProcess.value % linearProcess.maximum;
+            linearProcess.dataBind();
+        };
+        staticLoad.onclick = function () {
+            var linearProcess = document.getElementById("linearProcesscontainer").ej2_instances[0];
+            linearProcess.value = Math.random() * 100;
+            linearProcess.value = linearProcess.value % linearProcess.maximum;
+            linearProcess.dataBind();
+        };
+        complete.onclick = function () {
+            var linearProcess = document.getElementById("linearProcesscontainer").ej2_instances[0];
+            linearProcess.value = 100;
+            linearProcess.dataBind();
+        };
+        addten.onclick = function () {
+            var linearProcess = document.getElementById("linearProcesscontainer").ej2_instances[0];
+            linearProcess.value += 10;
+            linearProcess.value = linearProcess.value % linearProcess.maximum;
+            linearProcess.dataBind();
+        };
+        addthrity.onclick = function () {
+            var linearProcess = document.getElementById("linearProcesscontainer").ej2_instances[0];
+            linearProcess.value += 30;
+            linearProcess.value = linearProcess.value % linearProcess.maximum;
+            linearProcess.dataBind();
+        };
+        addfifty.onclick = function () {
+            var linearProcess = document.getElementById("linearProcesscontainer").ej2_instances[0];
+            linearProcess.value += 50;
+            linearProcess.value = linearProcess.value % linearProcess.maximum;
+            linearProcess.dataBind();
+        };
+        colorchange.onclick = function () {
+            var linearProcess = document.getElementById("linearProcesscontainer").ej2_instances[0];
+            var colors = ['#c0b0f5', '#b39ff5', '#a48cf5', '#8d6ff2', '#7653ed'];
+            linearProcess.progressColor = colors[count % 5];
+            count += 1;
+            linearProcess.value = linearProcess.value % linearProcess.maximum;
+            linearProcess.dataBind();
+        };
+    </script>
+}
+@section ActionDescription{
+    <p>
+        This sample illustrates a circular and linear progress bar to demonstrate indeterminate mode and annotation.
+    </p>
+}
+@section Description{
+    <p>
+        This demo for Essential JS2 Progress Bar control shows the indeterminate mode of progress bar
+    </p>
+}
+<style>
+    #control-container {
+        padding: 0px !important;
+    }
+</style>

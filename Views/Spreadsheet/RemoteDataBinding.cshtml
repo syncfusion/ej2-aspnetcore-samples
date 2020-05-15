@@ -2,7 +2,7 @@
 
 @section ControlsSection{
     <div class="control-section">
-        <ejs-spreadsheet id="spreadsheet" openUrl="RemoteDataOpen" saveUrl="RemoteDataSave" dataBound="dataBoundEvent">
+        <ejs-spreadsheet id="spreadsheet" openUrl="RemoteDataOpen" saveUrl="RemoteDataSave" created="createdHandler">
             <e-spreadsheet-sheets>
                 <e-spreadsheet-sheet name="Shipment Details">
                     <e-spreadsheet-ranges>
@@ -83,7 +83,7 @@
         </p>
         <p>
             In this demo, remote data is bound by assigning service data as an instance of <code>DataManager</code> to the
-            <code>dataSource</code> property under the range of sheet.
+            <code>dataSource</code> property under the <code>ranges</code> of sheet.
         </p>
         <p>
             More information about remote data binding can be found in this
@@ -95,11 +95,9 @@
 }
 
 <script>
-    function dataBoundEvent() {
+    function createdHandler() {
         //Apply style to a range
-        if (this.activeSheetIndex === 0 && this.sheets[this.activeSheetIndex].name === 'Shipment Details') {
-            this.cellFormat({ fontWeight: 'bold', textAlign: 'center' }, 'A1:G1');
-        }
+        this.cellFormat({ fontWeight: 'bold', textAlign: 'center' }, 'A1:G1');
     }
 </script>
 

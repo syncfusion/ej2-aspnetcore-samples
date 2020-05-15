@@ -1,0 +1,158 @@
+﻿@using Syncfusion.EJ2
+@section ControlsSection {
+    <div class="control-section progress-bar-parent">
+        <div class="row" style="margin-top: 8%">
+            <div class="col-lg-3 col-md-3 col-3" align="center">
+                <div id="full-background">
+                    <ejs-progressbar id="full-background"
+                                     minimum="0"
+                                     maximum="100"
+                                     enableRtl="false"
+                                     type='Circular'
+                                     value=60
+                                     radius="100%"
+                                     width='160px'
+                                     height='160px'
+                                     innerRadius="190%"
+                                     progressColor="white"
+                                     trackThickness=80
+                                     cornerRadius="Round"
+                                     progressThickness=10
+                                     load="progressLoad0">
+                        <e-progressbar-progressbarannotations>
+                            <e-progressbar-progressbarannotation content='<div id="point1" style="font-size:20px;font-weight:bold;color:#ffffff;fill:#ffffff"><span>60%</span></div>'></e-progressbar-progressbarannotation>
+                        </e-progressbar-progressbarannotations>
+                        <e-progressbar-animation enable=true duration=2000 delay=0></e-progressbar-animation>
+                    </ejs-progressbar>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-3" align="center">
+
+                <div id="outer-radius">
+                    <ejs-progressbar id="outer-radius"
+                                     minimum="0"
+                                     maximum="100"
+                                     type='Circular'
+                                     value=90
+                                     width='160px'
+                                     height='160px'
+                                     innerRadius="72"
+                                     cornerRadius="Round"
+                                     progressThickness=8
+                                     load="progressLoad">
+                        <e-progressbar-animation enable=true duration=2000 delay=0></e-progressbar-animation>
+                    </ejs-progressbar>
+                </div>
+
+            </div>
+            <div class="col-lg-3 col-md-3 col-3" align="center">
+                <div id="on-radius">
+                    <ejs-progressbar id="on-radius"
+                                     minimum="0"
+                                     maximum="100"
+                                     type='Circular'
+                                     value=90
+                                     width='160px'
+                                     height='160px'
+                                     trackThickness="3"
+                                     progressThickness=8
+                                     load="progressLoad">
+                        <e-progressbar-animation enable=true duration=2000 delay=0></e-progressbar-animation>
+                    </ejs-progressbar>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-3" align="center">
+                <div id="pie">
+                    <ejs-progressbar id="pie"
+                                     minimum="0"
+                                     maximum="100"
+                                     type='Circular'
+                                     value=70
+                                     enablePieProgress="true"
+                                     width='160px'
+                                     height='160px'
+                                     load="progressLoad">
+                        <e-progressbar-animation enable=true duration=2000 delay=0></e-progressbar-animation>
+                    </ejs-progressbar>
+                </div>
+            </div>
+        </div>
+        <div class="row linear-parent">
+            <button id="reLoad" class="e-control e-btn e-lib e-outline e-primary">Reload</button>
+        </div>
+    </div>
+    <script>
+        var progressLoad0 = function (args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.progressBar.theme = (selectedTheme.charAt(0).toUpperCase() +
+                selectedTheme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+            switch (selectedTheme) {
+                case 'material':
+                    args.progressBar.trackColor = '#e91e63';
+                    break;
+                case 'fabric':
+                    args.progressBar.trackColor = '#0078D6';
+                    break;
+                case 'bootstrap':
+                    args.progressBar.trackColor = '#317ab9';
+                    break;
+                case 'highcontrast':
+                    args.progressBar.trackColor = '#FFD939';
+                    break;
+                default:
+                    args.progressBar.trackColor = '#007bff';
+                    break;
+            }
+        };
+        var progressLoad = function (args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.progressBar.theme = (selectedTheme.charAt(0).toUpperCase() +
+                selectedTheme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+        }
+        var replayBtn = document.getElementById('reLoad');
+        replayBtn.onclick = function () {
+            var FullProgress = document.getElementById('full-background').ej2_instances[0];
+            var OuterProgress = document.getElementById('outer-radius').ej2_instances[0];
+            var OnProgress = document.getElementById('on-radius').ej2_instances[0];
+            var Pie = document.getElementById('pie').ej2_instances[0];
+            FullProgress.refresh();
+            OuterProgress.refresh();
+            OnProgress.refresh();
+            Pie.refresh();
+        };
+    </script>
+    <style>
+        #control-container {
+            padding: 0px !important;
+        }
+
+        #reLoad {
+            border-radius: 4px;
+            text-transform: capitalize;
+            margin-top: 3%;
+        }
+
+        #full-background_Circulartrack {
+            opacity: 1 !important;
+        }
+
+        .linear-parent {
+            text-align: center;
+            width: 80%;
+            margin: auto;
+        }
+    </style>
+}
+@section ActionDescription{
+    <p>
+        This sample illustrates a circular progress bar with customization options like radius, inner-radius, pie progress, track and progress thickness.
+    </p>
+}
+@section Description{
+    <p>
+        This demo for Essential JS2 Progress Bar control shows the customizing options for radius, inner-radius, pie progress, track and progress thickness.
+    </p>
+}

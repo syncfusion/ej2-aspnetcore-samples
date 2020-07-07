@@ -4,14 +4,14 @@
 @section ControlsSection{
     <div class="control-section">
         <div class="control_wrapper">
-            <ejs-kanban id="Kanban" keyField="Status" dataSource="@ViewBag.data" enableTooltip="true">
+            <ejs-kanban id="Kanban" keyField="Status" dataSource="@ViewBag.data" enableTooltip="true" cardRendered="cardRendered">
                 <e-kanban-columns>
                     <e-kanban-column headerText="To Do" keyField="Open" template="#headerTemplate" allowToggle="true"></e-kanban-column>
                     <e-kanban-column headerText="In Progress" keyField="InProgress" template="#headerTemplate" allowToggle="true"></e-kanban-column>
                     <e-kanban-column headerText="In Review" keyField="Review" template="#headerTemplate" allowToggle="true"></e-kanban-column>
                     <e-kanban-column headerText="Done" keyField="Close" template="#headerTemplate" allowToggle="true"></e-kanban-column>
                 </e-kanban-columns>
-                <e-kanban-cardsettings headerField="Title" template="#cardTemplate" selectionType="Multiple" priority="RankId"></e-kanban-cardsettings>
+                <e-kanban-cardsettings headerField="Title" template="#cardTemplate" selectionType="Multiple"></e-kanban-cardsettings>
                 <e-kanban-swimlanesettings keyField="Assignee"></e-kanban-swimlanesettings>
                 <e-kanban-dialogsettings fields="ViewBag.dialogData"></e-kanban-dialogsettings>
             </ejs-kanban>
@@ -24,7 +24,7 @@
         </div>
     </script>
     <script id="cardTemplate" type="text/x-jsrender">
-        <div class='card-template ${Priority}'>
+        <div class='card-template'>
             <div class='e-card-header'>
                 <div class='e-card-header-caption'>
                     <div class='e-card-header-title e-tooltip-text'>${Title}</div>
@@ -33,7 +33,7 @@
             <div class='e-card-content e-tooltip-text'>
                 <div class='e-text'>${Summary}</div>
             </div>
-            <div class='e-card-footer'>
+            <div class='e-card-custom-footer'>
                 ${getTags(data)}
                 <div class='e-card-avatar'> ${getString(data.Assignee)}</div>
             </div>
@@ -42,33 +42,32 @@
 }
 
 <style type="text/css">
-
     .e-kanban .header-template-wrap {
         display: inline-flex;
         font-size: 15px;
         font-weight: 500;
     }
 
-        .e-kanban .header-template-wrap .header-icon {
-            font-family: 'Kanban priority icons';
-            margin-top: 3px;
-            width: 10%;
-        }
+    .e-kanban .header-template-wrap .header-icon {
+        font-family: 'Kanban priority icons';
+        margin-top: 3px;
+        width: 10%;
+     }
 
-        .e-kanban .header-template-wrap .header-text {
-            margin-left: 15px;
-        }
+     .e-kanban .header-template-wrap .header-text {
+         margin-left: 15px;
+     }
 
-    .e-kanban.e-rtl .header-template-wrap .header-text {
+     .e-kanban.e-rtl .header-template-wrap .header-text {
         margin-right: 15px;
-    }
+     }
 
-    .e-kanban.e-rtl .e-card-avatar {
+     .e-kanban.e-rtl .e-card-avatar {
         left: 12px;
         right: auto;
-    }
+     }
 
-    .e-kanban .e-card-avatar {
+     .e-kanban .e-card-avatar {
         width: 30px;
         height: 30px;
         text-align: center;
@@ -81,7 +80,7 @@
         font-size: 12px;
         font-weight: 400;
         padding: 10px 0px 0px 1px;
-    }
+     }
 
     .e-kanban .Open::before {
         content: '\e700';
@@ -113,7 +112,7 @@
         font-size: 16px;
     }
 
-    .e-kanban .e-card .e-card-tag {
+    .e-kanban .e-card .e-card-tag-field {
         background: #ececec;
         color: #6b6b6b;
         margin-right: 5px;
@@ -123,48 +122,36 @@
         padding: 4px;
     }
 
-    .e-kanban .e-card-footer {
+    .e-kanban .e-card-custom-footer {
         display: flex;
         padding: 0px 12px 12px;
         line-height: 1;
         height: 35px;
     }
 
-    .card-template.Low {
-        border-left: 3px solid #ffd600
+    .e-kanban .e-kanban-content .e-content-row .e-content-cells .e-card-wrapper .e-card.Low,
+    .e-kanban.e-rtl .e-kanban-content .e-content-row .e-content-cells .e-card-wrapper .e-card.Low {
+        border-left: 3px solid #ffd600;
     }
 
-    .card-template.High {
-        border-left: 3px solid #990099
+    .e-kanban .e-kanban-content .e-content-row .e-content-cells .e-card-wrapper .e-card.High,
+    .e-kanban.e-rtl .e-kanban-content .e-content-row .e-content-cells .e-card-wrapper .e-card.High {
+        border-left: 3px solid #990099;
     }
 
-    .card-template.Normal {
-        border-left: 3px solid #66cc33
+    .e-kanban .e-kanban-content .e-content-row .e-content-cells .e-card-wrapper .e-card.Normal,
+    .e-kanban.e-rtl .e-kanban-content .e-content-row .e-content-cells .e-card-wrapper .e-card.Normal {
+        border-left: 3px solid #66cc33;
     }
 
-    .card-template.Critical {
-        border-left: 3px solid #cc0000
+    .e-kanban .e-kanban-content .e-content-row .e-content-cells .e-card-wrapper .e-card.Critical,
+    .e-kanban.e-rtl .e-kanban-content .e-content-row .e-content-cells .e-card-wrapper .e-card.Critical {
+        border-left: 3px solid #cc0000;
     }
 
-    .e-kanban.e-rtl .card-template {
-        border-left: none
+    .e-kanban.e-rtl .e-kanban-content .e-content-row .e-content-cells .e-card-wrapper .e-card {
+        border-left: none;
     }
-
-        .e-kanban.e-rtl .card-template.Low {
-            border-right: 3px solid #ffd600
-        }
-
-        .e-kanban.e-rtl .card-template.High {
-            border-right: 3px solid #990099
-        }
-
-        .e-kanban.e-rtl .card-template.Normal {
-            border-right: 3px solid #66cc33
-        }
-
-        .e-kanban.e-rtl .card-template.Critical {
-            border-right: 3px solid #cc0000
-        }
 
     @@font-face {
         font-family: 'Kanban priority icons';
@@ -195,13 +182,18 @@
             var tags = data.Tags.split(',');
             for (var a = 0; a < tags.length; a++) {
                 var tag = tags[a];
-                tagDiv += '<div class="e-card-tag e-tooltip-text">' + tag + '</div>';
+                tagDiv += '<div class="e-card-tag-field e-tooltip-text">' + tag + '</div>';
             }
             return tagDiv;
         }
 
         function getString(assignee) {
             return assignee.match(/\b(\w)/g).join('').toUpperCase();
+        }
+
+        function cardRendered(args) {
+            var val = args.data.Priority;
+            ej.base.addClass([args.element], val);
         }
     </script>
 }

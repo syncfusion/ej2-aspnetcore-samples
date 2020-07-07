@@ -189,3 +189,24 @@ gulp.task('title-section', function () {
         }
     }
 });
+
+gulp.task('sitemap-generate', function () {
+    let xmlstring = `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
+    let date = new Date().toISOString();
+    let link = 'https://ej2.syncfusion.com/aspnetcore';
+    let components = config.window.samplesList.map(com => { return { directory: com.directory, sampleUrls: com.samples.map(samp => { return samp.url; }) }; });
+    for (let component of components ? components : []) {
+        let sampleUrls = component.sampleUrls;
+        for (let sampleUrl of sampleUrls ? sampleUrls : []) {
+            let sitemapurl = `
+    <url>
+        <loc>${link}/${component.directory}/${sampleUrl}</loc>
+        <lastmod>${date.replace(date.slice(date.indexOf('T')), '')}</lastmod>
+    </url>`;
+            xmlstring += sitemapurl;
+        }
+    }
+    xmlstring += `
+</urlset>`;
+    fs.writeFileSync('./sitemap-demos.xml', xmlstring, 'utf-8');
+});

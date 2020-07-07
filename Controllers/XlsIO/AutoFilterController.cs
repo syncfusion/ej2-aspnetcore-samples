@@ -24,7 +24,7 @@ namespace EJ2CoreSampleBrowser.Controllers.XlsIO
             
             if (FilterType == null)
             {
-                ViewBag.datasource = icons.GetSymbols();
+                ViewBag.datasource = icons.GetSymbols(); 
                 ViewBag.datasource2 = icons.GetRating();
                 ViewBag.datasource3 = icons.GetArrows();
                 return View();
@@ -249,16 +249,24 @@ namespace EJ2CoreSampleBrowser.Controllers.XlsIO
                 }
               
                 workbook.Version = ExcelVersion.Excel2016;
-                MemoryStream result = new MemoryStream();
-                workbook.SaveAs(result);
-                result.Position = 0;
-                return File(result, "Application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
-            
-                
-            //Close the workbook.
-            workbook.Close();
-            excelEngine.Dispose();
-            return View();
+
+                try
+                {
+                    MemoryStream result = new MemoryStream();
+                    workbook.SaveAs(result);
+                    result.Position = 0;
+
+
+                    return File(result, "Application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+                }
+                catch (Exception)
+                {
+                }
+
+                //Close the workbook.
+                workbook.Close();
+                excelEngine.Dispose();
+                return View();
 			}
         }
 

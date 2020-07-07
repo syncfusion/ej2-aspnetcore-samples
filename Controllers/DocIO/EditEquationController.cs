@@ -12,6 +12,7 @@ using Syncfusion.DocIO.DLS;
 using Syncfusion.Office;
 using System;
 using System.IO;
+using Syncfusion.DocIORenderer;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,16 +20,18 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
 {
     public partial class DocIOController : Controller
     {	
-        public IActionResult EditEquation(string Button)
+        public IActionResult EditEquation(string Button, string Group1)
         {
             if (Button == null)
                 return View();
             string basePath = _hostingEnvironment.WebRootPath;
             string dataPath = basePath + @"/DocIO/Mathematical Equation.docx";
-            string contenttype1 = "application/vnd.ms-word.document.12";
+            string contenttype = "application/vnd.ms-word.document.12";
             // Load Template document stream.
             FileStream fileStream = new FileStream(dataPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                  
+            if (Button == "View Template")
+                return File(fileStream, contenttype, "Mathematical Equation.docx");
+
             // Creates an empty Word document instance.          
             WordDocument document = new WordDocument();
             // Opens template document.
@@ -88,13 +91,24 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
             //Gets the math text
             (mathParaItem.Item as WTextRange).Text = "x";
 
-            FormatType type = FormatType.Docx;
-            string filename = "Sample.docx";
-            string contenttype = "application/vnd.ms-word.document.12";
-            
+            string filename = "";
             MemoryStream ms = new MemoryStream();
-            document.Save(ms, type);
-            document.Close();
+            #region Document SaveOption
+            if (Group1 == "WordDocx")
+            {
+                filename = "EditEquation.docx";
+                contenttype = "application/msword";
+                document.Save(ms, FormatType.Docx);
+            }
+            else
+            {
+                filename = "EditEquation.pdf";
+                contenttype = "application/pdf";
+                DocIORenderer renderer = new DocIORenderer();
+                renderer.ConvertToPDF(document).Save(ms);
+            }
+            #endregion Document SaveOption
+            document.Close();			
             ms.Position = 0;
             return File(ms, contenttype, filename);
         }

@@ -1,0 +1,91 @@
+@using Syncfusion.EJ2
+@{ViewBag.Title = "   Essential DocIO (Word) : Track Changes : Syncfusion";}
+@section ControlsSection{
+    <div class="control-section">
+        @{Html.BeginForm("TrackChanges", "DocIO", FormMethod.Post);
+            {
+                <div style="margin-top: 10px;font-size:14px">
+                    Click the button to view the generated Word document. Please note that Microsoft Word Viewer or Microsoft Word is required to view the resultant Word document.
+                    <div style="margin-top: 10px">
+                        <div style="margin-top: 10px">
+                            Author Name:
+                            <select id="AuthorName" name="AuthorName" class="e-dropdown-btn" onchange="isAuthorNameChanged(this)">
+                                <option value="0">All</option>
+                                <option value="1">Nancy Davolio</option>
+                                <option value="2">Steven Buchanan</option>
+                                <option value="3">Stanley Hudson</option>
+                                <option value="4">Andrew Fuller</option>
+                            </select>
+                        </div>
+                        <div>
+                            <input type="radio" id="Radio1" name="Group1" value="acceptRadio" disabled="true" title="Accepts all changes made by the author" />
+                            <label for="Radio1" style="font-size:14px;font-weight:normal;text-align:match-parent" data-toggle="tooltip">Accepts all changes made by the author</label>
+                            <br />
+                            <input type="radio" id="Radio2" name="Group1" value="rejectRadio" disabled="true" title="Rejects all changes made by the author" />
+                            <label for="Radio2" id="Radio2Label" style="font-size:14px;font-weight:normal;text-align:match-parent" data-toggle="tooltip">Rejects all changes made by the author</label>
+                            <br />
+                            <input type="radio" id="Radio3" name="Group1" value="acceptsAllRadio" checked="checked" title="Accepts all the tracked changes in the Word document" />
+                            <label for="Radio3" style="font-size:14px;font-weight:normal;text-align:match-parent" data-toggle="tooltip">Accepts all the tracked changes in the Word document</label>
+                            <br />
+                            <input type="radio" id="Radio4" name="Group1" value="rejectAllRadio" title="Rejects all the tracked changes in the Word document" />
+                            <label for="Radio4" style="font-size:14px;font-weight:normal;text-align:match-parent" data-toggle="tooltip">Rejects all the tracked changes in the Word document</label>
+                        </div>
+                        <div style="margin-top: 18px">
+                            <input id="viewtemplate" name="Button" class="e-btn" type="submit" value="View Template" style="width: 150px; text-transform:capitalize" />
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <input id="generate" name="Button" class="e-btn" type="submit" value="Generate Document" style="width:170px; text-transform:capitalize" />
+                        </div>
+                    </div>
+                </div>
+                Html.EndForm();
+            }
+        }
+    </div>
+    <script type="text/javascript">
+        function isAuthorNameChanged(element) {
+            var selectedValue = element.options[element.selectedIndex].text;
+            if (selectedValue == "All") {
+                document.getElementById("Radio3").checked = true;
+                document.getElementById("Radio2").disabled = true;
+                document.getElementById("Radio1").disabled = true;
+            }
+            else {
+                document.getElementById("Radio1").checked = true;
+                document.getElementById("Radio2").disabled = false;
+                document.getElementById("Radio1").disabled = false;
+            }
+        }
+    </script>
+}
+@section ActionDescription{
+    <div>
+        This sample demonstrates how to accept or reject the tracked changes in the Word document using Essential DocIO.
+    </div>
+}
+@section Description{
+    <div>
+        With DocIO, you can accept or reject the tracked changes from an existing Word document (DOCX, DOC).
+        <ul>
+            <li>
+                You can accept or reject the tracked changes based on author, date, and type of revision.
+            </li>
+            <li>
+                You can accept or reject all the tracked changes in the Word document.
+            </li>
+        </ul>
+    </div>
+    <div style="margin-top: 15px">
+        More information about accepting or rejecting track changes can be found in this
+        <a href="https://help.syncfusion.com/file-formats/docio/accepting-or-rejecting-track-changes">documentation</a>
+        section.
+    </div>
+}
+@section Meta{
+    <meta name="description" content="This example demonstrates the Track Changes in ASP.NET Core DocIO control. Explore here for more details." />
+}
+@section Title{
+    <title>ASP.NET Core DocIO Track Changes Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Track Changes in ASP.NET Core DocIO Control</h1>
+}

@@ -24,7 +24,7 @@ namespace EJ2CoreSampleBrowser.Controllers.XlsIO
 
         public ActionResult ConditionalFormatting(string SaveOption)
         {
-            string basePath = _hostingEnvironment.WebRootPath;
+            string basePath = _hostingEnvironment.WebRootPath; 
 
             if (SaveOption == null)
                 return View();
@@ -36,7 +36,6 @@ namespace EJ2CoreSampleBrowser.Controllers.XlsIO
             ExcelEngine excelEngine = new ExcelEngine();
             //Step 2 : Instantiate the excel application object.
             IApplication application = excelEngine.Excel;
-            string OutputFileName = "";
 
             //Open an existing Excel 2007 file
             IWorkbook workbook = null;
@@ -50,7 +49,6 @@ namespace EJ2CoreSampleBrowser.Controllers.XlsIO
                 workbook = application.Workbooks.Create(3);
                 sheet = workbook.Worksheets[0];
                 workbook.Version = ExcelVersion.Excel97to2003;
-                OutputFileName = "ConditionalFormatting.xls";
             }
             //Set the File Format as XLSX
             else
@@ -59,7 +57,6 @@ namespace EJ2CoreSampleBrowser.Controllers.XlsIO
                 workbook = excelEngine.Excel.Workbooks.Open(inputStream);
                 sheet = workbook.Worksheets[0];
                 workbook.Version = ExcelVersion.Excel2016;
-                OutputFileName = "ConditionalFormatting.xlsx";
             }
            
             if (SaveOption != "Xls")

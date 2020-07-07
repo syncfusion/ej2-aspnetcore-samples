@@ -397,6 +397,102 @@ namespace EJ2CoreSampleBrowser.Models
             return recurrenceData;
         }
 
+        public List<QuickInfoTemplateData> GetQuickInfoTemplateData()
+        {
+            List<QuickInfoTemplateData> quickInfoTemplateData = new List<QuickInfoTemplateData>();
+            quickInfoTemplateData.Add(new QuickInfoTemplateData
+            {
+                RoomId = 10,
+                Id = 1,
+                Subject = "Board Meeting",
+                Description = "Meeting to discuss business goal of 2020.",
+                StartTime = "2020-01-05T04:00:00.000Z",
+                EndTime = "2020-01-05T05:30:00.000Z"
+            });
+            quickInfoTemplateData.Add(new QuickInfoTemplateData
+            {
+                RoomId = 8,
+                Id = 2,
+                Subject = "Training session on JSP",
+                Description = "Knowledge sharing on JSP topics.",
+                StartTime = "2020-01-07T04:00:00.000Z",
+                EndTime = "2020-01-07T05:30:00.000Z"
+            });
+            quickInfoTemplateData.Add(new QuickInfoTemplateData
+            {
+                RoomId = 3,
+                Id = 3,
+                Subject = "Sprint Planning with Team members",
+                Description = "Planning tasks for sprint.",
+                StartTime = "2020-01-09T04:00:00.000Z",
+                EndTime = "2020-01-09T05:30:00.000Z"
+            });
+            quickInfoTemplateData.Add(new QuickInfoTemplateData
+            {
+                RoomId = 2,
+                Id = 4,
+                Subject = "Meeting with Client",
+                Description = "Customer meeting to discuss features.",
+                StartTime = "2020-01-11T03:30:00.000Z",
+                EndTime = "2020-01-11T05:00:00.000Z"
+            });
+            quickInfoTemplateData.Add(new QuickInfoTemplateData
+            {
+                RoomId = 5,
+                Id = 5,
+                Subject = "Support Meeting with Managers",
+                Description = "Meeting to discuss support plan.",
+                StartTime = "2020-01-06T06:30:00.000Z",
+                EndTime = "2020-01-06T08:00:00.000Z"
+            });
+            quickInfoTemplateData.Add(new QuickInfoTemplateData
+            {
+                RoomId = 1,
+                Id = 6,
+                Subject = "Client Meeting",
+                Description = "Meeting to discuss client requirements.",
+                StartTime = "2020-01-08T06:00:00.000Z",
+                EndTime = "2020-01-08T07:30:00.000Z"
+            });
+            quickInfoTemplateData.Add(new QuickInfoTemplateData
+            {
+                RoomId = 7,
+                Id = 7,
+                Subject = "Appraisal Meeting",
+                Description = "Meeting to discuss employee appraisals.",
+                StartTime = "2020-01-10T05:30:00.000Z",
+                EndTime = "2020-01-10T07:00:00.000Z"
+            });
+            quickInfoTemplateData.Add(new QuickInfoTemplateData
+            {
+                RoomId = 6,
+                Id = 8,
+                Subject = "HR Meeting",
+                Description = "Meeting to discuss HR plans.",
+                StartTime = "2020-01-05T07:30:00.000Z",
+                EndTime = "2020-01-05T09:00:00.000Z"
+            });
+            quickInfoTemplateData.Add(new QuickInfoTemplateData
+            {
+                RoomId = 4,
+                Id = 9,
+                Subject = "Customer Meeting",
+                Description = "Meeting to discuss customer reported issues.",
+                StartTime = "2020-01-09T07:00:00.000Z",
+                EndTime = "2020-01-09T08:30:00.000Z"
+            });
+            quickInfoTemplateData.Add(new QuickInfoTemplateData
+            {
+                RoomId = 9,
+                Id = 10,
+                Subject = "Board Meeting",
+                Description = "Meeting to discuss business plans.",
+                StartTime = "2020-01-11T07:30:00.000Z",
+                EndTime = "2020-01-11T09:00:00.000Z"
+            });
+            return quickInfoTemplateData;
+        }
+
         public List<ZooEventData> GetZooEventData()
         {
             List<ZooEventData> zooEventData = new List<ZooEventData>();
@@ -6651,6 +6747,16 @@ namespace EJ2CoreSampleBrowser.Models
             public int ConsultantID { get; set; }
             public string DepartmentName { get; set; }
         }
+
+        public class QuickInfoTemplateData
+        {
+            public int Id { get; set; }
+            public int RoomId { set; get; }
+            public string Subject { get; set; }
+            public string StartTime { get; set; }
+            public string EndTime { get; set; }
+            public string Description { get; set; }
+        }
     }
     public class ResourceDataSourceModel
     {
@@ -6667,5 +6773,14 @@ namespace EJ2CoreSampleBrowser.Models
         public int groupId { set; get; }
         public string color { set; get; }
         public string designation { set; get; }
+    }
+
+    public class QuickInfoDataSourceModel
+    {
+        public string Name { set; get; }
+        public int Id { set; get; }
+        public int Capacity { set; get; }
+        public string Color { set; get; }
+        public string Type { set; get; }
     }
 }

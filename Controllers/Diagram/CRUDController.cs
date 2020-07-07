@@ -95,12 +95,12 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
         [DefaultValue(null)]
         [HtmlAttributeName("id")]
         [JsonProperty("id")]
-        public string Id { get; set; }
+        public new string Id { get; set; }
 
         [DefaultValue(null)]
         [HtmlAttributeName("sourceID")]
         [JsonProperty("sourceID")]
-        public string SourceID { get; set; }
+        public new string SourceID { get; set; }
 
         [DefaultValue(null)]
         [HtmlAttributeName("customFields")]
@@ -110,11 +110,11 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
         [DefaultValue(null)]
         [HtmlAttributeName("targetID")]
         [JsonProperty("targetID")]
-        public string TargetID { get; set; }
+        public new string TargetID { get; set; }
 
         [DefaultValue(null)]
         [HtmlAttributeName("crudAction")]
         [JsonProperty("crudAction")]
-        public CRUDAction CrudAction { get; set; }
+        public new CRUDAction CrudAction { get; set; }
     }
 }

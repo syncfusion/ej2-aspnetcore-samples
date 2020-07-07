@@ -4,6 +4,26 @@
                 }
 @section ControlsSection{
     <div class="control-section" style="overflow:auto">
+        <div id="dropdown-control" style="margin-bottom:5px;">
+            <table style="width: 350px;">
+                <tbody>
+                    <tr style="height: 50px">
+                        <td>
+                            <div><b>Content Type:</b>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <select id="contenttype" name="ddl-view-mode">
+                                    <option value='JSON' selected>JSON</option>
+                                    <option value='CSV'>CSV</option>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <div class="content-wrapper">
             <div id="PivotView1" style="height:100%;">
             </div>
@@ -15,22 +35,66 @@
         adaptor: new ej.data.WebApiAdaptor,
         crossDomain: true
     });
+
+    var csvReport = {
+        url: 'https://bi.syncfusion.com/productservice/api/sales',
+        dataSource: undefined,
+        type: 'CSV',
+        enableSorting: true,
+        expandAll: false,
+        rows: [
+            { name: 'Region' },
+            { name: 'Country' }
+        ],
+        values: [
+            { name: 'Total Cost' },
+            { name: 'Total Revenue' },
+            { name: 'Total Profit' }
+        ],
+        columns: [
+            { name: 'Item Type' },
+            { name: 'Sales Channel' }
+        ],
+        formatSettings: [{ name: 'Total Cost', format: 'C0' }, { name: 'Total Revenue', format: 'C0' }, { name: 'Total Profit', format: 'C0' }],
+        drilledMembers: [{ name: 'Item Type', items: ['Baby Food'] }],
+        filters: []
+    };
+
+    var jsonReport = {
+		dataSource: remoteData,
+		type: 'JSON',
+		expandAll: true,
+		formatSettings: [{ name: 'UnitPrice', format: 'C0' }],
+		columns: [{ name: 'ProductName', caption: 'Product Name' }],
+		filters: [],
+		rows: [{ name: 'ShipCountry', caption: 'Ship Country' }, { name: 'ShipCity', caption: 'Ship City' }],
+		values: [{ name: 'Quantity' }, { name: 'UnitPrice', caption: 'Unit Price' }]
+	};
     var pivotObj = new ej.pivotview.PivotView({
-        dataSourceSettings: {
-            dataSource: remoteData,
-            expandAll: true,
-            filters: [],
-            columns: [{ name: 'ProductName', caption: 'Product Name' }],
-            rows: [{ name: 'ShipCountry', caption: 'Ship Country' }, { name: 'ShipCity', caption: 'Ship City' }],
-            formatSettings: [{ name: 'UnitPrice', format: 'C0' }],
-            values: [{ name: 'Quantity' }, { name: 'UnitPrice', caption: 'Unit Price' }]
-        },
+        dataSourceSettings: jsonReport,
         height: 300,
         width: '100%',
         gridSettings: { columnWidth: 120 }
     });
     pivotObj.appendTo('#PivotView1');
+
+	var contentDropDown = new ej.dropdowns.DropDownList({
+        placeholder: 'Content Type',
+        change: function (args) {
+            if (args.value === 'JSON') {
+                pivotObj.dataSourceSettings = jsonReport;
+            } else if (args.value === 'CSV') {
+				pivotObj.dataSourceSettings = csvReport;
+            }
+        }
+    });
+    contentDropDown.appendTo('#contenttype');
 </script>
+<style>
+    .control-section {
+        padding-top: 5px;
+    }
+</style>
 }
 
 @section PreScripts {
@@ -41,31 +105,27 @@
 
 @section ActionDescription{
    <div id="action-description">
-       <p>This sample demonstrates basic rendering of the pivot table bound to JSON data pulled from a remote server.</p>
+       <p>This sample demonstrates basic rendering of the pivot table bound to JSON or CSV data pulled from a remote server.</p>
     </div>
 }
 
 @section Description{
     <div id="description">
-        <p>
-            The pivot table supports JSON data source. The
-            <code>dataSourceSettings->dataSource</code> property can be assigned with the result of DataManager to bind remote data.
-        </p>
+        <p>The pivot table supports JSON and CSV data source. The
+            <code>dataSourceSettings->dataSource</code> property can be assigned with the result of DataManager to bind remote data.</p>
         The
         <code>DataManager</code>, which will act as an interface between the service endpoint and the pivot table, will require the below minimal
         information to interact with service endpoint properly.
         <ul>
             <li>
-                <code>DataManager->url</code> - Defines the service endpoint to fetch data.
-            </li>
+                <code>DataManager->url</code> - Defines the service endpoint to fetch data.</li>
             <li>
                 <code>DataManager->adaptor</code> - Defines the adaptor option. Here,
-                <code>WebApiAdaptor</code> is used for remote binding.
-            </li>
+                <code>WebApiAdaptor</code> is used for remote binding.</li>
         </ul>
-        In this demo, remote data is bound by assigning service data as an instance of
+        In this demo, with respect to JSON remote data, is bound by assigning service data as an instance of
         <code>DataManager</code> to the
-        <code>dataSourceSettings->dataSource</code> property.
+        <code>dataSourceSettings->dataSource</code> property. But for CSV, the service URL is directly set to <code>url</code> for remote data consumption.
     </div>
 }
 @section Title{

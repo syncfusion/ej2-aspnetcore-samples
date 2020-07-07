@@ -1,7 +1,7 @@
 @using Syncfusion.EJ2.PivotView
 @section Meta{
-                    <meta name="description" content="This example demonstrates the Grouping in ASP.NET Core Pivot Table control. Explore here for more details."/>
-                }
+    <meta name="description" content="This example demonstrates the Grouping in ASP.NET Core Pivot Table control. Explore here for more details." />
+}
 @section ControlsSection{
 
     <div class="col-lg-8 control-section" id="pivot-table-section">
@@ -85,9 +85,9 @@
             overflow: auto;
         }
 
-        .pivot-table-property-section .e-multiselect {
-            padding: 0;
-        }
+            .pivot-table-property-section .e-multiselect {
+                padding: 0;
+            }
     </style>
     <script src="~/scripts/pivotData/data-source.js"></script>
     <script type="text/javascript">
@@ -166,9 +166,12 @@
                 data[ln].Sold = data[ln].Sold * (date.getFullYear() === 2015 ? 3 : date.getFullYear() === 2016 ? 4 : date.getFullYear() === 2017 ? 2 : 5);
                 data[ln].Amount = ((date.getFullYear() === 2018 ? 2 : 0) + data[ln].Sold) * amount[data[ln].Product_ID - 1000];
             }
-            args.pivotview.dataSourceSettings.groupSettings = [{ name: 'Date', type: 'Date', groupInterval: ['Years', 'Months', 'Days'] },
-            { name: 'Product_ID', type: 'Number', rangeInterval: 4 }];
-            args.pivotview.setProperties({ dataSourceSettings: { dataSource: ej.base.extend([], data, null, true) } }, true);
+            args.pivotview.setProperties({
+                dataSourceSettings: {
+                    dataSource: ej.base.extend([], data, null, true), groupSettings: [{ name: 'Date', type: 'Date', groupInterval: ['Years', 'Months', 'Days'] },
+                    { name: 'Product_ID', type: 'Number', rangeInterval: 4 }]
+                }
+            }, true);
         }
 
         function beforeColumnsRender(args) {
@@ -234,8 +237,8 @@
     </div>
 }
 @section Title{
-                    <title>ASP.NET Core Pivot Table Grouping Example - Syncfusion Demos </title> 
-                }
+    <title>ASP.NET Core Pivot Table Grouping Example - Syncfusion Demos </title>
+}
 @section Header{
-                    <h1 class='sb-sample-text'>Example of Grouping in ASP.NET Core Pivot Table Control</h1>
-                }
+    <h1 class='sb-sample-text'>Example of Grouping in ASP.NET Core Pivot Table Control</h1>
+}

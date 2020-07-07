@@ -12,6 +12,7 @@ using Syncfusion.DocIO.DLS;
 using Syncfusion.Office;
 using System;
 using System.IO;
+using Syncfusion.DocIORenderer;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,15 +20,24 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
 {
     public partial class DocIOController : Controller
     {
-        public IActionResult CreateEquation(string Button)
+        public IActionResult CreateEquation(string Button, string Group1)
         {
             if (Button == null)
                 return View();
 
-            //Creates a new word document instance
+            string basePath = _hostingEnvironment.WebRootPath;
+            string dataPath = basePath + @"/DocIO/Create Equation.docx";
+            // Load Template document stream.
+            FileStream fileStream = new FileStream(dataPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+
+            // Creates an empty Word document instance.
             WordDocument document = new WordDocument();
-            //Adds new section to the document
-            IWSection section = document.AddSection();
+            // Opens template document.
+            document.Open(fileStream, FormatType.Docx);
+            fileStream.Dispose();
+            fileStream = null;
+            //Gets the last section in the document
+            WSection section = document.LastSection;
             //Sets page margins
             document.LastSection.PageSetup.Margins.All = 72;
             //Adds new paragraph to the section
@@ -74,13 +84,26 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
             CreateVectorRelation(paragraph);
             #endregion
 
-            FormatType type = FormatType.Docx;
-            string filename = "Sample.docx";
-            string contenttype = "application/vnd.ms-word.document.12";
-
+            string filename = "";
+            string contenttype = "";
             MemoryStream ms = new MemoryStream();
-            document.Save(ms, type);
+            #region Document SaveOption
+            if (Group1 == "WordDocx")
+            {
+                filename = "CreateEquation.docx";
+                contenttype = "application/msword";
+                document.Save(ms, FormatType.Docx);
+            }
+            else
+            {
+                filename = "CreateEquation.pdf";
+                contenttype = "application/pdf";
+                DocIORenderer renderer = new DocIORenderer();
+                renderer.ConvertToPDF(document).Save(ms);
+            }
+            #endregion Document SaveOption            
             document.Close();
+			
             ms.Position = 0;
             return File(ms, contenttype, filename);
         }

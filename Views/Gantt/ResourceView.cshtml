@@ -3,11 +3,22 @@
     <div class="control-section">
         <div class="row">
             <div class="col-md-12">
+                @{
+                    List<object> toolbarItems = new List<object>();
+                    toolbarItems.Add("Add");
+                    toolbarItems.Add("Edit");
+                    toolbarItems.Add("Update");
+                    toolbarItems.Add("Delete");
+                    toolbarItems.Add("Cancel");
+                    toolbarItems.Add("ExpandAll");
+                    toolbarItems.Add("CollapseAll");
+                    toolbarItems.Add(new { text = "Show/Hide Overallocation", tooltipText = "Show/Hide Overallocation", id = "showhidebar" });
+                }
                 <ejs-gantt id='ResourceView' dataSource="ViewBag.dataSource" resources="ViewBag.projectResources" 
                            viewType="ResourceView" allowResizing="true" allowSelection="true" highlightWeekends="true"
-                           treeColumnIndex="1" height="450px"
+                           treeColumnIndex="1" height="450px" showOverAllocation="true"
                            projectStartDate="03/28/2019" projectEndDate="05/18/2019"
-                           toolbar="@(new List<string>() { "Add", "Edit", "Update", "Delete", "Cancel", "ExpandAll", "CollapseAll" })">
+                           toolbar=toolbarItems toolbarClick="toolbarClick">
                     <e-gantt-editsettings allowAdding="true" allowEditing="true" allowDeleting="true"
                                           allowTaskbarEditing="true" showDeleteConfirmDialog="true"></e-gantt-editsettings>
                     <e-gantt-columns>
@@ -25,7 +36,7 @@
                     <e-gantt-resourcefields id="ResourceId" name="ResourceName" unit="ResourceUnit" group="ResourceGroup">
                     </e-gantt-resourcefields>
                     <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate"
-                                        endDate="EndDate" duration="Duration" progress="Progress"
+                                        endDate="EndDate" duration="Duration" progress="Progress" dependency="Predecessor"
                                         child="SubTasks" work="Work" resourceInfo="Resources">
                     </e-gantt-taskfields>
 
@@ -35,6 +46,14 @@
                         <e-gantt-editdialogfield type="Resources"></e-gantt-editdialogfield>
                     </e-gantt-editdialogfields>
                 </ejs-gantt>
+	<script>	
+		function toolbarClick(args) {
+        if (args.item.id === 'showhidebar') {
+            var ganttObj = document.getElementById("ResourceView").ej2_instances[0];
+            ganttObj.showOverAllocation = ganttObj.showOverAllocation ? false : true;
+        }
+        }
+    </script>
             </div>
         </div>
     </div>

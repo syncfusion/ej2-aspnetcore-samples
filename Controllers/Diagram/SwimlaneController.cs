@@ -12,8 +12,6 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
 {
     public partial class DiagramController : Controller
     {
-        string darkColor = "#C7D4DF";
-        string lightColor = "#f5f5f5";
         string pathData = "M 120 24.9999 C 120 38.8072 109.642 50 96.8653 50 L 23.135 50 C 10.3578 50 0 38.8072 0 24.9999 L 0 24.9999 C 0 11.1928 10.3578 0 23.135 0 L 96.8653 0 C 109.642 0 120 11.1928 120 24.9999 Z";
 
         public IActionResult Swimlane()

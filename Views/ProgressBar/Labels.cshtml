@@ -3,53 +3,79 @@
     <div class="control-section">
         <div class="row linear-parent">
             <div id="percentage" class="linear-progress">
-                <ejs-progressbar id="percentage"
+                <ejs-progressbar id="percentage1"
                                  type='Linear'
-                                 height='60'
-                                 width='90%'
-                                 trackThickness=24
-                                 progressThickness=24
-                                 progressColor='#2BB20E'
-                                 minimum="0" maximum="100"
-                                 loaded="loaded1"
-                                 value=100 showProgressValue="true" cornerRadius="Round">
-
+                                 height="30"
+                                 width="100%"
+                                 minimum="0"
+                                 maximum="100"
+                                 trackThickness="24"
+                                 progressThickness="24"
+                                 cornerRadius='Square'
+                                 showProgressValue="true"
+                                 value="40"
+                                 role="Success"
+                                 load="progressLoad">
+                    <e-progressbar-labelstyle text="40% Complete (Success)" textAlignment="Center" color="#ffffff"></e-progressbar-labelstyle>
                     <e-progressbar-animation enable=true duration=2000 delay=0></e-progressbar-animation>
                 </ejs-progressbar>
             </div>
             <div id="ratio" class="linear-progress">
-                <ejs-progressbar id="ratio"
+                <ejs-progressbar id="ratio1"
                                  type='Linear'
-                                 height='60'
-                                 width='90%'
+                                 height='30'
+                                 width='100%'
+                                 minimum="0"
+                                 maximum="100"
                                  trackThickness=24
                                  progressThickness=24
-                                 progressColor='#8D8989'
-                                 loaded="loaded2"
-                                 minimum="0" maximum="100"
-                                 textRender="textRender1"
-                                 value=40 showProgressValue="true" cornerRadius="Round">
+                                 cornerRadius='Square'
+                                 showProgressValue=true
+                                 value=50
+                                 role="Info"
+                                 load="progressLoad">
+                    <e-progressbar-labelstyle text="50% Complete (Info)" textAlignment="Center" color="#ffffff"></e-progressbar-labelstyle>
                     <e-progressbar-animation enable=true duration=2000 delay=0></e-progressbar-animation>
                 </ejs-progressbar>
             </div>
             <div id="acutal" class="linear-progress">
-                <ejs-progressbar id="acutal"
+                <ejs-progressbar id="acutal1"
                                  type='Linear'
-                                 height='60'
-                                 width='90%'
+                                 height='30'
+                                 width='100%'
+                                 minimum="0"
+                                 maximum="100"
+                                 trackThickness="24"
+                                 progressThickness="24"
+                                 value=60
+                                 cornerRadius='Square'
+                                 showProgressValue=true
+                                 role="Warning"
+                                 load="progressLoad">
+                    <e-progressbar-labelstyle text="60% Complete (Warning)" textAlignment="Center" color="#ffffff"></e-progressbar-labelstyle>
+                    <e-progressbar-animation enable=true duration=2000 delay=0></e-progressbar-animation>
+                </ejs-progressbar>
+            </div>
+            <div id="custom" class="linear-progress">
+                <ejs-progressbar id="custom1"
+                                 type='Linear'
+                                 height='30'
+                                 width='100%'
+                                 minimum="0"
+                                 maximum="100"
                                  trackThickness=24
                                  progressThickness=24
-                                 progressColor='#E3165B'
-                                 trackColor="#F8C7D8"
-                                 loaded="loaded3"
-                                 textRender="textRender2"
-                                 minimum="0" maximum="100"
-                                 value=50 showProgressValue="true" cornerRadius="Round">
+                                 cornerRadius='Square'
+                                 showProgressValue=true
+                                 value=70
+                                 role="Danger"
+                                 load="progressLoad">
+                    <e-progressbar-labelstyle text="70% Complete (Danger)" textAlignment="Center" color="#ffffff"></e-progressbar-labelstyle>
                     <e-progressbar-animation enable=true duration=2000 delay=0></e-progressbar-animation>
                 </ejs-progressbar>
             </div>
         </div>
-        <div class="row linear-parent">
+        <div class="row linear-button">
             <button id="reLoad" class="e-control e-btn e-lib e-outline e-primary">Reload</button>
         </div>
     </div>
@@ -63,22 +89,14 @@
             margin-top: 2%;
         }
 
+        .linear-button {
+            text-align: center;
+        }
+
         .linear-progress {
-            width: 60%;
+            width: 80%;
             margin: auto;
             margin-bottom: 3%;
-        }
-
-        #percentage_linearLabel {
-            fill: white;
-        }
-
-        #ratio_linearLabel {
-            fill: white;
-        }
-
-        #acutal_linearLabel {
-            fill: white;
         }
 
         #reLoad {
@@ -87,33 +105,26 @@
         }
     </style>
     <script>
-        var loaded1 = function (args) {
-            var text1 = document.getElementById('percentage_linearLabel');
-            text1.setAttribute('fill', 'white');
-        }
-        var loaded2 = function (args) {
-            var text2 = document.getElementById('ratio_linearLabel');
-            text2.setAttribute('fill', 'white');
-        }
-        var loaded3 = function (args) {
-            var text3 = document.getElementById('acutal_linearLabel');
-            text3.setAttribute('fill', 'white');
-        }
-        var textRender1 = function (args) {
-            args.text = '2/5';
-        }
-        var textRender2 = function (args) {
-            args.text = '50';
-        }
+        var progressLoad = function (args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.progressBar.theme = (selectedTheme.charAt(0).toUpperCase() +
+                selectedTheme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+            if (args.progressBar.theme === 'Material') {
+                args.progressBar.trackColor = '#EAEAEA';
+            }
+        };
 
         var replayBtn = document.getElementById('reLoad');
         replayBtn.onclick = function () {
-            var PercentProgress = document.getElementById('percentage').ej2_instances[0];
-            var RatioProgress = document.getElementById('ratio').ej2_instances[0];
-            var ActualProgress = document.getElementById('acutal').ej2_instances[0];
+            var PercentProgress = document.getElementById('percentage1').ej2_instances[0];
+            var RatioProgress = document.getElementById('ratio1').ej2_instances[0];
+            var ActualProgress = document.getElementById('acutal1').ej2_instances[0];
+            var customProgress = document.getElementById('custom1').ej2_instances[0];
             PercentProgress.refresh();
             ActualProgress.refresh();
             RatioProgress.refresh();
+            customProgress.refresh();
         };
     </script>
 }

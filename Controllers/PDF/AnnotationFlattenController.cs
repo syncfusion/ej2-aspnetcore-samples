@@ -249,6 +249,33 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
             }
             secondPage.Annotations.Add(freeText0);
 
+            PdfRectangleAnnotation cloudannotation = new PdfRectangleAnnotation(new RectangleF(30, 300, 100, 50), "Rectangle Cloud Annoatation");
+            cloudannotation.Border.BorderWidth = 1;
+            cloudannotation.Color = Color.Red;
+            cloudannotation.InnerColor = Color.Blue;
+            PdfBorderEffect bordereffect = new PdfBorderEffect();
+            bordereffect.Intensity = 2;
+            bordereffect.Style = PdfBorderEffectStyle.Cloudy;
+            cloudannotation.BorderEffect = bordereffect;
+            secondPage.Graphics.DrawString("Cloud Annotation", font, brush, new PointF(40, 260));
+            secondPage.Annotations.Add(cloudannotation);
+            if (checkboxFlatten != "Flatten")
+            {
+                PdfRedactionAnnotation redactionannot = new PdfRedactionAnnotation();
+                redactionannot.Bounds = new RectangleF(350, 300, 100, 50);
+                redactionannot.Text = "Redaction Annotation";
+                redactionannot.InnerColor = Color.Orange;
+                redactionannot.BorderColor = Color.Red;
+                redactionannot.Font = new PdfStandardFont(PdfFontFamily.Helvetica, 13);
+                redactionannot.TextColor = Color.Green;
+                redactionannot.OverlayText = "REDACTED";
+                redactionannot.RepeatText = true;
+                redactionannot.TextAlignment = PdfTextAlignment.Left;
+                redactionannot.SetAppearance(true);
+                secondPage.Graphics.DrawString("Redaction Annotation", font, brush, new PointF(350, 260));
+                secondPage.Annotations.Add(redactionannot);
+            }
+
             MemoryStream SourceStream = new MemoryStream();
             document.Save(SourceStream);
             document.Close(true);

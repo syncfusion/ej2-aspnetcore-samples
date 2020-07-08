@@ -36,7 +36,7 @@ namespace samplebrowser.Controllers.XlsIO
             //The instantiation process consists of two steps.
 
 			AttendanceDetailsGenerator attendanceDetailsGenerator = new AttendanceDetailsGenerator();
-            _employeeAttendanceList = attendanceDetailsGenerator.GetEmployeeAttendanceDetails(2019, 01);
+            _employeeAttendanceList = attendanceDetailsGenerator.GetEmployeeAttendanceDetails(2019, 01); 
 
             #region Workbook Initialize
             ExcelEngine excelEngine = new ExcelEngine();
@@ -67,7 +67,7 @@ namespace samplebrowser.Controllers.XlsIO
             worksheet.Range["A1:AL31"].CellStyle.VerticalAlignment = ExcelVAlign.VAlignCenter;
 
             worksheet.Range["A1:AL1"].CellStyle.Font.Color = ExcelKnownColors.White;
-            worksheet.Range["A1:AL1"].CellStyle.FillBackgroundRGB = Color.FromArgb(58, 56, 56);
+            worksheet.Range["A1:AL1"].CellStyle.Color = Color.FromArgb(58, 56, 56);
 
             worksheet.Range["A1:B31"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignLeft;
             worksheet.Range["C2:G31"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;

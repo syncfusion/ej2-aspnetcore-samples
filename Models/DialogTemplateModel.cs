@@ -16,7 +16,7 @@ namespace EJ2CoreSampleBrowser.Models
         public double Freight { get; set; }
         public string ShipCity { get; set; }
         public bool Verified { get; set; }
-        public DateTime OrderDate { get; set; }
+        public DateTime? OrderDate { get; set; }
 
         public string ShipName { get; set; }
 

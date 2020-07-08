@@ -46,6 +46,7 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
             MailMergeDataTable mailMergeDataTableStock = GetMailMergeDataTableStock();
             // Execute Mail Merge with groups.
             document.MailMerge.ExecuteGroup(mailMergeDataTableStock);
+
             //Update fields in the document.
             document.UpdateDocumentFields();
 
@@ -54,21 +55,21 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
                 UnlinkFieldsInDocument(document);
 
             FormatType type = FormatType.Docx;
-            string filename = "Sample.docx";
+            string filename = "Update Fields.docx";
             string contenttype = "application/vnd.ms-word.document.12";
             #region Document SaveOption
             //Save as .doc format
             if (Group1 == "WordDoc")
             {
                 type = FormatType.Doc;
-                filename = "Sample.doc";
+                filename = "Update Fields.doc";
                 contenttype = "application/msword";
             }
             //Save as .xml format
             else if (Group1 == "WordML")
             {
                 type = FormatType.WordML;
-                filename = "Sample.xml";
+                filename = "Update Fields.xml";
                 contenttype = "application/msword";
             }
             #endregion Document SaveOption

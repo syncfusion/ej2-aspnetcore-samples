@@ -28,7 +28,7 @@ namespace EJ2CoreSampleBrowser.Controllers.XlsIO
 
             if (button == null)
                 return View();
-            else if (button == "Input Template")
+            else if (button == "Input Template") 
             {
                 Stream ms = new FileStream(basePath + @"/XlsIO/ExpenseReport.xlsx", FileMode.Open, FileAccess.Read);
                 return File(ms, "Application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Template.xlsx");
@@ -56,7 +56,6 @@ namespace EJ2CoreSampleBrowser.Controllers.XlsIO
                 {
                     //Create a memory stream to store the generated image.
                     Stream image = new MemoryStream();
-                    FileStream imageStream = null;
                     application.XlsIORenderer = new XlsIORenderer();
                     
 					ExportImageOptions imageOptions = new ExportImageOptions()

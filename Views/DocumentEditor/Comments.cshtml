@@ -1,7 +1,7 @@
 @section ControlsSection{
     <div class="control-section">
         <div id='documenteditor_titlebar' class="e-de-ctn-title"></div>
-        <ejs-documenteditorcontainer id="container" enableToolbar=true height="590px" showPropertiesPane="false"></ejs-documenteditorcontainer>
+        <ejs-documenteditorcontainer id="container" enableToolbar=true height="590px" userColor = "#b70f34" ></ejs-documenteditorcontainer>
     </div>
 }
 @section ActionDescription{
@@ -29,6 +29,7 @@
     var documenteditor;
     document.addEventListener('DOMContentLoaded', function () {
         var documenteditorElement = document.getElementById("container");
+        
         var container = documenteditorElement.ej2_instances[0];
         container.showPropertiesPane = false;
         documenteditor = container.documentEditor;
@@ -40,15 +41,27 @@
         ajax.onSuccess = function (data) {
             documenteditor.open(data);
             documenteditor.documentName = 'Comments';
-			documenteditor.showComments = true;
+            documenteditor.showComments = true;
             updateDocumentTitle();
         };
         container.documentChange = function (args) {
             updateDocumentTitle();
         };
+        container.commentDelete = function (args) {
+        if(args.author !== documenteditor.currentUser){
+            args.cancel = true;
+            ej.popups.DialogUtility.alert({
+                title: 'Information',
+                content: 'Delete restriction enabled. Only the author of the comment can delete it.',
+                showCloseIcon: true,
+                closeOnEscape: true,
+            });
+        }
+        };
+
         titleBarDiv = document.getElementById('documenteditor_titlebar');
         initComponentAndWireEvent();
-    });
+    });        
     </script>
 }
 @section Meta{

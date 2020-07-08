@@ -118,7 +118,7 @@ function loadCulture() {
 function changeRtl() {
 	setTimeout(function() {
 		var elementlist = ej.base.selectAll('.e-control', document.getElementById('control-content'));
-		var propertylist =[...ej.base.selectAll('.property-section .e-control', document.getElementById('control-content'))];
+		var propertylist =[].concat(ej.base.selectAll('.property-section .e-control', document.getElementById('control-content')));
 		for (var i = 0; i < elementlist.length; i++) {
 			var control = elementlist[i];
 			if (propertylist.indexOf(control) === -1) {

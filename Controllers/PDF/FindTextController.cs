@@ -39,7 +39,7 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
                 Dictionary<int, List<Syncfusion.Drawing.RectangleF>> matchRects = new Dictionary<int, List<Syncfusion.Drawing.RectangleF>>();
                 loadedDocument.FindText("document", out matchRects);
                 FindTextMessage message = new FindTextMessage();
-                for (int i = 0; i < loadedDocument.Pages.Count; i++)
+                for (int i = 0; i < loadedDocument.Pages.Count;)
                 {
                     List<Syncfusion.Drawing.RectangleF> rectCoords = matchRects[i];
                     message.Message = "First Occurrence: X:" + rectCoords[0].X + "; Y:" + rectCoords[0].Y + "; Width:" + rectCoords[0].Width+"; Height:" + rectCoords[0].Height + Environment.NewLine +

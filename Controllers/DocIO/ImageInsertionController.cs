@@ -18,7 +18,6 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
 {
     public partial class DocIOController : Controller
     {
-        string dataPath2;
         #region ImageInsertion
         public ActionResult ImageInsertion(string Group1)
         {
@@ -28,6 +27,7 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
             WordDocument document = new WordDocument();
             //Adding a new section to the document.
             IWSection section = document.AddSection();
+            section.PageSetup.Margins.All = 72;
             //Adding a paragraph to the section
             IWParagraph paragraph = section.AddParagraph();        
             //Writing text.
@@ -40,7 +40,8 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
             //Inserting .gif .
             WPicture picture = (WPicture)paragraph.AppendPicture(imageStream);
             //Adding Image caption
-            picture.AddCaption("Yahoo [.gif Image]", CaptionNumberingFormat.Roman, CaptionPosition.AboveImage);
+            picture.AddCaption("Figure", CaptionNumberingFormat.Roman, CaptionPosition.AfterImage);
+            ApplyFormattingForCaption(document.LastParagraph);
 
             paragraph = section.AddParagraph();
             paragraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
@@ -48,7 +49,8 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
             //Inserting .bmp
             picture = (WPicture)paragraph.AppendPicture(imageStream);
             //Adding Image caption
-            picture.AddCaption("Reports [.bmp Image]", CaptionNumberingFormat.Roman, CaptionPosition.AboveImage);
+            picture.AddCaption("Figure", CaptionNumberingFormat.Roman, CaptionPosition.AfterImage);
+            ApplyFormattingForCaption(document.LastParagraph);
 
             paragraph = section.AddParagraph();
             paragraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
@@ -56,7 +58,8 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
             //Inserting .png 
             picture = (WPicture)paragraph.AppendPicture(imageStream);
             //Adding Image caption
-            picture.AddCaption("Google [.png Image]", CaptionNumberingFormat.Roman, CaptionPosition.AboveImage);
+            picture.AddCaption("Figure", CaptionNumberingFormat.Roman, CaptionPosition.AfterImage);
+            ApplyFormattingForCaption(document.LastParagraph);
 
             paragraph = section.AddParagraph();
             paragraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
@@ -64,7 +67,8 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
             //Inserting .tif 
             picture = (WPicture)paragraph.AppendPicture(imageStream);
             //Adding Image caption
-            picture.AddCaption("Square [.tif Image]", CaptionNumberingFormat.Roman, CaptionPosition.AboveImage);
+            picture.AddCaption("Figure", CaptionNumberingFormat.Roman, CaptionPosition.AfterImage);
+            ApplyFormattingForCaption(document.LastParagraph);
 
             //Adding a new paragraph.
             paragraph = section.AddParagraph();
@@ -78,24 +82,28 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
             mImage.WidthScale = 50f;
 
             //Adding Image caption
-            mImage.AddCaption("Chart Vector Image", CaptionNumberingFormat.Roman, CaptionPosition.AboveImage);
+            mImage.AddCaption("Figure", CaptionNumberingFormat.Roman, CaptionPosition.AfterImage);
+            ApplyFormattingForCaption(document.LastParagraph);
+
+            //Updates the fields in Word document
+            document.UpdateDocumentFields();
 
             FormatType type = FormatType.Docx;
-            string filename = "Sample.docx";
+            string filename = "Image Insertion.docx";
             string contenttype = "application/vnd.ms-word.document.12";
             #region Document SaveOption
             //Save as .doc format
             if (Group1 == "WordDoc")
             {
                 type = FormatType.Doc;
-                filename = "Sample.doc";
+                filename = "Image Insertion.doc";
                 contenttype = "application/msword";
             }
             //Save as .xml format
             else if (Group1 == "WordML")
             {
                 type = FormatType.WordML;
-                filename = "Sample.xml";
+                filename = "Image Insertion.xml";
                 contenttype = "application/msword";
             }
             #endregion Document SaveOption
@@ -104,6 +112,18 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
             document.Close();
             ms.Position = 0;
             return File(ms, contenttype, filename);
+        }
+        /// <summary>
+        /// Apply formattings for image caption paragraph
+        /// </summary>
+        private void ApplyFormattingForCaption(WParagraph paragraph)
+        {
+            //Align the caption
+            paragraph.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
+            //Sets after spacing
+            paragraph.ParagraphFormat.AfterSpacing = 1.5f;
+            //Sets before spacing
+            paragraph.ParagraphFormat.BeforeSpacing = 1.5f;
         }
         #endregion ImageInsertion
     }

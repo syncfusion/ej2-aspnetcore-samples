@@ -19,27 +19,36 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
     public partial class DocIOController : Controller
     {
         #region BookmarkNavigation
-        public ActionResult BookmarkNavigation(string Group1)
+        public ActionResult BookmarkNavigation(string Group1,string Button)
         {
             if (Group1 == null)
                 return View();
+            if (Button == null)
+                return View();
+            string basePath = _hostingEnvironment.WebRootPath;
+            string dataPath = basePath + @"/DocIO/Bookmark_Template.docx";
+            FileStream fileStream = new FileStream(dataPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            string contenttype1 = "application/vnd.ms-word.document.12";
+            if (Button == "View Template")
+                return File(fileStream, contenttype1, "Bookmark_Template.docx");
+
             #region BookmarkNavigation
             // Creating a new document.
             WordDocument document = new WordDocument();
             //Adds section with one empty paragraph to the Word document
             document.EnsureMinimal();
-            //sets the page margins
+            //Sets the page margins
             document.LastSection.PageSetup.Margins.All = 72f;
             //Appends bookmark to the paragraph
             document.LastParagraph.AppendBookmarkStart("NorthwindDatabase");
             document.LastParagraph.AppendText("Northwind database with normalization concept");
             document.LastParagraph.AppendBookmarkEnd("NorthwindDatabase");
-            string basePath = _hostingEnvironment.WebRootPath;
-            string dataPath = basePath + @"/DocIO/Bookmark_Template.doc";
-            string dataPathTemp = basePath + @"/DocIO/BkmkDocumentPart_Template.doc";
+            basePath = _hostingEnvironment.WebRootPath;
+            dataPath = basePath + @"/DocIO/Bookmark_Template.docx";
+            string dataPathTemp = basePath + @"/DocIO/BkmkDocumentPart_Template.docx";
             // Open an existing template document with single section to get Northwind.information            
             WordDocument nwdInformation = new WordDocument();
-            FileStream fileStream = new FileStream(dataPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            fileStream = new FileStream(dataPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             nwdInformation.Open(fileStream, FormatType.Doc);
             fileStream.Dispose();
             fileStream = null;
@@ -74,6 +83,23 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
             bk.MoveToBookmark("Northwind_Information");
             // Replacing content of Northwind_Information bookmark.
             bk.ReplaceBookmarkContent(bodyPart);
+            #region Bookmark selection for table
+            // Creating a bookmark navigator. Which help us to navigate through the 
+            // bookmarks in the Northwind information document.
+            bk = new BookmarksNavigator(nwdInformation);
+            bk.MoveToBookmark("SuppliersTable");
+            //Sets the column index where the bookmark starts within the table
+            bk.CurrentBookmark.FirstColumn = 1;
+            //Sets the column index where the bookmark ends within the table
+            bk.CurrentBookmark.LastColumn = 5;
+            // Get the content of suppliers table bookmark.
+            bodyPart = bk.GetBookmarkContent();
+            // Creating a bookmark navigator. Which help us to navigate through the 
+            // bookmarks in the destination document.
+            bk = new BookmarksNavigator(document);
+            bk.MoveToBookmark("Table");
+            bk.ReplaceBookmarkContent(bodyPart);
+            #endregion
             // Move to the text bookmark
             bk.MoveToBookmark("Text");
             //Deletes the bookmark content
@@ -183,21 +209,21 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
             #endregion BookmarkNavigation
 
             FormatType type = FormatType.Docx;
-            string filename = "Sample.docx";
+            string filename = "Bookmark Navigation.docx";
             string contenttype = "application/vnd.ms-word.document.12";
             #region Document SaveOption
             //Save as .doc format
             if (Group1 == "WordDoc")
             {
                 type = FormatType.Doc;
-                filename = "Sample.doc";
+                filename = "Bookmark Navigation.doc";
                 contenttype = "application/msword";
             }
             //Save as .xml format
             else if (Group1 == "WordML")
             {
                 type = FormatType.WordML;
-                filename = "Sample.xml";
+                filename = "Bookmark Navigation.xml";
                 contenttype = "application/msword";
             }
             #endregion Document SaveOption

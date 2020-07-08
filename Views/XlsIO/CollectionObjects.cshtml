@@ -16,10 +16,12 @@
     <div class="control-section">
         @{Html.BeginForm("CollectionObjects", "XlsIO", FormMethod.Post);
         <div class="rowdiv">
-            <p>
-                Click the 'Import From Excel' button to import data from nested class into the ListView. 
-                The 'Export To Excel' button will generate a new Microsoft Excel document by exporting the nested class data from the ListView using Essential XlsIO. 
-                Please note that you need to have a MS Excel viewer installed in order to view the generated excel file.
+            <p style="font-weight:normal">
+                Click the "Import From Excel" button to import data from nested class into the ListView. 
+            </p>
+			<p style="font-weight:normal">
+                Click the "Export To Excel" button to view the Excel document created by exporting the nested class data from the ListView using Essential XlsIO. 
+                Please note that the Microsoft Excel viewer or Microsoft Excel is required to view the Excel document.
             </p>
             @Html.EJS().Grid("Export").AllowPaging(true).DataSource(dataManger =>
        {
@@ -34,12 +36,14 @@
 
             <div class="rowdiv">
                 <div class="celldiv">
-                    <label>
-                        <strong> Save As :</strong>
-                    </label>
-                     @Html.EJS().RadioButton("radio1").Label("XLS").Name("SaveOption").Value("Xls").Checked(false).Render()
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                     @Html.EJS().RadioButton("radio2").Label("XLSX").Name("SaveOption").Value("Xlsx").Checked(true).Render()
+                    <div>
+						Save As :
+						<input type="radio" id="XLS" name="SaveOption" value="Xls" />
+						<label for="XLS" style="font-weight:normal">XLS</label>
+						&nbsp;
+						<input type="radio" id="XLSX" name="SaveOption" value="Xlsx" checked="checked" />
+						<label for="XLSX" style="font-weight:normal">XLSX</label>
+					</div>
                   </div>
                 <br />
                 <div class="celldiv">

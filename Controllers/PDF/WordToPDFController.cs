@@ -50,7 +50,7 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
                         memoryStream.Position = 0;
                         return File(memoryStream, "application/pdf",  output + ".pdf");
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         ViewBag.Message = string.Format("The input document could not be processed completely, Could you please email the document to support@syncfusion.com for troubleshooting.");
                     }                    

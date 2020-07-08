@@ -71,11 +71,17 @@
     <script>
 
 
+        var div = document.getElementsByClassName('progress-text-align');
         var progressLoad = function (args) {
             var selectedTheme = location.hash.split('/')[1];
             selectedTheme = selectedTheme ? selectedTheme : 'Material';
             args.progressBar.theme = (selectedTheme.charAt(0).toUpperCase() +
                 selectedTheme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+            if (args.progressBar.theme === 'HighContrast') {
+                for (let i = 0; i < div.length; i++) {
+                    div[i].setAttribute('style', 'color:white');
+                }
+            }
         };
         var replayBtn = document.getElementById('reLoad');
         replayBtn.onclick = function () {

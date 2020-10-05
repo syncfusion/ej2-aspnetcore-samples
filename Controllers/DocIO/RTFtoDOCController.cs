@@ -25,6 +25,7 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
             if (Request.Form.Files != null)
             {
                 var extension = Path.GetExtension(Request.Form.Files[0].FileName).ToLower();
+                string outputFileName = Path.GetFileNameWithoutExtension(Request.Form.Files[0].FileName);
                 if (extension == ".rtf")
                 {
                     MemoryStream stream = new MemoryStream();
@@ -34,21 +35,21 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
                     stream = null;
 
                     FormatType type = FormatType.Docx;
-                    string filename = "Sample.docx";
+                    string filename = outputFileName +".docx";
                     string contenttype = "application/vnd.ms-word.document.12";
                     #region Document SaveOption
                     //Save as .doc format
                     if (Group1 == "WordDoc")
                     {
                         type = FormatType.Doc;
-                        filename = "Sample.doc";
+                        filename = outputFileName + ".doc";
                         contenttype = "application/msword";
                     }
                     //Save as .xml format
                     else if (Group1 == "WordML")
                     {
                         type = FormatType.WordML;
-                        filename = "Sample.xml";
+                        filename = outputFileName +".xml";
                         contenttype = "application/msword";
                     }
                     #endregion Document SaveOption

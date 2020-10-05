@@ -158,6 +158,38 @@ namespace EJ2CoreSampleBrowser.Controllers.PdfViewer
             }
             return Content(jsonResult);
         }
+
+        [AcceptVerbs("Post")]
+        [HttpPost]
+        [Route("api/[controller]/RenderPdfTexts")]
+        public IActionResult RenderPdfTexts([FromBody] Dictionary<string, string> jsonObject)
+        {
+            PdfRenderer pdfviewer = new PdfRenderer(_cache);
+            object result = pdfviewer.GetDocumentText(jsonObject);
+            return Content(JsonConvert.SerializeObject(result));
+        }
+
+        [AcceptVerbs("Post")]
+        [HttpPost]
+        [Route("api/[controller]/ExportFormFields")]
+        public IActionResult ExportFormFields([FromBody] Dictionary<string, string> jsonObject)
+        {
+            PdfRenderer pdfviewer = new PdfRenderer(_cache);
+            string jsonResult = pdfviewer.ExportFormFields(jsonObject);
+            return Content(jsonResult);
+        }
+
+        [AcceptVerbs("Post")]
+        [HttpPost]
+        [Route("api/[controller]/ImportFormFields")]
+        public IActionResult ImportFormFields([FromBody] Dictionary<string, string> jsonObject)
+        {
+            PdfRenderer pdfviewer = new PdfRenderer(_cache);
+            jsonObject["data"] = GetDocumentPath(jsonObject["data"]);
+            object jsonResult = pdfviewer.ImportFormFields(jsonObject);
+            return Content(JsonConvert.SerializeObject(jsonResult));
+        }
+
         private string GetDocumentPath(string document)
         {
             string documentPath = string.Empty;

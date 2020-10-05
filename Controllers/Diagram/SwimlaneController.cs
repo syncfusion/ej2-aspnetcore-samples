@@ -28,10 +28,10 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
             ViewBag.getConnectorDefaults = "getConnectorDefaults";
             ViewBag.getSymbolInfo = "getSymbolInfo";
             List<DiagramPort> ports = new List<DiagramPort>();
-            ports.Add(new DiagramPort() { Id="Port1", Offset = new DiagramPoint() { X = 0, Y = 0.5 }, Visibility = PortVisibility.Connect | PortVisibility.Hover, Constraints = PortConstraints.Draw });
-            ports.Add(new DiagramPort() { Id = "Port2", Offset = new DiagramPoint() { X = 0.5, Y = 0 }, Visibility = PortVisibility.Connect | PortVisibility.Hover, Constraints = PortConstraints.Draw });
-            ports.Add(new DiagramPort() { Id = "Port3", Offset = new DiagramPoint() { X = 1, Y = 0.5 }, Visibility = PortVisibility.Connect | PortVisibility.Hover, Constraints = PortConstraints.Draw });
-            ports.Add(new DiagramPort() { Id = "Port4", Offset = new DiagramPoint() { X = 0.5, Y = 1 }, Visibility = PortVisibility.Connect | PortVisibility.Hover, Constraints = PortConstraints.Draw });
+            ports.Add(new DiagramPort() { Id="Port1", Offset = new DiagramPoint() { X = 0, Y = 0.5 }, Visibility = PortVisibility.Connect | PortVisibility.Hover, Constraints = PortConstraints.Default |  PortConstraints.Draw });
+            ports.Add(new DiagramPort() { Id = "Port2", Offset = new DiagramPoint() { X = 0.5, Y = 0 }, Visibility = PortVisibility.Connect | PortVisibility.Hover, Constraints = PortConstraints.Default |  PortConstraints.Draw });
+            ports.Add(new DiagramPort() { Id = "Port3", Offset = new DiagramPoint() { X = 1, Y = 0.5 }, Visibility = PortVisibility.Connect | PortVisibility.Hover, Constraints = PortConstraints.Default |  PortConstraints.Draw });
+            ports.Add(new DiagramPort() { Id = "Port4", Offset = new DiagramPoint() { X = 0.5, Y = 1 }, Visibility = PortVisibility.Connect | PortVisibility.Hover, Constraints = PortConstraints.Default |  PortConstraints.Draw });
 
             List<DiagramNode> SymbolPaletee = new List<DiagramNode>();
             Dictionary<string, object> addInfo = new Dictionary<string, object>();
@@ -201,10 +201,10 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
         public void GenerateDiagramNodes(List<DiagramNode> Nodes)
         {
             List<DiagramPort> ports = new List<DiagramPort>();
-            ports.Add(new DiagramPort() { Id = "Port1", Offset = new DiagramPoint() { X = 0, Y = 0.5 }, Visibility = PortVisibility.Connect | PortVisibility.Hover, Constraints = PortConstraints.Draw });
-            ports.Add(new DiagramPort() { Id = "Port2", Offset = new DiagramPoint() { X = 0.5, Y = 0 }, Visibility = PortVisibility.Connect | PortVisibility.Hover, Constraints = PortConstraints.Draw });
-            ports.Add(new DiagramPort() { Id = "Port3", Offset = new DiagramPoint() { X = 1, Y = 0.5 }, Visibility = PortVisibility.Connect | PortVisibility.Hover, Constraints = PortConstraints.Draw });
-            ports.Add(new DiagramPort() { Id = "Port4", Offset = new DiagramPoint() { X = 0.5, Y = 1 }, Visibility = PortVisibility.Connect | PortVisibility.Hover, Constraints = PortConstraints.Draw });
+            ports.Add(new DiagramPort() { Id = "Port1", Offset = new DiagramPoint() { X = 0, Y = 0.5 }, Visibility = PortVisibility.Connect | PortVisibility.Hover, Constraints = PortConstraints.Default |  PortConstraints.Draw });
+            ports.Add(new DiagramPort() { Id = "Port2", Offset = new DiagramPoint() { X = 0.5, Y = 0 }, Visibility = PortVisibility.Connect | PortVisibility.Hover, Constraints = PortConstraints.Default |  PortConstraints.Draw });
+            ports.Add(new DiagramPort() { Id = "Port3", Offset = new DiagramPoint() { X = 1, Y = 0.5 }, Visibility = PortVisibility.Connect | PortVisibility.Hover, Constraints = PortConstraints.Default |  PortConstraints.Draw });
+            ports.Add(new DiagramPort() { Id = "Port4", Offset = new DiagramPoint() { X = 0.5, Y = 1 }, Visibility = PortVisibility.Connect | PortVisibility.Hover, Constraints = PortConstraints.Default |  PortConstraints.Draw });
 
 
             //Add lanes children

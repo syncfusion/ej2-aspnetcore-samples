@@ -203,6 +203,7 @@
     #listview .language:before {
         content: "\e710";
     }
+
     .bootstrap4 .e-settings.e-tooltip-wrap.e-popup {
         border-color: rgba(0, 0, 0, .15);
     }
@@ -214,7 +215,6 @@
     .bootstrap4 .e-settings.e-tooltip-wrap.e-popup .e-arrow-tip-outer.e-tip-top {
         border-bottom: 6px solid rgba(0, 0, 0, .15);
     }
-
 </style>
 
 <script type="text/javascript">
@@ -277,7 +277,8 @@
 
     //click event handler to close Tooltip while navigating to other tabs in right pane
     function onClick(args) {
-        if (!args.target.parentNode.parentNode.classList.contains('e-toolbar-item')) {
+        let targetEle = ej.base.closest(args.target, '.e-toolbar-item');
+        if (!targetEle) {
             if (document.getElementsByClassName('e-tooltip-wrap').length > 0) {
                 tooltipObj.close();
             }
@@ -292,13 +293,28 @@
     }
 
 </script>
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            In this demo, the Tooltip has been customized to show the list of menu items.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            Tooltip has been integrated with tooltipMenu-list component to display the Tooltip menu. With the help of <code>beforeRender</code> event, dataSource for tooltipMenu-list changed and its instance assigned to <code>content</code> of Tooltip to appear like menu. On clicking the Toolbar items, the corresponding Tooltip menu will be opened.
+        </p>
+    </div>
+}
 
 @section Meta{
-                    <meta name="description" content="This example demonstrates the Tooltip Menu in ASP.NET Core Tooltip control. Explore here for more details."/>
-                }
+    <meta name="description" content="This example demonstrates the Tooltip Menu in ASP.NET Core Tooltip control. Explore here for more details." />
+}
 @section Title{
-                    <title>ASP.NET Core Tooltip Tooltip Menu Example - Syncfusion Demos </title> 
-                }
+    <title>ASP.NET Core Tooltip Tooltip Menu Example - Syncfusion Demos </title>
+}
 @section Header{
-                    <h1 class='sb-sample-text'>Example of Tooltip Menu in ASP.NET Core Tooltip Control</h1>
-                }
+    <h1 class='sb-sample-text'>Example of Tooltip Menu in ASP.NET Core Tooltip Control</h1>
+}

@@ -1,0 +1,65 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+
+    <div class="col-lg-8 control-section">
+        <div class="control-wrapper" style='padding-top:75px;'>
+            <ejs-dropdowntree id="tree" popupHeight="200px" placeholder="Select items" mode="Delimiter" showCheckBox="true">
+                <e-dropdowntree-fields dataSource="ViewBag.dataSource" value="id" parentValue="pid" text="name" hasChildren="hasChild" expanded="expanded"></e-dropdowntree-fields>
+            </ejs-dropdowntree>
+        </div>
+    </div>
+    <div class="col-lg-4 property-section" id="all-option-table">
+        <table id="property" title="Properties">
+            <tbody>
+                <tr>
+                    <td style="padding-right: 10px">
+                        <div style="padding-left: 0;padding-top: 0">
+                            <ejs-checkbox id="select" label="Auto Check" change="onChange"></ejs-checkbox>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function onChange(args) {
+            var ddt = document.getElementById("tree");
+            ddt.ej2_instances[0].treeSettings.autoCheck = args.checked;
+        }
+    </script>
+}
+
+@section Meta{
+    <meta name="description" content="This example demonstrates the Checkbox in ASP.NET Core Dropdown Tree control" />
+}
+@section ActionDescription{
+    <p>
+        This sample explains you about the CheckBox functionalities of the Dropdown Tree. Click on any parent item's
+        CheckBox to check or uncheck the item and its child items. The parent item's checked state will be determined by
+        its child item’s checked state.
+    </p>
+}
+
+@section Description{
+    <p>
+        The <code>Dropdown Tree</code> control can be rendered with the checkbox on the left side of each tree item.
+        This allows the user to check more than one item, and this can be enabled by the <code>showCheckBox</code>
+        property.
+    </p>
+    <p>In this demo, the Dropdown Tree is populated with the checkbox enabled feature.</p>
+}
+
+<style>
+    .control-wrapper {
+        margin: 0 auto;
+        width: 250px;
+    }
+</style>
+
+@section Title{
+    <title>ASP.NET Core Dropdown Tree Checkbox Example - Syncfusion Demos</title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Checkbox in ASP.NET Core Dropdown Tree Control</h1>
+}

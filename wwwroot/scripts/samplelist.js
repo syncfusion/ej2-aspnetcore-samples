@@ -7,7 +7,7 @@ window.samplesList = [
         "name": "Data Grid",
         "directory": "Grid",
         "category": "Grids",
-        "type": "update",
+		"type": "update",
         "samples": [
             {
                 "url": "GridOverview",
@@ -31,10 +31,21 @@ window.samplesList = [
             },
             {
                 "url": "Grouping",
-                "name": "Grouping",
-                "category": "Data Grid",
+                "name": "Default Grouping",
+                "category": "Grouping",
                 "uid": "00002",
-                "order": 0,
+                "order": 1,
+                "component": "Data Grid",
+                "dir": "Grid",
+                "parentId": "00"
+            },
+            {
+                "url": "LazyLoadGroup",
+                "name": "Lazy Load Grouping",
+                "category": "Grouping",
+                "type": "new",
+                "uid": "88888",
+                "order": 1,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -84,7 +95,7 @@ window.samplesList = [
                 "name": "Default Scrolling",
                 "category": "Scrolling",
                 "uid": "00007",
-                "order": 1,
+                "order": 2,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -94,7 +105,7 @@ window.samplesList = [
                 "name": "Virtual Scrolling",
                 "category": "Scrolling",
                 "uid": "00008",
-                "order": 1,
+                "order": 2,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -104,7 +115,7 @@ window.samplesList = [
             "name": "Infinite Scrolling",
             "category": "Scrolling",
             "uid": "9999",
-            "order": 1,
+            "order": 2,
             "component": "Data Grid",
             "dir": "Grid",
             "parentId": "00"
@@ -114,7 +125,7 @@ window.samplesList = [
                 "name": "List Binding",
                 "category": "DataBinding",
                 "uid": "00009",
-                "order": 2,
+                "order": 3,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -124,7 +135,7 @@ window.samplesList = [
                 "name": "Remote Data",
                 "category": "DataBinding",
                 "uid": "000010",
-                "order": 2,
+                "order": 3,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -134,7 +145,7 @@ window.samplesList = [
                 "name": "DataTable Binding",
                 "category": "DataBinding",
                 "uid": "000047",
-                "order": 2,
+                "order": 3,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -144,7 +155,7 @@ window.samplesList = [
                 "name": "URL Adaptor",
                 "category": "DataBinding",
                 "uid": "000011",
-                "order": 2,
+                "order": 3,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -154,7 +165,7 @@ window.samplesList = [
                 "name": "AutoWrap Column Cells",
                 "category": "Columns",
                 "uid": "000012",
-                "order": 3,
+                "order": 4,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -164,7 +175,7 @@ window.samplesList = [
                 "name": "Show or Hide Column",
                 "category": "Columns",
                 "uid": "000013",
-                "order": 3,
+                "order": 4,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -174,7 +185,7 @@ window.samplesList = [
                 "name": "Column Template",
                 "category": "Columns",
                 "uid": "000014",
-                "order": 3,
+                "order": 4,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -184,7 +195,7 @@ window.samplesList = [
                 "name": "Stacked Header",
                 "category": "Columns",
                 "uid": "000015",
-                "order": 3,
+                "order": 4,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -194,7 +205,7 @@ window.samplesList = [
                 "name": "Reorder",
                 "category": "Columns",
                 "uid": "000016",
-                "order": 3,
+                "order": 4,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -204,7 +215,7 @@ window.samplesList = [
                 "name": "Column Chooser",
                 "category": "Columns",
                 "uid": "000017",
-                "order": 3,
+                "order": 4,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -214,7 +225,7 @@ window.samplesList = [
                 "name": "Header Template",
                 "category": "Columns",
                 "uid": "000018",
-                "order": 3,
+                "order": 4,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -224,7 +235,7 @@ window.samplesList = [
                 "name": "Column Resize",
                 "category": "Columns",
                 "uid": "000019",
-                "order": 3,
+                "order": 4,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -234,7 +245,7 @@ window.samplesList = [
                 "name": "Column Spanning",
                 "category": "Columns",
                 "uid": "000020",
-                "order": 3,
+                "order": 4,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -244,7 +255,7 @@ window.samplesList = [
                 "name": "Frozen Rows And Columns",
                 "category": "Columns",
                 "uid": "000021",
-                "order": 3,
+                "order": 4,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -254,7 +265,7 @@ window.samplesList = [
                 "name": "Column Menu",
                 "category": "Columns",
                 "uid": "000022",
-                "order": 3,
+                "order": 4,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -264,7 +275,7 @@ window.samplesList = [
                 "name": "Row Template",
                 "category": "Rows",
                 "uid": "000023",
-                "order": 4,
+                "order": 5,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -274,7 +285,7 @@ window.samplesList = [
                 "name": "Detail Template",
                 "category": "Rows",
                 "uid": "000024",
-                "order": 4,
+                "order": 5,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -284,7 +295,7 @@ window.samplesList = [
                 "name": "Row Hover",
                 "category": "Rows",
                 "uid": "000025",
-                "order": 4,
+                "order": 5,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -294,7 +305,7 @@ window.samplesList = [
                 "name": "Row Height",
                 "category": "Rows",
                 "uid": "000026",
-                "order": 4,
+                "order": 5,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -304,7 +315,7 @@ window.samplesList = [
                 "name": "Row Drag And Drop",
                 "category": "Rows",
                 "uid": "000027",
-                "order": 4,
+                "order": 5,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00",
@@ -315,7 +326,7 @@ window.samplesList = [
                 "name": "Row Drag And Drop Within Grid",
                 "category": "Rows",
                 "uid": "000060",
-                "order": 4,
+                "order": 5,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -325,7 +336,7 @@ window.samplesList = [
                 "name": "Row Spanning",
                 "category": "Rows",
                 "uid": "000049",
-                "order": 4,
+                "order": 5,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -335,7 +346,7 @@ window.samplesList = [
                 "name": "Multi Sorting",
                 "category": "Sorting",
                 "uid": "000028",
-                "order": 5,
+                "order": 6,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -345,7 +356,7 @@ window.samplesList = [
                 "name": "Sorting API",
                 "category": "Sorting",
                 "uid": "000029",
-                "order": 5,
+                "order": 6,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -355,8 +366,7 @@ window.samplesList = [
                 "name": "Default Filtering",
                 "category": "Filtering",
                 "uid": "000030",
-                "order": 6,
-                "type": "update",
+                "order": 7,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -366,7 +376,7 @@ window.samplesList = [
                 "name": "Filter Menu",
                 "category": "Filtering",
                 "uid": "000031",
-                "order": 6,
+                "order": 7,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -376,7 +386,7 @@ window.samplesList = [
                 "name": "Search",
                 "category": "Filtering",
                 "uid": "000032",
-                "order": 6,
+                "order": 7,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -386,7 +396,7 @@ window.samplesList = [
                 "name": "Default Paging",
                 "category": "Paging",
                 "uid": "000033",
-                "order": 7,
+                "order": 8,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -396,7 +406,7 @@ window.samplesList = [
                 "name": "Paging API",
                 "category": "Paging",
                 "uid": "000034",
-                "order": 7,
+                "order": 8,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -406,7 +416,7 @@ window.samplesList = [
                 "name": "Default Selection",
                 "category": "Selection",
                 "uid": "000035",
-                "order": 8,
+                "order": 9,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -416,7 +426,7 @@ window.samplesList = [
                 "name": "Selection API",
                 "category": "Selection",
                 "uid": "000036",
-                "order": 8,
+                "order": 9,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -426,7 +436,7 @@ window.samplesList = [
                 "name": "Checkbox Selection",
                 "category": "Selection",
                 "uid": "000037",
-                "order": 8,
+                "order": 9,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -436,7 +446,7 @@ window.samplesList = [
                 "name": "Default Aggregate",
                 "category": "Aggregates",
                 "uid": "000038",
-                "order": 9,
+                "order": 10,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -446,7 +456,7 @@ window.samplesList = [
                 "name": "Group and Caption Aggregate",
                 "category": "Aggregates",
                 "uid": "000039",
-                "order": 9,
+                "order": 10,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -456,7 +466,7 @@ window.samplesList = [
                 "name": "Inline Editing",
                 "category": "Editing",
                 "uid": "000040",
-                "order": 10,
+                "order": 11,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -466,7 +476,7 @@ window.samplesList = [
                 "name": "Dialog Editing",
                 "category": "Editing",
                 "uid": "000041",
-                "order": 10,
+                "order": 11,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -476,7 +486,7 @@ window.samplesList = [
                 "name": "Dialog Template",
                 "category": "Editing",
                 "uid": "000050",
-                "order": 10,
+                "order": 11,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "04",
@@ -492,7 +502,7 @@ window.samplesList = [
                 "name": "Batch Editing",
                 "category": "Editing",
                 "uid": "000042",
-                "order": 10,
+                "order": 11,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -502,7 +512,7 @@ window.samplesList = [
                 "name": "Command Column",
                 "category": "Editing",
                 "uid": "000043",
-                "order": 10,
+                "order": 11,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -512,7 +522,7 @@ window.samplesList = [
                 "name": "Default Exporting",
                 "category": "Exporting",
                 "uid": "000044",
-                "order": 11,
+                "order": 12,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -522,7 +532,7 @@ window.samplesList = [
                 "name": "Advanced Exporting",
                 "category": "Exporting",
                 "uid": "000045",
-                "order": 11,
+                "order": 12,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -532,7 +542,7 @@ window.samplesList = [
                 "name": "Hierarchy Exporting",
                 "category": "Exporting",
                 "uid": "000048",
-                "order": 11,
+                "order": 12,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -542,7 +552,7 @@ window.samplesList = [
                 "name": "Print",
                 "category": "Exporting",
                 "uid": "000046",
-                "order": 11,
+                "order": 12,
                 "component": "Data Grid",
                 "dir": "Grid",
                 "parentId": "00"
@@ -555,7 +565,6 @@ window.samplesList = [
         "name": "Pivot Table",
         "directory": "PivotTable",
         "category": "Grids",
-        "type": "update",
         "samples": [
             {
                 "url": "Default",
@@ -571,7 +580,6 @@ window.samplesList = [
                 "url": "LocalData",
                 "name": "Local Data",
                 "category": "Data Binding",
-                "type": "update",
                 "uid": "00111",
                 "order": 1,
                 "component": "Pivot Table",
@@ -582,7 +590,6 @@ window.samplesList = [
                 "url": "RemoteData",
                 "name": "Remote Data",
                 "category": "Data Binding",
-                "type": "update",
                 "uid": "00112",
                 "order": 1,
                 "component": "Pivot Table",
@@ -605,7 +612,6 @@ window.samplesList = [
                 "category": "Integration",
                 "uid": "001112",
                 "order": 2,
-                "type": "update",
                 "component": "Pivot Table",
                 "dir": "PivotTable",
                 "parentId": "01",
@@ -684,7 +690,6 @@ window.samplesList = [
                 "url": "Toolbar",
                 "name": "Toolbar",
                 "category": "User Interaction",
-                "type": "update",
                 "uid": "001119",
                 "order": 3,
                 "component": "Pivot Table",
@@ -839,7 +844,6 @@ window.samplesList = [
         "name": "Tree Grid",
         "directory": "TreeGrid",
         "category": "Grids",
-        "type": "update",
         "samples": [
             {
                 "url": "Overview",
@@ -926,7 +930,6 @@ window.samplesList = [
                 "name": "Column Chooser",
                 "category": "Columns",
                 "uid": "00713",
-                "type": "new",
                 "order": 2,
                 "component": "TreeGrid",
                 "dir": "TreeGrid",
@@ -1467,10 +1470,10 @@ window.samplesList = [
                 "category": "Formatting",
                 "component": "Spreadsheet",
                 "dir": "Spreadsheet",
-                "type": "new",
+                "type": "update",
                 "order": 3,
                 "parentId": "03",
-                "uid": "0310"
+                "uid": "0308"
             },
             {
                 "url": "SortingFiltering",
@@ -1480,7 +1483,18 @@ window.samplesList = [
                 "dir": "Spreadsheet",
                 "order": 4,
                 "parentId": "03",
-                "uid": "0308"
+                "uid": "0309"
+            },
+            {
+                "url": "Image",
+                "name": "Image",
+                "category": "Illustrations",
+                "component": "Spreadsheet",
+                "dir": "Spreadsheet",
+                "type": "new",
+                "order": 5,
+                "parentId": "03",
+                "uid": "0310"
             },
             {
                 "url": "CellTemplates",
@@ -1488,9 +1502,9 @@ window.samplesList = [
                 "category": "Templates",
                 "component": "Spreadsheet",
                 "dir": "Spreadsheet",
-                "order": 5,
+                "order": 6,
                 "parentId": "03",
-                "uid": "0309"
+                "uid": "0311"
             }
         ],
         "order": 0,
@@ -1638,6 +1652,17 @@ window.samplesList = [
                 "name": "Stacked Area",
                 "category": "Area Charts",
                 "uid": "002211",
+                "order": 1,
+                "component": "Chart",
+                "dir": "Chart",
+                "parentId": "02"
+            },
+            {
+                "url": "StackedStepArea",
+                "name": "Stacked Step Area",
+                "category": "Area Charts",
+                "uid": "002298",
+                "type": "new",
                 "order": 1,
                 "component": "Chart",
                 "dir": "Chart",
@@ -2076,7 +2101,6 @@ window.samplesList = [
             {
                 "url": "SmartLabel",
                 "name": "Smart Labels",
-                "type": "update",
                 "category": "Accumulation Chart",
                 "uid": "002255",
                 "order": 8,
@@ -2647,7 +2671,6 @@ window.samplesList = [
         "name": "CircularGauge",
         "directory": "CircularGauge",
         "category": "Data Visualization",
-        "type": "update",
         "samples": [
             {
                 "url": "Default",
@@ -2735,7 +2758,6 @@ window.samplesList = [
                 "category": "CircularGauge",
                 "uid": "00778",
                 "order": 0,
-                "type": "new",
                 "component": "CircularGauge",
                 "dir": "CircularGauge",
                 "parentId": "07"
@@ -2806,7 +2828,6 @@ window.samplesList = [
                 "category": "Export",
                 "uid": "007715",
                 "order": 4,
-                "type": "update",
                 "component": "CircularGauge",
                 "dir": "CircularGauge",
                 "parentId": "07"
@@ -3221,7 +3242,6 @@ window.samplesList = [
         "name": "HeatMap Chart",
         "directory": "HeatMapChart",
         "category": "Data Visualization",
-        "type": "update",
         "samples": [
             {
                 "url": "Default",
@@ -3384,7 +3404,6 @@ window.samplesList = [
                 "url": "ColorRange",
                 "name": "Color Range",
                 "category": "Features",
-                "type": "new",
                 "uid": "006751",
                 "order": 3,
                 "component": "HeatMapChart",
@@ -3419,7 +3438,6 @@ window.samplesList = [
         "name": "LinearGauge",
         "directory": "LinearGauge",
         "category": "Data Visualization",
-        "type": "update",
         "samples": [
             {
                 "url": "Default",
@@ -3487,7 +3505,6 @@ window.samplesList = [
                 "category": "LinearGauge",
                 "uid": "00886",
                 "order": 0,
-                "type": "new",
                 "component": "LinearGauge",
                 "dir": "LinearGauge",
                 "parentId": "08"
@@ -3516,7 +3533,6 @@ window.samplesList = [
                 "url": "Export",
                 "name": "Print & Export",
                 "category": "LinearGauge",
-                "type": "update",
                 "uid": "00889",
                 "order": 0,
                 "component": "LinearGauge",
@@ -3532,7 +3548,6 @@ window.samplesList = [
         "name": "Maps",
         "directory": "Maps",
         "category": "Data Visualization",
-        "type": "update",
         "samples": [
             {
                 "url": "Default",
@@ -3700,7 +3715,6 @@ window.samplesList = [
                 "category": "Print of Export",
                 "uid": "004416",
                 "order": 3,
-                "type": "update",
                 "component": "Maps",
                 "dir": "Maps",
                 "parentId": "04"
@@ -3713,7 +3727,6 @@ window.samplesList = [
                 "order": 3,
                 "component": "Maps",
                 "dir": "Maps",
-                "type": "update",
                 "parentId": "04"
             },
             {
@@ -4217,7 +4230,6 @@ window.samplesList = [
         "name": "TreeMap",
         "directory": "TreeMap",
         "category": "Data Visualization",
-        "type": "update",
         "samples": [
             {
                 "url": "Default",
@@ -4315,7 +4327,6 @@ window.samplesList = [
                 "category": "TreeMap",
                 "uid": "00559",
                 "order": 0,
-                "type": "update",
                 "component": "TreeMap",
                 "dir": "TreeMap",
                 "parentId": "05"
@@ -4426,7 +4437,6 @@ window.samplesList = [
     {
         "name": "Kanban",
         "directory": "Kanban",
-        "type": "preview",
         "category": "Data Visualization",
         "samples": [
             {
@@ -4443,7 +4453,6 @@ window.samplesList = [
                 "url": "DefaultFunctionalities",
                 "name": "Default Functionalities",
                 "category": "Kanban",
-                "type": "update",
                 "uid": "0056228",
                 "order": 0,
                 "component": "Kanban",
@@ -4487,7 +4496,6 @@ window.samplesList = [
                 "uid": "0056232",
                 "order": 0,
                 "component": "Kanban",
-                "type": "new",
                 "dir": "Kanban",
                 "parentId": "017"
             },
@@ -4498,7 +4506,6 @@ window.samplesList = [
                 "uid": "0056233",
                 "order": 0,
                 "component": "Kanban",
-                "type": "new",
                 "dir": "Kanban",
                 "parentId": "017"
             },
@@ -5068,7 +5075,6 @@ window.samplesList = [
                 "url": "Comments",
                 "name": "Comments",
                 "category": "Review",
-                "type": "update",
                 "order": 8,
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
@@ -5082,7 +5088,6 @@ window.samplesList = [
                 "order": 8,
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
-                "type": "new",
                 "parentId": "035",
                 "uid": "0036361",
             },
@@ -5093,9 +5098,19 @@ window.samplesList = [
                 "order": 1,
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
-                "type": "new",
                 "parentId": "035",
                 "uid": "0036362",
+            },
+            {
+                "url": "MailMerge",
+                "name": "Mail Merge",
+                "category": "Mail Merge",
+                "order": 9,
+                "component": "DocumentEditor",
+                "dir": "DocumentEditor",
+                "type": "new",
+                "parentId": "035",
+                "uid": "0036363",
             }
     
         ],
@@ -5265,7 +5280,6 @@ window.samplesList = [
         "name": "Scheduler",
         "directory": "Schedule",
         "category": "Calendars",
-        "type": "update",
         "ftName": "scheduler",
         "samples": [
             {
@@ -5385,7 +5399,6 @@ window.samplesList = [
                 "category": "Appointments",
                 "uid": "0012111",
                 "order": 2,
-                "type": "new",
                 "component": "Schedule",
                 "dir": "Schedule",
                 "parentId": "012"
@@ -5445,7 +5458,6 @@ window.samplesList = [
                 "name": "Year View",
                 "category": "Views",
                 "uid": "0012170",
-                "type": "update",
                 "order": 4,
                 "component": "Schedule",
                 "dir": "Schedule",
@@ -5626,7 +5638,6 @@ window.samplesList = [
                 "name": "Quick Info Template",
                 "category": "Template",
                 "uid": "0012178",
-                "type": "new",
                 "order": 7,
                 "component": "Schedule",
                 "dir": "Schedule",
@@ -5851,7 +5862,6 @@ window.samplesList = [
         "name": "Gantt",
         "directory": "Gantt",
         "category": "Calendars",
-        "type": "update",
         "order": 3,
         "uid": "050",
         "samples": [{
@@ -5870,7 +5880,6 @@ window.samplesList = [
             "category": "Gantt",
             "uid": "00751",
             "order": 0,
-            "type": "update",
             "component": "Gantt",
             "dir": "Gantt",
             "parentId": "0050"
@@ -5891,7 +5900,6 @@ window.samplesList = [
             "category": "Gantt",
             "uid": "00752",
             "order": 0,
-			"type": "update",
             "component": "Gantt",
             "dir": "Gantt",
             "parentId": "0050"
@@ -5992,7 +6000,6 @@ window.samplesList = [
             "category": "Resources",
             "uid": "00785",
             "order": 2,
-            "type": "update",
             "component": "Gantt",
             "dir": "Gantt",
             "parentId": "050"
@@ -6003,7 +6010,6 @@ window.samplesList = [
 			"category": "Resources",
 			"uid": "00786",
 			"order": 2,
-			"type": "new",
             "component": "Gantt",
             "dir": "Gantt",
             "parentId": "050"
@@ -6114,7 +6120,7 @@ window.samplesList = [
             "name": "Column Menu",
             "category": "Columns",
             "uid": "00769",
-            "order": 4,
+            "order": 5,
             "component": "Gantt",
             "dir": "Gantt",
             "parentId": "050"
@@ -6147,7 +6153,7 @@ window.samplesList = [
             "order": 5,
             "component": "Gantt",
             "dir": "Gantt",
-            "parentId": "050"
+            "parentId": "0050"
         },
         {
             "url": "ColumnTemplate",
@@ -6157,7 +6163,7 @@ window.samplesList = [
             "order": 5,
             "component": "Gantt",
             "dir": "Gantt",
-            "parentId": "050"
+            "parentId": "0050"
         },
         {
             "url": "HeaderTemplate",
@@ -6815,17 +6821,67 @@ window.samplesList = [
                 "category": "Dropdown Tree",
                 "uid": "077077",
                 "order": 0,
-                "component": "Dropdow Tree",
+                "component": "Dropdown Tree",
                 "dir": "DropDownTree",
                 "parentId": "077"
+            },
+            {
+                "url": "IconsAndImages",
+                "name": "Icons and Images",
+                "category": "Dropdown Tree",
+                "uid": "077078",
+                "order": 0,
+                "component": "Dropdown Tree",
+                "dir": "DropDownTree",
+                "parentId": "077",
+            },
+            {
+                "url": "Checkbox",
+                "name": "Checkbox",
+                "category": "Dropdown Tree",
+                "uid": "077079",
+                "order": 0,
+                "component": "Dropdown Tree",
+                "dir": "DropDownTree",
+                "parentId": "077",
+            },
+            {
+                "url": "MultipleSelection",
+                "name": "Multiple Selection",
+                "category": "Dropdown Tree",
+                "uid": "077080",
+                "order": 0,
+                "component": "Dropdown Tree",
+                "dir": "DropDownTree",
+                "parentId": "077",
+            },
+            {
+                "url": "Template",
+                "name": "Template",
+                "category": "Dropdown Tree",
+                "uid": "077081",
+                "order": 0,
+                "component": "Dropdown Tree",
+                "dir": "DropDownTree",
+                "parentId": "077",
+            },
+            {
+                "url": "Filtering",
+                "name": "Filtering",
+                "category": "Dropdown Tree",
+                "uid": "077082",
+                "order": 0,
+                "component": "Dropdown Tree",
+                "dir": "DropDownTree",
+                "parentId": "077",
             },
             {
                 "url": "LocalData",
                 "name": "Local Data",
                 "category": "Data Binding",
-                "uid": "077078",
+                "uid": "077083",
                 "order": 1,
-                "component": "Dropdow Tree",
+                "component": "Dropdown Tree",
                 "dir": "DropDownTree",
                 "parentId": "077"
             },
@@ -6833,9 +6889,9 @@ window.samplesList = [
                 "url": "RemoteData",
                 "name": "Remote Data",
                 "category": "Data Binding",
-                "uid": "077079",
+                "uid": "077084",
                 "order": 1,
-                "component": "Dropdow Tree",
+                "component": "Dropdown Tree",
                 "dir": "DropDownTree",
                 "parentId": "077"
             }
@@ -7806,12 +7862,10 @@ window.samplesList = [
         "name": "Progress Bar",
         "directory": "ProgressBar",
         "category": "Notifications",
-        "type": "update",
         "samples": [
             {
                 "url": "Linear",
                 "name": "Linear",
-                "type": "update",
                 "category": "ProgressBar",
                 "uid": "0057227",
                 "order": 0,
@@ -7852,7 +7906,6 @@ window.samplesList = [
             {
                 "url": "Labels",
                 "name": "Labels",
-                "type": "update",
                 "category": "ProgressBar",
                 "uid": "0057232",
                 "order": 0,
@@ -7873,7 +7926,6 @@ window.samplesList = [
             {
                 "url": "Stripes",
                 "name": "Stripes",
-                "type": "new",
                 "category": "ProgressBar",
                 "uid": "0057234",
                 "order": 0,
@@ -7884,7 +7936,6 @@ window.samplesList = [
             {
                 "url": "ProgressSegment",
                 "name": "Progress Segment",
-                "type": "new",
                 "category": "ProgressBar",
                 "uid": "0057235",
                 "order": 0,
@@ -8988,7 +9039,6 @@ window.samplesList = [
                 "name": "Bookmark Navigation",
                 "category": "Editing",
                 "order": 2,
-                "type": "update",
                 "component": "DocIO",
                 "dir": "DocIO",
                 "parentId": "047",
@@ -9039,7 +9089,6 @@ window.samplesList = [
                 "name": "Create Equation",
                 "category": "Mathematical Equation",
                 "order": 4,
-                "type": "update",
                 "component": "DocIO",
                 "dir": "DocIO",
                 "parentId": "047",
@@ -9050,7 +9099,6 @@ window.samplesList = [
                 "name": "Edit Equation",
                 "category": "Mathematical Equation",
                 "order": 4,
-                "type": "update",
                 "component": "DocIO",
                 "dir": "DocIO",
                 "parentId": "047",
@@ -9081,7 +9129,6 @@ window.samplesList = [
                 "name": "Image Insertion",
                 "category": "Insert Content",
                 "order": 5,
-                "type": "update",
                 "component": "DocIO",
                 "dir": "DocIO",
                 "parentId": "047",
@@ -9211,6 +9258,7 @@ window.samplesList = [
             {
                 "url": "RTFToDoc",
                 "name": "RTF to Word",
+                "type": "update",
                 "category": "Import and Export",
                 "order": 8,
                 "component": "DocIO",
@@ -9253,7 +9301,6 @@ window.samplesList = [
                 "name": "Table of Content",
                 "category": "References",
                 "order": 10,
-                "type": "new",
                 "component": "DocIO",
                 "dir": "DocIO",
                 "parentId": "047",
@@ -9344,7 +9391,6 @@ window.samplesList = [
                 "name": "Encrypt and Decrypt",
                 "category": "Security",
                 "order": 14,
-                "type": "new",
                 "component": "DocIO",
                 "dir": "DocIO",
                 "parentId": "047",
@@ -9355,12 +9401,12 @@ window.samplesList = [
                 "name": "Track Changes",
                 "category": "Review",
                 "order": 15,
-                "type": "new",
                 "component": "DocIO",
                 "dir": "DocIO",
                 "parentId": "047",
                 "uid": "00474742"
             }
+
         ],
         "order": 7,
         "uid": "047"
@@ -9368,8 +9414,8 @@ window.samplesList = [
     {
         "name": "PDF",
         "directory": "PDF",
-        "category": "File Formats",
         "type": "update",
+        "category": "File Formats",
         "samples": [
             {
                 "url": "Default",
@@ -9415,8 +9461,7 @@ window.samplesList = [
                 "url": "CompressExistingPDF",
                 "name": "Compress Existing PDF",
                 "category": "Compression",
-                "order": 3,
-                "type": "new",
+                "order": 3,              
                 "component": "PDF",
                 "dir": "PDF",
                 "parentId": "046",
@@ -9466,6 +9511,7 @@ window.samplesList = [
                 "url": "Barcode",
                 "name": "Barcode",
                 "category": "Graphics",
+                "type": "update",
                 "order": 5,
                 "component": "PDF",
                 "dir": "PDF",
@@ -9613,6 +9659,17 @@ window.samplesList = [
                 "uid": "00464644"
             },
             {
+                "url": "Redaction",
+                "name": "Redaction",
+                "category": "Security",
+                "order": 8,
+                "type": "new",
+                "component": "PDF",
+                "dir": "PDF",
+                "parentId": "046",
+                "uid": "00464647"
+            },
+            {
                 "url": "DocumentSettings",
                 "name": "Document Settings",
                 "category": "Settings",
@@ -9717,7 +9774,6 @@ window.samplesList = [
                 "name": "Annotations",
                 "category": "User Interaction",
                 "order": 11,
-                "type": "update",
                 "component": "PDF",
                 "dir": "PDF",
                 "parentId": "046",
@@ -9880,6 +9936,7 @@ window.samplesList = [
                 "category": "Conversion",
                 "order": 1,
                 "component": "Presentation",
+                "type": "update",
                 "dir": "Presentation",
                 "parentId": "045",
                 "uid": "0045452"
@@ -9959,7 +10016,6 @@ window.samplesList = [
                 "name": "OLE Object",
                 "category": "Slide Elements",
                 "order": 3,
-                "type": "update",
                 "component": "Presentation",
                 "dir": "Presentation",
                 "parentId": "045",
@@ -10036,13 +10092,23 @@ window.samplesList = [
                 "parentId": "044",
             },
             {
+                "url": "CallCenterDashboard",
+                "name": "Call Center Dashboard",
+                "category": "Product Showcase",
+                "order": 1,
+                "component": "XlsIO",
+                "dir": "XlsIO",
+                "uid": "0044442",
+                "parentId": "044",
+            },
+            {
                 "url": "FormatCells",
                 "name": "Format Cells",
                 "category": "Formatting",
                 "order": 2,
                 "component": "XlsIO",
                 "dir": "XlsIO",
-                "uid": "0044442",
+                "uid": "0044443",
                 "parentId": "044"
             },
             {
@@ -10052,7 +10118,7 @@ window.samplesList = [
                 "order": 2,
                 "component": "XlsIO",
                 "dir": "XlsIO",
-                "uid": "0044443",
+                "uid": "0044444",
                 "parentId": "044"
             },
             {
@@ -10062,7 +10128,7 @@ window.samplesList = [
                 "order": 3,
                 "component": "XlsIO",
                 "dir": "XlsIO",
-                "uid": "0044444",
+                "uid": "0044445",
                 "parentId": "044"
             },
             {
@@ -10072,7 +10138,7 @@ window.samplesList = [
                 "order": 3,
                 "component": "XlsIO",
                 "dir": "XlsIO",
-                "uid": "0044445",
+                "uid": "0044446",
                 "parentId": "044"
             },
             {
@@ -10082,7 +10148,7 @@ window.samplesList = [
                 "order": 3,
                 "component": "XlsIO",
                 "dir": "XlsIO",
-                "uid": "0044446",
+                "uid": "0044447",
                 "parentId": "044"
             },
             {
@@ -10092,7 +10158,7 @@ window.samplesList = [
                 "order": 4,
                 "component": "XlsIO",
                 "dir": "XlsIO",
-                "uid": "0044447",
+                "uid": "0044448",
                 "parentId": "044"
             },
             {
@@ -10102,7 +10168,7 @@ window.samplesList = [
                 "order": 5,
                 "component": "XlsIO",
                 "dir": "XlsIO",
-                "uid": "0044448",
+                "uid": "0044449",
                 "parentId": "044"
             },
             {
@@ -10112,7 +10178,7 @@ window.samplesList = [
                 "order": 5,
                 "component": "XlsIO",
                 "dir": "XlsIO",
-                "uid": "0044449",
+                "uid": "0044410",
                 "parentId": "044"
             },
             {
@@ -10122,7 +10188,7 @@ window.samplesList = [
                 "order": 5,
                 "component": "XlsIO",
                 "dir": "XlsIO",
-                "uid": "00444410",
+                "uid": "00444411",
                 "parentId": "044"
             },
             {
@@ -10132,7 +10198,7 @@ window.samplesList = [
                 "order": 5,
                 "component": "XlsIO",
                 "dir": "XlsIO",
-                "uid": "00444411",
+                "uid": "00444412",
                 "parentId": "044"
             },
             {
@@ -10142,7 +10208,7 @@ window.samplesList = [
                 "order": 5,
                 "component": "XlsIO",
                 "dir": "XlsIO",
-                "uid": "00444412",
+                "uid": "00444413",
                 "parentId": "044"
             },
             {
@@ -10152,7 +10218,7 @@ window.samplesList = [
                 "order": 6,
                 "component": "XlsIO",
                 "dir": "XlsIO",
-                "uid": "00444413",
+                "uid": "00444414",
                 "parentId": "044"
             },
             {
@@ -10162,7 +10228,7 @@ window.samplesList = [
                 "order": 6,
                 "component": "XlsIO",
                 "dir": "XlsIO",
-                "uid": "00444414",
+                "uid": "00444415",
                 "parentId": "044"
             },
 			{
@@ -10170,10 +10236,9 @@ window.samplesList = [
                 "name": "Import HTML Table",
                 "category": "Data Binding",
                 "order": 6,
-                "type": "new",
                 "component": "XlsIO",
                 "dir": "XlsIO",
-                "uid": "00444415",
+                "uid": "00444416",
                 "parentId": "044"
             },
             {
@@ -10181,9 +10246,10 @@ window.samplesList = [
                 "name": "Excel To PDF",
                 "category": "Export",
                 "order": 7,
+                "type": "update",
                 "component": "XlsIO",
                 "dir": "XlsIO",
-                "uid": "00444416",
+                "uid": "00444417",
                 "parentId": "044"
             },
             {
@@ -10193,7 +10259,7 @@ window.samplesList = [
                 "order": 7,
                 "component": "XlsIO",
                 "dir": "XlsIO",
-                "uid": "00444417",
+                "uid": "00444418",
                 "parentId": "044"
             },
             {
@@ -10203,7 +10269,7 @@ window.samplesList = [
                 "order": 7,
                 "component": "XlsIO",
                 "dir": "XlsIO",
-                "uid": "00444418",
+                "uid": "00444419",
                 "parentId": "044"
             },
 			{
@@ -10211,10 +10277,9 @@ window.samplesList = [
                 "name": "Excel To JSON",
                 "category": "Export",
                 "order": 7,
-                "type": "new",
                 "component": "XlsIO",
                 "dir": "XlsIO",
-                "uid": "00444419",
+                "uid": "00444420",
                 "parentId": "044"
             },
             {
@@ -10224,7 +10289,7 @@ window.samplesList = [
                 "order": 8,
                 "component": "XlsIO",
                 "dir": "XlsIO",
-                "uid": "00444420",
+                "uid": "00444421",
                 "parentId": "044"
             },
             {
@@ -10234,7 +10299,7 @@ window.samplesList = [
                 "order": 9,
                 "component": "XlsIO",
                 "dir": "XlsIO",
-                "uid": "00444421",
+                "uid": "00444422",
                 "parentId": "044"
             },
             {
@@ -10244,7 +10309,7 @@ window.samplesList = [
                 "order": 9,
                 "component": "XlsIO",
                 "dir": "XlsIO",
-                "uid": "00616122",
+                "uid": "00616123",
                 "parentId": "044"
             },
             {
@@ -10254,7 +10319,7 @@ window.samplesList = [
                 "order": 9,
                 "component": "XlsIO",
                 "dir": "XlsIO",
-                "uid": "00616123",
+                "uid": "00616124",
                 "parentId": "044"
             },
             {
@@ -10264,7 +10329,7 @@ window.samplesList = [
                 "order": 10,
                 "component": "XlsIO",
                 "dir": "XlsIO",
-                "uid": "00444424",
+                "uid": "00444425",
                 "parentId": "044"
             },
             {
@@ -10274,7 +10339,7 @@ window.samplesList = [
                 "order": 10,
                 "component": "XlsIO",
                 "dir": "XlsIO",
-                "uid": "00444425",
+                "uid": "00444426",
                 "parentId": "044"
             },
             {
@@ -10284,7 +10349,7 @@ window.samplesList = [
                 "order": 11,
                 "component": "XlsIO",
                 "dir": "XlsIO",
-                "uid": "00444426",
+                "uid": "00444427",
                 "parentId": "044"
             },
             {
@@ -10294,7 +10359,7 @@ window.samplesList = [
                 "order": 11,
                 "component": "XlsIO",
                 "dir": "XlsIO",
-                "uid": "00444427",
+                "uid": "00444428",
                 "parentId": "044"
             }
         ],
@@ -10305,14 +10370,12 @@ window.samplesList = [
         "name": "PDF Viewer",
         "directory": "PdfViewer",
         "category": "Viewer",
-        "type": "update",
         "samples": [
             {
                 "url": "Default",
                 "name": "Default Functionalities",
                 "category": "PDF Viewer",
                 "order": 0,
-                "type": "update",
                 "component": "PdfViewer",
                 "dir": "PdfViewer",
                 "parentId": "048",

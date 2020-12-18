@@ -41,8 +41,18 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
                                                            ? Syncfusion.DocIO.ExportBookmarkType.Headings
                                                          : Syncfusion.DocIO.ExportBookmarkType.Bookmarks;
                     if (renderingMode4 == "ShowRevisions")
+                    {
                         //Enables to show the revision marks in the generated PDF for tracked changes or revisions in the Word document.
                         document.RevisionOptions.ShowMarkup = RevisionType.Deletions | RevisionType.Formatting | RevisionType.Insertions;
+                        // Set revision bars color as Black.
+                        document.RevisionOptions.RevisionBarsColor = RevisionColor.Black;
+                        // Set revised properties (Formatting) color as Blue.
+                        document.RevisionOptions.RevisedPropertiesColor = RevisionColor.Blue;
+                        // Set deleted text (Deletions) color as Yellow.
+                        document.RevisionOptions.DeletedTextColor = RevisionColor.Yellow;
+                        // Set inserted text (Insertions) color as Pink.
+                        document.RevisionOptions.InsertedTextColor = RevisionColor.Pink;
+                    }
                     // Converts Word document into PDF document.
                     PdfDocument pdf = render.ConvertToPDF(document);
                     MemoryStream memoryStream = new MemoryStream();

@@ -25,6 +25,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
             ViewBag.Nodes = GetBPMNDiagramNodes();
             ViewBag.Connectors = GetBPMNDiagramConnectors();
             ViewBag.Palettes = palettes;
+            ViewBag.getSymbolNode = "getSymbolNodes";
             ViewBag.ContextMenuItems = GetContextMenuItems();
 
 
@@ -406,8 +407,8 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
                 Type = Segments.Orthogonal,
                 SourcePoint = new DiagramPoint() { X = 0, Y = 0 },
                 TargetPoint = new DiagramPoint() { X = 40, Y = 40 },
-                TargetDecorator = new DiagramDecorator() { Shape = DecoratorShapes.Arrow },
-                Style = new DiagramStrokeStyle() { StrokeWidth = 2 }
+                TargetDecorator = new DiagramDecorator() { Shape = DecoratorShapes.Arrow, Style = new DiagramShapeStyle() { StrokeColor = "#757575", Fill = "#757575" } },
+                Style = new DiagramStrokeStyle() { StrokeWidth = 2, StrokeColor = "#757575" }
             });
             connectors.Add(new DiagramConnector()
             {
@@ -415,8 +416,8 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
                 Type = Segments.Orthogonal,
                 SourcePoint = new DiagramPoint() { X = 0, Y = 0 },
                 TargetPoint = new DiagramPoint() { X = 40, Y = 40 },
-                TargetDecorator = new DiagramDecorator() { Shape = DecoratorShapes.Arrow },
-                Style = new DiagramStrokeStyle() { StrokeWidth = 2, StrokeDashArray = "4 4" }
+                TargetDecorator = new DiagramDecorator() { Shape = DecoratorShapes.Arrow, Style = new DiagramShapeStyle() { StrokeColor = "#757575", Fill = "#757575" } },
+                Style = new DiagramStrokeStyle() { StrokeWidth = 2, StrokeDashArray = "4 4", StrokeColor = "#757575" }
             });
             connectors.Add(new DiagramConnector()
             {
@@ -424,8 +425,8 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
                 Type = Segments.Straight,
                 SourcePoint = new DiagramPoint() { X = 0, Y = 0 },
                 TargetPoint = new DiagramPoint() { X = 40, Y = 40 },
-                TargetDecorator = new DiagramDecorator() { Shape = DecoratorShapes.Arrow },
-                Style = new DiagramStrokeStyle() { StrokeWidth = 2 }
+                TargetDecorator = new DiagramDecorator() { Shape = DecoratorShapes.Arrow, Style = new DiagramShapeStyle() { StrokeColor = "#757575", Fill = "#757575" } },
+                Style = new DiagramStrokeStyle() { StrokeWidth = 2, StrokeColor = "#757575" }
             });
             connectors.Add(new DiagramConnector()
             {
@@ -433,8 +434,9 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
                 Type = Segments.Orthogonal,
                 SourcePoint = new DiagramPoint() { X = 0, Y = 0 },
                 TargetPoint = new DiagramPoint() { X = 40, Y = 40 },
+                TargetDecorator = new DiagramDecorator() { Style = new DiagramShapeStyle() { StrokeColor = "#757575", Fill = "#757575" } },
                 Shape = new BpmnConnectors() { Type = "Bpmn", Flow = "Association", Association = "Directional" },
-                Style = new DiagramStrokeStyle() { StrokeDashArray = "2,2" }
+                Style = new DiagramStrokeStyle() { StrokeDashArray = "2,2", StrokeColor = "#757575" }
             });
 
             return connectors;

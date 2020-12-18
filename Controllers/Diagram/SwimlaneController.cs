@@ -36,25 +36,25 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
             List<DiagramNode> SymbolPaletee = new List<DiagramNode>();
             Dictionary<string, object> addInfo = new Dictionary<string, object>();
             addInfo.Add("tooltip", "Terminator");
-            SymbolPaletee.Add(new DiagramNode() { Id = "Terminator", AddInfo= addInfo, Ports = ports, Width = 50, Height = 50, Shape = new { type = "Flow", shape = "Terminator" }, Style = new DiagramTextStyle() { StrokeColor = "black", StrokeWidth = 1 } });
+            SymbolPaletee.Add(new DiagramNode() { Id = "Terminator", AddInfo= addInfo, Ports = ports, Width = 50, Height = 50, Shape = new { type = "Flow", shape = "Terminator" } });
             Dictionary<string, object> addInfo1 = new Dictionary<string, object>();
             addInfo1.Add("tooltip", "Process");
-            SymbolPaletee.Add(new DiagramNode() { Id = "Process", AddInfo = addInfo1, Ports = ports, Width = 50, Height = 50, Shape = new { type = "Flow", shape = "Process" }, Style = new DiagramTextStyle() { StrokeColor = "black", StrokeWidth = 1 } });
+            SymbolPaletee.Add(new DiagramNode() { Id = "Process", AddInfo = addInfo1, Ports = ports, Width = 50, Height = 50, Shape = new { type = "Flow", shape = "Process" } });
             Dictionary<string, object> addInfo2 = new Dictionary<string, object>();
             addInfo2.Add("tooltip", "Document");
-            SymbolPaletee.Add(new DiagramNode() { Id = "Document", AddInfo=addInfo2, Ports = ports, Width = 50, Height = 50, Shape = new { type = "Flow", shape = "Document" }, Style = new DiagramTextStyle() { StrokeColor = "black", StrokeWidth = 1 } });
+            SymbolPaletee.Add(new DiagramNode() { Id = "Document", AddInfo=addInfo2, Ports = ports, Width = 50, Height = 50, Shape = new { type = "Flow", shape = "Document" } });
             Dictionary<string, object> addInfo3 = new Dictionary<string, object>();
             addInfo3.Add("tooltip", "Predefined process");
-            SymbolPaletee.Add(new DiagramNode() { Id = "PreDefinedProcess", AddInfo=addInfo3, Ports = ports, Width = 50, Height = 50, Shape = new { type = "Flow", shape = "PreDefinedProcess" }, Style = new DiagramTextStyle() { StrokeColor = "black", StrokeWidth = 1 } });
+            SymbolPaletee.Add(new DiagramNode() { Id = "PreDefinedProcess", AddInfo=addInfo3, Ports = ports, Width = 50, Height = 50, Shape = new { type = "Flow", shape = "PreDefinedProcess" }, Style = new DiagramTextStyle() { StrokeColor = "#757575", StrokeWidth = 1 } });
             Dictionary<string, object> addInfo4 = new Dictionary<string, object>();
             addInfo4.Add("tooltip", "Data");
-            SymbolPaletee.Add(new DiagramNode() { Id = "data", AddInfo=addInfo4, Ports = ports, Width=50, Height= 50, Shape = new { type = "Flow", shape = "Data" }, Style = new DiagramTextStyle() { StrokeColor = "black", StrokeWidth = 1 } });
+            SymbolPaletee.Add(new DiagramNode() { Id = "data", AddInfo=addInfo4, Ports = ports, Width=50, Height= 50, Shape = new { type = "Flow", shape = "Data" }, Style = new DiagramTextStyle() { StrokeColor = "#757575", StrokeWidth = 1 } });
             List<Lane> lanes = new List<Lane>();
             Lane lane1 = new Lane();
             lane1.Id = "lane1";
             lane1.Height = 60;
             lane1.Width = 150;
-            lane1.Header = new Header() { Width = 50, Height = 50, Style = new DiagramTextStyle() { StrokeColor="black", FontSize = 11 } };
+            lane1.Header = new Header() { Width = 50, Height = 50, Style = new DiagramTextStyle() { StrokeColor="#757575", FontSize = 11 } };
             lanes.Add(lane1);
 
             List<Lane> lanes1 = new List<Lane>();
@@ -62,7 +62,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
             lane2.Id = "lane2";
             lane2.Height = 150;
             lane2.Width = 60;
-            lane2.Header = new Header() { Width = 50, Height = 50, Style = new DiagramTextStyle() { StrokeColor = "black", FontSize = 11 } };
+            lane2.Header = new Header() { Width = 50, Height = 50, Style = new DiagramTextStyle() { StrokeColor = "#757575", FontSize = 11 } };
             lanes1.Add(lane2);
 
 
@@ -82,7 +82,6 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
                     Orientation = "Horizontal",
                     IsLane =  true
                 },
-                Style= new DiagramShapeStyle() { StrokeWidth=1, StrokeColor="black"},
                 OffsetX=70,
                 OffsetY=30
             });
@@ -101,7 +100,6 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
                     Orientation = "Vertical",
                     IsLane = true
                 },
-                Style = new DiagramShapeStyle() { StrokeWidth = 1, StrokeColor = "black" },
                 OffsetX = 70,
                 OffsetY = 30
             });
@@ -118,7 +116,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
                     Type = "SwimLane",
                     Orientation = "Horizontal",
                     IsPhase = true
-                },
+                }
             });
             Dictionary<string, object> addInfo8 = new Dictionary<string, object>();
             addInfo8.Add("tooltip", "Horizontal phase");
@@ -133,7 +131,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
                     Type = "SwimLane",
                     Orientation = "Vertical",
                     IsPhase = true
-                },
+                }
             });
 
             List<DiagramConnector> SymbolPaletteConnectors = new List<DiagramConnector>();
@@ -143,8 +141,8 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
                 Type = Segments.Orthogonal,
                 SourcePoint = new DiagramPoint() { X = 0, Y = 0 },
                 TargetPoint = new DiagramPoint() { X = 27, Y = 27 },
-                TargetDecorator = new ConnectorTargetDecoratorConnectors() { Shape = DecoratorShapes.Arrow },
-                Style = new DiagramStrokeStyle() { StrokeWidth = 1 }
+                TargetDecorator = new ConnectorTargetDecoratorConnectors() { Shape = DecoratorShapes.Arrow, Style = new DiagramShapeStyle() { StrokeColor = "#757575", Fill = "#757575" } },
+                Style = new DiagramStrokeStyle() { StrokeWidth = 1, StrokeColor = "#757575" }
             });
             SymbolPaletteConnectors.Add(new DiagramConnector()
             {
@@ -153,7 +151,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
                 SourcePoint = new DiagramPoint() { X = 0, Y = 0 },
                 TargetPoint = new DiagramPoint() { X = 27, Y = 27 },
                 TargetDecorator = new ConnectorTargetDecoratorConnectors() { Shape = DecoratorShapes.None },
-                Style = new DiagramStrokeStyle() { StrokeWidth = 1, StrokeDashArray= "4,4" }
+                Style = new DiagramStrokeStyle() { StrokeWidth = 1, StrokeDashArray= "4,4", StrokeColor = "#757575" }
             });
 
             SymbolPaletteConnectors.Add(new DiagramConnector()
@@ -163,7 +161,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
                 SourcePoint = new DiagramPoint() { X = 0, Y = 0 },
                 TargetPoint = new DiagramPoint() { X = 40, Y = 40 },
                 TargetDecorator = new ConnectorTargetDecoratorConnectors() { Shape = DecoratorShapes.None },
-                Style = new DiagramStrokeStyle() { StrokeWidth = 1 }
+                Style = new DiagramStrokeStyle() { StrokeWidth = 1, StrokeColor = "#757575" }
             });
 
             SymbolPaletteConnectors.Add(new DiagramConnector()
@@ -172,8 +170,8 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
                 Type = Segments.Straight,
                 SourcePoint = new DiagramPoint() { X = 0, Y = 0 },
                 TargetPoint = new DiagramPoint() { X = 40, Y = 40 },
-                TargetDecorator = new ConnectorTargetDecoratorConnectors() { Shape = DecoratorShapes.Arrow },
-                Style = new DiagramStrokeStyle() { StrokeWidth = 1, StrokeDashArray= "4,4" }
+                TargetDecorator = new ConnectorTargetDecoratorConnectors() { Shape = DecoratorShapes.Arrow, Style = new DiagramShapeStyle() { StrokeColor = "#757575", Fill = "#757575" } },
+                Style = new DiagramStrokeStyle() { StrokeWidth = 1, StrokeDashArray= "4,4", StrokeColor = "#757575" }
             });
 
 
@@ -194,6 +192,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
 
             ViewBag.Palette = Palette;
             ViewBag.Multiple = ExpandMode.Multiple;
+            ViewBag.getSymbolNode = "getSymbolNodes";
             ViewBag.getConnectorDefaults = "getConnectorDefaults";
             return View();
         }

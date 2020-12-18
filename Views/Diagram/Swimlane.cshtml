@@ -6,7 +6,7 @@
                 <div id="palette-icon" style="float: right;" role="button" class="e-ddb-icons1 e-toggle-palette"></div>
             </div>
             <div id="palette-space" class="sb-mobile-palette">
-                <ejs-symbolpalette id="symbolPalette" symbolHeight="48" symbolWidth="48" getSymbolInfo="@ViewBag.getSymbolInfo" expandMode="@ViewBag.Multiple" width="100%" height="570px" palettes="ViewBag.Palette" symbolMargin="new SymbolPaletteMargin() { Left=8,Right=8,Top=8,Bottom=8}" getConnectorDefaults="@ViewBag.getConnectorDefaults" getNodeDefaults="@ViewBag.getNodeDefaults" created="created">
+                <ejs-symbolpalette id="symbolPalette" symbolHeight="48" getNodeDefaults="@ViewBag.getSymbolNode" symbolWidth="48" getSymbolInfo="@ViewBag.getSymbolInfo" expandMode="@ViewBag.Multiple" width="100%" height="570px" palettes="ViewBag.Palette" symbolMargin="new SymbolPaletteMargin() { Left=8,Right=8,Top=8,Bottom=8}"  created="created">
                 </ejs-symbolpalette>
             </div>
             <div id="diagram-space" class="sb-mobile-diagram">
@@ -120,6 +120,13 @@
         function getNodeDefaults(node) {
             node.style.strokeColor = "black";
             return node;
+        }
+        
+        function getSymbolNodes(symbol, diagram) {
+            if (symbol.id === 'Terminator' || symbol.id === 'Process' || symbol.id === 'Document' || symbol.id === 'PreDefinedProcess' || symbol.id === 'data' || symbol.id === 'stackCanvas1' || symbol.id === 'stackCanvas2') {
+                symbol.style.strokeWidth = 1;
+            }
+            symbol.style.strokeColor = '#757575';
         }
 
         function dragEnter(arg) {

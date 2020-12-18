@@ -231,7 +231,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
                 SourcePoint = new DiagramPoint() { X = 0, Y = 0 },
                 TargetPoint = new DiagramPoint() { X = 60, Y = 60 },
                 TargetDecorator = new DiagramDecorator { Shape = DecoratorShapes.None },
-                Style = new DiagramStrokeStyle() { StrokeWidth = 1, StrokeColor = "#444" }
+                Style = new DiagramStrokeStyle() { StrokeWidth = 1, StrokeColor = "#757575" }
             });
             PaletteLines.Add(new DiagramConnector()
             {
@@ -240,7 +240,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
                 SourcePoint = new DiagramPoint() { X = 0, Y = 0 },
                 TargetPoint = new DiagramPoint() { X = 60, Y = 60 },
                 TargetDecorator = new DiagramDecorator { Shape = DecoratorShapes.None },
-                Style = new DiagramStrokeStyle() { StrokeWidth = 1, StrokeColor = "#444", StrokeDashArray = "5,5" }
+                Style = new DiagramStrokeStyle() { StrokeWidth = 1, StrokeColor = "#757575", StrokeDashArray = "5,5" }
             });
             PaletteLines.Add(new DiagramConnector()
             {
@@ -249,7 +249,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
                 SourcePoint = new DiagramPoint() { X = 0, Y = 0 },
                 TargetPoint = new DiagramPoint() { X = 60, Y = 60 },
                 TargetDecorator = new DiagramDecorator { Shape = DecoratorShapes.None },
-                Style = new DiagramStrokeStyle() { StrokeWidth = 1, StrokeColor = "#444" }
+                Style = new DiagramStrokeStyle() { StrokeWidth = 1, StrokeColor = "#757575" }
             });
             PaletteLines.Add(new DiagramConnector()
             {
@@ -258,7 +258,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
                 SourcePoint = new DiagramPoint() { X = 0, Y = 0 },
                 TargetPoint = new DiagramPoint() { X = 60, Y = 60 },
                 TargetDecorator = new DiagramDecorator { Shape = DecoratorShapes.None },
-                Style = new DiagramStrokeStyle() { StrokeWidth = 1, StrokeColor = "#444", StrokeDashArray = "5,5" }
+                Style = new DiagramStrokeStyle() { StrokeWidth = 1, StrokeColor = "#757575", StrokeDashArray = "5,5" }
             });
             PaletteLines.Add(new DiagramConnector()
             {
@@ -268,7 +268,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
                 TargetPoint = new DiagramPoint() { X = 60, Y = 60 },
                 CornerRadius = 5,
                 TargetDecorator = new DiagramDecorator { Shape = DecoratorShapes.None },
-                Style = new DiagramStrokeStyle() { StrokeWidth = 1, StrokeColor = "#444" }
+                Style = new DiagramStrokeStyle() { StrokeWidth = 1, StrokeColor = "#757575" }
             });
             PaletteLines.Add(new DiagramConnector()
             {
@@ -278,7 +278,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
                 SourcePoint = new DiagramPoint() { X = 0, Y = 0 },
                 TargetPoint = new DiagramPoint() { X = 60, Y = 60 },
                 TargetDecorator = new DiagramDecorator { Shape = DecoratorShapes.None },
-                Style = new DiagramStrokeStyle() { StrokeWidth = 1, StrokeColor = "#444", StrokeDashArray = "5,5" }
+                Style = new DiagramStrokeStyle() { StrokeWidth = 1, StrokeColor = "#757575", StrokeDashArray = "5,5" }
             });
 
             List<SymbolPalettePalette> Palette = new List<SymbolPalettePalette>();

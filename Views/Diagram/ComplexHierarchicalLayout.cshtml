@@ -3,71 +3,75 @@
 
 @section ControlsSection{
     <div class="col-lg-8 control-section">
-    <ejs-diagram id="diagram" width="100%" height="500px" getNodeDefaults="@ViewBag.getNodeDefaults" getConnectorDefaults="@ViewBag.getConnectorDefaults" created="diagramCreated">
-        <e-diagram-snapsettings constraints="None"></e-diagram-snapsettings> 
-        <e-diagram-datasourcesettings id="Name" parentId="ReportingPersons" dataSource="new DataManager() { Data = (List<ComplexHierarchicalDataDetails>)ViewBag.Nodes }"></e-diagram-datasourcesettings>
-        <e-diagram-layout type="ComplexHierarchicalTree" horizontalSpacing="40" verticalSpacing="40" margin="ViewBag.marginValue"></e-diagram-layout>
-    </ejs-diagram>
-</div>
-   <div class="col-lg-4 property-section">
-    <div class="property-panel-header">
-        Layout Settings
+        <ejs-diagram id="diagram" width="100%" height="500px" getNodeDefaults="@ViewBag.getNodeDefaults" getConnectorDefaults="@ViewBag.getConnectorDefaults" created="diagramCreated">
+            <e-diagram-snapsettings constraints="None"></e-diagram-snapsettings>
+            <e-diagram-datasourcesettings id="Name" parentId="ReportingPersons" dataSource="new DataManager() { Data = (List<ComplexHierarchicalDataDetails>)ViewBag.Nodes }"></e-diagram-datasourcesettings>
+            <e-diagram-layout type="ComplexHierarchicalTree" horizontalSpacing="40" verticalSpacing="40" connectionPointOrigin="DifferentPoint" margin="ViewBag.marginValue"></e-diagram-layout>
+        </ejs-diagram>
     </div>
-    <div class="row property-panel-content" id="appearance" style="padding-top: 10px">
-        <div class="row row-header">
-            Orientation
+    <div class="col-lg-4 property-section">
+        <div class="property-panel-header">
+            Layout Settings
         </div>
-        <div class="row" style="padding-top: 8px">
-            <div class="image-pattern-style  e-selected-style" id="topToBottom" style="background-image: url('@Url.Content("~/images//diagram/common-orientation/toptobottom.png")'); margin-right: 3px">
+        <div class="row property-panel-content" id="appearance" style="padding-top: 10px">
+            <div class="row row-header">
+                Orientation
             </div>
-            <div class="image-pattern-style" id="bottomToTop" style="background-image: url('@Url.Content("~/images//diagram/common-orientation/bottomtotop.png")'); margin: 0px 3px">
+            <div class="row" style="padding-top: 8px">
+                <div class="image-pattern-style  e-selected-style" id="topToBottom" style="background-image: url('@Url.Content("~/images//diagram/common-orientation/toptobottom.png")'); margin-right: 3px">
+                </div>
+                <div class="image-pattern-style" id="bottomToTop" style="background-image: url('@Url.Content("~/images//diagram/common-orientation/bottomtotop.png")'); margin: 0px 3px">
+                </div>
+                <div class="image-pattern-style" id="leftToRight" style="background-image: url('@Url.Content("~/images//diagram/common-orientation/lefttoright.png")'); margin-right: 3px">
+                </div>
             </div>
-            <div class="image-pattern-style" id="leftToRight" style="background-image: url('@Url.Content("~/images//diagram/common-orientation/lefttoright.png")'); margin-right: 3px">
+            <div class="row" style="padding-top: 8px">
+                <div class="image-pattern-style" id="rightToLeft" style="background-image: url('@Url.Content("~/images//diagram/common-orientation/righttoleft.png")'); margin: 0px 3px">
+                </div>
             </div>
         </div>
-        <div class="row" style="padding-top: 8px">
-            <div class="image-pattern-style" id="rightToLeft" style="background-image: url('@Url.Content("~/images//diagram/common-orientation/righttoleft.png")'); margin: 0px 3px">
+        <div class="row property-panel-content" style="padding-top: 10px">
+            <div class="row row-header">
+                Behavior
+            </div>
+            <div class="row" style="padding-top: 8px">
+                <div style="display: table;height: 35px; padding-left: 0px" class="col-xs-5">
+                    <div style="display: table-cell; vertical-align: middle">Margin X</div>
+                </div>
+                <div class="col-xs-7">
+                    <ejs-numerictextbox id="marginLeft" format="##.##" change="marginLeftChange" width="120px" min="20" max="60" step="2" value="10"></ejs-numerictextbox>
+                </div>
+            </div>
+            <div class="row" style="padding-top: 8px">
+                <div style="display: table;height: 35px; padding-left: 0px" class="col-xs-5">
+                    <div style="display: table-cell; vertical-align: middle">Margin Y</div>
+                </div>
+                <div class="col-xs-7">
+                    <ejs-numerictextbox id="marginTop" format="##.##" change="marginTopChange" width="120px" min="20" max="60" step="2" value="50"></ejs-numerictextbox>
+                </div>
+            </div>
+            <div class="row" style="padding-top: 8px">
+                <div style="display: table;height: 35px; padding-left: 0px" class="col-xs-5">
+                    <div style="display: table-cell; vertical-align: middle">Horizontal Spacing</div>
+                </div>
+                <div class="col-xs-7">
+                    <ejs-numerictextbox id="hSpacing" format="##.##" change="hSpacingChange" width="120px" min="20" max="60" step="2" value="40"></ejs-numerictextbox>
+                </div>
+            </div>
+            <div class="row" style="padding-top: 8px">
+                <div style="display: table;height: 35px; padding-left: 0px" class="col-xs-5">
+                    <div style="display: table-cell; vertical-align: middle">Vertical Spacing</div>
+                </div>
+                <div class="col-xs-7">
+                    <ejs-numerictextbox id="vSpacing" format="##.##" change="vSpacingChange" width="120px" min="20" max="60" step="2" value="40"></ejs-numerictextbox>
+                </div>
+            </div>
+            <div class="row" style="padding-top: 10px">
+                <ejs-checkbox id="checked" checked="true" label="Prevent Connector Overlapping" change="onChangeData"></ejs-checkbox>
             </div>
         </div>
     </div>
-    <div class="row property-panel-content" style="padding-top: 10px">
-        <div class="row row-header">
-            Behavior
-        </div>
-        <div class="row" style="padding-top: 8px">
-            <div style="display: table;height: 35px; padding-left: 0px" class="col-xs-5">
-                <div style="display: table-cell; vertical-align: middle">Margin X</div>
-            </div>
-            <div class="col-xs-7">
-                <ejs-numerictextbox id="marginLeft" format="##.##" change="marginLeftChange" width="120px" min="20" max="60" step="2" value="10"></ejs-numerictextbox>
-            </div>
-        </div>
-        <div class="row" style="padding-top: 8px">
-            <div style="display: table;height: 35px; padding-left: 0px" class="col-xs-5">
-                <div style="display: table-cell; vertical-align: middle">Margin Y</div>
-            </div>
-            <div class="col-xs-7">
-                <ejs-numerictextbox id="marginTop" format="##.##" change="marginTopChange" width="120px" min="20" max="60" step="2" value="50"></ejs-numerictextbox>
-            </div>
-        </div>
-        <div class="row" style="padding-top: 8px">
-            <div style="display: table;height: 35px; padding-left: 0px" class="col-xs-5">
-                <div style="display: table-cell; vertical-align: middle">Horizontal Spacing</div>
-            </div>
-            <div class="col-xs-7">
-                <ejs-numerictextbox id="hSpacing" format="##.##" change="hSpacingChange" width="120px" min="20" max="60" step="2" value="40"></ejs-numerictextbox>
-            </div>
-        </div>
-        <div class="row" style="padding-top: 8px">
-            <div style="display: table;height: 35px; padding-left: 0px" class="col-xs-5">
-                <div style="display: table-cell; vertical-align: middle">Vertical Spacing</div>
-            </div>
-            <div class="col-xs-7">
-                <ejs-numerictextbox id="vSpacing" format="##.##" change="vSpacingChange" width="120px" min="20" max="60" step="2" value="40"></ejs-numerictextbox>
-            </div>
-        </div>
-    </div>
-</div>
+    @*custom code start*@
     <style>
 
         #diagram {
@@ -91,7 +95,7 @@
             background-position: center;
             float: left;
         }
-  
+
         .row-header {
             font-size: 15px;
             font-weight: 500;
@@ -111,7 +115,7 @@
             padding-right: 0px;
         }
     </style>
-
+    @*custom code end*@
     <script>
 
         function diagramCreated() {
@@ -168,6 +172,11 @@
             obj.shape = { type: 'Basic', shape: 'Rectangle', cornerRadius: 7 };
             return obj;
         }
+
+        function onChangeData(args) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            diagram.layout.connectionPointOrigin = args.checked ? "DifferentPoint" : "SamePoint";
+        }
         @*custom code start*@
         document.getElementById('appearance').onclick = function (args)  {
             var target = args.target;
@@ -189,11 +198,11 @@
     </script>
 }
 @section Meta{
-                    <meta name="description" content="This example demonstrates the Complex Hierarchical Tree in ASP.NET Core Diagram control. Explore here for more details."/>
-                }
+    <meta name="description" content="This example demonstrates the Complex Hierarchical Tree in ASP.NET Core Diagram control. Explore here for more details." />
+}
 @section Title{
-                    <title>ASP.NET Core Diagram Complex Hierarchical Tree Example - Syncfusion Demos </title> 
-                }
+    <title>ASP.NET Core Diagram Complex Hierarchical Tree Example - Syncfusion Demos </title>
+}
 @section Header{
-                    <h1 class='sb-sample-text'>Example of Complex Hierarchical Tree in ASP.NET Core Diagram Control</h1>
-                }
+    <h1 class='sb-sample-text'>Example of Complex Hierarchical Tree in ASP.NET Core Diagram Control</h1>
+}

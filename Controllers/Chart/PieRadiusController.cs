@@ -16,13 +16,13 @@ namespace EJ2CoreSampleBrowser.Controllers
         {
             List<PieData1> chartData = new List<PieData1>  
             {
-                new PieData1 { xValue = "Argentina", yValue = 505370, r = "100"},
-                new PieData1 { xValue = "Belgium",    yValue = 551500, r = "118.7"},
-                new PieData1 { xValue = "Cuba",  yValue = 312685 , r = "124.6"},
-                new PieData1 { xValue = "Dominican Republic", yValue = 350000 , r = "137.5"},
-                new PieData1 { xValue = "Egypt", yValue = 301000 , r = "150.8"},
-                new PieData1 { xValue = "Kazakhstan", yValue = 300000, r = "155.5"},
-                new PieData1 { xValue = "Somalia",  yValue = 357022, r = "160.6"}
+                new PieData1 { xValue = "Argentina", yValue = 505370, r = "50%"},
+                new PieData1 { xValue = "Belgium",    yValue = 551500, r = "70%"},
+                new PieData1 { xValue = "Cuba",  yValue = 312685 , r = "84%"},
+                new PieData1 { xValue = "Dominican Republic", yValue = 350000 , r = "97%"},
+                new PieData1 { xValue = "Egypt", yValue = 301000 , r = "84%"},
+                new PieData1 { xValue = "Kazakhstan", yValue = 300000, r = "70%"},
+                new PieData1 { xValue = "Somalia",  yValue = 357022, r = "90%"}
             };
             ViewBag.dataSource = chartData;
             return View();

@@ -65,6 +65,10 @@
 
         function appendElement(elementString, form) {
             form.querySelector("#dialogTemp").innerHTML = elementString;
+            form.ej2_instances[0].addRules('OrderID', { required: true, number: true });
+            form.ej2_instances[0].addRules('CustomerID', { required: true }); 
+            form.ej2_instances[0].addRules('Freight', { required: true });  //adding the form validation rules 
+            form.ej2_instances[0].refresh();  // refresh method of the formObj
             var script = document.createElement('script');
             script.type = "text/javascript";
             var serverScript = form.querySelector("#dialogTemp").querySelector('script');

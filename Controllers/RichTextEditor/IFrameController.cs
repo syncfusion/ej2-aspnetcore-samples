@@ -11,12 +11,19 @@ namespace EJ2CoreSampleBrowser.Controllers
     {
         public IActionResult IFrame()
         {
+            string hostUrl = "https://ej2-aspcore-service.azurewebsites.net/";
+            ViewBag.ajaxSettings = new {
+                url = hostUrl + "api/FileManager/FileOperations",
+                getImageUrl = hostUrl + "api/FileManager/GetImage",
+                uploadUrl = hostUrl + "api/FileManager/Upload",
+                downloadUrl = hostUrl + "api/FileManager/Download"
+            };
             ViewBag.items = new[] { "Bold", "Italic", "Underline", "StrikeThrough",
                 "FontName", "FontSize", "FontColor", "BackgroundColor",
                 "LowerCase", "UpperCase","SuperScript", "SubScript", "|",
                 "Formats", "Alignments", "OrderedList", "UnorderedList",
                 "Outdent", "Indent", "|",
-                "CreateTable", "CreateLink", "Image", "|", "ClearFormat", "Print",
+                "CreateTable", "CreateLink", "Image", "FileManager", "|", "ClearFormat", "Print",
                 "SourceCode", "FullScreen", "|", "Undo", "Redo"};
             return View();
         }

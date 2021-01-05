@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 
 namespace EJ2CoreSampleBrowser.Controllers.PdfViewer
 {
-    
+
     public partial class PdfViewerController : Controller
     {
         private readonly IHostingEnvironment _hostingEnvironment;
@@ -125,7 +125,7 @@ namespace EJ2CoreSampleBrowser.Controllers.PdfViewer
         public IActionResult PrintImages([FromBody] Dictionary<string, string> jsonObject)
         {
             PdfRenderer pdfviewer = new PdfRenderer(_cache);
-			object pageImage = pdfviewer.GetPrintImage(jsonObject);
+            object pageImage = pdfviewer.GetPrintImage(jsonObject);
             return Content(JsonConvert.SerializeObject(pageImage));
         }
         [AcceptVerbs("Post")]
@@ -134,8 +134,8 @@ namespace EJ2CoreSampleBrowser.Controllers.PdfViewer
         public IActionResult ExportAnnotations([FromBody] Dictionary<string, string> jsonObject)
         {
             PdfRenderer pdfviewer = new PdfRenderer(_cache);
-            string jsonResult = pdfviewer.GetAnnotations(jsonObject);
-            return Content(jsonResult);
+            string result = pdfviewer.ExportAnnotation(jsonObject);
+            return Content(result);
         }
         [AcceptVerbs("Post")]
         [HttpPost]
@@ -144,17 +144,42 @@ namespace EJ2CoreSampleBrowser.Controllers.PdfViewer
         {
             PdfRenderer pdfviewer = new PdfRenderer(_cache);
             string jsonResult = string.Empty;
+            object JsonResult;
             if (jsonObject != null && jsonObject.ContainsKey("fileName"))
             {
-                 string documentPath = GetDocumentPath(jsonObject["fileName"]);
-                 if (!string.IsNullOrEmpty(documentPath))
-                 {
-                      jsonResult = System.IO.File.ReadAllText(documentPath);
-                 }
-                 else
-                 {
-                     return Content(jsonObject["document"] + " is not found");
-                 }
+                string documentPath = GetDocumentPath(jsonObject["fileName"]);
+                if (!string.IsNullOrEmpty(documentPath))
+                {
+                    jsonResult = System.IO.File.ReadAllText(documentPath);
+                }
+                else
+                {
+                    return this.Content(jsonObject["document"] + " is not found");
+                }
+            }
+            else
+            {
+                string extension = Path.GetExtension(jsonObject["importedData"]);
+                if (extension != ".xfdf")
+                {
+                    JsonResult = pdfviewer.ImportAnnotation(jsonObject);
+                    return Content(JsonConvert.SerializeObject(JsonResult));
+                }
+                else
+                {
+                    string documentPath = GetDocumentPath(jsonObject["importedData"]);
+                    if (!string.IsNullOrEmpty(documentPath))
+                    {
+                        byte[] bytes = System.IO.File.ReadAllBytes(documentPath);
+                        jsonObject["importedData"] = Convert.ToBase64String(bytes);
+                        JsonResult = pdfviewer.ImportAnnotation(jsonObject);
+                        return Content(JsonConvert.SerializeObject(JsonResult));
+                    }
+                    else
+                    {
+                        return this.Content(jsonObject["document"] + " is not found");
+                    }
+                }
             }
             return Content(jsonResult);
         }

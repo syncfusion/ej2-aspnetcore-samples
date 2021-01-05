@@ -44,7 +44,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
             multiParents.Add(new ComplexHierarchicalDataDetails("node13", "#58b087", new string[] { "node12" }, "#16955e"));
             multiParents.Add(new ComplexHierarchicalDataDetails("node14", "#58b087", new string[] { "node12" }, "#16955e"));
             multiParents.Add(new ComplexHierarchicalDataDetails("node15", "#58b087", new string[] { "node12" }, "#16955e"));
-
+            multiParents.Add(new ComplexHierarchicalDataDetails("node116", "#58b087", new string[] { "node22", "node12" }, "#d3722e"));
             multiParents.Add(new ComplexHierarchicalDataDetails("node16", "#14ad85", new string[] { }, ""));
 
             multiParents.Add(new ComplexHierarchicalDataDetails("node17", "#659be5", new string[] { "node13", "node14", "node15" }, "#3a6eb5"));
@@ -74,7 +74,6 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
             multiParents.Add(new ComplexHierarchicalDataDetails("node31", "#e7704c", null, "#c15433"));
 
             multiParents.Add(new ComplexHierarchicalDataDetails("node114", "#f3904a", new string[] { "node11", "node21", "node31" }, "#d3722e"));
-            multiParents.Add(new ComplexHierarchicalDataDetails("node116", "#58b087", new string[] { "node12", "node22" }, "#d3722e"));
 
             return multiParents;
         }

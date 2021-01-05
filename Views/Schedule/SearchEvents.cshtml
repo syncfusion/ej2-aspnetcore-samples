@@ -83,29 +83,37 @@
             var endDate;
             var formElements = [].slice.call(document.querySelectorAll('.event-search .search-field'));
             formElements.forEach(function (node) {
-                if (node.value && node.value !== '') {
-                    var fieldOperator = 'contains';
-                    var predicateCondition = 'or';
-                    var fieldValue = node.value;
-                    var matchCase = true;
-                    if (node.classList.contains('e-datepicker')) {
-                        fieldOperator = node.classList.contains('e-start-time') ? 'greaterthanorequal' : 'lessthanorequal';
+                var fieldOperator;
+                var predicateCondition;
+                var fieldInstance;
+                var fieldValue;
+                if (node.value && node.value !== '' && !node.classList.contains('e-datepicker')) {
+                    fieldOperator = 'contains';
+                    predicateCondition = 'or';
+                    fieldValue = node.value;
+                    searchObj.push({
+                        field: node.name, operator: fieldOperator, value: fieldValue, predicate: predicateCondition,
+                        matchcase: true
+                    });
+                }
+                if (node.classList.contains('e-datepicker') && node.ej2_instances[0].value) {
+                    fieldInstance = ((node)).ej2_instances[0];
+                    fieldValue = fieldInstance.value;
+                    if (node.classList.contains('e-start-time')) {
+                        fieldOperator = 'greaterthanorequal';
                         predicateCondition = 'and';
-                        var fieldInstance = ((node)).ej2_instances[0];
-                        fieldValue = fieldInstance.value;
-                        if (node.classList.contains('e-start-time')) {
-                            startDate = new Date(+fieldValue);
-                        }
-                        if (node.classList.contains('e-end-time')) {
-                            var date = new Date(+fieldInstance.value);
-                            fieldValue = new Date(date.setDate(date.getDate() + 1));
-                            endDate = fieldValue;
-                        }
-                        matchCase = false;
+                        startDate = new Date(+fieldValue);
+                    }
+                    else {
+                        fieldOperator = 'lessthanorequal';
+                        predicateCondition = 'and';
+                        var date = new Date(+fieldInstance.value);
+                        fieldValue = new Date(date.setDate(date.getDate() + 1));
+                        endDate = fieldValue;
                     }
                     searchObj.push({
                         field: node.name, operator: fieldOperator, value: fieldValue, predicate: predicateCondition,
-                        matchcase: matchCase
+                        matchcase: false
                     });
                 }
             });

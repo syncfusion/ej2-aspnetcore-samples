@@ -187,9 +187,9 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
 
             DiagramPoint sourcePoint = new DiagramPoint() { X = 0, Y = 0 };
             DiagramPoint targetPoint = new DiagramPoint() { X = 40, Y = 40 };
-            ConnectorTargetDecoratorConnectors targetDecorator = new ConnectorTargetDecoratorConnectors() { Shape = DecoratorShapes.Arrow, Style = new DiagramShapeStyle() { Fill = "#444", StrokeColor = "#444" } };
-            DiagramStrokeStyle style1 = new DiagramStrokeStyle() { StrokeWidth = 2, StrokeColor = "#444", StrokeDashArray = "4 4" };
-            DiagramStrokeStyle style2 = new DiagramStrokeStyle() { StrokeWidth = 2 };
+            ConnectorTargetDecoratorConnectors targetDecorator = new ConnectorTargetDecoratorConnectors() { Shape = DecoratorShapes.Arrow, Style = new DiagramShapeStyle() { Fill = "#757575", StrokeColor = "#757575" } };
+            DiagramStrokeStyle style1 = new DiagramStrokeStyle() { StrokeWidth = 2, StrokeColor = "#757575", StrokeDashArray = "4 4" };
+            DiagramStrokeStyle style2 = new DiagramStrokeStyle() { StrokeWidth = 2, StrokeColor = "#757575" };
             List<DiagramConnector> SymbolPaletteConnectors = new List<DiagramConnector>();
             SymbolPaletteConnectors.Add(new DiagramConnector()
             {

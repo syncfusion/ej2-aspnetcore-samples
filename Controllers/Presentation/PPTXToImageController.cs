@@ -10,6 +10,7 @@ using System.IO;
 using Syncfusion.Presentation;
 using Microsoft.AspNetCore.Hosting;
 using Syncfusion.PresentationRenderer;
+using Syncfusion.Office;
 
 namespace EJ2CoreSampleBrowser.Controllers
 {
@@ -45,6 +46,9 @@ namespace EJ2CoreSampleBrowser.Controllers
 
             //Initialize PresentationRenderer to perform image conversion.
             presentation.PresentationRenderer = new PresentationRenderer();
+
+            // Add a custom fallback font collection for Presentation.
+            AddFallbackFonts(presentation);
 
             //Convert PowerPoint slide to image stream.
             Stream stream = presentation.Slides[0].ConvertToImage(ExportImageFormat.Jpeg);

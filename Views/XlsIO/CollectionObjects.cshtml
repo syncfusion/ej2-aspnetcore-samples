@@ -23,16 +23,13 @@
                 Click the "Export To Excel" button to view the Excel document created by exporting the nested class data from the ListView using Essential XlsIO. 
                 Please note that the Microsoft Excel viewer or Microsoft Excel is required to view the Excel document.
             </p>
-            @Html.EJS().Grid("Export").AllowPaging(true).DataSource(dataManger =>
-       {
-           dataManger.Url("/XlsIO/UrlDatasource").UpdateUrl("/XlsIO/Update").Adaptor("UrlAdaptor");
-       }).Columns(col =>
+            @Html.EJS().Grid("Export").AllowPaging(true).DataSource((IEnumerable<object>)ViewBag.DataSource).Columns(col =>
        {
            col.Field("ID").HeaderText("ID").IsPrimaryKey(true).Visible(false).TextAlign(Syncfusion.EJ2.Grids.TextAlign.Left).Width("40").Add();
            col.Field("BrandName").HeaderText("Brand").Width("70").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Left).Add();
            col.Field("VehicleType.VehicleName").HeaderText("Vehicle Type").Width("70").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Left).Add();
            col.Field("VehicleType.Model.ModelName").HeaderText("Model").Width("70").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Left).Add();
-       }).Width("550").Height("250").EditSettings(edit => { edit.AllowAdding(true).AllowEditing(true).AllowDeleting(true).Mode(Syncfusion.EJ2.Grids.EditMode.Normal); }).Render()
+       }).Width("550").Height("250").Render()
 
             <div class="rowdiv">
                 <div class="celldiv">

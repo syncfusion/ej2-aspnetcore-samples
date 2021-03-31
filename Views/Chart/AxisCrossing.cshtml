@@ -69,11 +69,16 @@
     @*custom code end*@
         function onChange(args) {
             var chart = document.getElementById('container').ej2_instances[0];
+            var target = document.getElementById('axisElements');
             var cross = document.getElementById("number").ej2_instances[0];
-            if (this.value === "xAxis") {
-                chart.primaryXAxis.crossesAt = cross.value;
+            if (axis.value === "xAxis") {
+                target.checked = chart.primaryXAxis.placeNextToAxisLine;
+                cross.value = + chart.primaryXAxis.crossesAt;
+                //chart.primaryXAxis.crossesAt = cross.value;
             } else if (this.value === "yAxis") {
-                chart.primaryYAxis.crossesAt = cross.value;
+                //chart.primaryYAxis.crossesAt = cross.value;
+                target.checked = chart.primaryYAxis.placeNextToAxisLine;
+                cross.value = + chart.primaryYAxis.crossesAt;
             }
             chart.dataBind();
 
@@ -81,22 +86,23 @@
         function valueChange(args) {
             var chart = document.getElementById('container').ej2_instances[0];
             var axis = document.getElementById("axis").ej2_instances[0];
+            var cross = document.getElementById("number").ej2_instances[0];
             if (axis.value === "xAxis") {
-                chart.primaryXAxis.crossesAt = this.value;
+                chart.primaryXAxis.crossesAt = cross.value;
             } else if (axis.value === "yAxis") {
-                chart.primaryYAxis.crossesAt = this.value;
+                chart.primaryYAxis.crossesAt = cross.value;
             }
             chart.dataBind();
         }
 
-        var line = document.getElementById('axisElements');
-        line.onchange = () => {
+        document.getElementById('axisElements').onchange = function (e) {
             var axis = document.getElementById("axis").ej2_instances[0];
             var chart = document.getElementById("container").ej2_instances[0];
+            var value = e.target.checked;
             if (axis.value === "xAxis") {
-                chart.primaryXAxis.placeNextToAxisLine = line.checked;
+                chart.primaryXAxis.placeNextToAxisLine = value;
             } else {
-                chart.primaryYAxis.placeNextToAxisLine = line.checked;
+                chart.primaryYAxis.placeNextToAxisLine = value;
             }
             chart.dataBind();
         }

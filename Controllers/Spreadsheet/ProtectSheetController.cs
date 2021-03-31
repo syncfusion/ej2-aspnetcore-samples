@@ -30,5 +30,21 @@ namespace EJ2CoreSampleBrowser.Controllers
             ViewBag.ProtectSheetData = data;
             return View();
         }
+
+        public IActionResult ProtectsheetOpen(IFormCollection openRequest)
+        {
+            OpenRequest open = new OpenRequest();
+            open.File = openRequest.Files[0];
+            if(openRequest["Password"].Count > 0)
+            {
+                open.Password = openRequest["Password"];
+            }
+            return Content(Workbook.Open(open));
+        }
+
+        public IActionResult ProtectsheetSave(SaveSettings saveSettings)
+        {
+            return Workbook.Save(saveSettings);
+        }
     }
 }

@@ -25,6 +25,9 @@ namespace EJ2CoreSampleBrowser.Controllers
                 "Outdent", "Indent", "|",
                 "CreateTable", "CreateLink", "Image", "FileManager", "|", "ClearFormat", "Print",
                 "SourceCode", "FullScreen", "|", "Undo", "Redo" };
+            ViewBag.table = new[] {
+                "TableHeader", "TableRows", "TableColumns", "TableCell", "-", "BackgroundColor", "TableRemove", "TableCellVerticalAlign", "Styles"
+            };
             return View();
         }
     }

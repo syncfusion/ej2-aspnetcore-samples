@@ -15,9 +15,9 @@
             <e-accumulationchart-legendsettings visible="false">
             </e-accumulationchart-legendsettings>
             <e-accumulation-series-collection>
-                <e-accumulation-series dataSource="ViewBag.dataSource" xName="xValue" yName="yValue" name="Browser" explodeIndex="0" explode="true" explodeOffset="10%">
+                <e-accumulation-series dataSource="ViewBag.dataSource" xName="xValue" yName="yValue" name="Browser" radius="70%" startAngle="0" endAngle="360" explodeIndex="5" explode="true" explodeOffset="10%">
                     <e-accumulationseries-datalabel name="text" visible="true">
-                        <e-font fontWeight="600" color="white"></e-font>
+                        <e-font fontWeight="600"></e-font>
                     </e-accumulationseries-datalabel>
                 </e-accumulation-series>
             </e-accumulation-series-collection>
@@ -49,11 +49,11 @@
                     </td>
                     <td style="width: 40%;">
                         <div data-role="rangeslider">
-                            <input type="range" name="range-min" id="pieradius" value="80" min="0" max="80" style="width:90%">
+                            <input type="range" name="range-min" id="pieradius" value="70" min="0" max="80" style="width:90%">
                         </div>
                     </td>
                     <td style="width: 30%;">
-                        <p id="radius" style="font-weight: normal;padding-top:15px">0.8</p>
+                        <p id="radius" style="font-weight: normal;padding-top:15px">0.70</p>
                     </td>
                 </tr>
                 <tr style="height: 50px">
@@ -68,7 +68,7 @@
                         </div>
                     </td>
                     <td style="width: 30%;">
-                        <p id="exploderadius" style="font-weight: normal;padding-top:15px">0.1</p>
+                        <p id="exploderadius" style="font-weight: normal;padding-top:15px">0.10</p>
                     </td>
                 </tr>
                 <tr style="height: 50px">
@@ -79,11 +79,11 @@
                     </td>
                     <td style="width: 70%;">
                         <div data-role="rangeslider">
-                            <input type="range" name="range-min" id="pieexplodeindex" value="0" min="0" max="6" style="width:90%">
+                            <input type="range" name="range-min" id="pieexplodeindex" value="5" min="0" max="5" style="width:90%">
                         </div>
                     </td>
                     <td style="width: 30%;">
-                        <p id="explodeindex" style="font-weight: normal;padding-top:15px">0</p>
+                        <p id="explodeindex" style="font-weight: normal;padding-top:15px">5</p>
                     </td>
                 </tr>
                 <tr style="height: 50px">
@@ -124,17 +124,19 @@
         </table>
     </div>
     <script>
-
+        function load(args) {
+            var indexedTheme = location.hash.split('/')[1];
+            indexedTheme = indexedTheme ? indexedTheme : 'Material';
+            args.accumulation.theme = (indexedTheme.charAt(0).toUpperCase() + indexedTheme.slice(1).replace(/dark/i, "Dark").replace(/light/i, "Light"));
+        }
         function anglechange(value) {
             var pie = document.getElementById("container").ej2_instances[0];
-            if (pie.series[0].startAngle !== +value || pie.series[0].endAngle !== +value) {
-                pie.series[0].startAngle = +value;
-                pie.series[0].endAngle = +value;
-                document.getElementById('anglevalue').innerHTML = value.toString();
-                pie.removeSvg();
-                pie.refreshSeries();
-                pie.refreshChart();
-            }
+            pie.series[0].startAngle = +value;
+            pie.series[0].endAngle = +value;
+            document.getElementById('anglevalue').innerHTML = value.toString();
+            pie.removeSvg();
+            pie.refreshSeries();
+            pie.refreshChart();
         }
 
         document.getElementById('pieangle').onpointermove = document.getElementById('pieangle').ontouchmove =
@@ -143,13 +145,11 @@
             };
         function radiuschange(value) {
             var pie = document.getElementById("container").ej2_instances[0];
-            if (pie.series[0].radius !== value + '%') {
-                pie.series[0].radius = value + '%';
-                document.getElementById('radius').innerHTML = (value / 100).toFixed(2);
-                pie.removeSvg();
-                pie.refreshSeries();
-                pie.refreshChart();
-            }
+            pie.series[0].radius = value + '%';
+            document.getElementById('radius').innerHTML = (value / 100).toFixed(2);
+            pie.removeSvg();
+            pie.refreshSeries();
+            pie.refreshChart();
         }
 
         document.getElementById('pieradius').onpointermove = document.getElementById('pieradius').ontouchmove =
@@ -158,13 +158,12 @@
             };
         function exploderadius(value) {
             var pie = document.getElementById("container").ej2_instances[0];
-            if (pie.visibleSeries[0].explodeOffset !== value + '%') {
-                pie.visibleSeries[0].explodeOffset = value + '%';
-                document.getElementById('exploderadius').innerHTML = (value / 100).toFixed(2);
-                pie.removeSvg();
-                pie.refreshSeries();
-                pie.refreshChart();
-            }
+            pie.series[0].explodeOffset = value + '%';
+            pie.series[0].animation.enable = false;
+            document.getElementById('exploderadius').innerHTML = (value / 100).toFixed(2);
+            pie.removeSvg();
+            pie.refreshSeries();
+            pie.refreshChart();
         }
 
         document.getElementById('pieexploderadius').onpointermove = document.getElementById('pieexploderadius').ontouchmove =
@@ -173,13 +172,11 @@
             };
         function explodeIndex(value) {
             var pie = document.getElementById("container").ej2_instances[0];
-            if (pie.visibleSeries[0].explodeIndex !== +value) {
-                pie.visibleSeries[0].explodeIndex = +value;
-                document.getElementById('explodeindex').innerHTML = value.toString();
-                pie.removeSvg();
-                pie.refreshSeries();
-                pie.refreshChart();
-            }
+            pie.visibleSeries[0].explodeIndex = +value;
+            document.getElementById('explodeindex').innerHTML = value.toString();
+            pie.removeSvg();
+            pie.refreshSeries();
+            pie.refreshChart();
         }
 
         document.getElementById('pieexplodeindex').onpointermove = document.getElementById('pieexplodeindex').ontouchmove =
@@ -206,21 +203,14 @@
             document.getElementById('y').onchange = function (e) {
                 ychange(+(document.getElementById('y')).value);
             };
-        function load(args) {
-            var indexedTheme = location.hash.split('/')[1];
-            indexedTheme = indexedTheme ? indexedTheme : 'Material';
-            args.accumulation.theme = (indexedTheme.charAt(0).toUpperCase() + indexedTheme.slice(1).replace(/dark/i, "Dark").replace(/light/i, "Light"));
-            args.accumulation.series[0].startAngle = 0;
-            args.accumulation.series[0].endAngle = 0;
-            args.accumulation.series[0].explodeIndex = 0;
-        }
+
     </script>
 }
-    @*custom code start*@
+@*custom code start*@
 @section Meta{
-                    <meta name="description" content="This example demonstrates the Pie in ASP.NET Core Chart control. Explore here for more details."/>
-                }
-    @*custom code end*@
+    <meta name="description" content="This example demonstrates the Pie in ASP.NET Core Chart control. Explore here for more details." />
+}
+@*custom code end*@
 @section ActionDescription{
 
     <div id="action-description">
@@ -236,8 +226,8 @@
 
 }
 @section Title{
-                 <title>ASP.NET Core Chart Pie Example - Syncfusion Demos </title>
-             }
+    <title>ASP.NET Core Chart Pie Example - Syncfusion Demos </title>
+}
 @section Header{
-                <h1 class='sb-sample-text'>Example of Pie in ASP.NET Core Chart Control</h1>
-            }
+    <h1 class='sb-sample-text'>Example of Pie in ASP.NET Core Chart Control</h1>
+}

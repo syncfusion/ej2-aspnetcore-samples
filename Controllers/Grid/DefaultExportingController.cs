@@ -11,8 +11,8 @@ namespace EJ2CoreSampleBrowser.Controllers.Grid
     {
         public IActionResult DefaultExporting()
         {
-            var order = OrdersDetails.GetAllRecords();
-            ViewBag.datasource = order;
+            var employee = ExportEmployeeDetails.GetAllRecords();
+            ViewBag.datasource = employee;
             return View();
         }
 

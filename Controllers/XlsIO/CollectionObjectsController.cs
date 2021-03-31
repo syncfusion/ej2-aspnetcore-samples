@@ -32,13 +32,6 @@ namespace EJ2CoreSampleBrowser.Controllers.XlsIO
         public static List<Brand> _sales = new List<Brand>();
         public static List<Brand> businessObjects = null;
 
-        public IActionResult UrlDatasource([FromBody]Data dm)
-        {
-            var order = _sales;
-            var Data = order.ToList();
-            int count = order.Count();
-            return dm.requiresCounts ? Json(new { result = Data.Skip(dm.skip).Take(dm.take), count = count }) : Json(Data);
-        }
         //For Session 
         //public HttpSessionStateBase Session { get; }
         public ActionResult CollectionObjects(string saveOption, string button)
@@ -111,7 +104,7 @@ namespace EJ2CoreSampleBrowser.Controllers.XlsIO
                 }
                 //Set the grid value to the Session
                 _sales = businessObjects;
-                //ViewBag.DataSource = _sales;
+                ViewBag.DataSource = _sales;
                 ViewBag.exportButtonState = "";
                 return View();
             }

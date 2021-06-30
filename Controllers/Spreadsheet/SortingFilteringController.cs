@@ -67,5 +67,17 @@ namespace EJ2CoreSampleBrowser.Controllers
             ViewBag.FilteringData = data;
             return View();
         }
+
+        public IActionResult SortOpen(IFormCollection openRequest)
+        {
+            OpenRequest open = new OpenRequest();
+            open.File = openRequest.Files[0];
+            return Content(Workbook.Open(open));
+        }
+
+        public IActionResult SortSave(SaveSettings saveSettings)
+        {
+            return Workbook.Save(saveSettings);
+        }
     }
 }

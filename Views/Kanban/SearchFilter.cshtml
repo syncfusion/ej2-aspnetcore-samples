@@ -26,7 +26,7 @@
                         </td>
                         <td>
                             <div>
-                                <ejs-dropdownlist id="priority_filter" dataSource="@ViewBag.PriorityData" index="0" change="change" created="priorityCreate" placeholder="Select a priority"></ejs-dropdownlist>
+                                <ejs-dropdownlist id="priority_filter" dataSource="@ViewBag.PriorityData" index="0" select="prioritySelect" created="priorityCreate" placeholder="Select a priority"></ejs-dropdownlist>
                             </div>
                         </td>
                     </tr>
@@ -36,8 +36,8 @@
                         </td>
                         <td>
                             <div>
-                                <ejs-dropdownlist id="status_filter" dataSource="@ViewBag.StatusData" index="0" change="change" created="statusCreate" placeholder="Select a status">
-                                    <e-dropdownlist-fields text="Id" value="Status"></e-dropdownlist-fields>
+                                <ejs-dropdownlist id="status_filter" dataSource="@ViewBag.StatusData" index="0" select="statusSelect" created="statusCreate" placeholder="Select a status">
+                                    <e-dropdownlist-fields text="Id" value="Value"></e-dropdownlist-fields>
                                 </ejs-dropdownlist>
                             </div>
                         </td>
@@ -107,20 +107,21 @@
             textObj = this;
         }
 
-        function change(args) {
+        function prioritySelect(args) {
             var filterQuery = new ej.data.Query();
-            if (args.value !== 'None') {
-                if (args.element.id === 'priority_filter') {
-                    filterQuery = new ej.data.Query().where('Priority', 'equal', args.value);
-                } else {
-                    filterQuery = new ej.data.Query().where('Status', 'equal', args.value);
-                }
+            if (args.itemData.value !== 'None') {
+                filterQuery = new ej.data.Query().where('Priority', 'equal', args.itemData.value);
             }
-            if (args.element.id === 'priority_filter') {
-                statusObj.setProperties({ value: 'None' }, false);
-            } else {
-                priorityObj.setProperties({ value: 'None' }, false);
+            statusObj.value = 'None';
+            kanbanObj.query = filterQuery;
+        }
+
+        function statusSelect(args) {
+            var filterQuery = new ej.data.Query();
+            if (args.itemData.Value !== 'None') {
+                filterQuery = new ej.data.Query().where('Status', 'equal', args.itemData.Value);
             }
+            priorityObj.value = 'None';
             kanbanObj.query = filterQuery;
         }
         document.getElementById('reset_filter').onclick = function () {
@@ -133,8 +134,8 @@
             }
         };
         function reset() {
-            priorityObj.setProperties({ value: 'None' }, false);
-            statusObj.setProperties({ value: 'None' }, false);
+            priorityObj.value = 'None';
+            statusObj.value = 'None';
             kanbanObj.query = new ej.data.Query();
         }
         document.getElementById('search_text').onkeyup = function (e) {

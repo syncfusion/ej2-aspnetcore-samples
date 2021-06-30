@@ -10,7 +10,7 @@ var searchInstance;
 var headerThemeSwitch = document.getElementById('header-theme-switcher');
 var settingElement = ej.base.select('.sb-setting-btn');
 var themeList = document.getElementById('themelist');
-var themeCollection = ['material', 'fabric', 'bootstrap', 'bootstrap4', 'highcontrast'];
+var themeCollection = ['material', 'fabric', 'bootstrap', 'bootstrap4', 'highcontrast','tailwind'];
 var themeDropDown;
 var contentTab;
 var sourceTab;

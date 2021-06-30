@@ -1,9 +1,5 @@
 @using Syncfusion.EJ2
 
-@{
-    var button = new Syncfusion.EJ2.Inputs.UploaderButtonsProps { Browse = "Choose file" };
-}
-
 @section ControlsSection{
     <div class="col-lg-9 control-section">
         <div class="schedule-wrapper">
@@ -38,7 +34,9 @@
                     </td>
                     <td style="width: 50%;">
                         <div width='300px' class='upload_wrapper'>
-                            <ejs-uploader id="ics-import" allowedExtensions=".ics" cssClass="calendar-import" showFileList="false" selected="onSelected" buttons="button" multiple="false"></ejs-uploader>
+                            <ejs-uploader id="ics-import" allowedExtensions=".ics" cssClass="calendar-import" showFileList="false" selected="onSelected" multiple="false">
+                                <e-uploader-buttons browse="Choose file"></e-uploader-buttons>
+                            </ejs-uploader>
                         </div>
                     </td>
                 </tr>
@@ -51,39 +49,31 @@
             padding-left: 0 !important;
         }
 
-        .calendar-import.e-upload .e-file-select-wrap {
-            padding: 0
-        }
+            .calendar-import.e-upload .e-file-select-wrap {
+                padding: 0
+            }
 
-        .calendar-import.e-upload .e-file-select-wrap .e-file-drop {
-            display: none;
-        }
+                .calendar-import.e-upload .e-file-select-wrap .e-file-drop {
+                    display: none;
+                }
     </style>
 
     <script type="text/javascript">
-        window.onload = function (args) {
-            var uploaderObj = document.getElementById("ics-import").ej2_instances[0];
-            uploaderObj.setProperties({
-                buttons: {
-                    browse: 'Choose file',
-                }
-            })
+        document.getElementById("ics-export").addEventListener('click', function () {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            scheduleObj.exportToICalendar();
+        });
+        function onSelected(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            scheduleObj.importICalendar(args.event.target.files[0]);
         }
-            document.getElementById("ics-export").addEventListener('click', function () {
-                var scheduleObj = document.getElementById('schedule').ej2_instances[0];
-                scheduleObj.exportToICalendar();
-            });
-            function onSelected(args) {
-                var scheduleObj = document.getElementById('schedule').ej2_instances[0];
-                scheduleObj.importICalendar(args.event.target.files[0]);
-            }
     </script>
 }
 
 @*custom code start*@
 @section Meta{
-                    <meta name="description" content="This example demonstrates the Export and Import ICS in ASP.NET Core Schedule control. Explore here for more details."/>
-                }
+    <meta name="description" content="This example demonstrates the Export and Import ICS in ASP.NET Core Schedule control. Explore here for more details." />
+}
 @*custom code end*@
 
 @section ActionDescription{
@@ -109,8 +99,8 @@
     </div>
 }
 @section Title{
-                    <title>ASP.NET Core Schedule Export and Import ICS Example - Syncfusion Demos </title> 
-                }
+    <title>ASP.NET Core Schedule Export and Import ICS Example - Syncfusion Demos </title>
+}
 @section Header{
-                    <h1 class='sb-sample-text'>Example of Export and Import ICS in ASP.NET Core Schedule Control</h1>
-                }
+    <h1 class='sb-sample-text'>Example of Export and Import ICS in ASP.NET Core Schedule Control</h1>
+}

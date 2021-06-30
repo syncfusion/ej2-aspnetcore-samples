@@ -20,7 +20,7 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
         {
             try
             {
-                if (PageWidth == String.Empty || PageHeight == String.Empty)
+                if (String.IsNullOrEmpty(PageWidth) || String.IsNullOrEmpty(PageHeight))
                 {
 
                     ViewData["Error"] = "Please ensure the width and height for the page to be updated.";

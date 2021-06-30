@@ -1143,6 +1143,10 @@ namespace EJ2CoreSampleBrowser.Models
         public int FIELD2 { get; set; }
         public int FIELD3 { get; set; }
         public int FIELD4 { get; set; }
+        public int FIELD5 { get; set; }
+        public int FIELD6 { get; set; }
+        public int FIELD7 { get; set; }
+
         public List<VirtualDataFormat> Children { get; set; }
 
 
@@ -1150,129 +1154,56 @@ namespace EJ2CoreSampleBrowser.Models
         public static List<VirtualDataFormat> GetVirtualData()
         {
 
+            string[] Names = new string[] { "VINET", "TOMSP", "HANAR", "VICTE", "SUPRD", "HANAR", "CHOPS", "RICSU", "WELLI", "HILAA", "ERNSH", "CENTC",
+        "OTTIK", "QUEDE", "RATTC", "ERNSH", "FOLKO", "BLONP", "WARTH", "FRANK", "GROSR", "WHITC", "WARTH", "SPLIR", "RATTC", "QUICK", "VINET",
+        "MAGAA", "TORTU", "MORGK", "BERGS", "LEHMS", "BERGS", "ROMEY", "ROMEY", "LILAS", "LEHMS", "QUICK", "QUICK", "RICAR", "REGGC", "BSBEV",
+        "COMMI", "QUEDE", "TRADH", "TORTU", "RATTC", "VINET", "LILAS", "BLONP", "HUNGO", "RICAR", "MAGAA", "WANDK", "SUPRD", "GODOS", "TORTU",
+        "OLDWO", "ROMEY", "LONEP", "ANATR", "HUNGO", "THEBI", "DUMON", "WANDK", "QUICK", "RATTC", "ISLAT", "RATTC", "LONEP", "ISLAT", "TORTU",
+        "WARTH", "ISLAT", "PERIC", "KOENE", "SAVEA", "KOENE", "BOLID", "FOLKO", "FURIB", "SPLIR", "LILAS", "BONAP", "MEREP", "WARTH", "VICTE",
+        "HUNGO", "PRINI", "FRANK", "OLDWO", "MEREP", "BONAP", "SIMOB", "FRANK", "LEHMS", "WHITC", "QUICK", "RATTC", "FAMIA" };
+
             List<VirtualDataFormat> DataCollection = new List<VirtualDataFormat>();
 
-            for(var i = 1; i <= 1000; i++)
-            {
+            List<VirtualDataFormat> ChildCollection = new List<VirtualDataFormat>();
 
-            VirtualDataFormat Parent1 = new VirtualDataFormat()
-            {
-                TaskID = 1,
-                FIELD1 = "VINET",
-                FIELD2 = 1967,
-                FIELD3 = 395,
-                FIELD4 = 87,
-                Children = new List<VirtualDataFormat>()
-            };
+            var rand = new Random();
 
-            VirtualDataFormat Child1 = new VirtualDataFormat()
-            {
-                TaskID = 2,
-                FIELD1 = "TOMSP",
-                FIELD2 = 1968,
-                FIELD3 = 295,
-                FIELD4 = 44
-            };
+            var j = 1;
 
-            VirtualDataFormat Child2 = new VirtualDataFormat()
+            for (var i = 0; i <= 1000; i = j)
             {
-                TaskID = 3,
-                FIELD1 = "HANAR",
-                FIELD2 = 1969,
-                FIELD3 = 376,
-                FIELD4 = 22
-            };
-            VirtualDataFormat Child3 = new VirtualDataFormat()
-            {
-                TaskID = 4,
-                FIELD1 = "VICTE",
-                FIELD2 = 1970,
-                FIELD3 = 123,
-                FIELD4 = 35
-            };
-            VirtualDataFormat Child4 = new VirtualDataFormat()
-            {
-                TaskID = 5,
-                FIELD1 = "SUPRD",
-                FIELD2 = 1971,
-                FIELD3 = 567,
-                FIELD4 = 98
-            };
-            VirtualDataFormat Child5 = new VirtualDataFormat()
-            {
-                TaskID = 6,
-                FIELD1 = "RICSU",
-                FIELD2 = 1972,
-                FIELD3 = 378,
-                FIELD4 = 56
-            };
-                VirtualDataFormat Parent2 = new VirtualDataFormat()
+                var name = rand.Next(0, 100);
+                VirtualDataFormat Parent = new VirtualDataFormat()
                 {
-                    TaskID = 1,
-                    FIELD1 = "TOMSP",
-                    FIELD2 = 1968,
-                    FIELD3 = 295,
-                    FIELD4 = 44,
+                    TaskID = i + 1,
+                    FIELD1 = Names[name],
+                    FIELD2 = 1967 + rand.Next(0, 10),
+                    FIELD3 = 395 + rand.Next(100, 600),
+                    FIELD4 = 87 + rand.Next(50, 250),
+                    FIELD5 = 147 + rand.Next(50, 250),
+                    FIELD6 = 200 + rand.Next(10, 550),
+                    FIELD7 = 553 + rand.Next(40, 750),
                     Children = new List<VirtualDataFormat>()
                 };
 
-                VirtualDataFormat Child6 = new VirtualDataFormat()
+                for (j = i + 1; j < i + 6; j++)
                 {
-                    TaskID = 2,
-                    FIELD1 = "VINET",
-                    FIELD2 = 1967,
-                    FIELD3 = 395,
-                    FIELD4 = 87
-                };
-
-                VirtualDataFormat Child7 = new VirtualDataFormat()
-                {
-                    TaskID = 3,
-                    FIELD1 = "VICTE",
-                    FIELD2 = 1970,
-                    FIELD3 = 123,
-                    FIELD4 = 35
-                };
-                VirtualDataFormat Child8 = new VirtualDataFormat()
-                {
-                    TaskID = 4,
-                    FIELD1 = "RICSU",
-                    FIELD2 = 1972,
-                    FIELD3 = 378,
-                    FIELD4 = 56
-                };
-                VirtualDataFormat Child9 = new VirtualDataFormat()
-                {
-                    TaskID = 5,
-                    FIELD1 = "HANAR",
-                    FIELD2 = 1969,
-                    FIELD3 = 376,
-                    FIELD4 = 22
-                };
-                VirtualDataFormat Child10 = new VirtualDataFormat()
-                {
-                    TaskID = 6,
-                    FIELD1 = "SUPRD",
-                    FIELD2 = 1971,
-                    FIELD3 = 567,
-                    FIELD4 = 98
-                };
-            Parent1.Children.Add(Child1);
-            Parent1.Children.Add(Child2);
-            Parent1.Children.Add(Child3);
-            Parent1.Children.Add(Child4);
-            Parent1.Children.Add(Child5);
-
-            Parent2.Children.Add(Child6);
-            Parent2.Children.Add(Child7);
-            Parent2.Children.Add(Child8);
-            Parent2.Children.Add(Child9);
-            Parent2.Children.Add(Child10);
+                    var childName = rand.Next(0, 100);
+                    Parent.Children.Add(new VirtualDataFormat()
+                    {
+                        TaskID = j + 1,
+                        FIELD1 = Names[childName],
+                        FIELD2 = 1967 + rand.Next(0, 10),
+                        FIELD3 = 395 + rand.Next(100, 600),
+                        FIELD4 = 87 + rand.Next(50, 250),
+                        FIELD5 = 147 + rand.Next(50, 250),
+                        FIELD6 = 200 + rand.Next(10, 550),
+                        FIELD7 = 553 + rand.Next(40, 750),
+                    });
+                }
 
 
-
-                DataCollection.Add(Parent1);
-                DataCollection.Add(Parent2);
+                DataCollection.Add(Parent);
 
             }
             return DataCollection;

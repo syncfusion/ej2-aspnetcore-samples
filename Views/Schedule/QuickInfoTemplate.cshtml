@@ -183,12 +183,18 @@
             var quickPopup = scheduleObj.element.querySelector('.e-quick-popup-wrapper');
             var getSlotData = function () {
                 var cellDetails = scheduleObj.getCellDetails(scheduleObj.getSelectedElements());
+                if (ej.base.isNullOrUndefined(cellDetails)) {
+                    cellDetails = scheduleObj.getCellDetails(scheduleObj.activeCellsData.element);
+                }
+                var subject = quickPopup.querySelector('#title').ej2_instances[0].value;
+                var notes = quickPopup.querySelector('#notes').ej2_instances[0].value;
                 var addObj = {};
                 addObj.Id = scheduleObj.getEventMaxID();
-                addObj.Subject = quickPopup.querySelector('#title').value;
+                addObj.Subject = ej.base.isNullOrUndefined(subject) ? 'Add title' : subject;
                 addObj.StartTime = new Date(+cellDetails.startTime);
                 addObj.EndTime = new Date(+cellDetails.endTime);
-                addObj.Description = quickPopup.querySelector('#notes').value;
+                addObj.IsAllDay = cellDetails.isAllDay;
+                addObj.Description = ej.base.isNullOrUndefined(notes) ? 'Add notes' : notes;
                 addObj.RoomId = quickPopup.querySelector('#eventType').ej2_instances[0].value;
                 return addObj;
             };

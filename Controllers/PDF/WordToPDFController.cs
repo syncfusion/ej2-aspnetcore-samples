@@ -21,20 +21,12 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
         {
             if (button == null)
                 return View();
-
-            if (Request.Form.Files != null && Request.Form.Files.Count!=0)
+            Stream stream = GetWordDocument();
+            if (stream != null)
             {
-                // Gets the extension from file.
-                string extension = Path.GetExtension(Request.Form.Files[0].FileName).ToLower();
-                string output = Path.GetFileNameWithoutExtension(Request.Form.Files[0].FileName);
-                // Compares extension with supported extensions.
-                if (extension == ".doc" || extension == ".docx" || extension == ".dot" || extension == ".dotx" || extension == ".dotm" || extension == ".docm"
-                   || extension == ".xml" || extension == ".rtf")
-                {
-                    Stream stream = new FileStream(Path.GetTempFileName(), FileMode.Create);
-                    Request.Form.Files[0].CopyToAsync(stream);
                     try
                     {
+                        string output = (Request.Form.Files != null && Request.Form.Files.Count != 0) ? Path.GetFileNameWithoutExtension(Request.Form.Files[0].FileName) : "WordtoPDF";
                         // Loads document from stream.
                         WordDocument document = new WordDocument(stream, FormatType.Automatic);
                         // Creates a new instance of DocIORenderer class.
@@ -50,21 +42,40 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
                         memoryStream.Position = 0;
                         return File(memoryStream, "application/pdf",  output + ".pdf");
                     }
-                    catch (Exception)
-                    {
-                        ViewBag.Message = string.Format("The input document could not be processed completely, Could you please email the document to support@syncfusion.com for troubleshooting.");
-                    }                    
+                catch
+                {
+                    ViewBag.Message = string.Format("The input document could not be processed completely, Could you please email the document to support@syncfusion.com for troubleshooting.");
+                }
+            }
+            return View();
+        }
+        private Stream GetWordDocument()
+        {
+            if (Request.Form.Files != null && Request.Form.Files.Count != 0)
+            {
+                // Gets the extension from file.
+                string extension = Path.GetExtension(Request.Form.Files[0].FileName).ToLower();
+
+                // Compares extension with supported extensions.
+                if (extension == ".doc" || extension == ".docx" || extension == ".dot" || extension == ".dotx" || extension == ".dotm" || extension == ".docm"
+                   || extension == ".xml" || extension == ".rtf")
+                {
+                    MemoryStream stream = new MemoryStream();
+                    Request.Form.Files[0].CopyTo(stream);
+                    return stream;
                 }
                 else
                 {
                     ViewBag.Message = string.Format("Please choose Word format document to convert to PDF");
+                    return null;
                 }
             }
             else
             {
-                ViewBag.Message = string.Format("Browse a Word document and then click the button to convert as a PDF document");
+                //Opens an existing document from stream through constructor of `WordDocument` class
+                FileStream fileStreamPath = new FileStream(_hostingEnvironment.WebRootPath + @"/DocIO/WordtoPDF.docx", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                return fileStreamPath;
             }
-            return View();
         }
     }
 }

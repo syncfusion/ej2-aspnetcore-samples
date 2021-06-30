@@ -1,79 +1,138 @@
 @using Syncfusion.EJ2
+
 @section ControlsSection{
-    <div class="control-section">
-        <div class="content-wrapper">
-            <div class="schedule-container">
-                <ejs-schedule id="schedule" width="100%" height="650px" selectedDate="new DateTime(2019, 1, 10)" actionBegin="onActionBegin">
-                    <e-schedule-eventsettings dataSource="@ViewBag.appointments"></e-schedule-eventsettings>
-                    <e-schedule-views>
-                        <e-schedule-view option="Month"></e-schedule-view>
-                    </e-schedule-views>
-                </ejs-schedule>
-            </div>
+    <div class="col-lg-10 control-section">
+        <div class="schedule-wrapper">
+            <ejs-schedule id="schedule" width="100%" height="650px" selectedDate="new DateTime(2019, 1, 10)">
+                <e-schedule-eventsettings dataSource="@ViewBag.appointments"></e-schedule-eventsettings>
+            </ejs-schedule>
         </div>
+    </div>
+    <div class="col-lg-2 property-section">
+        <table id='property' title='Properties' class='property-panel-table'>
+            <tbody>
+                <tr style="height: 50px">
+                    <td>
+                        <ejs-checkbox id="printWithOptionsElement" labelPosition="Before" label="Print with options" change="onChange"></ejs-checkbox>
+                    </td>
+                </tr>
+                <tr class="e-height-row e-hide-row">
+                    <td>
+                        <ejs-dropdownlist id="heightElement" width="auto" placeholder="Height" floatLabelType="Always" dataSource="@ViewBag.printHeightAndWidthData" index="0"></ejs-dropdownlist>
+                    </td>
+                </tr>
+                <tr class="e-width-row e-hide-row">
+                    <td>
+                        <ejs-dropdownlist id="widthElement" width="auto" placeholder="Width" floatLabelType="Always" dataSource="@ViewBag.printHeightAndWidthData" index="0"></ejs-dropdownlist>
+                    </td>
+                </tr>
+                <tr class="e-selected-date-row e-hide-row">
+                    <td>
+                        <ejs-datepicker id="selectedDateElement" width="auto" placeholder="Selected date" floatLabelType="Always" value="new DateTime(2019, 1, 10)"></ejs-datepicker>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 15px; text-align: center">
+                        <ejs-button id="print-btn" cssClass="e-print-btn" iconCss="e-icons e-icon-schedule-print" content="Print"></ejs-button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
     <style>
         /* custom code start*/
         @@font-face {
             font-family: 'Schedule_print';
-            src:
-                url(data:application/x-font-ttf;charset=utf-8;base64,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) format('truetype');
+            src: url(data:application/x-font-ttf;charset=utf-8;base64,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) format('truetype');
             font-weight: normal;
             font-style: normal;
         }
+
+        .property-panel-table .e-checkbox-wrapper {
+            padding: 0;
+        }
+
+        .property-panel-table td {
+            padding-bottom: 1rem;
+        }
         /* custom code end*/
-        .e-schedule .e-schedule-toolbar .e-icons {
+        .e-print-btn .e-icons {
             font-family: 'Schedule_print', 'e-icons';
         }
-        
-        .e-schedule .e-schedule-toolbar .e-icon-schedule-print::before {
+
+        .e-print-btn .e-icon-schedule-print::before {
             content: '\e204';
         }
 
-        .e-schedule-toolbar .e-toolbar-item.e-today {
+        .e-schedule-toolbar .e-toolbar-item.e-today,
+        .e-hide-row {
             display: none;
         }
     </style>
 
     <script type="text/javascript">
-        function onActionBegin(args) {
-            if (args.requestType === 'toolbarItemRendering') {
-                var exportItem = {
-                    align: 'Right', showTextOn: 'Both', prefixIcon: 'e-icon-schedule-print',
-                    text: 'Print', cssClass: 'e-print', click: onPrintIconClick
-                };
-                args.items.push(exportItem);
+        function onChange(args) {
+            var classList = ['.e-height-row', '.e-width-row', '.e-selected-date-row'];
+            for (var i = 0; i < classList.length; i++) {
+                var element = document.querySelector(classList[i]);
+                if (args.checked) {
+                    element.classList.remove('e-hide-row');
+                } else {
+                    element.classList.add('e-hide-row');
+                }
             }
         }
 
-        function onPrintIconClick() {
+        document.getElementById("print-btn").addEventListener("click", function () {
             var scheduleObj = document.getElementById('schedule').ej2_instances[0];
-            scheduleObj.print();
-        }
+            var printWithOptions = document.getElementById('printWithOptionsElement').ej2_instances[0];
+            if (printWithOptions.checked) {
+                var heightObj = document.getElementById('heightElement').ej2_instances[0];
+                var widthObj = document.getElementById('widthElement').ej2_instances[0];
+                var selectedDateObj = document.getElementById('selectedDateElement').ej2_instances[0];
+                var printOptions = {
+                    height: heightObj.value,
+                    width: widthObj.value,
+                    selectedDate: selectedDateObj.value
+                };
+                scheduleObj.print(printOptions);
+            } else {
+                scheduleObj.print();
+            }
+        })
     </script>
 }
 
+@*custom code start*@
 @section Meta{
-                    <meta name="description" content="This example demonstrates the Print in ASP.NET Core Schedule control. Explore here for more details."/>
-                }
+    <meta name="description" content="This example demonstrates the Print in ASP.NET Core Schedule control. Explore here for more details." />
+}
+@*custom code end*@
 
 @section ActionDescription{
     <div id="action-description">
         <p>This example demonstrates how to print the Scheduler element at client-side.</p>
     </div>
-
 }
 
 @section Description{
     <div id="description">
-        <p>In this example, the Scheduler element is Printed by making use of the public method
-            <code>print</code>.</p>
+        <p>In this example, the Scheduler element is Printed by making use of the public method<code>print</code>.</p>
+        <p>
+            Also, we can print the schedule based on the custom rendering by passing the <code>ScheduleModel</code> in the <code>print</code> method.
+            In the above demo, we have demonstrated the <code>print</code> method with the below properties of the <code>ScheduleModel</code>.
+        </p>
+        <ul>
+            <li>height</li>
+            <li>width</li>
+            <li>selectedDate</li>
+        </ul>
     </div>
 }
 @section Title{
-                    <title>ASP.NET Core Schedule Print Example - Syncfusion Demos </title> 
-                }
+    <title>ASP.NET Core Schedule Print Example - Syncfusion Demos </title>
+}
 @section Header{
-                    <h1 class='sb-sample-text'>Example of Print in ASP.NET Core Schedule Control</h1>
-                }
+    <h1 class='sb-sample-text'>Example of Print in ASP.NET Core Schedule Control</h1>
+}

@@ -25,6 +25,7 @@ namespace EJ2CoreSampleBrowser.Controllers
             List<DropDownData> costData = new List<DropDownData>();
             costData.Add(new DropDownData { Name = "Sum", Value = "Sum" });
             costData.Add(new DropDownData { Name = "Avg", Value = "Average" });
+            costData.Add(new DropDownData { Name = "Median", Value = "Median" }); 
             costData.Add(new DropDownData { Name = "Min", Value = "Min" });
             costData.Add(new DropDownData { Name = "Max", Value = "Max" });
             costData.Add(new DropDownData { Name = "Product", Value = "Product" });
@@ -50,6 +51,7 @@ namespace EJ2CoreSampleBrowser.Controllers
             List<DropDownData> unitData = new List<DropDownData>();
             unitData.Add(new DropDownData { Name = "Sum", Value = "Sum" });
             unitData.Add(new DropDownData { Name = "Avg", Value = "Average" });
+            unitData.Add(new DropDownData { Name = "Median", Value = "Median" });
             unitData.Add(new DropDownData { Name = "Count", Value = "Count" });
             unitData.Add(new DropDownData { Name = "Min", Value = "Min" });
             unitData.Add(new DropDownData { Name = "Max", Value = "Max" });

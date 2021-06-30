@@ -1,12 +1,12 @@
 @using Syncfusion.EJ2
 
 @section ControlsSection{
-    <div class="control-section">
+    <div class="col-lg-10 control-section">
         <div class="schedule-wrapper">
-            <ejs-schedule id="schedule" width="100%" height="650px" currentView="TimelineYear">
+            <ejs-schedule id="schedule" cssClass="year-view" width="100%" height="650px" firstMonthOfYear="0" monthsCount="12">
                 <e-schedule-views>
-                    <e-schedule-view option="Year"></e-schedule-view>
-                    <e-schedule-view option="TimelineYear" displayName="Horizontal Timeline Year" isSelected="true"></e-schedule-view>
+                    <e-schedule-view option="Year" isSelected="true"></e-schedule-view>
+                    <e-schedule-view option="TimelineYear" displayName="Horizontal Timeline Year"></e-schedule-view>
                     <e-schedule-view option="TimelineYear" displayName="Vertical Timeline Year" orientation="Vertical">
                         <e-schedule-view-group resources="@ViewBag.Resources"></e-schedule-view-group>
                     </e-schedule-view>
@@ -19,6 +19,48 @@
             </ejs-schedule>
         </div>
     </div>
+    <div class="col-lg-2 property-section">
+        <table id='property' title='Properties'>
+            <tbody>
+                <tr>
+                    <td>
+                        <ejs-dropdownlist id="firstMonthElement" placeholder="First month of year" floatLabelType="Always" dataSource="@ViewBag.Months" value="0" change="firstMonthOfYear">
+                            <e-dropdownlist-fields text="text" value="value"></e-dropdownlist-fields>
+                        </ejs-dropdownlist>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <ejs-numerictextbox id="numberOfMonthsElement" placeholder="Number of months" floatLabelType="Always" min="1" max="24" value="12" format="###.##" Type="text" change="numberOfMonths"></ejs-numerictextbox>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <style>
+        .year-view.e-schedule .e-timeline-year-view .e-resource-column-table,
+        .year-view.e-schedule .e-timeline-year-view .e-resource-left-td {
+            width: 120px;
+        }
+        /* custom code start*/
+        .col-lg-2.property-section .property-panel-table td {
+            padding-bottom: 1rem;
+        }
+        /* custom code end*/
+    </style>
+
+    <script type="text/javascript">
+        function firstMonthOfYear(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            scheduleObj.firstMonthOfYear = args.value;
+        }
+
+        function numberOfMonths(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            scheduleObj.monthsCount = args.value;
+        }
+    </script>
 }
 
 @*custom code start*@
@@ -30,7 +72,8 @@
 @section ActionDescription{
     <div id="action-description">
         <p>
-            This demo shows the experience of showing the annual year events in a single view with different orientations.
+            This example showcases the year and timeline year views of the Scheduler with the firstMonthOfYear and monthCount properties customizations.
+            Once the property value has been changed in the properties, it will be reflected in the Scheduler.
         </p>
     </div>
 }
@@ -39,9 +82,9 @@
     <div id="description">
         <p>
             In this demo, we have showcased the year and timeline year views that help to view the appointment in an annual calendar view. The view options are enabled by using the views property.
-            In the <code>TimelineYear</code>, <code>Horizontal</code> and <code>Vertical</code> orientations are available to view the events with a different layout.
+            In the <code>TimelineYear</code>, <code>Horizontal</code> and <code>Vertical</code> orientations are available to view the events with a different layout. Also this demo explains the
+            customization of the different starting month of the year using <code>firstMonthOfYear</code> property and the number of months using the <code>monthsCount</code> property.
         </p>
-        <p><strong>Note:-</strong> Inject <code>Year</code> and <code>TimelineYear</code> modules for loading these year views.</p>
     </div>
 }
 @section Title{

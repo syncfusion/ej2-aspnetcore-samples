@@ -120,6 +120,16 @@ namespace EJ2CoreSampleBrowser.Controllers
                 new { Name = "12 hours", Value = 720 }
             };
             ViewBag.SlotIntervalDataSource = slotIntervalDataSource;
+            List<object> time = new List<object>();
+            time.Add(new { Name = "12 hours", Value = "hh:mm a" });
+            time.Add(new { Name = "24 hours", Value = "HH:mm" });
+            ViewBag.TimeFormat = time;
+            List<object> weekNumbersData = new List<object>();
+            weekNumbersData.Add(new { Name = "Off", Value = "Off" });
+            weekNumbersData.Add(new { Name = "First Day Of Year", Value = "FirstDay" });
+            weekNumbersData.Add(new { Name = "First Full Week", Value = "FirstFullWeek" });
+            weekNumbersData.Add(new { Name = "First Four-Day Week", Value = "FirstFourDayWeek" });
+            ViewBag.WeekNumber = weekNumbersData;
 
             ViewBag.Appointments = GenerateEvents();
 

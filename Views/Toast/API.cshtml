@@ -2,6 +2,7 @@
 @using Syncfusion.EJ2.Notifications;
 @using Syncfusion.EJ2.DropDowns;
 @using Syncfusion.EJ2.Buttons;
+@using Syncfusion.EJ2.Inputs;
 @section ControlsSection{
     <div class="col-lg-12 control-section toast-api-section">
         <div class="control_wrapper">
@@ -37,6 +38,11 @@
                     </div>
                     <div class="group-form">
                         <ejs-checkbox id="actionButtons" label="Action Buttons" change="OnactionBtnChange"></ejs-checkbox>
+                    </div>
+                    <div class="input-form">
+                        <ejs-dropdownlist id="Direction" dataSource="ViewBag.directionData" floatLabelType="Auto" change="onDirectionChange" placeholder="ProgressDirection" created="directionCreated" index="0">
+                            <e-dropdownlist-fields text="Value" value="Id"></e-dropdownlist-fields>
+                        </ejs-dropdownlist>
                     </div>
                     <div class="input-form">
                         <div class="e-float-input e-input-group">
@@ -91,10 +97,10 @@
         </div>
     </div>
     <script type="text/javascript">
-       var btnEleShow = document.getElementById('toastBtnShow');
+        var btnEleShow = document.getElementById('toastBtnShow');
         var btnEleHide = document.getElementById('toastBtnHide');
         var prevDuplicates = false;
-    var toastObj, showEasingObj, showAnimationObj, hideEasingObj, hideAnimationObj;
+        var toastObj, showEasingObj, showAnimationObj, hideEasingObj, hideAnimationObj, directionObj;
         btnEleShow.onclick = function () { showToast(); };
         btnEleHide.onclick = function () {
             toastObj.hide('All');
@@ -110,6 +116,9 @@
     }
     function showEasingCreated() {
         showEasingObj = this;
+    }
+    function directionCreated() {
+        directionObj = this;
     }
     function showAnimationCreated() {
         showAnimationObj = this;
@@ -155,6 +164,10 @@
     
         function onShowEase(e) {
             toastObj.animation.show.easing = showEasingObj.value;
+        }
+
+        function onDirectionChange() {
+            toastObj.progressDirection = directionObj.value;
         }
 
     function onHideEase(e) {

@@ -132,7 +132,7 @@ namespace Syncfusion.Zugferd
 
             specifiedSupplyChainTradeTransaction.Add(ApplicableSupplyChainTradeSettlement);
 
-            XElement LineItem = AddTradeLineItems();
+            List<XElement> LineItem = AddTradeLineItems();
 
             specifiedSupplyChainTradeTransaction.Add(LineItem);            
 
@@ -147,14 +147,15 @@ namespace Syncfusion.Zugferd
             return stream;
         }
 
-        private XElement AddTradeLineItems()
+        private List<XElement> AddTradeLineItems()
         {
-            XElement tradeLineItem = null;
+           List<XElement> tradeLineItems = new List<XElement>();
+           XElement tradeLineItem = null;
             if (products.Count == 0)
                 throw new Exception("prodcut empty");
             foreach (Product product in this.products)
             {
-                tradeLineItem = new XElement(ram + "IncludedSupplyChainTradeLineItem");
+                tradeLineItem=new XElement(ram + "IncludedSupplyChainTradeLineItem");
 
                 if (Profile != ZugFerdProfile.Basic)
                 {
@@ -185,7 +186,7 @@ namespace Syncfusion.Zugferd
 
                 XElement LineTotalAmount = new XElement(ram + "LineTotalAmount");
 
-                LineTotalAmount.Value = FormatValue(TotalAmount);
+                LineTotalAmount.Value = FormatValue(product.Total);
                 LineTotalAmount.SetAttributeValue("currencyID", this.Currency.ToString("g"));
                 monetarySummation.Add(LineTotalAmount);
                 tradSettlement.Add(monetarySummation);
@@ -201,9 +202,10 @@ namespace Syncfusion.Zugferd
                 SpecifiedTradeProduct.Add(productName);
 
                 tradeLineItem.Add(SpecifiedTradeProduct);
+                tradeLineItems.Add(tradeLineItem);
                 
             }
-            return tradeLineItem;
+            return tradeLineItems;
 
         }
  

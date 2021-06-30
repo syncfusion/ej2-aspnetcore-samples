@@ -52,6 +52,10 @@ namespace EJ2CoreSampleBrowser.Controllers
         {
             OpenRequest open = new OpenRequest();
             open.File = openRequest.Files[0];
+            if(openRequest["Password"].Count > 0)
+            {
+                open.Password = openRequest["Password"];
+            }
             return Content(Workbook.Open(open));
         }
 

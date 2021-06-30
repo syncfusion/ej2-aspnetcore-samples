@@ -48,7 +48,7 @@
                     <div> Forward Forecast:</div>
                 </td>
                 <td style="width: 20%;">
-                    <ejs-numerictextbox id="forward" min="0" max="120" step="1" value="value" width="120" change="forward"></ejs-numerictextbox>
+                    <ejs-numerictextbox id="forward" min="1" max="20" step="1" value="value" width="120" change="forward"></ejs-numerictextbox>
                 </td>
             </tr>
             <tr id='' style="height: 50px">
@@ -56,7 +56,7 @@
                     <div>Backward Forecast:</div>
                 </td>
                 <td style="width: 20%;">
-                    <ejs-numerictextbox id="backward" min="0" max="120" step="1" value="value" width="120" change="backward"></ejs-numerictextbox>
+                    <ejs-numerictextbox id="backward" min="1" max="20" step="1" value="value" width="120" change="backward"></ejs-numerictextbox>
                 </td>
             </tr>
             <tr id='' style="height: 50px">
@@ -64,7 +64,7 @@
                     <div>Polynomial Order:</div>
                 </td>
                 <td style="width: 20%;">
-                    <ejs-numerictextbox id="polynomial" min="0" max="120" step="1" value="0" width="120" change="polynomial" enabled="false"></ejs-numerictextbox>
+                    <ejs-numerictextbox id="polynomial" min="1" max="20" step="1" value="0" width="120" change="polynomial" enabled="false"></ejs-numerictextbox>
                 </td>
             </tr>
             <tr id='' style="height: 50px">
@@ -72,7 +72,7 @@
                     <div>Period:</div>
                 </td>
                 <td style="width: 20%;">
-                    <ejs-numerictextbox id="period" min="0" max="120" step="1" value="0" width="120" change="period" enabled="false"></ejs-numerictextbox>
+                    <ejs-numerictextbox id="period" min="1" max="20" step="1" value="0" width="120" change="period" enabled="false"></ejs-numerictextbox>
                 </td>
             </tr>
         </table>
@@ -169,13 +169,15 @@
         }
         function forward() {
             var chart = document.getElementById('container').ej2_instances[0];
-            chart.series[0].trendlines.forwardForecast = this.value;
+            var forward = document.getElementById("forward").ej2_instances[0];
+            chart.series[0].trendlines[0].forwardForecast = forward.value;
             chart.series[0].animation.enable = false;
             chart.refresh();
         }
         function backward() {
             var chart = document.getElementById('container').ej2_instances[0];
-            chart.series[0].trendlines.backwardForecast = this.value;
+            var backward = document.getElementById("backward").ej2_instances[0];
+            chart.series[0].trendlines[0].backwardForecast = backward.value;
             chart.series[0].animation.enable = false;
             chart.refresh();
         }

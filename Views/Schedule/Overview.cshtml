@@ -2,17 +2,16 @@
 
 @{
     ViewData["Title"] = "Overview";
-    Syncfusion.EJ2.Inputs.UploaderButtonsProps button = new Syncfusion.EJ2.Inputs.UploaderButtonsProps { Browse = "Import" };
-
     string timelineTemplate = "<div style='height:46px;line-height:23px;'><div class='icon-child' style='text-align:center;'><button id='timeline_views'></button></div><div class='text-child' style='font-size:14px;'>Timeline Views</div></div>";
-    string weekNumberTemplate = "<div style='height:46px;line-height:23px;'><div class='icon-child' style='text-align:center;'><button id='week_number'></button></div><div class='text-child' style='font-size:14px;'>Week Number</div></div>";
+    string multiDragTemplate = "<div style='height:46px;line-height:23px;'><div class='icon-child' style='text-align:center;'><button id='multi_Drag'></button></div><div class='text-child' style='font-size:14px;'>Allow Multi Drag</div></div>";
     string groupTemplate = "<div style='height:46px;line-height:23px;'><div class='icon-child' style='text-align:center;'><button id='grouping'></button></div><div class='text-child' style='font-size:14px;'>Grouping</div></div>";
     string gridlineTemplate = "<div style='height:46px;line-height:23px;'><div class='icon-child' style='text-align:center;'><button id='gridlines'></button></div><div class='text-child' style='font-size:14px;'>Gridlines</div></div>";
     string autoHeightTemplate = "<div style='height:46px;line-height:23px;'><div class='icon-child' style='text-align:center;'><button id='row_auto_height'></button></div><div class='text-child' style='font-size:14px;'>Row Auto Height</div></div>";
     string tooltipTemplate = "<div style='height:46px;line-height:23px;'><div class='icon-child' style='text-align:center;'><button id='tooltip'></button></div><div class='text-child' style='font-size:14px;'>Tooltip</div></div>";
-
     string dateHeaderTemplate = "<div class='date - text'>${getDateHeaderText(data.date)}</div>${getWeather(data.date)}";
     string timezone = "Etc/GMT";
+    string timeformat = "hh:mm a";
+    string weeknumber = "Off";
 }
 
 @section ControlsSection{
@@ -34,7 +33,9 @@
                             </div>
                             <div class="control-panel" style="display: inline-flex;padding-left:15px;">
                                 <div class="e-icons e-schedule-import e-btn-icon e-icon-left" style="line-height: 40px;"></div>
-                                <ejs-uploader id="icalendar" allowedExtensions=".ics" cssClass="calendar-import" showFileList="false" selected="onSelected" buttons="button" multiple="false"></ejs-uploader>
+                                <ejs-uploader id="icalendar" allowedExtensions=".ics" cssClass="calendar-import" showFileList="false" selected="onSelected" multiple="false">
+                                    <e-uploader-buttons browse="Import"></e-uploader-buttons>
+                                </ejs-uploader>
                             </div>
                             <div class="control-panel">
                                 <ejs-dropdownbutton id="exporting" content="Export" items="ViewBag.ExportItems" select="onExportItemSelect"></ejs-dropdownbutton>
@@ -57,11 +58,11 @@
                                 <e-toolbar-item prefixIcon="e-icons e-schedule-agenda-view" tooltipText="Agenda" text="Agenda"></e-toolbar-item>
                                 <e-toolbar-item tooltipText="Timeline Views" template="timelineTemplate"></e-toolbar-item>
                                 <e-toolbar-item type="Separator"></e-toolbar-item>
-                                <e-toolbar-item tooltipText="Week Number" template="weekNumberTemplate"></e-toolbar-item>
                                 <e-toolbar-item tooltipText="Resource Grouping" template="groupTemplate"></e-toolbar-item>
                                 <e-toolbar-item tooltipText="Gridlines" template="gridlineTemplate"></e-toolbar-item>
                                 <e-toolbar-item tooltipText="Row Auto Height" template="autoHeightTemplate"></e-toolbar-item>
                                 <e-toolbar-item tooltipText="Tooltip" template="tooltipTemplate"></e-toolbar-item>
+                                <e-toolbar-item tooltipText="Allow Multi Drag" template="multiDragTemplate"></e-toolbar-item>
                             </e-toolbar-items>
                         </ejs-toolbar>
                     </div>
@@ -190,6 +191,26 @@
                                     </ejs-dropdownlist>
                                 </div>
                             </div>
+                            <div class="col-row">
+                                <div class="col-left">
+                                    <label style="line-height: 34px; margin: 0;">Time Format</label>
+                                </div>
+                                <div class="col-right">
+                                    <ejs-dropdownlist id="timeFormat" width="170px" dataSource="@ViewBag.TimeFormat" value="timeformat" popupHeight="150px" change="onTimeFormatChange">
+                                        <e-dropdownlist-fields text="Name" value="Value"></e-dropdownlist-fields>
+                                    </ejs-dropdownlist>
+                                </div>
+                            </div>
+                            <div class="col-row">
+                                <div class="col-left">
+                                    <label style="line-height: 34px; margin: 0;">Week Numbers</label>
+                                </div>
+                                <div class="col-right">
+                                    <ejs-dropdownlist id="week_number" width="170px" dataSource="@ViewBag.WeekNumber" value="weeknumber" popupHeight="150px" change="onWeekNumberChange">
+                                        <e-dropdownlist-fields text="Name" value="Value"></e-dropdownlist-fields>
+                                    </ejs-dropdownlist>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -215,6 +236,10 @@
             content: "\e7c7";
         }
 
+        .tailwind .e-schedule-clock::before {
+            content: "\e730";
+        }
+
         .material .e-schedule-timezone::before,
         .bootstrap .e-schedule-timezone::before {
             content: "\e30e";
@@ -229,8 +254,16 @@
             content: "\e7c9";
         }
 
+        .tailwind .e-schedule-timezone::before {
+            content: "\e736";
+        }
+
         .material .e-schedule-print::before {
             content: "\e813";
+        }
+
+        .tailwind .e-schedule-print::before {
+            content: "\e76c";
         }
 
         .fabric .e-schedule-print::before,
@@ -245,6 +278,10 @@
 
         .bootstrap4 .e-schedule-import::before {
             content: "\e77a";
+        }
+
+        .tailwind .e-schedule-import::before {
+            content: "\e76d";
         }
 
         .material .e-schedule-ical-export::before,
@@ -264,6 +301,10 @@
             content: "\e712";
         }
 
+        .tailwind .e-schedule-ical-export::before {
+            content: "\e7bf";
+        }
+
         .material .e-schedule-excel-export::before {
             content: "\e700";
         }
@@ -281,6 +322,10 @@
             content: "\e74e";
         }
 
+        .tailwind .e-schedule-excel-export::before {
+            content: "\e780";
+        }
+
         .material .e-schedule-add-event::before,
         .fabric .e-schedule-add-event::before,
         .bootstrap .e-schedule-add-event::before,
@@ -290,6 +335,10 @@
 
         .bootstrap4 .e-schedule-add-event::before {
             content: "\e759";
+        }
+
+        .tailwind .e-schedule-add-event::before {
+            content: "\e78a";
         }
 
         .material .e-schedule-add-recurrence-event::before,
@@ -304,6 +353,10 @@
 
         .bootstrap4 .e-schedule-add-recurrence-event::before {
             content: "\e7c8";
+        }
+
+        .tailwind .e-schedule-add-recurrence-event::before {
+            content: "\e71d";
         }
 
         .material .e-schedule-day-view::before {
@@ -323,6 +376,10 @@
             content: "\e7b8";
         }
 
+        .tailwind .e-schedule-day-view::before {
+            content: "\e767";
+        }
+
         .material .e-schedule-week-view::before {
             content: "\e315";
         }
@@ -340,6 +397,10 @@
             content: "\e7c0";
         }
 
+        .tailwind .e-schedule-week-view::before {
+            content: "\e795";
+        }
+
         .material .e-schedule-workweek-view::before {
             content: "\e314";
         }
@@ -355,6 +416,10 @@
 
         .bootstrap4 .e-schedule-workweek-view::before {
             content: "\e7c0";
+        }
+
+        .tailwind .e-schedule-workweek-view::before {
+            content: "\e795";
         }
 
         .material .e-schedule-month-view::before,
@@ -379,6 +444,11 @@
             content: "\e7c4";
         }
 
+        .tailwind .e-schedule-month-view::before,
+        .tailwind .e-schedule-year-view::before {
+            content: "\e719";
+        }
+
         .material .e-schedule-agenda-view::before {
             content: "\e31d";
         }
@@ -396,8 +466,17 @@
             content: "\e7bd";
         }
 
+        .tailwind .e-schedule-agenda-view::before {
+            content: "\e718";
+        }
+
         .e-schedule-toolbar-settings::before {
             content: "\e679";
+            font-size: 14px;
+        }
+
+        .tailwind .e-schedule-toolbar-settings::before {
+            content: "\e846";
             font-size: 14px;
         }
 
@@ -829,6 +908,10 @@
             content: '\e7f9';
         }
 
+        .tailwind .schedule-context-menu .e-menu-item .new::before {
+            content: '\e78a';
+        }
+
         .schedule-context-menu .e-menu-item .edit::before {
             content: '\ea9a';
         }
@@ -838,12 +921,25 @@
             font-weight: bold;
         }
 
+        .tailwind .schedule-context-menu .e-menu-item .recurrence::before {
+            content: '\e71d';
+            font-weight: bold;
+        }
+
         .schedule-context-menu .e-menu-item .today::before {
             content: '\e322';
         }
 
+        .tailwind .schedule-context-menu .e-menu-item .today::before {
+            content: '\e742';
+        }
+
         .schedule-context-menu .e-menu-item .delete::before {
             content: '\e94a';
+        }
+
+        .tailwind .schedule-context-menu .e-menu-item .delete::before {
+            content: '\e78d';
         }
 
         .e-bigger .schedule-context-menu ul .e-menu-item .e-menu-icon {
@@ -879,6 +975,10 @@
 
         .bootstrap4 .schedule-context-menu .e-menu-item .edit::before {
             content: '\e78f';
+        }
+
+        .tailwind .schedule-context-menu .e-menu-item .edit::before {
+            content: '\e7d2';
         }
 
         .bootstrap4 .schedule-context-menu .e-menu-item .delete::before {
@@ -931,6 +1031,11 @@
             width: 20px;
             height: 20px;
         }
+
+        .tailwind .schedule-overview.e-schedule .e-left-indent .e-header-cells {
+            height: 66px;
+        }
+
     </style>
     @*custom code end*@
     <script id="header-template" type="text/x-template">
@@ -1035,7 +1140,11 @@
         window.getHeaderStyles = function (data) {
             if (data.elementType === 'event') {
                 var resourceData = window.getResourceData(data);
-                return 'background:' + resourceData.CalendarColor + '; color: #FFFFFF;';
+                var calendarColor = '#3f51b5';
+                if (resourceData) {
+                    calendarColor = (resourceData.CalendarColor).toString();
+                }
+                return 'background:' + calendarColor + '; color: #FFFFFF;';
             }
             else {
                 return 'align-items: center; color: #919191;';
@@ -1044,7 +1153,11 @@
 
         window.getEventType = function (data) {
             var resourceData = window.getResourceData(data);
-            return resourceData.CalendarName;
+            var calendarName = '';
+            if (resourceData) {
+                calendarName = resourceData.CalendarName.toString();
+            }
+            return calendarName;
         };
 
         var buttonClickActions = function (e) {
@@ -1052,12 +1165,18 @@
             var popupElement = scheduleObj.element.querySelector('.e-quick-popup-wrapper');
             var getSlotData = function () {
                 var cellDetails = scheduleObj.getCellDetails(scheduleObj.getSelectedElements());
+                if (ej.base.isNullOrUndefined(cellDetails)) {
+                    cellDetails = scheduleObj.getCellDetails(scheduleObj.activeCellsData.element);
+                }
+                var subject = popupElement.querySelector('#title').ej2_instances[0].value;
+                var notes = popupElement.querySelector('#notes').ej2_instances[0].value;
                 var eventObj = {};
                 eventObj.Id = scheduleObj.getEventMaxID();
-                eventObj.Subject = popupElement.querySelector('#title').ej2_instances[0].value;
+                eventObj.Subject = ej.base.isNullOrUndefined(subject) ? 'Add title' : subject;
                 eventObj.StartTime = new Date(+cellDetails.startTime);
                 eventObj.EndTime = new Date(+cellDetails.endTime);
-                eventObj.Description = popupElement.querySelector('#notes').ej2_instances[0].value;
+                eventObj.IsAllDay = cellDetails.isAllDay;
+                eventObj.Description = ej.base.isNullOrUndefined(notes) ? 'Add notes' : notes;
                 eventObj.CalendarId = popupElement.querySelector('#eventType').ej2_instances[0].value;
                 return eventObj;
             };
@@ -1253,14 +1372,14 @@
             });
             timelineView.appendTo('#timeline_views');
 
-            var weekNumber = new ej.buttons.Switch({
+            var multiDrag = new ej.buttons.Switch({
                 checked: false,
                 change: function (args) {
                     var scheduleObj = document.getElementById('scheduler').ej2_instances[0];
-                    scheduleObj.showWeekNumber = args.checked;
+                    scheduleObj.allowMultiDrag = args.checked;
                 }
             });
-            weekNumber.appendTo('#week_number');
+            multiDrag.appendTo('#multi_Drag');
 
             var grouping = new ej.buttons.Switch({
                 checked: true,
@@ -1448,6 +1567,21 @@
         function onSlotCountChange(args) {
             var scheduleObj = document.getElementById('scheduler').ej2_instances[0];
             scheduleObj.timeScale.slotCount = args.value;
+        }
+
+        function onTimeFormatChange(args) {
+            var scheduleObj = document.getElementById('scheduler').ej2_instances[0];
+            scheduleObj.timeFormat = args.value;
+        }
+
+        function onWeekNumberChange(args) {
+            var scheduleObj = document.getElementById('scheduler').ej2_instances[0];
+            if (args.value === 'Off') {
+                 scheduleObj.showWeekNumber = false;
+            } else {
+                scheduleObj.showWeekNumber = true;
+                scheduleObj.weekRule = args.value;
+            }
         }
     </script>
 }

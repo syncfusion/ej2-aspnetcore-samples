@@ -13,11 +13,11 @@ namespace EJ2CoreSampleBrowser.Controllers.Kanban
         public IActionResult SearchFilter()
         {
             ViewBag.PriorityData = new string[] { "None", "High", "Normal", "Low" };
-            data.Add(new statusData { Id = "None", Status = "None" });
-            data.Add(new statusData { Id = "To Do", Status = "Open" });
-            data.Add(new statusData { Id = "In Progress", Status = "InProgress" });
-            data.Add(new statusData { Id = "Testing", Status = "Testing" });
-            data.Add(new statusData { Id = "Done", Status = "Close" });
+            data.Add(new statusData { Id = "None", Value = "None" });
+            data.Add(new statusData { Id = "To Do", Value = "Open" });
+            data.Add(new statusData { Id = "In Progress", Value = "InProgress" });
+            data.Add(new statusData { Id = "Testing", Value = "Testing" });
+            data.Add(new statusData { Id = "Done", Value = "Close" });
             ViewBag.StatusData = data;
             ViewBag.data = new KanbanDataModels().KanbanTasks();
             return View();
@@ -26,7 +26,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Kanban
     public class statusData
     {
         public string Id { get; set; }
-        public string Status { get; set; }
+        public string Value { get; set; }
 
     }
 }

@@ -14,18 +14,24 @@ namespace EJ2CoreSampleBrowser.Controllers
 
         public IActionResult PieLegend()
         {
-            List<PieData> chartData = new List<PieData>  
+            List<pieDataPoints> chartData = new List<pieDataPoints>  
             {
-                new PieData { xValue =  "Net-tution and Fees", yValue = 21, text = "21%" },
-                new PieData { xValue =  "Self-supporting Operations", yValue = 21, text = "21%" },
-                new PieData { xValue =  "Private Gifts", yValue = 8, text = "8%" },
-                new PieData { xValue =  "All Other", yValue = 8, text = "8%" },
-                new PieData { xValue =  "Local Revenue", yValue = 4, text = "4%" },
-                new PieData { xValue =  "State Revenue", yValue = 21, text = "21%" },
-                new PieData { xValue =  "Federal Revenue", yValue = 16, text = "16%" },
+                new pieDataPoints { x =  "Net-tution and Fees", y = 21, text = "21%" },
+                new pieDataPoints { x =  "Self-supporting Operations", y = 21, text = "21%" },
+                new pieDataPoints { x =  "Private Gifts", y = 8, text = "8%" },
+                new pieDataPoints { x =  "All Other", y = 8, text = "8%" },
+                new pieDataPoints { x =  "Local Revenue", y = 4, text = "4%" },
+                new pieDataPoints { x =  "State Revenue", y = 21, text = "21%" },
+                new pieDataPoints { x =  "Federal Revenue", y = 16, text = "16%" },
             };
             ViewBag.dataSource = chartData;
             return View();
-        }        
+        }
+        public class pieDataPoints
+        {
+            public string x;
+            public double y;
+            public string text;
+        }
     }
 }

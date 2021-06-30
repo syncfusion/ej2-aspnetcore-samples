@@ -56,6 +56,10 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
                     ViewBag.lab = "Invalid Page no";
                 }             
             }
+            else
+            {
+                ViewBag.lab = "Choose PDF document to Split";
+            }
             return View();
         }       
     }

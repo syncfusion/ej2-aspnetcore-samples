@@ -51,12 +51,18 @@ namespace EJ2CoreSampleBrowser.Controllers
         public IActionResult Open(IFormCollection openRequest)
         {
             OpenRequest open = new OpenRequest();
-            open.File = openRequest.Files[0];
-            if(openRequest["Password"].Count > 0)
+            if (openRequest.Files.Count != 0)
             {
-                open.Password = openRequest["Password"];
+                open.File = openRequest.Files[0];
             }
+            open.Password = openRequest["Password"];
+            if (openRequest["SheetIndex"].Count != 0)
+            {
+                open.SheetIndex = int.Parse(openRequest["SheetIndex"]);
+            }
+            open.SheetPassword = openRequest["SheetPassword"];
             return Content(Workbook.Open(open));
+
         }
 
         public IActionResult Save(SaveSettings saveSettings)

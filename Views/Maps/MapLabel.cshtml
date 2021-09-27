@@ -14,14 +14,14 @@
             </div>
 
 <div class="col-md-4 property-section">
-                <table id="property" title="Properties" style="width: 100%">
+                <table id="property" title="Properties" style="width: 100%; margin-left: -10px">
                     <tbody>
                         <tr style="height: 50px">
                             <td style="width: 80%">
                                 <div>Show Labels</div>
                             </td>
                             <td>
-                                <input type="checkbox" checked id="select" style="margin-top: 15px">
+                                <input type="checkbox" checked id="select" style="margin-top: 15px; margin-left: 35px">
                             </td>
                         </tr>
                         <tr style="height: 50px">
@@ -57,7 +57,7 @@
         var intersectaction = new ej.dropdowns.DropDownList({
             index: 0,
             placeholder: 'Select intersect action',
-            width: 120,
+            width: 90,
             change: function () {
                 maps.layers[0].dataLabelSettings.intersectionAction = intersectaction.value;
                 maps.refresh();
@@ -67,7 +67,7 @@
         var smartlabelmode = new ej.dropdowns.DropDownList({
             index: 0,
             placeholder: 'Select smartlabel mode',
-            width: 120,
+            width: 90,
             change: function () {
                 maps.layers[0].dataLabelSettings.smartLabelMode = smartlabelmode.value;
                 maps.refresh();
@@ -87,7 +87,8 @@
     @* custom code start *@
     function onMapLoad(args) {
         var theme = themeName ? themeName : "Material";
-        args.maps.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+        args.maps.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
     }
     @* custom code end *@
 </script>

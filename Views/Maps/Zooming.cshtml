@@ -18,62 +18,62 @@
         </div>
         </div>
 <div class="col-lg-3 property-section">
-    <table id="property" title="Properties" style="width: 100%">
+    <table id="property" title="Properties" style="width: 100%; margin-left: -10px">
 		<tbody>
 			<tr style="height: 50px">
 				<td style="width: 50%">
-					<div>Zooming</div>
+					<div style="width: 120%">Zooming</div>
 				</td>
 				<td>
-					<input type="checkbox" checked id="zoom" style="margin-top: 15px" />
+					<input type="checkbox" checked id="zoom" style="margin-top: 15px; margin-left:50px;" />
 				</td>
 			</tr>
 			<tr style="height: 50px">
 				<td style="width: 50%">
-					<div>Panning</div>
+					<div style="width: 120%">Panning</div>
 				</td>
 				<td>
-					<input type="checkbox" checked id="panning" style="margin-top: 15px" />
+					<input type="checkbox" checked id="panning" style="margin-top: 15px; margin-left:50px;" />
 				</td>
 			</tr>
 			<tr style="height: 50px">
 				<td style="width: 50%">
-					<div>Mouse wheel zoom</div>
+					<div style="width: 120%">Mouse wheel zoom</div>
 				</td>
 				<td>
-					<input type="checkbox" checked id="mousewheel" style="margin-top: 15px" />
+					<input type="checkbox" checked id="mousewheel" style="margin-top: 15px; margin-left:50px;" />
 				</td>
 			</tr>
 			<tr style="height: 50px">
 				<td style="width: 50%">
-					<div>Pinch zoom</div>
+					<div style="width: 120%">Pinch zoom</div>
 				</td>
 				<td>
-					<input type="checkbox" checked id="pinch" style="margin-top: 15px" />
+					<input type="checkbox" checked id="pinch" style="margin-top: 15px; margin-left:50px;" />
 				</td>
 			</tr>
 			<tr style="height: 50px">
 				<td style="width: 50%">
-					<div>Single click zoom</div>
+					<div style="width: 120%">Single click zoom</div>
 				</td>
 				<td>
-					<input type="checkbox" id="singletap" style="margin-top: 15px" />
+					<input type="checkbox" id="singletap" style="margin-top: 15px; margin-left:50px;" />
 				</td>
 			</tr>
 			<tr style="height: 50px">
 				<td style="width: 50%">
-					<div>Double click zoom</div>
+					<div style="width: 120%">Double click zoom</div>
 				</td>
 				<td>
-					<input type="checkbox" id="doubletap" style="margin-top: 15px" />
+					<input type="checkbox" id="doubletap" style="margin-top: 15px; margin-left:50px;" />
 				</td>
 			</tr>
 			<tr style="height: 50px">
-				<td style="width: 50%">
-					<div>Animation duration</div>
-				</td>
+                <td style="width: 50%">
+                    <div style="width: 120%">Animation duration <br><span id="dur">500 ms</span></div>
+                </td>
 				<td>
-					<div id="range"></div>
+					<div id="range" style="margin-left: 10px; width: 80px"></div>
 				</td>
 			</tr>
 		</tbody>
@@ -166,7 +166,8 @@
     @* custom code start *@
     function onMapLoad(args) {
         var theme = themeName ? themeName : "Material";
-        args.maps.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+        args.maps.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
     }
     @* custom code end *@
     window.onload = function () {
@@ -180,6 +181,11 @@
                 }
             },
             '#range');
+        slider.change = sliderChange = function (e) {
+            maps.layers[0].animationDuration = e.value;
+            maps.refresh();
+            document.getElementById('dur').innerHTML = e.value.toString() + ' ms';
+        };
         document.getElementById('mousewheel').onchange = function () {
             var element = (document.getElementById('mousewheel'));
             maps.zoomSettings.mouseWheelZoom = element.checked;

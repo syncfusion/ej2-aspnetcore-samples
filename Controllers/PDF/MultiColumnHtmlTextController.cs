@@ -202,7 +202,7 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
 
             //Download the PDF document in the browser.
             FileStreamResult fileStreamResult = new FileStreamResult(stream, "application/pdf");
-            fileStreamResult.FileDownloadName = "MultiColumnHtmlText.pdf";
+            fileStreamResult.FileDownloadName = "MergedPDF.pdf";
             return fileStreamResult;
 
         }

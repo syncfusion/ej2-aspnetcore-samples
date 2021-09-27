@@ -62,14 +62,12 @@
         </div>
 
         <div>
-            <ejs-grid id="VirtualGrid" height="400" dataBound="hide" enableVirtualization="true" enableColumnVirtualization="true" toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })">
-                <e-grid-editSettings allowDeleting="true" allowEditing="true" newRowPosition="Top"></e-grid-editSettings>
+            <ejs-grid id="VirtualGrid" height="600" dataBound="hide" enableVirtualization="true" enableColumnVirtualization="true">
                 <e-grid-columns>
-                    <e-grid-column field="SNo" headerText="S.No" width="140" isPrimaryKey="true" validationRules="@(new { required=true })"></e-grid-column>
                     <e-grid-column field="Field1" headerText="PlayerName" width="140"></e-grid-column>
                     <e-grid-column field="Field2" headerText="Year" textAlign="Right" width="120"></e-grid-column>
-                    <e-grid-column field="Field3" headerText="Sports" width="160" editType="dropdownedit" validationRules="@(new { required=true })"></e-grid-column>
-                    <e-grid-column field="Field4" headerText="Country" width="160" editType="dropdownedit"></e-grid-column>
+                    <e-grid-column field="Field3" headerText="Stint" textAlign="Right" width="120"></e-grid-column>
+                    <e-grid-column field="Field4" headerText="TMID" textAlign="Right" width="120"></e-grid-column>
                     <e-grid-column field="Field5" headerText="LGID" textAlign="Right" width="120"></e-grid-column>
                     <e-grid-column field="Field6" headerText="GP" textAlign="Right" width="120"></e-grid-column>
                     <e-grid-column field="Field7" headerText="GS" textAlign="Right" width="120"></e-grid-column>
@@ -95,7 +93,7 @@
                     <e-grid-column field="Field27" headerText="PostPoints" textAlign="Right" width="130"></e-grid-column>
                     <e-grid-column field="Field28" headerText="PostoRebounds" textAlign="Right" width="130"></e-grid-column>
                     <e-grid-column field="Field29" headerText="PostdRebounds" textAlign="Right" width="130"></e-grid-column>
-                    <e-grid-column field="Field30" headerText="PostRebounds" textAlign="Right" width="130" editType="numericedit" validationRules="@(new { required=true })"></e-grid-column>
+                    <e-grid-column field="Field30" headerText="PostRebounds" textAlign="Right" width="130"></e-grid-column>
                 </e-grid-columns>
             </ejs-grid>
         </div>
@@ -112,14 +110,6 @@
           'Ace', 'Adain', 'Adam', 'Adam-James', 'Addison', 'Addisson', 'Adegbola', 'Adegbolahan', 'Aden', 'Adenn', 'Adie', 'Adil', 'Aditya',
           'Adnan', 'Adrian', 'Adrien', 'Aedan', 'Aedin', 'Aedyn', 'Aeron', 'Afonso', 'Ahmad', 'Ahmed', 'Ahmed-Aziz', 'Ahoua', 'Ahtasham',
           'Aiadan', 'Aidan', 'Aiden', 'Aiden-Jack', 'Aiden-Vee'];
-
-      var sport = ['Cricket', 'Football', 'Tennis', 'Golf', 'Chess', 'Dodgeball', 'Racket', 'Archery', 'Climbing', 'Hunting', 'Carrom', 'Tag', 'Novuss',
-          'Subbuteo', 'Baseball', 'Madden NFL', 'Shuffleboard', 'Badminton', 'Hockey', 'Volleyball', 'Table Tennis', 'Golf', 'Cycling', 'Running', 'Walking', 'Wireball',
-          'Town ball', 'Tee ball', 'Stool ball', 'Stick ball'];
-      var country = ['India', 'Australia', 'Ballesteros', 'Belgium', 'Brazil', 'England', 'Ethiopia', 'Finland', 'France', 'Germany', 'Britain',
-          'Argentina', 'Jamaica', 'Kenya', 'Morocco', 'Ireland', 'Norway', 'Philippines', 'Portugal', 'Romania', 'Russia', 'Scotland', 'Scottish', 'Serbia', 'Spain',
-          'Sweden', 'Switzerland', 'Netherlands', 'UK', 'Ukraine', 'US', 'Wales', 'West Indies', 'China', 'Hong Kong', 'Italy', 'Philippines', 'Turkey', 'Botswana',
-          'Sri Lanka', 'Algeria', 'Bangladesh', 'Egypt', 'Malaysia'];
       document.getElementById("generate").addEventListener('click', function () {
             var grid = document.getElementById("VirtualGrid").ej2_instances[0]
             if (!virtualData.length) {
@@ -127,7 +117,6 @@
                 dataSource();
                 date1 = new Date().getTime();
                 grid.dataSource = virtualData;
-                grid.editSettings.allowAdding= true;
             } else {
                 flag = true;
                 show();
@@ -152,11 +141,10 @@
       function dataSource() {
           for (var i = 0; i < 100000; i++) {
               virtualData.push({
-                  'SNo': i + 1,
                   'Field1': names[Math.floor(Math.random() * names.length)],
                   'Field2': 1967 + (i % 10),
-                  'Field3': sport[Math.floor(Math.random() * sport.length)],
-                  'Field4': country[Math.floor(Math.random() * country.length)],
+                  'Field3': Math.floor(Math.random() * 200),
+                  'Field4': Math.floor(Math.random() * 100),
                   'Field5': Math.floor(Math.random() * 2000),
                   'Field6': Math.floor(Math.random() * 1000),
                   'Field7': Math.floor(Math.random() * 100),
@@ -204,8 +192,8 @@
     <div id="description">
 		<p>
 			The Grid UI virtualization allows you to render only rows and columns visible within the view-port without buffering the
-			entire datasource. Grid supports row and column virtualization. To enable row virtualization, set the <code>
-			enableVirtualization </code> property as true. For column virtualization, set <code> the 
+			entire datasource. Grid supports row and column virtualization. To enable row virtualization, set <code>
+			enableVirtualization </code> property as true. For column virtualization, set <code>
 			enableColumnVirtualization</code> property as true.
 		</p>
 		
@@ -213,7 +201,7 @@
 			Note: The <code>height</code> property must be defined when enabling <code>enableVirtualization</code>.
 		</p>
 		<p>
-			In this demo, Grid enabled row and column virtualization. Click the Load 100K Data button to bind 100000 rows and 30 columns. You can also perform the Edit action in this sample.
+			In this demo, Grid enabled row and column virtualization. Click the Load 100K Data button to bind 100000 rows and 30 columns.
 		</p>		
     </div>
 }

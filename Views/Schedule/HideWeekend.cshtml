@@ -3,7 +3,7 @@
 @section ControlsSection{
     <div class="col-lg-9 control-section">
         <div class="schedule-wrapper">
-            <ejs-schedule id="schedule" height="650" selectedDate="new DateTime(2018, 2, 15)" showWeekend="false" eventRendered="onEventRendered" workDays="@ViewBag.workDays">
+            <ejs-schedule id="schedule" height="650" selectedDate="new DateTime(DateTime.Today.Year, 2, 15)" showWeekend="false" eventRendered="onEventRendered" workDays="@ViewBag.workDays">
                 <e-schedule-workhours start="08:00"></e-schedule-workhours>
                 <e-schedule-views>
                     <e-schedule-view option="Day"></e-schedule-view>
@@ -20,13 +20,10 @@
         <table id='property' title='Properties' class='property-panel-table' style="width: 100%;">
             <tbody>
                 <tr style="height: 50px">
-                    <td style="width: 30%">
-                        <div>Working days</div>
-                    </td>
-                    <td style="width: 70%;">
+                    <td style="width: 100%;">
                         <div class="multi-prop">
                             <div>
-                                <ejs-multiselect id="workdayscheckbox" dataSource="@ViewBag.WorkDaysData" mode="CheckBox" change="onChange" value="@ViewBag.selectedDays" popupWidth="180" showDropDownIcon="true" showClearButton="false">
+                                <ejs-multiselect id="workdayscheckbox" dataSource="@ViewBag.WorkDaysData" mode="CheckBox" change="onChange" value="@ViewBag.selectedDays" showDropDownIcon="true" showClearButton="false" placeholder="Working days" floatLabelType="Always">
                                     <e-multiselect-fields text="Name" value="Code"></e-multiselect-fields>
                                 </ejs-multiselect>
                             </div>
@@ -34,10 +31,8 @@
                     </td>
                 </tr>
                 <tr style="height: 50px">
-                    <td style="width: 30%">
-                        <div>Non-Working days</div>
-                    </td>
-                    <td style="width: 70%;">
+                    <td style="width: 100%;">
+                        <div style="font-weight:500">Non-Working days</div>
                         <div class="evtbtn" title="Show/hide weekend" style="padding-bottom: 10px">
                             <ejs-button id="showweekendbtn" isToggle="true" content="Show"></ejs-button>
                         </div>

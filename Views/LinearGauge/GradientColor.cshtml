@@ -99,7 +99,8 @@
                 return;
             window.gaugeLoaded = true;
             var theme = themeName ? themeName : 'Material';
-            args.gauge.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+            args.gauge.theme = (theme.charAt(0).toUpperCase() +
+                theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
             window.gauge = args.gauge;
             var axis = args.gauge.axes[0];
             axis.majorTicks = {
@@ -107,9 +108,6 @@
                 interval: 25
             };
             axis.labelStyle = {
-                font: {
-                    color: '#424242',
-                },
                 offset: 55
             };
             axis.pointers = [{

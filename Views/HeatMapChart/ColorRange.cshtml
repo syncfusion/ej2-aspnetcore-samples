@@ -54,7 +54,7 @@
         window.onHeatmapLoad = function (args) {
             window.heatmap = args.heatmap;
             var selectedTheme = themeName ? themeName : 'Material';
-            args.heatmap.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1));
+             args.heatmap.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
         }
         window.valueChange = function (args) {
             window.heatmap.paletteSettings.type = args.value;
@@ -85,3 +85,8 @@
 @section Meta{
     <meta name="description" content="This demo for ASP.NET CORE Heatmap control demonstrates applying gradient colors or solid colors for the heatmap cells." />
 }
+<style>
+            body.material-dark .property-panel-section {
+            color: #ffffff;
+        }
+</style>

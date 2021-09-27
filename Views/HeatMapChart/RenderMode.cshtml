@@ -53,7 +53,7 @@
         window.onHeatmapLoad = function (args) {
             window.heatmap = args.heatmap;
             var selectedTheme = themeName ? themeName : 'Material';
-            args.heatmap.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1));
+             args.heatmap.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
         }
         window.valueChange = function (args) {
             window.heatmap.renderingMode = args.value;
@@ -89,3 +89,8 @@
 @section Header{
                     <h1 class='sb-sample-text'>Example of Rendering Mode in ASP.NET Core HeatMap Control</h1>
                 }
+<style>
+            body.material-dark .property-panel-section {
+            color: #ffffff;
+        }
+</style>

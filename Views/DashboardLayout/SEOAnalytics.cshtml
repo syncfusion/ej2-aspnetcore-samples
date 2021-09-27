@@ -181,7 +181,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="e-panel-content">
-                                                    <ejs-maps id="maps" load="window.onMapLoad" style="height:100%; width:100%">
+                                                    <ejs-maps id="maps" height="100%" width="100%" load="window.onMapLoad" style="height:100%; width:100%">
                                                         <e-maps-zoomsettings enable="false"></e-maps-zoomsettings>
                                                         <e-maps-legendsettings visible="false"></e-maps-legendsettings>
                                                         <e-maps-layers>
@@ -361,21 +361,21 @@
     });
 
     window.onMapLoad = function (args) {
-        var theme = location.hash.split("/")[1];
-        theme = theme ? theme : "Material";
-        args.maps.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+        var selectedTheme = location.hash.split('/')[1];
+        selectedTheme = selectedTheme ? selectedTheme : 'Material';
+        args.maps.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, 'Dark');
     }
 
     window.onChartLoad = function (args) {
         var selectedTheme = location.hash.split('/')[1];
         selectedTheme = selectedTheme ? selectedTheme : 'Material';
-        args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/dark/i, "Dark").replace(/light/i, "Light"));
+        args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, 'Dark');
     }
 
     function loadPiechart(args) {
-        var indexedTheme = location.hash.split('/')[1];
-        indexedTheme = indexedTheme ? indexedTheme : 'Material';
-        args.accumulation.theme = (indexedTheme.charAt(0).toUpperCase() + indexedTheme.slice(1).replace(/dark/i, "Dark").replace(/light/i, "Light"));
+        var selectedTheme = location.hash.split('/')[1];
+        selectedTheme = selectedTheme ? selectedTheme : 'Material';
+        args.accumulation.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, "Dark");
     }
 </script>
 <style>
@@ -391,11 +391,32 @@
     }
 
     .e-dashboardlayout.e-control .e-panel .e-panel-container .e-panel-header {
-      padding: 10px;
       border-bottom: 2px solid #e6e9ed !important;
       height: 35px;
-      margin: 0 15px 0 15px;
+      padding: 0 15px 0 15px;
+      line-height: 35px;
     }
+
+    .bootstrap-dark li.sidebar-item.filterHover,
+    .material-dark li.sidebar-item.filterHover,
+    .fabric-dark li.sidebar-item.filterHover,
+    .tailwind-dark li.sidebar-item.filterHover,
+    .bootstrap5-dark li.sidebar-item.filterHover {
+        background: inherit;
+    }
+
+    .bootstrap5-dark .card-content.text,
+    .tailwind-dark .card-content.text,
+    .material-dark .card-content.text,
+    .bootstrap-dark .card-content.text,
+    .highcontrast .card-content.text {
+        color: #ffffff;
+    }
+
+    .fabric-dark .card-content.text {
+        color: #dadada
+    }
+
 
     #sidebar-section {
       padding: 0px !important;
@@ -444,6 +465,10 @@
 
     #dockSidebar {
       text-align: center;
+    }
+
+    body.material-dark #sidebar-section {
+        color: #ffffff;
     }
 
     .e-icons::before {
@@ -555,7 +580,7 @@
       line-height: 2;
     }
 
-     #pie, #pieChart, #map, #colChart, #visitorsChart {
+     #pie, #pieChart, #maps, #colChart, #visitorsChart {
          width: 100%;
          height: 100%;
      }
@@ -720,6 +745,14 @@
     body.highcontrast #dockSidebar li.sidebar-item.filterHover,
     body.highcontrast #dockSidebar {
         background: #000;
+    }
+
+    .tailwind #dockSidebar, .bootstrap5 #dockSidebar {
+        background: #fff;
+    }
+
+    .tailwind-dark .e-dashboardlayout.e-control .e-panel .e-panel-container .e-panel-header, .tailwind .e-dashboardlayout.e-control .e-panel .e-panel-container .e-panel-header {
+        border-radius: 6px;
     }
 
 </style>

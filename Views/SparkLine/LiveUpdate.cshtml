@@ -136,7 +136,10 @@
 
 
                 function sparkLoad(args) {
-                    if (!args.sparkline.refreshing) {
+                    var theme = location.hash.split('/')[1];
+                    theme = theme ? theme : 'Material';
+                    args.sparkline.theme = (theme.charAt(0).toUpperCase() + theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+                    if (!args.sparkline.refreshing) {                       
                         if (args.sparkline.element.id === "spark-container1") {
                             spark1 = args.sparkline;
                             time1 = setInterval(update1, 1000);

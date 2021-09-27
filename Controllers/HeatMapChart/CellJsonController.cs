@@ -80,7 +80,7 @@ namespace EJ2CoreSampleBrowser.Controllers.HeatMapChart
                 data.Add(new heatmapDatasourceCell { rowid = "Germany", columnid = "2016", value = "35.6" });
 
                 data.Add(new heatmapDatasourceCell { rowid = "Mexico", columnid = "2010", value = "23.2" });
-                data.Add(new heatmapDatasourceCell { rowid = "Mexico", columnid = "2011", value = "24.9"});
+                data.Add(new heatmapDatasourceCell { rowid = "Mexico", columnid = "2011", value = "24.9" });
                 data.Add(new heatmapDatasourceCell { rowid = "Mexico", columnid = "2012", value = "30.1" });
                 data.Add(new heatmapDatasourceCell { rowid = "Mexico", columnid = "2013", value = "22.2" });
                 data.Add(new heatmapDatasourceCell { rowid = "Mexico", columnid = "2014", value = "29.3" });
@@ -93,7 +93,7 @@ namespace EJ2CoreSampleBrowser.Controllers.HeatMapChart
                 data.Add(new heatmapDatasourceCell { rowid = "Thailand", columnid = "2013", value = "23.5" });
                 data.Add(new heatmapDatasourceCell { rowid = "Thailand", columnid = "2014", value = "24.8" });
                 data.Add(new heatmapDatasourceCell { rowid = "Thailand", columnid = "2015", value = "29.9" });
-                data.Add(new heatmapDatasourceCell { rowid = "Thailand", columnid = "2016", value = "32.6"});
+                data.Add(new heatmapDatasourceCell { rowid = "Thailand", columnid = "2016", value = "32.6" });
 
 
                 data.Add(new heatmapDatasourceCell { rowid = "Austria", columnid = "2010", value = "22" });

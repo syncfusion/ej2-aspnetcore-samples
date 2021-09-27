@@ -65,6 +65,7 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
             else
             {
                 ViewBag.lab = "Choose a valid PDF file.";
+                ViewBag.data = new string[] { "PDF/A-1b", "PDF/A-2b", "PDF/A-3b" };
                 return View();
             }
 

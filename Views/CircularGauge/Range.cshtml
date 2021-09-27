@@ -14,7 +14,7 @@
     <div id="description">
         <p>
             In this example, you can see how to customize the ranges of an axis in the circular gauge. Ranges are used to group the axis
-            values, you can use <code>start</code>, <code>end</code>, <code>color</code>, <code>startWidth</code>, <code>endWidth</code>, <code>radius</code> and <code>roundedCornerRadius</code> properties to customize the ranges. In this sample, an axis is shown with one range and options
+            values, you can use <code>start</code>, <code>end</code>, <code>color</code>, <code>startWidth</code>, <code>endWidth</code>, <code>radius,</code> and <code>roundedCornerRadius</code> properties to customize the ranges. In this sample, an axis is shown with one range and options
             to customize the range properties with property panel.
         </p>
         <p>
@@ -47,13 +47,13 @@
         </div>
     </div>
     <div class="col-md-4 property-section">
-        <table id="property" title="Properties" style="width: 100%">
+        <table id="property" title="Properties" style="width: 100%; margin-left: -10px">
             <tr style="height: 50px">
                 <td>
                     <div> Select Range </div>
                 </td>
                 <td>
-                    <div>
+                    <div style="margin-left: 10px">
                         <select id="rangeSelect" class="form-control">
                             <option value="0" selected="selected">Low</option>
                             <option value="1">Medium</option>
@@ -68,7 +68,7 @@
                 </td>
                 <td>
                     <div>
-                        <input type="range" id="start" value="0" min="0" max="120" style="width:90%" />
+                        <input type="range" id="start" value="0" min="0" max="120" style="width: 110px; margin-left: 10px" />
                     </div>
                 </td>
             </tr>
@@ -79,7 +79,7 @@
                 </td>
                 <td>
                     <div>
-                        <input type="range" id="end" value="40" min="0" max="120" style="width:90%" />
+                        <input type="range" id="end" value="40" min="0" max="120" style="width: 110px; margin-left: 10px" />
                     </div>
                 </td>
             </tr>
@@ -88,7 +88,7 @@
                     <div id=''>Range Color</div>
                 </td>
                 <td>
-                    <div>
+                    <div style="margin-left: 10px">
                         <select id="rangeColor" class="form-control">
                             <option value="#30B32D" selected=true>#30B32D</option>
                             <option value="#FFDD00">#FFDD00</option>
@@ -103,7 +103,7 @@
                 </td>
                 <td style="width: 40%;">
                     <div>
-                        <input type="checkbox" id="enable" />
+                        <input type="checkbox" id="enable" style="width: 110px; margin-left: 10px" />
                     </div>
                 </td>
             </tr>
@@ -113,7 +113,7 @@
                 </td>
                 <td>
                     <div>
-                        <input type="range" id="startWidth" value="10" min="0" max="30" style="width:90%" />
+                        <input type="range" id="startWidth" value="10" min="0" max="30" style="width: 110px; margin-left: 10px" />
                     </div>
                 </td>
             </tr>
@@ -123,7 +123,7 @@
                 </td>
                 <td>
                     <div>
-                        <input type="range" id="endWidth" value="10" min="0" max="30" style="width:90%" />
+                        <input type="range" id="endWidth" value="10" min="0" max="30" style="width: 110px; margin-left: 10px" />
                     </div>
                 </td>
             </tr>
@@ -133,7 +133,7 @@
                 </td>
                 <td>
                     <div>
-                        <input type="range" id="radius" value="0" min="0" max="30" step="5" style="width:90%">
+                        <input type="range" id="radius" value="0" min="0" max="30" step="5" style="width: 110px; margin-left: 10px">
                     </div>
                 </td>
             </tr>
@@ -145,7 +145,8 @@
     window.gaugeload = function (args) {
         @* custom code start *@
         var theme = themeName ? themeName : 'Material';
-        args.gauge.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+        args.gauge.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
         @* custom code end *@
         if (window.gaugeLoaded)
             return;
@@ -164,17 +165,17 @@
             cap: { radius: 7 }, needleTail: { length: '18%' }
         }];
         axis.annotations = [{
-            content: "<div><span style='font-size:14px; color:#9E9E9E; font-family:Regular'>Speedometer</span></div>",
+            content: "<div><span style='font-size:14px; font-family:Regular'>Speedometer</span></div>",
             radius: "30%", angle: 0, zIndex: '1'
         }, {
-            content: "<div><span style='font-size:20px; color:#424242; font-family:Regular'>65 MPH</span></div>",
+            content: "<div><span style='font-size:20px;  font-family:Regular'>65 MPH</span></div>",
             radius: "40%", angle: 180, zIndex: '1'
         }];
     }
     window.addEventListener('load', function () {
         var colortObj;
         var listObj = new ej.dropdowns.DropDownList({
-            index: 0, width: 120,
+            index: 0, width: 110,
             change: function () {
                 var index = +listObj.value;
                 colortObj.value = circulargauge.axes[0].ranges[index].color;
@@ -198,7 +199,7 @@
         listObj.appendTo('#rangeSelect');
 
         colortObj = new ej.dropdowns.DropDownList({
-            index: 0, width: 120,
+            index: 0, width: 110,
             change: function () {
                 circulargauge.axes[0].ranges[listObj.value].color = colortObj.value.toString();
                 circulargauge.axes[0].pointers[0].animation.enable = false;
@@ -211,7 +212,7 @@
         document.getElementById('start').onchange = function () {
             circulargauge = document.getElementById('circular').ej2_instances[0];
             var min = parseInt((document.getElementById('start')).value, 10);
-            document.getElementById('rangeStart').innerHTML = 'Range Start <span>    ' + min;
+            document.getElementById('rangeStart').innerHTML = 'Range Start <span>&nbsp;&nbsp;&nbsp;' + min;
             circulargauge.axes[0].ranges[parseInt(listObj.value)].start = min;
             circulargauge.axes[0].pointers[0].animation.enable = false;
             circulargauge.refresh();
@@ -221,7 +222,7 @@
         document.getElementById('end').onchange = function () {
             circulargauge = document.getElementById('circular').ej2_instances[0];
             var max = parseInt((document.getElementById('end')).value, 10);
-            document.getElementById('rangeEnd').innerHTML = 'Range End <span>    ' + max;
+            document.getElementById('rangeEnd').innerHTML = 'Range End <span> &nbsp;&nbsp;&nbsp;' + max;
             circulargauge.axes[0].ranges[listObj.value].end = max;
             circulargauge.axes[0].pointers[0].animation.enable = false;
             circulargauge.refresh();
@@ -230,7 +231,7 @@
         document.getElementById('startWidth').onpointermove = document.getElementById('startWidth').ontouchmove =
             document.getElementById('startWidth').onchange = function () {
                 var startWidth = parseInt((document.getElementById('startWidth')).value, 10);
-                document.getElementById('rangeStartWidth').innerHTML = 'Start Width <span>    ' + startWidth;
+            document.getElementById('rangeStartWidth').innerHTML = 'Start Width <span> &nbsp;&nbsp;&nbsp;' + startWidth;
                 circulargauge.axes[0].ranges[listObj.value].startWidth = startWidth;
                 circulargauge.axes[0].pointers[0].animation.enable = false;
                 circulargauge.refresh();
@@ -239,7 +240,7 @@
         document.getElementById('endWidth').onpointermove = document.getElementById('endWidth').ontouchmove =
             document.getElementById('endWidth').onchange = function () {
                 var endWidth = parseInt((document.getElementById('endWidth')).value, 10);
-                document.getElementById('rangeEndWidth').innerHTML = 'End Width <span>    ' + endWidth;
+            document.getElementById('rangeEndWidth').innerHTML = 'End Width <span> &nbsp;&nbsp;&nbsp;' + endWidth;
                 circulargauge.axes[0].ranges[listObj.value].endWidth = endWidth;
                 circulargauge.axes[0].pointers[0].animation.enable = false; circulargauge.refresh();
             };
@@ -247,7 +248,7 @@
         document.getElementById('radius').onpointermove = document.getElementById('radius').ontouchmove =
             document.getElementById('radius').onchange = function () {
                 var radius = parseInt((document.getElementById('radius')).value, 10);
-                document.getElementById('radius').innerHTML = 'Corner Radius <span>    ' + radius;
+            document.getElementById('radius').innerHTML = 'Corner Radius <span> &nbsp;&nbsp;&nbsp;' + radius;
                 circulargauge.axes[0].ranges[+listObj.value].roundedCornerRadius = radius;
                 circulargauge.axes[0].pointers[0].animation.enable = false; circulargauge.refresh();
             };

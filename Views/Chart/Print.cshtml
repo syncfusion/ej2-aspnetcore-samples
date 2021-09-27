@@ -24,7 +24,7 @@
             <tbody>
                 <tr id="button-control" style="height: 50px">
                     <td align="center">
-                        <ejs-button id="button" content="Print" iconCss="e-icons e-play-icon" cssClass="e-flat" isPrimary="true"></ejs-button>
+                        <ejs-button id="button" content="Print" iconCss="e-icons e-print-icon" cssClass="e-flat" isPrimary="true"></ejs-button>
                     </td>
                 </tr>
             </tbody>
@@ -36,7 +36,7 @@
         window.onChartLoad = function (args) {
             var selectedTheme = location.hash.split('/')[1];
             selectedTheme = selectedTheme ? selectedTheme : 'Material';
-            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/dark/i, "Dark").replace(/light/i, "Light"));
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
         }
         @*custom code end*@
         document.getElementById('button').onclick = () => {
@@ -66,8 +66,32 @@
             padding: 0px !important;
         }
 
-        .e-play-icon::before {
+        .e-print-icon::before {
             content: '\e34b';
+        }
+
+        .e-view.fabric .e-print-icon::before, .e-view.fabric-dark .e-print-icon::before {
+            content: '\e7df';
+        }
+
+        .e-view.bootstrap .e-print-icon::before {
+            content: '\ebd2';
+        }
+
+        .e-view.bootstrap4 .e-print-icon::before {
+            content: '\e743';
+        }
+
+        .e-view.tailwind .e-print-icon::before, .e-view.tailwind-dark .e-print-icon::before {
+            content: '\e76c';
+        }
+
+        .e-view.highcontrast .e-print-icon::before {
+            content: '\ebf9';
+        }
+
+        .e-view.bootstrap5 .e-print-icon::before, .e-view.bootstrap5-dark .e-print-icon::before {
+            content: '\e75d';
         }
     </style>
 }

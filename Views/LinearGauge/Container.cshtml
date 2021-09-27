@@ -6,11 +6,12 @@
               <e-lineargauge-axes>
                   <e-lineargauge-axis minimum="0" maximum="180">
                       <e-axis-line width="0"></e-axis-line>
-                      <e-axis-majorticks interval="20" color="#9e9e9e"></e-axis-majorticks>
+                      <e-axis-majorticks interval="20" color="#9e9e9e" height="20"></e-axis-majorticks>
+                      <e-axis-minorticks  height="10" color="#9e9e9e"></e-axis-minorticks>
                   </e-lineargauge-axis>
                   <e-lineargauge-axis minimum="0" maximum="180" opposedPosition="true">
                       <e-axis-line width="0"></e-axis-line>
-                      <e-axis-majorticks interval="20" color="#9e9e9e"></e-axis-majorticks>
+                      <e-axis-majorticks interval="20" height="20"></e-axis-majorticks>
                   </e-lineargauge-axis>
               </e-lineargauge-axes> 
             </ejs-lineargauge>
@@ -21,10 +22,10 @@
             <tbody>
                 <tr>
                     <td>
-                        <div>Orientation</div>
+                        <div style="margin-left:-10px">Orientation</div>
                     </td>
                     <td>
-                        <div>
+                        <div style="margin-left:-10px">
                             <select name="selectIndex" autocomplete="off" id="orientationMode" style="width:90%">
                                 <option value="Vertical" selected="">Vertical</option>
                                 <option value="Horizontal">Horizontal</option>
@@ -34,10 +35,10 @@
                 </tr>
                 <tr>
                     <td>
-                        <div>Container Type</div>
+                        <div style="margin-left:-10px; width:60px">Container Type</div>
                     </td>
                     <td>
-                        <div>
+                        <div style="margin-left:-10px">
                             <select name="selectIndex" autocomplete="off" id="containerMode" style="width:90%">
                                 <option value="Thermometer">Thermometer</option>
                                 <option value="Normal" selected="">Normal</option>
@@ -57,7 +58,7 @@
         var containerMode = new ej.dropdowns.DropDownList({
             index: 0,
             placeholder: 'Select Range Bar Color',
-            width: 120,
+            width: 140,
             change: function () {
                 gauge.container.type = containerMode.value;
                 gauge.refresh();
@@ -67,7 +68,7 @@
         var orientationMode = new ej.dropdowns.DropDownList({
             index: 0,
             placeholder: 'Select Range Bar Color',
-            width: 120,
+            width: 140,
             change: function () {
                 gauge.orientation = orientationMode.value;
                 gauge.refresh();
@@ -80,7 +81,8 @@
     window.gaugeLoad = function (args) {
         @* custom code start *@
         var theme = themeName ? themeName : 'Material';
-        args.gauge.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+        args.gauge.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
         @* custom code end *@
         if (window.gaugeLoaded)
             return;

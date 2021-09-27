@@ -17,7 +17,7 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
 {
     public partial class DocIOController : Controller
     {
-        public IActionResult WordToPDF(string button, string renderingMode1, string renderingMode2, string renderingMode3, string renderingMode4)
+        public IActionResult WordToPDF(string button, string renderingMode1, string renderingMode2, string renderingMode3, string renderingMode4, string renderingMode5)
         {
             if (button == null)
                 return View();
@@ -52,6 +52,13 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
                         document.RevisionOptions.DeletedTextColor = RevisionColor.Yellow;
                         // Set inserted text (Insertions) color as Pink.
                         document.RevisionOptions.InsertedTextColor = RevisionColor.Pink;
+                    }
+                    if (renderingMode5 == "ShowComments")
+                    {
+                      //Sets ShowInBalloons to render a document comments in converted PDF document.
+                      document.RevisionOptions.CommentDisplayMode = CommentDisplayMode.ShowInBalloons;
+                      //Sets the color to be used for Comment Balloon
+                      document.RevisionOptions.CommentColor = RevisionColor.Blue;
                     }
                     // Converts Word document into PDF document.
                     PdfDocument pdf = render.ConvertToPDF(document);

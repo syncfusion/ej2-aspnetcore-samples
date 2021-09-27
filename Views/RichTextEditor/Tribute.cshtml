@@ -2,7 +2,7 @@
 @section ControlsSection{
    <div class="content-wrapper" id="all-option-sample">
         <div class="control-section">
-            <ejs-richtexteditor id="default" placeholder="Type @@ to get the employee list with their email IDs." created="onCreate">
+            <ejs-richtexteditor id="default" placeholder="Type @@ to get the employee list with their email IDs." created="onCreate" actionBegin="actionBeginEvent">
                 <e-richtexteditor-toolbarsettings items="@ViewBag.items"></e-richtexteditor-toolbarsettings>
             </ejs-richtexteditor>
         </div>
@@ -61,6 +61,11 @@
                 ]
             })
             tribute.attach(this.inputElement);
+        }
+        function actionBeginEvent(args) {
+            if (args.requestType === 'EnterAction') {
+                args.cancel = true;
+            }
         }
     </script>
 }

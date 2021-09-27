@@ -10,8 +10,8 @@ namespace EJ2CoreSampleBrowser.Controllers
         {
             List<object> exportItems = new List<object>()
             {
-                new { text = "iCalendar", iconCss = "e-icons e-schedule-ical-export" },
-                new { text = "Excel", iconCss = "e-icons e-schedule-excel-export" }
+                new { text = "iCalendar", iconCss = "e-icons e-export" },
+                new { text = "Excel", iconCss = "e-icons e-export-excel" }
             };
             ViewBag.ExportItems = exportItems;
 
@@ -27,20 +27,20 @@ namespace EJ2CoreSampleBrowser.Controllers
             ViewBag.Resources = new string[] { "Calendars" };
 
             List<object> menuItems = new List<object>() {
-                new { text = "New Event", iconCss = "e-icons new", id = "Add" },
-                new { text = "New Recurring Event", iconCss = "e-icons recurrence", id = "AddRecurrence" },
-                new { text = "Today", iconCss = "e-icons today", id = "Today" },
-                new { text = "Edit Event", iconCss = "e-icons edit", id = "Save" },
+                new { text = "New Event", iconCss = "e-icons e-plus", id = "Add" },
+                new { text = "New Recurring Event", iconCss = "e-icons e-repeat", id = "AddRecurrence" },
+                new { text = "Today", iconCss = "e-icons e-timeline-today", id = "Today" },
+                new { text = "Edit Event", iconCss = "e-icons e-edit", id = "Save" },
                 new {
-                    text = "Edit Event", id = "EditRecurrenceEvent", iconCss = "e-icons edit",
+                    text = "Edit Event", id = "EditRecurrenceEvent", iconCss = "e-icons e-edit",
                     items = new List<object>() {
                         new { text = "Edit Occurrence", id = "EditOccurrence"},
                         new { text = "Edit Series", id = "EditSeries" }
                     }
                 },
-                new { text = "Delete Event", iconCss = "e-icons delete", id = "Delete" },
+                new { text = "Delete Event", iconCss = "e-icons e-trash", id = "Delete" },
                 new {
-                    text = "Delete Event", id = "DeleteRecurrenceEvent", iconCss = "e-icons delete",
+                    text = "Delete Event", id = "DeleteRecurrenceEvent", iconCss = "e-icons e-trash",
                     items = new List<object>() {
                         new { text = "Delete Occurrence", id = "DeleteOccurrence" },
                         new { text = "Delete Series", id = "DeleteSeries"}

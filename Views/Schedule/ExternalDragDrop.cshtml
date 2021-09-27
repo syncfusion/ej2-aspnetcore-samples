@@ -7,7 +7,7 @@
                 <div class="title-container">
                     <h1 class="title-text">Doctor's Appointments</h1>
                 </div>
-                <ejs-schedule id="schedule" width="100%" height="650px" cssClass="schedule-drag-drop" resourceHeaderTemplate="#resource-template" currentView="TimelineDay" selectedDate="new DateTime(2018, 7, 1)" actionBegin="onActionBegin" drag="onItemDrag">
+                <ejs-schedule id="schedule" width="100%" height="650px" cssClass="schedule-drag-drop" resourceHeaderTemplate="#resource-template" currentView="TimelineDay" selectedDate="new DateTime(DateTime.Today.Year, 7, 2)" actionBegin="onActionBegin" drag="onItemDrag">
                     <e-schedule-group enableCompactView="false" resources="@ViewBag.Resources"></e-schedule-group>
                     <e-schedule-resources>
                         <e-schedule-resource dataSource="@ViewBag.Departments" field="DepartmentID" title="Department" name="Departments" textField="text" idField="id" colorField="color"></e-schedule-resource>
@@ -65,22 +65,10 @@
             text-align: center;
         }
         /* custom code end*/
+
         .treeview-external-drag #waiting {
             height: 100%;
             padding: 0;
-        }
-
-        .treeview-external-drag #waitid {
-            float: left;
-            width: 13%;
-            text-align: center;
-            line-height: 30px;
-            font-size: 13px;
-            font-family: "Segoe UI";
-            color: #f9920b;
-            overflow: hidden;
-            margin: 9px 0;
-            padding: 0 2px 0 0;
         }
 
         .treeview-external-drag #waitdetails {
@@ -96,7 +84,6 @@
             font-weight: bold;
             font-family: "Segoe UI";
             font-size: 12px;
-            color: #545554;
             padding: 5px 0 0 10px;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -106,7 +93,6 @@
             height: 50%;
             font-family: "Segoe UI";
             font-size: 10px;
-            color: #545554;
             opacity: 0.6;
             padding-left: 10px;
             padding-top: 5px;
@@ -116,7 +102,6 @@
 
         .treeview-external-drag .e-list-text,
         .e-bigger .treeview-external-drag .e-list-text {
-            background: white;
             border: 0.5px solid #E1E7EC;
             height: 50px;
             line-height: 15px;
@@ -180,8 +165,19 @@
             padding: 5px
         }
 
+        .tailwind .e-schedule.schedule-drag-drop .e-resource-cells.e-child-node .specialist-category,
+        .tailwind .e-schedule.schedule-drag-drop .e-resource-cells.e-child-node .specialist-name,
+        .tailwind-dark .e-schedule.schedule-drag-drop .e-resource-cells.e-child-node .specialist-category,
+        .tailwind-dark .e-schedule.schedule-drag-drop .e-resource-cells.e-child-node .specialist-name {
+            padding: unset !important;
+        }
+
         .e-schedule.schedule-drag-drop .e-resource-cells.e-parent-node .specialist-name {
             padding: 0 10px
+        }
+
+        .e-schedule.schedule-drag-drop .e-resource-cells.e-parent-node .template-wrap {
+            padding: 3px 0px;
         }
 
         .e-schedule.schedule-drag-drop .e-resource-cells.e-child-node .specialist-category .specialist-image {
@@ -228,7 +224,6 @@
                 padding-bottom: 10px
             }
             /* custom code end*/
-
             .treeview-external-drag.e-treeview,
             .e-bigger .treeview-external-drag.e-treeview {
                 width: 225px;
@@ -268,7 +263,7 @@
         }
 
         function getConsultantImage(value) {
-            let resourceName = value.resourceData[value.resource.textField];
+            var resourceName = value.resourceData[value.resource.textField];
             if (resourceName === 'GENERAL' || resourceName === 'DENTAL') {
                 return '';
             } else {
@@ -279,7 +274,7 @@
         }
 
         function getConsultantDesignation(value) {
-            let resourceName = value.resourceData[value.resource.textField];
+            var resourceName = value.resourceData[value.resource.textField];
             if (resourceName === 'GENERAL' || resourceName === 'DENTAL') {
                 return '';
             } else {
@@ -379,7 +374,8 @@
             In this example, <code>resourceHeaderTemplate</code> is used to change the default appearance of the resource header
             column. Within the <code>actionBegin</code> event of scheduler, the dragged item from the TreeView control is removed,
             when it is being dragged and dropped onto the scheduler. When the item is being dropped onto the scheduler, the event editor is
-            explicitly made to open with the target details by invoking the <code>openEditor</code> method of scheduler within the <code>nodeDragStop</code> event of TreeView.
+            explicitly made to open with the target details by invoking the <code>openEditor</code> method of scheduler within the
+            <code>nodeDragStop</code> event of TreeView.
         </p>
     </div>
 }

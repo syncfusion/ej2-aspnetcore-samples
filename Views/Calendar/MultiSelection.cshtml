@@ -2,16 +2,17 @@
 
 @section ControlsSection{
     <div class="col-lg-12 control-section">
-        <div class="calender-section">
-            <div id="calender-control" class="col-lg-6 col-sm-8 col-md-8 multiselectWrapper">
-                <ejs-calendar id="calendar" isMultiSelection="true" values="@ViewBag.multiValue" created="changeValue" change="changeValue"></ejs-calendar>
+        <div class="col-lg-7">
+            <div class="calender-section">
+                <div id="calender-control" class="col-lg-6 col-sm-8 col-md-8 multiselectWrapper">
+                    <ejs-calendar id="calendar" isMultiSelection="true" values="@ViewBag.multiValue" created="changeValue" change="changeValue"></ejs-calendar>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="valuesWrapper col-lg-6 col-sm-8 col-md-8">
-        <h5>Selected values</h5>
-        <div class="contentValue">
-            <div id="multiSelect">
+        <div class="col-lg-5">
+            <label>Selected values</label>
+            <div class="content-value">
+                <div id="multiselect"></div>
             </div>
         </div>
     </div>
@@ -20,7 +21,7 @@
     function changeValue() {
         if (this.isMultiSelection) {
             var globalize = new ej.base.Internationalization(this.locale);
-            var element = document.getElementById('multiSelect')
+            var element = document.getElementById('multiselect')
             element.innerHTML = '';
             for (var index = 0; index < this.values.length; index++) {
                 var selectedValue = globalize.formatDate(this.values[index]);
@@ -87,23 +88,22 @@
         overflow: auto;
     }
 
-    .contentValue {
+    .content-value {
         padding: 10px;
         overflow: auto;
-        max-height: 100px;
-        margin-bottom: 10px;
+        max-height: 150px;
         border: 1px solid rgba(0, 0, 0, 0.12);
+        margin-top: 15px;
+        font-size: 12px;
     }
 
-    .valuesWrapper {
-        width: 350px;
-        margin: 0 auto;
-        position: initial;
-    }
-
-    .valuesWrapper, #calender-control.multiselectWrapper {
-        float: none;
-        position: initial;
+    .highcontrast .content-value,
+    .material-dark .content-value,
+    .fabric-dark .content-value,
+    .bootstrap-dark .content-value,
+    .bootstrap5-dark .content-value,
+    .tailwind-dark .content-value {
+        border: 1px solid rgb(150, 150, 150);
     }
 </style>
 @*custom code end*@

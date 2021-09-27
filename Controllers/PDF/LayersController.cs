@@ -54,7 +54,7 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
 
             graphics = layer.Graphics;
             graphics.TranslateTransform(100, 180);
-            graphics.SkewTransform(0, 50);
+            //graphics.SkewTransform(0, 50);
 
             //Draw another set of elements
             pen = new PdfPen(Color.Red, 50);

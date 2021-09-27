@@ -16,7 +16,7 @@
         </p>
         <br>
         <p>
-            In this sample, you can drag the pointer using mouse or touch, the pointer value will be updated in an annotation placed
+            In this sample, you can drag the pointer using mouse or touch, and the pointer value will be updated in an annotation placed
             in the gauge.
         </p>
         <p>
@@ -41,7 +41,7 @@
         </div>
     </div>
     <div class="col-md-4 property-section">
-        <table id="property" title="Properties" style="width: 100%">
+        <table id="property" title="Properties" style="width: 100%; margin-left: -10px">
 			<tbody>
 				<tr style="height: 50px">
 					<td style="width: 30%">
@@ -49,7 +49,7 @@
 					</td>
 					<td style="width: 40%;">
 						<div>
-							<input type="range" id="value" value="70" min="0" max="120" style="width:90%">
+							<input type="range" id="value" value="70" min="0" max="120" style="width: 110px; margin-left: 20px">
 						</div>
 					</td>
 				</tr>
@@ -59,7 +59,7 @@
 					</td>
 					<td style="width: 40%;">
 						<div>
-							<input type="checkbox" id="enable" checked="true" style="width:90%">
+							<input type="checkbox" id="enable" checked="true" style="width: 110px; margin-left: 9px">
 						</div>
 					</td>
 				</tr>
@@ -69,7 +69,7 @@
 					</td>
 					<td style="width: 40%;">
 						<div>
-							<input type="checkbox" id="enableRangeDrag" style="width:90%">
+							<input type="checkbox" id="enableRangeDrag" style="width: 110px; margin-left: 9px">
 						</div>
 					</td>
 				</tr>
@@ -83,7 +83,8 @@
 
         @* custom code start *@
         var theme = themeName ? themeName : 'Material';
-        args.gauge.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+        args.gauge.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
         @* custom code end *@
         if (window.gaugeLoaded)
             return;
@@ -154,7 +155,7 @@
 		circulargauge.axes[0].pointers[1].animation.enable = false;
 		if (isNaN(args.rangeIndex)) {
 			pointerValue = Math.round(args.currentValue);
-			document.getElementById('pointerValue').innerHTML = 'Pointer Value <span>    ' + pointerValue;
+            document.getElementById('pointerValue').innerHTML = 'Pointer Value <span>&nbsp;&nbsp;&nbsp;' + pointerValue;
 			document.getElementById('value').value = pointerValue.toString();
 			circulargauge.axes[0].annotations[0].content = (content + pointerValue + ' MPH</span></div>');
 			circulargauge.axes[0].pointers[1].value = pointerValue;
@@ -188,7 +189,7 @@
             document.getElementById('value').onchange = function () {
                 var pointerValue = parseInt(document.getElementById('value').value, 10);
                 setPointersValue(circulargauge, pointerValue, false);
-                document.getElementById('pointerValue').innerHTML = 'Pointer Value <span>    ' + pointerValue;
+            document.getElementById('pointerValue').innerHTML = 'Pointer Value <span>&nbsp;&nbsp;&nbsp;' + pointerValue;
             };
         document.getElementById('enable').onchange = function () {
             var value = document.getElementById('enable').checked;

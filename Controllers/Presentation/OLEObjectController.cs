@@ -62,8 +62,7 @@ namespace EJ2CoreSampleBrowser.Controllers
                 oleObject.Top = 0.79 * 72;
                 oleObject.Width = 4.26 * 72;
                 oleObject.Height = 5.92 * 72;
-                //Set DisplayAsIcon as true, to open the embedded document in separate (default) application.
-                oleObject.DisplayAsIcon = true;
+
                 MemoryStream ms = new MemoryStream();
 
                 //Saves the presentation to the memory stream.

@@ -10,6 +10,7 @@ namespace EJ2CoreSampleBrowser.Controllers
         public IActionResult TimeScale()
         {
             ViewBag.datasource = new ScheduleData().GetScheduleData();
+            ViewBag.workDays = new int[] { 0, 1, 2, 3, 4, 5 };
             ViewBag.intervals = GetIntervalData();
             ViewBag.slotCounts = GetSlotCounts();
             ViewBag.timeScaleOptions = GetTimeScaleOptions();

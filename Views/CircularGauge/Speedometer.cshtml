@@ -68,34 +68,34 @@
         </ejs-circulargauge>
     </div>
        <div class="col-lg-3 property-section">
-    <table id="property" title="Properties" style="width: 100%">
+    <table id="property" title="Properties" style="width: 100%; margin-left: -10px">
         <tbody>
             <tr>
                 <td style="width: 40%">
-                    <div class="property-text"> Show text labels</div>
+                    <div class="property-text" style="width: 100px; margin-top: 5px"> Show text labels</div>
                 </td>
                 <td style="width: 40%;">
-                    <div>
+                    <div style="margin-left: 20px">
                         <input type="checkbox" id="showText" checked />
                     </div>
                 </td>
             </tr>
             <tr>
                 <td style="width: 40%">
-                    <div class="property-text"> Combine ranges</div>
+                    <div class="property-text" style="width: 100px; margin-top: 10px"> Combine ranges</div>
                 </td>
                 <td style="width: 40%;">
-                    <div>
+                    <div style="margin-left: 20px; margin-top: 5px">
                         <input type="checkbox" id="combineRange" checked />
                     </div>
                 </td>
             </tr>
             <tr>
                 <td style="width: 40%">
-                    <div class="property-text"> Gap between ranges</div>
+                    <div class="property-text" style="width: 100px; margin-top: 15px"> Gap between ranges</div>
                 </td>
                 <td style="width: 40%;">
-                    <div>
+                    <div style="margin-left: 20px">
                         <input type="checkbox" id="range" checked />
                     </div>
                 </td>
@@ -117,7 +117,8 @@
     function gaugeLoad(sender) {
         @* custom code start *@
         var selectedTheme = themeName ? themeName : 'Material';
-        sender.gauge.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1));
+        sender.gauge.theme = (selectedTheme.charAt(0).toUpperCase() +
+            selectedTheme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
         @* custom code end *@
         if (!circulargauge) {
             circulargauge = sender.gauge;

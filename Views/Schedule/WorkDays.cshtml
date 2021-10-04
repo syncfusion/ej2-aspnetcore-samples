@@ -3,7 +3,7 @@
 @section ControlsSection{
     <div class="col-lg-9 control-section">
         <div class="schedule-wrapper">
-            <ejs-schedule id="schedule" width="100%" height="650px" currentView="WorkWeek" selectedDate="new DateTime(2018, 2, 15)" workDays="@ViewBag.workDays" eventRendered="onEventRendered">
+            <ejs-schedule id="schedule" width="100%" height="650px" currentView="WorkWeek" selectedDate="new DateTime(DateTime.Today.Year, 2, 15)" workDays="@ViewBag.workDays" eventRendered="onEventRendered">
                 <e-schedule-workhours start="08:00"></e-schedule-workhours>
                 <e-schedule-views>
                     <e-schedule-view option="Week"></e-schedule-view>
@@ -20,24 +20,18 @@
         <table id='property' title='Properties' class='property-panel-table' style="width: 100%;">
             <tbody>
                 <tr style="height: 50px">
-                    <td style="width: 30%">
-                        <div>Work days</div>
-                    </td>
-                    <td style="width: 70%;">
+                    <td style="width: 100%;">
                         <div>
-                            <ejs-dropdownlist id="scheduleworkdays" dataSource="@ViewBag.workDaysdata" change="onChange" value="@{"1,3,5"}" popupWidth="auto">
+                            <ejs-dropdownlist id="scheduleworkdays" dataSource="@ViewBag.workDaysdata" change="onChange" value="@{"1,3,5"}" popupWidth="auto" placeholder="Work days" floatLabelType="Always">
                                 <e-dropdownlist-fields text="Name" value="Value"></e-dropdownlist-fields>
                             </ejs-dropdownlist>
                         </div>
                     </td>
                 </tr>
                 <tr style="height: 50px">
-                    <td style="width: 30%">
-                        <div>First day of week</div>
-                    </td>
-                    <td style="width: 70%;">
+                    <td style="width: 100%;">
                         <div>
-                            <ejs-dropdownlist id="scheduledayofweek" dataSource="@ViewBag.dayOfWeek" change="onDayChange" value="@{"0"}" popupWidth="auto">
+                            <ejs-dropdownlist id="scheduledayofweek" dataSource="@ViewBag.dayOfWeek" change="onDayChange" value="@{"0"}" popupWidth="auto" placeholder="First day of week" floatLabelType="Always">
                                 <e-dropdownlist-fields text="Name" value="Value"></e-dropdownlist-fields>
                             </ejs-dropdownlist>
                         </div>

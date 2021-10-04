@@ -72,6 +72,10 @@
         <li>
             In the hours worked column, we have used <code>WholeNumber</code> validation to find out overtime calculation(i.e more than 8 hours). And also, we used the <code>addInvalidHighlight</code> to highlight the overtime hours of the employee.
         </li>
+        <li>
+            In the gross pay with overtime column, we have used <code>WholeNumber</code> validation.
+            In this validation, we have used the input value as the cell reference. It helps in changing the criteria dynamically.
+        </li>
     </ul>
         <p>
             More information about the Data Validation can be found in this
@@ -95,11 +99,13 @@
         this.addDataValidation({ type: 'Time', operator: 'GreaterThan', value1: '8:00:00 AM', ignoreBlank: false  }, 'E4:E13');
         this.addDataValidation({ type: 'Time', operator: 'LessThan', value1: '6:00:00 PM', ignoreBlank: false  }, 'F4:F13');
         this.addDataValidation({ type: 'List', value1: 'Mon, Tue, Wed, Thu, Fri', ignoreBlank: false  }, 'D4:D13');
+        this.addDataValidation({ type: 'WholeNumber', operator: 'LessThan', value1: '=H5', ignoreBlank: false }, 'I4:I13');
         //Highlight Invalid Data.
         this.addInvalidHighlight('G4:G13');
+        this.addInvalidHighlight('I4:I13');
         @* custom code start *@
-        this.updateCell({ value: 'BasicSalary(30/hour)=' }, "H3");
-        this.updateCell({ value: 'GrossPayWithOvertime(15/hour)=' }, "I3");
+        this.updateCell({ value: 'Basic Salary (30/hour)=' }, "H3");
+        this.updateCell({ value: 'GrossPay With Overtime (15/hour)=' }, "I3");
         @* custom code end *@
 	}
 </script>

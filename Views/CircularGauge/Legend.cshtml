@@ -5,14 +5,14 @@
 @section ActionDescription{
     <div id="action-description">
         <p>
-            This sample visualizes moving air types in the legend based on their speed. The visibility, shape, alignment and position of the legend can be changed using the properties panel options.
+            This sample visualizes moving air types in the legend based on their speed. The visibility, shape, alignment, and position of the legend can be changed by using the properties panel options.
         </p>
     </div>
 }
 @section Description{
     <div id="description">
         <p>
-            In this example, you can see how to render a legend in circular gauge. A legend item denotes the axis ranges. Any number of legend items can be added to a legend. You can bind the desired colors  and legend text to the corresponding ranges.
+            In this example, you can see how to render a legend in circular gauge. A legend item denotes the axis ranges. Any number of legend items can be added to a legend. You can bind the desired colors and legend text to the corresponding ranges.
         </p>
         <p>
             More information on the ranges can be found in this
@@ -39,13 +39,13 @@
         </div>
     </div>
     <div class="col-md-4 property-section">
-        <table id="property" title="Properties" style="width: 100%">
+        <table id="property" title="Properties" style="width: 100%; margin-left: -10px">
             <tr style="height: 50px">
                 <td>
                     <div> Enable Legend </div>
                 </td>
                 <td style="padding-left: 50px;">
-                    <input type="checkbox" id="legend" checked/>
+                    <input type="checkbox" id="legend" checked style="margin-top: 20px; margin-left: 15px "/>
                 </td>
             </tr>
             <tr style="height: 50px">
@@ -53,7 +53,7 @@
                     <div> Show range when the legend item is toggled </div>
                 </td>
                 <td style="padding-left: 50px;">
-                    <input type="checkbox" id="togglelegend" checked/>
+                    <input type="checkbox" id="togglelegend"  style="margin-left: 15px" checked/>
                 </td>
             </tr>
             <tr style="height: 50px">
@@ -61,7 +61,7 @@
                     <div> Position </div>
                 </td>
                 <td>
-                    <div>
+                    <div style="width: 130px">
                         <select id="position" class="form-control">
                             <option value="Auto">Auto</option>
                             <option value="Top">Top</option>
@@ -77,7 +77,7 @@
                     <div> Alignment </div>
                 </td>
                 <td>
-                    <div>
+                    <div style="width: 130px">
                         <select id="alignment" class="form-control">
                             <option value="Far">Far</option>
                             <option value="Center" selected="true">Center</option>
@@ -91,7 +91,7 @@
                     <div> Shape </div>
                 </td>
                 <td>
-                    <div>
+                    <div style="width: 130px">
                         <select id="shape" class="form-control">
                             <option value="Circle" selected="true">Circle</option>
                             <option value="Rectangle">Rectangle</option>
@@ -111,7 +111,8 @@
     window.gaugeload = function (args) {
         @* custom code start *@
         var theme = themeName ? themeName : 'Material';
-        args.gauge.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+        args.gauge.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
         @* custom code end *@
         if (window.gaugeLoaded)
             return;
@@ -121,12 +122,6 @@
             position: 'Bottom'
         };
         var axis = args.gauge.axes[0];
-         axis.labelStyle.font = {
-            fontFamily: "Roboto",
-            color: "#424242",
-            size: "12px",
-            fontWeight: "Regular"
-        };
         axis.pointers = [{
             animation: { enable: true },
             value: 70, radius: '60%', pointerWidth: 8,

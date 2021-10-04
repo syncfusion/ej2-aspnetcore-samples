@@ -77,21 +77,21 @@
                 </tr>
                 <tr style="height: 50px">
                     <td style="width: 70%">
-                        <div class="property-text" style="padding: 0px;">Show legend for remaining data source items</div>
+                        <div class="property-text" style="padding: 0px; margin-top: 10px">Show legend for remaining data source items</div>
                     </td>
                     <td style="width: 30%">
-                        <div style="padding-top:0px">
-                            <input type="checkbox" id="opacity" />
+                        <div style="padding-top: 0px; margin-left: 15px">
+                            <input type="checkbox" id="opacity" style="margin-top: 10px;" />
                         </div>
                     </td>
                 </tr>
                 <tr style="height: 50px">
                     <td style="width: 70%">
-                        <div class="property-text" style="padding: 0px;">Show population density when the legend item is toggled</div>
+                        <div class="property-text" style="padding: 0px; margin-top: 25px">Show population density when the legend item is toggled</div>
                     </td>
                     <td style="width: 30%">
-                        <div style="padding-top:0px">
-                            <input type="checkbox" id="togglelegend" />
+                        <div style="padding-top: 0px; margin-left: 15px">
+                            <input type="checkbox" id="togglelegend" style="margin-top:25px;" />
                         </div>
                     </td>
                 </tr>
@@ -112,14 +112,15 @@
     function onMapLoad(args) {
         maps = args.maps;
         var theme = themeName ? themeName : "Material";
-        args.maps.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+        args.maps.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
     }
     @* custom code end *@
     window.onload = function () {
         var legendPosition = new ej.dropdowns.DropDownList({
             index: 0,
             placeholder: 'Legend Position',
-            width: 100,
+            width: 91,
             change: () => {
                 maps.legendSettings.position = legendPosition.value;
                 if (legendPosition.value === 'Left' || legendPosition.value === 'Right') {
@@ -145,7 +146,7 @@
         var mode = new ej.dropdowns.DropDownList({
             index: 0,
             placeholder: 'Select layoutMode type',
-            width: 100,
+            width: 91,
             change: () => {
                 maps.legendSettings.mode = mode.value;
                 if (mode.value === 'Interactive') {

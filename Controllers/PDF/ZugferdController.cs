@@ -30,8 +30,8 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
             //Create ZugFerd invoice PDF
             PdfDocument document = new PdfDocument(PdfConformanceLevel.Pdf_A3B);
 
-            document.ZugferdVersion = ZugferdVersion.ZugferdVersion2_1;
-            document.ZugferdConformanceLevel = ZugferdConformanceLevel.Basic_WL;
+            document.ZugferdVersion = ZugferdVersion.ZugferdVersion2_0;
+            document.ZugferdConformanceLevel = ZugferdConformanceLevel.Extended;
 
             CreateZugFerdInvoicePDF(document);
 
@@ -39,10 +39,12 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
             Stream zugferdXmlStream = CreateZugFerdXML();
 
             //Creates an attachment.
-            PdfAttachment attachment = new PdfAttachment("factur-x.xml", zugferdXmlStream);
+            PdfAttachment attachment = new PdfAttachment("ZUGFeRD-invoice.xml", zugferdXmlStream);
             attachment.Relationship = PdfAttachmentRelationship.Alternative;
             attachment.ModificationDate = DateTime.Now;
-            attachment.Description = "factur-x";
+
+            attachment.Description = "Adventure Invoice";
+
             attachment.MimeType = "application/xml";
 
             document.Attachments.Add(attachment);

@@ -11,7 +11,7 @@
             <ejs-button id="togglebtn" isToggle="true" iconCss="edit" content="EDIT" cssClass='toggle e-outline e-flat e-primary'></ejs-button>
         </div>
 
-        <div style="padding:5px;text-align: end;">
+        <div style="padding:5px;margin-top:5px;text-align: end;">
             <div class="add-widget-button e-control e-btn e-lib" id="dialogBtn">
                 Add New Widget
             </div>
@@ -155,9 +155,9 @@
     }
 
     function onPieload(args) {
-        var indexedTheme = location.hash.split('/')[1];
-        indexedTheme = indexedTheme ? indexedTheme : 'Material';
-        args.accumulation.theme = (indexedTheme.charAt(0).toUpperCase() + indexedTheme.slice(1).replace(/dark/i, "Dark").replace(/light/i, "Light"));
+        var selectedTheme = location.hash.split('/')[1];
+        selectedTheme = selectedTheme ? selectedTheme : 'Material';
+        args.accumulation.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, "Dark");
     }
 
     function onPanelResize(args) {
@@ -277,7 +277,7 @@
                     load: function (args) {
                         var indexedTheme = location.hash.split('/')[1];
                         indexedTheme = indexedTheme ? indexedTheme : 'Material';
-                        args.accumulation.theme = (indexedTheme.charAt(0).toUpperCase() + indexedTheme.slice(1).replace(/dark/i, "Dark").replace(/light/i, "Light"));
+                        args.accumulation.theme = (indexedTheme.charAt(0).toUpperCase() + indexedTheme.slice(1).replace(/-dark/i, "Dark").replace(/light/i, "Light"));
                     }
                 });
                 pie.appendTo('#' + '_pie' + countValue);
@@ -416,13 +416,16 @@
     }
 
     .e-dashboardlayout.e-control .e-panel .e-panel-container .e-panel-header {
-        padding: 10px;
         border-bottom: 2px solid #e6e9ed !important;
         height: 35px;
-        margin: 0 15px 0 15px;
+        padding: 0 15px 0 15px;
+        line-height: 35px;
     }
 
-    .sb-demo-section .container-fluid {
+    .material .sb-demo-section .container-fluid,
+    .fabric .sb-demo-section .container-fluid,
+    .bootstrap4 .sb-demo-section .container-fluid,
+    .bootstrap .sb-demo-section .container-fluid {
         background: #E5E5E5;
     }
 
@@ -431,9 +434,17 @@
     }
 
     .e-panel-content {
-        height: calc(100% - 35px) !important;
+        height: calc(100% - 37px) !important;
         overflow: hidden;
         width: 100%;
+    }
+
+    .bootstrap5-dark .dialog-text,
+    .highcontrast .dialog-text,
+    .tailwind-dark .dialog-text,
+    .fabric-dark .dialog-text,
+    .bootstrap-dark .dialog-text {
+        border: 1px solid #FFFFFF;
     }
 
     .e-dashboardlayout.e-control .e-panel,
@@ -484,6 +495,10 @@
 
     #togglebtn {
         float: right;
+    }
+
+    .tailwind-dark .e-dashboardlayout.e-control .e-panel .e-panel-container .e-panel-header, .tailwind .e-dashboardlayout.e-control .e-panel .e-panel-container .e-panel-header {
+        border-radius: 6px;
     }
 </style>
 

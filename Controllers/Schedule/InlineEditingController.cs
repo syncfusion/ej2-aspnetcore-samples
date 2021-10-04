@@ -24,6 +24,7 @@ namespace EJ2CoreSampleBrowser.Controllers
             ViewBag.Categories = categories;
 
             ViewBag.Resources = new string[] { "Categories" };
+            ViewBag.workDays = new int[] { 0, 1, 2, 3, 4, 5 };
             return View();
         }
     }

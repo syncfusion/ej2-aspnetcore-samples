@@ -12,7 +12,7 @@
 @section Description{
 	<div id="description">
         <p>
-            In this example, you can see how to export and print the rendered circular gauge. The Circular Gauge can be exported to JPEG, PNG, SVG, and PDF formats. Print functionality is done by <code>print</code> method when <code>allowPrint</code> is set as true. Export functionality is done by <code>export</code> method when <code>allowImageExport</code> and <code>allowPdfExport</code> is set as true.
+            In this example, you can see how to export and print the rendered circular gauge. The Circular Gauge can be exported to JPEG, PNG, SVG, and PDF formats. Print functionality is done by <code>print</code> method when <code>allowPrint</code> is set as true. Export functionality is done by <code>export</code> method when <code>allowImageExport</code> and <code>allowPdfExport</code> are set as true.
         </p>
 		<p>
 			More information on the print and export can be found in this
@@ -27,7 +27,7 @@
 				<e-circulargauge-axes>
 					<e-circulargauge-axis startAngle="0" direction="AntiClockWise" endAngle="0" minimum="0" maximum="100" radius="80%">
 						<e-axis-linestyle width="0"></e-axis-linestyle>
-						<e-axis-labelstyle offset="2" position="Outside" useRangeColor="true">
+						<e-axis-labelstyle offset="2" position="Outside" useRangeColor="true" hiddenLabel="Last">
 						</e-axis-labelstyle>
 						<e-axis-majorticks interval="10" position="Outside" width="1" height="25" useRangeColor="true"></e-axis-majorticks>
 						<e-axis-minorticks interval="2" position="Outside" width="1" height="8" useRangeColor="true"></e-axis-minorticks>
@@ -38,11 +38,11 @@
 	</div>
 
 	<div class="col-lg-3 property-section">
-		<table id="property" title="Properties" style="width: 100%">
+		<table id="property" title="Properties" style="width: 100%; margin-left: -10px">
 			<tr style="height: 50px">
 				<td style="width: 40%">
-					<div>
-						Export Type:
+					<div style="width:60%">
+						Export Type
 					</div>
 				</td>
 				<td style="width: 50%;">
@@ -58,22 +58,22 @@
 			</tr>
 			<tr style="height: 50px">
 				<td style="width: 40%">
-					<div>File Name:</div>
+					<div style="width:60%">File Name</div>
 				</td>
 				<td style="width: 40%;">
 					<div class="e-float-input" style='margin-top: 0px;'>
-						<input type="text" value="Gauge" id="fileName" style="margin-left: -10px;width: 75px;">
+						<input type="text" value="Gauge" id="fileName" style="margin-left: -10px; width: 90px;">
 					</div>
 				</td>
 			</tr>
 			<tr id="button-control" style="height: 50px">
 				<td>
-					<div>
+					<div style="margin-left: -10px; width: 100px">
 						<ejs-button id="export" content="Export" iconCss="e-icons e-play-icon" cssClass="e-flat"  isPrimary="true"></ejs-button>
 					</div>
 				</td>
 				<td>
-					<div>
+					<div style="margin-left: 10px; width: 100px">
 						<ejs-button id="print" content="Print" iconCss="e-icons e-play-icon1" cssClass="e-flat" isPrimary="true"></ejs-button>
 					</div>
 				</td>
@@ -93,13 +93,66 @@
 		.e-play-icon1::before {
 			content: '\e34b';
 		}
+
+        #export {
+            width: 90px;
+        }
+
+        #print {
+            width: 90px;
+        }
+        .e-view.fabric .e-play-icon1::before, .e-view.fabric-dark .e-play-icon1::before {
+            content: '\e7df';
+        }
+
+        .e-view.fabric .e-play-icon::before, .e-view.fabric-dark .e-play-icon::before {
+            content: '\e710';
+        }
+
+        .e-view.bootstrap .e-play-icon1::before {
+            content: '\ebd2';
+        }
+
+        .e-view.bootstrap4 .e-play-icon::before {
+            content: '\e780';
+        }
+
+        .e-view.bootstrap4 .e-play-icon1::before {
+            content: '\e743';
+        }
+
+        .e-view.tailwind .e-play-icon1::before, .e-view.tailwind-dark .e-play-icon1::before {
+            content: '\e76c';
+        }
+
+        .e-view.tailwind .e-play-icon::before, .e-view.tailwind-dark .e-play-icon::before {
+            content: '\e7bf';
+        }
+
+        .e-view.highcontrast .e-play-icon1::before {
+            content: '\ebf9';
+        }
+
+        .e-view.highcontrast .e-play-icon::before {
+            content: '\e710';
+        }
+
+        .e-view.bootstrap5 .e-play-icon1::before, .e-view.bootstrap5-dark .e-play-icon1::before {
+            content: '\e75d';
+        }
+
+        .e-view.bootstrap5 .e-play-icon::before, .e-view.bootstrap5-dark .e-play-icon::before {
+            content: '\e72e';
+        }
+
 	</style>
 }
 <script>
     window.gaugeload = function (args) {
         @* custom code start *@
         var theme = themeName ? themeName : 'Material';
-        args.gauge.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+        args.gauge.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
         @* custom code end *@
 		window.gauge = args.gauge;
         var axis = args.gauge.axes[0];
@@ -138,7 +191,7 @@
 	window.onload = function () {
 		window.exportType = new ej.dropdowns.DropDownList({
 			index: 0,
-			width: 75
+			width: 90
 		});
 		window.exportType.appendTo("#mode");
 		document.getElementById("export").onclick = () => {

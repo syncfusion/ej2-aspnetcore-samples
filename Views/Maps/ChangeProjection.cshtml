@@ -34,7 +34,7 @@
             </div>        
         </div>
         <div class="col-md-3 property-section">
-            <table id="property" title="Properties">
+            <table id="property" title="Properties" style="margin-left:-10px; width: 205px">
                 <tbody>
                     <tr style="height: 50px">
                         <td style="width: 60%">
@@ -64,7 +64,7 @@
         var projection = new ej.dropdowns.DropDownList({
             index: 0,
             placeholder: 'Select projection type',
-            width: 120,
+            width: 105,
             change: function () {
                 maps.projectionType = projection.value;
                 maps.refresh();
@@ -80,7 +80,8 @@
     @* custom code start *@
     function onMapLoad(args) {
         var theme = themeName ? themeName : "Material";
-        args.maps.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+        args.maps.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
     }
     @* custom code end *@
 </script>

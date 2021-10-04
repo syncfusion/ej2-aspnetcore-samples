@@ -5,7 +5,7 @@
 @section ControlsSection{
     <div class="col-lg-9 control-section">
         <div class="content-wrapper">
-            <ejs-schedule id="schedule" width="100%" height="650px" selectedDate="new DateTime(2019, 1, 10)" currentView="TimelineWeek">
+            <ejs-schedule id="schedule" width="100%" height="650px" selectedDate="new DateTime(DateTime.Today.Year, 1, 10)" currentView="TimelineWeek" workDays="@ViewBag.workDays">
                 <e-schedule-timescale interval="60" slotCount="6"></e-schedule-timescale>
                 <e-schedule-views>
                     <e-schedule-view option="Day"></e-schedule-view>
@@ -21,55 +21,36 @@
         <table id="property" title="Properties" style="width: 100%">
             <tbody>
                 <tr style="height: 50px">
-                    <td style="width: 50%">
-                        <div> Interval </div>
-                        <span>(in Minutes)</span>
-                    </td>
-                    <td style="width: 50%;">
+                    <td style="width: 100%;">
                         <div>
-                            <ejs-dropdownlist id="interval" value="@{"60"}" dataSource="@ViewBag.intervals" change="intervalChange">
+                            <ejs-dropdownlist id="interval" value="@{"60"}" dataSource="@ViewBag.intervals" change="intervalChange" placeholder="Interval (in minutes)" floatLabelType="Always">
                                 <e-dropdownlist-fields text="Text" value="Value"></e-dropdownlist-fields>
                             </ejs-dropdownlist>
                         </div>
                     </td>
                 </tr>
                 <tr style="height: 50px">
-                    <td style="width: 50%">
+                    <td style="width: 100%;">
                         <div>
-                            Slot Count
-                        </div>
-                    </td>
-                    <td style="width: 50%;">
-                        <div>
-                            <ejs-dropdownlist id="slotCount" value="@{"6"}" dataSource="@ViewBag.slotCounts" change="slotCountChange">
+                            <ejs-dropdownlist id="slotCount" value="@{"6"}" dataSource="@ViewBag.slotCounts" change="slotCountChange" placeholder="Slot Count" floatLabelType="Always">
                                 <e-dropdownlist-fields text="Text" value="Value"></e-dropdownlist-fields>
                             </ejs-dropdownlist>
                         </div>
                     </td>
                 </tr>
                 <tr style="height: 50px">
-                    <td style="width: 50%">
+                    <td style="width: 100%;">
                         <div>
-                            Grid lines
-                        </div>
-                    </td>
-                    <td style="width: 50%;">
-                        <div>
-                            <ejs-dropdownlist id="timescale" value="@{"enable"}" dataSource="@ViewBag.timeScaleOptions" change="timeScaleOptionChange">
+                            <ejs-dropdownlist id="timescale" value="@{"enable"}" dataSource="@ViewBag.timeScaleOptions" change="timeScaleOptionChange" placeholder="Gridlines" floatLabelType="Always">
                                 <e-dropdownlist-fields text="Text" value="Value"></e-dropdownlist-fields>
                             </ejs-dropdownlist>
                         </div>
                     </td>
                 </tr>
                 <tr style="height: 50px">
-                    <td style="width: 50%">
+                    <td style="width: 100%;">
                         <div>
-                            Apply Template
-                        </div>
-                    </td>
-                    <td style="width: 50%;">
-                        <div>
-                            <ejs-dropdownlist id="template" value="@{"no"}" dataSource="@ViewBag.timeScaleTemplateOptions" change="timeScaleTemplateOptionChange">
+                            <ejs-dropdownlist id="template" value="@{"no"}" dataSource="@ViewBag.timeScaleTemplateOptions" change="timeScaleTemplateOptionChange" placeholder="Apply Template" floatLabelType="Always">
                                 <e-dropdownlist-fields text="Text" value="Value"></e-dropdownlist-fields>
                             </ejs-dropdownlist>
                         </div>

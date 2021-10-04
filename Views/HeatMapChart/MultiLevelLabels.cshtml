@@ -59,7 +59,7 @@
     <script type="text/javascript">
         window.onHeatmapLoad = function (args) {
             var selectedTheme = themeName ? themeName : 'Material';
-            args.heatmap.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1));
+             args.heatmap.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
             selectedTheme = selectedTheme.toLowerCase();
             args.heatmap.xAxis.multiLevelLabels[0].categories = [{ start: 0, end: 2, text: 'Electronics', },
                 { start: 3, end: 4, text: 'Beauty and personal care', },
@@ -70,7 +70,7 @@
             { start: 6, end: 8, text: 'Q3' },
             { start: 9, end: 11, text: 'Q4' }
             ];
-            if (selectedTheme === 'highcontrast') {
+            if (selectedTheme === 'highcontrast'|| selectedTheme === 'tailwind-dark' || selectedTheme === 'material-dark' || selectedTheme === 'fabric-dark' || selectedTheme === 'bootstrap-dark' || selectedTheme === 'bootstrap5-dark') {
                 args.heatmap.xAxis.textStyle.color = 'White';
                 args.heatmap.yAxis.textStyle.color = 'White';
                 args.heatmap.xAxis.multiLevelLabels[0].textStyle.color = 'White';

@@ -17,7 +17,7 @@
         </p>
         <br>
         <p>
-            In this sample, two axes with a pointer has been used.
+            In this sample, two axes with a pointer have been used.
         </p>
         <p>
             More information on the axis can be found in this
@@ -31,10 +31,10 @@
             <ejs-circulargauge id="circular" title='Gauge with Multiple Axes' load="gaugeload">
                 <e-circulargauge-axes>
                     <e-circulargauge-axis startAngle="220" endAngle="140" minimum="0" maximum="160" radius="95%">
-                        <e-axis-linestyle width="1.5" color="#9E9E9E"></e-axis-linestyle>
+                        <e-axis-linestyle width="1.5"></e-axis-linestyle>
                         <e-axis-labelstyle autoAngle="true" position="@Syncfusion.EJ2.CircularGauge.Position.Inside" hiddenLabel="@Syncfusion.EJ2.CircularGauge.HiddenLabel.None"></e-axis-labelstyle>
-                        <e-axis-majorticks position="@Syncfusion.EJ2.CircularGauge.Position.Inside" width="2" height="10" color="#757575"></e-axis-majorticks>
-                        <e-axis-minorticks height="5" width="2" color="#757575" position="@Syncfusion.EJ2.CircularGauge.Position.Inside"></e-axis-minorticks>
+                        <e-axis-majorticks position="@Syncfusion.EJ2.CircularGauge.Position.Inside" width="2" height="10"></e-axis-majorticks>
+                        <e-axis-minorticks height="5" width="2" position="@Syncfusion.EJ2.CircularGauge.Position.Inside"></e-axis-minorticks>
                     </e-circulargauge-axis>
                     <e-circulargauge-axis startAngle="220" endAngle="140" minimum="0" maximum="240" radius="95%">
                         <e-axis-linestyle width="1.5" color="#E84011"></e-axis-linestyle>
@@ -48,7 +48,7 @@
         </div>
     </div>
     <div class="col-md-4 property-section">
-        <table id="property" title="Properties" style="width: 100%">
+        <table id="property" title="Properties" style="width: 100%; margin-left: -10px">
             <tbody>
                 <tr>
                     <td>
@@ -78,21 +78,21 @@
                 </tr>
                 <tr>
                     <td>
-                        <div id="start">Start Angle <span> &nbsp;&nbsp;&nbsp;220</span> </div>
+                        <div id="start" style="margin-top: 10px">Start Angle <span> &nbsp;&nbsp;&nbsp;220</span> </div>
                     </td>
                     <td>
                         <div>
-                            <input type="range" id="startAngle" value="220" min="0" max="360" style="width:90%">
+                            <input type="range" id="startAngle" value="220" min="0" max="360" style="width:120px; margin-top: 10px">
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <div id="end">End Angle <span> &nbsp;&nbsp;&nbsp;140</span> </div>
+                        <div id="end" style="margin-top: 20px">End Angle <span> &nbsp;&nbsp;&nbsp;140</span> </div>
                     </td>
                     <td>
                         <div>
-                            <input type="range" id="endAngle" value="140" min="0" max="360" style="width:90%">
+                            <input type="range" id="endAngle" value="140" min="0" max="360" style="width:120px; margin-top: 20px">
                         </div>
                     </td>
                 </tr>
@@ -113,8 +113,8 @@
                 direction.value = circulargauge.axes[axisIndex].direction;
                 var startAngle = circulargauge.axes[axisIndex].startAngle;
                 var endAngle = circulargauge.axes[axisIndex].endAngle;
-                document.getElementById('start').innerHTML = 'Start Angle <span>    ' + startAngle;
-                document.getElementById('end').innerHTML = 'End Angle <span>    ' + endAngle;
+                document.getElementById('start').innerHTML = 'Start Angle <span>&nbsp;&nbsp;&nbsp;' + startAngle;
+                document.getElementById('end').innerHTML = 'End Angle <span>&nbsp;&nbsp;&nbsp;' + endAngle;
                 document.getElementById('startAngle').value = startAngle.toString();
                 document.getElementById('endAngle').value = endAngle.toString();
             }
@@ -136,7 +136,7 @@
                 circulargauge.axes[0].pointers[0].animation.enable = false;
                 circulargauge.axes[1].pointers[0].animation.enable = false;
                 circulargauge.axes[axisIndex].startAngle = value;
-                document.getElementById('start').innerHTML = 'Start Angle <span>    ' + value;
+            document.getElementById('start').innerHTML = 'Start Angle <span>&nbsp;&nbsp;&nbsp;' + value;
                 circulargauge.axes[axisIndex].labelStyle.hiddenLabel =
                     ej.circulargauge.isCompleteAngle(circulargauge.axes[axisIndex].startAngle, circulargauge.axes[axisIndex].endAngle) ?
                         'First' : 'None';
@@ -148,7 +148,7 @@
                 circulargauge.axes[0].pointers[0].animation.enable = false;
                 circulargauge.axes[1].pointers[0].animation.enable = false;
                 circulargauge.axes[axisIndex].endAngle = value;
-                document.getElementById('end').innerHTML = 'End Angle <span>    ' + value;
+            document.getElementById('end').innerHTML = 'End Angle <span>&nbsp;&nbsp;&nbsp;' + value;
                 circulargauge.axes[axisIndex].labelStyle.hiddenLabel =
                     ej.circulargauge.isCompleteAngle(circulargauge.axes[axisIndex].startAngle, circulargauge.axes[axisIndex].endAngle) ?
                         'First' : 'None';
@@ -158,18 +158,20 @@
     window.gaugeload = function (args) {
         @* custom code start *@
         var theme = themeName ? themeName : 'Material';
-        args.gauge.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+        args.gauge.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
         @* custom code end *@
         if (window.gaugeLoaded)
             return;
         window.gaugeLoaded = true;
          circulargauge = args.gauge;
         var axis = args.gauge.axes[0];
-        axis.labelStyle.font = {
+        var axis1 = args.gauge.axes[1];
+        axis1.labelStyle.font = {
             color: "#E84011"
         };
         axis.pointers = [{
-            value: 80, radius: '100%', color: '#333333',
+            value: 80, radius: '100%',
             markerHeight: 15, markerWidth: 15, type: 'Marker',
             markerShape: 'Triangle',
         }];

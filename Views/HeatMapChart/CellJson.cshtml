@@ -14,7 +14,7 @@
     <div class="control-section">
         <div class="row">
             <div class="col-md-12">
-                <ejs-heatmap id='container' load="window.onHeatmapLoad" dataSource="ViewBag.data">
+                <ejs-heatmap id='container' load="window.onHeatmapLoad"  dataSource="ViewBag.data">
                     <e-heatmap-datasourcesettings isJsonData="true" adaptorType="Cell" xDataMapping="rowid" yDataMapping="columnid" valueMapping="value"></e-heatmap-datasourcesettings>
                     <e-heatmap-titlesettings text="Most Visited Destinations by International Tourist Arrivals" textStyle="textStyle">
                     </e-heatmap-titlesettings>
@@ -38,10 +38,9 @@
         </div>
     </div>
     <script type="text/javascript">
-
         window.onHeatmapLoad = function (args) {
             var selectedTheme = themeName ? themeName : 'Material';
-            args.heatmap.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1));
+            args.heatmap.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
         }
     </script>
 }

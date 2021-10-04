@@ -13,7 +13,7 @@
     <div id="description">
         <p>
             In this example, you can see how to render a default circular gauge. The CircularGauge control visualizes the numerical values
-            of scales in a circular manner. You can use <code>axes</code>, <code>ranges</code>, <code>pointers</code>        properties to customize the default appearance of the gauge. In this sample, a axis with multiple ranges and a pointer
+            of scales in a circular manner. You can use the <code>axes</code>, <code>ranges</code>, and <code>pointers</code>        properties to customize the default appearance of the gauge. In this sample, a axis with multiple ranges and a pointer
             has been used.
         </p>
         <p>
@@ -41,7 +41,8 @@
     window.gaugeload = function (args) {
         @* custom code start *@
         var theme = themeName ? themeName : 'Material';
-        args.gauge.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+        args.gauge.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
         @* custom code end *@
         var axis = args.gauge.axes[0];
         axis.labelStyle.font = {

@@ -24,20 +24,20 @@
                             <div class="schedule-overview-title" style="border: 1px solid transparent;">Scheduler Overview Functionalities</div>
                         </div>
                         <div class="center-panel">
-                            <ejs-button id="timezoneBtn" cssClass="title-bar-btn" content="UTC" disabled="true" iconCss="e-icons e-schedule-timezone"></ejs-button>
-                            <ejs-button id="timeBtn" cssClass="title-bar-btn" content="Time" disabled="true" iconCss="e-icons e-schedule-clock"></ejs-button>
+                            <ejs-button id="timezoneBtn" cssClass="title-bar-btn" content="UTC" disabled="true" iconCss="e-icons e-time-zone"></ejs-button>
+                            <ejs-button id="timeBtn" cssClass="title-bar-btn" content="Time" disabled="true" iconCss="e-icons e-clock"></ejs-button>
                         </div>
                         <div class="right-panel">
-                            <div class="control-panel">
-                                <ejs-button id="printBtn" cssClass="title-bar-btn" content="Print" iconCss="e-icons e-schedule-print"></ejs-button>
+                            <div class="control-panel calendar-export">
+                                <ejs-button id="printBtn" cssClass="title-bar-btn" content="Print" iconCss="e-icons e-print"></ejs-button>
                             </div>
                             <div class="control-panel" style="display: inline-flex;padding-left:15px;">
-                                <div class="e-icons e-schedule-import e-btn-icon e-icon-left" style="line-height: 40px;"></div>
+                                <div class="e-icons e-upload-1 e-btn-icon e-icon-left" style="line-height: 40px;"></div>
                                 <ejs-uploader id="icalendar" allowedExtensions=".ics" cssClass="calendar-import" showFileList="false" selected="onSelected" multiple="false">
                                     <e-uploader-buttons browse="Import"></e-uploader-buttons>
                                 </ejs-uploader>
                             </div>
-                            <div class="control-panel">
+                            <div class="control-panel calendar-export">
                                 <ejs-dropdownbutton id="exporting" content="Export" items="ViewBag.ExportItems" select="onExportItemSelect"></ejs-dropdownbutton>
                             </div>
                         </div>
@@ -47,15 +47,15 @@
                     <div style="height: 70px;width: calc(100% - 90px);">
                         <ejs-toolbar id="toolbar_options" height="70px" overflowMode="Scrollable" scrollStep="100" created="onToolbarCreated" clicked="onToolbarItemClick">
                             <e-toolbar-items>
-                                <e-toolbar-item prefixIcon="e-icons e-schedule-add-event" tooltipText="New Event" text="New Event"></e-toolbar-item>
-                                <e-toolbar-item prefixIcon="e-icons e-schedule-add-recurrence-event" tooltipText="New Recurring Event" text="New Recurring Event"></e-toolbar-item>
+                                <e-toolbar-item prefixIcon="e-icons e-plus" tooltipText="New Event" text="New Event"></e-toolbar-item>
+                                <e-toolbar-item prefixIcon="e-icons e-repeat" tooltipText="New Recurring Event" text="New Recurring Event"></e-toolbar-item>
                                 <e-toolbar-item type="Separator"></e-toolbar-item>
-                                <e-toolbar-item prefixIcon="e-icons e-schedule-day-view" tooltipText="Day" text="Day"></e-toolbar-item>
-                                <e-toolbar-item prefixIcon="e-icons e-schedule-week-view" tooltipText="Week" text="Week"></e-toolbar-item>
-                                <e-toolbar-item prefixIcon="e-icons e-schedule-workweek-view" tooltipText="WorkWeek" text="WorkWeek"></e-toolbar-item>
-                                <e-toolbar-item prefixIcon="e-icons e-schedule-month-view" tooltipText="Month" text="Month"></e-toolbar-item>
-                                <e-toolbar-item prefixIcon="e-icons e-schedule-year-view" tooltipText="Year" text="Year"></e-toolbar-item>
-                                <e-toolbar-item prefixIcon="e-icons e-schedule-agenda-view" tooltipText="Agenda" text="Agenda"></e-toolbar-item>
+                                <e-toolbar-item prefixIcon="e-icons e-day" tooltipText="Day" text="Day"></e-toolbar-item>
+                                <e-toolbar-item prefixIcon="e-icons e-week" tooltipText="Week" text="Week"></e-toolbar-item>
+                                <e-toolbar-item prefixIcon="e-icons e-week" tooltipText="WorkWeek" text="WorkWeek"></e-toolbar-item>
+                                <e-toolbar-item prefixIcon="e-icons e-month" tooltipText="Month" text="Month"></e-toolbar-item>
+                                <e-toolbar-item prefixIcon="e-icons e-month" tooltipText="Year" text="Year"></e-toolbar-item>
+                                <e-toolbar-item prefixIcon="e-icons e-agenda-date-range" tooltipText="Agenda" text="Agenda"></e-toolbar-item>
                                 <e-toolbar-item tooltipText="Timeline Views" template="timelineTemplate"></e-toolbar-item>
                                 <e-toolbar-item type="Separator"></e-toolbar-item>
                                 <e-toolbar-item tooltipText="Resource Grouping" template="groupTemplate"></e-toolbar-item>
@@ -67,7 +67,7 @@
                         </ejs-toolbar>
                     </div>
                     <div style="height:70px;width:90px;">
-                        <ejs-button id="settingsBtn" cssClass="overview-toolbar-settings" content="Settings" iconCss="e-icons e-schedule-toolbar-settings" iconPosition="Top"></ejs-button>
+                        <ejs-button id="settingsBtn" cssClass="overview-toolbar-settings" content="Settings" iconCss="e-icons e-settings" iconPosition="Top"></ejs-button>
                     </div>
                 </div>
                 <div class="overview-content">
@@ -219,277 +219,29 @@
     </div>
     @*custom code start*@
     <style>
-        .material .e-schedule-clock::before {
-            content: "\e20c";
-        }
-
-        .fabric .e-schedule-clock::before,
-        .highcontrast .e-schedule-clock::before {
-            content: "\e97f";
-        }
-
-        .bootstrap .e-schedule-clock::before {
-            content: "\e93e";
-        }
-
-        .bootstrap4 .e-schedule-clock::before {
-            content: "\e7c7";
-        }
-
-        .tailwind .e-schedule-clock::before {
-            content: "\e730";
-        }
-
-        .material .e-schedule-timezone::before,
-        .bootstrap .e-schedule-timezone::before {
-            content: "\e30e";
-        }
-
-        .fabric .e-schedule-timezone::before,
-        .highcontrast .e-schedule-timezone::before {
-            content: "\e311";
-        }
-
-        .bootstrap4 .e-schedule-timezone::before {
-            content: "\e7c9";
-        }
-
-        .tailwind .e-schedule-timezone::before {
-            content: "\e736";
-        }
-
-        .material .e-schedule-print::before {
-            content: "\e813";
-        }
-
-        .tailwind .e-schedule-print::before {
-            content: "\e76c";
-        }
-
-        .fabric .e-schedule-print::before,
-        .bootstrap .e-schedule-print::before,
-        .highcontrast .e-schedule-print::before {
-            content: "\e7df";
-        }
-
-        .bootstrap4 .e-schedule-print::before {
-            content: "\e743";
-        }
-
-        .bootstrap4 .e-schedule-import::before {
-            content: "\e77a";
-        }
-
-        .tailwind .e-schedule-import::before {
-            content: "\e76d";
-        }
-
-        .material .e-schedule-ical-export::before,
-        .fabric .e-schedule-ical-export::before {
-            content: "\e711";
-        }
-
-        .bootstrap .e-schedule-ical-export::before {
-            content: "\e702";
-        }
-
-        .bootstrap4 .e-schedule-ical-export::before {
-            content: "\e780";
-        }
-
-        .highcontrast .e-schedule-ical-export::before {
-            content: "\e712";
-        }
-
-        .tailwind .e-schedule-ical-export::before {
-            content: "\e7bf";
-        }
-
-        .material .e-schedule-excel-export::before {
-            content: "\e700";
-        }
-
-        .fabric .e-schedule-excel-export::before,
-        .highcontrast .e-schedule-excel-export::before {
-            content: "\242";
-        }
-
-        .bootstrap .e-schedule-excel-export::before {
-            content: "\e70b";
-        }
-
-        .bootstrap4 .e-schedule-excel-export::before {
-            content: "\e74e";
-        }
-
-        .tailwind .e-schedule-excel-export::before {
-            content: "\e780";
-        }
-
-        .material .e-schedule-add-event::before,
-        .fabric .e-schedule-add-event::before,
-        .bootstrap .e-schedule-add-event::before,
-        .highcontrast .e-schedule-add-event::before {
-            content: "\e823";
-        }
-
-        .bootstrap4 .e-schedule-add-event::before {
-            content: "\e759";
-        }
-
-        .tailwind .e-schedule-add-event::before {
-            content: "\e78a";
-        }
-
-        .material .e-schedule-add-recurrence-event::before,
-        .bootstrap .e-schedule-add-recurrence-event::before {
-            content: "\e308";
-        }
-
-        .fabric .e-schedule-add-recurrence-event::before,
-        .highcontrast .e-schedule-add-recurrence-event::before {
-            content: "\e309";
-        }
-
-        .bootstrap4 .e-schedule-add-recurrence-event::before {
-            content: "\e7c8";
-        }
-
-        .tailwind .e-schedule-add-recurrence-event::before {
-            content: "\e71d";
-        }
-
-        .material .e-schedule-day-view::before {
-            content: "\e31b";
-        }
-
-        .fabric .e-schedule-day-view::before,
-        .highcontrast .e-schedule-day-view::before {
-            content: "\e317";
-        }
-
-        .bootstrap .e-schedule-day-view::before {
-            content: "\e318";
-        }
-
-        .bootstrap4 .e-schedule-day-view::before {
-            content: "\e7b8";
-        }
-
-        .tailwind .e-schedule-day-view::before {
-            content: "\e767";
-        }
-
-        .material .e-schedule-week-view::before {
-            content: "\e315";
-        }
-
-        .fabric .e-schedule-week-view::before,
-        .highcontrast .e-schedule-week-view::before {
-            content: "\e31f";
-        }
-
-        .bootstrap .e-schedule-week-view::before {
-            content: "\e320";
-        }
-
-        .bootstrap4 .e-schedule-week-view::before {
-            content: "\e7c0";
-        }
-
-        .tailwind .e-schedule-week-view::before {
-            content: "\e795";
-        }
-
-        .material .e-schedule-workweek-view::before {
-            content: "\e314";
-        }
-
-        .fabric .e-schedule-workweek-view::before,
-        .highcontrast .e-schedule-workweek-view::before {
-            content: "\e323";
-        }
-
-        .bootstrap .e-schedule-workweek-view::before {
-            content: "\e319";
-        }
-
-        .bootstrap4 .e-schedule-workweek-view::before {
-            content: "\e7c0";
-        }
-
-        .tailwind .e-schedule-workweek-view::before {
-            content: "\e795";
-        }
-
-        .material .e-schedule-month-view::before,
-        .material .e-schedule-year-view::before {
-            content: "\e93c";
-        }
-
-        .fabric .e-schedule-month-view::before,
-        .fabric .e-schedule-year-view::before,
-        .highcontrast .e-schedule-month-view::before,
-        .highcontrast .e-schedule-year-view::before {
-            content: "\ea90";
-        }
-
-        .bootstrap .e-schedule-month-view::before,
-        .bootstrap .e-schedule-year-view::before {
-            content: "\ea8f";
-        }
-
-        .bootstrap4 .e-schedule-month-view::before,
-        .bootstrap4 .e-schedule-year-view::before {
-            content: "\e7c4";
-        }
-
-        .tailwind .e-schedule-month-view::before,
-        .tailwind .e-schedule-year-view::before {
-            content: "\e719";
-        }
-
-        .material .e-schedule-agenda-view::before {
-            content: "\e31d";
-        }
-
-        .fabric .e-schedule-agenda-view::before,
-        .highcontrast .e-schedule-agenda-view::before {
-            content: "\e316";
-        }
-
-        .bootstrap .e-schedule-agenda-view::before {
-            content: "\e31a";
-        }
-
-        .bootstrap4 .e-schedule-agenda-view::before {
-            content: "\e7bd";
-        }
-
-        .tailwind .e-schedule-agenda-view::before {
-            content: "\e718";
-        }
-
-        .e-schedule-toolbar-settings::before {
-            content: "\e679";
+        .tailwind .e-settings::before,
+        .tailwind-dark .e-settings::before {
             font-size: 14px;
         }
 
-        .tailwind .e-schedule-toolbar-settings::before {
-            content: "\e846";
-            font-size: 14px;
+        .tailwind.e-bigger .e-settings,
+        .tailwind-dark.e-bigger .e-settings {
+            font-size: 16px !important;
         }
 
         .material .schedule-overview .overview-toolbar .e-toolbar {
             border-style: solid;
         }
 
-        .material .schedule-overview .overview-header .overview-titlebar .e-upload.calendar-import .e-upload-browse-btn {
+        .material .schedule-overview .overview-header .overview-titlebar .e-upload.calendar-import .e-upload-browse-btn,
+        .material-dark .schedule-overview .overview-header .overview-titlebar .e-upload.calendar-import .e-upload-browse-btn {
             text-transform: capitalize;
+            box-shadow: none;
         }
 
         .highcontrast .schedule-overview .overview-header .overview-titlebar {
             background-color: #ffd939;
+            color: black;
         }
 
         .highcontrast .schedule-overview .overview-header,
@@ -497,8 +249,45 @@
             border: 1px solid #969696;
         }
 
+        .tailwind-dark .schedule-overview .overview-header,
+        .tailwind-dark .schedule-overview .overview-content {
+            border: 1px solid #4b5563;
+            border-top: 0;
+        }
+
         .highcontrast .schedule-overview .overview-content {
             border-top: 0;
+        }
+
+        .fabric-dark .schedule-overview .overview-content {
+            border: 1px solid #414040;
+        }
+
+        .fabric-dark .schedule-overview .overview-toolbar .overview-toolbar-settings {
+            border-color: #414040;
+        }
+
+        .tailwind .schedule-overview .overview-toolbar .e-toolbar {
+            border: 1px solid #e5e7eb;
+        }
+
+        .tailwind-dark .schedule-overview .overview-toolbar .e-toolbar {
+            border: 1px solid #4b5563;
+        }
+
+        .tailwind .schedule-overview .overview-toolbar .overview-toolbar-settings,
+        .tailwind .schedule-overview .overview-content .right-panel .control-panel {
+            background-color: #f3f4f6;
+            border-color: #e5e7eb;
+            box-shadow: none;
+        }
+
+        .tailwind-dark .schedule-overview .overview-toolbar .overview-toolbar-settings,
+        .tailwind-dark .schedule-overview .overview-content .right-panel .control-panel {
+            background-color: #374151;
+            border-color: #4b5563;
+            box-shadow: none;
+            color: #fff;
         }
 
         .highcontrast .schedule-overview .overview-toolbar .e-toolbar,
@@ -512,6 +301,13 @@
         .material .schedule-overview .overview-content .right-panel .control-panel {
             background-color: #fafafa;
             text-transform: capitalize;
+            box-shadow: none;
+        }
+
+        .material-dark .schedule-overview .overview-toolbar .overview-toolbar-settings,
+        .material-dark .schedule-overview .overview-content .right-panel .control-panel {
+            background-color: #2a2a2a;
+            color: #ffff;
         }
 
         .fabric .schedule-overview .overview-toolbar .overview-toolbar-settings,
@@ -519,16 +315,49 @@
             background-color: #ffffff;
         }
 
+        .fabric-dark .schedule-overview .overview-toolbar .overview-toolbar-settings,
+        .fabric-dark .schedule-overview .overview-content .right-panel .control-panel {
+            background-color: #333232;
+            color: #fff;
+        }
+
         .bootstrap .schedule-overview .overview-toolbar .overview-toolbar-settings,
         .bootstrap .schedule-overview .overview-content .right-panel .control-panel {
             background-color: #f8f8f8;
         }
+
+        .bootstrap5 .schedule-overview .overview-toolbar .overview-toolbar-settings,
+        .bootstrap5 .schedule-overview .overview-content .right-panel .control-panel {
+            background-color: #f8f9fa;
+            color: #212529;
+            font-weight: 400;
+        }
+
+        .bootstrap5-dark .schedule-overview .overview-toolbar .overview-toolbar-settings, 
+        .bootstrap5-dark .schedule-overview .overview-content .right-panel .control-panel {
+            background-color: #343a40;
+            color: #fff;
+            font-weight: 400;
+        }
+
+        .bootstrap-dark .schedule-overview .overview-toolbar .overview-toolbar-settings,
+        .bootstrap-dark .schedule-overview .overview-content .right-panel .control-panel {
+            background-color: #2a2a2a;
+            color: #fff;
+        }
+
 
         .highcontrast .schedule-overview .overview-toolbar .overview-toolbar-settings,
         .highcontrast .schedule-overview .overview-content .right-panel .control-panel {
             background-color: #000000;
             border-color: #969696;
             color: #ffffff;
+        }
+
+        .highcontrast .schedule-overview .overview-header .overview-titlebar .title-bar-btn,
+        .highcontrast .schedule-overview .overview-header .overview-titlebar .calendar-import .e-file-select-wrap .e-css.e-btn,
+        .highcontrast .schedule-overview .overview-header .overview-titlebar .e-dropdown-btn.e-btn {
+            color: black;
         }
 
         .schedule-overview .overview-header {
@@ -557,33 +386,52 @@
                     line-height: 40px;
                 }
 
-                    .schedule-overview .overview-header .overview-titlebar .e-upload.calendar-import button,
-                    .schedule-overview .overview-header .overview-titlebar .e-upload.calendar-import button:focus,
-                    .schedule-overview .overview-header .overview-titlebar .e-upload.calendar-import button:hover {
-                        background-color: transparent;
-                        border-color: transparent;
-                        box-shadow: none;
-                        color: #ffffff;
-                        font-size: 12px;
-                        text-transform: capitalize;
-                    }
+        .bootstrap5 .schedule-overview .overview-header .overview-titlebar .e-upload.calendar-import,
+        .bootstrap5 .schedule-overview .overview-header .overview-titlebar .calendar-export,
+        .bootstrap5-dark .schedule-overview .overview-header .overview-titlebar .e-upload.calendar-import,
+        .bootstrap5-dark .schedule-overview .overview-header .overview-titlebar .calendar-export,
+        .fabric .schedule-overview .overview-header .overview-titlebar .e-upload.calendar-import,
+        .fabric .schedule-overview .overview-header .overview-titlebar .calendar-export,
+        .fabric-dark .schedule-overview .overview-header .overview-titlebar .e-upload.calendar-import,
+        .fabric-dark .schedule-overview .overview-header .overview-titlebar .calendar-export,
+        .highcontrast .schedule-overview .overview-header .overview-titlebar .calendar-export,
+        .highcontrast .schedule-overview .overview-header .overview-titlebar .e-upload.calendar-import {
+            line-height: 1.5em;
+        }
 
-                .schedule-overview .overview-header .overview-titlebar .title-bar-btn,
-                .schedule-overview .overview-header .overview-titlebar .title-bar-btn:hover,
-                .schedule-overview .overview-header .overview-titlebar .title-bar-btn:focus,
-                .schedule-overview .overview-header .overview-titlebar .e-dropdown-btn,
-                .schedule-overview .overview-header .overview-titlebar .e-dropdown-btn.e-btn {
-                    background: transparent;
-                    box-shadow: none;
-                    font-family: inherit;
-                    border-color: transparent;
-                    border-radius: 2px;
-                    color: inherit;
-                    font-size: 12px;
-                    text-transform: capitalize;
-                    height: 40px;
-                    font-weight: 400;
-                }
+
+        .schedule-overview .overview-header .overview-titlebar .e-upload.calendar-import button,
+        .schedule-overview .overview-header .overview-titlebar .e-upload.calendar-import button:focus,
+        .schedule-overview .overview-header .overview-titlebar .e-upload.calendar-import button:hover {
+            background-color: transparent;
+            border-color: transparent;
+            box-shadow: none;
+            color: inherit;
+            font-size: 12px;
+            height: 40px;
+            text-transform: capitalize;
+        }
+
+        .schedule-overview .overview-header .overview-titlebar .title-bar-btn,
+        .schedule-overview .overview-header .overview-titlebar .title-bar-btn:hover,
+        .schedule-overview .overview-header .overview-titlebar .title-bar-btn:focus,
+        .schedule-overview .overview-header .overview-titlebar .e-dropdown-btn,
+        .schedule-overview .overview-header .overview-titlebar .e-dropdown-btn.e-btn {
+            background: transparent;
+            box-shadow: none;
+            font-family: inherit;
+            border-color: transparent;
+            border-radius: 2px;
+            color: inherit;
+            font-size: 12px;
+            text-transform: capitalize;
+            height: 40px;
+            font-weight: 400;
+        }
+
+        .schedule-overview .overview-header .overview-titlebar .e-btn:not([disabled]):focus {
+            background-color: rgba(255, 255, 255, 0.4) !important;
+        }
 
         .schedule-overview .overview-toolbar {
             display: flex;
@@ -613,11 +461,62 @@
                 height: 72px;
                 line-height: 1.6;
                 outline: none;
+                text-transform: capitalize;
                 width: 100%;
             }
 
+        .material .schedule-overview .overview-toolbar .overview-toolbar-settings:focus {
+            background-color: #0000001f;
+        }
+
+        .fabric .schedule-overview .overview-toolbar .overview-toolbar-settings:focus {
+            background-color: #f4f4f4;
+        }
+
+        .bootstrap .schedule-overview .overview-toolbar .overview-toolbar-settings:focus {
+            background-color: rgb(230, 230, 230);
+        }
+
+        .bootstrap4 .schedule-overview .overview-toolbar .overview-toolbar-settings:focus,
+        .bootstrap5 .schedule-overview .overview-toolbar .overview-toolbar-settings:focus {
+            background-color: #5c636a;
+            color: #fff;
+        }
+
+        .tailwind .schedule-overview .overview-toolbar .overview-toolbar-settings:focus {
+            background-color: #e5e7eb;
+        }
+
+        .highcontrast .schedule-overview .overview-toolbar .overview-toolbar-settings:focus {
+            background-color: rgb(104, 87, 8);
+        }
+
+        .material-dark .schedule-overview .overview-toolbar .overview-toolbar-settings:focus {
+            background-color: #ffffff1a;
+        }
+
+        .fabric-dark .schedule-overview .overview-toolbar .overview-toolbar-settings:focus {
+            background-color: rgb(65, 64, 64);
+        }
+
+        .bootstrap-dark .schedule-overview .overview-toolbar .overview-toolbar-settings:focus {
+            background-color: rgb(49, 49, 49);
+        }
+
+        .tailwind-dark .schedule-overview .overview-toolbar .overview-toolbar-settings:focus {
+            background-color: #4b5563;
+        }
+
+        .bootstrap5-dark .schedule-overview .overview-toolbar .overview-toolbar-settings:focus {
+            background-color: #5c636a;
+        }
+
+        .bootstrap5 .schedule-overview .overview-toolbar .e-toolbar {
+            border: 1px solid #dee2e6;
+        }
+
         .schedule-overview .overview-content {
-            border: 1px solid rgba(0, 0, 0, 0.15);
+            border: 1px solid #00000026;
             border-top: 0;
             display: flex;
         }
@@ -643,8 +542,8 @@
                 }
 
                 .schedule-overview .overview-content .right-panel .control-panel {
-                    background: rgba(248, 249, 250, 1);
-                    border-left: 1px solid rgba(0, 0, 0, 0.15);
+                    background: #f8f9fa;
+                    border-left: 1px solid #00000026;
                     font-size: 14px;
                     height: 100%;
                     overflow: auto;
@@ -652,26 +551,30 @@
                     width: 100%;
                 }
 
-                    .schedule-overview .overview-content .right-panel .control-panel .col-row {
-                        display: flex;
-                        flex-wrap: wrap;
-                    }
+        .tailwind-dark .schedule-overview .overview-content .right-panel .control-panel {
+            background: #374151;
+        }
 
-                    .schedule-overview .overview-content .right-panel .control-panel label {
-                        font-weight: 500;
-                    }
+        .schedule-overview .overview-content .right-panel .control-panel .col-row {
+            display: flex;
+            flex-wrap: wrap;
+        }
 
-                    .schedule-overview .overview-content .right-panel .control-panel .col-left {
-                        flex: 0 0 41.666667%;
-                        max-width: 41.666667%;
-                        margin-bottom: 1rem;
-                    }
+        .schedule-overview .overview-content .right-panel .control-panel label {
+            font-weight: 500;
+        }
 
-                    .schedule-overview .overview-content .right-panel .control-panel .col-right {
-                        flex: 0 0 58.333333%;
-                        max-width: 58.333333%;
-                        margin-bottom: 1rem;
-                    }
+        .schedule-overview .overview-content .right-panel .control-panel .col-left {
+            flex: 0 0 41.666667%;
+            max-width: 41.666667%;
+            margin-bottom: 1rem;
+        }
+
+        .schedule-overview .overview-content .right-panel .control-panel .col-right {
+            flex: 0 0 58.333333%;
+            max-width: 58.333333%;
+            margin-bottom: 1rem;
+        }
 
         .schedule-overview .overview-scheduler {
             height: 100%;
@@ -715,7 +618,7 @@
             width: 120px;
         }
 
-        .schedule-resource.e-multi-select-list-wrapper.e-checkbox .e-list-parent li:first-child {
+        .schedule-resource.e-multi-select-list-wrapper.e-checkbox .e-list-parent:first-child li:first-child {
             background-image: none;
             opacity: .5;
             pointer-events: none;
@@ -727,11 +630,44 @@
             padding: 8px 18px;
         }
 
+        .tailwind-dark .schedule-overview .quick-info-header {
+            background-color: #374151;
+        }
+
+        .bootstrap5-dark .schedule-overview .quick-info-header {
+            background-color: transparent;
+        }
+
+        .bootstrap-dark .schedule-overview .quick-info-header {
+            background-color: #1a1a1a;
+        }
+
+        .fabric-dark .schedule-overview .quick-info-header {
+            background-color: #201f1f;
+        }
+
+        .material-dark .schedule-overview .quick-info-header {
+            background-color: #424242;
+        }
+
+        .highcontrast .schedule-overview .quick-info-header {
+            background-color: #000000;
+        }
+
         .schedule-overview .quick-info-header-content {
             justify-content: flex-end;
             display: flex;
             flex-direction: column;
             padding: 5px 10px 5px;
+        }
+
+        .tailwind-dark .schedule-overview .quick-info-header-content,
+        .bootstrap-dark .schedule-overview .quick-info-header-content,
+        .bootstrap5-dark .schedule-overview .quick-info-header-content,
+        .fabric-dark .schedule-overview .quick-info-header-content,
+        .material-dark .schedule-overview .quick-info-header-content,
+        .highcontrast .schedule-overview .quick-info-header-content {
+            color: #fff !important;
         }
 
         .schedule-overview .quick-info-title {
@@ -750,6 +686,7 @@
         .schedule-overview .content-area {
             padding: 10px;
             width: auto;
+            margin: unset;
         }
 
         .schedule-overview .event-content {
@@ -782,6 +719,21 @@
             letter-spacing: 0.33px;
             line-height: 14px;
             padding-left: 8px;
+        }
+
+        .tailwind-dark .schedule-overview .event-content div label,
+        .bootstrap-dark .schedule-overview .event-content div label,
+        .bootstrap5-dark .schedule-overview .event-content div label,
+        .fabric-dark .schedule-overview .event-content div label,
+        .material-dark .schedule-overview .event-content div label,
+        .highcontrast .schedule-overview .event-content div label,
+        .tailwind-dark .schedule-overview .event-content div span,
+        .bootstrap-dark .schedule-overview .event-content div span,
+        .bootstrap5-dark .schedule-overview .event-content div span,
+        .fabric-dark .schedule-overview .event-content div span,
+        .material-dark .schedule-overview .event-content div span,
+        .highcontrast .schedule-overview .event-content div span {
+            color: #fff;
         }
 
         .schedule-overview .cell-footer.e-btn {
@@ -904,99 +856,12 @@
             margin-right: 5px;
         }
 
-        .schedule-context-menu .e-menu-item .new::before {
-            content: '\e7f9';
-        }
-
-        .tailwind .schedule-context-menu .e-menu-item .new::before {
-            content: '\e78a';
-        }
-
-        .schedule-context-menu .e-menu-item .edit::before {
-            content: '\ea9a';
-        }
-
-        .schedule-context-menu .e-menu-item .recurrence::before {
-            content: '\e308';
-            font-weight: bold;
-        }
-
-        .tailwind .schedule-context-menu .e-menu-item .recurrence::before {
-            content: '\e71d';
-            font-weight: bold;
-        }
-
-        .schedule-context-menu .e-menu-item .today::before {
-            content: '\e322';
-        }
-
-        .tailwind .schedule-context-menu .e-menu-item .today::before {
-            content: '\e742';
-        }
-
-        .schedule-context-menu .e-menu-item .delete::before {
-            content: '\e94a';
-        }
-
-        .tailwind .schedule-context-menu .e-menu-item .delete::before {
-            content: '\e78d';
-        }
-
         .e-bigger .schedule-context-menu ul .e-menu-item .e-menu-icon {
             font-size: 14px;
         }
 
         .schedule-context-menu ul .e-menu-item .e-menu-icon {
             font-size: 12px;
-        }
-
-        .highcontrast .schedule-context-menu .e-menu-item .today::before,
-        .fabric .schedule-context-menu .e-menu-item .today::before {
-            content: '\e321';
-        }
-
-        .bootstrap .schedule-context-menu .e-menu-item .today::before {
-            content: '\e312';
-        }
-
-        .highcontrast .schedule-context-menu .e-menu-item .delete::before,
-        .fabric .schedule-context-menu .e-menu-item .delete::before {
-            content: '\eb00';
-        }
-
-        .highcontrast .schedule-context-menu .e-menu-item .new::before,
-        .fabric .schedule-context-menu .e-menu-item .new::before {
-            content: '\e823';
-        }
-
-        .bootstrap4 .schedule-context-menu .e-menu-item .today::before {
-            content: '\e7be';
-        }
-
-        .bootstrap4 .schedule-context-menu .e-menu-item .edit::before {
-            content: '\e78f';
-        }
-
-        .tailwind .schedule-context-menu .e-menu-item .edit::before {
-            content: '\e7d2';
-        }
-
-        .bootstrap4 .schedule-context-menu .e-menu-item .delete::before {
-            content: '\e773';
-        }
-
-        .bootstrap4 .schedule-context-menu .e-menu-item .new::before {
-            content: '\e759';
-        }
-
-        .bootstrap4 .schedule-context-menu .e-menu-item .recurrence::before {
-            content: '\e7c8';
-        }
-
-        .highcontrast .schedule-context-menu .e-menu-item .recurrence::before,
-        .fabric .schedule-context-menu .e-menu-item .recurrence::before {
-            content: '\e309';
-            font-weight: bold;
         }
 
         .schedule-overview.e-schedule .e-vertical-view .e-header-cells,
@@ -1032,10 +897,87 @@
             height: 20px;
         }
 
-        .tailwind .schedule-overview.e-schedule .e-left-indent .e-header-cells {
+        .schedule-overview .overview-toolbar .e-toolbar .e-toolbar-item .e-tbar-btn.e-btn {
+            height: 50px !important;
+        }
+
+        .schedule-overview .overview-toolbar .e-toolbar .e-toolbar-item:not(.e-separator) {
+            padding: 3.5px;
+        }
+
+        .schedule-overview .overview-toolbar .e-toolbar .e-toolbar-item .e-tbar-btn {
+            padding: 1.5px;
+        }
+
+        .e-bigger .schedule-overview .overview-toolbar .e-toolbar .e-toolbar-item:not(.e-separator) {
+            padding: 5px;
+        }
+
+        .e-bigger .schedule-overview .overview-toolbar .e-toolbar .e-toolbar-item .e-tbar-btn {
+            padding: 6px;
+        }
+
+        .bootstrap:not(.e-bigger) .schedule-overview .overview-toolbar .e-toolbar .e-toolbar-item .e-tbar-btn.e-btn:hover,
+        .bootstrap-dark:not(.e-bigger) .schedule-overview .overview-toolbar .e-toolbar .e-toolbar-item .e-tbar-btn.e-btn:hover,
+        .bootstrap4:not(.e-bigger) .schedule-overview .overview-toolbar .e-toolbar .e-toolbar-item .e-tbar-btn.e-btn:hover {
+            border-width: 1.5px;
+            padding: unset !important;
+        }
+
+        .schedule-overview .overview-toolbar .e-toolbar .e-toolbar-item .e-btn.e-tbar-btn .e-icons.e-btn-icon,
+        .schedule-overview .overview-toolbar .e-toolbar .e-toolbar-item .e-btn.e-tbar-btn .e-tbar-btn-text {
+            line-height: 23px !important;
+            min-height: 23px !important;
+            padding: 0px !important;
+        }
+
+        .schedule-overview .overview-toolbar .e-toolbar .e-toolbar-item.e-template .icon-child {
+            height: 23px !important;
+        }
+
+        .schedule-overview .overview-toolbar .e-toolbar .e-toolbar-item.e-template .text-child {
+            line-height: 23px !important;
+        }
+
+        .tailwind .schedule-overview.e-schedule .e-left-indent .e-header-cells,
+        .tailwind-dark .schedule-overview.e-schedule .e-left-indent .e-header-cells {
             height: 66px;
         }
 
+        .tailwind .e-more-popup-wrapper .e-more-event-close .e-btn-icon,
+        .tailwind-dark .e-more-popup-wrapper .e-more-event-close .e-btn-icon {
+            margin-top: 0px;
+        }
+
+        .bootstrap-dark .schedule-overview .overview-content {
+            border: 1px solid #505050;
+        }
+
+        .bootstrap5-dark .schedule-overview .overview-content {
+            border: 1px solid #444c54;
+        }
+
+        .material-dark .schedule-overview .overview-content {
+            border: 1px solid #616161;
+        }
+
+        .bootstrap5 .schedule-overview .overview-toolbar .overview-toolbar-settings {
+            border-color: #dee2e6;
+        }
+
+        .bootstrap-dark .schedule-overview .overview-toolbar .overview-toolbar-settings {
+            border-color: #505050;
+        }
+
+        .material-dark .schedule-overview .overview-toolbar .overview-toolbar-settings {
+            border-color: #616161;
+        }
+
+        .bootstrap-dark .schedule-overview .overview-header .overview-titlebar .title-bar-btn,
+        .material-dark .schedule-overview .overview-header .overview-titlebar .title-bar-btn,
+        .material .schedule-overview .overview-header .overview-titlebar .title-bar-btn {
+            box-shadow: none;
+        }
     </style>
     @*custom code end*@
     <script id="header-template" type="text/x-template">
@@ -1327,7 +1269,7 @@
             var scheduleTimezone = scheduleObj.length > 0 ? scheduleObj[0].timezone : 'Etc/GMT';
             var timeBtn = document.querySelector('.schedule-overview #timeBtn');
             if (timeBtn) {
-                timeBtn.innerHTML = '<span class="e-btn-icon e-icons e-schedule-clock e-icon-left"></span>' + new Date().toLocaleTimeString('en-US', { timeZone: scheduleTimezone });
+                timeBtn.innerHTML = '<span class="e-btn-icon e-icons e-clock e-icon-left"></span>' + new Date().toLocaleTimeString('en-US', { timeZone: scheduleTimezone });
             }
         }
 
@@ -1340,6 +1282,7 @@
             setInterval(function () { updateLiveTime(); }, 1000);
             var timelineView = new ej.buttons.Switch({
                 checked: false,
+                created: function () { this.element.setAttribute('tabindex', '-1'); },
                 change: function (args) {
                     var scheduleObj = document.getElementById('scheduler').ej2_instances[0];
                     isTimelineView = args.checked;
@@ -1374,6 +1317,7 @@
 
             var multiDrag = new ej.buttons.Switch({
                 checked: false,
+                created: function () { this.element.setAttribute('tabindex', '-1'); },
                 change: function (args) {
                     var scheduleObj = document.getElementById('scheduler').ej2_instances[0];
                     scheduleObj.allowMultiDrag = args.checked;
@@ -1383,6 +1327,7 @@
 
             var grouping = new ej.buttons.Switch({
                 checked: true,
+                created: function () { this.element.setAttribute('tabindex', '-1'); },
                 change: function (args) {
                     var scheduleObj = document.getElementById('scheduler').ej2_instances[0];
                     scheduleObj.group.resources = args.checked ? ['Calendars'] : [];
@@ -1392,6 +1337,7 @@
 
             var gridlines = new ej.buttons.Switch({
                 checked: true,
+                created: function () { this.element.setAttribute('tabindex', '-1'); },
                 change: function (args) {
                     var scheduleObj = document.getElementById('scheduler').ej2_instances[0];
                     scheduleObj.timeScale.enable = args.checked;
@@ -1401,6 +1347,7 @@
 
             var rowAutoHeight = new ej.buttons.Switch({
                 checked: false,
+                created: function () { this.element.setAttribute('tabindex', '-1'); },
                 change: function (args) {
                     var scheduleObj = document.getElementById('scheduler').ej2_instances[0];
                     scheduleObj.rowAutoHeight = args.checked;
@@ -1410,6 +1357,7 @@
 
             var tooltip = new ej.buttons.Switch({
                 checked: false,
+                created: function () { this.element.setAttribute('tabindex', '-1'); },
                 change: function (args) {
                     var scheduleObj = document.getElementById('scheduler').ej2_instances[0];
                     scheduleObj.eventSettings.enableTooltip = args.checked;
@@ -1421,6 +1369,8 @@
                 var settingsPanel = document.querySelector('.overview-content .right-panel');
                 if (settingsPanel.classList.contains('hide')) {
                     ej.base.removeClass([settingsPanel], 'hide');
+                    document.querySelector('#workWeekDays').ej2_instances[0].refresh();
+                    document.querySelector('#resources').ej2_instances[0].refresh();
                 }
                 else {
                     ej.base.addClass([settingsPanel], 'hide');
@@ -1536,7 +1486,7 @@
             scheduleObj.timezone = args.value;
             updateLiveTime();
             document.querySelector('.schedule-overview #timezoneBtn').innerHTML =
-                '<span class="e-btn-icon e-icons e-schedule-timezone e-icon-left"></span>' + args.itemData.text;
+                '<span class="e-btn-icon e-icons e-time-zone e-icon-left"></span>' + args.itemData.text;
         }
 
         function onDayStartHourChange(args) {
@@ -1586,15 +1536,9 @@
     </script>
 }
 
-@*custom code start*@
-@section Meta{
-    <meta name="description" content="This example demonstrates the Overview Functionalities in ASP.NET Core Schedule control. Explore here for more details." />
-}
-@*custom code end*@
-
 @section ActionDescription{
     <div id="action-description">
-        <p>This sample demonstrates the overview of ASP.NET Corex Scheduler with its overall features. Use the toolbar buttons to play with Scheduler functionalities.</p>
+        <p>This <a href="https://www.syncfusion.com/aspnet-core-ui-controls/scheduler" target="_blank">ASP.NET Core Scheduler example </a> demonstrates the overview of ASP.NET Corex Scheduler with its overall features. Use the toolbar buttons to play with Scheduler functionalities.</p>
     </div>
 }
 
@@ -1611,10 +1555,15 @@
     </div>
 }
 
+@section Meta{
+    <meta name="description" content="This ASP.NET Core Scheduler example demonstrates the overview in ASP.NET Core Scheduler Component. Explore here for more details." />
+}
+
+
 @section Title{
     <title>ASP.NET Core Schedule Overview Functionalities Example - Syncfusion Demos </title>
 }
 
 @section Header{
-    <h1 class='sb-sample-text'>Example of Overview Functionalities in ASP.NET Core Schedule Control</h1>
+    <h1 class='sb-sample-text'>ASP.NET Core Scheduler Example - Overview</h1>
 }

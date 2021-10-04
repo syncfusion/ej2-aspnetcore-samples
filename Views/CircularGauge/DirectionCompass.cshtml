@@ -13,7 +13,7 @@
 @section Description{
     <div id="description">
         <p>
-            Circular gauge can be customized as per a user requirement.
+            Circular gauge can be customized as per the user requirement.
             In this example, a direction compass has been depicted by adding <code>needles</code> and by customizing the <code>labels</code> to show the direction.
         </p>
         <p>
@@ -39,7 +39,7 @@
         </div>
     </div>
 <div class="col-md-4 property-section">
-    <table id="property" title="Properties" style="width: 100%">
+    <table id="property" title="Properties" style="width: 100%; margin-left: -10px">
         <tbody>
             <tr style="height: 50px">
                 <td>
@@ -107,7 +107,8 @@
     window.gaugeload = function (args) {
         @* custom code start *@
         var theme = themeName ? themeName : 'Material';
-        args.gauge.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+        args.gauge.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
         @* custom code end *@
         if (window.gaugeLoaded)
             return;
@@ -118,10 +119,6 @@
             fontFamily: "Roboto",
             size: "12px"
         };
-        axis.ranges = [{
-            start: 7,
-            end: 7
-        }];
         axis.pointers = [{
             value: 7,
             radius: '50%',

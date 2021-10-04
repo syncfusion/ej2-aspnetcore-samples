@@ -16,7 +16,7 @@
             In this example, you can see how to render and configure the ticks and labels of an axis in the circular gauge. Labels are
             units that are used to display the values in the axis. You can customize <code>labels</code> with the properties
             like <code>angle</code>, <code>font</code>,
-            <code>position</code>, etc. Ticks are used to mark some values on the axis. You can also customize the ticks using
+            <code>position</code>, etc. Ticks are used to mark some values on the axis. You can also customize the ticks using the 
             <code>majorTicks</code>,
             <code>minorTicks</code> properties.
         </p>
@@ -42,14 +42,14 @@
         </div>        
     </div>
 <div class="col-md-4 property-section">
-    <table id="property" title="Properties" style="width: 100%;">
+    <table id="property" title="Properties" style="width: 100%; margin-left: -10px">
         <tbody>
             <tr>
                 <td>
                     <div> Ticks </div>
                 </td>
                 <td>
-                    <div>
+                    <div style="margin-left: 10px">
                         <select id="Ticks" class="form-control">
                             <option value="major" selected="true">Major Ticks</option>
                             <option value="minor">Minor Ticks</option>
@@ -62,7 +62,7 @@
                     <div> Tick Position </div>
                 </td>
                 <td>
-                    <div>
+                    <div style="margin-left: 10px">
 						<select id="tickposition" class="form-control">
 							<option value="Inside" selected="true">Inside</option>
 							<option value="Cross">Cross</option>
@@ -76,7 +76,7 @@
                     <div> Label Position </div>
                 </td>
                 <td>
-                    <div>
+                    <div style="margin-left: 10px">
 						<select id="labelposition" class="form-control">
 							<option value="Outside">Outside</option>
 							<option value="Cross">Cross</option>
@@ -87,41 +87,41 @@
             </tr>
             <tr>
                 <td>
-                    <div id="offset">Tick Offset <span>&nbsp;&nbsp;&nbsp;0</span> </div>
+                    <div id="offset" style="margin-top: 10px">Tick Offset <span>&nbsp;&nbsp;&nbsp;0</span> </div>
                 </td>
                 <td>
                     <div>
-                        <input type="range" id="tickOffset" value="0" min="0" max="50" style="width:90%">
+                        <input type="range" id="tickOffset" value="0" min="0" max="50" style="width: 120px; margin-top: 10px; margin-left: 10px">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <div id="height">Tick Height <span>&nbsp;&nbsp;&nbsp;10</span> </div>
+                    <div id="height" style="margin-top: 20px">Tick Height <span>&nbsp;&nbsp;&nbsp;10</span> </div>
                 </td>
                 <td>
                     <div>
-                        <input type="range" id="tickHeight" value="10" min="1" max="50" style="width:90%">
+                        <input type="range" id="tickHeight" value="10" min="1" max="50" style="width: 120px; margin-top: 20px; margin-left: 10px">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <div id="labelOffsetValue">Label Offset <span>&nbsp;&nbsp;&nbsp;0</span> </div>
+                    <div id="labelOffsetValue" style="margin-top: 20px">Label Offset <span>&nbsp;&nbsp;&nbsp;0</span> </div>
                 </td>
                 <td>
                     <div>
-                        <input type="range" id="labelOffset" value="0" min="0" max="50" style="width:90%">
+                        <input type="range" id="labelOffset" value="0" min="0" max="50" style="width: 120px; margin-top: 20px; margin-left: 10px">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <div id="enablePointer">Show Last Label </div>
+                    <div id="enablePointer" style="margin-top: 20px">Show Last Label </div>
                 </td>
                 <td>
                     <div>
-                        <input type="checkbox" id="enable" style="width:90%">
+                        <input type="checkbox" id="enable" style="width: 120px; margin-top: 25px; margin-left: 10px;">
                     </div>
                 </td>
             </tr>
@@ -139,7 +139,8 @@
     window.gaugeload = function (args) {
         @* custom code start *@
         var theme = themeName ? themeName : 'Material';
-        args.gauge.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+        args.gauge.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
         @* custom code end *@
         if (window.gaugeLoaded)
             return;
@@ -210,7 +211,7 @@
                 else {
                     circulargauge.axes[0].minorTicks.offset = value;
                 }
-                document.getElementById('offset').innerHTML = 'Tick Offset <span>   ' + value;
+            document.getElementById('offset').innerHTML = 'Tick Offset <span>&nbsp;&nbsp;&nbsp;' + value;
                 circulargauge.refresh();
             };
         document.getElementById('tickHeight').onpointermove = document.getElementById('tickHeight').ontouchmove =
@@ -222,14 +223,14 @@
                 else {
                     circulargauge.axes[0].minorTicks.height = value;
                 }
-                document.getElementById('height').innerHTML = 'Tick Height <span>   ' + value;
+            document.getElementById('height').innerHTML = 'Tick Height <span>&nbsp;&nbsp;&nbsp;' + value;
                 circulargauge.refresh();
             };
         document.getElementById('labelOffset').onpointermove = document.getElementById('labelOffset').ontouchmove =
             document.getElementById('labelOffset').onchange = function () {
                 var value = parseInt(document.getElementById('labelOffset').value, 10);
                 circulargauge.axes[0].labelStyle.offset = value;
-                document.getElementById('labelOffsetValue').innerHTML = 'Label Offset <span>   ' + value;
+            document.getElementById('labelOffsetValue').innerHTML = 'Label Offset <span>&nbsp;&nbsp;&nbsp;' + value;
                 circulargauge.refresh();
             };
         document.getElementById('enable').onchange = function () {

@@ -3,7 +3,7 @@
 @section ControlsSection{
     <div class="control-section">
         <div class="content-wrapper">
-            <ejs-schedule id="schedule" width="100%" height="650px" selectedDate="new DateTime(2018, 8, 1)" currentView="TimelineWeek" resourceHeaderTemplate="#resource-template" actionBegin="onActionBegin" eventRendered="onEventRendered" renderCell="onRenderCell" popupOpen="onPopupOpen">
+            <ejs-schedule id="schedule" width="100%" height="650px" cssClass="room-schedule" selectedDate="new DateTime(DateTime.Today.Year, 8, 2)" currentView="TimelineWeek" resourceHeaderTemplate="#resource-template" actionBegin="onActionBegin" eventRendered="onEventRendered" renderCell="onRenderCell" popupOpen="onPopupOpen">
                 <e-schedule-workhours start="08:00" end="18:00"></e-schedule-workhours>
                 <e-schedule-timescale slotCount="1" interval="60"></e-schedule-timescale>
                 <e-schedule-views>
@@ -35,25 +35,125 @@
             width: 75px;
         }
 
+        .room-schedule.e-schedule .e-timeline-view .e-resource-left-td {
+            width: 240px;
+        }
+
         .e-schedule .e-timeline-view .e-resource-left-td .e-resource-text {
             display: flex;
             font-weight: 500;
             padding: 0;
+            height: 36px;
         }
 
             .e-schedule .e-timeline-view .e-resource-left-td .e-resource-text > div {
-                border-right: 1px solid rgba(0, 0, 0, 0.12);
-                border-top: 1px solid rgba(0, 0, 0, 0.12);
+                border-color: #0000001f;
+                border-style: solid;
+                border-width: 1px 1px 0 0;
                 flex: 0 0 33.3%;
                 font-weight: 500;
                 height: 36px;
-                line-height: 34px;
+                line-height: 36px;
                 padding-left: 5px;
             }
 
                 .e-schedule .e-timeline-view .e-resource-left-td .e-resource-text > div:last-child {
                     border-right: 0;
                 }
+
+        .e-schedule .e-timeline-view .e-block-appointment {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+        }
+
+        .bootstrap4 .e-schedule .e-timeline-view .e-resource-left-td .e-resource-text,
+        .bootstrap5 .e-schedule .e-timeline-view .e-resource-left-td .e-resource-text {
+            height: 37px;
+        }
+
+            .bootstrap4 .e-schedule .e-timeline-view .e-resource-left-td .e-resource-text > div {
+                height: 37px;
+                line-height: 37px;
+            }
+
+        .material-dark .e-schedule .e-resource-cells .template-wrap > div,
+        .material-dark .e-schedule .e-timeline-view .e-resource-left-td .e-resource-text > div {
+            border-color: #616161;
+        }
+
+        .fabric-dark .e-schedule .e-resource-cells .template-wrap > div,
+        .fabric-dark .e-schedule .e-timeline-view .e-resource-left-td .e-resource-text > div {
+            border-color: #414040;
+        }
+
+        .bootstrap-dark .e-schedule .e-resource-cells .template-wrap > div,
+        .bootstrap-dark .e-schedule .e-timeline-view .e-resource-left-td .e-resource-text > div {
+            border-color: #505050;
+        }
+
+        .bootstrap5-dark .e-schedule .e-resource-cells .template-wrap > div,
+        .bootstrap5-dark .e-schedule .e-timeline-view .e-resource-left-td .e-resource-text > div {
+            border-color: #444c54;
+        }
+
+        .tailwind-dark .e-schedule .e-resource-cells .template-wrap > div {
+            border-color: #4b5563;
+        }
+
+        .highcontrast .e-schedule .e-resource-cells .template-wrap > div {
+            border-color: #969696;
+        }
+
+        .bootstrap4.e-bigger .e-schedule .e-timeline-view .e-resource-left-td .e-resource-text,
+        .bootstrap5.e-bigger .e-schedule .e-timeline-view .e-resource-left-td .e-resource-text {
+            height: 39px;
+        }
+
+            .bootstrap4.e-bigger .e-schedule .e-timeline-view .e-resource-left-td .e-resource-text > div {
+                height: 39px;
+                line-height: 39px;
+            }
+
+        .tailwind .e-schedule .e-timeline-view .e-resource-left-td .e-resource-text,
+        .tailwind-dark .e-schedule .e-timeline-view .e-resource-left-td .e-resource-text {
+            height: 39px;
+        }
+
+            .tailwind .e-schedule .e-timeline-view .e-resource-left-td .e-resource-text > div,
+            .tailwind-dark .e-schedule .e-timeline-view .e-resource-left-td .e-resource-text > div {
+                height: 39px;
+                line-height: 39px;
+            }
+
+            .tailwind .e-schedule .e-timeline-view .e-resource-left-td .e-resource-text > div {
+                background-color: #f3f4f6;
+                border-color: #e5e7eb;
+            }
+
+            .tailwind-dark .e-schedule .e-timeline-view .e-resource-left-td .e-resource-text > div {
+                background-color: #374151;
+                border-color: #4b5563;
+            }
+
+        .tailwind.e-bigger .e-schedule .e-timeline-view .e-resource-left-td .e-resource-text,
+        .tailwind-dark.e-bigger .e-schedule .e-timeline-view .e-resource-left-td .e-resource-text {
+            height: 40px;
+        }
+
+            .tailwind.e-bigger .e-schedule .e-timeline-view .e-resource-left-td .e-resource-text > div,
+            .tailwind-dark.e-bigger .e-schedule .e-timeline-view .e-resource-left-td .e-resource-text > div {
+                height: 40px;
+                line-height: 40px;
+            }
+
+        .highcontrast .e-schedule .e-timeline-view .e-resource-left-td .e-resource-text {
+            height: 36px;
+        }
+
+            .highcontrast .e-schedule .e-timeline-view .e-resource-left-td .e-resource-text > div {
+                border-color: #969696;
+            }
 
         .e-schedule .template-wrap {
             display: flex;
@@ -62,7 +162,7 @@
         }
 
             .e-schedule .template-wrap > div {
-                border-right: 1px solid rgba(0, 0, 0, 0.12);
+                border-right: 1px solid #0000001f;
                 flex: 0 0 33.3%;
                 font-weight: 500;
                 line-height: 58px;
@@ -95,11 +195,11 @@
             }
 
                 .e-schedule .e-timeline-view .e-resource-left-td .e-resource-text > div,
-                .e-schedule .template-wrap > div {
+                .e-schedule .e-resource-cells .template-wrap > div {
                     flex: 0 0 100%;
                 }
 
-                    .e-schedule .template-wrap > div:first-child {
+                    .e-schedule .e-resource-cells .template-wrap > div:first-child {
                         border-right: 0;
                     }
 
@@ -122,7 +222,7 @@
     </script>
     <script type="text/javascript">
         var isReadOnly = function (endDate) {
-            return (endDate < new Date(2018, 6, 31, 0, 0));
+            return (endDate < new Date(new Date().getFullYear(), 6, 31, 0, 0));
         };
         window.getRoomName = function (value) {
             return value.resourceData[value.resource.textField];
@@ -151,7 +251,7 @@
         }
         function onRenderCell(args) {
             if (args.element.classList.contains('e-work-cells')) {
-                if (args.date < new Date(2018, 6, 31, 0, 0)) {
+                if (args.date < new Date(new Date().getFullYear(), 6, 31, 0, 0)) {
                     args.element.setAttribute('aria-readonly', 'true');
                     args.element.classList.add('e-read-only-cells');
                 }
@@ -204,15 +304,11 @@
             Here, the timeline view is grouped with single level of resources by making use of the
             <code>group</code> property. Also, the lunch time blocking is done by applying styles on those cells through the
             <code>renderCell</code> event. The event editor and popup is prevented to open on those blocked time slots as well
-            as on the past bookings by making use of the
-            <code>popupOpen</code> event. The
-            <code>eventRendered</code> event is utilized in order to make the bookings done on past dates as read-only. To block
-            more than one bookings per slot, the
-            <code>isSlotAvailable</code> method is used. Also, the resource header displayed at the left panel is customized
-            to render as columns with the help of
-            <code>resourceHeaderTemplate</code>. The tooltip for resource header is customized by defining the
-            <code>headerTooltipTemplate</code> property within the
-            <code>group</code> API.
+            as on the past bookings by making use of the <code>popupOpen</code> event. The <code>eventRendered</code> event
+            is utilized in order to make the bookings done on past dates as read-only. To block more than one bookings per
+            slot, the <code>isSlotAvailable</code> method is used. Also, the resource header displayed at the left panel is
+            customized to render as columns with the help of <code>resourceHeaderTemplate</code>. The tooltip for resource
+            header is customized by defining the <code>headerTooltipTemplate</code> property within the <code>group</code> API.
         </p>
         <p>
             <b>Note:</b> The dates which lies beyond the current date set to scheduler through

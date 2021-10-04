@@ -15,7 +15,7 @@
     <div class="control-section">
         <div class="row">
             <div class="col-md-12">
-                <ejs-heatmap id='container' load="window.onHeatmapLoad" tooltipRender="window.ontooltipRender" dataSource="ViewBag.data">
+                <ejs-heatmap id='container' load="window.onHeatmapLoad" dataSource="ViewBag.data" tooltipRender="window.ontooltipRender">
                     <e-heatmap-datasourcesettings isJsonData="true" adaptorType="Table" xDataMapping="Region"></e-heatmap-datasourcesettings>
                     <e-heatmap-titlesettings text="Olympic Medal Achievements of most Successful Countries" textStyle="textStyle">
                     </e-heatmap-titlesettings>
@@ -39,7 +39,7 @@
     <script type="text/javascript">
         window.onHeatmapLoad = function (args) {
             var selectedTheme = themeName ? themeName : 'Material';
-            args.heatmap.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1));
+            args.heatmap.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
         }
         window.ontooltipRender = function (args) {
             args.content = [args.yLabel + " | " + args.xLabel + " : " + args.value + " medals"];

@@ -3,7 +3,7 @@
     <div class="control-section">
         <div class="content-wrapper">
             <div class="schedule-container">
-                <ejs-schedule id="schedule" width="100%" height="650px" selectedDate="new DateTime(2019, 1, 10)" actionBegin="onActionBegin">
+                <ejs-schedule id="schedule" width="100%" height="650px" selectedDate="new DateTime(DateTime.Today.Year, 1, 10)" actionBegin="onActionBegin">
                     <e-schedule-eventsettings dataSource="@ViewBag.appointments"></e-schedule-eventsettings>
                     <e-schedule-views>
                         <e-schedule-view option="Week"></e-schedule-view>
@@ -14,18 +14,6 @@
     </div>
 
     <style>
-        .e-schedule .e-schedule-toolbar .e-icon-schedule-excel-export::before {
-            content: '\e242';
-        }
-
-        .bootstrap4 .e-schedule .e-schedule-toolbar .e-icon-schedule-excel-export::before {
-            content: '\e74e';
-        }
-
-        .tailwind .e-schedule .e-schedule-toolbar .e-icon-schedule-excel-export::before {
-            content: '\e780';
-        }
-
         .e-schedule-toolbar .e-toolbar-item.e-today {
             display: none;
         }
@@ -35,7 +23,7 @@
         function onActionBegin(args) {
             if (args.requestType === 'toolbarItemRendering') {
                 var exportItem = {
-                    align: 'Right', showTextOn: 'Both', prefixIcon: 'e-icon-schedule-excel-export',
+                    align: 'Right', showTextOn: 'Both', prefixIcon: 'e-icons e-export-excel',
                     text: 'Excel Export', cssClass: 'e-excel-export', click: onExportClick
                 };
                 args.items.push(exportItem);

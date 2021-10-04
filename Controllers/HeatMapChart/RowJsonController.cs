@@ -13,7 +13,6 @@ namespace EJ2CoreSampleBrowser.Controllers.HeatMapChart
             ViewBag.data = new heatmapDatasourceRow().getData();
             return View();
         }
-
         public class heatmapDatasourceRow
         {
             public string Region { get; set; }

@@ -41,15 +41,15 @@
         </div>
         </div>
         <div class="col-lg-3 property-section">
-			<table id="property" title="Properties" style="width: 100%">
+			<table id="property" title="Properties" style="width: 100%; margin-left:-10px">
 				<tr style="height: 50px">
 					<td style="width: 40%">
-						<div>
-							Map Type:
+						<div style="width:50%">
+							Map Type
 						</div>
 					</td>
 					<td style="width: 50%;">
-						<div style="margin-left: -10px">
+						<div style="margin-left: -30px">
 							<select id="layertype">
 								<option value='Geometry'>Geometry</option>
 								<option value='OSM'>OSM</option>
@@ -59,29 +59,29 @@
 				</tr>
 				<tr style="height: 50px">
 					<td style="width: 40%">
-						<div>
-							Export Type:
+						<div style="width:50%">
+							Export Type
 						</div>
 					</td>
 					<td style="width: 50%;">
-						<div style="margin-left: -10px">
+						<div style="margin-left: -30px">
 							<input id="mode">
 						</div>
 					</td>
 				</tr>
 				<tr style="height: 50px">
 					<td style="width: 40%">
-						<div>File Name:</div>
+						<div style="width:50%">File Name</div>
 					</td>
 					<td style="width: 40%;">
 						<div class="e-float-input" style='margin-top: 0px;'>
-							<input type="text" value="Maps" id="fileName" style="margin-left: -10px;width: 75px;">
+							<input type="text" value="Maps" id="fileName" style="margin-left: -30px;width: 110px;">
 						</div>
 					</td>
 				</tr>
 				<tr id="button-control" style="height: 50px" align='center'>
 					<td>
-						<div style="margin-left:50%">
+						<div style="margin-left:40%">
 							<ejs-button id="togglebtn" content="Export" iconCss="e-icons e-play-icon" cssClass="e-flat" isPrimary=true></ejs-button>
 						</div>
 					</td>
@@ -96,6 +96,25 @@
 			width: 100%;
 			text-align: center;
 		}
+        .e-view.fabric .e-play-icon::before, .e-view.fabric-dark .e-play-icon::before {
+            content: '\e710';
+        }
+
+        .e-view.bootstrap4 .e-play-icon::before {
+            content: '\e780';
+        }
+
+        .e-view.tailwind-dark .e-play-icon::before, .e-view.tailwind .e-play-icon::before {
+            content: '\e7bf';
+        }
+
+        .e-view.highcontrast .e-play-icon::before {
+            content: '\e710';
+        }
+
+        .e-view.bootstrap5 .e-play-icon::before, .e-view.bootstrap5-dark .e-play-icon::before {
+            content: '\e72e';
+        }
     </style>
 }
 <script>
@@ -103,7 +122,8 @@
     function onMapLoad(args) {
         window.maps = args.maps;
         var theme = themeName ? themeName : "Material";
-        args.maps.theme = (theme.charAt(0).toUpperCase() + theme.slice(1));
+        args.maps.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
     }
     @* custom code end *@
     window.onload = function () {
@@ -111,12 +131,12 @@
         window.exportType = new ej.dropdowns.DropDownList({
             index: 0,
 			dataSource: modeData,
-            width: 75
+            width: 110
         });
         window.exportType.appendTo("#mode");
 		window.layerType = new ej.dropdowns.DropDownList({
 			index: 0,
-            width: 75,
+            width: 110,
 			change: () => {
                 if (layerType.value === 'OSM') {
                     if (window.exportType.value === 'SVG') {

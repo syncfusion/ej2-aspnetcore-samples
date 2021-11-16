@@ -58,20 +58,17 @@ namespace EJ2CoreSampleBrowser.Controllers.TextBoxes
             return Content("");
         }
         [AcceptVerbs("Post")]
-        public IActionResult Remove(IList<IFormFile> UploadFiles)
+        public IActionResult Remove(string UploadFile)
         {
             try
             {
-                foreach (var file in UploadFiles)
+                var fileName = UploadFile;
+                var filePath = Path.Combine(hostingEnv.WebRootPath);
+                var fileSavePath = filePath + "\\" + fileName;
+                if (!System.IO.File.Exists(fileSavePath))
                 {
-                    var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                    var filePath = Path.Combine(hostingEnv.WebRootPath);
-                    var fileSavePath = filePath + "\\" + fileName;
-                    if (!System.IO.File.Exists(fileSavePath))
-                    {
-                        System.IO.File.Delete(fileSavePath);
-                    }                   
-                }
+                    System.IO.File.Delete(fileSavePath);
+                }                   
             }
             catch (Exception e)
             {

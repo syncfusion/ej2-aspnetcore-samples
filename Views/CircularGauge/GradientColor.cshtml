@@ -17,12 +17,15 @@
     </div>
 }
 @section ControlsSection{
+    @{
+        var labelFont = new Syncfusion.EJ2.CircularGauge.CircularGaugeFont { FontFamily = "Segoe UI", Opacity = 1, Size="12px", FontWeight="Regular" };
+    }
     <div class="col-lg-8 control-section">
         <ejs-circulargauge id="gauge" load="gaugeload">
             <e-circulargauge-axes>
                 <e-circulargauge-axis startAngle="210" endAngle="150" minimum="0" maximum="100" radius="80%">
                     <e-axis-linestyle width="0"></e-axis-linestyle>
-                    <e-axis-labelstyle offset="20"></e-axis-labelstyle>
+                    <e-axis-labelstyle offset="20" font="labelFont"></e-axis-labelstyle>
                 </e-circulargauge-axis>
             </e-circulargauge-axes>
         </ejs-circulargauge>
@@ -31,11 +34,11 @@
         <table id="property" title="Properties" style="width: 100%">
             <tr style="height: 50px;">
                 <td>
-                    <div style="margin-top:30px;width: 120px; margin-left:-10px;"> Gradient Type </div>
+                    <div style="width: 120px; margin-left:-10px;"> Gradient Type </div>
                 </td>
                 <td>
-                    <div style="margin-top:20px; margin-left:-15px">
-                        <select autocomplete="off" id="gradient" style="width:90%">
+                    <div style="margin-left:-15px">
+                        <select autocomplete="off" id="gradient" style="width:100%">
                             <option value="linear">Linear Gradient</option>
                             <option value="radial">Radial Gradient</option>
                         </select>
@@ -44,11 +47,11 @@
             </tr>
             <tr style="height: 50px;">
                 <td>
-                    <div style="margin-top:30px; margin-left:-10px"> Elements </div>
+                    <div style="margin-left:-10px"> Elements </div>
                 </td>
                 <td>
-                    <div style="margin-top:30px; margin-left:-15px">
-                        <select autocomplete="off" id="element" style="width:90%">
+                    <div style="margin-left:-15px">
+                        <select autocomplete="off" id="element" style="width:100%">
                             <option value="range">Range</option>
                             <option value="pointer">Pointer</option>
                         </select>
@@ -100,30 +103,25 @@
         window.gaugeLoaded = true;
         window.gauge = args.gauge;
         var axis = args.gauge.axes[0];
-            axis.labelStyle.font = {
-            fontFamily: "Roboto",
-            size: "12px",
-            fontWeight: "Regular",
-            };
-            axis.majorTicks = {
-                height: 0,
-                interval: 10
-            };
-            axis.minorTicks = {
-                height: 0,
-            };
-            axis.pointers = [{
-                animation: { enable: false }, value: 65, radius: '85%', color: '#E63B86',
-                pointerWidth: 12,
-                cap: { radius: 12, border: { color: '#E63B86', width: 2.5 }, color: 'white' },
-                needleTail: { length: '0%' },
-                needleStartWidth: 2
+        axis.majorTicks = {
+            height: 0,
+            interval: 10
+        };
+        axis.minorTicks = {
+            height: 0,
+        };
+        axis.pointers = [{
+            animation: { enable: false }, value: 65, radius: '85%', color: '#E63B86',
+            pointerWidth: 12,
+            cap: { radius: 12, border: { color: '#E63B86', width: 2.5 }, color: 'white' },
+            needleTail: { length: '0%' },
+            needleStartWidth: 2
+        }];
+        axis.ranges = [
+            {
+                start: 0, end: 120, startWidth: 18, endWidth: 18, color: '#E63B86',
+                roundedCornerRadius: 10
             }];
-            axis.ranges = [
-                {
-                    start: 0, end: 120, startWidth: 18, endWidth: 18, color: '#E63B86',
-                    roundedCornerRadius: 10
-                }];
         if (linearCheck) {
             args.gauge.axes[0].ranges[0].linearGradient = rangeLinearGradient;
             linearCheck = false;
@@ -165,7 +163,7 @@
         var gradientType = new ej.dropdowns.DropDownList({
             index: 0,
             placeholder: 'Select gradient type',
-            width: 145,
+            width: '100%',
             change: function () {
                 changeGradient();
             }
@@ -174,7 +172,7 @@
         var element = new ej.dropdowns.DropDownList({
             index: 0,
             placeholder: 'Select element type',
-            width: 145,
+            width: '100%',
             change: function () {
                 changeGradient();
             }

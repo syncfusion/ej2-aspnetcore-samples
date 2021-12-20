@@ -17,6 +17,9 @@
     </div>
 }
 @section ControlsSection {
+@{ 
+    var labelFont = new Syncfusion.EJ2.LinearGauge.LinearGaugeFont { FontFamily = "Segoe UI", Opacity = 1 };
+}
 
     <div class="col-lg-8 control-section">
         <div style="width:92% ;margin-bottom: 50px;margin-left:10px;">
@@ -25,6 +28,8 @@
             <e-lineargauge-axes>
                 <e-lineargauge-axis>
                     <e-axis-line width="0"></e-axis-line>
+                    <e-axis-labelstyle font="labelFont">
+                    </e-axis-labelstyle>
                 </e-lineargauge-axis>
             </e-lineargauge-axes>
         </ejs-lineargauge>
@@ -34,11 +39,11 @@
         <table id="property" title="Properties" style="width: 100%">
             <tr style="height: 50px;">
                 <td>
-                    <div style="margin-top:30px;width: 120px; margin-left:-10px" > Gradient Type </div>
+                    <div> Gradient Type </div>
                 </td>
                 <td>
-                    <div style="margin-top:20px;margin-left:-15px;">
-                        <select autocomplete="off" id="gradient" style="width:90%">
+                    <div>
+                        <select autocomplete="off" id="gradient">
                             <option value="linear">Linear Gradient</option>
                             <option value="radial">Radial Gradient</option>
                         </select>
@@ -47,11 +52,11 @@
             </tr>
             <tr style="height: 50px;">
                 <td>
-                    <div style="margin-top:30px;margin-left:-8px;"> Elements </div>
+                    <div> Elements </div>
                 </td>
                 <td>
-                    <div style="margin-top:30px;margin-left:-15px;">
-                        <select autocomplete="off" id="element" style="width:90%">
+                    <div>
+                        <select autocomplete="off" id="element">
                             <option value="range">Range</option>
                             <option value="pointer">Pointer</option>
                         </select>
@@ -61,6 +66,11 @@
         </table>
     </div>
 }
+<style>
+    .property-panel-table div {
+        padding-left: 0px;
+    }
+</style>
     <script>
         var gauge;
         var rangeLinearGradient = {
@@ -169,7 +179,7 @@
             var gradientType = new ej.dropdowns.DropDownList({
                 index: 0,
                 placeholder: 'Select gradient type',
-                width: 145,
+                width: '100%',
                 change: function () {
                     changeGradient();
                 }
@@ -178,7 +188,7 @@
             var element = new ej.dropdowns.DropDownList({
                 index: 0,
                 placeholder: 'Select element type',
-                width: 145,
+                width: '100%',
                 change: function () {
                     changeGradient();
                 }

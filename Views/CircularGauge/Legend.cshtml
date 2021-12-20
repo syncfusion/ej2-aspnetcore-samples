@@ -22,14 +22,16 @@
 }
 @section ControlsSection{
     @{
+        var labelFont = new Syncfusion.EJ2.CircularGauge.CircularGaugeFont { FontFamily = "Segoe UI", Opacity = 1 };
      }
     <div class="col-md-8 control-section">
         <div class="content-wrapper">
             <ejs-circulargauge id="circular" load="gaugeload" title="Measure of wind speed in Km/h">
+                <e-circulargauge-titlestyle size="17px" fontFamily="Segoe UI"></e-circulargauge-titlestyle>
                 <e-circulargauge-axes>
                     <e-circulargauge-axis startAngle="210" endAngle="150" minimum="0" maximum="120" radius="80%">
                         <e-axis-linestyle width="2"></e-axis-linestyle>
-                        <e-axis-labelstyle position="@Syncfusion.EJ2.CircularGauge.Position.Inside" useRangeColor="false">
+                        <e-axis-labelstyle position="@Syncfusion.EJ2.CircularGauge.Position.Inside" useRangeColor="false" font="labelFont">
                         </e-axis-labelstyle>
                         <e-axis-majorticks height="16" offset="5" interval="20" color="#9E9E9E"></e-axis-majorticks>
                         <e-axis-minorticks height="8" interval="10"></e-axis-minorticks>
@@ -42,18 +44,18 @@
         <table id="property" title="Properties" style="width: 100%; margin-left: -10px">
             <tr style="height: 50px">
                 <td>
-                    <div> Enable Legend </div>
+                    <div class="textAlign"> Enable Legend </div>
                 </td>
-                <td style="padding-left: 50px;">
+                <td>
                     <input type="checkbox" id="legend" checked style="margin-top: 20px; margin-left: 15px "/>
                 </td>
             </tr>
             <tr style="height: 50px">
                 <td>
-                    <div> Show range when the legend item is toggled </div>
+                    <div class="textAlign"> Show range when the legend item is toggled </div>
                 </td>
-                <td style="padding-left: 50px;">
-                    <input type="checkbox" id="togglelegend"  style="margin-left: 15px" checked/>
+                <td>
+                    <input type="checkbox" id="togglelegend"  style="margin-left: 15px; margin-top: 20px;" checked/>
                 </td>
             </tr>
             <tr style="height: 50px">
@@ -61,7 +63,7 @@
                     <div> Position </div>
                 </td>
                 <td>
-                    <div style="width: 130px">
+                    <div style="width: 100%">
                         <select id="position" class="form-control">
                             <option value="Auto">Auto</option>
                             <option value="Top">Top</option>
@@ -77,7 +79,7 @@
                     <div> Alignment </div>
                 </td>
                 <td>
-                    <div style="width: 130px">
+                    <div style="width: 100%">
                         <select id="alignment" class="form-control">
                             <option value="Far">Far</option>
                             <option value="Center" selected="true">Center</option>
@@ -91,7 +93,7 @@
                     <div> Shape </div>
                 </td>
                 <td>
-                    <div style="width: 130px">
+                    <div style="width: 100%">
                         <select id="shape" class="form-control">
                             <option value="Circle" selected="true">Circle</option>
                             <option value="Rectangle">Rectangle</option>
@@ -106,6 +108,15 @@
         </table>
     </div>
 }
+<style>
+    .e-view.tailwind div.textAlign, .e-view.tailwind-dark div.textAlign, .e-view.fabric div.textAlign, .e-view.fabric-dark div.textAlign {
+        padding-top: 10px;
+    }
+
+    .e-view div.textAlign {
+        padding-top: 15px;
+    }
+</style>
 <script>
     var circulargauge;
     window.gaugeload = function (args) {

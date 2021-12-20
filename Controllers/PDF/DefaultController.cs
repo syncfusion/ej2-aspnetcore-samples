@@ -10,9 +10,13 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
 {
     public partial class PdfController : Controller
     {
-
+#if NET6_0
+        private readonly IWebHostEnvironment _hostingEnvironment;
+        public PdfController(IWebHostEnvironment hostingEnvironment)
+#else
         private readonly IHostingEnvironment _hostingEnvironment;
         public PdfController(IHostingEnvironment hostingEnvironment)
+#endif
         {
             _hostingEnvironment = hostingEnvironment;
         }

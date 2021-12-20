@@ -12,7 +12,6 @@
             var dict = new Dictionary<string, object>();
             dict.Add("number", true);
             dict.Add("min", 0);
-            var editparams = new { @params = new { format = "n" } };
         }
         <ejs-treegrid id="TreeGrid" dataSource="ViewBag.dataSource" height="400" childMapping="Children" treeColumnIndex="1" toolbar="@(new List<string>() { "Add", "Delete", "Update", "Cancel" })">
             <e-treegrid-editsettings allowAdding="true" allowEditing="true" allowDeleting="true" mode="Batch" newRowPosition="Below"></e-treegrid-editsettings>
@@ -20,8 +19,8 @@
                 <e-treegrid-column field="TaskId" headerText="Task ID" isPrimaryKey="true" validationRules="@(new { required=true, number=true})" textAlign="Right" width="90"></e-treegrid-column>
                 <e-treegrid-column field="TaskName" headerText="Task Name" validationRules="@(new { required=true})" editType="stringedit" width="220"></e-treegrid-column>
                 <e-treegrid-column field="StartDate" headerText=" Start Date" validationRules="@(new { date=true})" editType="datepickeredit" textAlign="Right" format="yMd" type="date" width="130"></e-treegrid-column>
-                <e-treegrid-column field="Duration" headerText="Duration" validationRules="@(dict)" editType="numericedit" textAlign="Right" edit="editparams" width="100"></e-treegrid-column>
-                <e-treegrid-column field="Progress" headerText="Progress" textAlign="Right" width="80" editType="numericedit" validationRules="@(dict)" edit="editparams"></e-treegrid-column>
+                <e-treegrid-column field="Duration" headerText="Duration" validationRules="@(dict)" editType="numericedit" textAlign="Right" edit="@(new{@params=new{format="n"}})" width="100"></e-treegrid-column>
+                <e-treegrid-column field="Progress" headerText="Progress" textAlign="Right" width="80" editType="numericedit" validationRules="@(dict)" edit="@(new{@params=new{format="n"}})"></e-treegrid-column>
                 <e-treegrid-column field="Priority" headerText="Priority" width="90" editType="stringedit" validationRules="@(new { required=true})"></e-treegrid-column>
             </e-treegrid-columns>
         </ejs-treegrid>

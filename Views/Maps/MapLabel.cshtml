@@ -1,5 +1,11 @@
 @using Syncfusion.EJ2;
 @section ControlsSection{
+@{ 
+    var labelStyle = new Syncfusion.EJ2.Maps.MapsFont
+    {
+        FontFamily = "Segoe UI"
+    };
+}
 <div class="col-md-8 control-section">
                 <ejs-maps id="maps" load="window.onMapLoad" loaded="window.onCreated">
                     <e-maps-zoomsettings enable="false"></e-maps-zoomsettings>
@@ -7,57 +13,68 @@
                         <e-maps-layer shapeData="ViewBag.usmap">
                             <e-layersettings-datalabelsettings visible="true" labelPath="name" smartLabelMode="@Syncfusion.EJ2.Maps.SmartLabelMode.Trim"></e-layersettings-datalabelsettings>
                             <e-layersettings-shapesettings autofill="true"></e-layersettings-shapesettings>
-                            <e-layersettings-tooltipsettings visible="true" valuePath="name"></e-layersettings-tooltipsettings>
+                            <e-layersettings-tooltipsettings visible="true" valuePath="name" font="labelStyle"></e-layersettings-tooltipsettings>
                         </e-maps-layer>
                     </e-maps-layers>
                 </ejs-maps>
             </div>
 
 <div class="col-md-4 property-section">
-                <table id="property" title="Properties" style="width: 100%; margin-left: -10px">
+                <table id="property" title="Properties" style="width: 100%;">
                     <tbody>
                         <tr style="height: 50px">
-                            <td style="width: 80%">
+                            <td>
                                 <div>Show Labels</div>
                             </td>
                             <td>
-                                <input type="checkbox" checked id="select" style="margin-top: 15px; margin-left: 35px">
+                                <div>
+                                    <input type="checkbox" checked id="select">
+                                </div>
                             </td>
                         </tr>
                         <tr style="height: 50px">
-                            <td style="width: 60%">
+                            <td>
                                 <div>Smart label mode</div>
                             </td>
-                            <td style="width: 40%">
-                                <select id="smartlabelmode" style="margin-left: -25px">
-                                    <option value="Trim">Trim</option>
-                                    <option value="None">None</option>
-                                    <option value="Hide">Hide</option>
-                                </select>
+                            <td>
+                                <div>
+                                    <select id="smartlabelmode" style="margin-left: -25px">
+                                        <option value="Trim">Trim</option>
+                                        <option value="None">None</option>
+                                        <option value="Hide">Hide</option>
+                                    </select>
+                                </div>
                             </td>
                         </tr>
                         <tr style="height: 50px">
-                            <td style="width: 60%">
+                            <td>
                                 <div>Intersect action</div>
                             </td>
-                            <td style="width: 40%;">
-                                <select id="intersectaction" style="margin-left: -25px">
-                                    <option value="None">None</option>
-                                    <option value="Trim">Trim</option>
-                                    <option value="Hide">Hide</option>
-                                </select>
+                            <td>
+                                <div>
+                                    <select id="intersectaction" style="margin-left: -25px">
+                                        <option value="None">None</option>
+                                        <option value="Trim">Trim</option>
+                                        <option value="Hide">Hide</option>
+                                    </select>
+                                </div>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 }
+<style>
+    .property-panel-header {
+        margin-left: 10px;
+    }
+</style>
 <script>
     window.onload = function () {
         var intersectaction = new ej.dropdowns.DropDownList({
             index: 0,
             placeholder: 'Select intersect action',
-            width: 90,
+            width: '100%',
             change: function () {
                 maps.layers[0].dataLabelSettings.intersectionAction = intersectaction.value;
                 maps.refresh();
@@ -67,7 +84,7 @@
         var smartlabelmode = new ej.dropdowns.DropDownList({
             index: 0,
             placeholder: 'Select smartlabel mode',
-            width: 90,
+            width: '100%',
             change: function () {
                 maps.layers[0].dataLabelSettings.smartLabelMode = smartlabelmode.value;
                 maps.refresh();
@@ -101,7 +118,6 @@
             <p>
                This sample visualizes the names of all the states in USA in data labels. Options have been provided to change the intersect action and smart labels mode of the data labels.
            </p>
-        </div>
         </div>
 }
 @section Description{

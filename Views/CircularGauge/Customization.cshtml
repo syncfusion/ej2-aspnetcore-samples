@@ -28,7 +28,7 @@
         <div class="content-wrapper" id="circular" style="display: block">
             <ejs-circulargauge id="circular" load="gaugeload" centerY='70%'>
                 <e-circulargauge-axes>
-                    <e-circulargauge-axis startAngle="300" endAngle="60" minimum="999" maximum="2000" radius="80%">
+                    <e-circulargauge-axis startAngle="300" endAngle="60" minimum="1" maximum="200" radius="80%">
                         <e-axis-linestyle width="8" color="transparent"></e-axis-linestyle>
                         <e-axis-labelstyle offset="-5"></e-axis-labelstyle>
                         <e-axis-majorticks width="0" color="transparent"></e-axis-majorticks>
@@ -44,23 +44,27 @@
         <table id="property" title="Properties" style="width: 100%; margin-left: -10px">
             <tbody>
                 <tr style="height: 50px">
-                    <td>
-                        <img id="random" src="~/styles/images/circulargauge/gauge1.png" alt="Customized gauge 1" style="margin-left:25px;margin-top:10px;">
-                        <div id="random_line" style="display:block;left: 0px;background: #ff4081;padding-top: 0px;height: 2px !important;width: 85px;margin: 2px 2px 2px 17px;"></div>
+                    <td align="center">
+                        <img id="random" src="~/styles/images/circulargauge/gauge1.png" alt="Customized gauge 1" style="margin-top:10px;">
+                        <div id="random_line" style="display:block;left: 0px;background: #ff4081;padding-top: 0px;height: 2px !important;width: 85px;margin: 2px 2px 2px 9px;"></div>
                     </td>
-                    <td>
-                        <img id="usage" src="~/styles/images/circulargauge/gauge2.png" alt="Customized gauge 2" style="margin-left:25px;margin-top:10px;">
-                        <div id="usage_line" style="display:none;left: 0px;background: #ff4081;padding-top: 0px;height: 2px !important;width: 85px;margin: 2px 2px 2px 17px;"></div>
+                    <td align="center">
+                        <img id="usage" src="~/styles/images/circulargauge/gauge2.png" alt="Customized gauge 2" style="margin-top:10px;">
+                        <div id="usage_line" style="display:none;left: 0px;background: #ff4081;padding-top: 0px;height: 2px !important;width: 85px;margin: 2px 2px 2px 5px;"></div>
                     </td>
                 </tr>
+                <tr style="height: 20px"></tr>
                 <tr style="height: 50px">
                     <td>
-                        <div id="currentPointerValue">Current Value <span> &nbsp;&nbsp;&nbsp;1800</span> </div>
+                        <div>Current Value</div>
                     </td>
                     <td>
                         <div>
-                            <input type="range" id="currentValue" value="1800" min="1000" max="2000" style="width:120px; margin-left: 20px">
+                            <input type="range" id="currentValue" value="180" min="1" max="200" style="width:54%; margin-left: 20px">
                         </div>
+                    </td>
+                    <td style="width: 10%;padding-top: 10px;text-align: center;">
+                        <span id='currentPointerValue' style="margin-left: -30px;">180</span>
                     </td>
                 </tr>
                 <tr style="height: 50px">
@@ -70,7 +74,7 @@
                     <td>
                         <div style="margin-left: 20px">
                             <select id="barColor" class="form-control">
-                                <option value="#FFDD00" selected="true">#FFDD00</option>
+                                <option value="#FFDD00">#FFDD00</option>
                                 <option value="#00bdae">#00bdae</option>
                                 <option value="#FF2680">#FF2680</option>
                             </select>
@@ -84,7 +88,7 @@
                     <td>
                         <div style="margin-left: 20px">
                             <select id="rangeColor" class="form-control">
-                                <option value="#E0E0E0" selected="true">#E0E0E0</option>
+                                <option value="#E0E0E0">#E0E0E0</option>
                                 <option value="#7bb4eb">#7bb4eb</option>
                                 <option value="#ea7a57">#ea7a57</option>
                             </select>
@@ -98,7 +102,7 @@
                     <td>
                         <div style="margin-left: 20px">
                             <select id="pointerColor" class="form-control">
-                                <option value="#424242" selected="true">#424242</option>
+                                <option value="#424242">#424242</option>
                                 <option value="#6f6fe2">#6f6fe2</option>
                                 <option value="#9e480e">#9e480e</option>
                             </select>
@@ -122,7 +126,7 @@
         var pointerColor;
         barColor = new ej.dropdowns.DropDownList({
             index: 0,
-            width: 120,
+            width: '100%',
             change: function () {
                 gauge.axes[0].pointers[0].color = barColor.value.toString();
                 gauge.refresh();
@@ -131,7 +135,7 @@
         barColor.appendTo('#barColor');
         rangeColor = new ej.dropdowns.DropDownList({
             index: 0,
-            width: 120,
+            width: '100%',
             change: function () {
                 gauge.axes[0].ranges[0].color = rangeColor.value.toString();
                 gauge.refresh();
@@ -140,7 +144,7 @@
         rangeColor.appendTo('#rangeColor');
         pointerColor = new ej.dropdowns.DropDownList({
             index: 0,
-            width: 120,
+            width: '100%',
             change: function () {
                 var color = pointerColor.value.toString();
                 if (!isUsage) {
@@ -162,7 +166,7 @@
             element.max = '100';
             element.value = usage.axes[0].pointers[0].value.toString();
             document.getElementById('currentPointerValue').innerHTML =
-                'Current Value <span>    ' + usage.axes[0].pointers[0].value + '</span>';
+                usage.axes[0].pointers[0].value.toString();
             barColor.value = usage.axes[0].pointers[0].color;
             rangeColor.value = usage.axes[0].ranges[0].color;
             pointerColor.enabled = false;
@@ -190,11 +194,11 @@
             var pointElement = document.getElementById('pointColor');
             pointElement.className = 'e-enabled';
             pointerColor.enabled = true;
-            element.min = '1000';
-            element.max = '2000';
+            element.min = '1';
+            element.max = '200';
             element.value = random.axes[0].pointers[0].value.toString();
-            document.getElementById('currentPointerValue').innerHTML = 'Current Value <span>&nbsp;&nbsp;&nbsp;' +
-                random.axes[0].pointers[0].value + '</span>';
+            document.getElementById('currentPointerValue').innerHTML =
+                random.axes[0].pointers[0].value.toString();
             barColor.value = random.axes[0].pointers[0].color;
             rangeColor.value = random.axes[0].ranges[0].color;
             pointerColor.value = random.axes[0].pointers[1].color;
@@ -206,8 +210,8 @@
                 if (!isUsage)
                     gauge.axes[0].pointers[1].value = value;
 
-                gauge.axes[0].annotations[0].content = '<div style="color:#666666;font-size:35px;">' + value + (isUsage ? 'GB' : '') + '</div>';                
-            document.getElementById('currentPointerValue').innerHTML = 'Current Value <span>&nbsp;&nbsp;&nbsp;' + value + '</span>';
+            gauge.axes[0].annotations[0].content = '<div style="color:#666666;font-size:35px;font-family:Segeo UI">' + value + (isUsage ? 'GB' : ' ' + 'Mbps') + '</div>';                
+            document.getElementById('currentPointerValue').innerHTML = value.toString();
                 gauge.refresh();
             };
         @* custom code start *@
@@ -238,10 +242,10 @@
             },
             axes: [{
                 annotations: [{
-                    content: '<div style="color:#666666;font-size:35px;">50.5GB</div>',
+                    content: '<div style="color:#666666;font-size:35px;font-family:Segeo UI">50.5GB</div>',
                     angle: 180, radius: '0%', zIndex: 1
                 }, {
-                    content: '<div style="color:#757575;font-size:15px;">Used</div>',
+                    content: '<div style="color:#757575;font-size:15px;font-family:Segeo UI">Used</div>',
                     angle: 180, radius: '25%',
                     textStyle: {
                         fontFamily: 'Roboto',
@@ -291,23 +295,23 @@
         };
         axis.pointers = [{
             type: 'RangeBar',
-            value: 1800, radius: '90%',
+            value: 180, radius: '90%',
             color: '#FFDD00', animation: { duration: 0 },
             pointerWidth: 30
         }, {
-            radius: '90%', value: 1800,
+            radius: '90%', value: 180,
             color: '#424242',
             animation: { duration: 0 },
             pointerWidth: 9,
             cap: { radius: 10, color: '#424242', border: { width: 0 } }
         }];
         axis.annotations = [{
-            content: '<div style="color:#666666;font-size:35px;">1800</div>',
+            content: '<div style="color:#666666;font-size:35px;font-family:Segeo UI">180 Mbps</div>',
             angle: 0,
             radius: '110%', zIndex: 1
         }];
         axis.ranges = [{
-            start: 1000, end: 2000,
+            start: 1, end: 200,
             radius: '90%',
             startWidth: 30, endWidth: 30,
             color: '#E0E0E0'

@@ -27,13 +27,16 @@
     </div>
 }
 @section ControlsSection{
+@{ 
+    var labelFont = new Syncfusion.EJ2.CircularGauge.CircularGaugeFont { FontFamily = "Segoe UI", Opacity = 1, Size = "12px" };
+}
     <div class="col-md-8 control-section">
         <div class="content-wrapper">
             <ejs-circulargauge id="circular" load="gaugeload">
                 <e-circulargauge-axes>
                     <e-circulargauge-axis startAngle="210" endAngle="150" minimum="0" maximum="170" radius="75%">
                         <e-axis-linestyle width="2" color="#9E9E9E"></e-axis-linestyle>
-                        <e-axis-labelstyle position="@Syncfusion.EJ2.CircularGauge.Position.Outside" autoAngle="true"></e-axis-labelstyle>
+                        <e-axis-labelstyle position="@Syncfusion.EJ2.CircularGauge.Position.Outside" autoAngle="true" font="labelFont"></e-axis-labelstyle>
                         <e-axis-majorticks position="@Syncfusion.EJ2.CircularGauge.Position.Inside" color="#757575" width="2" height="10" interval="20"></e-axis-majorticks>
                         <e-axis-minorticks position="@Syncfusion.EJ2.CircularGauge.Position.Inside" color="#757575" width="2" height="5" interval="10"></e-axis-minorticks>
                     </e-circulargauge-axis>
@@ -49,9 +52,9 @@
                     <div> Ticks </div>
                 </td>
                 <td>
-                    <div style="margin-left: 10px">
+                    <div>
                         <select id="Ticks" class="form-control">
-                            <option value="major" selected="true">Major Ticks</option>
+                            <option value="major">Major Ticks</option>
                             <option value="minor">Minor Ticks</option>
                         </select>
                     </div>
@@ -62,9 +65,9 @@
                     <div> Tick Position </div>
                 </td>
                 <td>
-                    <div style="margin-left: 10px">
+                    <div>
 						<select id="tickposition" class="form-control">
-							<option value="Inside" selected="true">Inside</option>
+							<option value="Inside">Inside</option>
 							<option value="Cross">Cross</option>
 							<option value="Outside">Outside</option>
 						</select>
@@ -76,7 +79,7 @@
                     <div> Label Position </div>
                 </td>
                 <td>
-                    <div style="margin-left: 10px">
+                    <div>
 						<select id="labelposition" class="form-control">
 							<option value="Outside">Outside</option>
 							<option value="Cross">Cross</option>
@@ -87,41 +90,50 @@
             </tr>
             <tr>
                 <td>
-                    <div id="offset" style="margin-top: 10px">Tick Offset <span>&nbsp;&nbsp;&nbsp;0</span> </div>
+                    <div style="margin-top: 10px">Tick Offset</div>
                 </td>
                 <td>
                     <div>
-                        <input type="range" id="tickOffset" value="0" min="0" max="50" style="width: 120px; margin-top: 10px; margin-left: 10px">
+                        <input type="range" id="tickOffset" value="0" min="0" max="50" style="width: 80%; margin-top: 10px;">
                     </div>
+                </td>
+                <td style="width: 10%;padding-top: 20px;text-align: center;">
+                    <span id='offset' style="margin-left: -20px;">0</span>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <div id="height" style="margin-top: 20px">Tick Height <span>&nbsp;&nbsp;&nbsp;10</span> </div>
+                    <div style="margin-top: 20px">Tick Height</div>
                 </td>
                 <td>
                     <div>
-                        <input type="range" id="tickHeight" value="10" min="1" max="50" style="width: 120px; margin-top: 20px; margin-left: 10px">
+                        <input type="range" id="tickHeight" value="10" min="1" max="50" style="width: 80%; margin-top: 20px;">
                     </div>
+                </td>
+                <td style="width: 10%;padding-top: 30px;text-align: center;">
+                    <span id='height' style="margin-left: -20px;">10</span>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <div id="labelOffsetValue" style="margin-top: 20px">Label Offset <span>&nbsp;&nbsp;&nbsp;0</span> </div>
+                    <div style="margin-top: 20px">Label Offset </div>
                 </td>
                 <td>
                     <div>
-                        <input type="range" id="labelOffset" value="0" min="0" max="50" style="width: 120px; margin-top: 20px; margin-left: 10px">
+                        <input type="range" id="labelOffset" value="0" min="0" max="50" style="width: 80%; margin-top: 20px;">
                     </div>
+                </td>
+                <td style="width: 10%;padding-top: 30px;text-align: center;">
+                    <span id='labelOffsetValue' style="margin-left: -20px;">0</span>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <div id="enablePointer" style="margin-top: 20px">Show Last Label </div>
+                    <div id="enablePointer" style="margin-top: 15px">Show Last Label </div>
                 </td>
                 <td>
                     <div>
-                        <input type="checkbox" id="enable" style="width: 120px; margin-top: 25px; margin-left: 10px;">
+                        <input type="checkbox" id="enable" style="margin-top: 20px;">
                     </div>
                 </td>
             </tr>
@@ -146,9 +158,6 @@
             return;
         window.gaugeLoaded = true;
         var axis = args.gauge.axes[0];
-        axis.labelStyle.font = {
-            size: "10px"
-        };
 		axis.ranges = [{ start: 0, end: 145, color: '#8BC34A', radius: '60%' }];
         axis.annotations = [{
             content: '<div id="content" style="color:#518C03;font-size:20px;font-family:Segoe UI;font-weight:semibold;">145</div>',
@@ -161,7 +170,7 @@
     window.addEventListener('load', function () {
         var ticks, tickPosition, labelPosition;
         ticks = new ej.dropdowns.DropDownList({
-            index: 0, width: 120,
+            index: 0, width: '100%',
             change: function () {
                 var value = ticks.value.toString();
                 var tick;
@@ -175,13 +184,13 @@
                 tickPosition.value = tick.position;
                 document.getElementById('tickOffset').value = tick.offset.toString();
                 document.getElementById('tickHeight').value = tick.height.toString();
-                document.getElementById('offset').innerHTML = 'Tick Offset <span>   ' + tick.offset;
-                document.getElementById('height').innerHTML = 'Tick Height <span>   ' + tick.height;
+                document.getElementById('offset').innerHTML = tick.offset.toString();
+                document.getElementById('height').innerHTML = tick.height.toString();
             }
         });
         ticks.appendTo('#Ticks');
         tickPosition = new ej.dropdowns.DropDownList({
-            index: 0, width: 120,
+            index: 0, width: '100%',
             change: function () {
                 var value = tickPosition.value.toString();
                 if (isMajorTicks) {
@@ -195,7 +204,7 @@
         });
         tickPosition.appendTo('#tickposition');
         labelPosition = new ej.dropdowns.DropDownList({
-            index: 0, width: 120,
+            index: 0, width: '100%',
             change: function () {
                 circulargauge.axes[0].labelStyle.position = labelPosition.value.toString();
                 circulargauge.refresh();
@@ -211,7 +220,7 @@
                 else {
                     circulargauge.axes[0].minorTicks.offset = value;
                 }
-            document.getElementById('offset').innerHTML = 'Tick Offset <span>&nbsp;&nbsp;&nbsp;' + value;
+            document.getElementById('offset').innerHTML = value.toString();
                 circulargauge.refresh();
             };
         document.getElementById('tickHeight').onpointermove = document.getElementById('tickHeight').ontouchmove =
@@ -223,14 +232,14 @@
                 else {
                     circulargauge.axes[0].minorTicks.height = value;
                 }
-            document.getElementById('height').innerHTML = 'Tick Height <span>&nbsp;&nbsp;&nbsp;' + value;
+            document.getElementById('height').innerHTML = value.toString();
                 circulargauge.refresh();
             };
         document.getElementById('labelOffset').onpointermove = document.getElementById('labelOffset').ontouchmove =
             document.getElementById('labelOffset').onchange = function () {
                 var value = parseInt(document.getElementById('labelOffset').value, 10);
                 circulargauge.axes[0].labelStyle.offset = value;
-            document.getElementById('labelOffsetValue').innerHTML = 'Label Offset <span>&nbsp;&nbsp;&nbsp;' + value;
+            document.getElementById('labelOffsetValue').innerHTML = value.toString();
                 circulargauge.refresh();
             };
         document.getElementById('enable').onchange = function () {

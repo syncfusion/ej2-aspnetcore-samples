@@ -9,7 +9,6 @@
                     var dict = new Dictionary<string, object>();
                     dict.Add("number", true);
                     dict.Add("min", 0);
-                    var editparams = new { @params = new { format = "n" } };
                 }
                 <ejs-treegrid id="TreeGrid" dataSource="ViewBag.dataSource" childMapping="Children" height="350" treeColumnIndex="1" allowPaging="true" allowSorting="true" allowReordering="true"
                               load="load" actionBegin="actionBegin" actionComplete="actionComplete" expanded="expanded" collapsed="collapsed" columnDragStart="columnDragStart"
@@ -21,7 +20,7 @@
                         <e-treegrid-column field="TaskId" headerText="Task ID" isPrimaryKey="true" validationRules="@(new { required=true, number=true})" textAlign="Right" width="100"></e-treegrid-column>
                         <e-treegrid-column field="TaskName" headerText="Task Name" validationRules="@(new { required=true})" editType="stringedit" width="210"></e-treegrid-column>
                         <e-treegrid-column field="StartDate" headerText=" Start Date" validationRules="@(new { date=true})" editType="datepickeredit" textAlign="Right" format="yMd" type="date" width="150"></e-treegrid-column>
-                        <e-treegrid-column field="Duration" headerText="Duration" validationRules="@(dict)" editType="numericedit" textAlign="Right" edit="editparams" width="120"></e-treegrid-column>
+                        <e-treegrid-column field="Duration" headerText="Duration" validationRules="@(dict)" editType="numericedit" textAlign="Right" edit="@(new{@params=new{format="n"}})" width="120"></e-treegrid-column>
                     </e-treegrid-columns>
                 </ejs-treegrid>
             </div>

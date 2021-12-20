@@ -4,7 +4,7 @@
         var toolbars = new string[] { "Zoom", "ZoomIn", "ZoomOut", "Pan", "Reset" };
         var propertyPath = new[] { "continent" };
     }
-    <div class="col-lg-9 control-section">
+    <div class="col-lg-8 control-section">
         <div id="maps">
             <ejs-maps id="maps" load="window.onMapLoad" loaded="onCreated">
                 <e-maps-zoomsettings enable="true" toolbars="toolbars" pinchZooming="true"></e-maps-zoomsettings>
@@ -17,65 +17,82 @@
             </ejs-maps>
         </div>
         </div>
-<div class="col-lg-3 property-section">
-    <table id="property" title="Properties" style="width: 100%; margin-left: -10px">
+<div class="col-lg-4 property-section">
+    <table id="property" title="Properties" style="width: 100%;">
 		<tbody>
 			<tr style="height: 50px">
 				<td style="width: 50%">
-					<div style="width: 120%">Zooming</div>
+					<div style="margin-top: 5px;">Zooming</div>
 				</td>
 				<td>
-					<input type="checkbox" checked id="zoom" style="margin-top: 15px; margin-left:50px;" />
+                    <div style="margin-left:-10px">
+                        <input type="checkbox" checked id="zoom" style="margin-top: 10px; margin-left:10px;" />
+                    </div>
 				</td>
 			</tr>
 			<tr style="height: 50px">
 				<td style="width: 50%">
-					<div style="width: 120%">Panning</div>
+					<div style="margin-top: 5px;">Panning</div>
 				</td>
 				<td>
-					<input type="checkbox" checked id="panning" style="margin-top: 15px; margin-left:50px;" />
+                    <div style="margin-left:-10px">
+                        <input type="checkbox" checked id="panning" style="margin-top: 10px; margin-left:10px;" />
+                    </div>
 				</td>
 			</tr>
 			<tr style="height: 50px">
 				<td style="width: 50%">
-					<div style="width: 120%">Mouse wheel zoom</div>
+					<div style="margin-top: 5px;">Mouse wheel zoom</div>
 				</td>
 				<td>
-					<input type="checkbox" checked id="mousewheel" style="margin-top: 15px; margin-left:50px;" />
+                    <div style="margin-left:-10px">
+                        <input type="checkbox" checked id="mousewheel" style="margin-top: 10px; margin-left:10px;" />
+                    </div>
 				</td>
 			</tr>
 			<tr style="height: 50px">
 				<td style="width: 50%">
-					<div style="width: 120%">Pinch zoom</div>
+					<div style="margin-top: 5px;">Pinch zoom</div>
 				</td>
 				<td>
-					<input type="checkbox" checked id="pinch" style="margin-top: 15px; margin-left:50px;" />
+                    <div style="margin-left:-10px">
+                        <input type="checkbox" checked id="pinch" style="margin-top: 10px; margin-left:10px;" />
+                    </div>
 				</td>
 			</tr>
 			<tr style="height: 50px">
 				<td style="width: 50%">
-					<div style="width: 120%">Single click zoom</div>
+					<div style="margin-top: 5px;">Single click zoom</div>
 				</td>
 				<td>
-					<input type="checkbox" id="singletap" style="margin-top: 15px; margin-left:50px;" />
+                    <div style="margin-left:-10px">
+                        <input type="checkbox" id="singletap" style="margin-top: 10px; margin-left:10px;" />
+                    </div>
 				</td>
 			</tr>
 			<tr style="height: 50px">
 				<td style="width: 50%">
-					<div style="width: 120%">Double click zoom</div>
+					<div style="margin-top: 5px;">Double click zoom</div>
 				</td>
 				<td>
-					<input type="checkbox" id="doubletap" style="margin-top: 15px; margin-left:50px;" />
+                    <div style="margin-left:-10px">
+                        <input type="checkbox" id="doubletap" style="margin-top: 10px; margin-left:10px;" />
+                    </div>
 				</td>
 			</tr>
-			<tr style="height: 50px">
+            <tr style="height: 50px">
                 <td style="width: 50%">
-                    <div style="width: 120%">Animation duration <br><span id="dur">500 ms</span></div>
+                    <div>Animation duration</div>
                 </td>
-				<td>
-					<div id="range" style="margin-left: 10px; width: 80px"></div>
-				</td>
-			</tr>
+                <td>
+                    <div style="margin-left:-10px">
+                        <input type="range" id="range" value="500" min="0" max="500" step="250" style="width:60%;">
+                    </div>
+                </td>
+                <td style="padding-top: 20px;text-align: center;">
+                    <span id='dur' style="margin-left: -28px;">500</span>
+                </td>
+            </tr>
 		</tbody>
     </table>
 </div>
@@ -157,6 +174,9 @@
         top: calc(50% - 4px);
         border-radius: 5px;
     }
+    .property-panel-header {
+        margin-left: 10px;
+    }
 </style>
 <script>
     var maps;
@@ -175,7 +195,7 @@
         var slider = new ej.inputs.Slider(
             {
                 value: 500,
-                min: 0, max: 2000, step: 1,
+                min: 0, max: 1000, step: 250,
                 change: function (args) {
                     window.maps.layers[0].animationDuration = args.value;
                 }
@@ -184,7 +204,7 @@
         slider.change = sliderChange = function (e) {
             maps.layers[0].animationDuration = e.value;
             maps.refresh();
-            document.getElementById('dur').innerHTML = e.value.toString() + ' ms';
+            document.getElementById('dur').innerHTML = e.value.toString();
         };
         document.getElementById('mousewheel').onchange = function () {
             var element = (document.getElementById('mousewheel'));

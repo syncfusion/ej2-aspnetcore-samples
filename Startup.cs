@@ -11,6 +11,7 @@ using System.IO;
 using Microsoft.AspNetCore.StaticFiles;
 using Syncfusion.Licensing;
 using EJ2ScheduleSample.Controllers;
+using Microsoft.Extensions.Hosting;
 
 namespace EJ2CoreSampleBrowser
 {
@@ -31,17 +32,14 @@ namespace EJ2CoreSampleBrowser
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc()
- .AddJsonOptions(x =>
- {
-     x.SerializerSettings.ContractResolver = null;
- });
+            services.AddMvc().AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = null);
+            services.AddControllersWithViews();
             services.AddSignalR();
             services.AddDirectoryBrowser();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -51,18 +49,21 @@ namespace EJ2CoreSampleBrowser
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
             }
-            
-            app.UseMvc(routes =>
+
+            app.UseRouting();
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller}/{action}/{id?}",
-                    defaults: new { controller = "Home", action = "Index" }
-                    );
+                endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                        name: "default",
+                        pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapHub<ScheduleHub>("/scheduleHub");
             });
 
-            // app.UseStaticFiles(); // For the wwwroot folder
             app.UseFileServer();
 
             app.UseStaticFiles(new StaticFileOptions
@@ -70,7 +71,7 @@ namespace EJ2CoreSampleBrowser
                 ServeUnknownFileTypes = true,
                 DefaultContentType = "plain/text",
                 FileProvider = new PhysicalFileProvider(
-            Path.Combine(Directory.GetCurrentDirectory(), "Controllers")),
+                Path.Combine(Directory.GetCurrentDirectory(), "Controllers")),
                 RequestPath = "/Controllers"
             });
 
@@ -79,14 +80,9 @@ namespace EJ2CoreSampleBrowser
                 ServeUnknownFileTypes = true,
                 DefaultContentType = "plain/text",
                 FileProvider = new PhysicalFileProvider(
-            Path.Combine(Directory.GetCurrentDirectory(), "Views")),
+                Path.Combine(Directory.GetCurrentDirectory(), "Views")),
                 RequestPath = "/Views"
             });
-            app.UseSignalR(routes =>  // <-- SignalR 
-            {
-                routes.MapHub<ScheduleHub>("/scheduleHub");
-            });
-
         }
     }
 }

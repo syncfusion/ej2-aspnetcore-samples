@@ -30,6 +30,7 @@
             new { start = 40, end = 80, color = "#FFDD00" },
             new { start = 80, end = 120, color = "#F03E3E" }
             };
+        var labelFont = new Syncfusion.EJ2.CircularGauge.CircularGaugeFont { FontFamily = "Segoe UI", Opacity = 1, Size = "12px", FontWeight = "Regular" };
     }
     <div class="col-md-8 control-section">
         <div class="content-wrapper">
@@ -37,8 +38,7 @@
                 <e-circulargauge-axes>
                     <e-circulargauge-axis startAngle="210" endAngle="150" minimum="0" maximum="120" radius="80%">
                         <e-axis-linestyle width="10" color="transparent"></e-axis-linestyle>
-                        <e-axis-labelstyle position="@Syncfusion.EJ2.CircularGauge.Position.Inside" useRangeColor="false">
-                        </e-axis-labelstyle>
+                        <e-axis-labelstyle position="@Syncfusion.EJ2.CircularGauge.Position.Inside" useRangeColor="false" font="labelFont" />
                         <e-axis-majorticks height="10" offset="5"></e-axis-majorticks>
                         <e-axis-minorticks height="10" width="0" color="transparent"></e-axis-minorticks>
                     </e-circulargauge-axis>
@@ -64,33 +64,39 @@
             </tr>
             <tr style="height: 50px">
                 <td>
-                    <div id='rangeStart'>Range Start <span> &nbsp;&nbsp;&nbsp;0</span> </div>
+                    <div>Range Start</div>
                 </td>
                 <td>
                     <div>
-                        <input type="range" id="start" value="0" min="0" max="120" style="width: 110px; margin-left: 10px" />
+                        <input type="range" id="start" value="0" min="0" max="120" style="width: 70%; margin-left: 10px" />
                     </div>
+                </td>
+                <td style="width: 10%;padding-top: 10px;text-align: center;">
+                    <span id='rangeStart' style="margin-left: -20px;">0</span>
                 </td>
             </tr>
 
             <tr style="height: 50px">
                 <td>
-                    <div id='rangeEnd'>Range End <span> &nbsp;&nbsp;&nbsp;40</span> </div>
+                    <div>Range End</div>
                 </td>
                 <td>
                     <div>
-                        <input type="range" id="end" value="40" min="0" max="120" style="width: 110px; margin-left: 10px" />
+                        <input type="range" id="end" value="40" min="0" max="120" style="width: 70%; margin-left: 10px" />
                     </div>
+                </td>
+                <td style="width: 10%;padding-top: 10px;text-align: center;">
+                    <span id='rangeEnd' style="margin-left: -20px;">40</span>
                 </td>
             </tr>
             <tr style="height: 50px">
                 <td>
-                    <div id=''>Range Color</div>
+                    <div>Range Color</div>
                 </td>
                 <td>
                     <div style="margin-left: 10px">
                         <select id="rangeColor" class="form-control">
-                            <option value="#30B32D" selected=true>#30B32D</option>
+                            <option value="#30B32D" selected="true">#30B32D</option>
                             <option value="#FFDD00">#FFDD00</option>
                             <option value="#F03E3E">#F03E3E</option>
                         </select>
@@ -102,44 +108,61 @@
                     <div id='enablePointer'>Range Font Color</div>
                 </td>
                 <td style="width: 40%;">
-                    <div>
-                        <input type="checkbox" id="enable" style="width: 110px; margin-left: 10px" />
+                    <div class="textAlign">
+                        <input type="checkbox" id="enable" style="margin-left: 10px" />
                     </div>
                 </td>
             </tr>
             <tr style="height: 50px">
                 <td>
-                    <div id='rangeStartWidth'>Start Width <span> &nbsp;&nbsp;&nbsp;10</span> </div>
+                    <div>Start Width</div>
                 </td>
                 <td>
                     <div>
-                        <input type="range" id="startWidth" value="10" min="0" max="30" style="width: 110px; margin-left: 10px" />
+                        <input type="range" id="startWidth" value="10" min="0" max="30" style="width: 70%; margin-left: 10px" />
                     </div>
+                </td>
+                <td style="width: 10%;padding-top: 10px;text-align: center;">
+                    <span id='rangeStartWidth' style="margin-left: -20px;">10</span>
                 </td>
             </tr>
             <tr style="height: 50px">
                 <td>
-                    <div id='rangeEndWidth'>End Width <span> &nbsp;&nbsp;&nbsp;10</span> </div>
+                    <div>End Width</div>
                 </td>
                 <td>
                     <div>
-                        <input type="range" id="endWidth" value="10" min="0" max="30" style="width: 110px; margin-left: 10px" />
+                        <input type="range" id="endWidth" value="10" min="0" max="30" style="width: 70%; margin-left: 10px" />
                     </div>
+                </td>
+                <td style="width: 10%;padding-top: 10px;text-align: center;">
+                    <span id='rangeEndWidth' style="margin-left: -20px;">10</span>
                 </td>
             </tr>
             <tr style="height: 50px">
                 <td>
-                    <div id="roundedRadius">Corner Radius</div>
+                    <div>Corner Radius</div>
                 </td>
                 <td>
                     <div>
-                        <input type="range" id="radius" value="0" min="0" max="30" step="5" style="width: 110px; margin-left: 10px">
+                        <input type="range" id="radius" value="0" min="0" max="30" step="5" style="width: 70%; margin-left: 10px">
                     </div>
+                </td>
+                <td style="width: 10%;padding-top: 10px;text-align: center;">
+                    <span id='radius' style="margin-left: -20px;">0</span>
                 </td>
             </tr>
         </table>
     </div>
 }
+<style>
+    .e-view.tailwind div.textAlign, .e-view.tailwind-dark div.textAlign, .e-view.fabric div.textAlign, .e-view.fabric-dark div.textAlign {
+        padding-top: 15px;
+    }
+    .e-view div.textAlign {
+        padding-top: 10px;
+    }
+</style>
 <script>
     var circulargauge;
     window.gaugeload = function (args) {
@@ -152,11 +175,7 @@
             return;
         window.gaugeLoaded = true;
         var axis = args.gauge.axes[0];
-        axis.labelStyle.font = {
-            fontFamily: "Roboto",
-            size: "12px",
-            fontWeight: "Regular"
-        };
+        
         circulargauge = args.gauge;
         axis.ranges = [{ start: 0, end: 40, color: '#30B32D' }, { start: 40, end: 80, color: '#FFDD00' },
         { start: 80, end: 120, color: '#F03E3E' }];
@@ -165,41 +184,40 @@
             cap: { radius: 7 }, needleTail: { length: '18%' }
         }];
         axis.annotations = [{
-            content: "<div><span style='font-size:14px; font-family:Regular'>Speedometer</span></div>",
+            content: "<div><span style='font-size:14px;font-family:Segoe UI'>Speedometer</span></div>",
             radius: "30%", angle: 0, zIndex: '1'
         }, {
-            content: "<div><span style='font-size:20px;  font-family:Regular'>65 MPH</span></div>",
+                content: "<div><span style='font-size:20px;font-family:Segoe UI'>65 MPH</span></div>",
             radius: "40%", angle: 180, zIndex: '1'
         }];
     }
     window.addEventListener('load', function () {
         var colortObj;
         var listObj = new ej.dropdowns.DropDownList({
-            index: 0, width: 110,
+            index: 0, width: '100%',
             change: function () {
                 var index = +listObj.value;
                 colortObj.value = circulargauge.axes[0].ranges[index].color;
                 (document.getElementById('endWidth')).value = circulargauge.axes[0].ranges[index].endWidth.toString();
-                document.getElementById('rangeEndWidth').innerHTML = 'End Width <span>    ' +
-                    circulargauge.axes[0].ranges[index].endWidth;
+                document.getElementById('rangeEndWidth').innerHTML = circulargauge.axes[0].ranges[index].endWidth.toString();
                 (document.getElementById('startWidth')).value = circulargauge.axes[0].ranges[index].startWidth.toString();
-                document.getElementById('rangeStartWidth').innerHTML = 'Start Width <span>    ' +
-                    circulargauge.axes[0].ranges[index].startWidth;
+                document.getElementById('rangeStartWidth').innerHTML = 
+                    circulargauge.axes[0].ranges[index].startWidth.toString();
                 (document.getElementById('end')).value = circulargauge.axes[0].ranges[index].end.toString();
-                document.getElementById('rangeEnd').innerHTML = 'Range End <span>    ' +
-                    circulargauge.axes[0].ranges[index].end;
+                document.getElementById('rangeEnd').innerHTML = 
+                    circulargauge.axes[0].ranges[index].end.toString();
                 (document.getElementById('start')).value = circulargauge.axes[0].ranges[index].start.toString();
-                document.getElementById('rangeStart').innerHTML = 'Range Start <span>    ' +
-                    circulargauge.axes[0].ranges[index].start;
+                document.getElementById('rangeStart').innerHTML = 
+                    circulargauge.axes[0].ranges[index].start.toString();
                 (document.getElementById('radius')).value = circulargauge.axes[0].ranges[index].roundedCornerRadius.toString();
-                document.getElementById('radius').innerHTML = 'Corner Radius <span>    ' +
-                    circulargauge.axes[0].ranges[index].roundedCornerRadius;
+                document.getElementById('radius').innerHTML = 
+                    circulargauge.axes[0].ranges[index].roundedCornerRadius.toString();
             }
         });
         listObj.appendTo('#rangeSelect');
 
         colortObj = new ej.dropdowns.DropDownList({
-            index: 0, width: 110,
+            index: 0, width: '100%',
             change: function () {
                 circulargauge.axes[0].ranges[listObj.value].color = colortObj.value.toString();
                 circulargauge.axes[0].pointers[0].animation.enable = false;
@@ -212,7 +230,7 @@
         document.getElementById('start').onchange = function () {
             circulargauge = document.getElementById('circular').ej2_instances[0];
             var min = parseInt((document.getElementById('start')).value, 10);
-            document.getElementById('rangeStart').innerHTML = 'Range Start <span>&nbsp;&nbsp;&nbsp;' + min;
+            document.getElementById('rangeStart').innerHTML = min.toString();
             circulargauge.axes[0].ranges[parseInt(listObj.value)].start = min;
             circulargauge.axes[0].pointers[0].animation.enable = false;
             circulargauge.refresh();
@@ -222,7 +240,7 @@
         document.getElementById('end').onchange = function () {
             circulargauge = document.getElementById('circular').ej2_instances[0];
             var max = parseInt((document.getElementById('end')).value, 10);
-            document.getElementById('rangeEnd').innerHTML = 'Range End <span> &nbsp;&nbsp;&nbsp;' + max;
+            document.getElementById('rangeEnd').innerHTML = max.toString();
             circulargauge.axes[0].ranges[listObj.value].end = max;
             circulargauge.axes[0].pointers[0].animation.enable = false;
             circulargauge.refresh();
@@ -231,7 +249,7 @@
         document.getElementById('startWidth').onpointermove = document.getElementById('startWidth').ontouchmove =
             document.getElementById('startWidth').onchange = function () {
                 var startWidth = parseInt((document.getElementById('startWidth')).value, 10);
-            document.getElementById('rangeStartWidth').innerHTML = 'Start Width <span> &nbsp;&nbsp;&nbsp;' + startWidth;
+            document.getElementById('rangeStartWidth').innerHTML = startWidth.toString();
                 circulargauge.axes[0].ranges[listObj.value].startWidth = startWidth;
                 circulargauge.axes[0].pointers[0].animation.enable = false;
                 circulargauge.refresh();
@@ -240,7 +258,7 @@
         document.getElementById('endWidth').onpointermove = document.getElementById('endWidth').ontouchmove =
             document.getElementById('endWidth').onchange = function () {
                 var endWidth = parseInt((document.getElementById('endWidth')).value, 10);
-            document.getElementById('rangeEndWidth').innerHTML = 'End Width <span> &nbsp;&nbsp;&nbsp;' + endWidth;
+            document.getElementById('rangeEndWidth').innerHTML = endWidth.toString();
                 circulargauge.axes[0].ranges[listObj.value].endWidth = endWidth;
                 circulargauge.axes[0].pointers[0].animation.enable = false; circulargauge.refresh();
             };
@@ -248,8 +266,8 @@
         document.getElementById('radius').onpointermove = document.getElementById('radius').ontouchmove =
             document.getElementById('radius').onchange = function () {
                 var radius = parseInt((document.getElementById('radius')).value, 10);
-            document.getElementById('radius').innerHTML = 'Corner Radius <span> &nbsp;&nbsp;&nbsp;' + radius;
-                circulargauge.axes[0].ranges[+listObj.value].roundedCornerRadius = radius;
+            document.getElementById('radius').innerHTML = radius.toString();
+                circulargauge.axes[0].ranges[listObj.value].roundedCornerRadius = radius;
                 circulargauge.axes[0].pointers[0].animation.enable = false; circulargauge.refresh();
             };
 

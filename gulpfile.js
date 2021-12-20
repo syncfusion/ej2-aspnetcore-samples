@@ -136,8 +136,8 @@ gulp.task('desValidation', function (done) {
         }
     }
     if (error || des) {
-        if (!fs.existsSync('./cireports')) {
-            fs.mkdirSync('./cireports');
+        if (!fs.existsSync('./cireports/logs')) {
+            fs.mkdirSync('./cireports/logs', { recursive: true });
         }
         fs.writeFileSync('./cireports/logs/descriptionValidation.txt', error + des, 'utf-8');
         done();

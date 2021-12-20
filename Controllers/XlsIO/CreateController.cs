@@ -24,8 +24,13 @@ namespace EJ2CoreSampleBrowser.Controllers.XlsIO
     public partial class XlsIOController : Controller
     {
         #region Getting Started
+#if NET6_0
+        private readonly IWebHostEnvironment _hostingEnvironment;
+        public XlsIOController(IWebHostEnvironment hostingEnvironment)
+#else
         private readonly IHostingEnvironment _hostingEnvironment;
         public XlsIOController(IHostingEnvironment hostingEnvironment)
+#endif
         {
             _hostingEnvironment = hostingEnvironment;
         }

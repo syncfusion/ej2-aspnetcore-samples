@@ -1926,7 +1926,7 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 14,
                 Subject = "Beach Clean-up",
                 StartTime = new DateTime(CurrentYear, 2, 14, 12, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 14, 2, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 14, 14, 0, 0),
                 EventType = "public-event",
                 City = "Mumbai",
                 CategoryColor = "#357cd2"
@@ -2463,7 +2463,7 @@ namespace EJ2CoreSampleBrowser.Models
             resourceData.Add(new ResourceData
             {
                 Id = 14,
-                Subject = "Test report Validation",
+                Subject = "Test report validation",
                 StartTime = new DateTime(CurrentYear, 4, 7, 9, 0, 0),
                 EndTime = new DateTime(CurrentYear, 4, 7, 11, 0, 0),
                 IsAllDay = false,
@@ -2533,7 +2533,7 @@ namespace EJ2CoreSampleBrowser.Models
             resourceData.Add(new ResourceData
             {
                 Id = 21,
-                Subject = "workflow Analysis",
+                Subject = "Workflow Analysis",
                 StartTime = new DateTime(CurrentYear, 4, 11, 9, 30, 0),
                 EndTime = new DateTime(CurrentYear, 4, 11, 11, 30, 0),
                 IsAllDay = false,
@@ -2663,7 +2663,7 @@ namespace EJ2CoreSampleBrowser.Models
             resourceData.Add(new ResourceData
             {
                 Id = 34,
-                Subject = "Test report Validation",
+                Subject = "Test report validation",
                 StartTime = new DateTime(CurrentYear, 4, 17, 9, 0, 0),
                 EndTime = new DateTime(CurrentYear, 4, 17, 11, 0, 0),
                 IsAllDay = false,
@@ -2733,7 +2733,7 @@ namespace EJ2CoreSampleBrowser.Models
             resourceData.Add(new ResourceData
             {
                 Id = 41,
-                Subject = "workflow Analysis",
+                Subject = "Workflow Analysis",
                 StartTime = new DateTime(CurrentYear, 4, 21, 9, 30, 0),
                 EndTime = new DateTime(CurrentYear, 4, 21, 11, 30, 0),
                 IsAllDay = false,
@@ -2863,7 +2863,7 @@ namespace EJ2CoreSampleBrowser.Models
             resourceData.Add(new ResourceData
             {
                 Id = 54,
-                Subject = "Test report Validation",
+                Subject = "Test report validation",
                 StartTime = new DateTime(CurrentYear, 4, 27, 9, 0, 0),
                 EndTime = new DateTime(CurrentYear, 4, 27, 11, 0, 0),
                 IsAllDay = false,
@@ -2949,7 +2949,7 @@ namespace EJ2CoreSampleBrowser.Models
             resourceTeamData.Add(new ResourceTeamData
             {
                 Id = 2,
-                Subject = "Test report Validation",
+                Subject = "Test report validation",
                 StartTime = new DateTime(CurrentYear, 6, 2, 10, 30, 0),
                 EndTime = new DateTime(CurrentYear, 6, 2, 13, 0, 0),
                 RecurrenceRule = "FREQ=WEEKLY;INTERVAL=1;BYDAY=MO,WE,FR",
@@ -3069,7 +3069,7 @@ namespace EJ2CoreSampleBrowser.Models
             resourceTeamData.Add(new ResourceTeamData
             {
                 Id = 15,
-                Subject = "Test report Validation",
+                Subject = "Test report validation",
                 StartTime = new DateTime(CurrentYear, 6, 8, 15, 30, 0),
                 EndTime = new DateTime(CurrentYear, 6, 8, 17, 45, 0),
                 ProjectId = 1,
@@ -3078,7 +3078,7 @@ namespace EJ2CoreSampleBrowser.Models
             resourceTeamData.Add(new ResourceTeamData
             {
                 Id = 16,
-                Subject = "Test report Validation",
+                Subject = "Test report validation",
                 StartTime = new DateTime(CurrentYear, 6, 8, 15, 0, 0),
                 EndTime = new DateTime(CurrentYear, 6, 8, 17, 0, 0),
                 ProjectId = 2,
@@ -6012,7 +6012,7 @@ namespace EJ2CoreSampleBrowser.Models
             timelineResourceData.Add(new ResourceData
             {
                 Id = 65,
-                Subject = "Test report Validation",
+                Subject = "Test report validation",
                 StartTime = new DateTime(CurrentYear, 4, 4, 15, 0, 0),
                 EndTime = new DateTime(CurrentYear, 4, 4, 18, 0, 0),
                 IsAllDay = false,

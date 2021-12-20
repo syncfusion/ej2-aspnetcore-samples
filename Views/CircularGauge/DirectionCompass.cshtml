@@ -23,13 +23,16 @@
     </div>
 }
 @section ControlsSection{
+@{ 
+    var labelFont = new Syncfusion.EJ2.CircularGauge.CircularGaugeFont { FontFamily = "Segoe UI", Opacity = 1, Size = "13px", FontWeight = "Regular" };
+}
     <div class="col-md-8 control-section">
         <div class="content-wrapper">
             <ejs-circulargauge id="circular" axisLabelRender="axisLabelRender" load="gaugeload">
                 <e-circulargauge-axes>
                     <e-circulargauge-axis startAngle="0" endAngle="360" minimum="0" maximum="8" radius="70%">
                         <e-axis-linestyle width="8" ></e-axis-linestyle>
-                        <e-axis-labelstyle autoAngle="true" hiddenLabel="@Syncfusion.EJ2.CircularGauge.HiddenLabel.Last">
+                        <e-axis-labelstyle autoAngle="true" hiddenLabel="@Syncfusion.EJ2.CircularGauge.HiddenLabel.Last" font="labelFont">
                         </e-axis-labelstyle>
                         <e-axis-majorticks height="15" interval="1" ></e-axis-majorticks>
                         <e-axis-minorticks height="10" interval="0.5" ></e-axis-minorticks>
@@ -47,7 +50,7 @@
                 </td>
                 <td>
                     <div>
-                        <select id="poiterColor" class="form-control" style="width:90%">
+                        <select id="poiterColor" class="form-control" style="width:100%">
                             <option value="#f03e3e" selected="true">#f03e3e</option>
                             <option value="#4472c4">#4472c4</option>
                             <option value="#ed7d31">#ed7d31</option>
@@ -61,7 +64,7 @@
                 </td>
                 <td>
                     <div>
-                        <select id="labelColor" class="form-control" style="width:90%">
+                        <select id="labelColor" class="form-control" style="width:100%">
                             <option value="#f03e3e" selected="true">#f03e3e</option>
                             <option value="#4472c4">#4472c4</option>
                             <option value="#ed7d31">#ed7d31</option>
@@ -81,7 +84,7 @@
         pointerColor = new ej.dropdowns.DropDownList({
             index: 0,
             placeholder: 'Select Range Bar Color',
-            width: 120,
+            width: '100%',
             change: function () {
                 var rangeColor = pointerColor.value.toString();
                 circulargauge.axes[0].pointers[0].color = rangeColor;                
@@ -92,7 +95,7 @@
         labelColor = new ej.dropdowns.DropDownList({
             index: 0,
             placeholder: 'Select Range Bar Color',
-            width: 120,
+            width: '100%',
             change: function () {
                 var rangeColor = labelColor.value.toString();
                 circulargauge.axes[0].labelStyle.font.color = rangeColor;
@@ -114,11 +117,7 @@
             return;
         window.gaugeLoaded = true;
         circulargauge = args.gauge;
-        var axis = args.gauge.axes[0];
-        axis.labelStyle.font = {
-            fontFamily: "Roboto",
-            size: "12px"
-        };
+        var axis = args.gauge.axes[0];        
         axis.pointers = [{
             value: 7,
             radius: '50%',

@@ -15,9 +15,14 @@ namespace EJ2CoreSampleBrowser.Controllers.PdfViewer
 
     public partial class PdfViewerController : Controller
     {
-        private readonly IHostingEnvironment _hostingEnvironment;
         private IMemoryCache _cache;
+#if NET6_0
+        private readonly IWebHostEnvironment _hostingEnvironment;
+        public PdfViewerController(IMemoryCache memoryCache, IWebHostEnvironment hostingEnvironment)
+#else
+        private readonly IHostingEnvironment _hostingEnvironment;
         public PdfViewerController(IMemoryCache memoryCache, IHostingEnvironment hostingEnvironment)
+#endif
         {
             _cache = memoryCache;
             _hostingEnvironment = hostingEnvironment;

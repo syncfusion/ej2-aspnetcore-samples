@@ -5,7 +5,8 @@
         <div class="content-wrapper">
             <div class="row material2">
                 <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
-                    <h5>Breadcrumb with Events</h5>
+                    <h5 style="display: inline-block">Breadcrumb with Events</h5>
+                    <ejs-button id="reset" cssClass="reset-btn e-small" content="Reset State" onclick="btnClick()"></ejs-button>
                 </div>
             </div>
             <div class="row material2">
@@ -60,10 +61,19 @@
 
         function logEvent(eventName) {
             var span = document.createElement('span');
-            span.innerHTML = 'Breadcrumb <b>' + eventName + '</b> event called<hr>';
+            span.innerHTML = 'Breadcrumb <b>' + eventName + '</b> event is triggered<hr>';
             var log = document.getElementById('EventLog');
             log.insertBefore(span, log.firstChild);
         }
+
+        function btnClick() {
+            var breadcrumb, breadcrumbInst, breadcrumbs = document.querySelector('.content-wrapper').getElementsByClassName("e-breadcrumb");
+            for (var i = 0; i < breadcrumbs.length; i++) {
+                breadcrumb = breadcrumbs[i];
+                breadcrumbInst = ej.base.getComponent(breadcrumb, 'breadcrumb');
+                breadcrumbInst.activeItem = breadcrumbInst.items[breadcrumbInst.items.length - 1].text;
+            }
+        };
     </script>
 
 @*custom code start*@
@@ -119,6 +129,11 @@
     .highcontrast .e-breadcrumb {
         margin-left: -4px;
     }
+
+    #reset {
+        float: right;
+        margin: 5px 2px 5px 0;
+    }
 </style>
 
 <style>
@@ -153,9 +168,9 @@
     <ul>
         <li>created - Triggers when the Breadcrumb is created.</li>
         <li>itemClick - Triggers when a Breadcrumb item is clicked.</li>
-        <li>beforeItemRender - Triggers while rendering each Breadcrumb item.</li>
+        <li>beforeItemRender - Triggers while rendering each Breadcrumb item and separator.</li>
     </ul>
-    <p>More information about <code>Breadcrumb</code> component can be found in this <a target='_blank' href="https://ej2.syncfusion.com/aspnetcore/documentation/breadcrumb/getting-started/">documentation section</a>.</p>
+    <p>More information about Breadcrumb component can be found in this <a target='_blank' href="https://ej2.syncfusion.com/aspnetcore/documentation/breadcrumb/getting-started/">documentation section</a>.</p>
 }
 
 @section Meta{

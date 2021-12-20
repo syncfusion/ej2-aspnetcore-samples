@@ -25,7 +25,12 @@
                 };
         var titleStyle = new MapsFont
         {
-            Size = "16px"
+            Size = "16px",
+            FontFamily = "Segoe UI"
+        };
+        var layerStyle = new MapsFont
+        {
+            FontFamily = "Segoe UI"
         };
         var propertyPath = new[] { "name" };
     }
@@ -38,7 +43,7 @@
                 <e-maps-layers>
                     <e-maps-layer shapeData="ViewBag.mapdata" shapeDataPath="name" shapePropertyPath="propertyPath" dataSource="ViewBag.population">
                         <e-layersettings-shapesettings colorValuePath="density" fill="#E5E5E5" colorMapping="colormapping"></e-layersettings-shapesettings>
-                        <e-layersettings-tooltipsettings visible="true" valuePath="name" format="${name} : ${density}"></e-layersettings-tooltipsettings>
+                        <e-layersettings-tooltipsettings visible="true" valuePath="name" format="${name} : ${density}" textStyle="layerStyle"></e-layersettings-tooltipsettings>
                     </e-maps-layer>
                 </e-maps-layers>
             </ejs-maps>
@@ -52,22 +57,22 @@
         <table id="property" title="Properties" style="width: 100%">
             <tbody>
                 <tr style="height: 50px">
-                    <td style="width: 10%">
-                        <div class="property-text" style="padding: 0px;">Legend mode</div>
+                    <td>
+                        <div style="padding: 0px;">Legend mode</div>
                     </td>
-                    <td style="width: 30%;">
-                        <select name="selectIndex" autocomplete="off" id="legendMode" style="width:60%;">
+                    <td>
+                        <select name="selectIndex" autocomplete="off" id="legendMode">
                             <option value="Default" selected>Default</option>
                             <option value="Interactive">Interactive</option>
                         </select>
                     </td>
                 </tr>
                 <tr style="height: 50px">
-                    <td style="width: 10%">
-                        <div class="property-text" style="padding: 0px;">Legend position</div>
+                    <td>
+                        <div style="padding: 0px;">Legend position</div>
                     </td>
-                    <td style="width: 30%">
-                        <select name="legendPos" autocomplete="off" id="legendPosition" style="width:60%;">
+                    <td>
+                        <select name="legendPos" autocomplete="off" id="legendPosition">
                             <option value="Top" selected>Top</option>
                             <option value="Bottom">Bottom</option>
                             <option value="Left">Left</option>
@@ -76,22 +81,22 @@
                     </td>
                 </tr>
                 <tr style="height: 50px">
-                    <td style="width: 70%">
-                        <div class="property-text" style="padding: 0px; margin-top: 10px">Show legend for remaining data source items</div>
+                    <td>
+                        <div  style="padding-top: 7px;margin-left:-10px;">Show legend for remaining data source items</div>
                     </td>
-                    <td style="width: 30%">
-                        <div style="padding-top: 0px; margin-left: 15px">
+                    <td>
+                        <div style="padding-top: 0px; margin-left: -20px">
                             <input type="checkbox" id="opacity" style="margin-top: 10px;" />
                         </div>
                     </td>
                 </tr>
                 <tr style="height: 50px">
-                    <td style="width: 70%">
-                        <div class="property-text" style="padding: 0px; margin-top: 25px">Show population density when the legend item is toggled</div>
+                    <td>
+                        <div class="property-text" style="padding-top: 7px;margin-left:-10px;">Show population density when the legend item is toggled</div>
                     </td>
-                    <td style="width: 30%">
-                        <div style="padding-top: 0px; margin-left: 15px">
-                            <input type="checkbox" id="togglelegend" style="margin-top:25px;" />
+                    <td>
+                        <div style="padding-top: 0px; margin-left: -20px">
+                            <input type="checkbox" id="togglelegend" />
                         </div>
                     </td>
                 </tr>
@@ -120,7 +125,7 @@
         var legendPosition = new ej.dropdowns.DropDownList({
             index: 0,
             placeholder: 'Legend Position',
-            width: 91,
+            width: '100%',
             change: () => {
                 maps.legendSettings.position = legendPosition.value;
                 if (legendPosition.value === 'Left' || legendPosition.value === 'Right') {
@@ -146,7 +151,7 @@
         var mode = new ej.dropdowns.DropDownList({
             index: 0,
             placeholder: 'Select layoutMode type',
-            width: 91,
+            width: '100%',
             change: () => {
                 maps.legendSettings.mode = mode.value;
                 if (mode.value === 'Interactive') {

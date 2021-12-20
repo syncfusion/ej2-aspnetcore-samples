@@ -14,8 +14,13 @@ namespace EJ2CoreSampleBrowser.Controllers.TextBoxes
 {
     public partial class UploaderController : Controller
     {
+#if NET6_0
+        private IWebHostEnvironment hostingEnv;
+        public UploaderController(IWebHostEnvironment env)
+#else
         private IHostingEnvironment hostingEnv;
         public UploaderController(IHostingEnvironment env)
+#endif
         {
             this.hostingEnv = env;
         }
@@ -68,7 +73,7 @@ namespace EJ2CoreSampleBrowser.Controllers.TextBoxes
                 if (!System.IO.File.Exists(fileSavePath))
                 {
                     System.IO.File.Delete(fileSavePath);
-                }                   
+                }  
             }
             catch (Exception e)
             {

@@ -4,19 +4,20 @@
 @section ControlsSection{
     @{
         var leafBorder = new TreeMapBorder { Color = "black", Width = 0.5 };
+        var titleFont = new TreeMapFont { FontFamily = "Segoe UI" };
     }
     <div class="col-lg-9 control-section">
         <div id="container">
             <ejs-treemap id="container" load="treeMapLoad" dataSource="ViewBag.dataSource" weightValuePath="Population" rangeColorValuePath="WinPercentage" equalColorValuePath="Winner" format="n" useGroupingSeparator="true">
-                <e-treemap-titlesettings text="US presidential election result - 2016"></e-treemap-titlesettings>
-                <e-treemap-leafitemsettings labelPath="State" fill="#6699cc" border="leafBorder">
+                <e-treemap-titlesettings text="US presidential election result - 2016" textStyle="titleFont"></e-treemap-titlesettings>
+                <e-treemap-leafitemsettings labelPath="State" fill="#6699cc" border="leafBorder" labelStyle="titleFont">
                     <e-leafitemsettings-colormappings>
                         <e-leafitemsettings-colormapping value="Trump" color="@("#D84444")"></e-leafitemsettings-colormapping>
                         <e-leafitemsettings-colormapping value="Clinton" color="@("#316DB5")"></e-leafitemsettings-colormapping>
                     </e-leafitemsettings-colormappings>
                 </e-treemap-leafitemsettings>
                 <e-treemap-legendsettings height="10" visible="true" position="@LegendPosition.Top" shape="@LegendShape.Rectangle"></e-treemap-legendsettings>
-                <e-treemap-tooltipsettings visible="true" format="<b>${Winner}</b><br>State : ${State}<br>Trump : ${Trump} %<br>Clinton : ${Clinton} %"></e-treemap-tooltipsettings>
+                <e-treemap-tooltipsettings visible="true" format="<b>${Winner}</b><br>State : ${State}<br>Trump : ${Trump} %<br>Clinton : ${Clinton} %" textStyle="titleFont"></e-treemap-tooltipsettings>
             </ejs-treemap>
         </div>
         <div style="float: right; margin-right: 10px;">
@@ -27,35 +28,48 @@
 <div class="col-lg-3 property-section">
     <table id="property" title="Properties" style="width: 100%">
         <tbody>
-            <tr style="height: 50px">
-                <td style="width: 40%">
-                    <div>Legend Type</div>
+            <tr>
+                <td>
+                    <div style="padding-top: 0px;">Legend Type</div>
                 </td>
                 <td style="width: 80%; height:30%">
-                    <select name="selectIndex" autocomplete="off" id="legendMode" style="width:60%;">
-                        <option value="Default" selected>Default</option>
-                        <option value="Interactive">Interactive</option>
-                    </select>
+                    <div style="padding-top: 0px;padding-left: 10px;">
+                        <select name="selectIndex" autocomplete="off" id="legendMode">
+                            <option value="Default" selected>Default</option>
+                            <option value="Interactive">Interactive</option>
+                        </select>
+                    </div>
                 </td>
             </tr>
-            <tr style="height: 50px">
-                <td style="width: 40%">
+            <tr>
+                <td>
                     <div class="property-text" style="padding: 0px;">Position</div>
                 </td>
-                <td style="width: 30%">
-                    <select name="selectIndex" autocomplete="off" id="legendPosition" style="width:60%;">
-                        <option value="Top" selected>Top</option>
-                        <option value="Bottom">Bottom</option>
-                        <option value="Left">Left</option>
-                        <option value="Right">Right</option>
-                        <option value="Auto">Auto</option>
-                    </select>
+                <td>
+                    <div style="padding-top: 0px;padding-left: 10px;">
+                        <select name="selectIndex" autocomplete="off" id="legendPosition">
+                            <option value="Top" selected>Top</option>
+                            <option value="Bottom">Bottom</option>
+                            <option value="Left">Left</option>
+                            <option value="Right">Right</option>
+                            <option value="Auto">Auto</option>
+                        </select>
+                    </div>
                 </td>
             </tr>
         </tbody>
     </table>
 </div>
 }
+<style>
+    .property-panel-table div {
+        padding-left: 0px;
+    }
+
+    tr {
+        height: 50px;
+    }
+</style>
 <script>
     @* custom code start *@
     function treeMapLoad(args) {
@@ -100,7 +114,7 @@
     window.onload = function () {
         window.legendMode = new ej.dropdowns.DropDownList({
             index: 0,
-            width: 120,
+            width: '100%',
             change: function () {
                 window.treemap.legendSettings.mode = window.legendMode.value;
                 window.treemap.refresh();

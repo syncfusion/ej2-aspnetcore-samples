@@ -1,19 +1,24 @@
 @using Syncfusion.EJ2;
 @section ControlsSection{
+    @{
+        var labelFont = new Syncfusion.EJ2.LinearGauge.LinearGaugeFont { FontFamily = "Segoe UI", Opacity = 1 };
+    }
     <div class="col-md-8 control-section">
         <div class="content-wrapper">
-            <ejs-lineargauge id="linear" load="gaugeLoad" title = 'Temperature Measure'>
-              <e-lineargauge-axes>
-                  <e-lineargauge-axis minimum="0" maximum="180">
-                      <e-axis-line width="0"></e-axis-line>
-                      <e-axis-majorticks interval="20" color="#9e9e9e" height="20"></e-axis-majorticks>
-                      <e-axis-minorticks  height="10" color="#9e9e9e"></e-axis-minorticks>
-                  </e-lineargauge-axis>
-                  <e-lineargauge-axis minimum="0" maximum="180" opposedPosition="true">
-                      <e-axis-line width="0"></e-axis-line>
-                      <e-axis-majorticks interval="20" height="20"></e-axis-majorticks>
-                  </e-lineargauge-axis>
-              </e-lineargauge-axes> 
+            <ejs-lineargauge id="linear" load="gaugeLoad" title='Temperature Measure'>
+                <e-lineargauge-axes>
+                    <e-lineargauge-axis minimum="0" maximum="180">
+                        <e-axis-line width="0"></e-axis-line>
+                        <e-axis-labelstyle font="labelFont"></e-axis-labelstyle>
+                        <e-axis-majorticks interval="20" color="#9e9e9e" height="20"></e-axis-majorticks>
+                        <e-axis-minorticks height="10" color="#9e9e9e"></e-axis-minorticks>
+                    </e-lineargauge-axis>
+                    <e-lineargauge-axis minimum="0" maximum="180" opposedPosition="true">
+                        <e-axis-line width="0"></e-axis-line>
+                        <e-axis-labelstyle font="labelFont"></e-axis-labelstyle>
+                        <e-axis-majorticks interval="20" height="20"></e-axis-majorticks>
+                    </e-lineargauge-axis>
+                </e-lineargauge-axes>
             </ejs-lineargauge>
         </div>
     </div>
@@ -26,20 +31,20 @@
                     </td>
                     <td>
                         <div style="margin-left:-10px">
-                            <select name="selectIndex" autocomplete="off" id="orientationMode" style="width:90%">
+                            <select name="selectIndex" autocomplete="off" id="orientationMode">
                                 <option value="Vertical" selected="">Vertical</option>
                                 <option value="Horizontal">Horizontal</option>
                             </select>
                         </div>
                     </td>
                 </tr>
-                <tr>
+                <tr style="height:55px;">
                     <td>
-                        <div style="margin-left:-10px; width:60px">Container Type</div>
+                        <div style="margin-left:-10px;">Container Type</div>
                     </td>
                     <td>
                         <div style="margin-left:-10px">
-                            <select name="selectIndex" autocomplete="off" id="containerMode" style="width:90%">
+                            <select name="selectIndex" autocomplete="off" id="containerMode">
                                 <option value="Thermometer">Thermometer</option>
                                 <option value="Normal" selected="">Normal</option>
                                 <option value="RoundedRectangle">RoundedRectangle</option>
@@ -58,7 +63,7 @@
         var containerMode = new ej.dropdowns.DropDownList({
             index: 0,
             placeholder: 'Select Range Bar Color',
-            width: 140,
+            width: '100%',
             change: function () {
                 gauge.container.type = containerMode.value;
                 gauge.refresh();
@@ -68,15 +73,15 @@
         var orientationMode = new ej.dropdowns.DropDownList({
             index: 0,
             placeholder: 'Select Range Bar Color',
-            width: 140,
+            width: '100%',
             change: function () {
                 gauge.orientation = orientationMode.value;
                 gauge.refresh();
             }
         });
-        orientationMode.appendTo('#orientationMode');       
+        orientationMode.appendTo('#orientationMode');
     });
-    
+
     var gauge;
     window.gaugeLoad = function (args) {
         @* custom code start *@
@@ -106,14 +111,14 @@
                 color: '#f02828'
             }
         ];
-        
+
         gauge.axes[1].pointers = [{ width: 0 }];
         gauge.orientation = 'Vertical';
     }
 </script>
 @section Meta{
-                    <meta name="description" content="This example demonstrates the Container in ASP.NET Core LinearGauge control. Explore here for more details."/>
-                }
+    <meta name="description" content="This example demonstrates the Container in ASP.NET Core LinearGauge control. Explore here for more details." />
+}
 @section ActionDescription{
     <div id="action-description">
         <p>
@@ -136,8 +141,8 @@
     </div>
 }
 @section Title{
-                    <title>ASP.NET Core LinearGauge Container Example - Syncfusion Demos </title> 
-                }
+    <title>ASP.NET Core LinearGauge Container Example - Syncfusion Demos </title>
+}
 @section Header{
-                    <h1 class='sb-sample-text'>Example of Container in ASP.NET Core LinearGauge Control</h1>
-                }
+    <h1 class='sb-sample-text'>Example of Container in ASP.NET Core LinearGauge Control</h1>
+}

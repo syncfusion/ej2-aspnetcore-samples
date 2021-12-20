@@ -28,12 +28,15 @@
     </div>
 }
 @section ControlsSection{
+@{ 
+    var labelFont = new Syncfusion.EJ2.LinearGauge.LinearGaugeFont { FontFamily = "Segoe UI", Opacity = 1 };
+}
     <div class="col-md-8 control-section">
         <ejs-lineargauge id="linear1" load="gaugeLoad">
             <e-lineargauge-axes>
                 <e-lineargauge-axis>
                     <e-axis-line width="0"></e-axis-line>
-                    <e-axis-labelstyle format="{value}%" offset="30"></e-axis-labelstyle>
+                    <e-axis-labelstyle format="{value}%" offset="30" font="labelFont"></e-axis-labelstyle>
                     <e-axis-majorticks height="0"></e-axis-majorticks>
                     <e-axis-minorticks height="0"></e-axis-minorticks>
                 </e-lineargauge-axis>
@@ -41,15 +44,15 @@
         </ejs-lineargauge>
     </div>
     <div class="col-md-4 property-section">
-        <table id="property" title="Properties" style="width: 100%; margin-left:-10px;">
+        <table id="property" title="Properties" style="width: 100%;">
             <tbody>
                 <tr>
                     <td>
                         <div> Select Range</div>
                     </td>
                     <td>
-                        <div style="margin-left: 20px;">
-                            <select name="selectIndex" autocomplete="off" id="rangeIndex" style="width:90%">
+                        <div>
+                            <select name="selectIndex" autocomplete="off" id="rangeIndex" style="width:100%">
                                 <option value="0">Low</option>
                                 <option value="1">Moderate</option>
                                 <option value="2">High</option>
@@ -59,14 +62,11 @@
                 </tr>
                 <tr>
                     <td>
-                        <div style="margin-top:10px">Range Color</div>
+                        <div>Range Color</div>
                     </td>
                     <td>
-                        <div>
-                            <div class="e-float-input" style="margin-top: 0px; margin-left: 10px;">
-                                <input type="text" value="#F03E3E" id="color" style="width:130px;">
-                            </div>
-
+                        <div class="e-float-input" style="margin-top: 0px;">
+                            <input type="text" value="#F03E3E" id="color" style="width:100%;">
                         </div>
                     </td>
                 </tr>
@@ -75,8 +75,8 @@
                         <div>Range Font Color</div>
                     </td>
                     <td>
-                        <div style="margin-left: 20px">
-                            <select name="selectIndex" autocomplete="off" id="useRangeColor" style="width:90%">
+                        <div>
+                            <select name="selectIndex" autocomplete="off" id="useRangeColor" style="width:100%">
                                 <option value="font" selected="">Default Color</option>
                                 <option value="range">Range Color</option>
                             </select>
@@ -85,67 +85,75 @@
                 </tr>
                 <tr>
                     <td>
-                        <div id="startRangeValue" style="margin-top: 10px">
-                            Range Start
-                            <span>&nbsp;&nbsp;&nbsp;0</span>
-                        </div>
+                        <div style="margin-top: 10px">Range Start</div>
                     </td>
                     <td>
                         <div>
-                            <input type="range" id="start" value="0" min="0" max="100" style="width:130px; margin-top: 10px; margin-left: 20px">
+                            <input type="range" id="start" value="0" min="0" max="100" style="width: 70%; margin-top: 10px;">
                         </div>
+                    </td>
+                    <td style="width: 10%;padding-top: 20px;text-align: center;">
+                        <span id='startRangeValue' style="margin-left: -30px;">0</span>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <div id="endRangeValue" style="margin-top: 20px">
-                            Range End
-                            <span>&nbsp;&nbsp;&nbsp;32</span>
-                        </div>
+                        <div style="margin-top: 20px">Range End</div>
                     </td>
                     <td>
                         <div>
-                            <input type="range" id="end" value="32" min="0" max="100" style="width: 130px; margin-top: 20px; margin-left: 20px">
+                            <input type="range" id="end" value="32" min="0" max="100" style="width: 70%; margin-top: 20px;">
                         </div>
+                    </td>
+                    <td style="width: 10%;padding-top: 30px;text-align: center;">
+                        <span id='endRangeValue' style="margin-left: -30px;">32</span>
                     </td>
                 </tr>
 
                 <tr>
                     <td>
-                        <div id="startWidthValue" style="margin-top: 20px">
-                            Range Start Width
-                            <span>&nbsp;&nbsp;&nbsp;15</span>
-                        </div>
+                        <div style="margin-top: 20px">Range Start Width</div>
                     </td>
                     <td>
                         <div>
-                            <input type="range" id="startWidth" value="15" min="0" max="30" style="width: 130px; margin-top: 20px; margin-left: 20px ">
+                            <input type="range" id="startWidth" value="15" min="0" max="30" style="width: 70%; margin-top: 20px;">
                         </div>
+                    </td>
+                    <td style="width: 10%;padding-top: 30px;text-align: center;">
+                        <span id='startWidthValue' style="margin-left: -30px;">15</span>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <div id="endWidthValue" style="margin-top: 20px">
-                            Range End Width
-                            <span>&nbsp;&nbsp;&nbsp;15</span>
-                        </div>
+                        <div style="margin-top: 20px">Range End Width</div>
                     </td>
                     <td>
                         <div>
-                            <input type="range" id="endWidth" value="15" min="0" max="30" style="width: 130px; margin-top: 20px; margin-left: 20px">
+                            <input type="range" id="endWidth" value="15" min="0" max="30" style="width: 70%; margin-top: 20px;">
                         </div>
+                    </td>
+                    <td style="width: 10%;padding-top: 30px;text-align: center;">
+                        <span id='endWidthValue' style="margin-left: -30px;">15</span>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
 }
+<style>
+    .property-panel-table div {
+        padding-left: 0px;
+    }
+    tr {
+        height: 50px;
+    }
+</style>
 <script>
     window.addEventListener('load', function () {
         var rangeIndex = new ej.dropdowns.DropDownList({
             index: 0,
             placeholder: 'Select Range Bar Color',
-            width: 130,
+            width: '100%',
             change: function () {
                 var value = +rangeIndex.value;
                 var start = document.getElementById('start');
@@ -158,10 +166,10 @@
                 startWidth.value = gauge.axes[0].ranges[value].startWidth.toString();
                 endWidth.value = gauge.axes[0].ranges[value].endWidth.toString();
                 rangeColor.value = gauge.axes[0].ranges[value].color.toString();
-                document.getElementById('startWidthValue').innerHTML = 'Range Start Width<span>&nbsp;&nbsp;&nbsp;' + startWidth.value;
-                document.getElementById('endWidthValue').innerHTML = 'Range End Width<span>&nbsp;&nbsp;&nbsp;' + endWidth.value;
-                document.getElementById('startRangeValue').innerHTML = 'Range Start <span>&nbsp;&nbsp;&nbsp;' + start.value;
-                document.getElementById('endRangeValue').innerHTML = 'Range End <span>&nbsp;&nbsp;&nbsp;' + end.value;
+                document.getElementById('startWidthValue').innerHTML = startWidth.value.toString();
+                document.getElementById('endWidthValue').innerHTML = endWidth.value.toString();
+                document.getElementById('startRangeValue').innerHTML = start.value.toString();
+                document.getElementById('endRangeValue').innerHTML = end.value.toString();
                 gauge.refresh();
             }
         });
@@ -175,14 +183,14 @@
             document.getElementById('startWidth').onchange = function () {
                 var ele = document.getElementById('startWidth');
                 gauge.axes[0].ranges[+rangeIndex.value].startWidth = parseInt(ele.value, 10);
-            document.getElementById('startWidthValue').innerHTML = 'Range Start Width<span>&nbsp;&nbsp;&nbsp;' + ele.value;
+            document.getElementById('startWidthValue').innerHTML = ele.value.toString();
                 gauge.refresh();
             };
         document.getElementById('endWidth').ontouchmove = document.getElementById('endWidth').onpointermove =
             document.getElementById('endWidth').onchange = function () {
                 var ele = document.getElementById('endWidth');
                 gauge.axes[0].ranges[+rangeIndex.value].endWidth = parseInt(ele.value, 10);
-            document.getElementById('endWidthValue').innerHTML = 'Range End Width<span>&nbsp;&nbsp;&nbsp;' + ele.value;
+            document.getElementById('endWidthValue').innerHTML = ele.value.toString();
                 gauge.refresh();
             };
         document.getElementById('start').ontouchmove = document.getElementById('start').onpointermove =
@@ -191,7 +199,7 @@
                 var end = document.getElementById('end');
                 gauge.axes[0].ranges[+rangeIndex.value].start = parseInt(start.value, 10);
                 gauge.axes[0].ranges[+rangeIndex.value].end = parseInt(end.value, 10);
-            document.getElementById('startRangeValue').innerHTML = 'Range Start <span>&nbsp;&nbsp;&nbsp;' + start.value;
+            document.getElementById('startRangeValue').innerHTML = start.value.toString();
                 gauge.refresh();
             };
         document.getElementById('end').ontouchmove = document.getElementById('end').onpointermove =
@@ -200,13 +208,13 @@
                 var end = document.getElementById('end');
                 gauge.axes[0].ranges[+rangeIndex.value].start = parseInt(start.value, 10);
                 gauge.axes[0].ranges[+rangeIndex.value].end = parseInt(end.value, 10);
-            document.getElementById('endRangeValue').innerHTML = 'Range End <span>&nbsp;&nbsp;&nbsp;' + end.value;
+            document.getElementById('endRangeValue').innerHTML = end.value.toString();
                 gauge.refresh();
             };
         var useRangeColor = new ej.dropdowns.DropDownList({
             index: 0,
             placeholder: 'Select Range Bar Color',
-            width: 130,
+            width: '100%',
             change: function () {
                 gauge.axes[0].labelStyle.useRangeColor = (useRangeColor.value === 'range') ? true : false;
                 gauge.refresh();
@@ -269,7 +277,7 @@
 
         var annotation = gauge.annotations[0];
                
-        annotation.content = '<div id="pointer" style="width:20px"><h1 style="font-size:18px;">35</h1></div>';
+        annotation.content = '<div id="pointer" style="width:20px"><h1 style="font-size:18px;font-family: Segoe UI">35</h1></div>';
         annotation.axisIndex = 0;
         annotation.axisValue = 35;
         annotation.y = -50;

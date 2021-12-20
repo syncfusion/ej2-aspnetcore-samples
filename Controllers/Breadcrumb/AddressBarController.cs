@@ -28,6 +28,12 @@ namespace EJ2CoreSampleBrowser.Controllers
             }
             };
             ViewBag.menuItems = menuItems;
+            return PartialView("_AddressBarItemTemplatePartial", id);
+        }
+
+        public IActionResult AddressBarSeparatorTemplatePartial([FromBody] CRUDModel<BreadcrumbItemModel> value)
+        {
+            string id = value.Value.Text != null ? value.Value.Text.Split(" ")[0].Split(".")[0] : "Home";
             List<MenuItem> parentMenuItems = new List<MenuItem>() {
                 new MenuItem { Items = new List<MenuItem>() }
             };
@@ -41,14 +47,14 @@ namespace EJ2CoreSampleBrowser.Controllers
                 }
             }
             ViewBag.subMenuItems = parentMenuItems;
-            return PartialView("_AddressBarItemTemplatePartial", id);
+            return PartialView("_AddressBarSeparatorTemplatePartial", id);
         }
 
         private List<AddressBarItemModel> getItems(string text, bool needParent, List<BreadcrumbItemModel> breadcrumbItems)
         {
             List<AddressBarItemModel> mItems = items;
             bool isBreaked = false;
-            if (text == null)
+            if (text == null || text == "")
             {
                 mItems = getSubMenuItems(mItems);
             }
@@ -76,6 +82,10 @@ namespace EJ2CoreSampleBrowser.Controllers
                             {
                                 mItems = mItems[j].Items;
                                 j = 0;
+                                if (mItems == null)
+                                {
+                                    isBreaked = true;
+                                }
                             }
                             break;
                         }

@@ -6,18 +6,18 @@ using Microsoft.AspNetCore.Html;
 using System.IO;
 using Manoli.Utils.CSharpFormat;
 using System.Net;
-using Microsoft.Extensions.PlatformAbstractions;
-using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using EJ2CoreSampleBrowser.Helpers.BrowserClasses;
+using Microsoft.Extensions.Hosting.Internal;
 
 namespace EJ2CoreSampleBrowser.Helpers.BrowserClasses
 {
     internal class ProductXmlDataEngine
     {
-        private readonly IHostingEnvironment _appEnvironment;
+        private readonly IWebHostEnvironment _appEnvironment;
+
         public static IHttpContextAccessor HttpContextAccessor;
         public static void Configure(IHttpContextAccessor httpContextAccessor)
         {
@@ -105,7 +105,8 @@ namespace EJ2CoreSampleBrowser.Helpers.BrowserClasses
             }
             return DynamicUrl.Replace("Razor", "razor").Replace("razor/", "");
         }
-        private static IHostingEnvironment GetPhysicalPath(IHostingEnvironment path)
+        private static IWebHostEnvironment GetPhysicalPath(IWebHostEnvironment path)
+
         {
             return path;
         }
@@ -130,8 +131,8 @@ namespace EJ2CoreSampleBrowser.Helpers.BrowserClasses
             }
             return sourceCodes;
         }
+        public string GetTabContent(TabType LoadType, string Path, IWebHostEnvironment physicalPath)
 
-        public string GetTabContent(TabType LoadType, string Path, IHostingEnvironment physicalPath)
         {
             EJ2CoreSampleBrowser.Helpers.BrowserClasses.TagBuilder tabContent = new EJ2CoreSampleBrowser.Helpers.BrowserClasses.TagBuilder("div");
             string Filestream = "";

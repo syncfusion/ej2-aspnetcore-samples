@@ -21,13 +21,16 @@
 	</div>
 }
 @section ControlsSection{
-	<div class="col-lg-9 control-section">
+@{ 
+    var labelFont = new Syncfusion.EJ2.CircularGauge.CircularGaugeFont { FontFamily = "Segoe UI", Opacity = 1, Size = "12px", FontWeight = "Normal", Color = "#424242" };
+}
+	<div class="col-lg-8 control-section">
 		<div id="gauge1">
 			<ejs-circulargauge id="gauge" load="gaugeload" allowImageExport="true" allowPdfExport="true" allowPrint="true">
 				<e-circulargauge-axes>
 					<e-circulargauge-axis startAngle="0" direction="AntiClockWise" endAngle="0" minimum="0" maximum="100" radius="80%">
 						<e-axis-linestyle width="0"></e-axis-linestyle>
-						<e-axis-labelstyle offset="2" position="Outside" useRangeColor="true" hiddenLabel="Last">
+						<e-axis-labelstyle offset="2" position="Outside" useRangeColor="true" hiddenLabel="Last" font="labelFont">
 						</e-axis-labelstyle>
 						<e-axis-majorticks interval="10" position="Outside" width="1" height="25" useRangeColor="true"></e-axis-majorticks>
 						<e-axis-minorticks interval="2" position="Outside" width="1" height="8" useRangeColor="true"></e-axis-minorticks>
@@ -37,7 +40,7 @@
 		</div>
 	</div>
 
-	<div class="col-lg-3 property-section">
+	<div class="col-lg-4 property-section">
 		<table id="property" title="Properties" style="width: 100%; margin-left: -10px">
 			<tr style="height: 50px">
 				<td style="width: 40%">
@@ -46,7 +49,7 @@
 					</div>
 				</td>
 				<td style="width: 50%;">
-					<div style="margin-left: -10px">
+					<div>
 						<select id="mode">
 							<option value='JPEG'>JPEG</option>
 							<option value='PNG'>PNG</option>
@@ -62,18 +65,18 @@
 				</td>
 				<td style="width: 40%;">
 					<div class="e-float-input" style='margin-top: 0px;'>
-						<input type="text" value="Gauge" id="fileName" style="margin-left: -10px; width: 90px;">
+						<input type="text" value="Gauge" id="fileName" style="width: 100%;">
 					</div>
 				</td>
 			</tr>
 			<tr id="button-control" style="height: 50px">
 				<td>
-					<div style="margin-left: -10px; width: 100px">
+					<div style="margin-left: -10px;">
 						<ejs-button id="export" content="Export" iconCss="e-icons e-play-icon" cssClass="e-flat"  isPrimary="true"></ejs-button>
 					</div>
 				</td>
 				<td>
-					<div style="margin-left: 10px; width: 100px">
+					<div style="margin-left: 10px;">
 						<ejs-button id="print" content="Print" iconCss="e-icons e-play-icon1" cssClass="e-flat" isPrimary="true"></ejs-button>
 					</div>
 				</td>
@@ -156,18 +159,7 @@
         @* custom code end *@
 		window.gauge = args.gauge;
         var axis = args.gauge.axes[0];
-        axis.labelStyle.font = {
-			color: '#424242',
-			fontFamily: 'Roboto',
-			size: '12px',
-			fontWeight: 'Regular'
-        };
-        axis.pointers = [{
-			pointerWidth: 0,
-			cap: {
-				radius: 0,
-			},
-		}];
+        axis.pointers = [];
 		axis.ranges = [
 			{
 				start: 0, end: 32,
@@ -191,7 +183,7 @@
 	window.onload = function () {
 		window.exportType = new ej.dropdowns.DropDownList({
 			index: 0,
-			width: 90
+			width: "100%"
 		});
 		window.exportType.appendTo("#mode");
 		document.getElementById("export").onclick = () => {

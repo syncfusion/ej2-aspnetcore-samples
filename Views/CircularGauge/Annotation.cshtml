@@ -1,7 +1,7 @@
 @using Syncfusion.EJ2;
 @section Meta{
-                    <meta name="description" content="This example demonstrates the Annotation in ASP.NET Core CircularGauge control. Explore here for more details."/>
-                }
+    <meta name="description" content="This example demonstrates the Annotation in ASP.NET Core CircularGauge control. Explore here for more details." />
+}
 @section ActionDescription{
     <div id="action-description">
         <p>
@@ -16,7 +16,7 @@
             In this example, you can see how to use annotation in the circular gauge. Annotations are used to mark the specific area
             of interest in gauge with texts, shapes or images. In this sample <code>minutes</code> and <code>seconds</code>        sub gauges are achieved using <code>annotation</code> feature.
         </p>
-        <br>        
+        <br>
         <p>
             More information on the annotation can be found in this
             <a target="_blank" href="http://ej2.syncfusion.com/documentation">documentation section</a>.
@@ -24,23 +24,26 @@
     </div>
 }
 @section ControlsSection{
-    <div class="control-section" style="border:0px;">
-        <div class="content-wrapper">
-            <ejs-circulargauge id="clockgauge" centerY="45%" load="gaugeload" loaded="loadCompleted">
-                <e-circulargauge-titlestyle color="String" size="16px"></e-circulargauge-titlestyle>
-                <e-circulargauge-axes>
-                    <e-circulargauge-axis startAngle="0" endAngle="0" minimum="0" maximum="12">
-                        <e-axis-linestyle width="0" color="transparent"></e-axis-linestyle>
-                        <e-axis-labelstyle hiddenLabel="@Syncfusion.EJ2.CircularGauge.HiddenLabel.First" autoAngle="false"></e-axis-labelstyle>
-                        <e-axis-majorticks width="2" height="14" interval="1" ></e-axis-majorticks>
-                        <e-axis-minorticks height="4" width="1" interval="0.2" ></e-axis-minorticks>
-                    </e-circulargauge-axis>
-                </e-circulargauge-axes>
-            </ejs-circulargauge>
+        @{
+            var labelFont = new Syncfusion.EJ2.CircularGauge.CircularGaugeFont { FontFamily = "Segoe UI", Opacity = 1 };
+        }
+        <div class="control-section" style="border:0px;">
+            <div class="content-wrapper">
+                <ejs-circulargauge id="clockgauge" centerY="45%" load="gaugeload" loaded="loadCompleted">
+                    <e-circulargauge-titlestyle color="String" size="16px"></e-circulargauge-titlestyle>
+                    <e-circulargauge-axes>
+                        <e-circulargauge-axis startAngle="0" endAngle="0" minimum="0" maximum="12">
+                            <e-axis-linestyle width="0" color="transparent"></e-axis-linestyle>
+                            <e-axis-labelstyle hiddenLabel="@Syncfusion.EJ2.CircularGauge.HiddenLabel.First" autoAngle="false" font="labelFont"></e-axis-labelstyle>
+                            <e-axis-majorticks width="2" height="14" interval="1"></e-axis-majorticks>
+                            <e-axis-minorticks height="4" width="1" interval="0.2"></e-axis-minorticks>
+                        </e-circulargauge-axis>
+                    </e-circulargauge-axes>
+                </ejs-circulargauge>
+            </div>
         </div>
-    </div>
-}
-<script>
+    }
+    <script>
     var clockInterval, count =0;
     var intervalExecute = true;
     var subGauge1;
@@ -53,7 +56,7 @@
     }
 
     function updateSubGauge1() {
-        
+
         subGauge1 = new ej.circulargauge.CircularGauge(gauge2());
         subGauge1.appendTo('#minutes');
     }
@@ -81,7 +84,7 @@
             }],
             loaded: intervalExecute ? (function (args) {
                 if (intervalExecute) {
-                    indianTime = document.getElementById('clockgauge').ej2_instances[0];    
+                    indianTime = document.getElementById('clockgauge').ej2_instances[0];
                     updateTime(false);
                     _this.clockInterval = setInterval(function () {
                         window.refresh = true;
@@ -116,7 +119,7 @@
             clearInterval(interval);
         }
     }
-    
+
     function getTime(offset, gauge, enable, subGauge) {
         var returnTime = calcTime(offset);
         var seconds = returnTime.getSeconds() * 12 / 60;
@@ -133,7 +136,7 @@
         var minutes = returnTime.getMinutes() * 12 / 60 + returnTime.getSeconds() * 12 / 3600;
         var content;
         var hourValue;
-        
+
         if (subGauge) {
             if (gauge.element.id === 'minutes') {
                 content = '<div id="tm" style="font-size:8px;">' + Math.floor(returnTime.getMinutes()) + ' M</div>';
@@ -149,8 +152,8 @@
         }
         else {
             hourValue = (Math.floor(returnTime.getHours()) % 12);
-            
-            
+
+
             if (window.refresh) {
                 gauge.axes[0].pointers[0].value = hour;
                 gauge.axes[0].pointers[1].value = minutes;
@@ -164,8 +167,8 @@
                 content = '<div id="tm" style="font-size:10px;">' + date.getDate() + '-' +
                     (date.getMonth() + 1) + '-' + date.getFullYear() + '</div>';
                 gauge.axes[0].annotations[3].content = content;
-            }          
-            
+            }
+
         }
         if (window.refresh)
             gauge.refresh();
@@ -227,7 +230,7 @@
                     pointers: [{
                         radius: '70%',
                         pointerWidth: 2,
-                        cap: {                            
+                        cap: {
                             radius: 2,
                             border: {
                                 width: 0.2
@@ -262,7 +265,7 @@
         @* custom code end *@
         if (window.gaugeLoad)
             return;
-        window.gaugeLoad = true;        
+        window.gaugeLoad = true;
         var axis = args.gauge.axes[0];
         axis.radius = ej.base.Browser.isDevice ? '90%' : '70%';
         axis.pointers = [{
@@ -335,10 +338,10 @@
                       + new Date().getFullYear() + '</div>'
         }];
     }
-</script>
-@section Title{
-                    <title>ASP.NET Core CircularGauge Annotation Example - Syncfusion Demos </title> 
-                }
-@section Header{
-                    <h1 class='sb-sample-text'>Example of Annotation in ASP.NET Core CircularGauge Control</h1>
-                }
+    </script>
+    @section Title{
+        <title>ASP.NET Core CircularGauge Annotation Example - Syncfusion Demos </title>
+    }
+    @section Header{
+        <h1 class='sb-sample-text'>Example of Annotation in ASP.NET Core CircularGauge Control</h1>
+    }

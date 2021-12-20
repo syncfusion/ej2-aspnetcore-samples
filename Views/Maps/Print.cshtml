@@ -34,18 +34,22 @@
             Opacity = 1
         };
         var propertyPath = new[] { "name" };
+        var layerStyle = new MapsFont
+        {
+            FontFamily = "Segoe UI"
+        };
     }
     <div class="col-lg-9 control-section">
         <div id="maps">
             <ejs-maps id="maps" load="onMapLoad" allowPrint="true" format="n" useGroupingSeparator="true" tooltipRender="tooltipRender">
-                <e-maps-titlesettings alignment="@Syncfusion.EJ2.Maps.Alignment.Center" text="State-wise US population - 2010"></e-maps-titlesettings>
+                <e-maps-titlesettings alignment="@Syncfusion.EJ2.Maps.Alignment.Center" text="State-wise US population - 2010" textStyle="layerStyle"></e-maps-titlesettings>
                 <e-maps-zoomsettings enable="false"></e-maps-zoomsettings>
                 <e-maps-legendsettings mode="@LegendMode.Interactive" alignment="@Alignment.Center" height="10" width="350" visible="true" position="@Syncfusion.EJ2.Maps.LegendPosition.Bottom" labelDisplayMode="@LabelIntersectAction.Trim"></e-maps-legendsettings>
                 <e-maps-layers>
                     <e-maps-layer shapeData="ViewBag.mapdata" dataSource="ViewBag.datasource" shapePropertyPath="propertyPath" shapeDataPath="name">
                         <e-layersettings-shapesettings border="border" colorValuePath="population" colorMapping="colorMaps">
                         </e-layersettings-shapesettings>
-                        <e-layersettings-tooltipsettings visible="true" valuePath="population" format="State: ${name} <br> Population: ${population}"></e-layersettings-tooltipsettings>
+                        <e-layersettings-tooltipsettings visible="true" valuePath="population" format="State: ${name} <br> Population: ${population}" textStyle="layerStyle"></e-layersettings-tooltipsettings>
                     </e-maps-layer>
                 </e-maps-layers>
             </ejs-maps>

@@ -64,7 +64,7 @@
                 <e-maps-zoomsettings enable="false"></e-maps-zoomsettings>
                 <e-maps-legendsettings visible="true" position="@LegendPosition.Bottom" height="10" width="80%" mode="@LegendMode.Interactive">
                     <e-legendsettings-title text="Inches"></e-legendsettings-title>
-                    <e-legendsettings-titlestyle size="18px"></e-legendsettings-titlestyle>
+                    <e-legendsettings-titlestyle size="18px" fontFamily="Segoe UI"></e-legendsettings-titlestyle>
                 </e-maps-legendsettings>
                 <e-maps-layers>
                     <e-maps-layer dataSource="ViewBag.dataSource" shapeData="ViewBag.mapdata" shapePropertyPath="propertyPath" shapeDataPath="State">
@@ -87,14 +87,14 @@
         <div style="float: right; margin-right: 10px;">Source:<a href="https://craft.co/youtube/locations" target="_blank">craft.co/youtube/locations</a></div>
     </div>
     <div class="col-lg-3 property-section">
-        <table id="property" title="Properties" style="width: 110%">
+        <table id="property" title="Properties" style="width: 100%">
             <tbody>
                 <tr style="height: 50px">
                     <td style="width: 10%">
                         <div class="property-text" style="margin-left:-10px">Color Mapping Type</div>
                     </td>
                     <td style="width: 30%;">
-                        <div style="margin-left:10px">
+                        <div>
                         <select autocomplete="off" id="colorMapping">
                             <option value="RangeColorMapping" selected>Range</option>
                             <option value="EqualColorMapping">Equal</option>
@@ -103,33 +103,33 @@
                             </div>
                     </td>
                 </tr>
-                <tr>
-                    <td style="width: 40%">
+                <tr style="height: 50px">
+                    <td style="width: 50%">
                         <div class="property-text" id="text1" style="display: none; margin-left:-10px"> Change Opacity</div>
                     </td>
-                    <td style="width: 40%;">
-                        <div id="input1" style="display: none; margin-left: 45px">
-                            <input type="checkbox" id="opacity"/>
+                    <td style="margin-left: -10px;margin-top: -5px;">
+                        <div id="input1" style="display: none;margin-left: -10px;padding-top: 0px;">
+                            <input type="checkbox" id="opacity" />
                         </div>
                     </td>
                 </tr>
-                <tr>
+                <tr style="height: 50px">
                     <td style="width: 50%">
-                        <div class="property-text" id="text2" style="margin-top:12%; display: none; margin-left:-10px">Min Opacity</div>
+                        <div class="property-text" id="text2" style="display: none; margin-left:-10px">Min Opacity</div>
                     </td>
                     <td style="width: 50%;">
-                        <div id="input2" style="display: none; margin-left: 10px">
-                            <input type="range" id="minopacity" step="0.1" value="0.5" min="0" max="1" style="width: 120px; margin-top: 20%" />
+                        <div id="input2" style="display: none; margin-left: 0px">
+                            <input type="range" id="minopacity" step="0.1" value="0.5" min="0" max="1" style="width: 100%;" />
                         </div>
                     </td>
                 </tr>
-                <tr>
+                <tr style="height: 50px">
                     <td style="width: 50%">
-                        <div class="property-text" id="text3" style="margin-top:12%; display: none; margin-left:-10px">Max Opacity</div>
+                        <div class="property-text" id="text3" style="display: none; margin-left:-10px">Max Opacity</div>
                     </td>
                     <td style="width: 50%;">
-                        <div id="input3" style="display: none; margin-left: 10px">
-                            <input type="range" id="maxopacity" step="0.1" value="1" min="0" max="1" style="width: 120px; margin-top: 20%" />
+                        <div id="input3" style="display: none; margin-left: 0px">
+                            <input type="range" id="maxopacity" step="0.1" value="1" min="0" max="1" style="width: 100%; " />
                         </div>
                     </td>
                 </tr>
@@ -137,6 +137,9 @@
         </table>
     </div>
 }
+<style>
+    
+</style>
 <script>
     var maps;
     @* custom code start *@
@@ -151,7 +154,7 @@
         var dropDown = new ej.dropdowns.DropDownList({
             index: 0,
             placeholder: 'Range ColorMaping',
-            width: 120,
+            width: '100%',
             change: () => {
                 var element = dropDown.value.toString();
                  if (element === 'RangeColorMapping') {

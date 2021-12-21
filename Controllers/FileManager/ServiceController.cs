@@ -22,7 +22,11 @@ namespace EJ2CoreSampleBrowser.Controllers
         public PhysicalFileProvider operation;
         public string basePath;
         string root = "wwwroot"+ Path.DirectorySeparatorChar +"Files";
+#if NET6_0
+        public FileManagerController(IWebHostEnvironment hostingEnvironment)
+#else
         public FileManagerController(IHostingEnvironment hostingEnvironment)
+#endif
         {
             // Map the path of the files to be accessed with the host
             this.basePath = hostingEnvironment.ContentRootPath;

@@ -20,9 +20,13 @@ namespace EJ2CoreSampleBrowser.Controllers
         {
             return View();
         }
-
+#if NET6_0
+        private readonly IWebHostEnvironment _hostingEnvironment;
+        public PresentationController(IWebHostEnvironment hostingEnvironment)
+#else
         private readonly IHostingEnvironment _hostingEnvironment;
         public PresentationController(IHostingEnvironment hostingEnvironment)
+#endif
         {
             _hostingEnvironment = hostingEnvironment;
         }

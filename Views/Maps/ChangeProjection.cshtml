@@ -9,6 +9,11 @@
         var titleStyle = new MapsFont
         {
             Size = "16px",
+            FontFamily = "Segoe UI"
+        };
+        var layerText = new Syncfusion.EJ2.Maps.MapsFont
+        {
+            FontFamily = "Segoe UI"
         };
         var propertyPath = new[] { "name" };
     }
@@ -22,7 +27,7 @@
                 <e-maps-legendsettings visible="true"></e-maps-legendsettings>
                 <e-maps-layers>
                     <e-maps-layer dataSource="ViewBag.uno" shapeData="ViewBag.mapdata" shapePropertyPath="propertyPath" shapeDataPath="Country">
-                        <e-layersettings-tooltipsettings valuePath="Country" visible="true"></e-layersettings-tooltipsettings>
+                        <e-layersettings-tooltipsettings valuePath="Country" visible="true" font="layerText"></e-layersettings-tooltipsettings>
                         <e-layersettings-shapesettings colorMapping="colormapping" fill="lightgrey" colorValuePath="Membership"></e-layersettings-shapesettings>
                     </e-maps-layer>
                 </e-maps-layers>
@@ -34,13 +39,13 @@
             </div>        
         </div>
         <div class="col-md-3 property-section">
-            <table id="property" title="Properties" style="margin-left:-10px; width: 205px">
+            <table id="property" title="Properties" style="margin-left:-10px; width: 100%">
                 <tbody>
                     <tr style="height: 50px">
-                        <td style="width: 60%">
+                        <td>
                             <div>Projection Type</div>
                         </td>
-                        <td style="width: 30%;">
+                        <td>
                             <div>
                                 <select name="projectionType" id="projectiontype" style="margin-left: 25px">
                                     <option value="Mercator">Mercator</option>
@@ -64,7 +69,7 @@
         var projection = new ej.dropdowns.DropDownList({
             index: 0,
             placeholder: 'Select projection type',
-            width: 105,
+            width: '100%',
             change: function () {
                 maps.projectionType = projection.value;
                 maps.refresh();

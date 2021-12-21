@@ -1,0 +1,337 @@
+@{
+    Layout = null;
+}
+
+@using Syncfusion.EJ2
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="This example demonstrates the Default Functionalities in ASP.NET Core Sidebar control. Explore here for more details."/>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" rel="stylesheet" />
+    <style rel="stylesheet" id="themelink"></style>
+    <link href="https://cdn.syncfusion.com/ej2/material.css" rel="stylesheet">
+    <script type="text/javascript">
+        if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
+            document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.5/bluebird.min.js"><\/script>');
+        }
+    </script>
+    <script id="sample-datasource" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-signals/1.0.0/js-signals.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crossroads/0.12.0/crossroads.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hasher/1.2.0/hasher.min.js"></script>
+    
+    <link href="~/css/richtexteditor/codemirror.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/css/css.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/htmlmixed/htmlmixed.js" type="text/javascript"></script>
+    <script src="~/scripts/samplelist.js"></script>
+    <script src="~/scripts/search-index.js"></script>
+    <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js"></script>
+</head>
+<body>
+    <div id="wrapper">
+        <div class="col-lg-12 col-sm-12 col-md-12">
+            <h3 class="title-head">Rich Text Editor Online Html Editor</h3>
+            <div class="heading">
+                <h6 class="title"><b>PREVIEW</b> </h6>
+            </div>
+            <div class="heading right">
+                <h6 class="title"><b>HTML SOURCE CODE </b></h6>
+            </div>
+            <ejs-splitter id="splitter" height="450px" width="100%">
+                <e-splitter-panes>
+                    <e-splitter-pane size="50%" resizable="false" cssClass="pane1">
+                        <e-content-template>
+                            <div class="content">
+                                <ejs-richtexteditor id="defaultRTE" height="448px" saveInterval=1 maxLength=5000 showCharCount="true" change="onChange" actionComplete="updateValue" created="onCreate">
+                                    <e-content-template>
+                                        <p>The Rich Text Editor is a WYSIWYG (what you see is what you get) editor used to create and edit
+                                            the content and return the valid HTML markup or markdown of the content.
+                                            This provides a lot of commands to edit and format the content. </p>
+                                        <p><b>Toolbar</b></p>
+                                        <p>The editor’s toolbar provides various commands to align the text, format, insert a link, image,
+                                            list, undo/redo operations, HTML view, and more. The toolbar comes with different modes such as
+                                            floating, multi-row, and expanded. </p>
+                                        <p><b>Links</b></p>
+                                        <p>Create a hyperlink using the "insert link" dialog and you can edit the hyperlink text, display text,
+                                            and tooltip using the "edit link" dialog and quick toolbar. If the text has valid hyperlink text,
+                                            the editor converts it to hyperlink automatically. For example, link to Rich Text Editor.</p>
+                                        <p><b>Table</b></p>
+                                        <p>This editor allows you to insert a table with options to add, edit, and remove and perform other
+                                            table-related actions. </p>
+                                        <p>For example</p>
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <th>Employee name</th>
+                                                    <th>Role</th>
+                                                    <th>Mail</th>
+                                                    <th>Country</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>Janet Fleet</td>
+                                                    <td>Manager</td>
+                                                    <td>janet95@arpy.com</td>
+                                                    <td>France</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Nancy Buchanan</td>
+                                                    <td>Project Lead</td>
+                                                    <td>nancy55@rpy.com</td>
+                                                    <td>Sweden</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Rose Rose</td>
+                                                    <td>Project Lead</td>
+                                                    <td>rose44@sample.com</td>
+                                                    <td>France</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <p><b>Image</b></p>
+                                        <p>Allows you to insert images with caption, alt text, link, resize, and drag-and-drop from an
+                                            online source and local computer. You can upload an image to the server and insert it into the editor.
+                                            It provides an option to customize a quick toolbar for an image.</p>
+                                        <p>For example</p>
+                                        <img id="rteImageID" style="height:300px;transform: rotate(0deg);" alt="Logo"
+                                            src="@Url.Content("~/images/RichTextEditor/RTEImage-Feather.png")" />
+                                        <p><b>Lists</b></p>
+                                        <p>You can include content with ordered and unordered lists.</p>
+                                        <p>Examples for an ordered list:</p>
+                                        <ul>
+                                            <li>TypeScript</li>
+                                            <li>Javascript</li>
+                                            <li>Angular</li>
+                                            <li>React</li>
+                                            <li>Vue</li>
+                                        </ul>
+                                        <p>Examples for an unordered list:</p>
+                                        <ol>
+                                            <li>Rich Text Editor</li>
+                                            <li>Toolbar</li>
+                                            <li>Button</li>
+                                            <li>Dialog</li>
+                                            <li>Data Grid</li>
+                                        </ol>
+                                        <p>The editor has a lot of features to edit HTML content and Markdown content in web applications.</p>
+                                    </e-content-template>
+                                    <e-richtexteditor-toolbarsettings items="@ViewBag.Tools"></e-richtexteditor-toolbarsettings>
+                                </ejs-richtexteditor>
+                            </div>
+                        </e-content-template>
+                    </e-splitter-pane>
+                    <e-splitter-pane cssClass="pane2">
+                        <e-content-template>
+                            <div class="content">
+                                <div class="splitter-default-content source-code pane2" contenteditable="true"></div>
+                            </div>
+                        </e-content-template>
+                    </e-splitter-pane>
+                </e-splitter-panes>
+            </ejs-splitter>       
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    var rteObj, myCodeMirror, textArea;
+    function onCreate() {
+        rteObj = this;
+        setTimeout(function () {
+            rteObj.refreshUI();
+            updateValue();
+            textArea = rteObj.contentModule.getEditPanel();
+            srcArea = document.querySelector(".source-code");
+            if (srcArea) {
+                srcArea.addEventListener("keyup", updateHtmlValue);
+            }
+        }, 500);
+    }
+
+     function onChange() {
+        updateValue();
+    }
+
+    function updateHtmlValue() {
+        textArea.innerHTML = myCodeMirror.getValue();
+    }
+
+    function updateValue(e) {
+        var mirrorView = rteObj.element.querySelector("#src-view");
+        if (!mirrorView) {
+            mirrorView = ej.base.createElement("div", { className: "e-content" });
+            mirrorView.id = "src-view";
+            var srcCodeElement = document.querySelector('.source-code');
+            if (srcCodeElement) {
+                srcCodeElement.appendChild(mirrorView);
+            }
+            mirrorView.innerHTML = '';
+            mirrorView.style.display = 'block';
+        }
+        var srcViewEle = document.querySelector('#src-view');
+        var codemirrorEle = document.querySelector('.CodeMirror-wrap');
+        if (codemirrorEle) {
+            codemirrorEle.remove();
+        }
+        renderCodeMirror(srcViewEle, rteObj.value);
+    }
+
+    function renderCodeMirror(mirrorView, content) {
+        if (content) {
+            myCodeMirror = CodeMirror(mirrorView, {
+                value: content,
+                lineNumbers: true,
+                mode: "text/html",
+                lineWrapping: true,
+            });
+        }
+    }
+</script>
+
+<style>
+    #defaultRTE {
+        overflow: hidden;
+        border: none;
+    }
+
+    .e-splitter .CodeMirror {
+        height: auto;
+    }
+
+    .center {
+        text-align: center;
+        font-size: 13px;
+        font-weight: 400;
+        margin-top: 20px;
+    }
+
+    .pane1 {
+        padding-right: 8px;
+    }
+
+    .pane2 {
+        padding-left: 8px;
+    }
+
+    .heading {
+        margin-top: 10px;
+        float: left;
+        width: 50%;
+        border: 1px solid #e8e8e8;
+        border-bottom: none;
+        position: relative;
+        box-sizing: border-box;
+        padding: 5px;
+    }
+
+    .title {
+        color: #a0aabf;
+        letter-spacing: 1px;
+        padding-left: 10px;
+    }
+
+    .title-head {
+        text-align: center
+    }
+
+    .e-control.e-splitter .e-split-bar.e-split-bar-horizontal.e-last-bar {
+        margin: 0;
+    }
+
+    .heading.right {
+        border-left-width: thin;
+    }
+
+    .sample-view {
+        display: none;
+    }
+
+    .ej2-new .sample-view {
+        display: block;
+        padding: 15px;
+    }
+
+    .ej2-new .sb-bread-crumb,
+    .ej2-new .button-content,
+    .ej2-new #action-description,
+    .ej2-new #description-section,
+    .ej2-new .sb-header,
+    .ej2-new #description {
+        display: none !important;
+    }
+
+    .ej2-new .sample-head {
+        display: block !important;
+    }
+
+    .ej2-new .container-fluid {
+        padding: 0 !important;
+    }
+
+    .sample-head {
+        height: 48px;
+        background: #FFFFFF;
+        box-shadow: 0 8px 11px -6px rgba(0, 0, 0, 0.12);
+        z-index: 1001;
+        opacity: 100;
+        display: none;
+    }
+
+    .head-content {
+        padding: 15px 0 0 35px;
+        font-weight: 499;
+        line-height: 18px;
+        font-size: 15px;
+        color: #000000;
+        font-family: sans-serif;
+    }
+
+    body {
+        margin: 0;
+    }
+
+    .btn-parent {
+        float: right;
+        padding: 8px;
+        width: 10%;
+
+    }
+
+    .btn-content {
+        color: white;
+    }
+
+    table,
+    th,
+    td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    .ej2-new .content {
+        top : 0px;
+    }
+
+    .ej2-new .control-section {
+        padding-left: 0px;
+    }
+
+    .CodeMirror-vscrollbar {
+        display: none !important;
+    }
+</style>
+
+<ejs-scripts></ejs-scripts>

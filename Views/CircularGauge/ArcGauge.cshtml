@@ -23,7 +23,7 @@
 }
 @section ControlsSection{
     @{
-       
+
         var minor = new Syncfusion.EJ2.CircularGauge.CircularGaugeTick
         {
 
@@ -41,6 +41,8 @@
         };
 
         var border = new Syncfusion.EJ2.CircularGauge.CircularGaugeBorder { Color = "grey", Width = 2 };
+        var labelFont = new Syncfusion.EJ2.CircularGauge.CircularGaugeFont { FontFamily = "Segoe UI", Opacity = 1, Size = "0px", FontWeight = "Normal" };
+        var titleFont = new Syncfusion.EJ2.CircularGauge.CircularGaugeFont { FontFamily = "Segoe UI", Opacity = 1, Size = "18px" };
     }
 
     <script id='pointerValue' type="text/x-template">
@@ -83,12 +85,11 @@
     </style>
     <div class="control-section" style="border-right:0px;">
         <div id="range-container">
-            <ejs-circulargauge id="range-container" loaded="gaugeLoaded" load="gaugeload" title="Progress Tracker">
-                <e-circulargauge-titlestyle size="18px"></e-circulargauge-titlestyle>
+            <ejs-circulargauge id="range-container" loaded="gaugeLoaded" load="gaugeload" title="Progress Tracker" titleStyle="titleFont">
                 <e-circulargauge-axes>
                     <e-circulargauge-axis startAngle="200" endAngle="160" minimum="0" maximum="100" radius="80%" majorTicks="major" minorTicks="minor">
                         <e-axis-linestyle width="0"></e-axis-linestyle>
-                        <e-axis-labelstyle position="Inside" useRangeColor="true">
+                        <e-axis-labelstyle position="Inside" useRangeColor="true" font="labelFont">
                         </e-axis-labelstyle>
                         <e-circulargauge-annotations>
                             <e-circulargauge-annotation content="<div id=pointervalue style=font-size:35px;width:120px;text-align:center>60/100</div>" angle="0" zIndex="1.0" radius="0%"></e-circulargauge-annotation>
@@ -154,12 +155,7 @@
         args.gauge.theme = (theme.charAt(0).toUpperCase() +
             theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
         @* custom code end *@
-        var axis = args.gauge.axes[0];
-        axis.labelStyle.font = {
-            fontFamily: "Roboto",
-            size: "0px",
-            fontWeight: "Regular"
-        };
+        var axis = args.gauge.axes[0];        
         axis.pointers = [{
             roundedCornerRadius: 20,
             value: 60,

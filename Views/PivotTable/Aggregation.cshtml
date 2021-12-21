@@ -11,6 +11,7 @@
                         <e-field name="EnerType" items="@ViewBag.drilledMembers"></e-field>
                     </e-drilledmembers>
                     <e-formatsettings>
+                        <e-field name="PowUnits" format="N"></e-field>  
                         <e-field name="ProCost" format="C"></e-field>                        
                     </e-formatsettings>
                     <e-rows>
@@ -87,6 +88,11 @@
             var pivotObj = document.getElementById('pivotview').ej2_instances[0];
             for (var vCnt = 0; vCnt < pivotObj.dataSourceSettings.values.length; vCnt++) {
                 if (pivotObj.dataSourceSettings.values[vCnt].name === fieldName) {
+                    if (pivotObj.dataSourceSettings.values[vCnt].name === 'PowUnits' && summaryType === 'Avg') {
+                        pivotObj.setProperties({ dataSourceSettings: { formatSettings: [{ name: 'PowUnits', format: 'N2' }, { name: 'ProCost', format: 'C' }] } }, true);
+                    } else {
+                        pivotObj.setProperties({ dataSourceSettings: { formatSettings: [{ name: 'PowUnits', format: 'N' }, { name: 'ProCost', format: 'C' }] } }, true);
+                    }
                     pivotObj.dataSourceSettings.values[vCnt].type = summaryType;
                     isAvail = true;
                 }

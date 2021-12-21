@@ -4,15 +4,16 @@
     @{
         var levelBorder = new TreeMapBorder { Color = "black", Width = 0.5 };
         var leafBorder = new TreeMapBorder { Color = "white", Width = 0.5 };
-        var style = new TreeMapFont { Size = "16px" };
+        var style = new TreeMapFont { Size = "16px", FontFamily = "Segoe UI" };
+        var titleFont = new TreeMapFont { FontFamily = "Segoe UI" };
     }
     <div id="Tooltip" style="display:none;">
         <div id='displayAirports'>
             <div id="airplaneicon" style="float:left;height:32px;width:32px;">
             </div>
             <div id="value" style="float:left;">
-                <span id="label" style="margin-left: -5px;">Airports:</span>
-                <b style="margin-left: 5px">${Count}</b>
+                <span id="label" style="margin-left: -5px; font-family: Segoe UI">Airports:</span>
+                <b style="margin-left: 5px; font-family: Segoe UI">${Count}</b>
             </div>
         </div>
     </div>
@@ -60,8 +61,8 @@
         <div class="row">
             <div class="col-md-12">
                 <ejs-treemap id="container" load="treeMapLoad" dataSource="ViewBag.dataSource" weightValuePath="Count" equalColorValuePath="Count">
-                    <e-treemap-titlesettings text="Country wise International Airport count in South America"></e-treemap-titlesettings>
-                    <e-treemap-leafitemsettings labelPath="State" fill="#6699cc" border="leafBorder">
+                    <e-treemap-titlesettings text="Country wise International Airport count in South America" textStyle="titleFont"></e-treemap-titlesettings>
+                    <e-treemap-leafitemsettings labelPath="State" fill="#6699cc" border="leafBorder" labelStyle="titleFont">
                         <e-leafitemsettings-colormappings>
                             <e-leafitemsettings-colormapping value="25" color="@("#634D6F")"></e-leafitemsettings-colormapping>
                             <e-leafitemsettings-colormapping value="12" color="@("#B34D6D")"></e-leafitemsettings-colormapping>
@@ -73,7 +74,7 @@
                             <e-leafitemsettings-colormapping value="1" color="@("#95659A")"></e-leafitemsettings-colormapping>
                         </e-leafitemsettings-colormappings>
                     </e-treemap-leafitemsettings>
-                    <e-treemap-tooltipsettings visible="true" template="#Tooltip"></e-treemap-tooltipsettings>
+                    <e-treemap-tooltipsettings visible="true" template="#Tooltip" textStyle="titleFont"></e-treemap-tooltipsettings>
                     <e-treemap-legendsettings visible="true" position="@LegendPosition.Top" shape="@LegendShape.Rectangle"></e-treemap-legendsettings>
                 </ejs-treemap>
                 <div style="float: right; margin-right: 10px;">

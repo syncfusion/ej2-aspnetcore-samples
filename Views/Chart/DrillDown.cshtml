@@ -20,6 +20,11 @@
             </e-accumulation-series-collection>
         </ejs-accumulationchart>
     </div>
+    <style>
+        path[id^=container_Series_0_Point_] {
+           cursor: pointer !important;
+        }
+    </style>
     <script>
         var suvs = [{ x: 'Toyota', y: 8 }, { x: 'Ford', y: 12 }, { x: 'GM', y: 17 }, { x: 'Renault', y: 6 }, { x: 'Fiat', y: 3 },
         { x: 'Hyundai', y: 16 }, { x: 'Honda', y: 8 }, { x: 'Maruthi', y: 10 }, { x: 'BMW', y: 20 }];
@@ -35,7 +40,7 @@
         };
         var mouseClick = function (args) {
 
-            var pie = document.getElementById("container").ej2_instances[0];
+            var pie = document.getElementById("drilledContainer").ej2_instances[0];
             pie.series = [
                 {
                     dataSource: [{ x: 'SUV', y: 25 }, { x: 'Car', y: 37 }, { x: 'Pickup', y: 15 }, { x: 'Minivan', y: 23 }],
@@ -49,6 +54,7 @@
             ];
             pie.textRender = function (args) { args.text = args.point.x + ' ' + args.point.y + ' %'; }
             pie.title = 'Automobile Sales by Category';
+            pie.element.id = "container";
             pie.refresh();
             document.getElementById('text').style.visibility = 'hidden';
             document.getElementById('symbol').style.visibility = 'hidden';
@@ -99,6 +105,7 @@
                     break;
             }
             pie.series[0].dataLabel.position = "Outside";
+            pie.element.id = "drilledContainer";
             pie.refresh();
             document.getElementById('symbol').style.visibility = 'visible';
             document.getElementById('category').style.visibility = 'visible';

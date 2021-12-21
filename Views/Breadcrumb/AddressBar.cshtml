@@ -5,12 +5,13 @@
         <div class="content-wrapper">
             <div class="row material2">
                 <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
-                    <h5>File Manager like Breadcrumb</h5>
+                    <h5 style="display: inline-block">File Manager like Breadcrumb</h5>
+                    <ejs-button id="reset" cssClass="reset-btn e-small" content="Reset State" onclick="btnClick()"></ejs-button>
                 </div>
             </div>
             <div class="row material2">
                 <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
-                    <ejs-breadcrumb id="address-bar" cssClass="e-custom-breadcrumb" beforeItemRender="beforeItemRender" itemTemplate="#itemTemplate">
+                    <ejs-breadcrumb id="address-bar" cssClass="e-custom-breadcrumb" beforeItemRender="beforeItemRender" itemTemplate="#itemTemplate" separatorTemplate="#separatorTemplate">
                         <e-breadcrumb-items>
                             <e-breadcrumb-item iconCss="e-bicons e-picture"></e-breadcrumb-item>
                             <e-breadcrumb-item text="This PC"></e-breadcrumb-item>
@@ -28,7 +29,7 @@
 
 @section ActionDescription{
     <p>
-        This sample demonstrates the Address Bar functionalities using the <b>Breadcrumb</b> component. Click the
+        This sample demonstrates the address bar functionalities using the <b>Breadcrumb</b> component. Click the
         right arrow icon to view and navigate to the next level items.
     </p>
 }
@@ -36,15 +37,14 @@
 @section Description{
     <p>
         In the <code>Breadcrumb</code> component, <code>itemTemplate</code> property is used to render <code>Menu</code>
-        as <code>Breadcrumb</code> items.
+        as Breadcrumb items.
     </p>
     <p>
-        In this demo, we have rendered Address of <b>Pictures</b> folder in <code>Breadcrumb</code>. And click the
+        In this demo, we have rendered address of pictures folder in Breadcrumb. And click the
         right arrow icon to view and navigate to the next level items.
     </p>
     <p>
-        More information about <code>Breadcrumb</code> component can be found in this <a target='_blank'
-                                                                                         href="https://ej2.syncfusion.com/aspnetcore/documentation/breadcrumb/getting-started/">documentation section</a>.
+        <p>More information about Breadcrumb component can be found in this <a target='_blank' href="https://ej2.syncfusion.com/aspnetcore/documentation/breadcrumb/getting-started/">documentation section</a>.
     </p>
 }
 
@@ -99,6 +99,11 @@
     .e-bigger.highcontrast .e-custom-breadcrumb .e-menu-wrapper ul .e-menu-item.e-menu-caret-icon {
         padding-right: 22px !important;
     }
+
+    #reset {
+        float: right;
+        margin: 5px 2px 5px 0;
+    }
 </style>
 
 @*custom code end*@
@@ -118,6 +123,7 @@
     .bootstrap5 .e-custom-breadcrumb .e-menu-wrapper ul .e-menu-item.e-menu-caret-icon,
     .bootstrap5-dark .e-custom-breadcrumb .e-menu-wrapper ul .e-menu-item.e-menu-caret-icon {
         padding-right: 23px !important;
+        margin-top: -2px;
     }
 
     .e-custom-breadcrumb .e-menu-wrapper ul .e-menu-item .e-caret {
@@ -149,10 +155,6 @@
 
     .e-custom-breadcrumb ol {
         background-color: transparent !important;
-    }
-
-    .e-custom-breadcrumb .e-breadcrumb-separator {
-        display: none;
     }
 
     .e-custom-breadcrumb .e-menu-wrapper ul .e-menu-item .e-menu-icon {
@@ -231,10 +233,40 @@
 <script id="itemTemplate" type="text/x-template">
     <div id="template"></div>
 </script>
+<script id="separatorTemplate" type="text/x-template">
+    <div id="template"></div>
+</script>
 
 <script>
 function beforeItemRender(args) {
-    if (!args.element.classList.contains('e-breadcrumb-separator')) {
+    if (args.element.classList.contains('e-breadcrumb-separator')) {
+        if (args.item.previousItem.text == 'LastItem') {
+            return
+        }
+        var breadcrumbObj = ej.base.getComponent(document.getElementById('address-bar'), 'breadcrumb');
+        args.item.items = [];
+        breadcrumbObj.items.forEach((item) => {
+            args.item.items.push({ text: item.text, iconCss: item.iconCss });
+        });
+        var separatorObj = { text: args.item.previousItem.text, iconCss: args.item.previousItem.iconCss, items: args.item.items }
+        var ajax = new ej.base.Ajax({
+            url: '@Url.Action("AddressBarSeparatorTemplatePartial", "Breadcrumb")',
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ value: separatorObj })
+        });
+        ajax.mode = false;
+        ajax.send().then(function (data) {
+            appendElement(data, args.element, "template");
+        }).catch(function (xhr) {
+            console.log(xhr);
+        });
+    }
+    else {
+        if (args.item.text === 'LastItem') {
+            args.element.style.display = 'none';
+            return;
+        }
         var breadcrumbObj = ej.base.getComponent(document.getElementById('address-bar'), 'breadcrumb');
         args.item.items = [];
         breadcrumbObj.items.forEach((item) => {
@@ -288,6 +320,8 @@ function appendElement(elementString, element, templateID) {
             text: 'Pictures'
         }
     ];
+
+    var initialBreadcrumbItems = [].slice.call(breadcrumbItems);
 
     var addressBaritems = [
         {
@@ -392,15 +426,17 @@ function appendElement(elementString, element, templateID) {
     ];
 
     function selectHandler(args) {
+        var breadcrumbObj = ej.base.getComponent(document.getElementById('address-bar'), 'breadcrumb');
         for (var i = 0; i < breadcrumbItems.length; i++) {
             if (breadcrumbItems[i].text === args.item.text) {
                 breadcrumbItems = breadcrumbItems.slice(0, i + 1);
                 breadcrumbItems[0].iconCss = 'e-bicons e-' + getItems(args.item.text, true)[0].items.type;
-                var breadcrumbObj = ej.base.getComponent(document.getElementById('address-bar'), 'breadcrumb');
                 breadcrumbObj.items = breadcrumbItems;
                 break;
             }
         }
+        breadcrumbObj.items.push({ text: 'LastItem' });
+        breadcrumbObj.activeItem = 'LastItem';
     }
 
     function subMenuSelectHandler(args) {
@@ -417,7 +453,11 @@ function appendElement(elementString, element, templateID) {
                 breadcrumbItems = breadcrumbItems.slice(0, idx);
             }
             breadcrumbItems[0].iconCss = 'e-bicons e-' + args.element.id;
-            breadcrumbItems.push({ text: args.item.text });
+            if (breadcrumbItems[breadcrumbItems.length - 1].text === 'LastItem') {
+                breadcrumbItems.pop();
+            }
+            breadcrumbItems.push({ text: args.element.textContent });
+            breadcrumbItems.push({ text: 'LastItem' });
             var breadcrumbObj = ej.base.getComponent(document.getElementById('address-bar'), 'breadcrumb');
             breadcrumbObj.items = breadcrumbItems;
         }
@@ -475,6 +515,12 @@ function appendElement(elementString, element, templateID) {
         }
         return subItems;
     }
+
+    function btnClick() {
+        var breadcrumb = document.getElementById('address-bar');
+        var breadcrumbInst = ej.base.getComponent(breadcrumb, 'breadcrumb');
+        breadcrumbInst.items = breadcrumbItems = initialBreadcrumbItems;
+    };
 </script>
 
 

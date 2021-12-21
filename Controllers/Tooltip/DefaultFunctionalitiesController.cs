@@ -12,7 +12,7 @@ namespace EJ2CoreSampleBrowser.Controllers
     {
         public IActionResult DefaultFunctionalities()
         {
-            ViewBag.content = "Lets go green & Save Earth !!!";
+            ViewBag.content = "Let's go green to save the planet!!";
             return View();
         }
     }

@@ -220,7 +220,7 @@
 
         var buttonClickActions = function (e) {
             var scheduleObj = document.getElementById('schedule').ej2_instances[0];
-            var quickPopup = scheduleObj.element.querySelector('.e-quick-popup-wrapper');
+            var quickPopup = ej.base.closest(e.target, '.e-quick-popup-wrapper');
             var getSlotData = function () {
                 var cellDetails = scheduleObj.getCellDetails(scheduleObj.getSelectedElements());
                 if (ej.base.isNullOrUndefined(cellDetails)) {
@@ -251,7 +251,7 @@
                 scheduleObj.deleteEvent(eventDetails, currentAction);
             }
             else {
-                var isCellPopup = quickPopup.classList.contains('e-cell-popup');
+                var isCellPopup = quickPopup.firstElementChild.classList.contains('e-cell-popup');
                 var eventDetail = isCellPopup ? getSlotData() :
                     scheduleObj.activeEventData.event;
                 var currentActions = isCellPopup ? 'Add' : 'Save';
@@ -281,7 +281,7 @@
 
         function OnPopupOpen(args) {
             var scheduleObj = document.getElementById('schedule').ej2_instances[0];
-            if (args.type === 'QuickInfo') {
+            if (args.type === 'QuickInfo' || args.type === 'ViewEventInfo') {
                 var titleObj = new ej.inputs.TextBox({ placeholder: 'Title' });
                 titleObj.appendTo(args.element.querySelector('#title'));
                 var typeObj = new ej.dropdowns.DropDownList({

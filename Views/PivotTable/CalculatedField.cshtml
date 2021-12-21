@@ -67,7 +67,11 @@
     <script>
         document.getElementById("calculated-field-btn").addEventListener('click', function () {
             var pivotObj = document.getElementById('pivotview').ej2_instances[0];
-            pivotObj.calculatedFieldModule.createCalculatedFieldDialog();
+            if (ej.base.Browser.isDevice) {
+                pivotObj.pivotFieldListModule.dialogRenderer.onShowFieldList();
+            } else {
+                pivotObj.calculatedFieldModule.createCalculatedFieldDialog();
+            }
         });
     </script>
 }

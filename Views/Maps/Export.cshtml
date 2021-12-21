@@ -41,15 +41,15 @@
         </div>
         </div>
         <div class="col-lg-3 property-section">
-			<table id="property" title="Properties" style="width: 100%; margin-left:-10px">
+			<table id="property" title="Properties" style="width: 100%;">
 				<tr style="height: 50px">
-					<td style="width: 40%">
-						<div style="width:50%">
+					<td>
+						<div>
 							Map Type
 						</div>
 					</td>
-					<td style="width: 50%;">
-						<div style="margin-left: -30px">
+					<td>
+						<div>
 							<select id="layertype">
 								<option value='Geometry'>Geometry</option>
 								<option value='OSM'>OSM</option>
@@ -58,31 +58,31 @@
 					</td>
 				</tr>
 				<tr style="height: 50px">
-					<td style="width: 40%">
-						<div style="width:50%">
+					<td>
+						<div>
 							Export Type
 						</div>
 					</td>
-					<td style="width: 50%;">
-						<div style="margin-left: -30px">
+					<td>
+						<div>
 							<input id="mode">
 						</div>
 					</td>
 				</tr>
 				<tr style="height: 50px">
-					<td style="width: 40%">
-						<div style="width:50%">File Name</div>
+					<td>
+						<div>File Name</div>
 					</td>
-					<td style="width: 40%;">
+					<td>
 						<div class="e-float-input" style='margin-top: 0px;'>
-							<input type="text" value="Maps" id="fileName" style="margin-left: -30px;width: 110px;">
+							<input type="text" value="Maps" id="fileName" style="width: 100%;">
 						</div>
 					</td>
 				</tr>
-				<tr id="button-control" style="height: 50px" align='center'>
-					<td>
-						<div style="margin-left:40%">
-							<ejs-button id="togglebtn" content="Export" iconCss="e-icons e-play-icon" cssClass="e-flat" isPrimary=true></ejs-button>
+				<tr id="button-control" style="height: 50px">
+					<td align="center">
+						<div>
+							<ejs-button id="togglebtn" content="Export" iconCss="e-icons e-play-icon" cssClass="e-flat" isPrimary=true style="margin-left: 60%;"></ejs-button>
 						</div>
 					</td>
 				</tr>
@@ -115,6 +115,12 @@
         .e-view.bootstrap5 .e-play-icon::before, .e-view.bootstrap5-dark .e-play-icon::before {
             content: '\e72e';
         }
+        td {
+            width: 50%;
+        }
+        .property-panel-table div {
+            padding-left:0px;
+        }
     </style>
 }
 <script>
@@ -131,12 +137,12 @@
         window.exportType = new ej.dropdowns.DropDownList({
             index: 0,
 			dataSource: modeData,
-            width: 110
+            width: '100%'
         });
         window.exportType.appendTo("#mode");
 		window.layerType = new ej.dropdowns.DropDownList({
 			index: 0,
-            width: 110,
+            width: '100%',
 			change: () => {
                 if (layerType.value === 'OSM') {
                     if (window.exportType.value === 'SVG') {

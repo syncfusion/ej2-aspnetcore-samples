@@ -48,10 +48,10 @@ namespace EJ2CoreSampleBrowser.Controllers.TreeView
             childitem2.Add(new Childitem { nodeId = "02-01", nodeText = "Personals", child=subchilditem4});
             subchilditem4.Add(new SubChilditem { nodeId = "02-01-01", nodeText = "My photo.png" });
             subchilditem4.Add(new SubChilditem { nodeId = "02-01-02", nodeText = "Rental document.docx" });
-            subchilditem4.Add(new SubChilditem { nodeId = "02-01-03", nodeText = "Pay slip.pdf" });
+            subchilditem4.Add(new SubChilditem { nodeId = "02-01-03", nodeText = "Payslip.pdf" });
             List<SubChilditem> subchilditem5 = new List<SubChilditem>();
             childitem2.Add(new Childitem { nodeId = "02-02", nodeText = "Projects",child=subchilditem5 });
-            subchilditem5.Add(new SubChilditem { nodeId = "02-02-01", nodeText = "ASP Application " });
+            subchilditem5.Add(new SubChilditem { nodeId = "02-02-01", nodeText = "Blazor Application" });
             subchilditem5.Add(new SubChilditem { nodeId = "02-02-02", nodeText = "TypeScript Application" });
             subchilditem5.Add(new SubChilditem { nodeId = "02-02-03", nodeText = "React Application" });
            
@@ -59,7 +59,7 @@ namespace EJ2CoreSampleBrowser.Controllers.TreeView
             childitem2.Add(new Childitem { nodeId = "02-02", nodeText = "Office", child = subchilditem6 });
             subchilditem6.Add(new SubChilditem { nodeId = "02-03-01", nodeText = "Work details.docx " });
             subchilditem6.Add(new SubChilditem { nodeId = "02-03-02", nodeText = "Weekly report.docx" });
-            subchilditem6.Add(new SubChilditem { nodeId = "02-03-03", nodeText = "Wish list.csv" });
+            subchilditem6.Add(new SubChilditem { nodeId = "02-03-03", nodeText = "Wishlist.csv" });
             List <Childitem> childitem3 = new List<Childitem>();
             parentitem.Add(new Parentitem
             {

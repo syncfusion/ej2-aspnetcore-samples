@@ -1,26 +1,16 @@
 ﻿@using Syncfusion.EJ2
+@using Syncfusion.EJ2.Charts
 @section ControlsSection{
     @{
         /**/
-
-        var majorGridLines = new { width = 0.000001 };
-        var navigatorBorder = new { width = 0.000001 };
-        var animation = new { enable = false };
-        var lineStyle = new { width = 0.000001 };
-        var majorTickLines = new { width = 0.000001 };
-        var minorTickLines = new { width = 0.000001 };
-        var crosshairTooltip = new { enable = true };
-        var line = new { width = 0.00001 };
-        var cross = new
-        {
-            enable = true
-
-        };
-        var upperLine = new { color = "#e74c3d" };
-        var border = new Syncfusion.EJ2.Charts.ChartBorder { Color = "Transparent", Width = 0 };
-        var margin = new { right = 0, left = 0, top = 0, bottom = 0 };
-
-
+        var majorGridLines = new RangeNavigatorMajorTickLines { Width = 0.000001 };
+        var lineStyle = new ChartAxisLine { Width = 0.000001 };
+        var crosshairTooltip = new ChartCrosshairTooltip { Enable = true };
+        var line = new ChartMajorGridLines { Width = 0.00001 };
+        var lineTicks = new ChartMajorTickLines { Width = 0.00001 };
+        var lineAxis = new ChartAxisLine { Width = 0.00001 };
+        var border = new ChartBorder { Color = "Transparent", Width = 0 };
+        var width = "10%";
     }
     <div class="control-section">
         <div id="container" align="center">
@@ -47,7 +37,7 @@
                 </e-chart-tooltipsettings>
                 <e-chart-margin top="0"></e-chart-margin>
                 <e-chart-annotations>
-                    <e-chart-annotation content="<div id='annotation'></div>" coordinateUnits="Pixel" region="Series" x="10%" y="20%"></e-chart-annotation>
+                    <e-chart-annotation content="<div id='annotation'></div>" coordinateUnits="Pixel" region="Series" x="width" y="20%"></e-chart-annotation>
                 </e-chart-annotations>
                 <e-chart-primaryxaxis valueType="DateTime"
                                       majorGridLines="line"
@@ -61,8 +51,8 @@
                                       interval=30
                                       rowIndex=1
                                       opposedPosition=true
-                                      majorTickLines="line"
-                                      lineStyle="line"></e-chart-primaryyaxis>
+                                      majorTickLines="lineTicks"
+                                      lineStyle="lineAxis"></e-chart-primaryyaxis>
                 <e-chart-chartarea border="border"></e-chart-chartarea>
                 <e-chart-legendsettings visible="false">
                 </e-chart-legendsettings>
@@ -72,7 +62,7 @@
                     <e-chart-axis name="secondary" crosshairTooltip="crosshairTooltip"
                                   opposedPosition=true rowIndex=0
                                   majorGridLines="line" lineStyle="lineStyle" minimum=-3.5 maximum=3.5
-                                  interval=3 majorTickLines="line" title="MACD">
+                                  interval=3 majorTickLines="lineTicks" title="MACD">
                         <e-striplines>
                             <e-stripline start="-3.5" end="3.5" text="" color="black" visible="true" opacity="0.03" zIndex="Behind"></e-stripline>
                         </e-striplines>

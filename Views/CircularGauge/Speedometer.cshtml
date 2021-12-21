@@ -40,6 +40,7 @@
             NeedleTail = new Syncfusion.EJ2.CircularGauge.CircularGaugeNeedleTail { Color = "#757575", Length = "15%" }
         }
         );
+        var labelFont = new Syncfusion.EJ2.CircularGauge.CircularGaugeFont { FontFamily = "Segoe UI", Opacity = 1, Size = "13px"  };
     }
 
    <script id='pointerValue' type="text/x-template">
@@ -56,7 +57,7 @@
             <e-circulargauge-axes>
                 <e-circulargauge-axis startAngle="270" endAngle="90" minimum="0" maximum="120" radius="120%" pointers="pointer">
                     <e-axis-linestyle width="0" color="#E0E0E0"></e-axis-linestyle>
-                    <e-axis-labelstyle useRangeColor="false" position="Outside" autoAngle="true">
+                    <e-axis-labelstyle useRangeColor="false" position="Outside" autoAngle="true" font="labelFont">
                     </e-axis-labelstyle>
                     <e-axis-majorticks color="transparent"></e-axis-majorticks>
                     <e-axis-minorticks color="transparent"></e-axis-minorticks>
@@ -71,30 +72,30 @@
     <table id="property" title="Properties" style="width: 100%; margin-left: -10px">
         <tbody>
             <tr>
-                <td style="width: 40%">
-                    <div class="property-text" style="width: 100px; margin-top: 5px"> Show text labels</div>
+                <td>
+                    <div class="property-text" style="margin-top: 10px"> Show text labels</div>
                 </td>
-                <td style="width: 40%;">
+                <td>
                     <div style="margin-left: 20px">
                         <input type="checkbox" id="showText" checked />
                     </div>
                 </td>
             </tr>
             <tr>
-                <td style="width: 40%">
-                    <div class="property-text" style="width: 100px; margin-top: 10px"> Combine ranges</div>
+                <td>
+                    <div class="property-text" style="margin-top: 10px"> Combine ranges</div>
                 </td>
-                <td style="width: 40%;">
+                <td>
                     <div style="margin-left: 20px; margin-top: 5px">
                         <input type="checkbox" id="combineRange" checked />
                     </div>
                 </td>
             </tr>
             <tr>
-                <td style="width: 40%">
-                    <div class="property-text" style="width: 100px; margin-top: 15px"> Gap between ranges</div>
+                <td>
+                    <div class="property-text" style="margin-top: 10px"> Gap between ranges</div>
                 </td>
-                <td style="width: 40%;">
+                <td>
                     <div style="margin-left: 20px">
                         <input type="checkbox" id="range" checked />
                     </div>
@@ -122,14 +123,9 @@
         @* custom code end *@
         if (!circulargauge) {
             circulargauge = sender.gauge;
-            sender.gauge.axes[0].labelStyle.font = {
-                size: "13px",
-                fontFamily: "Roboto"
-            };
             sender.gauge.axes[0].lineStyle.width = 0;
             sender.gauge.axes[0].labelStyle = {
                 useRangeColor: false, position: 'Outside', autoAngle: true,
-                font: { size: '13px', fontFamily: 'Roboto' }
             };
             sender.gauge.axes[0].majorTicks.width = 0;
             sender.gauge.axes[0].minorTicks.width = 0;

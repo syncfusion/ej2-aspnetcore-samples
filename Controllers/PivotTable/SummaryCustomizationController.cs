@@ -14,7 +14,7 @@ namespace EJ2CoreSampleBrowser.Controllers
         public IActionResult SummaryCustomization()
         {
             ViewBag.data = new PivotTableData().GetPivot_Data();
-            ViewBag.drilledMembers = new string[] { "France" };
+            ViewBag.drilledMembers = new string[] { "France", "Germany" };
             ViewBag.filterMembers = new string[] { "Gloves", "Helmets", "Shorts", "Vests" };
             ViewBag.fielddata = new Fields().FieldList();
             return View();

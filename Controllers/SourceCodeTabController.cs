@@ -9,8 +9,9 @@ namespace EJ2CoreSampleBrowser.Controllers
 {
     public class SourceCodeTabController : Controller
     {
-        private IHostingEnvironment _appEnv;
-        public SourceCodeTabController(IHostingEnvironment appEnv)
+        private IWebHostEnvironment _appEnv;
+        public SourceCodeTabController(IWebHostEnvironment appEnv)
+
         {
             _appEnv = appEnv;
         }

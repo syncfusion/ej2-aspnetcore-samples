@@ -18,8 +18,13 @@ namespace EJ2CoreSampleBrowser.Controllers.DocIO
 {
     public partial class DocIOController : Controller
     {
+#if NET6_0
+        private readonly IWebHostEnvironment _hostingEnvironment;
+        public DocIOController(IWebHostEnvironment hostingEnvironment)
+#else
         private readonly IHostingEnvironment _hostingEnvironment;
         public DocIOController(IHostingEnvironment hostingEnvironment)
+#endif
         {
             _hostingEnvironment = hostingEnvironment;
         }

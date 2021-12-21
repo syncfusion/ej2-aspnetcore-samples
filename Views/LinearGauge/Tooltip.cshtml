@@ -1,7 +1,7 @@
 @using Syncfusion.EJ2;
 @section Meta{
-                    <meta name="description" content="This example demonstrates the Tooltip in ASP.NET Core LinearGauge control. Explore here for more details."/>
-                }
+    <meta name="description" content="This example demonstrates the Tooltip in ASP.NET Core LinearGauge control. Explore here for more details." />
+}
 @section ActionDescription{
     <div id="action-description">
         <p>
@@ -15,7 +15,7 @@
             This sample demonstrates the measuring scale by using the linear gauge. Tooltip is used to track the pointer value closer
             to the current mouse position or touch contact. You can show the tooltip for an individual marker or bar pointer
             by hover or tap on the pointer in touch enabled devices.
-            <br>        
+            <br>
         <p>
             More information about tooltip can be found in this
             <a target="_blank" href="http://ej2.syncfusion.com/documentation">documentation section</a>.
@@ -23,12 +23,15 @@
     </div>
 }
 @section ControlsSection{
+    @{
+        var labelFont = new Syncfusion.EJ2.LinearGauge.LinearGaugeFont { FontFamily = "Segoe UI", Opacity = 1 };
+    }
     <div class="control-section" style="border-right:0px;">
         <div class="content-wrapper">
-            <ejs-lineargauge id="linear" load="gaugeLoad" orientation="Horizontal" axisLabelRender ="labelRender"
-                tooltipRender="renderTooltip" loaded ="gaugeLoaded" resized ="gaugeResized">
+            <ejs-lineargauge id="linear" load="gaugeLoad" orientation="Horizontal" axisLabelRender="labelRender"
+                             tooltipRender="renderTooltip" loaded="gaugeLoaded" resized="gaugeResized">
                 <e-lineargauge-axes>
-                    <e-lineargauge-axis  maximum="10" minimum="0">
+                    <e-lineargauge-axis maximum="10" minimum="0">
                         <e-axis-line offset="140"></e-axis-line>
                     </e-lineargauge-axis>
                     <e-lineargauge-axis opposedPosition="true" minimum="0" maximum="25"></e-lineargauge-axis>
@@ -57,7 +60,10 @@
              }
          };
          gauge.tooltip = {
-             enable: true
+             enable: true,
+             textStyle: {
+                 fontFamily: 'Segoe UI'
+             }
          };
          axis.majorTicks = {
              interval: 1
@@ -70,7 +76,7 @@
              value: 5.4,
              offset: 15,
              color: '#ff66b3'
-         }];       
+         }];
 
          axis = gauge.axes[1];
          axis.line = {
@@ -90,7 +96,7 @@
              }];
 
          var annotation = gauge.annotations[0];
-        annotation.content = '<div id="first"><h1 style="font-size:15px;">Inches</h1></div>',             
+        annotation.content = '<div id="first"><h1 style="font-size:15px;font-family: Segoe UI">Inches</h1></div>',
          annotation.x = 35;
          annotation.zIndex = '1';
          annotation.y = -58;
@@ -100,13 +106,13 @@
          args.gauge.annotations[1] = new ej.lineargauge.Annotation(args.gauge);
          annotation = args.gauge.annotations[1];
          annotation.propName = "annotations";
-        annotation.content = '<div id="second"><h1 style="font-size:15px;">Centimeters</h1></div>';
+        annotation.content = '<div id="second"><h1 style="font-size:15px;font-family: Segoe UI">Centimeters</h1></div>';
          annotation.axisIndex = 1;
          annotation.axisValue = 16.5;
          annotation.y = 52;
          annotation.x = 50;
          annotation.zIndex = '1';
-    
+
          var width = parseInt(((this.width, this.element.offsetWidth) || this.element.offsetWidth || 600), 10);
          if (width < 500) {
              gaugeMobileSize();
@@ -115,10 +121,10 @@
              gaugeDesktopSize();
         }
         if (args.gauge.theme.toLowerCase().indexOf('dark') > 1 || args.gauge.theme.toLowerCase() === 'highcontrast') {
-            args.gauge.annotations[0].content = '<div id="first"><h1 style="font-size:15px; color: #DADADA">Inches</h1></div>';
-            args.gauge.annotations[1].content = '<div id="second"><h1 style="font-size:15px; color: #DADADA">Centimeters</h1></div>';
+            args.gauge.annotations[0].content = '<div id="first"><h1 style="font-size:15px; color: #DADADA;font-family: Segoe UI">Inches</h1></div>';
+            args.gauge.annotations[1].content = '<div id="second"><h1 style="font-size:15px; color: #DADADA;font-family: Segoe UI">Centimeters</h1></div>';
         }
-                
+
     }
     function renderTooltip(args) {
         args.content = (args.axis.visibleRange.max === 25) ? args.content + ' cm' : args.content + ' in';
@@ -154,7 +160,7 @@
             gaugeDesktopSize();
         }
     }
-    
+
     function gaugeLoaded(args) {
         if (document.getElementById('tooltipContainer')) {
             if (gauge.availableSize.width < 500) {
@@ -193,8 +199,8 @@
     </div>
 </script>
 @section Title{
-                    <title>ASP.NET Core LinearGauge Tooltip Example - Syncfusion Demos </title> 
-                }
+    <title>ASP.NET Core LinearGauge Tooltip Example - Syncfusion Demos </title>
+}
 @section Header{
-                    <h1 class='sb-sample-text'>Example of Tooltip in ASP.NET Core LinearGauge Control</h1>
-                }
+    <h1 class='sb-sample-text'>Example of Tooltip in ASP.NET Core LinearGauge Control</h1>
+}

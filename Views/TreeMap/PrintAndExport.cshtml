@@ -4,13 +4,14 @@
 
     @{
         var leafBorder = new TreeMapBorder{ Color = "white", Width = 0.5 };
+        var titleFont = new TreeMapFont { FontFamily = "Segoe UI" };
     }
     <div class="col-lg-9 control-section">
         <div id="container">
             <ejs-treemap id="container" load="treeMapLoad" allowImageExport="true" allowPdfExport="true" allowPrint="true" layoutType="@Syncfusion.EJ2.TreeMap.LayoutMode.SliceAndDiceVertical" dataSource="ViewBag.dataSource" weightValuePath="Percentage" rangeColorValuePath="Percentage">
-                <e-treemap-titlesettings text="Top 10 best selling smartphone brands - 2017"></e-treemap-titlesettings>
-                <e-treemap-tooltipsettings visible="true" format="${Product} (+${Percentage}) %"></e-treemap-tooltipsettings>
-                <e-treemap-leafitemsettings interSectAction="@LabelAlignment.Hide" labelPosition="@Syncfusion.EJ2.TreeMap.LabelPosition.Center" labelPath="Product" fill="#6699cc" labelFormat="${Product} (+${Percentage}) %" border="leafBorder">
+                <e-treemap-titlesettings text="Top 10 best selling smartphone brands - 2017" textStyle="titleFont"></e-treemap-titlesettings>
+                <e-treemap-tooltipsettings visible="true" format="${Product} (+${Percentage}) %" textStyle="titleFont"></e-treemap-tooltipsettings>
+                <e-treemap-leafitemsettings interSectAction="@LabelAlignment.Hide" labelPosition="@Syncfusion.EJ2.TreeMap.LabelPosition.Center" labelPath="Product" fill="#6699cc" labelFormat="${Product} (+${Percentage}) %" border="leafBorder" labelStyle="titleFont">
                     <e-leafitemsettings-colormappings>
                         <e-leafitemsettings-colormapping from="1.3" to="22" color="@("#FAB665")" minOpacity="0.5" maxOpacity="1"></e-leafitemsettings-colormapping>
                     </e-leafitemsettings-colormappings>
@@ -25,14 +26,14 @@
 <div class="col-lg-3 property-section">
     <table id="property" title="Properties" style="width: 100%">
         <tbody>
-            <tr style="height: 50px">
-                <td style="width: 40%">
+            <tr>
+                <td>
                     <div>
                         Export Type
                     </div>
                 </td>
-                <td style="width: 60%;">
-                    <div style="margin-left: -10px">
+                <td>
+                    <div>
                         <select id="mode">
                             <option value='JPEG'>JPEG</option>
                             <option value='PNG'>PNG</option>
@@ -42,36 +43,40 @@
                     </div>
                 </td>
             </tr>
-            <tr style="height: 50px">
-                <td style="width: 40%">
+            <tr>
+                <td>
                     <div>File Name</div>
                 </td>
-                <td style="width: 40%;">
+                <td>
                     <div class="e-float-input" style='margin-top: 0px;'>
-                        <input type="text" value="Treemap" id="fileName" style="margin-left: -10px">
+                        <input type="text" value="Treemap" id="fileName" style="width:100%">
                     </div>
                 </td>
             </tr>
             <tr id="button-control1">
-                <td>
-                    <div style="height: 45px;margin-left:50%">
-                        <button id="export" style="width: 80px">Export</button>
+                <td align="center">
+                    <div>
+                        <button id="export">Export</button>
                     </div>
                 </td>
-            </tr>
-            <tr id="button-control2">
-                <td>
-                    <div style="height: 45px;margin-left:50%">
-                        <button id="print" style="width: 80px">Print</button>
+                <td align="center">
+                    <div>
+                        <button id="print">Print</button>
                     </div>
                 </td>
             </tr>
         </tbody>
     </table>
 </div>
-    <style>
+<style>
     .e-play-icon::before {
         content: '\e728';
+    }
+    .property-panel-table div {
+        padding-left: 0px;
+    }
+    tr {
+        height: 50px;
     }
 </style>
 
@@ -88,7 +93,7 @@
     window.onload = function () {
         window.exportType = new ej.dropdowns.DropDownList({
             index: 0,
-            width: 90
+            width: '100%'
         });
         window.exportType.appendTo('#mode');
         window.togglebtn1 = new ej.buttons.Button({

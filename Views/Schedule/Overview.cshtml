@@ -31,9 +31,8 @@
                             <div class="control-panel calendar-export">
                                 <ejs-button id="printBtn" cssClass="title-bar-btn" content="Print" iconCss="e-icons e-print"></ejs-button>
                             </div>
-                            <div class="control-panel" style="display: inline-flex;padding-left:15px;">
-                                <div class="e-icons e-upload-1 e-btn-icon e-icon-left" style="line-height: 40px;"></div>
-                                <ejs-uploader id="icalendar" allowedExtensions=".ics" cssClass="calendar-import" showFileList="false" selected="onSelected" multiple="false">
+                            <div class="control-panel">
+                                <ejs-uploader id="icalendar" allowedExtensions=".ics" cssClass="calendar-import" showFileList="false" created="uploaderCreated" selected="onSelected" multiple="false">
                                     <e-uploader-buttons browse="Import"></e-uploader-buttons>
                                 </ejs-uploader>
                             </div>
@@ -104,7 +103,7 @@
                                     <label style="line-height: 34px; margin: 0;">First Day of Week</label>
                                 </div>
                                 <div class="col-right">
-                                    <ejs-dropdownlist id="weekFirstDay" width="170px" dataSource="@ViewBag.WeekDays" value="0" popupHeight="150px" change="onWeekFirstDayChange">
+                                    <ejs-dropdownlist id="weekFirstDay" dataSource="@ViewBag.WeekDays" value="0" popupHeight="150px" change="onWeekFirstDayChange">
                                         <e-dropdownlist-fields text="text" value="value"></e-dropdownlist-fields>
                                     </ejs-dropdownlist>
                                 </div>
@@ -114,7 +113,7 @@
                                     <label style="line-height: 34px; margin: 0;">Work week</label>
                                 </div>
                                 <div class="col-right">
-                                    <ejs-multiselect id="workWeekDays" cssClass="schedule-workweek" width="170px" dataSource="@ViewBag.WeekDays" mode="CheckBox" enableSelectionOrder="false" showClearButton="false" showDropDownIcon="true" popupHeight="150px" value="new int[] {1,2,3,4,5}" change="onWeekDaysChange">
+                                    <ejs-multiselect id="workWeekDays" cssClass="schedule-workweek" dataSource="@ViewBag.WeekDays" mode="CheckBox" enableSelectionOrder="false" showClearButton="false" showDropDownIcon="true" popupHeight="150px" value="new int[] {1,2,3,4,5}" change="onWeekDaysChange">
                                         <e-multiselect-fields text="text" value="value"></e-multiselect-fields>
                                     </ejs-multiselect>
                                 </div>
@@ -124,7 +123,7 @@
                                     <label style="line-height: 34px; margin: 0;">Resources</label>
                                 </div>
                                 <div class="col-right">
-                                    <ejs-multiselect id="resources" cssClass="schedule-workweek" width="170px" dataSource="@ViewBag.Calendars" mode="CheckBox" enableSelectionOrder="false" showClearButton="false" showDropDownIcon="true" popupHeight="150px" value="new int[] {1}" change="onCalendarChange">
+                                    <ejs-multiselect id="resources" cssClass="schedule-workweek" dataSource="@ViewBag.Calendars" mode="CheckBox" enableSelectionOrder="false" showClearButton="false" showDropDownIcon="true" popupHeight="150px" value="new int[] {1}" change="onCalendarChange">
                                         <e-multiselect-fields text="CalendarName" value="CalendarId"></e-multiselect-fields>
                                     </ejs-multiselect>
                                 </div>
@@ -134,7 +133,7 @@
                                     <label style="line-height: 34px; margin: 0;">Timezone</label>
                                 </div>
                                 <div class="col-right">
-                                    <ejs-dropdownlist id="timezone" width="170px" dataSource="@ViewBag.TimezoneData" value="timezone" popupHeight="150px" change="onTimezoneChange">
+                                    <ejs-dropdownlist id="timezone" dataSource="@ViewBag.TimezoneData" value="timezone" popupHeight="150px" change="onTimezoneChange">
                                         <e-dropdownlist-fields text="text" value="value"></e-dropdownlist-fields>
                                     </ejs-dropdownlist>
                                 </div>
@@ -144,7 +143,7 @@
                                     <label style="line-height: 34px; margin: 0;">Day Start Hour</label>
                                 </div>
                                 <div class="col-right">
-                                    <ejs-timepicker id="dayStartHour" width="170px" showClearButton="false" value="new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0)" change="onDayStartHourChange"></ejs-timepicker>
+                                    <ejs-timepicker id="dayStartHour" showClearButton="false" value="new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0)" change="onDayStartHourChange"></ejs-timepicker>
                                 </div>
                             </div>
                             <div class="col-row">
@@ -152,7 +151,7 @@
                                     <label style="line-height: 34px; margin: 0;">Day End Hour</label>
                                 </div>
                                 <div class="col-right">
-                                    <ejs-timepicker id="dayEndHour" width="170px" showClearButton="false" value="new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59)" change="onDayEndHourChange"></ejs-timepicker>
+                                    <ejs-timepicker id="dayEndHour" showClearButton="false" value="new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59)" change="onDayEndHourChange"></ejs-timepicker>
                                 </div>
                             </div>
                             <div class="col-row">
@@ -160,7 +159,7 @@
                                     <label style="line-height: 34px; margin: 0;">Work Start Hour</label>
                                 </div>
                                 <div class="col-right">
-                                    <ejs-timepicker id="workHourStart" width="170px" showClearButton="false" value="new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 9, 0, 0)" change="onWorkStartHourChange"></ejs-timepicker>
+                                    <ejs-timepicker id="workHourStart" showClearButton="false" value="new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 9, 0, 0)" change="onWorkStartHourChange"></ejs-timepicker>
                                 </div>
                             </div>
                             <div class="col-row">
@@ -168,7 +167,7 @@
                                     <label style="line-height: 34px; margin: 0;">Work End Hour</label>
                                 </div>
                                 <div class="col-right">
-                                    <ejs-timepicker id="workHourEnd" width="170px" showClearButton="false" value="new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 18, 0, 0)" change="onWorkEndHourChange"></ejs-timepicker>
+                                    <ejs-timepicker id="workHourEnd" showClearButton="false" value="new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 18, 0, 0)" change="onWorkEndHourChange"></ejs-timepicker>
                                 </div>
                             </div>
                             <div class="col-row">
@@ -176,7 +175,7 @@
                                     <label style="line-height: 34px; margin: 0;">Slot Duration</label>
                                 </div>
                                 <div class="col-right">
-                                    <ejs-dropdownlist id="slotDuration" width="170px" dataSource="@ViewBag.SlotIntervalDataSource" value="60" popupHeight="150px" change="onSlotIntervalChange">
+                                    <ejs-dropdownlist id="slotDuration" dataSource="@ViewBag.SlotIntervalDataSource" value="60" popupHeight="150px" change="onSlotIntervalChange">
                                         <e-dropdownlist-fields text="Name" value="Value"></e-dropdownlist-fields>
                                     </ejs-dropdownlist>
                                 </div>
@@ -186,7 +185,7 @@
                                     <label style="line-height: 34px; margin: 0;">Slot Interval</label>
                                 </div>
                                 <div class="col-right">
-                                    <ejs-dropdownlist id="slotInterval" width="170px" dataSource="new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }" value="2" popupHeight="150px" change="onSlotCountChange">
+                                    <ejs-dropdownlist id="slotInterval" dataSource="new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }" value="2" popupHeight="150px" change="onSlotCountChange">
                                         <e-dropdownlist-fields text="text" value="value"></e-dropdownlist-fields>
                                     </ejs-dropdownlist>
                                 </div>
@@ -196,7 +195,7 @@
                                     <label style="line-height: 34px; margin: 0;">Time Format</label>
                                 </div>
                                 <div class="col-right">
-                                    <ejs-dropdownlist id="timeFormat" width="170px" dataSource="@ViewBag.TimeFormat" value="timeformat" popupHeight="150px" change="onTimeFormatChange">
+                                    <ejs-dropdownlist id="timeFormat" dataSource="@ViewBag.TimeFormat" value="timeformat" popupHeight="150px" change="onTimeFormatChange">
                                         <e-dropdownlist-fields text="Name" value="Value"></e-dropdownlist-fields>
                                     </ejs-dropdownlist>
                                 </div>
@@ -206,7 +205,7 @@
                                     <label style="line-height: 34px; margin: 0;">Week Numbers</label>
                                 </div>
                                 <div class="col-right">
-                                    <ejs-dropdownlist id="week_number" width="170px" dataSource="@ViewBag.WeekNumber" value="weeknumber" popupHeight="150px" change="onWeekNumberChange">
+                                    <ejs-dropdownlist id="week_number" dataSource="@ViewBag.WeekNumber" value="weeknumber" popupHeight="150px" change="onWeekNumberChange">
                                         <e-dropdownlist-fields text="Name" value="Value"></e-dropdownlist-fields>
                                     </ejs-dropdownlist>
                                 </div>
@@ -333,7 +332,7 @@
             font-weight: 400;
         }
 
-        .bootstrap5-dark .schedule-overview .overview-toolbar .overview-toolbar-settings, 
+        .bootstrap5-dark .schedule-overview .overview-toolbar .overview-toolbar-settings,
         .bootstrap5-dark .schedule-overview .overview-content .right-panel .control-panel {
             background-color: #343a40;
             color: #fff;
@@ -1104,7 +1103,7 @@
 
         var buttonClickActions = function (e) {
             var scheduleObj = document.getElementById('scheduler').ej2_instances[0];
-            var popupElement = scheduleObj.element.querySelector('.e-quick-popup-wrapper');
+            var popupElement = ej.base.closest(e.target, '.e-quick-popup-wrapper');
             var getSlotData = function () {
                 var cellDetails = scheduleObj.getCellDetails(scheduleObj.getSelectedElements());
                 if (ej.base.isNullOrUndefined(cellDetails)) {
@@ -1223,7 +1222,7 @@
         }
 
         function onPopupOpen(args) {
-            if (args.type === 'QuickInfo') {
+            if (args.type === 'QuickInfo' || args.type === 'ViewEventInfo') {
                 var titleObj = new ej.inputs.TextBox({ placeholder: 'Title' });
                 titleObj.appendTo(args.element.querySelector('#title'));
                 var eventTypeObj = new ej.dropdowns.DropDownList({
@@ -1270,6 +1269,15 @@
             var timeBtn = document.querySelector('.schedule-overview #timeBtn');
             if (timeBtn) {
                 timeBtn.innerHTML = '<span class="e-btn-icon e-icons e-clock e-icon-left"></span>' + new Date().toLocaleTimeString('en-US', { timeZone: scheduleTimezone });
+            }
+        }
+
+        function uploaderCreated() {
+            var uploader = document.getElementById('icalendar');
+            if (uploader) {
+                var uploaderObj = uploader.ej2_instances[0];
+                var template = '<div class="e-template-btn"><span class="e-btn-icon e-icons e-upload-1 e-icon-left"></span>${text}</div>';
+                uploaderObj.buttons = { browse: ej.base.compile(template.trim())({ text: 'Import' })[0] };
             }
         }
 

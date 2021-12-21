@@ -1,9 +1,12 @@
 @using Syncfusion.EJ2.TreeMap;
 @section ControlsSection{
+@{ 
+    var titleFont = new TreeMapFont { FontFamily = "Segoe UI" };
+}
     <div class="col-lg-9 control-section">
         <div id="treemap">
             <ejs-treemap id="container" format="n" useGroupingSeparator="true" rangeColorValuePath="Area" load="treeMapLoad" dataSource="ViewBag.dataSource" weightValuePath="Area">
-                <e-treemap-titlesettings text="Top 10 largest islands in the World"></e-treemap-titlesettings>
+                <e-treemap-titlesettings text="Top 10 largest islands in the World" textStyle="titleFont"></e-treemap-titlesettings>
                 <e-treemap-leafitemsettings labelPath="Name">
                     <e-leafitemsettings-colormappings>
                         <e-leafitemsettings-colormapping from="100000" to="250000" label="0.1M - 0.25M" color="@("#547C84")"></e-leafitemsettings-colormapping>
@@ -13,7 +16,7 @@
                     </e-leafitemsettings-colormappings>
                     <e-leafitemsettings-border color="white" width="0.5"></e-leafitemsettings-border>
                 </e-treemap-leafitemsettings>
-                <e-treemap-tooltipsettings visible="true" format="Name: ${Name}<br>Area: ${Area} per square kms<br>Continent: ${Location}" opacity="0.8"></e-treemap-tooltipsettings>
+                <e-treemap-tooltipsettings visible="true" format="Name: ${Name}<br>Area: ${Area} per square kms<br>Continent: ${Location}" opacity="0.8" textStyle="titleFont"></e-treemap-tooltipsettings>
                 <e-treemap-legendsettings visible="true" position="@LegendPosition.Bottom" height="10" mode="@LegendMode.Interactive"></e-treemap-legendsettings>
             </ejs-treemap>
         </div>
@@ -21,45 +24,47 @@
     <div class="col-lg-3 property-section">
     <table id="property" title="Properties" style="width: 100%">
         <tbody>
-            <tr style="height: 50px">
-                <td style="width: 10%">
+            <tr>
+                <td>
                     <div class="property-text">Color Mapping Type</div>
                 </td>
-                <td style="width: 30%;">
-                    <select autocomplete="off" id="colorMapping">
-                        <option value="RangeColorMapping" selected>Range</option>
-                        <option value="EqualColorMapping">Equal</option>
-                        <option value="DesaturationColorMapping">Desaturation</option>
-                    </select>
+                <td>
+                    <div style="margin-left:10px;">
+                        <select autocomplete="off" id="colorMapping">
+                            <option value="RangeColorMapping" selected>Range</option>
+                            <option value="EqualColorMapping">Equal</option>
+                            <option value="DesaturationColorMapping">Desaturation</option>
+                        </select>
+                    </div>
                 </td>
             </tr>
             <tr>
-                <td style="width: 40%">
+                <td>
                     <div class="property-text" id="text1" style="display: none;"> Change Opacity</div>
                 </td>
-                <td style="width: 40%;">
-                    <div id="input1" style="display: none">
+                <td>
+                    <div id="input1" style="display: none;margin-top:-5px; margin-left:10px;">
                         <input type="checkbox" id="opacity" />
                     </div>
                 </td>
             </tr>
             <tr>
-                <td style="width: 50%">
-                    <div class="property-text" id="text2" style="margin-top:12%; display: none">Min Opacity</div>
+                <td>
+                    <div class="property-text" id="text2" style="display: none">Min Opacity</div>
                 </td>
-                <td style="width: 50%;">
-                    <div id="input2" style="display: none">
-                        <input type="range" id="minopacity" step="0.1" value="0.5" min="0" max="1" style="width:100%;margin-top: 20%" />
+                <td>
+                    <div id="input2" style="display: none; margin-left: 10px;padding-top: 15px;">
+                        <input type="range" id="minopacity" step="0.1" value="0.5" min="0" max="1" style="width:100%;" />
                     </div>
                 </td>
             </tr>
             <tr>
-                <td style="width: 50%">
-                    <div class="property-text" id="text3" style="margin-top:12%; display: none">Max Opacity</div>
+                <td>
+                    <div class="property-text" id="text3" style="display: none">Max Opacity</div>
                 </td>
-                <td style="width: 50%;">
-                    <div id="input3" style="display: none">
-                        <input type="range" id="maxopacity" step="0.1" value="1" min="0" max="1" style="width:100%;margin-top: 20%" />
+                <td>
+                    <div id="input3" style="display: none; margin-left: 10px;padding-top: 15px;">
+                        <input type="range" id="maxopacity" step="0.1" value="1" min="0" max="1" style="width:100%;" />
                     </div>
                 </td>
             </tr>
@@ -67,6 +72,14 @@
     </table>
 </div>
 }
+<style>
+    .property-panel-table div {
+        padding-left: 0px;
+    }
+    tr {
+        height: 48px;
+    }
+</style>
 <script>
     var treemap;
     @* custom code start *@
@@ -82,7 +95,7 @@
         var dropDown = new ej.dropdowns.DropDownList({
             index: 0,
             placeholder: 'Range ColorMaping',
-            width: 110,
+            width: '100%',
             change: () => {
                 var element = dropDown.value.toString();
                 treemap.leafItemSettings.colorMapping[4] = treemap.leafItemSettings.colorMapping[4] == undefined ? new ej.treemap.ColorMapping(treemap) : treemap.leafItemSettings.colorMapping[4];

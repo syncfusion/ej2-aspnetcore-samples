@@ -10,7 +10,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.9/signalr.min.js"></script>
         <script>
             var isHubConnected = false;
-            var connection = new signalR.HubConnectionBuilder().withUrl("https://ej2.syncfusion.com/aspnetcore/scheduleHub/", { withCredentials: false }).withAutomaticReconnect().build();
+            var connection = new signalR.HubConnectionBuilder().withUrl("https://ej2.syncfusion.com/aspnetcore/scheduleHub/", { withCredentials: false, skipNegotiation: true, transport: signalR.HttpTransportType.WebSockets }).withAutomaticReconnect().build();
 
             connection.on('ReceiveData', function (action, data) {
                 var schObj = document.getElementById("schedule").ej2_instances[0];

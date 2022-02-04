@@ -7595,7 +7595,17 @@ window.samplesList = [
                 "component": "Accordion",
                 "dir": "Accordion",
                 "parentId": "043"
-            }
+            },
+            {
+                "url": "KeyboardInteraction",
+                "name": "Keyboard Interaction",
+                "category": "Accordion",
+                "uid": "0043433",
+                "order": 0,
+                "component": "Accordion",
+                "dir": "Accordion",
+                "parentId": "043"
+            },
         ],
         "order": 6,
         "uid": "043"
@@ -8050,7 +8060,17 @@ window.samplesList = [
                 "component": "Tab",
                 "dir": "Tab",
                 "parentId": "040"
-            }
+            },
+            {
+                "url": "KeyboardInteraction",
+                "name": "Keyboard Interaction",
+                "category": "Tab",
+                "uid": "0040406",
+                "order": 0,
+                "component": "Tab",
+                "dir": "Tab",
+                "parentId": "040"
+            },
         ],
         "order": 6,
         "uid": "040"
@@ -8086,6 +8106,16 @@ window.samplesList = [
                 "name": "Alignment",
                 "category": "Toolbar",
                 "uid": "0041412",
+                "order": 0,
+                "component": "Toolbar",
+                "dir": "Toolbar",
+                "parentId": "041"
+            },
+            {
+                "url": "KeyboardInteraction",
+                "name": "Keyboard Interaction",
+                "category": "Toolbar",
+                "uid": "0041413",
                 "order": 0,
                 "component": "Toolbar",
                 "dir": "Toolbar",

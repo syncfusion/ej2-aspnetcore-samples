@@ -63,11 +63,11 @@ namespace EJ2CoreSampleBrowser.Controllers.TextBoxes
             return Content("");
         }
         [AcceptVerbs("Post")]
-        public IActionResult Remove(string UploadFile)
+        public IActionResult Remove(string UploadFiles)
         {
             try
             {
-                var fileName = UploadFile;
+                var fileName = UploadFiles;
                 var filePath = Path.Combine(hostingEnv.WebRootPath);
                 var fileSavePath = filePath + "\\" + fileName;
                 if (!System.IO.File.Exists(fileSavePath))

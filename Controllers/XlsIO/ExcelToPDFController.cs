@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +19,7 @@ namespace EJ2CoreSampleBrowser.Controllers.XlsIO
             basePath = _hostingEnvironment.WebRootPath;
             ExcelEngine excelEngine = new ExcelEngine();
             IApplication application = excelEngine.Excel;
+            application.EnablePartialTrustCode = true;
             if (checkboxStream != null)
             {
                 application.SubstituteFont += new Syncfusion.XlsIO.Implementation.SubstituteFontEventHandler(SubstituteFont);

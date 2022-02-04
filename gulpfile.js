@@ -6,6 +6,7 @@ var fs = require('fs');
 var elasticlunr = require('elasticlunr');
 var config = require('./wwwroot/scripts/samplelist.js');
 var beautify = require('json-beautify');
+var configJson = JSON.parse(fs.readFileSync('./config.json'));
 require("@syncfusion/ej2-staging");
 
 gulp.task('generate-searchlist', function () {
@@ -187,5 +188,52 @@ gulp.task('title-section', function () {
             }
             fs.writeFileSync(path, content, 'utf-8');
         }
+    }
+});
+
+const SITEMAP_TEMPLATE =
+`<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{{:URLS}}
+</urlset>`;
+
+const SITE_URL = `
+    <url>
+        <loc>{{:DemoPath}}</loc>
+        <lastmod>{{:Date}}</lastmod>
+    </url>`;
+
+const LOCAL_SITE_URL = `
+    <url>
+        <type>{{:Type}}</type>
+        <loc>{{:DemoPath}}</loc>
+        <lastmod>{{:Date}}</lastmod>
+    </url>`;
+
+gulp.task('sitemap-generate', function () {
+    let siteMapFile = SITEMAP_TEMPLATE;
+    let date = new Date().toISOString().substring(0, 10);
+    let link = 'https://ej2.syncfusion.com/aspnetcore';
+    let xmlstring = '';
+    let components = config.window.samplesList.map(com => { return { directory: com.directory, type: com.samples.map(list => { return list.type; }), sampleUrls: com.samples.map(samp => { return samp.url; }) }; });
+    for (let component of components ? components : []) {
+        let sampleUrls = component.sampleUrls;
+        let sampleType = component.type;
+        sampleUrls = sampleUrls ? sampleUrls : [];
+        sampleType = sampleType ? sampleType : [];
+        for (let i = 0; i < sampleUrls.length; i++) {
+            let urls = SITE_URL;
+            if (process.argv[4] === 'local-sitemap' && sampleType[i] === 'new') {
+                urls = LOCAL_SITE_URL;
+                urls = urls.replace(/{{:Type}}/g, 'new');
+            }
+            urls = urls.replace(/{{:DemoPath}}/g, `${link}/${component.directory}/${sampleUrls[i]}`);
+            urls = urls.replace(/{{:Date}}/g, date);
+            xmlstring += urls;
+        }
+    }
+    siteMapFile = siteMapFile.replace(/{{:URLS}}/g, xmlstring);
+    if (process.argv[4] === 'local-sitemap') {
+        fs.writeFileSync('./' + configJson.appName + '/wwwroot/sitemap-demos.xml', siteMapFile, 'utf-8');
+    } else {
+        fs.writeFileSync('./sitemap-demos.xml', siteMapFile, 'utf-8');
     }
 });

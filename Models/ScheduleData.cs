@@ -18,8 +18,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 1,
                 Subject = "Explosion of Betelgeuse Star",
                 Location = "Space Centre USA",
-                StartTime = new DateTime(CurrentYear, 1, 10, 9, 30, 0),
-                EndTime = new DateTime(CurrentYear, 1, 10, 11, 0, 0),
+                StartTime = new DateTime(CurrentYear, 1, 9, 9, 30, 0),
+                EndTime = new DateTime(CurrentYear, 1, 9, 11, 0, 0),
                 CategoryColor = "#1aaa55"
             });
             appData.Add(new AppointmentData
@@ -27,8 +27,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 2,
                 Subject = "Thule Air Crash Report",
                 Location = "Newyork City",
-                StartTime = new DateTime(CurrentYear, 1, 11, 12, 0, 0),
-                EndTime = new DateTime(CurrentYear, 1, 11, 14, 0, 0),
+                StartTime = new DateTime(CurrentYear, 1, 10, 12, 0, 0),
+                EndTime = new DateTime(CurrentYear, 1, 10, 14, 0, 0),
                 CategoryColor = "#357cd2"
             });
             appData.Add(new AppointmentData
@@ -36,8 +36,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 3,
                 Subject = "Blue Moon Eclipse",
                 Location = "Space Centre USA",
-                StartTime = new DateTime(CurrentYear, 1, 12, 9, 30, 0),
-                EndTime = new DateTime(CurrentYear, 1, 12, 11, 0, 0),
+                StartTime = new DateTime(CurrentYear, 1, 11, 9, 30, 0),
+                EndTime = new DateTime(CurrentYear, 1, 11, 11, 0, 0),
                 CategoryColor = "#7fa900"
             });
             appData.Add(new AppointmentData
@@ -45,8 +45,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 4,
                 Subject = "Meteor Showers in 2021",
                 Location = "Space Centre USA",
-                StartTime = new DateTime(CurrentYear, 1, 13, 13, 0, 0),
-                EndTime = new DateTime(CurrentYear, 1, 13, 14, 30, 0),
+                StartTime = new DateTime(CurrentYear, 1, 12, 13, 0, 0),
+                EndTime = new DateTime(CurrentYear, 1, 12, 14, 30, 0),
                 CategoryColor = "#ea7a57"
             });
             appData.Add(new AppointmentData
@@ -54,8 +54,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 5,
                 Subject = "Milky Way as Melting pot",
                 Location = "Space Centre USA",
-                StartTime = new DateTime(CurrentYear, 1, 14, 12, 0, 0),
-                EndTime = new DateTime(CurrentYear, 1, 14, 14, 0, 0),
+                StartTime = new DateTime(CurrentYear, 1, 13, 12, 0, 0),
+                EndTime = new DateTime(CurrentYear, 1, 13, 14, 0, 0),
                 CategoryColor = "#00bdae"
             });
             appData.Add(new AppointmentData
@@ -63,8 +63,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 6,
                 Subject = "Mysteries of Bermuda Triangle",
                 Location = "Bermuda",
-                StartTime = new DateTime(CurrentYear, 1, 14, 9, 30, 0),
-                EndTime = new DateTime(CurrentYear, 1, 14, 11, 0, 0),
+                StartTime = new DateTime(CurrentYear, 1, 13, 9, 30, 0),
+                EndTime = new DateTime(CurrentYear, 1, 13, 11, 0, 0),
                 CategoryColor = "#f57f17"
             });
             appData.Add(new AppointmentData
@@ -72,8 +72,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 7,
                 Subject = "Glaciers and Snowflakes",
                 Location = "Himalayas",
-                StartTime = new DateTime(CurrentYear, 1, 15, 11, 0, 0),
-                EndTime = new DateTime(CurrentYear, 1, 15, 12, 30, 0),
+                StartTime = new DateTime(CurrentYear, 1, 14, 11, 0, 0),
+                EndTime = new DateTime(CurrentYear, 1, 14, 12, 30, 0),
                 CategoryColor = "#1aaa55"
             });
             appData.Add(new AppointmentData
@@ -81,8 +81,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 8,
                 Subject = "Life on Mars",
                 Location = "Space Centre USA",
-                StartTime = new DateTime(CurrentYear, 1, 16, 9, 0, 0),
-                EndTime = new DateTime(CurrentYear, 1, 16, 10, 0, 0),
+                StartTime = new DateTime(CurrentYear, 1, 15, 9, 0, 0),
+                EndTime = new DateTime(CurrentYear, 1, 15, 10, 0, 0),
                 CategoryColor = "#357cd2"
             });
             appData.Add(new AppointmentData
@@ -90,8 +90,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 9,
                 Subject = "Alien Civilization",
                 Location = "Space Centre USA",
-                StartTime = new DateTime(CurrentYear, 1, 18, 11, 0, 0),
-                EndTime = new DateTime(CurrentYear, 1, 18, 13, 0, 0),
+                StartTime = new DateTime(CurrentYear, 1, 17, 11, 0, 0),
+                EndTime = new DateTime(CurrentYear, 1, 17, 13, 0, 0),
                 CategoryColor = "#7fa900"
             });
             appData.Add(new AppointmentData
@@ -99,8 +99,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 10,
                 Subject = "Wildlife Galleries",
                 Location = "Africa",
-                StartTime = new DateTime(CurrentYear, 1, 20, 11, 0, 0),
-                EndTime = new DateTime(CurrentYear, 1, 20, 13, 0, 0),
+                StartTime = new DateTime(CurrentYear, 1, 19, 11, 0, 0),
+                EndTime = new DateTime(CurrentYear, 1, 19, 13, 0, 0),
                 CategoryColor = "#ea7a57"
             });
             appData.Add(new AppointmentData
@@ -108,8 +108,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 11,
                 Subject = "Best Photography 2021",
                 Location = "London",
-                StartTime = new DateTime(CurrentYear, 1, 21, 9, 30, 0),
-                EndTime = new DateTime(CurrentYear, 1, 21, 11, 0, 0),
+                StartTime = new DateTime(CurrentYear, 1, 20, 9, 30, 0),
+                EndTime = new DateTime(CurrentYear, 1, 20, 11, 0, 0),
                 CategoryColor = "#00bdae"
             });
             appData.Add(new AppointmentData
@@ -117,8 +117,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 12,
                 Subject = "Smarter Puppies",
                 Location = "Sweden",
-                StartTime = new DateTime(CurrentYear, 1, 8, 10, 0, 0),
-                EndTime = new DateTime(CurrentYear, 1, 8, 11, 30, 0),
+                StartTime = new DateTime(CurrentYear, 1, 7, 10, 0, 0),
+                EndTime = new DateTime(CurrentYear, 1, 7, 11, 30, 0),
                 CategoryColor = "#f57f17"
             });
             appData.Add(new AppointmentData
@@ -126,8 +126,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 13,
                 Subject = "Myths of Andromeda Galaxy",
                 Location = "Space Centre USA",
-                StartTime = new DateTime(CurrentYear, 1, 6, 10, 30, 0),
-                EndTime = new DateTime(CurrentYear, 1, 6, 12, 30, 0),
+                StartTime = new DateTime(CurrentYear, 1, 5, 10, 30, 0),
+                EndTime = new DateTime(CurrentYear, 1, 5, 12, 30, 0),
                 CategoryColor = "#1aaa55"
             });
             appData.Add(new AppointmentData
@@ -135,8 +135,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 14,
                 Subject = "Aliens vs Humans",
                 Location = "Research Centre of USA",
-                StartTime = new DateTime(CurrentYear, 1, 5, 10, 0, 0),
-                EndTime = new DateTime(CurrentYear, 1, 5, 11, 30, 0),
+                StartTime = new DateTime(CurrentYear, 1, 4, 10, 0, 0),
+                EndTime = new DateTime(CurrentYear, 1, 4, 11, 30, 0),
                 CategoryColor = "#357cd2"
             });
             appData.Add(new AppointmentData
@@ -144,8 +144,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 15,
                 Subject = "Facts of Humming Birds",
                 Location = "California",
-                StartTime = new DateTime(CurrentYear, 1, 19, 9, 30, 0),
-                EndTime = new DateTime(CurrentYear, 1, 19, 11, 0, 0),
+                StartTime = new DateTime(CurrentYear, 1, 18, 9, 30, 0),
+                EndTime = new DateTime(CurrentYear, 1, 18, 11, 0, 0),
                 CategoryColor = "#7fa900"
             });
             appData.Add(new AppointmentData
@@ -153,8 +153,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 16,
                 Subject = "Sky Gazers",
                 Location = "Alaska",
-                StartTime = new DateTime(CurrentYear, 1, 22, 11, 0, 0),
-                EndTime = new DateTime(CurrentYear, 1, 22, 13, 0, 0),
+                StartTime = new DateTime(CurrentYear, 1, 21, 11, 0, 0),
+                EndTime = new DateTime(CurrentYear, 1, 21, 13, 0, 0),
                 CategoryColor = "#ea7a57"
             });
             appData.Add(new AppointmentData
@@ -162,8 +162,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 17,
                 Subject = "The Cycle of Seasons",
                 Location = "Research Centre of USA",
-                StartTime = new DateTime(CurrentYear, 1, 11, 5, 30, 0),
-                EndTime = new DateTime(CurrentYear, 1, 11, 7, 30, 0),
+                StartTime = new DateTime(CurrentYear, 1, 10, 5, 30, 0),
+                EndTime = new DateTime(CurrentYear, 1, 10, 7, 30, 0),
                 CategoryColor = "#00bdae"
             });
             appData.Add(new AppointmentData
@@ -171,8 +171,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 18,
                 Subject = "Space Galaxies and Planets",
                 Location = "Space Centre USA",
-                StartTime = new DateTime(CurrentYear, 1, 11, 17, 0, 0),
-                EndTime = new DateTime(CurrentYear, 1, 11, 18, 30, 0),
+                StartTime = new DateTime(CurrentYear, 1, 10, 17, 0, 0),
+                EndTime = new DateTime(CurrentYear, 1, 10, 18, 30, 0),
                 CategoryColor = "#f57f17"
             });
             appData.Add(new AppointmentData
@@ -180,8 +180,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 19,
                 Subject = "Lifecycle of Bumblebee",
                 Location = "San Fransisco",
-                StartTime = new DateTime(CurrentYear, 1, 14, 6, 0, 0),
-                EndTime = new DateTime(CurrentYear, 1, 14, 7, 30, 0),
+                StartTime = new DateTime(CurrentYear, 1, 13, 6, 0, 0),
+                EndTime = new DateTime(CurrentYear, 1, 13, 7, 30, 0),
                 CategoryColor = "#7fa900"
             });
             appData.Add(new AppointmentData
@@ -189,8 +189,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 20,
                 Subject = "Alien Civilization",
                 Location = "Space Centre USA",
-                StartTime = new DateTime(CurrentYear, 1, 14, 16, 0, 0),
-                EndTime = new DateTime(CurrentYear, 1, 14, 18, 0, 0),
+                StartTime = new DateTime(CurrentYear, 1, 13, 16, 0, 0),
+                EndTime = new DateTime(CurrentYear, 1, 13, 18, 0, 0),
                 CategoryColor = "#ea7a57"
             });
             appData.Add(new AppointmentData
@@ -198,8 +198,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 21,
                 Subject = "Alien Civilization",
                 Location = "Space Centre USA",
-                StartTime = new DateTime(CurrentYear, 1, 10, 14, 0, 0),
-                EndTime = new DateTime(CurrentYear, 1, 10, 16, 0, 0),
+                StartTime = new DateTime(CurrentYear, 1, 9, 14, 0, 0),
+                EndTime = new DateTime(CurrentYear, 1, 9, 16, 0, 0),
                 CategoryColor = "#ea7a57"
             });
             appData.Add(new AppointmentData
@@ -207,8 +207,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 22,
                 Subject = "The Cycle of Seasons",
                 Location = "Research Centre of USA",
-                StartTime = new DateTime(CurrentYear, 1, 12, 14, 30, 0),
-                EndTime = new DateTime(CurrentYear, 1, 12, 16, 0, 0),
+                StartTime = new DateTime(CurrentYear, 1, 11, 14, 30, 0),
+                EndTime = new DateTime(CurrentYear, 1, 11, 16, 0, 0),
                 CategoryColor = "#00bdae"
             });
             appData.Add(new AppointmentData
@@ -216,8 +216,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 23,
                 Subject = "Sky Gazers",
                 Location = "Greenland",
-                StartTime = new DateTime(CurrentYear, 1, 15, 14, 30, 0),
-                EndTime = new DateTime(CurrentYear, 1, 15, 16, 0, 0),
+                StartTime = new DateTime(CurrentYear, 1, 14, 14, 30, 0),
+                EndTime = new DateTime(CurrentYear, 1, 14, 16, 0, 0),
                 CategoryColor = "#ea7a57"
             });
             appData.Add(new AppointmentData
@@ -225,8 +225,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 24,
                 Subject = "Facts of Humming Birds",
                 Location = "California",
-                StartTime = new DateTime(CurrentYear, 1, 16, 12, 30, 0),
-                EndTime = new DateTime(CurrentYear, 1, 16, 14, 30, 0),
+                StartTime = new DateTime(CurrentYear, 1, 15, 12, 30, 0),
+                EndTime = new DateTime(CurrentYear, 1, 15, 14, 30, 0),
                 CategoryColor = "#7fa900"
             });
             return appData;
@@ -409,8 +409,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 1,
                 Subject = "Board Meeting",
                 Description = "Meeting to discuss business goal of 2020.",
-                StartTime = CurrentYear.ToString() + "-01-03T04:00:00.000Z",
-                EndTime = CurrentYear.ToString() + "-01-03T05:30:00.000Z"
+                StartTime = CurrentYear.ToString() + "-01-02T04:00:00.000Z",
+                EndTime = CurrentYear.ToString() + "-01-02T05:30:00.000Z"
             });
             quickInfoTemplateData.Add(new QuickInfoTemplateData
             {
@@ -418,8 +418,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 2,
                 Subject = "Training session on JSP",
                 Description = "Knowledge sharing on JSP topics.",
-                StartTime = CurrentYear.ToString() + "-01-05T04:00:00.000Z",
-                EndTime = CurrentYear.ToString() + "-01-05T05:30:00.000Z"
+                StartTime = CurrentYear.ToString() + "-01-04T04:00:00.000Z",
+                EndTime = CurrentYear.ToString() + "-01-04T05:30:00.000Z"
             });
             quickInfoTemplateData.Add(new QuickInfoTemplateData
             {
@@ -427,8 +427,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 3,
                 Subject = "Sprint Planning with Team members",
                 Description = "Planning tasks for sprint.",
-                StartTime = CurrentYear.ToString() + "-01-07T04:00:00.000Z",
-                EndTime = CurrentYear.ToString() + "-01-07T05:30:00.000Z"
+                StartTime = CurrentYear.ToString() + "-01-06T04:00:00.000Z",
+                EndTime = CurrentYear.ToString() + "-01-06T05:30:00.000Z"
             });
             quickInfoTemplateData.Add(new QuickInfoTemplateData
             {
@@ -436,8 +436,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 4,
                 Subject = "Meeting with Client",
                 Description = "Customer meeting to discuss features.",
-                StartTime = CurrentYear.ToString() + "-01-09T03:30:00.000Z",
-                EndTime = CurrentYear.ToString() + "-01-09T05:00:00.000Z"
+                StartTime = CurrentYear.ToString() + "-01-08T03:30:00.000Z",
+                EndTime = CurrentYear.ToString() + "-01-08T05:00:00.000Z"
             });
             quickInfoTemplateData.Add(new QuickInfoTemplateData
             {
@@ -445,8 +445,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 5,
                 Subject = "Support Meeting with Managers",
                 Description = "Meeting to discuss support plan.",
-                StartTime = CurrentYear.ToString() + "-01-04T06:30:00.000Z",
-                EndTime = CurrentYear.ToString() + "-01-04T08:00:00.000Z"
+                StartTime = CurrentYear.ToString() + "-01-03T06:30:00.000Z",
+                EndTime = CurrentYear.ToString() + "-01-03T08:00:00.000Z"
             });
             quickInfoTemplateData.Add(new QuickInfoTemplateData
             {
@@ -454,8 +454,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 6,
                 Subject = "Client Meeting",
                 Description = "Meeting to discuss client requirements.",
-                StartTime = CurrentYear.ToString() + "-01-06T06:00:00.000Z",
-                EndTime = CurrentYear.ToString() + "-01-06T07:30:00.000Z"
+                StartTime = CurrentYear.ToString() + "-01-05T06:00:00.000Z",
+                EndTime = CurrentYear.ToString() + "-01-05T07:30:00.000Z"
             });
             quickInfoTemplateData.Add(new QuickInfoTemplateData
             {
@@ -463,8 +463,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 7,
                 Subject = "Appraisal Meeting",
                 Description = "Meeting to discuss employee appraisals.",
-                StartTime = CurrentYear.ToString() + "-01-08T05:30:00.000Z",
-                EndTime = CurrentYear.ToString() + "-01-08T07:00:00.000Z"
+                StartTime = CurrentYear.ToString() + "-01-07T05:30:00.000Z",
+                EndTime = CurrentYear.ToString() + "-01-07T07:00:00.000Z"
             });
             quickInfoTemplateData.Add(new QuickInfoTemplateData
             {
@@ -472,8 +472,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 8,
                 Subject = "HR Meeting",
                 Description = "Meeting to discuss HR plans.",
-                StartTime = CurrentYear.ToString() + "-01-03T07:30:00.000Z",
-                EndTime = CurrentYear.ToString() + "-01-03T09:00:00.000Z"
+                StartTime = CurrentYear.ToString() + "-01-02T07:30:00.000Z",
+                EndTime = CurrentYear.ToString() + "-01-02T09:00:00.000Z"
             });
             quickInfoTemplateData.Add(new QuickInfoTemplateData
             {
@@ -481,8 +481,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 9,
                 Subject = "Customer Meeting",
                 Description = "Meeting to discuss customer reported issues.",
-                StartTime = CurrentYear.ToString() + "-01-07T07:00:00.000Z",
-                EndTime = CurrentYear.ToString() + "-01-07T08:30:00.000Z"
+                StartTime = CurrentYear.ToString() + "-01-06T07:00:00.000Z",
+                EndTime = CurrentYear.ToString() + "-01-06T08:30:00.000Z"
             });
             quickInfoTemplateData.Add(new QuickInfoTemplateData
             {
@@ -490,8 +490,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 10,
                 Subject = "Board Meeting",
                 Description = "Meeting to discuss business plans.",
-                StartTime = CurrentYear.ToString() + "-01-09T07:30:00.000Z",
-                EndTime = CurrentYear.ToString() + "-01-09T09:00:00.000Z"
+                StartTime = CurrentYear.ToString() + "-01-08T07:30:00.000Z",
+                EndTime = CurrentYear.ToString() + "-01-08T09:00:00.000Z"
             });
             return quickInfoTemplateData;
         }
@@ -503,144 +503,144 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 1,
                 Subject = "Story Time for Kids",
-                StartTime = new DateTime(CurrentYear, 2, 14, 10, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 14, 11, 30, 0),
+                StartTime = new DateTime(CurrentYear, 2, 13, 10, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 13, 11, 30, 0),
                 CategoryColor = "#1aaa55"
             });
             zooEventData.Add(new ZooEventData
             {
                 Id = 2,
                 Subject = "Camping with Turtles",
-                StartTime = new DateTime(CurrentYear, 2, 15, 12, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 15, 14, 0, 0),
+                StartTime = new DateTime(CurrentYear, 2, 14, 12, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 14, 14, 0, 0),
                 CategoryColor = "#357cd2"
             });
             zooEventData.Add(new ZooEventData
             {
                 Id = 3,
                 Subject = "Wildlife Warriors",
-                StartTime = new DateTime(CurrentYear, 2, 16, 10, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 16, 11, 30, 0),
+                StartTime = new DateTime(CurrentYear, 2, 15, 10, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 15, 11, 30, 0),
                 CategoryColor = "#7fa900"
             });
             zooEventData.Add(new ZooEventData
             {
                 Id = 4,
                 Subject = "Parrot Talk",
-                StartTime = new DateTime(CurrentYear, 2, 17, 9, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 17, 10, 0, 0),
+                StartTime = new DateTime(CurrentYear, 2, 16, 9, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 16, 10, 0, 0),
                 CategoryColor = "#ea7a57"
             });
             zooEventData.Add(new ZooEventData
             {
                 Id = 5,
                 Subject = "Birds of Prey",
-                StartTime = new DateTime(CurrentYear, 2, 18, 10, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 18, 11, 30, 0),
+                StartTime = new DateTime(CurrentYear, 2, 17, 10, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 17, 11, 30, 0),
                 CategoryColor = "#00bdae"
             });
             zooEventData.Add(new ZooEventData
             {
                 Id = 6,
                 Subject = "Croco World",
-                StartTime = new DateTime(CurrentYear, 2, 19, 12, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 19, 14, 0, 0),
+                StartTime = new DateTime(CurrentYear, 2, 18, 12, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 18, 14, 0, 0),
                 CategoryColor = "#f57f17"
             });
             zooEventData.Add(new ZooEventData
             {
                 Id = 7,
                 Subject = "Venomous Snake Hunt",
-                StartTime = new DateTime(CurrentYear, 2, 20, 10, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 20, 11, 30, 0),
+                StartTime = new DateTime(CurrentYear, 2, 19, 10, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 19, 11, 30, 0),
                 CategoryColor = "#1aaa55"
             });
             zooEventData.Add(new ZooEventData
             {
                 Id = 8,
                 Subject = "Face Painting & Drawing events",
-                StartTime = new DateTime(CurrentYear, 2, 22, 9, 30, 0),
-                EndTime = new DateTime(CurrentYear, 2, 22, 11, 0, 0),
+                StartTime = new DateTime(CurrentYear, 2, 21, 9, 30, 0),
+                EndTime = new DateTime(CurrentYear, 2, 21, 11, 0, 0),
                 CategoryColor = "#357cd2"
             });
             zooEventData.Add(new ZooEventData
             {
                 Id = 9,
                 Subject = "Pony Rides",
-                StartTime = new DateTime(CurrentYear, 2, 24, 11, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 24, 13, 0, 0),
+                StartTime = new DateTime(CurrentYear, 2, 23, 11, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 23, 13, 0, 0),
                 CategoryColor = "#7fa900"
             });
             zooEventData.Add(new ZooEventData
             {
                 Id = 10,
                 Subject = "Feed the Giants",
-                StartTime = new DateTime(CurrentYear, 2, 25, 9, 30, 0),
-                EndTime = new DateTime(CurrentYear, 2, 25, 11, 0, 0),
+                StartTime = new DateTime(CurrentYear, 2, 24, 9, 30, 0),
+                EndTime = new DateTime(CurrentYear, 2, 24, 11, 0, 0),
                 CategoryColor = "#ea7a57"
             });
             zooEventData.Add(new ZooEventData
             {
                 Id = 11,
                 Subject = "Jungle Treasure Hunt",
-                StartTime = new DateTime(CurrentYear, 2, 12, 10, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 12, 11, 30, 0),
+                StartTime = new DateTime(CurrentYear, 2, 11, 10, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 11, 11, 30, 0),
                 CategoryColor = "#00bdae"
             });
             zooEventData.Add(new ZooEventData
             {
                 Id = 12,
                 Subject = "Endangered Species Program",
-                StartTime = new DateTime(CurrentYear, 2, 10, 10, 30, 0),
-                EndTime = new DateTime(CurrentYear, 2, 10, 12, 30, 0),
+                StartTime = new DateTime(CurrentYear, 2, 9, 10, 30, 0),
+                EndTime = new DateTime(CurrentYear, 2, 9, 12, 30, 0),
                 CategoryColor = "#f57f17"
             });
             zooEventData.Add(new ZooEventData
             {
                 Id = 13,
                 Subject = "Black Cockatoos Playtime",
-                StartTime = new DateTime(CurrentYear, 2, 8, 10, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 8, 11, 30, 0),
+                StartTime = new DateTime(CurrentYear, 2, 7, 10, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 7, 11, 30, 0),
                 CategoryColor = "#1aaa55"
             });
             zooEventData.Add(new ZooEventData
             {
                 Id = 14,
                 Subject = "Walk with Jungle King",
-                StartTime = new DateTime(CurrentYear, 2, 17, 12, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 17, 14, 0, 0),
+                StartTime = new DateTime(CurrentYear, 2, 16, 12, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 16, 14, 0, 0),
                 CategoryColor = "#357cd2"
             });
             zooEventData.Add(new ZooEventData
             {
                 Id = 15,
                 Subject = "Trained Climbers",
-                StartTime = new DateTime(CurrentYear, 2, 22, 13, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 22, 14, 30, 0),
+                StartTime = new DateTime(CurrentYear, 2, 21, 13, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 21, 14, 30, 0),
                 CategoryColor = "#7fa900"
             });
             zooEventData.Add(new ZooEventData
             {
                 Id = 16,
                 Subject = "Playtime with Chimpanzees",
-                StartTime = new DateTime(CurrentYear, 2, 25, 13, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 25, 14, 30, 0),
+                StartTime = new DateTime(CurrentYear, 2, 24, 13, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 24, 14, 30, 0),
                 CategoryColor = "#ea7a57"
             });
             zooEventData.Add(new ZooEventData
             {
                 Id = 17,
                 Subject = "Story Time for Kids",
-                StartTime = new DateTime(CurrentYear, 2, 16, 14, 30, 0),
-                EndTime = new DateTime(CurrentYear, 2, 16, 16, 0, 0),
+                StartTime = new DateTime(CurrentYear, 2, 15, 14, 30, 0),
+                EndTime = new DateTime(CurrentYear, 2, 15, 16, 0, 0),
                 CategoryColor = "#1aaa55"
             });
             zooEventData.Add(new ZooEventData
             {
                 Id = 18,
                 Subject = "Black Cockatoos Playtime",
-                StartTime = new DateTime(CurrentYear, 2, 18, 14, 30, 0),
-                EndTime = new DateTime(CurrentYear, 2, 18, 16, 0, 0),
+                StartTime = new DateTime(CurrentYear, 2, 17, 14, 30, 0),
+                EndTime = new DateTime(CurrentYear, 2, 17, 16, 0, 0),
                 CategoryColor = "#7fa900"
             });
             return zooEventData;
@@ -1595,128 +1595,128 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 1,
                 Subject = "Project Workflow Analysis",
-                StartTime = new DateTime(CurrentYear, 2, 8, 9, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 8, 11, 0, 0),
+                StartTime = new DateTime(CurrentYear, 2, 7, 9, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 7, 11, 0, 0),
                 CategoryColor = "#1aaa55"
             });
             employeeEventData.Add(new EmployeeEventData
             {
                 Id = 2,
                 Subject = "Project Requirement Planning",
-                StartTime = new DateTime(CurrentYear, 2, 9, 11, 30, 0),
-                EndTime = new DateTime(CurrentYear, 2, 9, 14, 0, 0),
+                StartTime = new DateTime(CurrentYear, 2, 8, 11, 30, 0),
+                EndTime = new DateTime(CurrentYear, 2, 8, 14, 0, 0),
                 CategoryColor = "#357cd2"
             });
             employeeEventData.Add(new EmployeeEventData
             {
                 Id = 3,
                 Subject = "Quality Analysis",
-                StartTime = new DateTime(CurrentYear, 2, 10, 9, 30, 0),
-                EndTime = new DateTime(CurrentYear, 2, 10, 11, 0, 0),
+                StartTime = new DateTime(CurrentYear, 2, 9, 9, 30, 0),
+                EndTime = new DateTime(CurrentYear, 2, 9, 11, 0, 0),
                 CategoryColor = "#7fa900"
             });
             employeeEventData.Add(new EmployeeEventData
             {
                 Id = 4,
                 Subject = "Timeline Estimation",
-                StartTime = new DateTime(CurrentYear, 2, 10, 11, 30, 0),
-                EndTime = new DateTime(CurrentYear, 2, 10, 14, 0, 0),
+                StartTime = new DateTime(CurrentYear, 2, 9, 11, 30, 0),
+                EndTime = new DateTime(CurrentYear, 2, 9, 14, 0, 0),
                 CategoryColor = "#ea7a57"
             });
             employeeEventData.Add(new EmployeeEventData
             {
                 Id = 5,
                 Subject = "Project Resource planning",
-                StartTime = new DateTime(CurrentYear, 2, 11, 9, 30, 0),
-                EndTime = new DateTime(CurrentYear, 2, 11, 12, 0, 0),
+                StartTime = new DateTime(CurrentYear, 2, 10, 9, 30, 0),
+                EndTime = new DateTime(CurrentYear, 2, 10, 12, 0, 0),
                 CategoryColor = "#00bdae"
             });
             employeeEventData.Add(new EmployeeEventData
             {
                 Id = 6,
                 Subject = "Meeting with Developers",
-                StartTime = new DateTime(CurrentYear, 2, 12, 11, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 12, 13, 0, 0),
+                StartTime = new DateTime(CurrentYear, 2, 11, 11, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 11, 13, 0, 0),
                 CategoryColor = "#f57f17"
             });
             employeeEventData.Add(new EmployeeEventData
             {
                 Id = 7,
                 Subject = "Task Assignment to Developers",
-                StartTime = new DateTime(CurrentYear, 2, 15, 10, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 15, 11, 30, 0),
+                StartTime = new DateTime(CurrentYear, 2, 14, 10, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 14, 11, 30, 0),
                 CategoryColor = "#1aaa55"
             });
             employeeEventData.Add(new EmployeeEventData
             {
                 Id = 8,
                 Subject = "Project Review - 1",
-                StartTime = new DateTime(CurrentYear, 2, 16, 11, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 16, 12, 30, 0),
+                StartTime = new DateTime(CurrentYear, 2, 15, 11, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 15, 12, 30, 0),
                 CategoryColor = "#357cd2"
             });
             employeeEventData.Add(new EmployeeEventData
             {
                 Id = 9,
                 Subject = "Project Review - 2",
-                StartTime = new DateTime(CurrentYear, 2, 17, 12, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 17, 13, 30, 0),
+                StartTime = new DateTime(CurrentYear, 2, 16, 12, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 16, 13, 30, 0),
                 CategoryColor = "#7fa900"
             });
             employeeEventData.Add(new EmployeeEventData
             {
                 Id = 10,
                 Subject = "Project Review - 3",
-                StartTime = new DateTime(CurrentYear, 2, 18, 11, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 18, 12, 30, 0),
+                StartTime = new DateTime(CurrentYear, 2, 17, 11, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 17, 12, 30, 0),
                 CategoryColor = "#ea7a57"
             });
             employeeEventData.Add(new EmployeeEventData
             {
                 Id = 11,
                 Subject = "Project Output Preview",
-                StartTime = new DateTime(CurrentYear, 2, 19, 9, 30, 0),
-                EndTime = new DateTime(CurrentYear, 2, 19, 12, 0, 0),
+                StartTime = new DateTime(CurrentYear, 2, 18, 9, 30, 0),
+                EndTime = new DateTime(CurrentYear, 2, 18, 12, 0, 0),
                 CategoryColor = "#00bdae"
             });
             employeeEventData.Add(new EmployeeEventData
             {
                 Id = 12,
                 Subject = "Testing Project Quality",
-                StartTime = new DateTime(CurrentYear, 2, 22, 10, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 22, 11, 30, 0),
+                StartTime = new DateTime(CurrentYear, 2, 21, 10, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 21, 11, 30, 0),
                 CategoryColor = "#f57f17"
             });
             employeeEventData.Add(new EmployeeEventData
             {
                 Id = 13,
                 Subject = "Draft Technical Documentation",
-                StartTime = new DateTime(CurrentYear, 2, 23, 10, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 23, 13, 0, 0),
+                StartTime = new DateTime(CurrentYear, 2, 22, 10, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 22, 13, 0, 0),
                 CategoryColor = "#1aaa55"
             });
             employeeEventData.Add(new EmployeeEventData
             {
                 Id = 14,
                 Subject = "Online Hosting of Project",
-                StartTime = new DateTime(CurrentYear, 2, 24, 10, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 24, 11, 30, 0),
+                StartTime = new DateTime(CurrentYear, 2, 23, 10, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 23, 11, 30, 0),
                 CategoryColor = "#357cd2"
             });
             employeeEventData.Add(new EmployeeEventData
             {
                 Id = 15,
                 Subject = "Project Submission to Client",
-                StartTime = new DateTime(CurrentYear, 2, 25, 10, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 25, 13, 0, 0),
+                StartTime = new DateTime(CurrentYear, 2, 24, 10, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 24, 13, 0, 0),
                 CategoryColor = "#7fa900"
             });
             employeeEventData.Add(new EmployeeEventData
             {
                 Id = 16,
                 Subject = "Review meeting with Client",
-                StartTime = new DateTime(CurrentYear, 2, 26, 10, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 26, 11, 30, 0),
+                StartTime = new DateTime(CurrentYear, 2, 25, 10, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 25, 11, 30, 0),
                 CategoryColor = "#ea7a57"
             });
             return employeeEventData;
@@ -1731,8 +1731,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Subject = "Environment Day",
                 Tags = "Eco day, Forest conserving, Earth & its resources",
                 Description = "A day that creates awareness to promote the healthy planet and reduce the air pollution crisis on nature earth.",
-                StartTime = new DateTime(CurrentYear, 2, 15, 9, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 15, 14, 0, 0),
+                StartTime = new DateTime(CurrentYear, 2, 14, 9, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 14, 14, 0, 0),
                 ImageName = "environment-day",
                 PrimaryColor = "#1aaa55",
                 SecondaryColor = "#47bb76"
@@ -1743,8 +1743,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Subject = "Health Day",
                 Tags = "Reduce mental stress, Follow good food habits",
                 Description = "A day that raises awareness on different health issues. It marks the anniversary of the foundation of WHO.",
-                StartTime = new DateTime(CurrentYear, 2, 16, 9, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 16, 14, 0, 0),
+                StartTime = new DateTime(CurrentYear, 2, 15, 9, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 15, 14, 0, 0),
                 ImageName = "health-day",
                 PrimaryColor = "#357cd2",
                 SecondaryColor = "#5d96db"
@@ -1755,8 +1755,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Subject = "Cancer Day",
                 Tags = "Life threatening cancer effects, Palliative care",
                 Description = "A day that raises awareness on cancer and its preventive measures. Early detection saves life.",
-                StartTime = new DateTime(CurrentYear, 2, 17, 9, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 17, 14, 0, 0),
+                StartTime = new DateTime(CurrentYear, 2, 16, 9, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 16, 14, 0, 0),
                 ImageName = "cancer-day",
                 PrimaryColor = "#7fa900",
                 SecondaryColor = "#a4c932"
@@ -1767,8 +1767,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Subject = "Happiness Day",
                 Tags = "Stress-free, Smile, Resolve frustration and bring happiness",
                 Description = "A general idea is to promote happiness and smile around the world.",
-                StartTime = new DateTime(CurrentYear, 2, 18, 9, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 18, 14, 0, 0),
+                StartTime = new DateTime(CurrentYear, 2, 17, 9, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 17, 14, 0, 0),
                 ImageName = "happiness-day",
                 PrimaryColor = "#ea7a57",
                 SecondaryColor = "#ee9478"
@@ -1779,8 +1779,8 @@ namespace EJ2CoreSampleBrowser.Models
                 Subject = "Tourism Day",
                 Tags = "Diverse cultural heritage, strengthen peace",
                 Description = "A day that raises awareness on the role of tourism and its effect on social and economic values.",
-                StartTime = new DateTime(CurrentYear, 2, 19, 9, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 19, 14, 0, 0),
+                StartTime = new DateTime(CurrentYear, 2, 18, 9, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 18, 14, 0, 0),
                 ImageName = "tourism-day",
                 PrimaryColor = "#00bdae",
                 SecondaryColor = "#32cabe"
@@ -1983,200 +1983,200 @@ namespace EJ2CoreSampleBrowser.Models
                 Id = 1,
                 Subject = "Surgery - Andrew",
                 EventType = "Confirmed",
-                StartTime = new DateTime(CurrentYear, 2, 15, 9, 0, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 15, 10, 0, 0)
+                StartTime = new DateTime(CurrentYear, 2, 14, 9, 0, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 14, 10, 0, 0)
             });
             doctorsEventData.Add(new DoctorsEventData
             {
                 Id = 2,
                 Subject = "Consulting - John",
                 EventType = "Confirmed",
-                StartTime = new DateTime(CurrentYear, 2, 15, 10, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 15, 11, 30, 0)
+                StartTime = new DateTime(CurrentYear, 2, 14, 10, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 14, 11, 30, 0)
             });
             doctorsEventData.Add(new DoctorsEventData
             {
                 Id = 3,
                 Subject = "Therapy - Robert",
                 EventType = "Requested",
-                StartTime = new DateTime(CurrentYear, 2, 15, 11, 30, 0),
-                EndTime = new DateTime(CurrentYear, 2, 15, 12, 30, 0)
+                StartTime = new DateTime(CurrentYear, 2, 14, 11, 30, 0),
+                EndTime = new DateTime(CurrentYear, 2, 14, 12, 30, 0)
             });
             doctorsEventData.Add(new DoctorsEventData
             {
                 Id = 4,
                 Subject = "Observation - Steven",
                 EventType = "Confirmed",
-                StartTime = new DateTime(CurrentYear, 2, 15, 12, 30, 0),
-                EndTime = new DateTime(CurrentYear, 2, 15, 13, 30, 0)
+                StartTime = new DateTime(CurrentYear, 2, 14, 12, 30, 0),
+                EndTime = new DateTime(CurrentYear, 2, 14, 13, 30, 0)
             });
             doctorsEventData.Add(new DoctorsEventData
             {
                 Id = 5,
                 Subject = "Extraction - Nancy",
                 EventType = "Confirmed",
-                StartTime = new DateTime(CurrentYear, 2, 15, 13, 30, 0),
-                EndTime = new DateTime(CurrentYear, 2, 15, 15, 0, 0)
+                StartTime = new DateTime(CurrentYear, 2, 14, 13, 30, 0),
+                EndTime = new DateTime(CurrentYear, 2, 14, 15, 0, 0)
             });
             doctorsEventData.Add(new DoctorsEventData
             {
                 Id = 6,
                 Subject = "Surgery - Paul",
                 EventType = "New",
-                StartTime = new DateTime(CurrentYear, 2, 16, 9, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 16, 10, 0, 0)
+                StartTime = new DateTime(CurrentYear, 2, 15, 9, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 15, 10, 0, 0)
             });
             doctorsEventData.Add(new DoctorsEventData
             {
                 Id = 7,
                 Subject = "Extraction - Josephs",
                 EventType = "Confirmed",
-                StartTime = new DateTime(CurrentYear, 2, 16, 10, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 16, 11, 0, 0)
+                StartTime = new DateTime(CurrentYear, 2, 15, 10, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 15, 11, 0, 0)
             });
             doctorsEventData.Add(new DoctorsEventData
             {
                 Id = 8,
                 Subject = "Consulting - Mario",
                 EventType = "Confirmed",
-                StartTime = new DateTime(CurrentYear, 2, 16, 11, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 16, 12, 0, 0)
+                StartTime = new DateTime(CurrentYear, 2, 15, 11, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 15, 12, 0, 0)
             });
             doctorsEventData.Add(new DoctorsEventData
             {
                 Id = 9,
                 Subject = "Therapy - Saveley",
                 EventType = "Requested",
-                StartTime = new DateTime(CurrentYear, 2, 16, 12, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 16, 13, 30, 0)
+                StartTime = new DateTime(CurrentYear, 2, 15, 12, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 15, 13, 30, 0)
             });
             doctorsEventData.Add(new DoctorsEventData
             {
                 Id = 10,
                 Subject = "Observation - Cartrain",
                 EventType = "Confirmed",
-                StartTime = new DateTime(CurrentYear, 2, 16, 13, 30, 0),
-                EndTime = new DateTime(CurrentYear, 2, 16, 15, 30, 0)
+                StartTime = new DateTime(CurrentYear, 2, 15, 13, 30, 0),
+                EndTime = new DateTime(CurrentYear, 2, 15, 15, 30, 0)
             });
             doctorsEventData.Add(new DoctorsEventData
             {
                 Id = 11,
                 Subject = "Consulting - Yang",
                 EventType = "New",
-                StartTime = new DateTime(CurrentYear, 2, 17, 9, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 17, 10, 0, 0)
+                StartTime = new DateTime(CurrentYear, 2, 16, 9, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 16, 10, 0, 0)
             });
             doctorsEventData.Add(new DoctorsEventData
             {
                 Id = 12,
                 Subject = "Observation - Michael",
                 EventType = "New",
-                StartTime = new DateTime(CurrentYear, 2, 17, 10, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 17, 11, 30, 0)
+                StartTime = new DateTime(CurrentYear, 2, 16, 10, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 16, 11, 30, 0)
             });
             doctorsEventData.Add(new DoctorsEventData
             {
                 Id = 13,
                 Subject = "Surgery - Roland",
                 EventType = "Confirmed",
-                StartTime = new DateTime(CurrentYear, 2, 17, 11, 30, 0),
-                EndTime = new DateTime(CurrentYear, 2, 17, 12, 30, 0)
+                StartTime = new DateTime(CurrentYear, 2, 16, 11, 30, 0),
+                EndTime = new DateTime(CurrentYear, 2, 16, 12, 30, 0)
             });
             doctorsEventData.Add(new DoctorsEventData
             {
                 Id = 14,
                 Subject = "Extraction - Francisco",
                 EventType = "Requested",
-                StartTime = new DateTime(CurrentYear, 2, 17, 12, 30, 0),
-                EndTime = new DateTime(CurrentYear, 2, 17, 13, 30, 0)
+                StartTime = new DateTime(CurrentYear, 2, 16, 12, 30, 0),
+                EndTime = new DateTime(CurrentYear, 2, 16, 13, 30, 0)
             });
             doctorsEventData.Add(new DoctorsEventData
             {
                 Id = 15,
                 Subject = "Therapy - Henriette",
                 EventType = "Confirmed",
-                StartTime = new DateTime(CurrentYear, 2, 17, 13, 30, 0),
-                EndTime = new DateTime(CurrentYear, 2, 17, 15, 0, 0)
+                StartTime = new DateTime(CurrentYear, 2, 16, 13, 30, 0),
+                EndTime = new DateTime(CurrentYear, 2, 16, 15, 0, 0)
             });
             doctorsEventData.Add(new DoctorsEventData
             {
                 Id = 16,
                 Subject = "Observation - Bernardo",
                 EventType = "Confirmed",
-                StartTime = new DateTime(CurrentYear, 2, 18, 9, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 18, 10, 0, 0)
+                StartTime = new DateTime(CurrentYear, 2, 17, 9, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 17, 10, 0, 0)
             });
             doctorsEventData.Add(new DoctorsEventData
             {
                 Id = 17,
                 Subject = "Therapy - Wilson",
                 EventType = "Confirmed",
-                StartTime = new DateTime(CurrentYear, 2, 18, 10, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 18, 11, 0, 0)
+                StartTime = new DateTime(CurrentYear, 2, 17, 10, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 17, 11, 0, 0)
             });
             doctorsEventData.Add(new DoctorsEventData
             {
                 Id = 18,
                 Subject = "Consulting - Horst",
                 EventType = "Confirmed",
-                StartTime = new DateTime(CurrentYear, 2, 18, 11, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 18, 12, 0, 0)
+                StartTime = new DateTime(CurrentYear, 2, 17, 11, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 17, 12, 0, 0)
             });
             doctorsEventData.Add(new DoctorsEventData
             {
                 Id = 19,
                 Subject = "Surgery - Limeira",
                 EventType = "Requested",
-                StartTime = new DateTime(CurrentYear, 2, 18, 12, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 18, 13, 30, 0)
+                StartTime = new DateTime(CurrentYear, 2, 17, 12, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 17, 13, 30, 0)
             });
             doctorsEventData.Add(new DoctorsEventData
             {
                 Id = 20,
                 Subject = "Observation - Victoria",
                 EventType = "Requested",
-                StartTime = new DateTime(CurrentYear, 2, 18, 13, 30, 0),
-                EndTime = new DateTime(CurrentYear, 2, 18, 15, 30, 0)
+                StartTime = new DateTime(CurrentYear, 2, 17, 13, 30, 0),
+                EndTime = new DateTime(CurrentYear, 2, 17, 15, 30, 0)
             });
             doctorsEventData.Add(new DoctorsEventData
             {
                 Id = 21,
                 Subject = "Extraction - Afonso",
                 EventType = "Confirmed",
-                StartTime = new DateTime(CurrentYear, 2, 19, 9, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 19, 10, 0, 0)
+                StartTime = new DateTime(CurrentYear, 2, 18, 9, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 18, 10, 0, 0)
             });
             doctorsEventData.Add(new DoctorsEventData
             {
                 Id = 22,
                 Subject = "Extraction - Paula",
                 EventType = "New",
-                StartTime = new DateTime(CurrentYear, 2, 19, 10, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 19, 11, 0, 0)
+                StartTime = new DateTime(CurrentYear, 2, 18, 10, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 18, 11, 0, 0)
             });
             doctorsEventData.Add(new DoctorsEventData
             {
                 Id = 23,
                 Subject = "Observation - George",
                 EventType = "Requested",
-                StartTime = new DateTime(CurrentYear, 2, 19, 11, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 19, 12, 0, 0)
+                StartTime = new DateTime(CurrentYear, 2, 18, 11, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 18, 12, 0, 0)
             });
             doctorsEventData.Add(new DoctorsEventData
             {
                 Id = 24,
                 Subject = "Therapy - Smith",
                 EventType = "New",
-                StartTime = new DateTime(CurrentYear, 2, 19, 12, 0, 0),
-                EndTime = new DateTime(CurrentYear, 2, 19, 13, 30, 0)
+                StartTime = new DateTime(CurrentYear, 2, 18, 12, 0, 0),
+                EndTime = new DateTime(CurrentYear, 2, 18, 13, 30, 0)
             });
             doctorsEventData.Add(new DoctorsEventData
             {
                 Id = 25,
                 Subject = "Surgery - Jennifer",
                 EventType = "New",
-                StartTime = new DateTime(CurrentYear, 2, 19, 13, 30, 0),
-                EndTime = new DateTime(CurrentYear, 2, 19, 15, 30, 0, 0)
+                StartTime = new DateTime(CurrentYear, 2, 18, 13, 30, 0),
+                EndTime = new DateTime(CurrentYear, 2, 18, 15, 30, 0, 0)
             });
             return doctorsEventData;
         }
@@ -4661,8 +4661,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 1,
                 Subject = "Echocardiogram",
-                StartTime = new DateTime(CurrentYear, 4, 1, 9, 30, 0),
-                EndTime = new DateTime(CurrentYear, 4, 1, 11, 30, 0),
+                StartTime = new DateTime(CurrentYear, 3, 31, 9, 30, 0),
+                EndTime = new DateTime(CurrentYear, 3, 31, 11, 30, 0),
                 IsAllDay = false,
                 DoctorId = 1
             });
@@ -4670,8 +4670,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 2,
                 Subject = "Lumbar punctures",
-                StartTime = new DateTime(CurrentYear, 4, 2, 9, 30, 0),
-                EndTime = new DateTime(CurrentYear, 4, 2, 10, 45, 0),
+                StartTime = new DateTime(CurrentYear, 4, 1, 9, 30, 0),
+                EndTime = new DateTime(CurrentYear, 4, 1, 10, 45, 0),
                 IsAllDay = false,
                 DoctorId = 2
             });
@@ -4679,8 +4679,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 3,
                 Subject = "Osteoarthritis",
-                StartTime = new DateTime(CurrentYear, 4, 1, 8, 0, 0),
-                EndTime = new DateTime(CurrentYear, 4, 1, 10, 30, 0),
+                StartTime = new DateTime(CurrentYear, 3, 31, 8, 0, 0),
+                EndTime = new DateTime(CurrentYear, 3, 31, 10, 30, 0),
                 IsAllDay = false,
                 DoctorId = 3
             });
@@ -4688,8 +4688,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 4,
                 Subject = "Ambulatory ECG",
-                StartTime = new DateTime(CurrentYear, 4, 2, 12, 0, 0),
-                EndTime = new DateTime(CurrentYear, 4, 2, 12, 30, 0),
+                StartTime = new DateTime(CurrentYear, 4, 1, 12, 0, 0),
+                EndTime = new DateTime(CurrentYear, 4, 1, 12, 30, 0),
                 IsAllDay = false,
                 DoctorId = 1
             });
@@ -4697,8 +4697,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 5,
                 Subject = "Osteoporosis",
-                StartTime = new DateTime(CurrentYear, 4, 2, 11, 0, 0),
-                EndTime = new DateTime(CurrentYear, 4, 2, 11, 50, 0),
+                StartTime = new DateTime(CurrentYear, 4, 1, 11, 0, 0),
+                EndTime = new DateTime(CurrentYear, 4, 1, 11, 50, 0),
                 IsAllDay = false,
                 DoctorId = 3
             });
@@ -4706,8 +4706,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 6,
                 Subject = "Neuromuscular",
-                StartTime = new DateTime(CurrentYear, 4, 5, 11, 30, 0),
-                EndTime = new DateTime(CurrentYear, 4, 5, 13, 30, 0),
+                StartTime = new DateTime(CurrentYear, 4, 4, 11, 30, 0),
+                EndTime = new DateTime(CurrentYear, 4, 4, 13, 30, 0),
                 IsAllDay = false,
                 DoctorId = 2
             });
@@ -4715,8 +4715,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 7,
                 Subject = "Rheumatoid arthritis",
-                StartTime = new DateTime(CurrentYear, 4, 5, 13, 40, 0),
-                EndTime = new DateTime(CurrentYear, 4, 5, 14, 40, 0),
+                StartTime = new DateTime(CurrentYear, 4, 4, 13, 40, 0),
+                EndTime = new DateTime(CurrentYear, 4, 4, 14, 40, 0),
                 IsAllDay = false,
                 DoctorId = 3
             });
@@ -4724,8 +4724,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 8,
                 Subject = "Cardiac Catheterization",
-                StartTime = new DateTime(CurrentYear, 4, 5, 11, 30, 0),
-                EndTime = new DateTime(CurrentYear, 4, 5, 13, 0, 0),
+                StartTime = new DateTime(CurrentYear, 4, 4, 11, 30, 0),
+                EndTime = new DateTime(CurrentYear, 4, 4, 13, 0, 0),
                 IsAllDay = false,
                 DoctorId = 1
             });
@@ -4733,8 +4733,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 9,
                 Subject = "Growth abnormalities",
-                StartTime = new DateTime(CurrentYear, 4, 6, 14, 0, 0),
-                EndTime = new DateTime(CurrentYear, 4, 6, 15, 30, 0),
+                StartTime = new DateTime(CurrentYear, 4, 5, 14, 0, 0),
+                EndTime = new DateTime(CurrentYear, 4, 5, 15, 30, 0),
                 IsAllDay = false,
                 DoctorId = 3
             });
@@ -4742,8 +4742,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 10,
                 Subject = "Sleep disorders",
-                StartTime = new DateTime(CurrentYear, 4, 7, 12, 0, 0),
-                EndTime = new DateTime(CurrentYear, 4, 7, 14, 0, 0),
+                StartTime = new DateTime(CurrentYear, 4, 6, 12, 0, 0),
+                EndTime = new DateTime(CurrentYear, 4, 6, 14, 0, 0),
                 IsAllDay = false,
                 DoctorId = 2
             });
@@ -4751,8 +4751,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 11,
                 Subject = "Torn ligaments",
-                StartTime = new DateTime(CurrentYear, 4, 7, 13, 30, 0),
-                EndTime = new DateTime(CurrentYear, 4, 7, 14, 45, 0),
+                StartTime = new DateTime(CurrentYear, 4, 6, 13, 30, 0),
+                EndTime = new DateTime(CurrentYear, 4, 6, 14, 45, 0),
                 IsAllDay = false,
                 DoctorId = 3
             });
@@ -4760,8 +4760,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 12,
                 Subject = "Coronary angiogram",
-                StartTime = new DateTime(CurrentYear, 4, 6, 8, 0, 0),
-                EndTime = new DateTime(CurrentYear, 4, 6, 9, 30, 0),
+                StartTime = new DateTime(CurrentYear, 4, 5, 8, 0, 0),
+                EndTime = new DateTime(CurrentYear, 4, 5, 9, 30, 0),
                 IsAllDay = false,
                 DoctorId = 1
             });
@@ -4769,8 +4769,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 13,
                 Subject = "Blood pressure",
-                StartTime = new DateTime(CurrentYear, 4, 8, 12, 0, 0),
-                EndTime = new DateTime(CurrentYear, 4, 8, 12, 30, 0),
+                StartTime = new DateTime(CurrentYear, 4, 7, 12, 0, 0),
+                EndTime = new DateTime(CurrentYear, 4, 7, 12, 30, 0),
                 IsAllDay = false,
                 DoctorId = 1
             });
@@ -4778,8 +4778,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 14,
                 Subject = "Radiculopathy",
-                StartTime = new DateTime(CurrentYear, 4, 9, 15, 45, 0),
-                EndTime = new DateTime(CurrentYear, 4, 9, 16, 30, 0),
+                StartTime = new DateTime(CurrentYear, 4, 8, 15, 45, 0),
+                EndTime = new DateTime(CurrentYear, 4, 8, 16, 30, 0),
                 IsAllDay = false,
                 DoctorId = 2
             });
@@ -4787,8 +4787,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 15,
                 Subject = "Sprains and strains",
-                StartTime = new DateTime(CurrentYear, 4, 8, 14, 0, 0),
-                EndTime = new DateTime(CurrentYear, 4, 8, 15, 30, 0),
+                StartTime = new DateTime(CurrentYear, 4, 7, 14, 0, 0),
+                EndTime = new DateTime(CurrentYear, 4, 7, 15, 30, 0),
                 IsAllDay = false,
                 DoctorId = 3
             });
@@ -4796,8 +4796,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 16,
                 Subject = "Cardiac stress testing",
-                StartTime = new DateTime(CurrentYear, 4, 9, 10, 0, 0),
-                EndTime = new DateTime(CurrentYear, 4, 9, 10, 30, 0),
+                StartTime = new DateTime(CurrentYear, 4, 8, 10, 0, 0),
+                EndTime = new DateTime(CurrentYear, 4, 8, 10, 30, 0),
                 IsAllDay = false,
                 DoctorId = 1
             });
@@ -4805,8 +4805,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 17,
                 Subject = "Tendon injuries",
-                StartTime = new DateTime(CurrentYear, 4, 9, 14, 0, 0),
-                EndTime = new DateTime(CurrentYear, 4, 9, 15, 30, 0),
+                StartTime = new DateTime(CurrentYear, 4, 8, 14, 0, 0),
+                EndTime = new DateTime(CurrentYear, 4, 8, 15, 30, 0),
                 IsAllDay = false,
                 DoctorId = 3
             });
@@ -4814,8 +4814,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 18,
                 Subject = "Dementia",
-                StartTime = new DateTime(CurrentYear, 4, 12, 15, 0, 0),
-                EndTime = new DateTime(CurrentYear, 4, 12, 17, 0, 0),
+                StartTime = new DateTime(CurrentYear, 4, 11, 15, 0, 0),
+                EndTime = new DateTime(CurrentYear, 4, 11, 17, 0, 0),
                 IsAllDay = false,
                 DoctorId = 2
             });
@@ -4823,8 +4823,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 19,
                 Subject = "Pulled muscles",
-                StartTime = new DateTime(CurrentYear, 4, 12, 13, 30, 0),
-                EndTime = new DateTime(CurrentYear, 4, 12, 15, 50, 0),
+                StartTime = new DateTime(CurrentYear, 4, 11, 13, 30, 0),
+                EndTime = new DateTime(CurrentYear, 4, 11, 15, 50, 0),
                 IsAllDay = false,
                 DoctorId = 3
             });
@@ -4832,8 +4832,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 20,
                 Subject = "Coronary angiogram",
-                StartTime = new DateTime(CurrentYear, 4, 12, 10, 30, 0),
-                EndTime = new DateTime(CurrentYear, 4, 12, 12, 30, 0),
+                StartTime = new DateTime(CurrentYear, 4, 11, 10, 30, 0),
+                EndTime = new DateTime(CurrentYear, 4, 11, 12, 30, 0),
                 IsAllDay = false,
                 DoctorId = 1
             });
@@ -4841,8 +4841,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 21,
                 Subject = "Back pain",
-                StartTime = new DateTime(CurrentYear, 4, 13, 10, 30, 0),
-                EndTime = new DateTime(CurrentYear, 4, 13, 11, 30, 0),
+                StartTime = new DateTime(CurrentYear, 4, 12, 10, 30, 0),
+                EndTime = new DateTime(CurrentYear, 4, 12, 11, 30, 0),
                 IsAllDay = false,
                 DoctorId = 3
             });
@@ -4850,8 +4850,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 22,
                 Subject = "Neuropathy",
-                StartTime = new DateTime(CurrentYear, 4, 14, 12, 30, 0),
-                EndTime = new DateTime(CurrentYear, 4, 14, 13, 45, 0),
+                StartTime = new DateTime(CurrentYear, 4, 13, 12, 30, 0),
+                EndTime = new DateTime(CurrentYear, 4, 13, 13, 45, 0),
                 IsAllDay = false,
                 DoctorId = 2
             });
@@ -4859,8 +4859,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 23,
                 Subject = "Ruptured disks",
-                StartTime = new DateTime(CurrentYear, 4, 14, 13, 0, 0),
-                EndTime = new DateTime(CurrentYear, 4, 14, 15, 50, 0),
+                StartTime = new DateTime(CurrentYear, 4, 13, 13, 0, 0),
+                EndTime = new DateTime(CurrentYear, 4, 13, 15, 50, 0),
                 IsAllDay = false,
                 DoctorId = 3
             });
@@ -4868,8 +4868,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 24,
                 Subject = "Atherosclerosis",
-                StartTime = new DateTime(CurrentYear, 4, 13, 10, 0, 0),
-                EndTime = new DateTime(CurrentYear, 4, 13, 12, 30, 0),
+                StartTime = new DateTime(CurrentYear, 4, 12, 10, 0, 0),
+                EndTime = new DateTime(CurrentYear, 4, 12, 12, 30, 0),
                 IsAllDay = false,
                 DoctorId = 1
             });
@@ -4877,8 +4877,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 25,
                 Subject = "Arthroplasty",
-                StartTime = new DateTime(CurrentYear, 4, 15, 9, 0, 0),
-                EndTime = new DateTime(CurrentYear, 4, 15, 10, 0, 0),
+                StartTime = new DateTime(CurrentYear, 4, 14, 9, 0, 0),
+                EndTime = new DateTime(CurrentYear, 4, 14, 10, 0, 0),
                 IsAllDay = false,
                 DoctorId = 1
             });
@@ -4886,8 +4886,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 26,
                 Subject = "Hyperactivity disorder",
-                StartTime = new DateTime(CurrentYear, 4, 16, 14, 0, 0),
-                EndTime = new DateTime(CurrentYear, 4, 16, 15, 45, 0),
+                StartTime = new DateTime(CurrentYear, 4, 15, 14, 0, 0),
+                EndTime = new DateTime(CurrentYear, 4, 15, 15, 45, 0),
                 IsAllDay = false,
                 DoctorId = 2
             });
@@ -4895,8 +4895,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 27,
                 Subject = "Muscular dystrophy",
-                StartTime = new DateTime(CurrentYear, 4, 15, 13, 10, 0),
-                EndTime = new DateTime(CurrentYear, 4, 15, 15, 20, 0),
+                StartTime = new DateTime(CurrentYear, 4, 14, 13, 10, 0),
+                EndTime = new DateTime(CurrentYear, 4, 14, 15, 20, 0),
                 IsAllDay = false,
                 DoctorId = 3
             });
@@ -4904,8 +4904,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 28,
                 Subject = "Consulting",
-                StartTime = new DateTime(CurrentYear, 4, 16, 9, 20, 0),
-                EndTime = new DateTime(CurrentYear, 4, 16, 10, 30, 0),
+                StartTime = new DateTime(CurrentYear, 4, 15, 9, 20, 0),
+                EndTime = new DateTime(CurrentYear, 4, 15, 10, 30, 0),
                 IsAllDay = false,
                 DoctorId = 1
             });
@@ -4913,8 +4913,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 29,
                 Subject = "Hand surgery",
-                StartTime = new DateTime(CurrentYear, 4, 16, 13, 20, 0),
-                EndTime = new DateTime(CurrentYear, 4, 16, 15, 22, 0),
+                StartTime = new DateTime(CurrentYear, 4, 15, 13, 20, 0),
+                EndTime = new DateTime(CurrentYear, 4, 15, 15, 22, 0),
                 IsAllDay = false,
                 DoctorId = 3
             });
@@ -4922,8 +4922,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 30,
                 Subject = "Neuromuscular",
-                StartTime = new DateTime(CurrentYear, 4, 19, 14, 0, 0),
-                EndTime = new DateTime(CurrentYear, 4, 19, 15, 40, 0),
+                StartTime = new DateTime(CurrentYear, 4, 20, 14, 0, 0),
+                EndTime = new DateTime(CurrentYear, 4, 20, 15, 40, 0),
                 IsAllDay = false,
                 DoctorId = 2
             });
@@ -4931,8 +4931,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 31,
                 Subject = "Spine surgery",
-                StartTime = new DateTime(CurrentYear, 4, 19, 12, 18, 0),
-                EndTime = new DateTime(CurrentYear, 4, 19, 14, 23, 0),
+                StartTime = new DateTime(CurrentYear, 4, 18, 12, 18, 0),
+                EndTime = new DateTime(CurrentYear, 4, 18, 14, 23, 0),
                 IsAllDay = false,
                 DoctorId = 3
             });
@@ -4940,8 +4940,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 32,
                 Subject = "Fibrinogen",
-                StartTime = new DateTime(CurrentYear, 4, 19, 9, 0, 0),
-                EndTime = new DateTime(CurrentYear, 4, 19, 12, 30, 0),
+                StartTime = new DateTime(CurrentYear, 4, 18, 9, 0, 0),
+                EndTime = new DateTime(CurrentYear, 4, 18, 12, 30, 0),
                 IsAllDay = false,
                 DoctorId = 1
             });
@@ -4949,8 +4949,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 33,
                 Subject = "Bone tumors",
-                StartTime = new DateTime(CurrentYear, 4, 20, 10, 45, 0),
-                EndTime = new DateTime(CurrentYear, 4, 20, 12, 20, 0),
+                StartTime = new DateTime(CurrentYear, 4, 19, 10, 45, 0),
+                EndTime = new DateTime(CurrentYear, 4, 19, 12, 20, 0),
                 IsAllDay = false,
                 DoctorId = 3
             });
@@ -4958,8 +4958,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 34,
                 Subject = "Neuromuscular",
-                StartTime = new DateTime(CurrentYear, 4, 21, 13, 0, 0),
-                EndTime = new DateTime(CurrentYear, 4, 21, 17, 0, 0),
+                StartTime = new DateTime(CurrentYear, 4, 20, 13, 0, 0),
+                EndTime = new DateTime(CurrentYear, 4, 20, 17, 0, 0),
                 IsAllDay = false,
                 DoctorId = 2
             });
@@ -4967,8 +4967,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 35,
                 Subject = "Osteoporosis",
-                StartTime = new DateTime(CurrentYear, 4, 21, 11, 45, 0),
-                EndTime = new DateTime(CurrentYear, 4, 21, 14, 30, 0),
+                StartTime = new DateTime(CurrentYear, 4, 20, 11, 45, 0),
+                EndTime = new DateTime(CurrentYear, 4, 20, 14, 30, 0),
                 IsAllDay = false,
                 DoctorId = 3
             });
@@ -4976,8 +4976,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 36,
                 Subject = "Triglyceride",
-                StartTime = new DateTime(CurrentYear, 4, 20, 9, 30, 0),
-                EndTime = new DateTime(CurrentYear, 4, 20, 10, 45, 0),
+                StartTime = new DateTime(CurrentYear, 4, 19, 9, 30, 0),
+                EndTime = new DateTime(CurrentYear, 4, 19, 10, 45, 0),
                 IsAllDay = false,
                 DoctorId = 1
             });
@@ -4985,8 +4985,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 37,
                 Subject = "Fibrinogen",
-                StartTime = new DateTime(CurrentYear, 4, 22, 8, 0, 0),
-                EndTime = new DateTime(CurrentYear, 4, 22, 12, 30, 0),
+                StartTime = new DateTime(CurrentYear, 4, 21, 8, 0, 0),
+                EndTime = new DateTime(CurrentYear, 4, 21, 12, 30, 0),
                 IsAllDay = false,
                 DoctorId = 1
             });
@@ -4994,8 +4994,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 38,
                 Subject = "Head trauma",
-                StartTime = new DateTime(CurrentYear, 4, 23, 12, 0, 0),
-                EndTime = new DateTime(CurrentYear, 4, 23, 15, 0, 0),
+                StartTime = new DateTime(CurrentYear, 4, 22, 12, 0, 0),
+                EndTime = new DateTime(CurrentYear, 4, 22, 15, 0, 0),
                 IsAllDay = false,
                 DoctorId = 2
             });
@@ -5003,8 +5003,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 39,
                 Subject = "Arthroplasty",
-                StartTime = new DateTime(CurrentYear, 4, 22, 12, 18, 0),
-                EndTime = new DateTime(CurrentYear, 4, 22, 13, 22, 0),
+                StartTime = new DateTime(CurrentYear, 4, 21, 12, 18, 0),
+                EndTime = new DateTime(CurrentYear, 4, 21, 13, 22, 0),
                 IsAllDay = false,
                 DoctorId = 3
             });
@@ -5012,8 +5012,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 40,
                 Subject = "Echocardiogram",
-                StartTime = new DateTime(CurrentYear, 4, 23, 10, 30, 0),
-                EndTime = new DateTime(CurrentYear, 4, 23, 12, 40, 0),
+                StartTime = new DateTime(CurrentYear, 4, 22, 10, 30, 0),
+                EndTime = new DateTime(CurrentYear, 4, 22, 12, 40, 0),
                 IsAllDay = false,
                 DoctorId = 1
             });
@@ -5021,8 +5021,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 41,
                 Subject = "Skull reconstruction",
-                StartTime = new DateTime(CurrentYear, 4, 23, 13, 20, 0),
-                EndTime = new DateTime(CurrentYear, 4, 23, 15, 45, 0),
+                StartTime = new DateTime(CurrentYear, 4, 22, 13, 20, 0),
+                EndTime = new DateTime(CurrentYear, 4, 22, 15, 45, 0),
                 IsAllDay = false,
                 DoctorId = 3
             });
@@ -5030,8 +5030,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 42,
                 Subject = "Dementia",
-                StartTime = new DateTime(CurrentYear, 4, 26, 12, 30, 0),
-                EndTime = new DateTime(CurrentYear, 4, 26, 16, 45, 0),
+                StartTime = new DateTime(CurrentYear, 4, 25, 12, 30, 0),
+                EndTime = new DateTime(CurrentYear, 4, 25, 16, 45, 0),
                 IsAllDay = false,
                 DoctorId = 2
             });
@@ -5039,8 +5039,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 43,
                 Subject = "Orthopedic trauma",
-                StartTime = new DateTime(CurrentYear, 4, 26, 10, 18, 0),
-                EndTime = new DateTime(CurrentYear, 4, 26, 12, 20, 0),
+                StartTime = new DateTime(CurrentYear, 4, 25, 10, 18, 0),
+                EndTime = new DateTime(CurrentYear, 4, 25, 12, 20, 0),
                 IsAllDay = false,
                 DoctorId = 3
             });
@@ -5048,8 +5048,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 44,
                 Subject = "Blood pressure",
-                StartTime = new DateTime(CurrentYear, 4, 26, 10, 50, 0),
-                EndTime = new DateTime(CurrentYear, 4, 26, 12, 30, 0),
+                StartTime = new DateTime(CurrentYear, 4, 25, 10, 50, 0),
+                EndTime = new DateTime(CurrentYear, 4, 25, 12, 30, 0),
                 IsAllDay = false,
                 DoctorId = 1
             });
@@ -5057,8 +5057,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 45,
                 Subject = "Ruptured disks",
-                StartTime = new DateTime(CurrentYear, 4, 27, 12, 50, 0),
-                EndTime = new DateTime(CurrentYear, 4, 27, 15, 20, 0),
+                StartTime = new DateTime(CurrentYear, 4, 26, 12, 50, 0),
+                EndTime = new DateTime(CurrentYear, 4, 26, 15, 20, 0),
                 IsAllDay = false,
                 DoctorId = 3
             });
@@ -5066,8 +5066,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 46,
                 Subject = "Head trauma",
-                StartTime = new DateTime(CurrentYear, 4, 28, 11, 50, 0),
-                EndTime = new DateTime(CurrentYear, 4, 28, 12, 45, 0),
+                StartTime = new DateTime(CurrentYear, 4, 27, 11, 50, 0),
+                EndTime = new DateTime(CurrentYear, 4, 27, 12, 45, 0),
                 IsAllDay = false,
                 DoctorId = 2
             });
@@ -5075,8 +5075,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 47,
                 Subject = "Cerebral palsy",
-                StartTime = new DateTime(CurrentYear, 4, 28, 14, 50, 0),
-                EndTime = new DateTime(CurrentYear, 4, 28, 15, 50, 0),
+                StartTime = new DateTime(CurrentYear, 4, 27, 14, 50, 0),
+                EndTime = new DateTime(CurrentYear, 4, 27, 15, 50, 0),
                 IsAllDay = false,
                 DoctorId = 3
             });
@@ -5084,8 +5084,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 48,
                 Subject = "Consulting",
-                StartTime = new DateTime(CurrentYear, 4, 27, 9, 0, 0),
-                EndTime = new DateTime(CurrentYear, 4, 27, 11, 30, 0),
+                StartTime = new DateTime(CurrentYear, 4, 26, 9, 0, 0),
+                EndTime = new DateTime(CurrentYear, 4, 26, 11, 30, 0),
                 IsAllDay = false,
                 DoctorId = 1
             });
@@ -5093,8 +5093,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 49,
                 Subject = "Electrocardiogram",
-                StartTime = new DateTime(CurrentYear, 4, 30, 9, 30, 0),
-                EndTime = new DateTime(CurrentYear, 4, 30, 11, 50, 0),
+                StartTime = new DateTime(CurrentYear, 4, 29, 9, 30, 0),
+                EndTime = new DateTime(CurrentYear, 4, 29, 11, 50, 0),
                 IsAllDay = false,
                 DoctorId = 1
             });
@@ -5102,8 +5102,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 50,
                 Subject = "Radiculopathy",
-                StartTime = new DateTime(CurrentYear, 4, 30, 14, 0, 0),
-                EndTime = new DateTime(CurrentYear, 4, 30, 15, 30, 0),
+                StartTime = new DateTime(CurrentYear, 4, 29, 14, 0, 0),
+                EndTime = new DateTime(CurrentYear, 4, 29, 15, 30, 0),
                 IsAllDay = false,
                 DoctorId = 2
             });
@@ -5111,8 +5111,8 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 51,
                 Subject = "Skull reconstruction",
-                StartTime = new DateTime(CurrentYear, 4, 30, 14, 0, 0),
-                EndTime = new DateTime(CurrentYear, 4, 30, 16, 0, 0),
+                StartTime = new DateTime(CurrentYear, 4, 29, 14, 0, 0),
+                EndTime = new DateTime(CurrentYear, 4, 29, 16, 0, 0),
                 IsAllDay = false,
                 DoctorId = 3
             });
@@ -6485,104 +6485,104 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 Id = 1,
                 Subject = "Burning Man",
-                StartTime = new DateTime(CurrentYear, 6, 4, 15, 0, 0),
-                EndTime = new DateTime(CurrentYear, 6, 4, 17, 30, 0),
+                StartTime = new DateTime(CurrentYear, 6, 3, 15, 0, 0),
+                EndTime = new DateTime(CurrentYear, 6, 3, 17, 30, 0),
                 OwnerId = 1
             });
             resourceSampleData.Add(new ResourceSampleData
             {
                 Id = 2,
                 Subject = "Marketing Forum",
-                StartTime = new DateTime(CurrentYear, 6, 6, 10, 0, 0),
-                EndTime = new DateTime(CurrentYear, 6, 6, 11, 30, 0),
+                StartTime = new DateTime(CurrentYear, 6, 5, 10, 0, 0),
+                EndTime = new DateTime(CurrentYear, 6, 5, 11, 30, 0),
                 OwnerId = 2
             });
             resourceSampleData.Add(new ResourceSampleData
             {
                 Id = 3,
                 Subject = "Business Factory",
-                StartTime = new DateTime(CurrentYear, 6, 6, 13, 30, 0),
-                EndTime = new DateTime(CurrentYear, 6, 6, 15, 0, 0),
+                StartTime = new DateTime(CurrentYear, 6, 5, 13, 30, 0),
+                EndTime = new DateTime(CurrentYear, 6, 5, 15, 0, 0),
                 OwnerId = 3
             });
             resourceSampleData.Add(new ResourceSampleData
             {
                 Id = 4,
                 Subject = "Burning Man",
-                StartTime = new DateTime(CurrentYear, 6, 7, 11, 30, 0),
-                EndTime = new DateTime(CurrentYear, 6, 7, 13, 0, 0),
+                StartTime = new DateTime(CurrentYear, 6, 6, 11, 30, 0),
+                EndTime = new DateTime(CurrentYear, 6, 6, 13, 0, 0),
                 OwnerId = 1
             });
             resourceSampleData.Add(new ResourceSampleData
             {
                 Id = 5,
                 Subject = "Funnel Hacking",
-                StartTime = new DateTime(CurrentYear, 6, 8, 9, 30, 0),
-                EndTime = new DateTime(CurrentYear, 6, 8, 11, 0, 0),
+                StartTime = new DateTime(CurrentYear, 6, 7, 9, 30, 0),
+                EndTime = new DateTime(CurrentYear, 6, 7, 11, 0, 0),
                 OwnerId = 3
             });
             resourceSampleData.Add(new ResourceSampleData
             {
                 Id = 6,
                 Subject = "The human gathering",
-                StartTime = new DateTime(CurrentYear, 6, 8, 13, 0, 0),
-                EndTime = new DateTime(CurrentYear, 6, 8, 14, 30, 0),
+                StartTime = new DateTime(CurrentYear, 6, 7, 13, 0, 0),
+                EndTime = new DateTime(CurrentYear, 6, 7, 14, 30, 0),
                 OwnerId = 2
             });
             resourceSampleData.Add(new ResourceSampleData
             {
                 Id = 7,
                 Subject = "Techweek",
-                StartTime = new DateTime(CurrentYear, 6, 9, 11, 0, 0),
-                EndTime = new DateTime(CurrentYear, 6, 9, 12, 30, 0),
+                StartTime = new DateTime(CurrentYear, 6, 8, 11, 0, 0),
+                EndTime = new DateTime(CurrentYear, 6, 8, 12, 30, 0),
                 OwnerId = 2
             });
             resourceSampleData.Add(new ResourceSampleData
             {
                 Id = 8,
                 Subject = "Grow Conference",
-                StartTime = new DateTime(CurrentYear, 6, 10, 10, 0, 0),
-                EndTime = new DateTime(CurrentYear, 6, 10, 11, 30, 0),
+                StartTime = new DateTime(CurrentYear, 6, 9, 10, 0, 0),
+                EndTime = new DateTime(CurrentYear, 6, 9, 11, 30, 0),
                 OwnerId = 1
             });
             resourceSampleData.Add(new ResourceSampleData
             {
                 Id = 9,
                 Subject = "Data Science Conference",
-                StartTime = new DateTime(CurrentYear, 6, 10, 13, 30, 0),
-                EndTime = new DateTime(CurrentYear, 6, 10, 15, 0, 0),
+                StartTime = new DateTime(CurrentYear, 6, 9, 13, 30, 0),
+                EndTime = new DateTime(CurrentYear, 6, 9, 15, 0, 0),
                 OwnerId = 1
             });
             resourceSampleData.Add(new ResourceSampleData
             {
                 Id = 10,
                 Subject = "Blogcademy",
-                StartTime = new DateTime(CurrentYear, 6, 11, 12, 0, 0),
-                EndTime = new DateTime(CurrentYear, 6, 11, 13, 30, 0),
+                StartTime = new DateTime(CurrentYear, 6, 10, 12, 0, 0),
+                EndTime = new DateTime(CurrentYear, 6, 10, 13, 30, 0),
                 OwnerId = 3
             });
             resourceSampleData.Add(new ResourceSampleData
             {
                 Id = 11,
                 Subject = "World Domination Summit",
-                StartTime = new DateTime(CurrentYear, 6, 12, 9, 30, 0),
-                EndTime = new DateTime(CurrentYear, 6, 12, 11, 0, 0),
+                StartTime = new DateTime(CurrentYear, 6, 11, 9, 30, 0),
+                EndTime = new DateTime(CurrentYear, 6, 11, 11, 0, 0),
                 OwnerId = 2
             });
             resourceSampleData.Add(new ResourceSampleData
             {
                 Id = 12,
                 Subject = "Content Marketing",
-                StartTime = new DateTime(CurrentYear, 6, 12, 13, 0, 0),
-                EndTime = new DateTime(CurrentYear, 6, 12, 14, 30, 0),
+                StartTime = new DateTime(CurrentYear, 6, 11, 13, 0, 0),
+                EndTime = new DateTime(CurrentYear, 6, 11, 14, 30, 0),
                 OwnerId = 1
             });
             resourceSampleData.Add(new ResourceSampleData
             {
                 Id = 13,
                 Subject = "Mobile World Conference",
-                StartTime = new DateTime(CurrentYear, 6, 18, 18, 0, 0),
-                EndTime = new DateTime(CurrentYear, 6, 18, 20, 0, 0),
+                StartTime = new DateTime(CurrentYear, 6, 17, 18, 0, 0),
+                EndTime = new DateTime(CurrentYear, 6, 17, 20, 0, 0),
                 OwnerId = 1
             });
             return resourceSampleData;

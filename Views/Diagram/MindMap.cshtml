@@ -1,0 +1,395 @@
+@using Syncfusion.EJ2;
+@using EJ2CoreSampleBrowser.Controllers.Diagram;
+
+@section ControlsSection{
+    <div class="control-section">
+        <div class="diagram-control">
+            <ejs-diagram id="diagram" width="100%" height="550px" created="create" selectedItems="@ViewBag.selectedItems" getCustomTool="@ViewBag.getTool" selectionChange="selectionChange" getNodeDefaults="@ViewBag.getNodeDefaults" getConnectorDefaults="@ViewBag.getConnectorDefaults">
+                <e-diagram-snapsettings constraints="None"></e-diagram-snapsettings>
+                <e-diagram-datasourcesettings id="Id" parentId="ParentId" dataSource="new DataManager(){ Data = (List<MindMapDetails>)ViewBag.Nodes }"></e-diagram-datasourcesettings>
+                <e-diagram-layout type="MindMap" horizontalSpacing="50" getBranch="@ViewBag.getBranch"></e-diagram-layout>
+            </ejs-diagram>
+        </div>
+    </div>
+    <style>
+        #diagram {
+            display: block;
+        }
+
+        .row {
+            display: block;
+        }
+    </style>
+    <script>
+
+
+        function create(args) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            diagram.fitToPage();
+        }
+        var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__; var __extends = (this && this.__extends) || (function () {
+            var extendStatics = Object.setPrototypeOf ||
+                /* jshint proto: true */
+                ({ __proto__: [] } instanceof Array && function (der, b) { der.__proto__ = b; }) ||
+                function (der, b) { for (var p in b) if (b.hasOwnProperty(p)) der[p] = b[p]; };
+            return function (der, b) {
+                extendStatics(der, b);
+                function __() { this.constructor = der; }
+                der.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+            };
+        })();
+
+        function getBranch(node, nodes) {
+            return node.data.Branch;
+        }
+
+        function selectionChange(arg) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            if (arg.state === 'Changing') {
+                if (arg.newValue[0] && arg.newValue[0] instanceof ej.diagrams.Node) {
+                    for (var i = 0; i < diagram.selectedItems.userHandles.length; i++) {
+                        diagram.selectedItems.userHandles[i].visible = true;
+                    } /* tslint:disable:no-string-literal */
+                    if ((arg.newValue[0].data.Branch === 'Left') ||
+                        /* tslint:disable:no-string-literal */
+                        (arg.newValue[0].data.Branch === 'subLeft')) {
+                        hideUserHandle('leftHandle');
+                        changeUserHandlePosition('leftHandle');
+                        /* tslint:disable:no-string-literal */
+                    } else if ((arg.newValue[0].data.Branch === 'Right') ||
+                        /* tslint:disable:no-string-literal */
+                        (arg.newValue[0].data.Branch === 'subRight')) {
+                        hideUserHandle('rightHandle');
+                        changeUserHandlePosition('rightHandle');
+                    } else if (arg.newValue[0].data.Branch === 'Root') {
+                        hideUserHandle('delete');
+                    }
+                } else {
+                    hideUserHandle('leftHandle');
+                    hideUserHandle('rightHandle');
+                    hideUserHandle('delete');
+                }
+            }
+        }
+
+
+        function getNodeDefaults(obj, diagram) {
+            obj.constraints = ej.diagrams.NodeConstraints.Default & ~ej.diagrams.NodeConstraints.Drag;
+            if ((obj.data.Branch === 'Left') || (obj.data.Branch === 'Right') || (obj.data.Branch === 'Root')) {
+                obj.shape = { type: 'Basic', shape: 'Ellipse' }; obj.borderColor = 'black'; /* tslint:disable:no-string-literal */
+                obj.style = {
+                    fill: (obj.data.Branch === 'Root') ? '#E74C3C' : '#F39C12', strokeColor: 'none',
+                    strokeWidth: 2
+                };
+                obj.annotations = [{
+                    content: (obj.data.Label), margin: { left: 10, right: 10, top: 10, bottom: 10 },
+                    style: { color: 'white' }
+                }];
+                var port = [{
+                    id: 'port1', offset: { x: 0, y: 0.5 }, visibility: "Hidden",
+                    style: { fill: 'black' }
+                },
+                {
+                    id: 'port2', offset: { x: 1, y: 0.5 }, visibility: "Hidden",
+                    style: { fill: 'black' }
+                },
+                ];
+                for (var i = 0; i < port.length; i++) {
+                    obj.ports.push(new ej.diagrams.PointPort(obj, 'ports', port[i], true));
+                }
+                hideUserHandle('Top');
+
+            } else {
+                var color; /* tslint:disable:no-string-literal */
+                if ((obj.data.Branch === 'Right') || (obj.data.Branch === 'subRight')) {
+                    color = '#8E44AD';
+                } else {
+                    color = '#3498DB';
+                }
+                obj.shape = {
+                    type: 'Native', content: '<g><line x1="0" x2="100" y1="20" y2="20" stroke-width="5" stroke= '
+                    + color + ' ' + ' ></line>'
+                    + '<rect x="0" y="0"   width="100" height="20" fill="transparent" stroke="none"></rect></g>'
+                };
+                obj.shape = { type: 'Basic', shape: 'Rectangle' };
+                obj.style = { fill: color, strokeWidth: 0 };
+                obj.minWidth = 100;
+                obj.height = 4;
+                var port = [
+                    {
+                        id: 'port1', offset: { x: 0, y: 0.5 }, visibility: "Hidden",
+                        style: { fill: 'black' }
+                    },
+                    {
+                        id: 'port2', offset: { x: 1, y: 0.5 }, visibility: "Hidden",
+                        style: { fill: 'black' }
+                    },
+                ];
+                for (var i = 0; i < port.length; i++) {
+                    obj.ports.push(new ej.diagrams.PointPort(obj, 'ports', port[i], true));
+                }
+                obj.annotations = [{
+                    content: obj.data.Label, offset: { x: .5, y: 0 }, verticalAlignment: 'Bottom'
+                }];
+                obj.shape.margin = { left: 0, right: 0, top: 0, bottom: 0 };
+            }
+            return obj;
+        }
+
+        function getConnectorDefaults(connector, diagram) {
+            connector.type = 'Bezier';
+            connector.targetDecorator = { shape: 'None' };
+            var sourceNode = getObject(connector.sourceID); var targetNode = getObject(connector.targetID);
+            /* tslint:disable:no-string-literal */
+            if ((targetNode.data.Branch === 'Right') || (targetNode.data.Branch === 'subRight')) {
+                connector.sourcePortID = sourceNode.ports[0].id;
+                connector.targetPortID = targetNode.ports[1].id;
+                connector.style = { strokeWidth: 5, strokeColor: '#8E44AD' };
+                /* tslint:disable:no-string-literal */
+            } else if ((targetNode.data.Branch === 'Left') || (targetNode.data.Branch === 'subLeft')) {
+                connector.sourcePortID = sourceNode.ports[1].id;
+                connector.targetPortID = targetNode.ports[0].id;
+                connector.style = { strokeWidth: 5, strokeColor: '#3498DB' };
+            }
+            connector.constraints &= ~ej.diagrams.ConnectorConstraints.Select;
+            return connector;
+        }
+
+        function hideUserHandle(name) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            for (var i = 0; i < diagram.selectedItems.userHandles.length; i++) {
+                var handle = diagram.selectedItems.userHandles[i];
+                if (handle.name === name) {
+                    handle.visible = false;
+                }
+            }
+        }
+
+        function changeUserHandlePosition(change) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            for (var i = 0; i < diagram.selectedItems.userHandles.length; i++) {
+                var handle = diagram.selectedItems.userHandles[i];
+                if (handle.name === 'delete' && change === 'leftHandle') {
+                    applyHandle(handle, 'Left', 1, { top: 0, bottom: 0, left: 0, right: 10 }, 'Left', 'Top');
+
+                } else if (handle.name === 'delete' && change === 'rightHandle') {
+                    applyHandle(handle, 'Right', 1, { top: 0, bottom: 0, left: 10, right: 0 }, 'Right', 'Top');
+                }
+            }
+        }
+        //set the value for UserHandle element.
+        function applyHandle(handle, side, offset, margin, halignment, valignment) {
+            handle.side = side;
+            handle.offset = offset;
+            handle.margin = margin;
+            handle.horizontalAlignment = halignment;
+            handle.verticalAlignment = valignment;
+        }
+
+        function addNode(branch) {
+            var obj = {};
+            obj.id = ej.diagrams.randomId();
+            obj.data = { Branch: branch };
+            /* tslint:disable:no-string-literal */
+            obj.data.Label = 'Node';
+            return obj;
+        }
+
+        function getObject(objId) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            var nd;
+            for (var i = 0; i < diagram.nodes.length; i++) {
+                var node = diagram.nodes[i]
+                if (node.id === objId) {
+                    return node;
+                }
+            }
+            return nd;
+        }
+
+        function addConnector(source, target) {
+            var connector = {};
+            connector.id = ej.diagrams.randomId();
+            connector.sourceID = source.id; connector.targetID = target.id;
+            return connector;
+        }
+
+
+        function getTool(action) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            if (action === 'leftHandle') {
+                return new LeftExtendTool(diagram.commandHandler);
+            } else if (action === 'rightHandle') {
+                return new RightExtendTool(diagram.commandHandler);
+            } else if (action === 'delete') {
+                return new DeleteClick(diagram.commandHandler);
+            }
+        }
+
+        var LeftExtendTool = (function (_super) {
+            __extends(LeftExtendTool, _super);
+            function LeftExtendTool() {
+                return _super !== null && _super.apply(this, arguments) || this;
+            }
+            LeftExtendTool.prototype.mouseDown = function (args) {
+                _super.prototype.mouseDown.call(this, args);
+                this.inAction = true;
+            };
+            LeftExtendTool.prototype.mouseUp = function (args) {
+                if (this.inAction) {
+                    var diagram = document.getElementById("diagram").ej2_instances[0];
+                    var selectedElement = this.commandHandler.getSelectedObject();
+                    if (selectedElement[0]) {
+                        if (selectedElement[0] instanceof ej.diagrams.Node) {
+                            var branch = '';
+                            if (selectedElement[0].data.Branch === 'Root') {
+                                branch = 'Right';
+                            }
+                            else if (selectedElement[0].data.Branch === 'Right' ||
+                                selectedElement[0].data.Branch === 'subRight') {
+                                branch = 'subRight';
+                            }
+                            var node = addNode(branch);
+                            node.data['Id'] = node.id;
+                            var connector = addConnector(selectedElement[0], node);
+                            diagram.clearSelection();
+                            var nd = diagram.add(node);
+                            diagram.add(connector);
+                            diagram.doLayout();
+                            diagram.bringIntoView(nd.wrapper.bounds);
+                            diagram.startTextEdit(nd);
+                        }
+                    }
+                }
+            };
+            return LeftExtendTool;
+        }(ej.diagrams.ToolBase));
+
+        function update(selectedObject, node) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            var connector = addConnector(selectedObject, node);
+            diagram.clearSelection();
+            var nd = diagram.add(node);
+            diagram.add(connector);
+            diagram.doLayout();
+            diagram.startTextEdit(nd);
+        }
+
+        var RightExtendTool = (function (_super) {
+            __extends(RightExtendTool, _super);
+            function RightExtendTool() {
+                return _super !== null && _super.apply(this, arguments) || this;
+            }
+            RightExtendTool.prototype.mouseDown = function (args) {
+                _super.prototype.mouseDown.call(this, args);
+                this.inAction = true;
+            };
+            RightExtendTool.prototype.mouseUp = function (args) {
+                if (this.inAction) {
+                    var diagram = document.getElementById("diagram").ej2_instances[0];
+                    var selectedObject = this.commandHandler.getSelectedObject();
+                    if (selectedObject[0]) {
+                        if (selectedObject[0] instanceof ej.diagrams.Node) {
+                            var branch = '';
+                            if (selectedObject[0].data.Branch === 'Root') {
+                                branch = 'Left';
+                            }
+                            else if (selectedObject[0].data.Branch === 'Left' ||
+                                selectedObject[0].data.Branch === 'subLeft') {
+                                branch = 'subLeft';
+                            }
+                            var node = addNode(branch);
+                            node.data.Id = node.id;
+                            var connector = addConnector(selectedObject[0], node);
+                            diagram.clearSelection();
+                            var nd = diagram.add(node);
+                            diagram.add(connector);
+                            diagram.doLayout();
+                            diagram.bringIntoView(nd.wrapper.bounds);
+                            diagram.startTextEdit(nd);
+                        }
+                    }
+                }
+            };
+            return RightExtendTool;
+        }(ej.diagrams.ToolBase));
+
+        var DeleteClick = (function (_super) {
+            __extends(DeleteClick, _super);
+            function DeleteClick() {
+                return _super !== null && _super.apply(this, arguments) || this;
+            }
+            DeleteClick.prototype.mouseDown = function (args) {
+                _super.prototype.mouseDown.call(this, args);
+                this.inAction = true;
+            };
+            DeleteClick.prototype.mouseUp = function (args) {
+                var diagram = document.getElementById("diagram").ej2_instances[0];
+                if (this.inAction) {
+                    var selectedObject = this.commandHandler.getSelectedObject();
+                    if (selectedObject[0]) {
+                        if (selectedObject[0] instanceof ej.diagrams.Node) {
+                            var node = selectedObject[0];
+                            this.removeSubChild(node, diagram);
+                        }
+                        diagram.doLayout();
+                    }
+                }
+            };
+            DeleteClick.prototype.removeSubChild = function (node, diagram) {
+                for (var i = node.outEdges.length - 1; i >= 0; i--) {
+                    var connector = diagram.getObject(node.outEdges[i]);
+                    var childNode = diagram.getObject(connector.targetID);
+                    if (childNode.outEdges.length > 0) {
+                        this.removeSubChild(childNode, diagram);
+                    }
+                    else {
+                        diagram.remove(childNode);
+                    }
+                }
+                diagram.remove(node);
+            };
+            return DeleteClick;
+        }(ej.diagrams.ToolBase));
+
+
+        function onchange(params) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            if (selectedObject[0].data.Branch === 'Root' || selectedObject[0].data.Branch === 'Left' || selectedObject[0].data.Branch === 'Right') {
+                selectedObject[0].style.fill = args.target.value;
+                diagram.dataBind();
+            } else {
+                selectedObject[0].annotations[0].style.color = args.target.value;
+                diagram.dataBind();
+            }
+        }
+
+
+    </script>
+}
+@section ActionDescription{
+    <p>
+        This sample demonstrates the concept of creativity using mind map layout algorithm. User handles are used to extend the mind map interactively.
+    </p>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Mind Map in ASP.NET Core Diagram control. Explore here for more details."/>
+                }
+@section Description{
+    <p>
+        This example shows how to generate a mind map from an external data source. The <code>type</code> property of the <code>layout</code> can be used to enable the mind map layout algorithm. The
+        <code>getBranch</code> property can also be used to define the branches at both left and right sides.
+
+    </p>
+    <p>
+        The diagram component’s features are segregated into individual feature-wise modules. To generate diagrams from an external data source, inject <code>DataBinding</code> module using <code>Diagram.Inject(DataBinding)</code> method. To automatically generate a mind map, inject
+        <code>Mindmap</code> module using <code>Diagram.Inject(Mindmap)</code> method.
+
+    </p>
+}
+@section Title{
+                    <title>ASP.NET Core Diagram Mind Map Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Mind Map in ASP.NET Core Diagram Control</h1>
+                }

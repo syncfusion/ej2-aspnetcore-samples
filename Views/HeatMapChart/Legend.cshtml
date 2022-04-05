@@ -1,0 +1,113 @@
+@using Syncfusion.EJ2.HeatMap;
+@using Syncfusion.EJ2.DropDowns;
+@section ControlsSection{
+    @{
+        var textStyle = new { size = "15px", fontWeight = "500", fontStyle = "Normal" };
+        var xAxisLabel = new string[] { "London", "Berlin", "Madrid", "Paris", "Rome", "Lisbon", "Dublin" };
+        var yAxisLabel = new string[] { "12AM", "2AM", "4AM", "6AM", "8AM", "10AM", "12PM",
+        "2PM", "4PM", "6PM", "8PM", "10PM" };
+    }
+    <div class="col-lg-9 control-section">
+        <div id="container">
+            <ejs-heatmap id='container' load="window.onHeatmapLoad" dataSource="ViewBag.dataSource" tooltipRender="window.tooltipRender">
+                <e-heatmap-titlesettings text="Hourly Weather Forecast" textStyle="textStyle">
+                </e-heatmap-titlesettings>
+                <e-heatmap-xaxis labels="xAxisLabel" labelRotation="45" labelIntersectAction="None"></e-heatmap-xaxis>
+                <e-heatmap-yaxis labels="yAxisLabel"></e-heatmap-yaxis>
+                <e-heatmap-palettesettings>
+                    <e-palettes>
+                        <e-palette value="0" color="#6EB5D0"></e-palette>
+                        <e-palette value="10" color="#7EDCA2"></e-palette>
+                        <e-palette value="19" color="#DCD57E"></e-palette>
+                        <e-palette value="22" color="#DCD57E"></e-palette>
+                    </e-palettes>
+                </e-heatmap-palettesettings>
+                <e-heatmap-cellsettings showLabel="false" format="{value} C"></e-heatmap-cellsettings>
+                <e-heatmap-legendsettings position="Bottom">
+                    <e-legendsettings-title text="Celsius"></e-legendsettings-title>
+                </e-heatmap-legendsettings>
+            </ejs-heatmap>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties" style="width: 100%">
+            <tbody>
+                <tr style="height: 50px">
+                    <td style="width: 60%">
+                        <div>Legend Position:</div>
+                    </td>
+                    <td style="width: 40%;">
+                        <div>
+                            <select id="LegendPosition">
+                                <option value="Left">Left</option>
+                                <option value="Right">Right</option>
+                                <option value="Top">Top</option>
+                                <option value="Bottom">Bottom</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script type="text/javascript">
+       
+        window.onHeatmapLoad = function (args) {
+            window.heatmap = args.heatmap;
+            var selectedTheme = themeName ? themeName : 'Material';
+             args.heatmap.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+            args.heatmap.legendSettings.labelFormat = "{value}\xB0 C";
+        }
+        window.onload = function () {
+            window.legentListObj = new ej.dropdowns.DropDownList({
+                index: 3,
+                width: 120,
+                change: function (args) {
+                    window.heatmap.legendSettings.position = window.legentListObj.value.toString() === "Right" ?
+                        "Right" : window.legentListObj.value.toString() === "Bottom" ?
+                            "Bottom" : window.legentListObj.value.toString() === "Left" ?
+                                "Left" : window.legentListObj.value.toString() === "Top" ? "Top" : null;
+                }
+            });
+            window.legentListObj.appendTo('#LegendPosition');
+           
+        };
+        window.tooltipRender = function (args) { 
+            args.content = [args.xLabel + ' | ' + args.yLabel + ' : ' + args.value + '\xB0 C']
+        };
+    </script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample visualizes the hourly weather forecast for some major European cities. The data label is disabled in this sample, the tooltip displays the data point values.  In property panel, the options are available to change the display position of the Heatmap legend axes by means of dropdown.
+        </p>
+    </div>
+}
+@section Description{
+
+    <div id="description">
+        <p>
+            In this example, you can see how to change the display position of the Heatmap legend. You can change the display position of legend to left, right, bottom and top by using the <code>position </code> property in <code>legendSettings</code>.
+        </p>
+        <p>
+            Tooltip is enabled in this example, to see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+        </p>
+        <br>
+    </div>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Legend Placement in ASP.NET Core HeatMap control. Explore here for more details."/>
+                }
+@section Title{
+                    <title>ASP.NET Core HeatMap Legend Placement Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Legend Placement in ASP.NET Core HeatMap Control</h1>
+                }
+<style>
+            body.material-dark .property-panel-section {
+            color: #ffffff;
+        }
+</style>

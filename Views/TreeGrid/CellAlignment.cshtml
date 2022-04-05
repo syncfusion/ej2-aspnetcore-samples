@@ -1,0 +1,115 @@
+@using Syncfusion.EJ2
+
+
+@section ControlsSection{
+    <div class="col-lg-8 control-section">
+        <div class="content-wrapper">
+            <ejs-treegrid id="TreeGrid" dataSource="ViewBag.dataSource" allowPaging="true" childMapping="Children" height="350" treeColumnIndex="1">
+                <e-treegrid-columns>
+                    <e-treegrid-column field="TaskId" headerText="Task ID" textAlign="Right" width="80"></e-treegrid-column>
+                    <e-treegrid-column field="TaskName" headerText="Task Name" width="200"></e-treegrid-column>
+                    <e-treegrid-column field="StartDate" headerText=" Start Date" textAlign="Right" format="yMd" width="105"></e-treegrid-column>
+                    <e-treegrid-column field="Duration" headerText="Duration" textAlign="Right" width="81"></e-treegrid-column>
+                    <e-treegrid-column field="Progress" headerText="Progress" textAlign="Right" width="84"></e-treegrid-column>
+                </e-treegrid-columns>
+            </ejs-treegrid>
+        </div>
+    </div>
+
+    <div class="col-lg-4 property-section">
+        <table id="property" title="Properties" style="width: 100%">
+            <tr style="height: 50px">
+                <td style="width: 50%">
+                    <div>Column</div>
+                </td>
+                <td style="width: 50%;padding-right: 10px">
+                    <ejs-dropdownlist id="Columns" width="110px" dataSource="@ViewBag.columns" placeholder="Select a Column" index="0" popupHeight="220px" value="@("TaskId")" change="columnChange">
+                        <e-dropdownlist-fields text="name" value="id"></e-dropdownlist-fields>
+                    </ejs-dropdownlist>
+                </td>
+            </tr>
+            <tr style="height: 50px">
+                <td style="width: 50%">
+                    <div>Cell Alignment</div>
+                </td>
+                <td style="width: 50%;padding-right: 10px">
+                    <ejs-dropdownlist id="Alignment" width="110px" dataSource="@ViewBag.indexes" placeholder="Select Alignment" index="0" popupHeight="220px" value="@("Right")" change="alignmentChange">
+                        <e-dropdownlist-fields text="name" value="id"></e-dropdownlist-fields>
+                    </ejs-dropdownlist>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        function columnChange(e) {
+            var treegrid = document.getElementById("TreeGrid").ej2_instances[0];
+            var dropDownColumn = document.getElementById("Columns").ej2_instances[0];
+            var dropDownAlign = document.getElementById("Alignment").ej2_instances[0];
+            var columnName = e.value;
+            var alignment = treegrid.getColumnIndexByField(columnName);
+            dropDownAlign.value = alignment;
+        }
+        function alignmentChange(e) {
+            var treegrid = document.getElementById("TreeGrid").ej2_instances[0];
+            var dropDownColumn = document.getElementById("Columns").ej2_instances[0];
+            var dropDownAlign = document.getElementById("Alignment").ej2_instances[0];
+            var alignment = e.value;
+            var columnName = dropDownColumn.value;
+            treegrid.getColumnByField(columnName).textAlign = alignment;
+            treegrid.refreshColumns();
+        }
+    </script>
+
+
+
+}
+
+@*custom code start*@
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Cell Alignment in ASP.NET Core TreeGrid control. Explore here for more details."/>
+                }
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the text alignment functionalities of the treegrid columns.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            Align both content and header text of particular column using the <code>
+                TextAlign
+            </code> property of columns. There are four possible ways to align content and header text of column, they are.
+            <br>
+        </p>
+        <ul>
+            <li><code>Right</code></li>
+            <li><code>Left</code></li>
+            <li><code>Center</code></li>
+            <li><code>Justify</code></li>
+        </ul>
+
+        <br />
+        <p>
+            In this sample, we have initially set the <code>TextAlign</code> property as “Right” for Duration, Start Date and End Date columns
+            and also we have an option to align the values of content and header text dynamically by select the column and text align value from property panel.
+        </p>
+        <p>
+            More information about Cell Alignment can be found in this documentation section.
+        </p>
+    </div>
+
+}
+
+@*custom code end*@
+@section Title{
+                    <title>ASP.NET Core TreeGrid Cell Alignment Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Cell Alignment in ASP.NET Core TreeGrid Control</h1>
+                }

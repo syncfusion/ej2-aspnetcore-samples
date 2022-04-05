@@ -1,0 +1,72 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+
+    @{
+        var indicator = new string[0];
+        var line = new String[0];
+    }
+
+    <div class="control-section" align="center">        
+        <ejs-stockchart id="stockchartmultiple" load="chartLoad" indicatorType="indicator" trendlineType="line" title="Multiple Series">
+            <e-stockchart-border width="0"></e-stockchart-border>
+            <e-stockchart-primaryxaxis>
+                <e-majorgridlines width="0"></e-majorgridlines>
+                <e-crosshairtooltip enable="true"></e-crosshairtooltip>
+            </e-stockchart-primaryxaxis>
+            <e-stockchart-primaryyaxis interval="40">
+                <e-linestyle color="transparent"></e-linestyle>
+                <e-majorticklines width="0" color="transparent"></e-majorticklines>
+                <e-crosshairtooltip enable="true"></e-crosshairtooltip>
+            </e-stockchart-primaryyaxis>
+            <e-stockchart-crosshairsettings enable="true"></e-stockchart-crosshairsettings>
+            <e-stockchart-series-collection>
+                <e-stockchart-series type='Spline' xName='x' yName='close' name='GOOG'>
+                </e-stockchart-series>
+                <e-stockchart-series type='Spline' xName='x' yName='close' name='GOOGL'></e-stockchart-series>
+            </e-stockchart-series-collection>
+            <e-stockchart-legendsettings visible="true"></e-stockchart-legendsettings>
+        </ejs-stockchart>
+        </div>
+    <script src="~/scripts/StockChartData/goog.js"></script>
+    <script src="~/scripts/StockChartData/googl.js"></script>
+    <script>
+        var data1 = goog;
+        var data2 = googl;
+        function chartLoad(args) {
+            @*custom code start*@
+            letselectedTheme: string = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.stockChart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+           @*custom code end*@
+            args.stockChart.series[0].dataSource = data1;
+            args.stockChart.series[1].dataSource = data2;
+        }
+
+    </script>
+}
+@*custom code start*@
+@section Scripts {
+
+}
+@*custom code end*@
+@section ActionDescription{
+    <p>
+        This sample visualizes stock chart with multiple series and legend.
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can see how to render and configure the Stock Chart.
+        The <code>SplineSeries</code> is used to display data based on the selection made in the Range Selector. Since there are multiple series, the interactive legend has been enabled, which provides a quick overview of each series.
+    </p>
+    <br>
+}
+@section Title{
+                 <title>ASP.NET Core StockChart Multiple Series Example - Syncfusion Demos </title>
+             }
+@section Meta{
+                <meta name="description" content="This example demonstrates the Multiple Series in ASP.NET Core StockChart control. Explore here for more details."/>
+            }
+@section Header{
+                <h1 class='sb-sample-text'>Example of Multiple Series in ASP.NET Core StockChart Control</h1>
+            }

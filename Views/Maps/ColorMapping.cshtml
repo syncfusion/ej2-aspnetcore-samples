@@ -1,0 +1,387 @@
+@using Syncfusion.EJ2.Maps;
+@section ControlsSection{
+    @{
+        var propertyPath = new[] { "name" };
+        var color1 = "#DEEBAE";
+        var color2 = "#A4D6AD";
+        var color3 = "#37AFAB" ;
+        var color4 = "#547C84";
+        var color5 = "#CEBF93";
+        var color6 = "#a69d70";
+
+    }
+    <div id="template" style="display:none">
+        <div class="toolback">
+            <div class="listing2">
+                <center>
+                    ${State}
+                </center>
+            </div>
+            <hr style="margin-top: 2px;margin-bottom:5px;border:0.5px solid #DDDDDD">
+            <div>
+                <center>  <span class="listing1">Inches : </span><span class="listing2">${inches}</span></center>
+            </div>
+            <div>
+                <center>  <span class="listing1">Category : </span><span class="listing2">${value}</span> </center>
+            </div>
+        </div>
+    </div>
+    <style>
+        .toolback {
+            border-radius: 4px;
+            border: 1px #abb9c6;
+            opacity: 90%;
+            background: rgba(53, 63, 76, 0.90);
+            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.40);
+            padding-bottom: 10px;
+            padding-top: 10px;
+            padding-left: 10px;
+            padding-right: 10px;
+            width: 140px;
+        }
+
+        .listing1 {
+            font-size: 13px;
+            color: #cccccc
+        }
+
+        .listing2 {
+            font-size: 13px;
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .property-text {
+            font-family: "Roboto", "Segoe UI", "GeezaPro", "DejaVu Serif", "sans-serif" !important;
+            font-size: 13px !important;
+            font-weight: 400 !important;
+        }
+    </style>
+    <div class="col-lg-9 control-section">
+        <div id="maps">
+            <ejs-maps id="maps" load="window.onMapLoad">
+                <e-maps-titlesettings text="Spring Precipitation Averages of US States"></e-maps-titlesettings>
+                <e-maps-zoomsettings enable="false"></e-maps-zoomsettings>
+                <e-maps-legendsettings visible="true" position="@LegendPosition.Bottom" height="10" width="80%" mode="@LegendMode.Interactive">
+                    <e-legendsettings-title text="Inches"></e-legendsettings-title>
+                    <e-legendsettings-titlestyle size="18px" fontFamily="Segoe UI"></e-legendsettings-titlestyle>
+                </e-maps-legendsettings>
+                <e-maps-layers>
+                    <e-maps-layer dataSource="ViewBag.dataSource" shapeData="ViewBag.mapdata" shapePropertyPath="propertyPath" shapeDataPath="State">
+                        <e-layersettings-tooltipsettings valuePath="State" visible="true" template="#template"></e-layersettings-tooltipsettings>
+                        <e-layersettings-shapesettings colorValuePath="inches" fill="#E5E5E5">
+                            <e-layers-shapesettings-border color="black" width="0.2" opacity="1"></e-layers-shapesettings-border>
+                            <e-shapesettings-colormappings>
+                                <e-shapesettings-colormapping from="0.1" to="1" color="color1" label="0 - 1"></e-shapesettings-colormapping>
+                                <e-shapesettings-colormapping from="1" to="2" color="color2" label="1 - 2"></e-shapesettings-colormapping>
+                                <e-shapesettings-colormapping from="2" to="3" color="color3" label="2 - 3"></e-shapesettings-colormapping>
+                                <e-shapesettings-colormapping from="3" to="4" color="color4" label="3 - 4"></e-shapesettings-colormapping>
+                                <e-shapesettings-colormapping from="4" to="5" color="color5" label="4 - 5"></e-shapesettings-colormapping>
+                                <e-shapesettings-colormapping from="5" to="6" color="color6" label="5 - 6"></e-shapesettings-colormapping>
+                            </e-shapesettings-colormappings>
+                        </e-layersettings-shapesettings>
+                    </e-maps-layer>
+                </e-maps-layers>
+            </ejs-maps>
+        </div>
+        <div style="float: right; margin-right: 10px;">Source:<a href="https://craft.co/youtube/locations" target="_blank">craft.co/youtube/locations</a></div>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties" style="width: 100%">
+            <tbody>
+                <tr style="height: 50px">
+                    <td style="width: 10%">
+                        <div class="property-text" style="margin-left:-10px">Color Mapping Type</div>
+                    </td>
+                    <td style="width: 30%;">
+                        <div>
+                        <select autocomplete="off" id="colorMapping">
+                            <option value="RangeColorMapping" selected>Range</option>
+                            <option value="EqualColorMapping">Equal</option>
+                            <option value="DesaturationColorMapping">Desaturation</option>
+                        </select>
+                            </div>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td style="width: 50%">
+                        <div class="property-text" id="text1" style="display: none; margin-left:-10px"> Change Opacity</div>
+                    </td>
+                    <td style="margin-left: -10px;margin-top: -5px;">
+                        <div id="input1" style="display: none;margin-left: -10px;padding-top: 0px;">
+                            <input type="checkbox" id="opacity" />
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td style="width: 50%">
+                        <div class="property-text" id="text2" style="display: none; margin-left:-10px">Min Opacity</div>
+                    </td>
+                    <td style="width: 50%;">
+                        <div id="input2" style="display: none; margin-left: 0px">
+                            <input type="range" id="minopacity" step="0.1" value="0.5" min="0" max="1" style="width: 100%;" />
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td style="width: 50%">
+                        <div class="property-text" id="text3" style="display: none; margin-left:-10px">Max Opacity</div>
+                    </td>
+                    <td style="width: 50%;">
+                        <div id="input3" style="display: none; margin-left: 0px">
+                            <input type="range" id="maxopacity" step="0.1" value="1" min="0" max="1" style="width: 100%; " />
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+}
+<style>
+    
+</style>
+<script>
+    var maps;
+    @* custom code start *@
+    function onMapLoad(args) {
+        maps = args.maps;
+        var theme = themeName ? themeName : "Material";
+        args.maps.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+    }
+    @* custom code end *@
+    window.onload = function () {
+        var dropDown = new ej.dropdowns.DropDownList({
+            index: 0,
+            placeholder: 'Range ColorMaping',
+            width: '100%',
+            change: () => {
+                var element = dropDown.value.toString();
+                 if (element === 'RangeColorMapping') {
+                document.getElementById('text1').style.display = 'none';
+                document.getElementById('input1').style.display = 'none';
+                document.getElementById('text2').style.display = 'none';
+                document.getElementById('input2').style.display = 'none';
+                document.getElementById('text3').style.display = 'none';
+                document.getElementById('input3').style.display = 'none';
+                maps.layers[0].shapeSettings.colorValuePath = 'inches';
+                maps.layers[0].shapeSettings.colorMapping[0].from = 0.1;
+                maps.layers[0].shapeSettings.colorMapping[0].to = 1;
+                maps.layers[0].shapeSettings.colorMapping[0].color = '#DEEBAE';
+                maps.layers[0].shapeSettings.colorMapping[0].label = '0 - 1';
+                maps.layers[0].shapeSettings.colorMapping[0].value = null;
+                maps.layers[0].shapeSettings.colorMapping[1].from = 1;
+                maps.layers[0].shapeSettings.colorMapping[1].to = 2;
+                maps.layers[0].shapeSettings.colorMapping[1].color = '#A4D6AD';
+                maps.layers[0].shapeSettings.colorMapping[1].label = '1 - 2';
+                maps.layers[0].shapeSettings.colorMapping[1].value = null;
+                maps.layers[0].shapeSettings.colorMapping[2].from = 2;
+                maps.layers[0].shapeSettings.colorMapping[2].to = 3;
+                maps.layers[0].shapeSettings.colorMapping[2].color = '#37AFAB';
+                maps.layers[0].shapeSettings.colorMapping[2].label = '2 - 3';
+                maps.layers[0].shapeSettings.colorMapping[2].value = null;
+                maps.layers[0].shapeSettings.colorMapping[3].from = 3;
+                maps.layers[0].shapeSettings.colorMapping[3].to = 4;
+                maps.layers[0].shapeSettings.colorMapping[3].color = '#547C84';
+                maps.layers[0].shapeSettings.colorMapping[3].label = '3 - 4';
+                maps.layers[0].shapeSettings.colorMapping[3].value = null;
+                maps.layers[0].shapeSettings.colorMapping[4].from = 4;
+                maps.layers[0].shapeSettings.colorMapping[4].to = 5;
+                maps.layers[0].shapeSettings.colorMapping[4].color = '#CEBF93';
+                maps.layers[0].shapeSettings.colorMapping[4].label = '4 - 5';
+                maps.layers[0].shapeSettings.colorMapping[4].value = null;
+                maps.layers[0].shapeSettings.colorMapping[5].from = 5;
+                maps.layers[0].shapeSettings.colorMapping[5].to = 6;
+                maps.layers[0].shapeSettings.colorMapping[5].color = '#a69d70';
+                maps.layers[0].shapeSettings.colorMapping[5].label = '5 - 6';
+                maps.layers[0].shapeSettings.colorMapping[5].value = null;
+                maps.legendSettings.title.text = 'Inches';
+                maps.refresh();
+            } else if (element === 'EqualColorMapping') {
+                document.getElementById('text1').style.display = 'none';
+                document.getElementById('input1').style.display = 'none';
+                document.getElementById('text2').style.display = 'none';
+                document.getElementById('input2').style.display = 'none';
+                document.getElementById('text3').style.display = 'none';
+                document.getElementById('input3').style.display = 'none';
+                maps.layers[0].shapeSettings.colorValuePath = 'value';
+                maps.layers[0].shapeSettings.colorMapping[0].from = null;
+                maps.layers[0].shapeSettings.colorMapping[0].to = null;
+                maps.layers[0].shapeSettings.colorMapping[0].color = '#DEEBAE';
+                maps.layers[0].shapeSettings.colorMapping[0].label = null;
+                maps.layers[0].shapeSettings.colorMapping[0].value = 'Low';
+                maps.layers[0].shapeSettings.colorMapping[1].from = null;
+                maps.layers[0].shapeSettings.colorMapping[1].to = null;
+                maps.layers[0].shapeSettings.colorMapping[1].value = 'Moderate';
+                maps.layers[0].shapeSettings.colorMapping[1].color = '#A4D6AD';
+                maps.layers[0].shapeSettings.colorMapping[1].label = null;
+                maps.layers[0].shapeSettings.colorMapping[5].label = null;
+                maps.layers[0].shapeSettings.colorMapping[2].to = null;
+                maps.layers[0].shapeSettings.colorMapping[2].from = null;
+                maps.layers[0].shapeSettings.colorMapping[2].color = '#37AFAB';
+                maps.layers[0].shapeSettings.colorMapping[2].value = 'High';
+                maps.layers[0].shapeSettings.colorMapping[2].label = null;
+                maps.layers[0].shapeSettings.colorMapping[3].to = null;
+                maps.layers[0].shapeSettings.colorMapping[5].color = null;
+                maps.layers[0].shapeSettings.colorMapping[3].color = null;
+                maps.layers[0].shapeSettings.colorMapping[3].from = null;
+                maps.layers[0].shapeSettings.colorMapping[4].value = null;
+                maps.layers[0].shapeSettings.colorMapping[5].from = null;
+                maps.layers[0].shapeSettings.colorMapping[3].label = null;
+                maps.layers[0].shapeSettings.colorMapping[4].from = null;
+                maps.layers[0].shapeSettings.colorMapping[4].to = null;
+                maps.layers[0].shapeSettings.colorMapping[3].value = null;
+                maps.layers[0].shapeSettings.colorMapping[4].color = null;
+                maps.layers[0].shapeSettings.colorMapping[4].label = null;
+                maps.layers[0].shapeSettings.colorMapping[5].to = null;
+                maps.layers[0].shapeSettings.colorMapping[5].value = null;
+                maps.legendSettings.title.text = 'Category';
+                maps.refresh();
+            }
+                if (element === 'DesaturationColorMapping') {
+                document.getElementById('text1').style.display = 'block';
+                document.getElementById('input1').style.display = 'block';
+                var minOpacity = document.getElementById('minopacity');
+                var maxOpacity = document.getElementById('maxopacity');
+                if (highlightCheckBox.checked) {
+                    document.getElementById('text2').style.display = 'block';
+                    document.getElementById('input2').style.display = 'block';
+                    document.getElementById('text3').style.display = 'block';
+                    document.getElementById('input3').style.display = 'block';
+                    maps.layers[0].shapeSettings.colorMapping[0].minOpacity = parseFloat(minOpacity.value);
+                    maps.layers[0].shapeSettings.colorMapping[0].maxOpacity = parseFloat(maxOpacity.value);
+                } else {
+                    maps.layers[0].shapeSettings.colorMapping[0].minOpacity = null;
+                    maps.layers[0].shapeSettings.colorMapping[0].maxOpacity = null;
+                }
+                maps.layers[0].shapeSettings.colorValuePath = 'inches';
+                maps.layers[0].shapeSettings.colorMapping[0].from = 0.1;
+                maps.layers[0].shapeSettings.colorMapping[0].to = 6;
+                maps.layers[0].shapeSettings.colorMapping[0].color = ['#F0D6AD', '#19547B'];
+                maps.layers[0].shapeSettings.colorMapping[0].value = null;
+                maps.layers[0].shapeSettings.colorMapping[0].label = '0 - 6';
+                maps.layers[0].shapeSettings.colorMapping[1].from = null;
+                maps.layers[0].shapeSettings.colorMapping[1].to = null;
+                maps.layers[0].shapeSettings.colorMapping[1].color = null;
+                maps.layers[0].shapeSettings.colorMapping[1].value = null;
+                maps.layers[0].shapeSettings.colorMapping[1].label = null;
+                maps.layers[0].shapeSettings.colorMapping[2].from = null;
+                maps.layers[0].shapeSettings.colorMapping[2].to = null;
+                maps.layers[0].shapeSettings.colorMapping[2].color = null;
+                maps.layers[0].shapeSettings.colorMapping[2].value = null;
+                maps.layers[0].shapeSettings.colorMapping[2].label = null;
+                maps.layers[0].shapeSettings.colorMapping[3].from = null;
+                maps.layers[0].shapeSettings.colorMapping[3].to = null;
+                maps.layers[0].shapeSettings.colorMapping[3].color = null;
+                maps.layers[0].shapeSettings.colorMapping[3].label = null;
+                maps.layers[0].shapeSettings.colorMapping[3].value = null;
+                maps.layers[0].shapeSettings.colorMapping[4].from = null;
+                maps.layers[0].shapeSettings.colorMapping[4].to = null;
+                maps.layers[0].shapeSettings.colorMapping[4].color = null;
+                maps.layers[0].shapeSettings.colorMapping[4].label = null;
+                maps.layers[0].shapeSettings.colorMapping[4].value = null;
+                maps.layers[0].shapeSettings.colorMapping[5].from = null;
+                maps.layers[0].shapeSettings.colorMapping[5].to = null;
+                maps.layers[0].shapeSettings.colorMapping[5].color = null;
+                maps.layers[0].shapeSettings.colorMapping[5].label = null;
+                maps.layers[0].shapeSettings.colorMapping[5].value = null;
+                maps.legendSettings.title.text = 'Inches';
+                maps.refresh();
+               
+            }
+            }
+        });
+        dropDown.appendTo('#colorMapping');
+
+        var highlightCheckBox = new ej.buttons.CheckBox(
+            {
+                change: (args) => {
+                    var minOpacity = document.getElementById('minopacity');
+                    var maxOpacity = document.getElementById('maxopacity');
+                    if (args.checked) {
+                        document.getElementById('text2').style.display = 'block';
+                        document.getElementById('input2').style.display = 'block';
+                        document.getElementById('text3').style.display = 'block';
+                        document.getElementById('input3').style.display = 'block';
+                        maps.layers[0].shapeSettings.colorMapping[0].minOpacity = parseFloat(minOpacity.value);
+                        maps.layers[0].shapeSettings.colorMapping[0].maxOpacity = parseFloat(maxOpacity.value);
+                        maps.layers[0].shapeSettings.colorMapping[1].minOpacity = parseFloat(minOpacity.value);
+                        maps.layers[0].shapeSettings.colorMapping[1].maxOpacity = parseFloat(maxOpacity.value);
+                        minOpacity.disabled = false;
+                        maxOpacity.disabled = false;
+                    } else {
+                        document.getElementById('text2').style.display = 'none';
+                        document.getElementById('input2').style.display = 'none';
+                        document.getElementById('text3').style.display = 'none';
+                        document.getElementById('input3').style.display = 'none';
+                        maps.layers[0].shapeSettings.colorMapping[0].minOpacity = null;
+                        maps.layers[0].shapeSettings.colorMapping[0].maxOpacity = null;
+                        maps.layers[0].shapeSettings.colorMapping[1].minOpacity = null;
+                        maps.layers[0].shapeSettings.colorMapping[1].maxOpacity = null;
+                        minOpacity.disabled = true;
+                        maxOpacity.disabled = true;
+                    }
+                    maps.refresh();
+                },
+                checked: false
+            }, '#opacity');
+
+        document.getElementById('minopacity').onpointermove = document.getElementById('minopacity').ontouchmove =
+            document.getElementById('minopacity').onchange = () => {
+            var slider = document.getElementById('minopacity');
+                if (!slider.disabled) {
+                    var minOpacity = parseFloat(slider.value);
+                    maps.layers[0].shapeSettings.colorMapping[0].minOpacity = minOpacity;
+                    maps.layers[0].shapeSettings.colorMapping[1].minOpacity = minOpacity;
+                    maps.refresh();
+                }
+            };
+        document.getElementById('maxopacity').onpointermove = document.getElementById('maxopacity').ontouchmove =
+            document.getElementById('maxopacity').onchange = () => {
+            var slider = document.getElementById('maxopacity');
+                if (!slider.disabled) {
+                    var maxOpacity = parseFloat(slider.value);
+                    maps.layers[0].shapeSettings.colorMapping[0].maxOpacity = maxOpacity;
+                    maps.layers[0].shapeSettings.colorMapping[1].maxOpacity = maxOpacity;
+                    maps.refresh();
+                }
+            };
+    }
+
+    
+</script>
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Color Mapping in ASP.NET Core Maps control. Explore here for more details."/>
+                }
+@section ActionDescription{
+  <div id="action-description">
+    <p>
+        This sample shows the average amount of rainfall and snowfall in spring season of all the states in the United States. The color mapping is applied to the shapes to differentiate them from other shapes.
+   </p>
+</div>
+
+}
+@section Description{
+
+   <div id="description">
+    <p>
+        In this example, you can see how to render a map with color mapping. The range color mapping and desaturation color mapping group the shapes based on the inches value, whereas the equal color mapping groups the shapes based on the category (low, moderate, or high) values. Legend is enabled in this example to represent each color mapping.
+    </p>
+    <p>
+        Tooltip is enabled in this example. To see the tooltip in action, hover the mouse over a marker or tap a marker in touch enabled devices.
+    </p>
+<br/>
+    <p style="font-weight: 500">Injecting Module</p>
+    <p>
+        The maps component features are segregated into individual modules by feature. To use a legend, inject the <code>Legend</code> module using the <code>Maps.Inject(Legend)</code> method.
+    </p>
+   
+</div>
+
+}
+@section Title{
+                    <title>ASP.NET Core Maps Color Mapping Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Color Mapping in ASP.NET Core Maps Control</h1>
+                }

@@ -1,0 +1,271 @@
+@using Syncfusion.EJ2;
+@section ControlsSection{
+
+    <div class="control-section" style="border-right:0px;">
+        <div class="row">
+            @{
+                var font = new
+                {
+                    color = "#424242"
+                };
+                var labelFont = new Syncfusion.EJ2.LinearGauge.LinearGaugeFont { FontFamily = "Segoe UI", Opacity = 1 };
+            }
+            <ejs-lineargauge id="linear1" load="gaugeLoad1" style="height:300px;">
+                <e-lineargauge-axes>
+                    <e-lineargauge-axis>
+                        <e-axis-line offset="30"></e-axis-line>
+                        <e-axis-labelstyle offset="30" font="labelFont"></e-axis-labelstyle>
+                        <e-axis-majorticks interval="10" color="#9e9e9e"></e-axis-majorticks>
+                    </e-lineargauge-axis>
+                </e-lineargauge-axes>
+            </ejs-lineargauge>
+        </div>
+        <div class="row">
+            <ejs-lineargauge id="linear2" load="gaugeLoad2" style="height:300px;">
+                <e-lineargauge-axes>
+                    <e-lineargauge-axis>
+                        <e-axis-line offset="30"></e-axis-line>
+                        <e-axis-labelstyle offset="30" font="labelFont"></e-axis-labelstyle>
+                        <e-axis-majorticks interval="10" color="#9e9e9e"></e-axis-majorticks>
+                    </e-lineargauge-axis>
+                </e-lineargauge-axes>
+            </ejs-lineargauge>
+        </div>
+        <div class="row">
+            <ejs-lineargauge id="linear3" load="gaugeLoad3" style="height:300px;">
+                <e-lineargauge-axes>
+                    <e-lineargauge-axis maximum="10">
+                        <e-axis-line offset="30"></e-axis-line>
+                        <e-axis-labelstyle  format="{value}k" offset="50" font="labelFont"></e-axis-labelstyle>
+                    </e-lineargauge-axis>
+                </e-lineargauge-axes>
+            </ejs-lineargauge>
+        </div>
+    </div>
+}
+<script>
+
+    var gauge;
+    window.gaugeLoad1 = function (args) {
+        @* custom code start *@
+        var theme = themeName ? themeName : 'Material';
+        args.gauge.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+        @* custom code end *@
+        if (window.gaugeLoaded)
+            return;
+        window.gaugeLoaded = true;
+        gauge = args.gauge;
+        gauge.container = {
+            width: 30,
+            border: {
+                width: 0
+            },
+            offset: 30
+        };
+        args.gauge.orientation = "Horizontal";
+        var axis = args.gauge.axes[0];
+
+        axis.pointers = [{
+            value: 10,
+            placement: 'Near',
+            offset: -60,
+            height: 10,
+            width: 10,
+            markerType: 'Triangle'
+        }];
+        axis.ranges = [
+            {
+                start: 0,
+                end: 10,
+                startWidth: 30,
+                endWidth: 30,
+                color: '#30b32d'
+            }
+        ]
+        var annotation = gauge.annotations[0];
+
+        annotation.content = '<div id="title" style="width:300px;"> <img style="float:left" src' + '="../styles/images/lineargauge/Exercise Tracking.svg"/><p style="font-size:18px;color:#4285F4;float:left;margin-left:12px;' + 'margin-top:3px">Exercise Tracking </p></div>';
+        annotation.axisIndex = 0;
+        annotation.axisValue = 0;
+        annotation.y = -180;
+        annotation.x = 150;
+        annotation.zIndex = '1';
+
+        args.gauge.annotations[1] = new ej.lineargauge.Annotation(args.gauge);
+        annotation = args.gauge.annotations[1];
+        annotation.propName = "annotations";
+        annotation.content = '<div id="running" style="width:100px;"><img style="height:25px;width:25px;float:left" src="../styles/images/lineargauge/Running.svg" /></span><p style="float:left;margin-left:10px;margin-top: 3px;">Running</p></div>';
+        annotation.axisIndex = 0;
+        annotation.axisValue = 0;
+        annotation.y = -130;
+        annotation.x = 50;
+        annotation.zIndex = '1';
+
+        args.gauge.annotations[2] = new ej.lineargauge.Annotation(args.gauge);
+        annotation = args.gauge.annotations[2];
+        annotation.propName = "annotations";
+        annotation.content = '<div id="pointerText" style="width:60px;"><p style="font-size:15px;color:#30b32d;">10 MPH</p></div>';
+        annotation.axisIndex = 0;
+        annotation.axisValue = 10;
+        annotation.y = -65;
+        annotation.zIndex = '1';
+        args.gauge.theme = (selectedTheme.charAt(0).toUpperCase() +
+            selectedTheme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+        if (args.gauge.theme.toLowerCase().indexOf('dark') > 1 || args.gauge.theme.toLowerCase() === 'highcontrast') {
+            args.gauge.annotations[1].content = '<div id="running" style="width:100px;"><img style="height:25px;width:25px;' +
+                'float:left" src="../styles/images/lineargauge/running1.svg" /></span><p style="float:left;margin-left:10px;margin-top: 3px;">Running</p></div>';
+        }
+
+    }
+
+    window.gaugeLoad2 = function (args) {
+        if (window.gaugeLoaded2)
+            return;
+        window.gaugeLoaded2 = true;
+        gauge = args.gauge;
+        gauge.container = {
+            width: 30,
+            border: {
+                width: 0
+            },
+            offset: -50
+        };
+        args.gauge.orientation = "Horizontal";
+        var axis = args.gauge.axes[0];
+
+        axis.pointers = [{
+            value: 28,
+            height: 10,
+            width: 10,
+            placement: 'Near',
+            offset: -60,
+            markerType: 'Triangle'
+        }];
+        axis.ranges = [
+            {
+                start: 0,
+                end: 28,
+                startWidth: 30,
+                endWidth: 30,
+                color: '#30b32d'
+            }
+        ];
+
+        var annotation = gauge.annotations[0];
+
+        annotation.content = '<div id="cycle" style="width:100px;"><img style="height:25px;width:25px;float:left" src="../styles/images/lineargauge/Cycling.svg" /></span><p style="float:left;margin-left:10px;margin-top: 5px;">Cycling</p></div>';
+        annotation.axisIndex = 0;
+        annotation.axisValue = 0;
+        annotation.y = -110;
+        annotation.x = 50;
+        annotation.zIndex = '1';
+
+        args.gauge.annotations[1] = new ej.lineargauge.Annotation(args.gauge);
+        annotation = args.gauge.annotations[1];
+        annotation.propName = "annotations";
+        annotation.content = '<div id="pointerText" style="width:60px;"><p style="font-size:15px;color:#30b32d;">28 MPH</p></div>';
+        annotation.axisIndex = 0;
+        annotation.axisValue = 28;
+        annotation.y = -70;
+        annotation.zIndex = '1';
+        args.gauge.theme = (selectedTheme.charAt(0).toUpperCase() +
+            selectedTheme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+        if (args.gauge.theme.toLowerCase().indexOf('dark') > 1 || args.gauge.theme.toLowerCase() === 'highcontrast') {
+            args.gauge.annotations[0].content = '<div id="cycle" style="width:100px;"><img style="height:25px;width:25px;' +
+                'float:left" src="../styles/images/lineargauge/cycling1.svg" /></span><p style="float:left;' +
+                'margin-left:10px;margin-top: 5px;">Cycling</p></div>';
+        }
+
+    }
+
+    window.gaugeLoad3 = function (args) {
+        if (window.gaugeLoaded3)
+            return;
+        window.gaugeLoaded3 = true;
+        gauge = args.gauge;
+        gauge.container = {
+            width: 30,
+            border: {
+                width: 0
+            },
+            offset: -90
+        };
+        args.gauge.orientation = "Horizontal";
+        var axis = args.gauge.axes[0];
+
+        axis.pointers = [{
+            value: 2,
+            height: 10,
+            width: 10,
+            placement: 'Near',
+            offset: -60,
+            markerType: 'Triangle'
+        }];
+        axis.ranges = [
+            {
+                start: 0,
+                end: 2,
+                startWidth: 30,
+                endWidth: 30,
+                color: '#30b32d'
+            }
+        ];
+
+        var annotation = gauge.annotations[0];
+
+        annotation.content = '<div id="walk" style="width:100px;"><img style="height:25px;width:25px;float:left" src="../styles/' +
+            'images/lineargauge/Walking.svg" /></span><p style="float:left;margin-left: 5px;margin-top: 2px;">Walking</p></div>';
+        annotation.axisIndex = 0;
+        annotation.axisValue = 0;
+        annotation.y = -120;
+        annotation.x = 50;
+        annotation.zIndex = '1';
+
+        args.gauge.annotations[1] = new ej.lineargauge.Annotation(args.gauge);
+        annotation = args.gauge.annotations[1];
+        annotation.propName = "annotations";
+        annotation.content = '<div id="pointerText" style="width:100px;"><p style="font-size:15px;color:#30b32d;">2000 Steps</p></div>';
+        annotation.axisIndex = 0;
+        annotation.axisValue = 2.2;
+        annotation.y = -65;
+        annotation.zIndex = '1';
+        args.gauge.theme = (selectedTheme.charAt(0).toUpperCase() +
+            selectedTheme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+        if (args.gauge.theme.toLowerCase().indexOf('dark') > 1 || args.gauge.theme.toLowerCase() === 'highcontrast') {
+            args.gauge.annotations[0].content = '<div id="walk" style="width:100px;"><img style="height:25px;width:25px;' +
+                'float:left" src="../styles/images/lineargauge/walking1.svg" /></span><p style="float:left;margin-left: 5px;margin-top: 2px;">Walking</p></div>';
+        }
+
+    
+    }
+</script>
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Data Sample in ASP.NET Core LinearGauge control. Explore here for more details."/>
+                }
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample illustrates exercise tracking of an athlete by using ranges, pointers, and annotation features available in linear gauge.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            This sample demonstrates the exercise tracking using ranges, pointer and annotation features in linear gauge. We have rendered
+            3 linear gauges in this sample for indicating running, cycling and walking.
+        </p>
+        <br>
+        <p>
+            More information about thermometer linear gauge can be found in this
+            <a target="_blank" href="http://ej2.syncfusion.com/documentation">documentation section</a>.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core LinearGauge Data Sample Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Data Sample in ASP.NET Core LinearGauge Control</h1>
+                }

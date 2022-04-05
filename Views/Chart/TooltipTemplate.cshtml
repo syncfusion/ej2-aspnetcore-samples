@@ -1,0 +1,112 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="control-section" align="center">
+        <ejs-chart id="container" load="window.onChartLoad" backgroundImage="./../scripts/chart/images/wheat.png" title="USA Wheat Production">
+            <e-chart-titlestyle color="#333333"></e-chart-titlestyle>
+            <e-chart-tooltipsettings enable="true" template="#Tooltip">
+            </e-chart-tooltipsettings>
+            <e-chart-chartarea>
+                <e-chartarea-border width="0"></e-chartarea-border>
+            </e-chart-chartarea>
+            <e-chart-primaryxaxis valueType="Category" edgeLabelPlacement="Shift">
+                <e-majorgridlines width="0"></e-majorgridlines>
+                <e-majorticklines width="0"></e-majorticklines>
+                <e-linestyle color="#EFEFEF"></e-linestyle>
+                <e-labelstyle color="white"></e-labelstyle>
+            </e-chart-primaryxaxis>
+            <e-chart-primaryyaxis rangePadding="None" title="Billion Bushels">
+                <e-titlestyle color="white"></e-titlestyle>
+                <e-linestyle width="0"></e-linestyle>
+                <e-labelstyle color="white"></e-labelstyle>
+                <e-majorgridlines color="#EFEFEF"></e-majorgridlines>
+                <e-majorticklines width="0"></e-majorticklines>
+            </e-chart-primaryyaxis>
+            <e-series-collection>
+                <e-series dataSource="ViewBag.dataSource" xName="xValue" yName="yValue" width="2" fill="#333333" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Line">
+                    <e-series-marker visible="true" height="10" width="10" fill="#C1272D">
+                    </e-series-marker>
+                </e-series>
+            </e-series-collection>
+        </ejs-chart>
+    </div>
+    @*custom code start*@
+    <script>
+        window.onChartLoad = function (args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "80%";
+        }
+    </script>
+    @*custom code end*@
+    <script id='Tooltip' type="text/x-template">
+        <div id="wrap">
+            <table style="width:100%;  border: 1px solid black;" class="table-borderless">
+                <tr>
+                    <th rowspan="2" style="background-color: #C1272D">
+                        <img src='./../scripts/chart/images/grain.png' />
+                    </th>
+                    <td style="height: 25px; width: 50px; background-color: #C1272D; font-size: 14px; color: #E7C554; font-weight: bold; padding-left: 5px">${y}</td>
+                </tr>
+                <tr>
+                    <td style="height: 25px; width: 50px; background-color: #C1272D; font-size: 18px; color: #FFFFFF; font-weight: bold; padding-left: 5px">${x}</td>
+                </tr>
+            </table>
+        </div>
+    </script>
+}
+@*custom code start*@
+@section Scripts {
+
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Tooltip Template in ASP.NET Core Chart control. Explore here for more details."/>
+                }
+@*custom code end*@
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample visualizes the USA Wheat Production data with default line series in the chart.
+            Data points are enhanced with marker and tooltip.
+        </p>
+    </div>
+}
+@section Description{
+    <div>
+        <p>
+            In this example, you can see how to render and configure the backgroundImage and tooltip template for the charts.
+            You can use <code>backgroundImage</code>, <code>tooltip</code>, and <code>fill</code> properties to customize the line.
+            <code>marker</code> is used to represent individual data and its value.
+        </p>
+        <p>
+            Tooltip is enabled in this example. To see the tooltip in action, hover a point or tap on a point in touch
+            enabled devices.
+        </p>
+    </div>
+}
+<style>
+    #control-container {
+        padding: 0px !important;
+    }
+
+    #templateWrap img {
+        border-radius: 0px;
+        width: 24px;
+        padding: 4px;
+        height: 24px;
+    }
+
+    #templateWrap .des {
+        float: right;
+        padding: 2px;
+        line-height: 20px;
+        text-align: center;
+    }
+</style>
+@section Title{
+                 <title>ASP.NET Core Chart Tooltip Template Example - Syncfusion Demos </title>
+             }
+@section Header{
+                <h1 class='sb-sample-text'>Example of Tooltip Template in ASP.NET Core Chart Control</h1>
+            }

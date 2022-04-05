@@ -1,0 +1,86 @@
+@using Syncfusion.EJ2
+
+
+@section ControlsSection{
+    <div class="control-section">
+
+        <ejs-treegrid id="TreeGrid" hasChildMapping="isParent" idMapping="TaskID" height="400" parentIdMapping="parentItem" treeColumnIndex="1" allowPaging="true">
+            <e-data-manager url="http://localhost:62928/api/SelfReferenceData" adaptor="WebApiAdaptor" crossDomain="true"></e-data-manager>
+            <e-treegrid-columns>
+                <e-treegrid-column field="TaskID" headerText="Task ID" textAlign="Right" width="120"></e-treegrid-column>
+                <e-treegrid-column field="TaskName" headerText="Task Name" width="150"></e-treegrid-column>
+                <e-treegrid-column field="StartDate" headerText=" Start Date" textAlign="Right" format="yMd" type="date" width="120"></e-treegrid-column>
+                <e-treegrid-column field="EndDate" headerText=" End Date" textAlign="Right" format="yMd" type="date" width="120"></e-treegrid-column>
+                <e-treegrid-column field="Duration" headerText="Duration" textAlign="Right" width="110"></e-treegrid-column>
+                <e-treegrid-column field="Progress" headerText="Progress" textAlign="Right" width="110"></e-treegrid-column>
+            </e-treegrid-columns>
+        </ejs-treegrid>
+
+    </div>
+}
+
+@*custom code start*@
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Remote Data in ASP.NET Core TreeGrid control. Explore here for more details."/>
+                }
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the way of binding remote services to TreeGrid component. Here, the DataManager is used to bind the remote data with TreeGrid.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            TreeGrid can be bound to remote services by assigning the <code>dataSource</code> property with the instance of <code>
+                DataManager
+            </code>.
+        </p>
+
+        <p>
+            The DataManager, which will act as an interface between the service endpoint and the TreeGrid, will require the below minimal information to interact with service endpoint properly.
+        </p>
+        <ul>
+            <li><code>DataManager->url</code> - Defines the service endpoint to fetch data</li>
+            <li>
+                <code>DataManager->adaptor</code> - Defines the adaptor option. By default, <code>ODataAdaptor</code> is used
+                for remote binding.
+            </li>
+        </ul>
+        <p>
+            Adaptor is responsible for processing response and request from/to the service endpoint.
+            Some predefined adaptors which are designed to interact with
+            particular service endpoints are,
+        </p>
+        <ul>
+            <li>
+                <code>UrlAdaptor</code> - Use this to interact any remote services. This is the base adaptor for all remote based
+                adaptors.
+            </li>
+            <li><code>ODataAdaptor</code> - Use this to interact with OData endpoints.</li>
+            <li><code>ODataV4Adaptor</code> - Use this to interact with OData V4 endpoints.</li>
+            <li><code>WebApiAdaptor</code> - Use this to interact with Web API created under OData standards.</li>
+            <li><code>WebMethodAdaptor</code> - Use this to interact with web methods.</li>
+        </ul>
+        <p>
+            In this demo, remote data is bound by assigning service data using <code>DataManager</code>.
+        </p>
+        <br />
+
+        <p>
+            More information on the data binding can be found in this documentation section.
+        </p>
+    </div>
+}
+
+@*custom code end*@
+@section Title{
+                    <title>ASP.NET Core TreeGrid Remote Data Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Remote Data in ASP.NET Core TreeGrid Control</h1>
+                }

@@ -1,0 +1,109 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="control-section col-lg-9" align='center'>
+        <ejs-chart id="container" title="Internet Users – 2016" load="load">
+            <e-chart-tooltipsettings enable="true" shared="true">
+            </e-chart-tooltipsettings>
+            <e-chart-primaryxaxis valueType="Category"
+                                  interval=1
+                                  isIndexed=true>
+                <e-crosshairtooltip enable="true"></e-crosshairtooltip>
+            </e-chart-primaryxaxis>
+            <e-chart-primaryyaxis title="GDP Growth Rate"
+                                  labelFormat="{value}%"></e-chart-primaryyaxis>
+            <e-chart-crosshairsettings enable=true lineType="Vertical"></e-chart-crosshairsettings>
+            <e-series-collection>
+                <e-series dataSource="ViewBag.dataSource" name="2015" xName="x" width="2" opacity="1" yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                    <e-series-marker visible="false" height="10" width="10"></e-series-marker>
+                </e-series>
+                <e-series dataSource="ViewBag.dataSource2" name="2016" xName="x" width="2" opacity="1" yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                    <e-series-marker visible="false" height="10" width="10"></e-series-marker>
+                </e-series>
+            </e-series-collection>
+        </ejs-chart>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties" style="width: 100%">
+            <tbody>
+                <tr style="height: 50px">
+                    <td style="width: 50%">
+                        <div>
+                            Indexed:
+                        </div>
+                    </td>
+                    <td style="width: 50%;">
+                        <div>
+                            <input type="checkbox" id="isIndexed" checked="">
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+    @*custom code start*@
+        function load(args) {
+            var indexedTheme = location.hash.split('/')[1];
+            indexedTheme = indexedTheme ? indexedTheme : 'Material';
+            args.chart.theme = (indexedTheme.charAt(0).toUpperCase() + indexedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+        }
+    @*custom code end*@    
+        document.getElementById('isIndexed').onchange = () => {
+            var element = (document.getElementById('isIndexed'));
+            var chart = document.getElementById('container').ej2_instances[0]
+            chart.primaryXAxis.isIndexed = element.checked;
+            if (chart.primaryXAxis.isIndexed) {
+                chart.series[0].type = 'Column';
+                chart.series[1].type = 'Column';
+                chart.series[0].marker.visible = false;
+                chart.series[1].marker.visible = false;
+                chart.primaryXAxis.labelRotation = 0;
+                chart.crosshair.line.width = 1;
+            } else {
+                chart.series[0].type = 'Line';
+                chart.series[1].type = 'Line';
+                chart.series[0].marker.visible = true;
+                chart.series[1].marker.visible = true;
+                chart.primaryXAxis.labelRotation = 90;
+                chart.crosshair.line.width = 0;
+            }
+            chart.refresh();
+        };
+    </script>
+
+}
+@*custom code start*@
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Indexed Category Axis in ASP.NET Core Chart control. Explore here for more details."/>
+                }
+@*custom code end*@
+@section ActionDescription{
+
+    <div id="action-description">
+        <p>
+            In this example, you can see how to indexed axis in chart. For indexed category axis you can use <code>isIndexed</code> property.
+        </p>
+    </div>
+}
+@section Description {
+    <div id="description">
+    <p>
+        In this example, you can see how to indexed axis in chart. For indexed category axis you can use <code>isIndexed</code> property.
+    </p>
+    <p>
+        Hover the chart area to view trackball and its tooltip. Touch and hold to enable trackball in touch enabled devices.
+    </p>
+    <p>
+        More information on the indexed axis can be found in this &nbsp;
+        <a target="_blank" href="http://ej2.syncfusion.com/react/documentation/chart/api-series.html#type-chartseriestype">documentation section</a>.
+    </p>
+    </div>
+
+}
+@section Title{
+                 <title>ASP.NET Core Chart Indexed Category Axis Example - Syncfusion Demos </title>
+             }
+@section Header{
+                <h1 class='sb-sample-text'>Example of Indexed Category Axis in ASP.NET Core Chart Control</h1>
+            }

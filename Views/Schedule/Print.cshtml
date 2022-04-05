@@ -1,0 +1,128 @@
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+    <div class="col-lg-9 control-section">
+        <div class="schedule-wrapper">
+            <ejs-schedule id="schedule" width="100%" height="650px" selectedDate="new DateTime(DateTime.Today.Year, 1, 10)">
+                <e-schedule-eventsettings dataSource="@ViewBag.appointments"></e-schedule-eventsettings>
+            </ejs-schedule>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id='property' title='Properties' class='property-panel-table'>
+            <tbody>
+                <tr style="height: 50px">
+                    <td>
+                        <ejs-checkbox id="printWithOptionsElement" labelPosition="Before" label="Print with options" change="onChange"></ejs-checkbox>
+                    </td>
+                </tr>
+                <tr class="e-height-row e-hide-row">
+                    <td>
+                        <ejs-dropdownlist id="heightElement" placeholder="Height" floatLabelType="Always" dataSource="@ViewBag.printHeightAndWidthData" index="0"></ejs-dropdownlist>
+                    </td>
+                </tr>
+                <tr class="e-width-row e-hide-row">
+                    <td>
+                        <ejs-dropdownlist id="widthElement" placeholder="Width" floatLabelType="Always" dataSource="@ViewBag.printHeightAndWidthData" index="0"></ejs-dropdownlist>
+                    </td>
+                </tr>
+                <tr class="e-selected-date-row e-hide-row">
+                    <td>
+                        <ejs-datepicker id="selectedDateElement" placeholder="Selected date" floatLabelType="Always" value="new DateTime(DateTime.Today.Year, 1, 10)"></ejs-datepicker>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 15px; text-align: center">
+                        <ejs-button id="print-btn" cssClass="e-print-btn" iconCss="e-icons e-print" content="Print"></ejs-button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <style>
+        /* custom code start*/
+        .property-panel-table .e-checkbox-wrapper {
+            padding: 0;
+        }
+
+        .property-panel-table td {
+            padding-bottom: 1rem;
+        }
+        /* custom code end*/
+
+        .e-schedule-toolbar .e-toolbar-item.e-today,
+        .e-hide-row {
+            display: none;
+        }
+
+        .e-schedule .e-schedule-toolbar .e-toolbar-items .e-toolbar-item.e-separator {
+            display: none;
+        }
+    </style>
+
+    <script type="text/javascript">
+        function onChange(args) {
+            var classList = ['.e-height-row', '.e-width-row', '.e-selected-date-row'];
+            for (var i = 0; i < classList.length; i++) {
+                var element = document.querySelector(classList[i]);
+                if (args.checked) {
+                    element.classList.remove('e-hide-row');
+                } else {
+                    element.classList.add('e-hide-row');
+                }
+            }
+        }
+
+        document.getElementById("print-btn").addEventListener("click", function () {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            var printWithOptions = document.getElementById('printWithOptionsElement').ej2_instances[0];
+            if (printWithOptions.checked) {
+                var heightObj = document.getElementById('heightElement').ej2_instances[0];
+                var widthObj = document.getElementById('widthElement').ej2_instances[0];
+                var selectedDateObj = document.getElementById('selectedDateElement').ej2_instances[0];
+                var printOptions = {
+                    height: heightObj.value,
+                    width: widthObj.value,
+                    selectedDate: selectedDateObj.value
+                };
+                scheduleObj.print(printOptions);
+            } else {
+                scheduleObj.print();
+            }
+        })
+    </script>
+}
+
+@*custom code start*@
+@section Meta{
+    <meta name="description" content="This example demonstrates the Print in ASP.NET Core Schedule control. Explore here for more details." />
+}
+@*custom code end*@
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This example demonstrates how to print the Scheduler element at client-side.</p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>In this example, the Scheduler element is Printed by making use of the public method<code>print</code>.</p>
+        <p>
+            Also, we can print the schedule based on the custom rendering by passing the <code>ScheduleModel</code> in the <code>print</code> method.
+            In the above demo, we have demonstrated the <code>print</code> method with the below properties of the <code>ScheduleModel</code>.
+        </p>
+        <ul>
+            <li>height</li>
+            <li>width</li>
+            <li>selectedDate</li>
+        </ul>
+    </div>
+}
+@section Title{
+    <title>ASP.NET Core Schedule Print Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Print in ASP.NET Core Schedule Control</h1>
+}

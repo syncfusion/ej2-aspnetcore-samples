@@ -1,0 +1,153 @@
+@{
+    ViewData["Title"] = "Ticks";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using Syncfusion.EJ2
+@section ControlsSection{
+        <div class="col-lg-8 control-section">
+            <div class="content-wrapper">
+                <div class="sliderwrap">
+                    <label class="userselect">Default Slider</label>
+                    <ejs-slider id="default" min="0.1" max="0.9" value="0.3" step="0.05">
+                        <e-slider-ticksdata placement=Before showSmallTicks="true" largeStep="0.2" smallStep="0.05"></e-slider-ticksdata>
+                    </ejs-slider>
+                </div>
+                <div class="sliderwrap">
+                    <label class="userselect">Range Slider</label>
+                    <ejs-slider id="range" min="10" max="90" step="5" type="Range" value=ViewBag.rangeValue>
+                        <e-slider-ticksdata placement=Before showSmallTicks="true" largeStep="20" smallStep="5"></e-slider-ticksdata>
+                    </ejs-slider>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 property-section">
+            <table id="property" title="Properties">
+                <tbody>
+                    <tr>
+                        <td style="width: 50%">
+                            <div class="userselect">Placement</div>
+                        </td>
+                        <td style="width: 50%;padding-right: 10px">
+                            <div>
+                                <ejs-dropdownlist id="drop" placeholder="Ticks position" dataSource="@ViewBag.placement" index="0" change="onPlacementChange" popupHeight="200">
+                                </ejs-dropdownlist>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%">
+                            <div class="userselect">Disabled</div>
+                        </td>
+                        <td style="width: 50%;padding-right: 10px">
+                            <div style="padding-left: 0;padding-top: 0">
+                                <ejs-checkbox id="disabled" checked="false" change="enableDisableTooltip" ></ejs-checkbox>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+}
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Ticks in ASP.NET Core Slider control. Explore here for more details."/>
+                }
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the rendering of Slider component with ticks placement. Drag the thumb over the bar for selecting
+            the values between min and max.
+        </p>
+
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            The ticks are the visual representation of the Slider values. The ticks are differentiated as small and large ticks based
+            on its size. The ticks position can be defined by the
+            <a target="_blank" href="http://ej2.syncfusion.com/documentation/slider/api-ticksData.html?lang=es6#smallstep-number">smallStep</a> and
+            <a target="_blank" href="https://ej2.syncfusion.com/documentation/api/slider/ticksData/#largestep">largeStep </a>properties.
+        </p>
+        <p> In this demo, ticks position with default and range Slider is demonstrated.</p>
+        <ul>
+            <li>Default Slider – In this sample, the small and large ticks are rendered with the frequency of 0.05 and 0.20.</li>
+            <li>Range Slider – In this sample, the small and large ticks are rendered with the frequency of 5 and 20.</li>
+        </ul>
+        <p> The ticks placement of Slider and disable Slider component from the property pane can also be changed.</p>
+        <p>The following properties are used to restrict the value range for the slider:</p>
+        <ul>
+            <li>
+                <a target="_blank" href="http://ej2.syncfusion.com/documentation/slider/api-slider.html?lang=es6#step-string---number">step </a> - defines incremental or decremental step value for slider.
+            </li>
+            <li>
+                <a target="_blank" href="http://ej2.syncfusion.com/documentation/slider/api-slider.html?lang=es6#min-string---number">min </a> – specifies minimum value of the slider.
+            </li>
+            <li>
+                <a target="_blank" href="http://ej2.syncfusion.com/documentation/slider/api-slider.html?lang=es6#max-string---number">max </a> – to specifies maximum value of the slider.
+            </li>
+        </ul>
+        <p>
+            For more information, refer to the
+            <a target="_blank" href="http://ej2.syncfusion.com/aspnet-core/documentation/slider/ticks.html?syntax=tag">ticks</a> section from the documentation.
+        </p>
+
+    </div>
+}
+
+
+<style>
+    .content-wrapper {
+        width: 52%;
+        margin: 0 auto;
+        min-width: 185px;
+    }
+
+    .sliderwrap {
+        margin-top: 45px;
+    }
+
+    .e-bigger .content-wrapper {
+        width: 80%;
+    }
+
+    .sliderwrap label {
+        padding-bottom: 50px;
+        font-size: 13px;
+        font-weight: 500;
+        margin-top: 15px;
+    }
+
+    .userselect {
+        -webkit-user-select: none; /* Safari 3.1+ */
+        -moz-user-select: none; /* Firefox 2+ */
+        -ms-user-select: none; /* IE 10+ */
+        user-select: none; /* Standard syntax */
+    }
+</style>
+<script type="text/javascript">
+    function onPlacementChange(args) {
+        defaultTicks = document.getElementById("default")
+        defaultTicks.ej2_instances[0].ticks.placement = args.value;
+        rangeTicks = document.getElementById("range")
+        rangeTicks.ej2_instances[0].ticks.placement = args.value;
+    }
+
+    function enableDisableTooltip(args) {
+        defaulttooltip = document.getElementById("default")
+        defaulttooltip.ej2_instances[0].enabled = !args.checked;
+        rangetooltip = document.getElementById("range")
+        rangetooltip.ej2_instances[0].enabled = !args.checked;
+    }
+</script>
+@section Title{
+                    <title>ASP.NET Core Slider Ticks Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Ticks in ASP.NET Core Slider Control</h1>
+                }

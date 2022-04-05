@@ -1,0 +1,83 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="col-lg-8 control-section">
+        <div class="control-wrapper">
+            <div style='padding-top:70px;'>
+                <ejs-combobox id="games" dataSource="@ViewBag.data" placeholder="Select a game" index="2" popupHeight="230px" change="valueChange">
+                    <e-combobox-fields text="Game" value="Id"></e-combobox-fields>
+                </ejs-combobox>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 property-section">
+        <table id="property" title="Properties" style="width: 100%; margin:10px">
+            <tr>
+                <td class="left-side">Value</td>
+                <td>:<span id='value' class="right-side"></span></td>
+            </tr>
+            <tr>
+                <td class="left-side">Text</td>
+                <td>:<span id='text' class="right-side"></span></td>
+            </tr>
+        </table>
+    </div>
+    @*custom code start*@
+    <style>
+        .control-wrapper {
+            margin: 0 auto;
+            width: 300px;
+        }
+
+        .property-section .right-side {
+            padding-left: 10px;
+        }
+
+        .property-section .left-side {
+            padding: 5px;
+            width: 25%
+        }
+    </style>
+    @*custom code end*@
+    <script>
+        function valueChange() {
+            var games = document.getElementById('games').ej2_instances[0];
+            var value = document.getElementById('value');
+            var text = document.getElementById('text');
+            value.innerHTML = games.value === null ? 'null' : games.value.toString();
+            text.innerHTML = games.text === null ? 'null' : games.text.toString();
+        }
+    </script>
+}
+@section Scripts{
+    <script>
+        valueChange();
+    </script>
+
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Default Functionalities in ASP.NET Core ComboBox control. Explore here for more details."/>
+                }
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the default functionalities of the ComboBox in ASP.NET CORE application. Type a character in the ComboBox element or click the drodown icon to choose an item from the <code>options</code> list.
+            The selected item's <code>value</code> and <code>text</code> property values will be shown in the property panel.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>The <code>ComboBox</code> component allows the user to type a value, or choose an option from the list of predefined options.</p>
+        <p>
+            More information on the ComboBox instantiation can be found in the
+            <a href="https://ej2.syncfusion.com/aspnetcore/documentation/combo-box/getting-started/" target="_blank"> documentation section</a>.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core ComboBox Default Functionalities Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Default Functionalities in ASP.NET Core ComboBox Control</h1>
+                }

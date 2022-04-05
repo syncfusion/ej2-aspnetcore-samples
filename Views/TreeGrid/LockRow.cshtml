@@ -1,0 +1,157 @@
+@using Syncfusion.EJ2
+
+
+@section ControlsSection{
+
+    <div class="col-lg-9 control-section">
+        <div class="control-wrapper">
+            <div class="control-section">
+                @{
+                    var dict = new Dictionary<string, object>();
+                    dict.Add("number", true);
+                    dict.Add("min", 0);
+                    var dropValue = new List<int>() { 2, 6 };
+                }
+                <ejs-treegrid id="TreeGrid" dataSource="ViewBag.dataSource" allowPaging="true" height="350" enableHover="false" childMapping="Children"
+                    rowDataBound="onrowDataBound" beginEdit="onBeginEdit"
+                    treeColumnIndex="1" toolbar="@(new List<string>() { "Edit", "Update", "Cancel" })">
+                    <e-treegrid-pagesettings pageSize="2" pageSizeMode="Root" />
+                    <e-treegrid-editsettings allowEditing="true" allowAdding="true" mode="Row"></e-treegrid-editsettings>
+                    <e-treegrid-columns>
+                        <e-treegrid-column field="TaskId" headerText="Task ID" isPrimaryKey="true" validationRules="@(new { required=true, number=true})" textAlign="Right" width="100"></e-treegrid-column>
+                        <e-treegrid-column field="TaskName" headerText="Task Name" validationRules="@(new { required=true})" editType="stringedit" width="210"></e-treegrid-column>
+                        <e-treegrid-column field="StartDate" headerText=" Start Date" validationRules="@(new { date=true})" editType="datepickeredit" textAlign="Right" format="yMd" type="date" width="165"></e-treegrid-column>
+                        <e-treegrid-column field="Duration" headerText="Duration" validationRules="@(dict)" editType="numericedit" textAlign="Right" edit="@(new{@params=new{format="n"}})" width="120"></e-treegrid-column>
+                    </e-treegrid-columns>
+                </ejs-treegrid>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties" style="width: 100%">
+            <tr style="height: 50px">
+                <td>
+                    <div style="width: 42px;padding-left: 1px">Disable Rows</div>
+                </td>
+                <td style="width: 90%;padding-right: 10px">
+                    <div id='columnddl'>
+                        <ejs-multiselect id="DisableRows" width="155px" popupHeight="350px" select="onChange" removed="onRemove" dataSource="ViewBag.dropdata" value=@(dropValue)
+                                         showDropDownIcon="true" mode="CheckBox">
+                            <e-multiselect-fields text="text" value="value"></e-multiselect-fields>
+                        </ejs-multiselect>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        function onChange(e) {
+            var treeGridObj = document.getElementById("TreeGrid").ej2_instances[0];
+            treeGridObj.refresh();
+        }
+        function onRemove() {
+            var treeGridObj = document.getElementById("TreeGrid").ej2_instances[0];
+            treeGridObj.refresh();
+        }
+        function onrowDataBound(args) {
+            var treeGridObj = document.getElementById("TreeGrid").ej2_instances[0];
+            var dropdownObj = document.getElementById("DisableRows").ej2_instances[0];
+            if (dropdownObj.value.indexOf(args.data['TaskId'].toString()) !== -1 || dropdownObj.value.indexOf(args.data['TaskId']) !== -1)
+                ejs.base.addClass([args.row], 'disableRow');
+            else
+                ejs.base.removeClass([args.row], 'disableRow');
+        }
+        function onBeginEdit(args) {
+            var dropdownObj = document.getElementById("DisableRows").ej2_instances[0];
+            if (dropdownObj.value.indexOf(args.rowData['TaskId'].toString()) !== -1 || dropdownObj.value.indexOf(args.rowData['TaskId']) !== -1)
+                args.cancel = true;
+        }
+    </script>
+    <style>
+        .material .disableRow .e-rowcell{
+        color: rgba(0, 0, 0, .38) !important;
+    }
+    </style>
+
+    @*custom code start*@
+
+    <style>
+    .material-dark .disableRow .e-rowcell{
+        color: #757575 !important;
+    }        
+    .fabric .disableRow .e-rowcell{
+        color: #c8c8c8 !important;
+    }
+    .fabric-dark .disableRow .e-rowcell{
+        color: #757575 !important;
+    }    
+    .bootstrap .disableRow .e-rowcell{
+        color: rgba(0, 0, 0, .35) !important;
+    }
+    .bootstrap-dark .disableRow .e-rowcell{
+        color: #757575 !important;
+    }
+    .bootstrap4 .disableRow .e-rowcell{
+        color: rgba(0, 0, 0, .35) !important;
+    }
+    .highcontrast .disableRow .e-rowcell{
+        color: #757575 !important;
+    }
+    .tailwind .disableRow .e-rowcell{
+        color: #757575 !important;
+    }
+    .tailwind-dark .disableRow .e-rowcell{
+        color: #757575 !important;
+    }
+    .bootstrap5 .disableRow .e-rowcell{
+        color: rgba(0, 0, 0, .35) !important;
+    }
+    .bootstrap5-dark .disableRow .e-rowcell{
+        color: #757575 !important;
+    }
+    </style>
+
+    @*custom code end*@
+
+}
+
+@*custom code start*@
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Lock Row in ASP.NET Core TreeGrid control. Explore here for more details."/>
+                }
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This samples demonstrates the way of preventing editing for certain row and disable the locked rows to differentiate edit and non-editable rows in TreeGrid.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            The TreeGrid supports CRUD operations. This CRUD operations can be configured in TreeGrid using <code>editSettings</code>. Also, it has different modes to manipulate the datasource.
+        </p>
+        <p>
+            The available modes are,
+        </p>
+        <ul>
+            <li><code>Row </code></li>
+            <li><code>Cell</code></li>
+            <li><code>Dialog</code></li>
+        </ul>
+        <p>
+            In this sample, we have provided an option in property panel to prevent editing for certain rows. Using <code>beginEdit</code>  event of treegrid, we prevent the editing for selected Task ID row in the dropdown and disable the corresponding row using <code>rowDataBound</code> event of TreeGrid.
+        </p>
+    </div>
+}
+
+@*custom code end*@
+@section Title{
+                    <title>ASP.NET Core TreeGrid Lock Row Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Lock Row in ASP.NET Core TreeGrid Control</h1>
+                }

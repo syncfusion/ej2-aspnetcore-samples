@@ -1,0 +1,73 @@
+@using Syncfusion.EJ2
+@using Newtonsoft.Json
+@section ControlsSection{
+    <div class="col-lg-12 control-section">
+        <div class="control-wrapper">
+            <div style='padding-top:70px;'>
+                <ejs-combobox id="employees" open="isCheckScroll" dataBound="isCheckScroll" dataSource="@ViewBag.data" cssClass="e-multi-column" filtering="onfiltering" allowFiltering="true" placeholder="Select an employee" popupHeight="400px"
+                              headerTemplate="@Html.Raw("<table><tr><th class=\"e-text-center\" style=\"width: 75px;\">Emp ID</th><th>First Name</th><th>Designation</th></tr></table>")"
+                              itemTemplate="@Html.Raw("<table><tbody><tr><td class=\"e-text-center\" style=\"width: 75px;\">${EmployeeID}</td><td>${FirstName}</td><td>${Designation}</td></tr> </tbody></table>")">
+                    <e-combobox-fields text="FirstName" value="EmployeeID"></e-combobox-fields>
+                </ejs-combobox>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function onfiltering(e) {
+            var query = new ej.data.Query().select(['FirstName', 'EmployeeID', 'Designation']);
+            var predicateQuery = query.where(new ej.data.Predicate('FirstName', 'contains', e.text, true).or('Designation', 'contains', e.text, true));
+            query = (e.text !== '') ? predicateQuery : query;
+            e.updateData(@Html.Raw(JsonConvert.SerializeObject(ViewBag.data)), query);
+            isCheckScroll.call(this);
+        }
+        function isCheckScroll() {
+            if (this.popupObj && this.popupObj.element && this.liCollections.length > 0) {
+                var offsetHeight = this.popupObj.element.querySelector('.e-content').offsetHeight;
+                var contentHight = (offsetHeight < this.liCollections[0].offsetHeight * this.liCollections.length);
+                (contentHight || offsetHeight === 0) ? this.popupObj.element.classList.add('e-scroller') : this.popupObj.element.classList.remove('e-scroller');
+            }
+        }
+    </script>
+
+    @*custom code start*@
+    <style>
+        .control-wrapper {
+            margin: 0 auto;
+            width: 400px;
+        }
+        @@media (max-width: 900px) {
+            .control-wrapper {
+                width: 300px;
+            }
+        }
+    </style>
+    @*custom code end*@
+
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Multi Column in ASP.NET Core ComboBox control. Explore here for more details."/>
+                }
+@section ActionDescription{
+    <div id="action-description">
+        <p>This sample demonstrates the Multicolumn ComboBox. Click/focus and type the character in the ComboBox to select an item from the multicolumn data.</p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            The ComboBox has an option to display the data in a multicolumn layout using the following templates.
+        </p>
+        <ul>
+            <li><b>Header Template</b> : Displays the column names in the grid layout header.</li>
+            <li><b>Item Template</b> : Binds the data value by row wise.</li>
+        </ul>
+    </div>
+
+}
+@section Title{
+                    <title>ASP.NET Core ComboBox Multi Column Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Multi Column in ASP.NET Core ComboBox Control</h1>
+                }

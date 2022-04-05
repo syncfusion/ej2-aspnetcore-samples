@@ -1,0 +1,100 @@
+﻿@using Syncfusion.EJ2
+
+@section ActionDescription{
+    This sample demonstrates exporting data from Excel to a data table, and import data from the data table to the Grid.
+}
+@section Meta{
+    <meta name="description" content="This sample demonstrates exporting data from Excel to a data table, and import data from the data table to the Grid using .NET Excel (XlsIO) library." />
+}
+@section Description{
+    The ImportDataTable and ExportDataTable methods makes it easier to work with ADO.NET data tables. It just takes one line of code to import data from data table to a Spreadsheet or export data from Spreadsheet to a data table.
+    <br />
+    <br />Features :
+    <br />
+    <ul>
+        <li>Usage of helper methods to work with ADO.NET</li>
+        <li>Import data from Spreadsheet to a data table</li>
+        <li>Export data from data table to Spreadsheet</li>
+        <li>Apply row and column styles</li>
+        <li>Export data from Spreadsheet to a data table by skipping specific rows, replacing cell values in the data table, and stop exporting</li>
+    </ul>
+    <br />
+}
+@section ControlsSection{
+    <div class="control-section">
+        @{Html.BeginForm("ImportExportDataTable", "Excel", FormMethod.Post);
+            <div class="rowdiv" style="float:left; width: 100%;">
+                <p style="font-weight:normal">
+                    Click the "Input Template" button to view the input Excel document.
+                </p>
+                <p style="font-weight:normal">
+                    Click the "Import from Excel" button to import data from Excel and view the data in the grid. Here, the data will be exported to a data table with customized options and imported to the grid.
+                </p>
+                <p style="font-weight:normal">
+                    Click the "Export to Excel" button to create a new Microsoft Excel document and export the data from the grid to an Excel workbook.
+                </p>
+                <p style="font-weight:normal">
+                    Note: You need to have a MS Excel Viewer installed in order to view the generated Excel file.
+                </p>
+                @Html.EJS().Grid("Export").AllowPaging(true).DataSource((System.Data.DataTable)ViewBag.dataSource).Columns(col =>
+                {
+                col.Field("CustomerID").HeaderText("Customer ID").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Left).Width("60").Add();
+                col.Field("CompanyName").HeaderText("Company Name").Width("80").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Left).Add();
+                col.Field("ContactName").HeaderText("ContactName").Width("70").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Left).Add();
+                col.Field("ContactTitle").HeaderText("ContactTitle").Width("70").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Left).Add();
+                col.Field("Address").HeaderText("Address").Width("100").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Left).Add();
+                col.Field("City").HeaderText("City").Width("60").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Left).Add();
+                }).Width("850").Height("250").Render()
+                <br />
+                <br />
+                <div class="celldiv">
+                    <div class="rowdiv" style="float:left; width: 40%;">
+                        <div>
+                            Import Options :
+                            <br /><br />
+                            <input type="radio" id="rdbtnskip" @ViewBag.importOptionSkip name="importOption" value="Skip" checked="checked" onchange="OptionChanged()" />
+                            <label for="rdbtnskip" style="font-weight:normal">Skip rows if "ContactTitle" is "Owner"</label>
+                            <br />
+                            <input type="radio" id="rdbtnreplace" @ViewBag.importOptionReplace name="importOption" value="Replace" onchange="OptionChanged()" />
+                            <label for="rdbtnreplace" style="font-weight:normal;align-content:center">Replace "México D.F." to "Mexico"</label>
+                            <br />
+                            <input type="radio" id="rdbtnstop" @ViewBag.importOptionStop name="importOption" value="Stop" onchange="OptionChanged()" />
+                            <label for="rdbtnstop" style="font-weight:normal">Stop importing if "CustomerID" is "BLONP"</label>
+                        </div>
+                    </div>
+                    <div style="float:left; width: 20%;">
+                        <div>
+                            Export As :
+                            <br /><br />
+                            <input type="radio" id="XLS" name="SaveOption" value="Xls" />
+                            <label for="XLS" style="font-weight:normal;vertical-align:central">XLS</label>
+                            <br />
+                            <input type="radio" id="XLSX" name="SaveOption" value="Xlsx" checked="checked" />
+                            <label for="XLSX" style="font-weight:normal">XLSX</label>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="rowdiv" style="float:left; width: 40%;">
+                            <input id="input" class="e-btn" type="submit" name="button" value="Input Template" style="width:162px; font-size:small; height:25px;text-transform:capitalize" /><br /><br />
+                            <input id="import" class="e-btn" type="submit" name="button" value="Import From Excel" style="width:162px; font-size:small; height:25px;text-transform:capitalize" /><br /><br />
+                            <input id="export" class="e-btn" @ViewBag.exportButtonState type="submit" name="button" value="Export To Excel" style="width:162px; font-size:small; height:25px;text-transform:capitalize" />
+                            <br /><br />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <script type="text/javascript">
+                function OptionChanged() {
+                    document.getElementById('export').setAttribute("disabled", "\disabled\"");
+                }
+            </script>
+        }
+    </div>
+}
+@section Title{
+    <title>ASP.NET Core Excel (XlsIO) library - Import/Export Data Table Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Import/Export Data table in ASP.NET Core Excel (XlsIO) Library</h1>
+}

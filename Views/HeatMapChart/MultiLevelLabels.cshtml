@@ -1,0 +1,131 @@
+@using Syncfusion.EJ2.HeatMap;
+@section ControlsSection{
+    @{
+        var textStyle = new { size = "15px", fontWeight = "500", fontStyle = "Normal" };
+        var xAxisLabel = new string[] {"Laptop", "Mobile", "Gaming", "Cosmetics", "Fragrance", "Watches", "Handbags", "Apparel",
+                "Kitchenware", "Furniture", "Home Decor" };
+        var yAxisLabel = new string[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+        var cellBorder = new
+        {
+            width = "0",
+        };
+        var yBorder = new
+        {
+            type = "Brace",
+            color = "#a19d9d"
+        };
+        var xAxisBorder = new
+        {
+            type = "Rectangle",
+            color = "#a19d9d",
+            width = 1
+        };
+        var xAxisTextStyle = new
+        {
+            color = "black",
+            fontWeight = "Bold"
+        };
+    }
+    <div class="control-section">
+        <div class="row">
+            <div class="col-md-12">
+                <ejs-heatmap id='container' load="window.onHeatmapLoad" tooltipRender="window.onHeatmapTooltipRender" cellRender="window.onHeatmapCellRender" dataSource="ViewBag.dataSource">
+                    <e-heatmap-titlesettings text="Product wise Monthly sales revenue for a e-commerce website" textStyle="textStyle">
+                    </e-heatmap-titlesettings>
+                    <e-heatmap-xaxis labels="xAxisLabel" border="ViewBag.AxisBorder">
+                        <e-xaxis-multilevellabels>
+                            <e-xaxis-multilevellabel border="xAxisBorder" textStyle="xAxisTextStyle" >
+                            </e-xaxis-multilevellabel>
+                        </e-xaxis-multilevellabels>
+                    </e-heatmap-xaxis>
+                    <e-heatmap-yaxis labels="yAxisLabel">
+                        <e-yaxis-multilevellabels>
+                            <e-yaxis-multilevellabel border="yBorder" textStyle="xAxisTextStyle"></e-yaxis-multilevellabel>
+                        </e-yaxis-multilevellabels>
+                        
+                    </e-heatmap-yaxis>
+                    <e-heatmap-palettesettings>
+                        <e-palettes>
+                            <e-palette color="#F0ADCE"></e-palette>
+                            <e-palette color="#19307B"></e-palette>
+                        </e-palettes>
+                    </e-heatmap-palettesettings>
+                    <e-heatmap-legendsettings visible="false"></e-heatmap-legendsettings>
+                    <e-heatmap-cellsettings border="cellBorder"></e-heatmap-cellsettings>
+                </ejs-heatmap>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        window.onHeatmapLoad = function (args) {
+            var selectedTheme = themeName ? themeName : 'Material';
+             args.heatmap.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+            selectedTheme = selectedTheme.toLowerCase();
+            args.heatmap.xAxis.multiLevelLabels[0].categories = [{ start: 0, end: 2, text: 'Electronics', },
+                { start: 3, end: 4, text: 'Beauty and personal care', },
+                { start: 5, end: 7, text: 'Fashion', },
+                { start: 8, end: 10, text: 'Household', }];
+            args.heatmap.yAxis.multiLevelLabels[0].categories = [{ start: 0, end: 2, text: 'Q1' },
+            { start: 3, end: 5, text: 'Q2' },
+            { start: 6, end: 8, text: 'Q3' },
+            { start: 9, end: 11, text: 'Q4' }
+            ];
+            if (selectedTheme === 'highcontrast'|| selectedTheme === 'tailwind-dark' || selectedTheme === 'material-dark' || selectedTheme === 'fabric-dark' || selectedTheme === 'bootstrap-dark' || selectedTheme === 'bootstrap5-dark') {
+                args.heatmap.xAxis.textStyle.color = 'White';
+                args.heatmap.yAxis.textStyle.color = 'White';
+                args.heatmap.xAxis.multiLevelLabels[0].textStyle.color = 'White';
+                args.heatmap.yAxis.multiLevelLabels[0].textStyle.color = 'White';
+            }
+            else {
+                args.heatmap.xAxis.textStyle.color = 'Black';
+                args.heatmap.yAxis.textStyle.color = 'Black';
+                args.heatmap.xAxis.multiLevelLabels[0].textStyle.color = 'Black';
+                args.heatmap.yAxis.multiLevelLabels[0].textStyle.color = 'Black';
+            }
+        }
+        window.onHeatmapTooltipRender = function (args) {
+            args.content = [args.xLabel + ' | ' + args.yLabel + ' : $ ' + (args.value / 10) + 'K'];
+        }
+        window.onHeatmapCellRender = function (args) {
+            args.displayText = '$ ' + (args.value / 10) + 'K';
+        }
+    </script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample visualizes the product wise monthly sales revenue of the items sold by an online retailer in a year.  The products are grouped based on the purchase domains and revenue is displayed as cell data.
+        </p>
+    </div>
+}
+@section Description{
+
+    <div id="description">
+        <p>
+            In this example, you can see how to group axis labels.
+            You can customize text in each level by using <code>alignment</code>, <code>textSytle</code> and <code>border</code> properties.
+        </p>
+        <p>
+            Border of the axis labels can be customized by using <code>type</code> property.
+        </p>
+        <ul>
+            <li><code>Rectangle</code></li>
+            <li><code>Brace</code></li>
+            <li><code>WithoutTopBorder</code></li>
+            <li><code>WithoutBottomBorder</code></li>
+            <li><code>WithoutTopandBottomBorder</code></li>
+            <li><code>withoutBorder</code>.</li>
+        </ul>
+        <br>
+    </div>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Multi Level Labels in ASP.NET Core HeatMap control. Explore here for more details."/>
+                }
+@section Title{
+                    <title>ASP.NET Core HeatMap Multi Level Labels Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Multi Level Labels in ASP.NET Core HeatMap Control</h1>
+                }

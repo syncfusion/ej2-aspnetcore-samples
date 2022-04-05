@@ -1,0 +1,377 @@
+@using Syncfusion.EJ2
+
+
+@section ControlsSection{
+    <div class="control-section">
+        <div class="control_wrapper">
+            <ejs-kanban id="Kanban" keyField="Category" dataSource="@ViewBag.data" dialogOpen="onDialogOpen" dialogClose="onDialogClose" created="onKanbanCreated">
+                <e-kanban-columns>
+                    <e-kanban-column headerText="Menu" keyField="Menu"></e-kanban-column>
+                    <e-kanban-column headerText="Order" keyField="Order"></e-kanban-column>
+                    <e-kanban-column headerText="Ready to Serve" keyField="Ready to Serve"></e-kanban-column>
+                    <e-kanban-column headerText="Delivered" keyField="Delivered,Served"></e-kanban-column>
+                </e-kanban-columns>
+
+                <e-kanban-cardsettings headerField="Id" template="#cardTemplate"></e-kanban-cardsettings>
+                <e-kanban-dialogsettings template="#dialogTemplate"></e-kanban-dialogsettings>
+            </ejs-kanban>
+        </div>
+    </div>
+    <script id='dialogTemplate' type="text/x-template">
+        <table>
+            <tbody>
+                <tr>
+                    <td class="e-label">ID</td>
+                    <td>
+                        <input id="Id" name="Id" type="text" class="e-field" value="${Id}" disabled required />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="e-label">Category</td>
+                    <td>
+                        <input type="text" name="Category" id="Category" class="e-field" value=${Category} required />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="e-label">Size</td>
+                    <td>
+                        <input type="text" name="Size" id="Size" class="e-field" value=${Size} />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="e-label">Title</td>
+                    <td>
+                        <input type="text" name="Title" id="Title" class="e-field" value=${Title} />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="e-label">Description</td>
+                    <td>
+                        <textarea type="text" name="Description" id="Description" class="e-field" value=${Description}>${Description}</textarea>
+                        <span class="e-float-line"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="e-label">Deliver</td>
+                    <td>
+                        <div id="datepicker-control">
+                            <input type="text" name="Date" id="datepicker" class="e-field" value=${Date} />
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </script>
+    <script id="cardTemplate" type="text/x-template">
+        <div class='card-template'>
+            <div class='card-template-wrap'>
+                <table class='card-template-wrap'>
+                    <colgroup>
+                        <col style="width:55px">
+                        <col>
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <td class='e-image'>
+                                <img src="../images/Kanban/${ImageURL}" alt="">
+                            </td>
+                            <td class='e-title'>
+                                <div class="e-card-stacked">
+                                    <div class='e-card-header'>
+                                        <div class='e-card-header-caption'>
+                                            <div class='e-card-header-title e-tooltip-text'>${Title}</div>
+                                        </div>
+                                    </div>
+                                    <div class="e-card-content" style="line-height:2.75em">
+                                        <table class='card-template-wrap'>
+                                            <tbody>
+                                                <tr class='e-tooltip-text'>
+                                                    ${if(Category =="Menu" || Category=="Order" || Category=="Ready to Serve")}
+                                                    <td colspan="2">
+                                                        <div class='e-description'>
+                                                            ${if(Category =="Menu")}
+                                                            ${Description}
+                                                            ${else}
+                                                            ${OrderID}
+                                                            ${/if}
+                                                        </div>
+                                                    </td>
+                                                    ${else}
+                                                    <td colspan="2"><div class='e-description'>${OrderID}</div></td>
+                                                    <td><span class='e-icons e-done'></span></td>
+                                                    ${/if}
+                                                </tr>
+                                                <tr>
+                                                    ${if(Category !="Menu")}
+                                                    ${if(Category =="Order")}
+                                                    <td><div class='e-preparingText e-tooltip-text'>Preparing</div></td>
+                                                    <td class='e-prepare'>
+                                                        <div class='e-time e-tooltip-text'>
+                                                            <div class='e-icons e-clock'></div><div class='e-mins'>15 mins</div>
+                                                        </div>
+                                                    </td>
+                                                    ${/if}
+                                                    ${if(Category =="Ready to Serve")}
+                                                    <td><div class='e-readyText e-tooltip-text'>Ready to Serve</div></td>
+                                                    <td class='e-prepare'>
+                                                        <div class='e-time e-tooltip-text'>
+                                                            <div class='e-icons e-clock'></div><div class='e-mins'>5 mins</div>
+                                                        </div>
+                                                    </td>
+                                                    ${/if}
+                                                </tr>
+                                                ${if(Category =="Delivered" || Category=="Served")}
+                                                <tr class="e-tooltip-text">
+                                                    <td colspan="2">
+                                                        <div class='e-tooltip-text'>
+                                                            <label class="e-date">Deliver:</label>
+                                                            <span class="e-kanban-date">${Date}</span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr class="e-tooltip-text">
+                                                    <td><div class='e-deliveredText e-tooltip-text'>Delivered</div></td>
+                                                </tr>
+                                                ${/if}
+                                                ${else}
+                                                <tr class="e-tooltip-text">
+                                                    <td><div class='e-size e-tooltip-text'>${Size}</div></td>
+                                                    <td><div class='e-price e-tooltip-text'>${Price}</div></td>
+                                                </tr>
+                                                ${/if}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </script>
+
+}
+@section PreScripts {
+    <script>
+        var kanbanObj;
+        var categoryData = ['Menu', 'Order', 'Ready to Serve', 'Delivered', 'Served'];
+        function onKanbanCreated() {
+            kanbanObj = this;
+        }
+        function onDialogOpen(args) {
+            if (args.requestType !== 'Delete') {
+                var curData = args.data;
+                var filledTextBox = new ej.inputs.TextBox({});
+                filledTextBox.appendTo(args.element.querySelector('#Id'));
+                var numericObj = new ej.inputs.NumericTextBox({
+                    value: curData.Estimate, placeholder: 'Estimate',
+                });
+                numericObj.appendTo(args.element.querySelector('#Estimate'));
+                var categoryDropObj = new ej.dropdowns.DropDownList({
+                    value: curData.Category, popupHeight: '300px',
+                    dataSource: categoryData, fields: { text: 'Category', value: 'Category' }, placeholder: 'Category'
+                });
+                categoryDropObj.appendTo(args.element.querySelector('#Category'));
+
+                var sizeObj = new ej.inputs.TextBox({
+                    placeholder: 'Size',
+
+                });
+                sizeObj.appendTo(args.element.querySelector('#Size'));
+                var titleObj = new ej.inputs.TextBox({
+                    placeholder: 'Title',
+
+                });
+                titleObj.appendTo(args.element.querySelector('#Title'));
+                var descriptionObj = new ej.inputs.TextBox({
+                    placeholder: 'Title',
+                    multiline: true
+
+                });
+                descriptionObj.appendTo(args.element.querySelector('#descriptionObj'));
+                var datepicker = new ej.calendars.DatePicker({
+                    value: curData.Date,
+                    format: 'MM/dd/yyyy'
+                });
+                datepicker.appendTo(args.element.querySelector('#datepicker'));
+            }
+        }
+        function onDialogClose(args) {
+            if (args.element.querySelector('#datepicker')) {
+                args.data.Date =
+                    args.element.querySelector('#datepicker').ej2_instances[0].value.toLocaleString('es-PR').split(" ")[0];
+            }
+
+        }
+    </script>
+
+}
+
+<style type="text/css">
+    .e-kanban .e-prepare,
+    .e-kanban .e-price {
+        text-align: right;
+    }
+
+    .e-kanban .e-card table {
+        table-layout: fixed;
+    }
+
+    .e-kanban .e-time {
+        display: inline-flex;
+    }
+
+    .e-kanban .e-size {
+        color: #b8860b
+    }
+
+    .e-kanban .e-date {
+        display: contents;
+    }
+
+    .e-kanban .e-kanban-date {
+        padding-left: 4px;
+    }
+
+    .e-kanban .e-mins {
+        padding-left: 3px;
+    }
+
+    .e-kanban .e-clock {
+        padding-top: 2px;
+    }
+
+        .e-kanban .e-clock::before {
+            content: '\e20c';
+            color: #ffa500;
+            font-size: 10px;
+        }
+
+    .e-kanban .e-done::before {
+        content: '\ea84';
+        color: #008000;
+        font-size: 16px;
+    }
+
+    .fabric .e-kanban .e-clock::before {
+        content: '\e97f';
+    }
+
+    .bootstrap .e-kanban .e-clock::before {
+        content: '\e93e';
+    }
+
+    .bootstrap4 .e-kanban .e-clock::before {
+        content: '\e7c7';
+    }
+
+    .bootstrap4 .e-kanban .e-done::before {
+        content: '\e7d9';
+    }
+
+    .highcontrast .e-kanban .e-clock::before {
+        content: '\e97f';
+    }
+
+    .e-kanban .card-template-wrap {
+        line-height: normal;
+        font-size: 12px;
+        width: 100%;
+    }
+
+        .e-kanban .card-template-wrap td {
+            background: none !important;
+            border: none !important;
+            height: auto !important;
+            line-height: 1.6;
+        }
+
+    .e-kanban .e-image img {
+        background: #ececec;
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+    }
+
+    .e-kanban .e-image {
+        padding-right: 5px;
+        padding-left: 10px;
+    }
+
+    .e-kanban .card-header {
+        font-size: 15px;
+        font-weight: 500;
+        display: inline-block;
+    }
+
+    .e-kanban .e-card .card-content {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .e-kanban .e-description {
+        padding-top: 5px;
+        padding-bottom: 10px;
+    }
+
+    .e-kanban .e-card .e-done {
+        padding-top: 5px;
+        padding-bottom: 10px;
+        position: absolute;
+        right: 15px;
+    }
+
+    .e-kanban .e-readyText {
+        color: #008000;
+    }
+
+    .e-kanban .e-preparingText {
+        color: #9ACD32;
+        animation: blinker 1.5s linear infinite;
+    }
+    .e-kanban-dialog .e-kanban-form-wrapper table .e-label, .e-kanban-dialog .e-kanban-form-container table .e-label {
+        width: 80px;
+    }
+
+    .e-kanban .e-deliveredText {
+        padding-top: 5px;
+        color: #ff0000;
+    }
+
+    @@keyframes blinker {
+        50% {
+            opacity: 0.5;
+        }
+    }
+</style>
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates how to customize the Kanban cards using templates. In this demo, the cards are
+            customized with
+            icons, images, and tags.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            You can customize the default design of the Kanban cards using templates. This can be achieved using the
+            <code>CardSettings</code> -> <code>Template</code> property, which accepts the string or HTML element`s ID
+            value.
+        </p>
+        <p>In this demo, all the cards are customized with templating as text, images, and tags.</p>
+    </div>
+}
+
+@section Meta{
+    <meta name="description" content="This example demonstrates the Card Template in ASP.NET Core Kanban control. Explore here for more details." />
+}
+@section Title{
+    <title>ASP.NET Core Kanban Card Template Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Card Template in ASP.NET Core Kanban Control</h1>
+}

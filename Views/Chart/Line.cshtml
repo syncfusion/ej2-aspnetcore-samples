@@ -1,0 +1,85 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="control-section" align="center">
+        <ejs-chart id="container" load="window.onChartLoad" title="Inflation - Consumer Price">
+            <e-chart-tooltipsettings enable="true">
+            </e-chart-tooltipsettings>
+            <e-chart-primaryxaxis valueType="DateTime"
+                                  labelFormat="y"
+                                  intervalType="Years"
+                                  edgeLabelPlacement="Shift">
+                <e-majorgridlines width="0"></e-majorgridlines>
+            </e-chart-primaryxaxis>
+            <e-chart-primaryyaxis labelFormat="{value}%"
+                                  rangePadding="None"
+                                  minimum=0
+                                  maximum=100
+                                  interval=20>
+                <e-linestyle width="0"></e-linestyle>
+                <e-majorticklines width="0"></e-majorticklines>
+            </e-chart-primaryyaxis>
+            <e-chart-chartarea>
+                <e-chartarea-border width="0"></e-chartarea-border>
+            </e-chart-chartarea>
+            <e-series-collection>
+                <e-series dataSource="ViewBag.dataSource" name="Germany" xName="xValue" width="2" opacity="1" yName="yValue" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Line">
+                    <e-series-marker visible="true" height="10" width="10"></e-series-marker>
+                </e-series>
+                <e-series dataSource="ViewBag.dataSource" name="England" xName="xValue" width="2" opacity="1" yName="yValue1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Line">
+                    <e-series-marker visible="true" height="10" width="10"></e-series-marker>
+                </e-series>
+            </e-series-collection>
+        </ejs-chart>
+    </div>
+    @*custom code start*@
+    <script>
+        window.onChartLoad = function (args) {
+            var selectedTheme = themeName ? themeName : 'Material';
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "60%";
+        }
+    </script>
+    @*custom code end*@
+}
+@*custom code start*@
+@section Scripts {
+
+}
+
+
+<style>
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Line in ASP.NET Core Chart control. Explore here for more details."/>
+                }
+@*custom code end*@
+@section ActionDescription{
+    <p>
+        This sample visualizes the consumer price data with default line series in the chart.
+        Data points are enhanced with marker and tooltip
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can see how to render and configure the line type charts. Line type charts are used to represent time-dependent data, showing trends in data at equal intervals.
+        You can use <code>dashArray</code>, <code>width</code>, <code>fill</code> properties to customize the line. <code>marker</code> and <code>dataLabel</code> are used to represent individual data and its value.
+    </p>
+    <p>
+        Tooltip is enabled in this example, to see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+    </p>
+    <br>
+
+    <p>
+        More information on the line series can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/documentation/api/chart/series/#type">documentation section</a>.
+    </p>
+}
+@section Title{
+                 <title>ASP.NET Core Chart Line Example - Syncfusion Demos </title>
+             }
+@section Header{
+                <h1 class='sb-sample-text'>Example of Line in ASP.NET Core Chart Control</h1>
+            }

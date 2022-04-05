@@ -1,0 +1,193 @@
+@using Syncfusion.EJ2.PivotView
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Selection in ASP.NET Core Pivot Table control. Explore here for more details."/>
+                }
+@section ControlsSection{
+
+    <div class="col-lg-8 control-section" style="overflow:auto">
+        <div class="content-wrapper">
+            <ejs-pivotview id="pivotview" width="100%" height="400" load="onLoad" cellSelected="onCellSelected" showTooltip="false">
+                <e-datasourcesettings dataSource="@ViewBag.data" expandAll="true" enableSorting="true">
+                    <e-rows>
+                        <e-field name="Country"></e-field>
+                        <e-field name="Products"></e-field>
+                    </e-rows>
+                    <e-columns>
+                        <e-field name="Year"></e-field>
+                        <e-field name="Order_Source" caption="Order Source"></e-field>
+                    </e-columns>
+                    <e-values>
+                        <e-field name="Sold" caption="Units Sold"></e-field>
+                        <e-field name="Amount" caption="Sold Amount"></e-field>
+                    </e-values>
+                    <e-formatsettings>
+                        <e-field name="Amount" format="C0" maximumsignificantdigits="10" minimumsignificantdigits="1" usegrouping="true"></e-field>
+                    </e-formatsettings>
+                    <e-filters>
+                        <e-field name="Product_Categories" caption="Product Categories"></e-field>
+                    </e-filters>
+                </e-datasourcesettings>
+                <e-gridSettings columnWidth="120" allowSelection="true"></e-gridSettings>
+            </ejs-pivotview>
+        </div>
+    </div>
+
+    <div class="col-lg-4 property-section pivottable-property-section">
+        <table id='property' title='Properties' class='property-panel-table' style="width: 100%;">
+            <tbody>
+                <tr style="height: 50px">
+                    <td>
+                        <div>
+                            Selection Modes:
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <ejs-dropdownlist id="mode" dataSource="@ViewBag.modeData" change="onModeChange" index="0" width="150" floatLabelType="Auto">
+                                <e-dropdownlist-fields text="Name" value="Value"></e-dropdownlist-fields>
+                            </ejs-dropdownlist>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td>
+                        <div>
+                            Selection Types:
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <ejs-dropdownlist id="type" dataSource="@ViewBag.typeData" change="onTypeChange" index="1" width="150" floatLabelType="Auto">
+                                <e-dropdownlist-fields text="Name" value="Name"></e-dropdownlist-fields>
+                            </ejs-dropdownlist>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div>
+                            <b>
+                                <hr>Event Trace:
+                            </b>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="eventarea" style="height: 160px;overflow: auto">
+                            <span class="EventLog" id="EventLog" style="word-break: normal;"></span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <style>
+        .pivottable-property-section hr {
+            margin: 1px 10px 0px 0px;
+            border-top: 1px solid #eee;
+        }
+    </style>
+    <script>
+        function onLoad(args) {
+            var pivotObj = document.getElementById('pivotview').ej2_instances[0];
+            pivotObj.gridSettings.selectionSettings = { mode: 'Cell', type: 'Multiple', cellSelectionMode: 'Box' };
+        }
+        function onCellSelected(args) {
+            document.getElementById('EventLog').innerHTML = '';
+            if (args.selectedCellsInfo.length > 0) {
+                for (var cnt = 0; cnt < args.selectedCellsInfo.length; cnt++) {
+                    var cell = args.selectedCellsInfo[cnt];
+                    var summMeasure = this.engineModule.fieldList[cell.measure] ? this.engineModule.fieldList[cell.measure].aggregateType + ' of ' +
+                        this.engineModule.fieldList[cell.measure].caption : '';
+                    appendElement(
+                        (cell.columnHeaders == '' ? '' : 'Column Headers: ' + '<b>' + cell.columnHeaders.split('.').join(' - ') + '</b></br>') +
+                        (cell.rowHeaders == '' ? '' : 'Row Headers: ' + '<b>' + cell.rowHeaders.split('.').join(' - ') + '</b></br>') +
+                        (summMeasure == '' ? '' : 'Measure: ' + '<b>' + summMeasure + '</b></br>') +
+                        'Value: ' + '<b>' + cell.currentCell.formattedText + '</b><hr></br>');
+                }
+            }
+        }
+        function appendElement(html) {
+            var span = document.createElement('span');
+            span.innerHTML = html;
+            var log = document.getElementById('EventLog');
+            log.appendChild(span);
+        }
+        function onModeChange(args) {
+            var pivotObj = document.getElementById('pivotview').ej2_instances[0];
+            pivotObj.gridSettings.selectionSettings.mode = args.value;
+            pivotObj.renderModule.updateGridSettings();
+        }
+        function onTypeChange(args) {
+            var pivotObj = document.getElementById('pivotview').ej2_instances[0];
+            pivotObj.gridSettings.selectionSettings.type = args.value;
+            pivotObj.renderModule.updateGridSettings();
+        }
+    </script>
+}
+
+@section PreScripts {
+    <script>
+        ej.base.enableRipple(false);
+    </script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates different types of grid cell selection options and an event for getting complete information about the selection. The selection of headers, value cells, and summary cells can be done through mouse and keyboard actions.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            This feature provides interactive support to highlight rows, columns, values, and summary cells that you select.
+            Selection can be done through either mouse or keyboard interaction.  To enable selection, set <code>
+                allowSelection
+            </code> as true.
+        </p>
+        <p>
+            The pivot table supports two types of selection that can be set using
+            <code>selectionSettings.type</code> property. They are,
+        </p>
+        <ul>
+            <li>
+                <code>Single</code> - Enabled by default. Allows user to select a single row, column, or cell at a time.
+            </li>
+            <li><code>Multiple</code> - Allows the user to select more than one row, column, or cell at the same time.</li>
+        </ul>
+        <p>
+            Also, there are three modes of selection that can be set using
+            <code>selectionSettings.mode</code> property. They are,
+        </p>
+        <ul>
+            <li><code>Row</code> - Enabled by default. Enables the complete row selection in a pivot table.</li>
+            <li><code>Column</code> - Enables the complete column selection in a pivot table.</li>
+            <li><code>Cell</code> - Enables only value and summary cell selection in a pivot table.</li>
+            <li><code>Both</code> - Enables both row and column selection in a pivot table.</li>
+        </ul>
+        <p>
+            To perform multiselection, hold the <strong>CTRL</strong> key and click the desired cells.
+            To select a range of cells, hold the <strong>SHIFT</strong> key and click the cells.
+        </p>
+        <p>
+            While using pivot table in a touch device, double-tap over a row, column, or other cells.
+            This results in a pop-up with a multiselect icon. Now tap the icon to proceed with multiselection.
+        </p>
+        <p>
+            In this demo, pick the selection type and selection mode from the properties panel in order to perform the desired selection process.
+            The selected cell information can be seen in the Event Trace part with the help of the
+            <code>cellSelected</code> event.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Pivot Table Selection Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Selection in ASP.NET Core Pivot Table Control</h1>
+                }

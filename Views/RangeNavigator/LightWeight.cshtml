@@ -1,0 +1,117 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+    @{
+        var majorGridLines = new Syncfusion.EJ2.Charts.RangeNavigatorMajorTickLines { Width = 0.000001 };
+        var navigatorBorder = new { width = 0.000001 };
+        var animation = new { enable = false };
+        var lineStyle = new { width = 0.000001 };
+        var majorTickLines = new { width = 0.000001 };
+        var minorTickLines = new { width = 0.000001 };
+
+    }
+<div class="control-section" align="center">
+
+    <div id="container">
+        <div class="row" align="center">
+            <h4 id="days" style="font-family: Segoe UI;font-weight: 500; font-style:normal; font-size:15px;">Calculate the Bussiness and Weekend days in a period</h4>
+            <br /><div id="datetime">
+
+                <ejs-rangenavigator id="container1" intervalType="Months" majorTickLines="majorGridLines" valueType="DateTime" animationDuration="500"
+                                    labelFormat="MMM" load="onChartLoad" changed="changedEvent" xName="x" yName="y">
+                </ejs-rangenavigator>
+            </div>
+                  <table style="font-family: Segoe UI;font-weight: 500; font-style:normal; font-size:15px;">
+                      <tbody>
+                          <tr>
+                              <td id="working">
+                                  <table>
+                                      <tbody>
+                                          <tr>
+                                              <td id="working" style="width: 150px;">Total Business Days:</td>
+                                              <td id="workingcount" style="width: 25px;"></td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                              </td>
+                              <td style="padding-left: 20px;" id="holiday">
+                                  <table>
+                                      <tbody>
+                                          <tr>
+                                              <td id="weekend" style="width: 150px;">Total Weekend Days: </td>
+                                              <td id="weekendcount" style="width: 25px;"></td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+
+        </div>
+    </div>
+</div>
+    <script src="~/scripts/data-service.js"></script>
+    <script>
+        var data = GetDateTimeData(new Date('2018-01-01'), new Date('2019-01-01'));
+        window.onChartLoad = function (args) {
+               @*custom code start*@
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.rangeNavigator.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+            args.rangeNavigator.width = ej.base.Browser.isDevice ? "100%" : "80%";
+               @*custom code end*@
+            args.rangeNavigator.navigatorStyleSettings.thumb.type = "Rectangle";
+            args.rangeNavigator.dataSource = data;
+            args.rangeNavigator.value = [new Date('2018-06-01'), new Date('2018-07-01')];            
+        }
+        changedEvent = function (args) {
+            var currentDate = new Date(+args.start);
+            var workingDaysCount = 0;
+            var holidaysDaysCount = 0;
+            while (currentDate <= new Date(+args.end)) {
+                if (currentDate.getDay() > 0 && currentDate.getDay() <= 5) {
+                    workingDaysCount++;
+                } else {
+                    holidaysDaysCount++;
+                }
+                currentDate.setDate(currentDate.getDate() + 1);
+            }
+            document.getElementById('workingcount').innerHTML = ' ' + workingDaysCount;
+            document.getElementById('weekendcount').innerHTML = ' ' + holidaysDaysCount;
+        }
+    </script>
+}
+   @*custom code start*@
+@section Scripts {
+
+}
+
+<style>
+    #control-container {
+        padding: 0px !important;
+    }
+
+    #container {
+        transform: translateY(25%);
+    }
+</style>
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Lightweight in ASP.NET Core Range Selector control. Explore here for more details."/>
+                }
+   @*custom code end*@
+@section ActionDescription{
+    <p>
+        This sample represents the total number of business and weekend days in a selected period.
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can see how to render a light-weight range navigator without series. You can use <code>width</code>, <code>height</code>, <code>fill</code> and <code>border</code> properties to customize the thumb in range navigator. You can also change the type of the thumb using type property.
+    </p>
+}
+@section Title{
+                 <title>ASP.NET Core Range Selector Lightweight Example - Syncfusion Demos </title>
+             }
+@section Header{
+                <h1 class='sb-sample-text'>Example of Lightweight in ASP.NET Core Range Selector Control</h1>
+            }

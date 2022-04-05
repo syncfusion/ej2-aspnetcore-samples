@@ -1,0 +1,115 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="control-section" align='center'>
+        <div id="container1">
+            <ejs-bulletchart id="bulletgraph" minimum="0" maximum="300" interval="50" title="Revenue" subtitle="U.S. $" valueField="value" targetField="target" dataSource="ViewBag.dataSource1" labelFormat="${value}K" width="500" load="load1" titlePosition="Left">
+                <e-bulletchart-animation></e-bulletchart-animation>
+                <e-bulletchart-tooltipsettings enable="true"></e-bulletchart-tooltipsettings>
+                <e-bullet-range-collection>
+                    <e-bullet-range end="150"></e-bullet-range>
+                    <e-bullet-range end="250"></e-bullet-range>
+                    <e-bullet-range end="300"></e-bullet-range>
+                </e-bullet-range-collection>
+            </ejs-bulletchart>
+            <ejs-bulletchart id="bulletgraph1" minimum="0" maximum="30" interval="5" labelFormat="{value}%" title="Profit" subtitle="%" valueField="value" targetField="target" dataSource="ViewBag.dataSource2" width="500" load="load2" titlePosition="Left">
+                <e-bulletchart-animation></e-bulletchart-animation>
+                <e-bulletchart-tooltipsettings enable="true"></e-bulletchart-tooltipsettings>
+                <e-bullet-range-collection>
+                    <e-bullet-range end="20"></e-bullet-range>
+                    <e-bullet-range end="25"></e-bullet-range>
+                    <e-bullet-range end="30"></e-bullet-range>
+                </e-bullet-range-collection>
+            </ejs-bulletchart>
+            <ejs-bulletchart id="bulletgraph2" minimum="0" maximum="600" interval="100" title="Avg Order Size" subtitle="U.S. $" valueField="value" targetField="target" dataSource="ViewBag.dataSource3" labelFormat="{value} $" width="500" load="load3" titlePosition="Left">
+                <e-bulletchart-animation></e-bulletchart-animation>
+                <e-bulletchart-tooltipsettings enable="true"></e-bulletchart-tooltipsettings>
+                <e-bullet-range-collection>
+                    <e-bullet-range end="350"></e-bullet-range>
+                    <e-bullet-range end="500"></e-bullet-range>
+                    <e-bullet-range end="600"></e-bullet-range>
+                </e-bullet-range-collection>
+            </ejs-bulletchart>
+            <ejs-bulletchart id="bulletgraph3" minimum="0" maximum="2500" interval="500" title="New Customers" subtitle="Count" valueField="value" targetField="target" dataSource="ViewBag.dataSource4" width="500" load="load4" titlePosition="Left">
+                <e-bulletchart-animation></e-bulletchart-animation>
+                <e-bulletchart-tooltipsettings enable="true"></e-bulletchart-tooltipsettings>
+                <e-bullet-range-collection>
+                    <e-bullet-range end="1700"></e-bullet-range>
+                    <e-bullet-range end="2000"></e-bullet-range>
+                    <e-bullet-range end="2500"></e-bullet-range>
+                </e-bullet-range-collection>
+            </ejs-bulletchart>
+            <ejs-bulletchart id="bulletgraph4" minimum="0" maximum="5" interval="1" title="Cust Satisfication" subtitle="Top Rating of 5" valueField="value" targetField="target" dataSource="ViewBag.dataSource5" width="400px" load="load5" titlePosition="Left">
+                <e-bulletchart-animation></e-bulletchart-animation>
+                <e-bulletchart-tooltipsettings enable="true"></e-bulletchart-tooltipsettings>
+                <e-bullet-range-collection>
+                    <e-bullet-range end="3.7"></e-bullet-range>
+                    <e-bullet-range end="4.2"></e-bullet-range>
+                    <e-bullet-range end="5"></e-bullet-range>
+                </e-bullet-range-collection>
+            </ejs-bulletchart>
+        </div>
+    </div>
+    @*custom code start*@
+    <script type="text/javascript">
+        themeChange = function (args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.bulletChart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/contrast/i, 'Contrast'));
+            args.bulletChart.width = ej.base.Browser.isDevice ? "100%" : "60%";
+            args.bulletChart.titlePosition = ej.base.Browser.isDevice ? 'Top' : 'Left';
+        }
+
+        load1 = function (args) {
+            themeChange(args);
+            args.bulletChart.margin.left = ej.base.Browser.isDevice ? 10 : 53;
+        }
+        load2 = function (args) {
+            themeChange(args);
+            args.bulletChart.margin.left = ej.base.Browser.isDevice ? 10 : 72;
+        }
+        load3 = function (args) {
+            themeChange(args);
+            args.bulletChart.margin.left = ej.base.Browser.isDevice ? 10 : 13;
+        }
+        load4 = function (args) {
+            themeChange(args);
+            args.bulletChart.margin.left = ej.base.Browser.isDevice ? 10 : 10;
+        }
+        load5 = function (args) {
+            themeChange(args);
+            args.bulletChart.margin.left = ej.base.Browser.isDevice ? 10 : 0;
+        }
+    </script>
+    @*custom code end*@
+}
+@*custom code start*@
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Default Functionalities in ASP.NET Core BulletChart control. Explore here for more details."/>
+                }
+@*custom code end*@
+@section ActionDescription{
+    <div id="action-description">
+        This sample illustrates a default bullet chart to compare the feature (value) bar with comparative (target) bar. It includes variety of configurations to change the look and feel of the chart.
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            Tooltip is enabled in this example. To see the tooltip in action, hover a feature bar or comparative bar on the bullet chart.
+        </p>
+    </div>
+}
+@section Scripts {
+}
+
+<style>
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@section Title{
+                 <title>ASP.NET Core BulletChart Default Functionalities Example - Syncfusion Demos </title>
+             }
+@section Header{
+                <h1 class='sb-sample-text'>Example of Default Functionalities in ASP.NET Core BulletChart Control</h1>
+            }

@@ -1,0 +1,72 @@
+@using Syncfusion.EJ2
+@{
+    ViewData["Title"] = "Real-Time Binding";
+}
+@section ControlsSection{
+    <div class="control-section">
+        <ejs-schedule id="schedule" height="550px" selectedDate="new DateTime(DateTime.Today.Year, 1, 10)" navigating="onNavigation" actionComplete="onActionComplete">
+            <e-schedule-eventsettings dataSource="@ViewBag.appointments"></e-schedule-eventsettings>
+        </ejs-schedule>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.9/signalr.min.js"></script>
+        <script>
+            var isHubConnected = false;
+            var connection = new signalR.HubConnectionBuilder().withUrl("https://ej2.syncfusion.com/aspnetcore/scheduleHub/", { withCredentials: false, skipNegotiation: true, transport: signalR.HttpTransportType.WebSockets }).withAutomaticReconnect().build();
+
+            connection.on('ReceiveData', function (action, data) {
+                var schObj = document.getElementById("schedule").ej2_instances[0];
+                if (action == 'view') {
+                    schObj.currentView = data; // Here passing the view name
+                }
+                if (action === 'eventCreated' || action === 'eventChanged' || action === 'eventRemoved') {
+                    schObj.eventSettings.dataSource = data; // Here passing the updated data to schedule control
+                }
+            });
+
+            connection.start().then(function () { isHubConnected = true; }).catch(function () { isHubConnected = false; });
+
+            // To change the Schedule view after the navigation
+            function onNavigation(args) {
+                if (args.action == 'view' && isHubConnected) {
+                    connection.invoke('SendData', args.action, args.currentView);
+                }
+            }
+
+            // To update the schedule data after performing CRUD.
+            function onActionComplete(args) {
+                if (isHubConnected && (args.requestType === 'eventCreated' || args.requestType === 'eventChanged' || args.requestType === 'eventRemoved')) {
+                    var schObj = document.getElementById("schedule").ej2_instances[0];
+                    connection.invoke('SendData', args.requestType, schObj.eventSettings.dataSource);
+                }
+            }
+        </script>
+    </div>
+}
+
+@*custom code start*@
+@section Meta{
+    <meta name="description" content="This example demonstrates the Real-Time Binding in ASP.NET Core Schedule control. Explore here for more details." />
+}
+@*custom code end*@
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This demo showcases the way of binding signalR services to Scheduler component. Here, the SignalR is used to bind the data with Scheduler.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id='description'>
+        <p>
+            In this sample, we have used the <code>navigating</code> event to invoke the scheduler control’s view change action and <code>actionComplete</code>
+            event to update the scheduler data source after performing the CRUD operations. The SignalR will bind the data in order to corresponding event call.
+        </p>
+    </div>
+}
+@section Title{
+    <title>ASP.NET Core Schedule Real-Time Binding Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Real-Time Binding in ASP.NET Core Schedule Control</h1>
+}

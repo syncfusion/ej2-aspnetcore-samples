@@ -1,0 +1,118 @@
+@using Syncfusion.EJ2.HeatMap;
+@using Syncfusion.EJ2.Buttons;
+@section ControlsSection{
+    @{
+        var textStyle = new { size = "15px", fontWeight = "500", fontStyle = "Normal" };
+        var xAxisLabel = new string[] { "2005", "2006", "2007", "2008", "2009", "2010",
+"2011", "2012", "2013", "2014", "2015" };
+        var yAxisLabel = new string[] { "Agriculture", "Energy", "Administration", "Health", "Interior",
+"Justice", "NASA", "Transportation" };
+        var cellBorder = new
+        {
+            width = "0",
+        };
+    }
+    <div class="col-lg-9 control-section">
+        <div id="container">
+            <ejs-heatmap id='container' load="window.onHeatmapLoad" dataSource="ViewBag.dataSource">
+                <e-heatmap-titlesettings text="U.S. Government Energy Consumption by Agency (Trillion Btu)" textStyle="textStyle">
+                </e-heatmap-titlesettings>
+                <e-heatmap-xaxis labels="xAxisLabel" labelRotation="45" labelIntersectAction="None"></e-heatmap-xaxis>
+                <e-heatmap-yaxis labels="yAxisLabel"></e-heatmap-yaxis>
+                <e-heatmap-palettesettings type="Fixed">
+                    <e-palettes>
+                        <e-palette value="4.3" color="#FFFFDA"></e-palette>
+                        <e-palette value="7" color="#EDF8B6"></e-palette>
+                        <e-palette value="9" color="#CAE8B4"></e-palette>
+                        <e-palette value="15" color="#78D1BD"></e-palette>
+                        <e-palette value="18" color="#36BCC6"></e-palette>
+                        <e-palette value="25" color="#208FC6"></e-palette>
+                        <e-palette value="30" color="#253494"></e-palette>
+                        <e-palette value="32" color="#081D58"></e-palette>
+                    </e-palettes>
+                </e-heatmap-palettesettings>
+                <e-heatmap-cellsettings border="cellBorder" showLabel="false"></e-heatmap-cellsettings>
+                <e-heatmap-legendsettings position="Bottom" width="400px" enableSmartLegend="true"></e-heatmap-legendsettings>
+            </ejs-heatmap>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties" style="width: 100%">
+            <tbody>
+                <tr style="height: 50px">
+                    <td style="width: 60%">
+                        <div>Palette Type:</div>
+                    </td>
+                    <td style="width: 40%;">
+                        <div class="row" style="padding-top: 10px;">
+                            <ejs-radiobutton id="fixed" label="Fixed" name="paletteType" change="window.valueChange" value="Fixed" checked="true"></ejs-radiobutton>
+                        </div>
+                        <div class="row" style="padding-top: 10px;">
+                            <ejs-radiobutton id="gradient" label="Gradient" name="paletteType" change="window.valueChange" value="Gradient"></ejs-radiobutton>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td style="width: 60%">
+                        <div>Enable Smart Legend:</div>
+                    </td>
+                    <td style="width: 40%;">
+                        <div class="row" style="padding-top: 10px;">
+                            <ejs-checkbox id='smartLegend' checked="true" disabled="false" change='window.smartLegend'></ejs-checkbox>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script type="text/javascript">
+
+        window.onHeatmapLoad = function (args) {
+            window.heatmap = args.heatmap;
+            var selectedTheme = themeName ? themeName : 'Material';
+             args.heatmap.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+        }
+        window.valueChange = function (args) {
+            var element = document.getElementById('smartLegend');
+            element.ej2_instances[0].disabled = args.value == "Gradient" ? true : false;
+            window.heatmap.paletteSettings.type = args.value;
+        }
+        window.smartLegend = function (args) {
+            window.heatmap.legendSettings.enableSmartLegend = args.checked;
+        }
+    </script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample visualizes the energy consumption in trillion British thermal units (btu) by the various public sectors in US government over the years. The data label is disabled in this sample, the tooltip displays the data point values.  In property panel, the options are available to change palette type in Heatmap by means of radio button.
+        </p>
+    </div>
+}
+@section Description{
+
+    <div id="description">
+        <p>
+            In this example, you can see how to change the palette type between <code>Fixed </code> and <code>Gradient </code> types in Heatmap. The palette type can be defined using the <code>type </code> property in <code>paletteSettings </code>. Legend is enabled in this example, changing the palette mode the legend type will be automatically switched between gradient legend and list type legend.
+        </p>
+        <p>
+            Tooltip is enabled in this example, to see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+        </p>
+        <br />
+    </div>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Palette Mode in ASP.NET Core HeatMap control. Explore here for more details."/>
+                }
+@section Title{
+                    <title>ASP.NET Core HeatMap Palette Mode Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Palette Mode in ASP.NET Core HeatMap Control</h1>
+                }
+<style>
+            body.material-dark .property-panel-section {
+            color: #ffffff;
+        }
+</style>

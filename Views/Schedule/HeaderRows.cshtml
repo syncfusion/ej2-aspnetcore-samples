@@ -1,0 +1,77 @@
+@section ControlsSection{
+    <div class="col-lg-12 control-section">
+        <div class="content-wrapper">
+            <ejs-schedule id="schedule" width="100%" height="650px" selectedDate="new DateTime(DateTime.Today.Year, 1, 1)" eventRendered="onEventRendered">
+                <e-schedule-eventsettings dataSource="@ViewBag.datasource"></e-schedule-eventsettings>
+                <e-schedule-header-rows>
+                    <e-schedule-header-row option="Month" template="#month-template"></e-schedule-header-row>
+                    <e-schedule-header-row option="Week" template="#week-template"></e-schedule-header-row>
+                    <e-schedule-header-row option="Date"></e-schedule-header-row>
+                </e-schedule-header-rows>
+                <e-schedule-views>
+                    <e-schedule-view option="TimelineMonth" interval="12"></e-schedule-view>
+                </e-schedule-views>
+            </ejs-schedule>
+        </div>
+    </div>
+
+    <script id="month-template" type="text/x-template">
+        <span class="month">${getMonthDetails(data)}</span>
+    </script>
+
+    <script id="week-template" type="text/x-template">
+        <span class="week">${getWeekDetails(data)}</span>
+    </script>
+
+    <script src="~/scripts/schedule/applyCategoryColor.js"></script>
+    <script type="text/javascript">
+        var instance = new ej.base.Internationalization();
+        window.getMonthDetails = function (value) {
+            return instance.formatDate(value.date, { skeleton: 'yMMMM' });
+        };
+        window.getWeekDetails = function (value) {
+            return 'Week ' + ej.schedule.getWeekNumber(ej.schedule.getWeekLastDate(value.date, 0));
+        };
+
+        function onEventRendered(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            applyCategoryColor(args, scheduleObj.currentView);
+        }
+    </script>
+}
+@*custom code start*@
+@section Meta{
+    <meta name="description" content="This example demonstrates the Header Rows in ASP.NET Core Schedule control. Explore here for more details." />
+}
+@*custom code end*@
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This demo showcases how to display the additional header rows on timeline view. In this demo, an additional row for displaying
+            <b>month</b> and
+            <b>week number</b> has been added.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            Unlike the usual date and time rows, timeline view can be displayed with additional header rows to display the years, months
+            and week numbers. To do so, define the
+            <code>headerRows</code> property which accepts an array of object and each object includes the
+            <code>option</code> API to define the specific header row type such as
+            <code>Year</code>,
+            <code>Month</code>,
+            <code>Week</code> and
+            <code>Date</code>. The object also includes the
+            <code>template</code> option to provide label customization on these rows. This
+            <code>headerRows</code> property is application only on timeline views.
+        </p>
+    </div>
+}
+@section Title{
+    <title>ASP.NET Core Schedule Header Rows Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Header Rows in ASP.NET Core Schedule Control</h1>
+}

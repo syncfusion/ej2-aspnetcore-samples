@@ -1,0 +1,92 @@
+@using Syncfusion.EJ2
+@{ 
+    var defaultanimation = new Syncfusion.EJ2.Popups.DialogAnimationSettings { Effect = Syncfusion.EJ2.Popups.DialogEffect.None };
+}
+@section ControlsSection {
+    <div class="col-lg-12 control-section" id="target">
+        <ejs-button id="normalbtn" content="Open"></ejs-button>
+        <ejs-dialog id="default_dialog" animationSettings="defaultanimation" width="500px" target="#target" open="dialogOpen"
+                    close="dialogClose" showCloseIcon="true" header="About SYNCFUSION succinctly series">
+            <e-content-template>
+                <p>In the Succinctly series, Syncfusion created a robust, free library of more than 130 technical e - books formatted for PDF, Kindle, and EPUB.<br> <br>The Succinctly series was born in 2012 out of a desire to provide concise technical e-books for software developers.Each title in the Succinctly series is written by a carefully chosen expert and provides essential content in about 100 pages.</p>
+            </e-content-template>
+            <e-dialog-buttons>
+                <e-dialog-dialogbutton buttonModel="ViewBag.button" click="dlgButtonClick"></e-dialog-dialogbutton>
+            </e-dialog-buttons>
+        </ejs-dialog>
+    </div>
+}
+
+<style>
+    /* custom code start */
+    .control-section {
+        padding-left: 10px;
+    }
+
+    @@media screen and (min-width: 150px) and (max-width: 480px) {
+        .control-section {
+            margin-bottom: 30px;
+        }
+
+        .control-wrapper {
+            margin-bottom: 0px;
+        }
+    }
+    /* custom code end */
+</style>
+
+@section PreScripts{
+    <script>
+        var btnElement = document.getElementById("normalbtn");
+        btnElement.addEventListener('click', function () {
+            var dialogObj = document.getElementById("default_dialog");
+            dialogObj.ej2_instances[0].show();
+        });
+        function dialogClose() {
+            btnElement.style.display = "block";
+        }
+        function dialogOpen() {
+            btnElement.style.display = "none";
+        }
+        function dlgButtonClick() {
+            window.open('https://www.syncfusion.com/company/about-us');
+        }
+    </script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This example demonstrates the default rendering of the dialog control with minimum configuration. Click close or press ESC to close the dialog. Click “open” to show the dialog again, if it is closed.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            The dialog control is used to display information and get input from the user. The dialog control is classified as modal and non-modal dialog depend on its interaction with parent application.
+        </p>
+        <ul>
+            <li>
+                Modal - It creates overlay that disable interaction with the parent application, and the user should respond with modal before continuing with other applications.
+            </li>
+            <li>
+                Non-modal - It does not prevent user interaction with parent application.
+            </li>
+        </ul>
+    </div>
+}
+
+@*custom code start*@
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Default Functionalities in ASP.NET Core Dialog control. Explore here for more details."/>
+                }
+
+@*custom code end*@
+@section Title{
+                    <title>ASP.NET Core Dialog Default Functionalities Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Default Functionalities in ASP.NET Core Dialog Control</h1>
+                }

@@ -1,0 +1,66 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+    @{ 
+        var series = new string[0];
+        var indicator = new string[0];
+    }
+
+    <div class="control-section" align="center">
+        <ejs-stockchart id="stockchartarea" load="chartLoad" seriesType="series" indicatorType="indicator" title="AAPL Stock Price">
+            <e-stockchart-border width="0"></e-stockchart-border>
+            <e-stockchart-primaryxaxis>
+                <e-majorgridlines width="0"></e-majorgridlines>
+                <e-crosshairtooltip enable="true"></e-crosshairtooltip>
+            </e-stockchart-primaryxaxis>
+            <e-stockchart-primaryyaxis>
+                <e-linestyle color="transparent"></e-linestyle>
+                <e-majorticklines color="transparent"></e-majorticklines>
+                <e-crosshairtooltip enable="true"></e-crosshairtooltip>
+            </e-stockchart-primaryyaxis>
+            <e-stockchart-crosshairsettings enable="true"></e-stockchart-crosshairsettings>
+            <e-stockchart-series-collection>
+                <e-stockchart-series xName="x" yName="high" type="Area" name="google" opacity=0.5>
+                </e-stockchart-series>
+            </e-stockchart-series-collection>
+        </ejs-stockchart>
+ 
+    </div>
+    <script src="~/scripts/StockChartData/aapl.js"></script>
+    <script>
+        var data = aapl;
+        function chartLoad(args) {
+            @*custom code start*@
+            letselectedTheme: string = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.stockChart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+            @*custom code end*@
+            args.stockChart.series[0].dataSource = data;
+        }
+    </script>
+}
+@*custom code start*@
+@section Scripts {
+
+}
+@*custom code end*@
+@section ActionDescription{
+    <p>
+        This sample visualizes stock data with area. Period and range selector help us to navigate different of data.
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can see how to render and configure the Stock chart.
+        <code>AreaSeries</code> is used to represent selected data value.
+    </p>
+    <br>
+}
+@section Title{
+                 <title>ASP.NET Core StockChart Area Example - Syncfusion Demos </title>
+             }
+@section Meta{
+                <meta name="description" content="This example demonstrates the Area in ASP.NET Core StockChart control. Explore here for more details."/>
+            }
+@section Header{
+                <h1 class='sb-sample-text'>Example of Area in ASP.NET Core StockChart Control</h1>
+            }

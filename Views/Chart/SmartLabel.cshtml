@@ -1,0 +1,79 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+   <div class="control-section">
+        <div id="container" align='center'>
+            <ejs-accumulationchart id="container" title="Rio Olympics Gold " load="load" enableBorderOnMouseMove="false">
+                <e-accumulation-series-collection>
+                    <e-accumulation-series dataSource="ViewBag.dataSource" xName="xValue" yName="yValue" name="RIO" startAngle="60">
+                    <e-accumulationseries-datalabel visible="true" name="text" position="Outside">
+                        <e-connectorstyle type="Curve" length="20px"></e-connectorstyle>
+                    </e-accumulationseries-datalabel>
+                    </e-accumulation-series>
+                </e-accumulation-series-collection>
+                <e-accumulationchart-legendsettings visible="false"></e-accumulationchart-legendsettings>
+                <e-accumulationchart-tooltipsettings enable="true" format="${point.x} : <b>${point.y}%</b>"></e-accumulationchart-tooltipsettings>
+            </ejs-accumulationchart>
+        </div>
+    </div>
+    @*custom code start*@
+    <script>
+        function load(args) {
+            var indexedTheme = location.hash.split('/')[1];
+            indexedTheme = indexedTheme ? indexedTheme : 'Material';
+            args.accumulation.theme = (indexedTheme.charAt(0).toUpperCase() + indexedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+        }
+    </script>
+
+@*custom code end*@
+}
+@*custom code start*@
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Smart Labels in ASP.NET Core Chart control. Explore here for more details."/>
+                }
+@*custom code end*@
+@section ActionDescription{
+
+    <p>
+        Labels in an axis can be placed smartly when it intersects with each other. Intersect action and edge label placement can be changed by using property panel.
+    </p>
+}
+@section Description {
+    <div id="description">
+        <p>
+            In this example, you can see how to arrange the axis labels smartly. When the Axis labels overlap with each other based on
+            the chart dimensions and label size, you can use the <code>labelIntersectAction</code> property of the axis
+            to avoid overlapping.
+        </p>
+        <p>
+            Chart supports the following by which can be set using <code>labelIntersectAction</code> property.
+        </p>
+        <ul>
+            <li><code>Hide</code> - Hide the label when it intersect.</li>
+            <li><code>Trim</code> - Trim the label when it intersect.</li>
+            <li><code>Wrap</code> - Wrap the label when it intersect.</li>
+            <li><code>MultipleRows</code> - Arrange the label in multiple row when it intersect.</li>
+            <li><code>Rotate45</code> - Rotate the label to 45 degree when it intersect.</li>
+            <li><code>Rotate90</code> - Rotate the label to 90 degree when it intersect.</li>
+            <li><code>None</code> - Shows all the labels.</li>
+        </ul>
+        <p>
+            Chart supports three types of edge labels placement which can be set using <code>edgeLabelPlacement</code> property.
+        </p>
+        <ul>
+            <li><code>None</code> - No action will be performed.</li>
+            <li><code>Hide</code> - Edge label will be hidden .</li>
+            <li><code>Shift</code> - Shifts the edge labels.</li>
+        </ul>
+        <p>
+            More information on the smart axis labels can be found in this &nbsp;
+            <a target="_blank" href="http://ej2.syncfusion.com/react/documentation/chart/api-series.html#type-chartseriestype">documentation section</a>.
+        </p>
+    </div>
+
+}
+@section Title{
+                 <title>ASP.NET Core Chart Smart Labels Example - Syncfusion Demos </title>
+             }
+@section Header{
+                <h1 class='sb-sample-text'>Example of Smart Labels in ASP.NET Core Chart Control</h1>
+            }

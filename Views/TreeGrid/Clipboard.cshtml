@@ -1,0 +1,132 @@
+@using Syncfusion.EJ2
+
+
+@section ControlsSection{
+    @{
+        var alertanimation = new Syncfusion.EJ2.Popups.DialogAnimationSettings { Effect = Syncfusion.EJ2.Popups.DialogEffect.None };
+    }
+
+    @{
+
+        List<object> toolbar = new List<object>();
+        toolbar.Add(new { text = "Copy", tooltipText = "Copy", prefixIcon = "e-copy", id = "copy" });
+        toolbar.Add(new { text = "Copy With Header", tooltipText = "Copy With Header", prefixIcon = "e-copy", id = "copyHeader" });
+    }
+
+<div class="col-lg-9 control-section">
+    <div class="content-wrapper">
+        <ejs-treegrid id="TreeGrid" dataSource="ViewBag.dataSource" allowPaging="true" childMapping="Children" height="350" treeColumnIndex="1" toolbarClick="toolbarClick" toolbar="toolbar">
+            <e-treegrid-pagesettings pageSize="10" ></e-treegrid-pagesettings>
+            <e-treegrid-columns>
+                <e-treegrid-column field="TaskId" headerText="Task ID" textAlign="Right" width="70"></e-treegrid-column>
+                <e-treegrid-column field="TaskName" headerText="Task Name" width="200"></e-treegrid-column>
+                <e-treegrid-column field="StartDate" headerText=" Start Date" textAlign="Right" format="yMd" type="date" width="80"></e-treegrid-column>
+                <e-treegrid-column field="Duration" headerText="Duration" textAlign="Right" width="80"></e-treegrid-column>
+                <e-treegrid-column field="Progress" headerText="Progress" textAlign="Right" width="80"></e-treegrid-column>
+            </e-treegrid-columns>
+        </ejs-treegrid>
+    </div>
+    <ejs-dialog id="alert_dialog" animationSettings="alertanimation" visible="false" target=".control-section" width="300px" header="Copy with Header" content="Atleast one row should be selected to copy with header">
+        <e-dialog-buttons>
+            <e-dialog-dialogbutton buttonModel="ViewBag.alertbutton" click="alertBtnClick"></e-dialog-dialogbutton>
+        </e-dialog-buttons>
+    </ejs-dialog>
+</div>
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties" style="width: 100%;">
+            <tr>
+                <td class="left-side">Hierarchy Mode</td>
+                <td>
+                    <ejs-dropdownlist id="mode" width="100px" dataSource="@ViewBag.dropdata" placeholder="Select a Mode" change="onModeChange" index="0" popupHeight="220px">
+                        <e-dropdownlist-fields text="mode" value="id"></e-dropdownlist-fields>
+                    </ejs-dropdownlist>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        function toolbarClick(args) {
+            if (this.getSelectedRecords().length > 0) {
+                var withHeader = false;
+                if (args.item.id === 'copyHeader') {
+                    withHeader = true;
+                }
+                this.copy(withHeader);
+            } else {
+                var dialogObj = document.getElementById('alert_dialog').ej2_instances[0];
+                dialogObj.show();
+            }
+        }
+        function alertBtnClick() {
+            var dialogObj = document.getElementById('alert_dialog').ej2_instances[0];
+            dialogObj.hide();
+        }
+        function onModeChange(e) {
+            var treegrid = document.getElementById("TreeGrid").ej2_instances[0];
+            var mode = e.value;
+            treegrid.copyHierarchyMode = mode;
+        }
+    </script>
+
+}
+@*custom code start*@
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Clipboard in ASP.NET Core TreeGrid control. Explore here for more details."/>
+                }
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates copy to clipboard functionality of the Tree Grid component. Select rows and click Copy button from
+            toolbar to copy content. To copy with header click Copy with header button from toolbar.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>Selected rows or cells data in the Tree Grid can be copied into the clipboard using the Keyboard shortcuts and <code>copy</code> method.</p>
+
+        <p>
+            In this demo, selected rows data can be copied into the clipboard using the below Keyboard shortcuts or toolbar interactions.
+            <ul>
+                <li><code>Ctrl + C</code> - Selected rows or cells data without header.</li>
+                <li><code>Ctrl + Shift + H</code> - Selected rows or cells data with header.</li>
+            </ul>
+        </p>
+        <p>Tree Grid provides support for a set of copy modes with <code>copyHierarchyMode</code> property. The below are the type of copy mode available in Tree Grid. </p>
+        <ul>
+            <li>
+                <code>Parent</code> - This is the default copy hierarchy mode in Tree Grid.
+                Clipboard value have the selected records with its parent records, if the selected records not have any parent record then the selected record will be in clipboard.
+            </li>
+            <li><code>Child</code> - Clipboard value have the selected records with its child record, if the selected records do not have any child record then the selected records will be in clipboard.</li>
+            <li>
+                <code>Both</code> - Clipboard value have the selected records with its both parent and child record.
+                If the selected records do not have any parent and child record then the selected records will be in clipboard.
+            </li>
+            <li><code>None</code> - Only the Selected records will be in clipboard.</li>
+        </ul>
+        <p>
+            While using the Tree Grid in a touch device environment, there is an option for multi-selection
+            through single tap on the row and it will show a popup with the multi-selection symbol.
+            Tap the icon to enable multi-selection in a single tap and click for the toolbar to copy the selected records into clipboard.
+        </p>
+
+        <p>
+            More information on the data binding can be found in this <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/tree-grid/clipboard/">
+                documentation section
+            </a>.
+        </p>
+    </div>
+}
+
+@*custom code end*@
+@section Title{
+                    <title>ASP.NET Core TreeGrid Clipboard Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Clipboard in ASP.NET Core TreeGrid Control</h1>
+                }

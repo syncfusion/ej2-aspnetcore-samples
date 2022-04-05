@@ -1,0 +1,157 @@
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+    <div class="col-lg-9 control-section">
+        <div class="control_wrapper">
+            <div id='container'>
+
+                <ejs-kanban id="Kanban" keyField="Status" dataSource="@ViewBag.data" dialogOpen="onDialogOpen" created="onKanbanCreated">
+                    <e-kanban-columns>
+                        <e-kanban-column headerText="To Do" keyField="Open"></e-kanban-column>
+                        <e-kanban-column headerText="In Progress" keyField="InProgress"></e-kanban-column>
+                        <e-kanban-column headerText="Testing" keyField="Testing"></e-kanban-column>
+                        <e-kanban-column headerText="Done" keyField="Close"></e-kanban-column>
+                    </e-kanban-columns>
+                    <e-kanban-cardsettings headerField="Id" contentField="Summary"></e-kanban-cardsettings>
+                    <e-kanban-dialogsettings template="#dialogTemplate"></e-kanban-dialogsettings>
+                </ejs-kanban>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties">
+            <tr>
+                <td>
+                    <button class="e-btn e-dialog-add" id="addNew">Add New Card</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script id='dialogTemplate' type="text/x-template">
+        <table>
+            <tbody>
+                <tr>
+                    <td class="e-label">ID</td>
+                    <td>
+                        <input id="Id" name="Id" type="text" class="e-field" value="${Id}" disabled required />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="e-label">Status</td>
+                    <td>
+                        <input type="text" name="Status" id="Status" class="e-field" value=${Status} required />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="e-label">Assignee</td>
+                    <td>
+                        <input type="text" name="Assignee" id="Assignee" class="e-field" value=${Assignee} />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="e-label">Priority</td>
+                    <td>
+                        <input type="text" name="Priority" id="Priority" class="e-field" value=${Priority} />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="e-label">Summary</td>
+                    <td>
+                        <textarea type="text" name="Summary" id="Summary" class="e-field" value=${Summary}>${Summary}</textarea>
+                        <span class="e-float-line"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </script>
+}
+@section PreScripts {
+    <script>
+        var kanbanObj;
+        var statusData = ['Open', 'InProgress', 'Testing', 'Close'];
+        var assigneeData = ['Nancy Davloio', 'Andrew Fuller', 'Janet Leverling',
+            'Steven walker', 'Robert King', 'Margaret hamilt', 'Michael Suyama'];
+        var priorityData = ['Low', 'Normal', 'Critical', 'Release Breaker', 'High'];
+        function onKanbanCreated() {
+            kanbanObj = this;
+        }
+        function onDialogOpen(args) {
+          if (args.requestType !== 'Delete') {
+            var curData = args.data;
+            var filledTextBox = new ej.inputs.TextBox({});
+            filledTextBox.appendTo(args.element.querySelector('#Id'));
+            var numericObj = new ej.inputs.NumericTextBox({
+                value: curData.Estimate, placeholder: 'Estimate',
+            });
+            numericObj.appendTo(args.element.querySelector('#Estimate'));
+            var statusDropObj = new ej.dropdowns.DropDownList({
+                value: curData.Status, popupHeight: '300px',
+                dataSource: statusData, fields: { text: 'Status', value: 'Status' }, placeholder: 'Status'
+            });
+            statusDropObj.appendTo(args.element.querySelector('#Status'));
+            var assigneeDropObj = new ej.dropdowns.DropDownList({
+                value: curData.Assignee, popupHeight: '300px',
+                dataSource: assigneeData, fields: { text: 'Assignee', value: 'Assignee' }, placeholder: 'Assignee'
+            });
+            assigneeDropObj.appendTo(args.element.querySelector('#Assignee'));
+            var priorityObj = new ej.dropdowns.DropDownList({
+                value: curData.Priority, popupHeight: '300px',
+                dataSource: priorityData, fields: { text: 'Priority', value: 'Priority' }, placeholder: 'Priority'
+            });
+            priorityObj.appendTo(args.element.querySelector('#Priority'));
+            var textareaObj = new ej.inputs.TextBox({
+                placeholder: 'Summary',
+                multiline: true
+            });
+            textareaObj.appendTo(args.element.querySelector('#Summary'));
+         }
+        }
+        var count = 31;
+        document.getElementById('addNew').onclick = function () {
+            var curData = { Id: 'Task ' + count, Status: 'Open', Priority: 'Normal', Assignee: 'Andrew Fuller', Estimate: 0, Tags: '', Summary: '' };
+            kanbanObj.openDialog('Add', curData);
+            count++;
+        }
+    </script>
+
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample showcases the CRUD (Create, Read, Update, and Delete) operations of the Kanban control. You can add
+            a new
+            card using the button from the property panel and read, update, or delete a card by opening the card details in
+            dialog
+            by double-clicking it.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            The sample is designed to showcase the CRUD operations of the Kanban board. The Kanban provides the essential
+            methods to
+            handle the CRUD operation from the application-end.
+        </p>
+        <ol>
+            <li>updateCard</li>
+            <li>addCard</li>
+            <li>deleteCard</li>
+        </ol>
+        <p>
+            The double click event of the card is used to open the card details in a dialog and read, edit, or delete a
+            card.
+        </p>
+    </div>
+}
+
+@section Meta{
+    <meta name="description" content="This example demonstrates the Dialog Editing in ASP.NET Core Kanban control. Explore here for more details." />
+}
+@section Title{
+    <title>ASP.NET Core Kanban Dialog Editing Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Dialog Editing in ASP.NET Core Kanban Control</h1>
+}

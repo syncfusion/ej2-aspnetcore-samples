@@ -1,0 +1,70 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+   <div class="control-section">
+        <div id="container" align='center'>
+            <ejs-chart id="lineContainer" load="window.onChartLoad" title="Electricity- Production">
+                <e-chart-chartarea>
+                    <e-chartarea-border width="0"></e-chartarea-border>
+                </e-chart-chartarea>
+                <e-chart-primaryxaxis edgeLabelPlacement="Shift" >
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                </e-chart-primaryxaxis>
+                <e-chart-primaryyaxis title="Production (Billion as kWh)" labelFormat="{value}B" >
+                    <e-majorticklines width="0"></e-majorticklines>
+                    <e-linestyle width="0"></e-linestyle>
+                </e-chart-primaryyaxis>
+                <e-series-collection>
+                    <e-series dataSource="ViewBag.dataSource" name="Renewable" xName="xValue" width=2 yName="yValue" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StepArea"></e-series>
+                    <e-series dataSource="ViewBag.dataSource" name="Non-Renewable" xName="xValue" width=2 yName="yValue1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StepArea"></e-series>
+                </e-series-collection>
+            </ejs-chart>
+        </div>
+    </div>
+    @*custom code start*@
+    <script>
+        window.onChartLoad = function (args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "60%";
+        }
+    </script>
+    @*custom code end*@
+}
+@*custom code start*@
+@section Scripts {
+
+}
+
+<style>
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Step Area in ASP.NET Core Chart control. Explore here for more details."/>
+                }
+@*custom code end*@
+@section ActionDescription{
+    <p>
+        This sample visualizes the data about electricity production by using renewable and non-renewable resources by using default step area series in the chart.
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can see how to render and configure the StepArea type charts. This series forms the step line progress, by connecting points through vertical and horizontal lines with area filled.
+        You can use <code>dashArray</code>, <code>width</code>, <code>fill</code> properties to customize the area. <code>marker</code> and <code>dataLabel</code> are used to represent individual data and its value.
+    </p>
+    <br>
+ 
+    <p>
+        More information on the StepArea series can be found in this
+        <a target="_blank" href="http://ej2.syncfusion.com/documentation/chart/api-series.html#type-chartseriestype">documentation section</a>.
+    </p>
+}
+@section Title{
+                 <title>ASP.NET Core Chart Step Area Example - Syncfusion Demos </title>
+             }
+@section Header{
+                <h1 class='sb-sample-text'>Example of Step Area in ASP.NET Core Chart Control</h1>
+            }

@@ -1,0 +1,258 @@
+@using Syncfusion.EJ2.Charts;
+
+@section ControlsSection{
+    @{
+
+    }
+<div class="col-lg-9 control-section">
+    <div id="container" class="row">
+        <ejs-smithchart id="container" load="smithLoad" loaded="smithLoaded" radius="1">
+            <e-smithchart-title text="Impedance Transmission" enableTrim="true" maximumWidth="200" visible="true"></e-smithchart-title>
+            <e-smithchart-legendsettings visible="true" position="Top" shape="Circle"></e-smithchart-legendsettings>
+            <e-smithchart-smithchartseriescollection>
+                <e-smithchart-smithchartseries name="Transmission1" width="2" enableSmartLabels="false" fill="#0F94C4"></e-smithchart-smithchartseries>
+                <e-smithchart-smithchartseries name="Transmission2" width="2" enableSmartLabels="false" fill="#EE0C88"></e-smithchart-smithchartseries>
+            </e-smithchart-smithchartseriescollection>
+        </ejs-smithchart>
+    </div>
+</div>
+<div class="col-lg-3 property-section">
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br>
+    <table id="property" style="width:100%" title="Properties">
+        <tbody>
+            <tr style="height: 35px">
+                <td style="width: 70%" id="radius1">
+                    Radius<span>&nbsp;&nbsp;&nbsp;1</span>
+                </td>
+                <td style="width: 70%">
+                    <div>
+                        <div id="radius"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr style="height: 35px">
+                <td style="width: 70%">
+                    Marker
+                </td>
+                <td style="width: 50%">
+                    <ejs-checkbox id="marker" checked="true"></ejs-checkbox>
+                </td>
+            </tr>
+            <tr style="height: 35px">
+                <td style="width: 70%">
+                    Data Label
+                </td>
+                <td style="width: 50%">
+                    <ejs-checkbox id="datalabel"></ejs-checkbox>
+                </td>
+            </tr>
+            <tr style="height: 35px">
+                <td style="width: 70%">
+                    Animation
+                </td>
+                <td style="width: 50%">
+                    <ejs-checkbox id="animate"></ejs-checkbox>
+                </td>
+            </tr>
+            <tr style="height: 35px">
+                <td style="width: 70%">
+                    Tooltip
+                </td>
+                <td style="width: 50%">
+                    <ejs-checkbox id="tooltip" checked="true"></ejs-checkbox>
+                </td>
+            </tr>
+            <tr style="height: 35px">
+                <td style="width: 70%">
+                    Legend
+                </td>
+                <td style="width: 50%">
+                    <ejs-checkbox id="legend" checked="true"></ejs-checkbox>
+                </td>
+            </tr>
+            <tr style="height: 35px">
+                <td style="width: 70%">
+                    Legend Position
+                </td>
+                <td style="width: 50%">
+                    <select id="legend1" style="width: 50px; height: 20px">
+                        <option value="top">Top</option>
+                        <option value="bottom">Bottom</option>
+                        <option value="left">Left</option>
+                        <option value="right">Right</option>
+                    </select>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<style>
+    #radius > * {
+        padding: 0px !important;
+    }
+    .smithinput {
+        opacity: 1 !important;
+        position: relative !important;
+        height: 15px !important;
+        width: 15px !important;
+    }
+</style>
+
+    <script type="text/javascript">
+
+        function smithLoad(args) {
+            @* custom code start *@
+            var theme = themeName ? themeName : 'Material';
+            args.smithchart.theme = (theme.charAt(0).toUpperCase() + theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+            @* custom code end *@
+            args.smithchart.horizontalAxis.minorGridLines.visible = true;
+            args.smithchart.radialAxis.minorGridLines.visible = true;
+        }
+
+        window.onload = function () {
+            window.legendPosition = new ej.dropdowns.DropDownList({
+                index: 0,
+                width: 120,
+                change: function () {
+                    window.smithchart.legendSettings.position = window.legendPosition.value;
+                    window.smithchart.refresh();
+                }
+            });
+            window.legendPosition.appendTo('#legend1');
+            
+            window.slider = new ej.inputs.Slider({
+                value: 1, type: 'MinRange',
+                change: function (args) {
+                      window.smithchart.radius = args.value;
+                      document.getElementById('radius1').innerHTML = 'Radius <span> ' + (args.value);
+                      window.smithchart.refresh();
+                },
+                max: 1, min: 0, step: 0.1
+            }, '#radius');
+        }
+
+        document.getElementById('marker').onchange = (e) => {
+            var boolean = e.target.checked;
+            if (boolean) {
+                window.smithchart.series[0].marker.visible = true;
+                window.smithchart.series[1].marker.visible = true;
+            } else {
+                window.smithchart.series[0].marker.visible = false;
+                window.smithchart.series[1].marker.visible = false;
+            }
+            smithchart.refresh();
+        };
+        document.getElementById('datalabel').onchange = (e) => {
+            var boolean = e.target.checked;
+            if (boolean) {
+                window.smithchart.series[0].marker.dataLabel.visible = true;
+                window.smithchart.series[1].marker.dataLabel.visible = true;
+            } else {
+                window.smithchart.series[0].marker.dataLabel.visible = false;
+                window.smithchart.series[1].marker.dataLabel.visible = false;
+            }
+            window.smithchart.refresh();
+        };
+        document.getElementById('animate').onchange = (e) => {
+            var boolean = e.target.checked;
+            if (boolean) {
+                window.smithchart.series[0].enableAnimation = true;
+                window.smithchart.series[1].enableAnimation = true;
+            } else {
+                window.smithchart.series[0].enableAnimation = false;
+                window.smithchart.series[1].enableAnimation = false;
+            }
+            window.smithchart.refresh();
+        };
+        document.getElementById('tooltip').onchange = (e) => {
+            var boolean = e.target.checked;
+            if (boolean) {
+                window.smithchart.series[0].tooltip.visible = true;
+                window.smithchart.series[1].tooltip.visible = true;
+            } else {
+                window.smithchart.series[0].tooltip.visible = false;
+                window.smithchart.series[1].tooltip.visible = false;
+            }
+            window.smithchart.refresh();
+        };
+        document.getElementById('legend').onchange = (e) => {
+            var boolean = e.target.checked;
+            if (boolean) {
+                window.smithchart.legendSettings.visible = true;
+                window.legendPosition .enabled = true;
+            } else {
+                window.smithchart.legendSettings.visible = false;
+                window.legendPosition .enabled = false;
+            }
+            window.smithchart.refresh();
+        };
+        function smithLoaded(args) {
+            window.smithchart = args.smithchart;
+            args.smithchart.series[0].marker = {
+                shape: 'rectangle',
+                visible: true,
+                border: {
+                    width: 2,
+                }
+            };
+            args.smithchart.series[0].tooltip.visible = true;
+            args.smithchart.series[1].tooltip.visible = true;
+            args.smithchart.series[1].marker = {
+                shape: 'rectangle',
+                visible: true,
+                border: {
+                    width: 2,
+                }
+            };
+            args.smithchart.series[0].points = [
+                { resistance: 10, reactance: 25 }, { resistance: 8, reactance: 6 },
+                { resistance: 6, reactance: 4.5 }, { resistance: 4.5, reactance: 4 },
+                { resistance: 3.5, reactance: 3 }, { resistance: 2.5, reactance: 2 },
+                { resistance: 2, reactance: 1.5 }, { resistance: 1.5, reactance: 1.25 },
+                { resistance: 1, reactance: 0.9 }, { resistance: 0.5, reactance: 0.6 },
+                { resistance: 0.3, reactance: 0.4 }, { resistance: 0, reactance: 0.15 },
+            ];
+            args.smithchart.series[1].points = [
+                { resistance: 20, reactance: -50 }, { resistance: 10, reactance: -10 },
+                { resistance: 9, reactance: -4.5 }, { resistance: 8, reactance: -3.5 },
+                { resistance: 7, reactance: -2.5 }, { resistance: 6, reactance: -1.5 },
+                { resistance: 5, reactance: -1 }, { resistance: 4.5, reactance: -0.8 },
+                { resistance: 3.5, reactance: -0.8 }, { resistance: 2.5, reactance: -0.4 },
+                { resistance: 2, reactance: -0.2 }, { resistance: 1.5, reactance: 0 },
+                { resistance: 1, reactance: 0.1 }, { resistance: 0.5, reactance: 0.2 },
+                { resistance: 0.3, reactance: 0.15 }, { resistance: 0, reactance: 0.05 },
+            ];
+            args.smithchart.loaded = null;
+            args.smithchart.refresh();
+        }
+    </script>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Customization in ASP.NET Core SmithChart control. Explore here for more details."/>
+                }
+@section ActionDescription{
+    <div id="action-description">
+    <p>
+        This sample demonstrates the options available for customizing the smith chart.
+    </p>
+</div>
+}
+@section Description{
+    <div id="description">
+    <p>
+        In this example, you can customize the smith chart with several options. Tooltip is enabled in this example. To see the tooltip in action, hover the mouse over a data point or tap a data point in touch enabled devices.
+    </p>
+    <br />
+    <p style="font-weight: 500">Injecting Module</p>
+    <p>
+
+        Smith chart component features are segregated into individual feature-wise modules. To use a tooltip, inject the <code>Tooltip</code> module using the <code>SmithChart.Inject(TooltipRender)</code> method, and use a legend by injecting the <code>Legend</code> module using the <code>SmithChart.Inject(Legend)</code> method
+    </p>
+</div>
+}
+@section Title{
+                    <title>ASP.NET Core SmithChart Customization Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Customization in ASP.NET Core SmithChart Control</h1>
+                }

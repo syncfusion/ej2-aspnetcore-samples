@@ -1,0 +1,236 @@
+@using Syncfusion.EJ2.Diagrams;
+@section ControlsSection{
+    <div class="control-section">
+        <div id="swimlaneDiagram" style="width: 100%; height: 600px">
+            <div class="sb-mobile-palette-bar">
+                <div id="palette-icon" style="float: right;" role="button" class="e-ddb-icons1 e-toggle-palette"></div>
+            </div>
+            <div id="palette-space" class="sb-mobile-palette">
+                <ejs-symbolpalette id="symbolPalette" symbolHeight="48" getNodeDefaults="@ViewBag.getSymbolNode" symbolWidth="48" getSymbolInfo="@ViewBag.getSymbolInfo" expandMode="@ViewBag.Multiple" width="100%" height="570px" palettes="ViewBag.Palette" symbolMargin="new SymbolPaletteMargin() { Left=8,Right=8,Top=8,Bottom=8}"  created="created">
+                </ejs-symbolpalette>
+            </div>
+            <div id="diagram-space" class="sb-mobile-diagram">
+                <ejs-diagram id="container" width="100%" height="100%" getConnectorDefaults="@ViewBag.getConnectorDefaults" nodes="ViewBag.nodes" connectors="ViewBag.connectors" contextMenuOpen="contextMenuOpen" contextMenuClick="contextMenuClick" dragEnter="dragEnter">
+                    <e-diagram-snapsettings constraints="None"></e-diagram-snapsettings>
+                    <e-diagram-selecteditems constraints="All &~SelectorConstraints.Rotate"></e-diagram-selecteditems>
+                    <e-diagram-contextmenusettings show="true" showCustomMenuOnly="true" items="@ViewBag.items"></e-diagram-contextmenusettings>
+                </ejs-diagram>
+            </div>
+        </div>
+    </div>
+    <style>
+
+        .sb-mobile-palette {
+            width: 220px;
+            height: 570px;
+            float: left;
+        }
+
+        .sb-mobile-palette-bar {
+            display: none;
+        }
+
+        .sb-mobile-diagram {
+            width: calc(100% - 222px);
+            height: 570px;
+            float: left;
+            border: 1px solid rgba(0, 0, 0, 0.12);
+            border-left: none;
+        }
+
+        @@media (max-width: 550px) {
+            .sb-mobile-palette {
+                z-index: 19;
+                position: absolute;
+                display: none;
+                transition: transform 300ms linear, visibility 0s linear 300ms;
+                width: 39%;
+                height: 100%;
+            }
+
+            .sb-mobile-diagram {
+                width: 100%;
+                height: 100%;
+                float: left;
+                left: 0px;
+            }
+
+            .sb-mobile-palette-bar {
+                display: block;
+                width: 100%;
+                background: #fafafa;
+                padding: 10px 10px;
+                border: 0.5px solid #e0e0e0;
+                min-height: 40px;
+            }
+
+            #palette-icon {
+                font-size: 20px;
+            }
+        }
+
+        .sb-mobile-palette-open {
+            position: absolute;
+            display: block;
+            right: 15px;
+        }
+
+        .material #swimlaneDiagram #palette-space .e-accordion {
+            border: none;
+        }
+
+        .material #swimlaneDiagram #palette-space {
+            border: 1px solid rgba(0, 0, 0, 0.12);
+        }
+
+        .fabric #swimlaneDiagram .sb-mobile-diagram {
+            border-left: 1px solid rgba(0, 0, 0, 0.12);
+        }
+
+        .bootstrap #swimlaneDiagram .sb-mobile-diagram {
+            height: 554px;
+            margin-top: 5px;
+            border-radius: 4px;
+            border-left: 1px solid rgba(0, 0, 0, 0.12);
+        }
+    </style>
+
+    <script>
+         function getSymbolInfo(symbol) {
+            return { tooltip: symbol.addInfo ? symbol.addInfo.tooltip : symbol.id };
+        }
+        function getConnectorDefaults(connector) {
+            if (connector.id.indexOf("Link21") !== -1) {
+                connector.type = 'Straight';
+            }
+            else if (connector.id.indexOf("Link22") !== -1) {
+                connector.type = 'Straight';
+            }
+            else {
+                connector.type = 'Orthogonal';
+            }
+            connector.style.strokeColor = "black";
+            connector.sourceDecorator.style.strokeColor = "black";
+            connector.targetDecorator.style.strokeColor = "black";
+            connector.sourceDecorator.style.fill = "black";
+            connector.targetDecorator.style.fill = "black";
+            return connector;
+        }
+
+        function getNodeDefaults(node) {
+            node.style.strokeColor = "black";
+            return node;
+        }
+        
+        function getSymbolNodes(symbol, diagram) {
+            if (symbol.id === 'Terminator' || symbol.id === 'Process' || symbol.id === 'Document' || symbol.id === 'PreDefinedProcess' || symbol.id === 'data' || symbol.id === 'stackCanvas1' || symbol.id === 'stackCanvas2') {
+                symbol.style.strokeWidth = 1;
+            }
+            symbol.style.strokeColor = '#757575';
+        }
+
+        function dragEnter(arg) {
+            if (arg.element) {
+                let shape = arg.element.shape;
+                if (shape.isLane) {
+                    if (shape.orientation === 'Horizontal') {
+                        shape.lanes[0].height = 100;
+                        shape.lanes[0].width = 500;
+                    } else if (shape.orientation === 'Vertical') {
+                        shape.lanes[0].height = 500;
+                        shape.lanes[0].width = 100;
+                    }
+                }
+            }
+        }
+
+        function contextMenuClick(args) {
+            var diagram = document.getElementById("container").ej2_instances[0];
+            if (args.item.id === 'InsertLaneBefore' || args.item.id === 'InsertLaneAfter') {
+                if (diagram.selectedItems.nodes.length > 0 && diagram.selectedItems.nodes[0].isLane) {
+                    var index;
+                    var node = diagram.selectedItems.nodes[0];
+                    var swimlane = diagram.getObject(diagram.selectedItems.nodes[0].parentId);
+                    var shape = swimlane.shape;
+                    var existingLane = ej.diagrams.cloneObject(shape.lanes[0]);
+
+                    var newLane = {
+                        id: ej.diagrams.randomId(),
+                        header: {
+                            width: existingLane.header.width, height: existingLane.header.height,
+                            style: existingLane.header.style
+                        },
+                        style: existingLane.style,
+                        height: existingLane.height, width: existingLane.width,
+                    };
+
+                    if (shape.orientation === 'Horizontal') {
+                        var exclude = 0;
+                        exclude += (shape.header) ? 1 : 0;
+                        exclude += (shape.phases.length) ? 1 : 0;
+                        index = node.rowIndex - exclude;
+                        newLane.header.width = existingLane.header.width;
+                        newLane.header.height = existingLane.height;
+                    } else {
+                        index = node.columnIndex - (shape.phases.length) ? 1 : 0;
+                        newLane.header.width = existingLane.width;
+                        newLane.header.height = existingLane.header.height;
+                    }
+                    if (args.item.id === 'InsertLaneBefore') {
+                        diagram.addLanes(swimlane, [newLane], index);
+                    } else {
+                        diagram.addLanes(swimlane, [newLane], index + 1);
+                    }
+                    diagram.clearSelection();
+                }
+            } else if (args.item.id === 'Cut') {
+                diagram.cut();
+            } else if (args.item.id === 'Clone') {
+                diagram.copy();
+                diagram.paste();
+            }
+        }
+
+        function contextMenuOpen(args) {
+            var diagram = document.getElementById("container").ej2_instances[0];
+            for (var item of args.items) {
+                if ((diagram.selectedItems.connectors.length + diagram.selectedItems.nodes.length) > 0) {
+                    if (item.id === 'InsertLaneBefore' || item.id === 'InsertLaneAfter') {
+                        if (diagram.selectedItems.connectors.length || (diagram.selectedItems.nodes.length && !diagram.selectedItems.nodes[0].isLane)) {
+                            args.hiddenItems.push(item.text);
+                        }
+                    }
+                } else {
+                    args.hiddenItems.push(item.text);
+                }
+            }
+        }
+        function created() {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            var bounds = document.getElementById('diagram-space').getBoundingClientRect();
+            var node = diagram.nodes[0];
+            node.offsetX = bounds.width / 2;
+            node.offsetY = bounds.height / 2;
+            diagram.dataBind();
+        }
+    </script>
+}
+@section ActionDescription{
+    <p>
+        This sample visualize the sales processing flow chart with the help of built-in swimlane shapes.
+    </p>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Swimlane in ASP.NET Core Diagram control. Explore here for more details."/>
+                }
+@section Description{
+    <p>
+        This sample shows how an sales process works with each entity involved in the process assigned a lane that contains all the activities for which they are responsible. The <code>type</code> property of the <code>shape</code> allows us to choose the swimlane shape type. Using the <code>children</code> property of the lane, we can add the nodes inside the lanes. We can also create the swimlane interactively using the swimlane shapes from the symbol palette.
+    </p>
+}
+@section Title{
+                    <title>ASP.NET Core Diagram Swimlane Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Swimlane in ASP.NET Core Diagram Control</h1>
+                }

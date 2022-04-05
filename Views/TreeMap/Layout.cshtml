@@ -1,0 +1,121 @@
+@using Syncfusion.EJ2.TreeMap;
+@section ControlsSection{
+    @{
+        var leafBorder = new TreeMapBorder{ Color = "black", Width = 0.5 };
+        var titleFont = new TreeMapFont { FontFamily = "Segoe UI" };
+    }
+    <div class="col-lg-9 control-section">
+        <div id="container">
+            <ejs-treemap id="container" load="treeMapLoad" renderDirection="TopLeftBottomRight" dataSource="ViewBag.dataSource" weightValuePath="GDP" rangeColorValuePath="GDP">
+                <e-treemap-titlesettings text="Top 10 countries by GDP Nominal - 2015" textStyle="titleFont"></e-treemap-titlesettings>
+                <e-treemap-leafitemsettings labelPath="State" labelFormat="${State}<br>$${GDP} Trillion<br>(${percentage} %)" border="leafBorder" labelStyle="titleFont">
+                    <e-leafitemsettings-colormappings>
+                        <e-leafitemsettings-colormapping from="1550" to="17946" color="@("#9cbb59")" minOpacity="0.5" maxOpacity="1"></e-leafitemsettings-colormapping>
+                    </e-leafitemsettings-colormappings>
+                </e-treemap-leafitemsettings>
+                <e-treemap-tooltipsettings visible="true" format="${State}<br>Rank : ${Rank}" textStyle="titleFont"></e-treemap-tooltipsettings>
+            </ejs-treemap>
+        </div>
+        <div style="float: right; margin-right: 10px;">
+            Source:
+            <a href=" https://www.reinisfischer.com/top-10-largest-economies-world-gdp-nominal-2015" target="_blank">www.reinisfischer.com</a>
+        </div>
+        </div>
+        <div class="col-lg-3 property-section">
+            <table id="property" title="Properties" style="width: 100%">
+                <tbody>
+                    <tr style="height: 50px">
+                        <td>
+                            <div>Layout Type</div>
+                        </td>
+                        <td>
+                            <div>
+                                <select name="selectIndex" autocomplete="off" id="layoutMode">
+                                    <option value="Squarified" selected>Squarified</option>
+                                    <option value="SliceAndDiceHorizontal">Horizontal</option>
+                                    <option value="SliceAndDiceVertical">Vertical</option>
+                                    <option value="SliceAndDiceAuto">Auto</option>
+                                </select>
+                                </div>
+                        </td>
+                    </tr>
+                    <tr style="height: 50px">
+                        <td style="width: 60%">
+                            <div>Render Direction</div>
+                        </td>
+                        <td>
+                            <div >
+                                <select name="direction" autocomplete="off" id="directionMode">
+                                    <option value="TopLeftBottomRight" selected>TopLeftBottomRight</option>
+                                    <option value="TopRightBottomLeft">TopRightBottmLeft</option>
+                                    <option value="BottomLeftTopRight">BottomLeftTopRight</option>
+                                    <option value="BottomRightTopLeft">BottomRightTopLeft</option>
+                                </select>
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+}
+<style>
+    .property-panel-table div {
+        padding-left: 0px;
+    }
+</style>
+<script>
+    @* custom code start *@
+    function treeMapLoad(args) {
+        window.treemap = args.treemap;
+        var theme = themeName ? themeName : 'Material';
+        args.treemap.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+    }
+    @* custom code end *@
+    window.onload = function () {
+        window.layoutMode = new ej.dropdowns.DropDownList({
+            index: 0,
+            width: '100%',
+            change: function () {
+                window.treemap.layoutType = window.layoutMode.value;
+                window.treemap.refresh();
+            }
+        });
+        window.layoutMode.appendTo('#layoutMode');
+        window.directionMode = new ej.dropdowns.DropDownList({
+            index: 0,
+            width: '100%',
+            change: function () {
+                window.treemap.renderDirection = window.directionMode.value;
+                window.treemap.refresh();
+            }
+        });
+        window.directionMode.appendTo('#directionMode');
+    };
+</script>
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Layout in ASP.NET Core TreeMap control. Explore here for more details."/>
+                }
+@section ActionDescription{
+    <div id="action-description">
+    <p>
+        This sample illustrates the details of GDP Nominal of top 10 countries in the year 2015. Layout of the treemap can be changed by using the <code>Layout Type</code> in properties panel.
+    </p>
+</div>
+}
+@section Description{
+<div id="description">
+    <p>
+        In this example, you can change the layout of the treemap and we have applied desaturation color mapping, to denote weightage of the items by varying the fill color. Also we have formatted the labels text and placed it in multiple lines.
+    </p>
+    <p>
+        Tooltip is enabled in this example. To see the tooltip in action, hover the mouse over an item or tap an item in touch enabled devices.
+    </p>
+</div>
+}
+@section Title{
+                    <title>ASP.NET Core TreeMap Layout Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Layout in ASP.NET Core TreeMap Control</h1>
+                }

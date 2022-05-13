@@ -1,0 +1,201 @@
+@using Syncfusion.EJ2
+@using Syncfusion.EJ2.Navigations
+@using Syncfusion.EJ2.DropDowns
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Hamburger Mode in ASP.NET Core Menu Bar control. Explore here for more details."/>
+                }
+@section ControlsSection{
+    <div class="control-section">
+        <div class="col-lg-8 control-section">
+            <div class="menu-control">
+                <div id='layoutcontainer' class="deviceLayout">
+                    <div class="speaker">
+                        <div class="camera"></div>
+                    </div>
+                    <div class="layout">
+                        <div id="container">
+                            <ejs-menu id="menu" items="ViewBag.data" hamburgerMode="true" showItemOnClick="true" created="menuCreated">
+                            </ejs-menu>
+                        </div>
+                    </div>
+                    <div class="outerButton"> </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 property-section">
+            <table id="property" title="Properties" style="width: 100%">
+                <tbody>
+                    <tr>
+                        <td style="width: 50%;padding-top:10px">
+                            <div>View Mode</div>
+                        </td>
+                        <td style="width: 50%;padding-top:10px">
+                            <div style="max-width: 200px">
+                                <ejs-dropdownlist id="ddl" dataSource="ViewBag.ddlData" popupHeight="200px" change="ddlChange" index="0">
+                                    <e-dropdownlist-fields value="value" text="text"></e-dropdownlist-fields>
+                                </ejs-dropdownlist>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This sample demonstrates the hamburger mode in the <code>menu</code> component.</p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            Enabling the <code>hamburgerMode</code> property makes the <code>menu</code> component in adaptive view. By default, its shows header with
+            hamburger icon in <code>Horizontal</code> orientation.
+        </p>
+        <p>The menu shows on clicking hamburger icon. You can use the <code>open</code> and <code>close</code> methods to show / hide the menu programmatically.</p>
+        <p>
+            More information about Menu can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/menu/getting-started">
+                documentation
+            </a> section.
+        </p>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        // Getting Menu control instance
+        var menuObj = ej.base.getComponent(document.getElementById('menu'), 'menu');
+    </script>
+}
+
+<script>
+    function ddlChange(args) {
+        var container = document.querySelector('#layoutcontainer');
+        switch (args.value) {
+            case 'Mobile':
+            case 'Tablet':
+                menuObj.close();
+                container.classList.add('deviceLayout');
+                container.classList[args.value === 'Mobile' ? 'remove' : 'add']('tabletview');
+                menuObj.element.parentElement.classList[args.value === 'Mobile' ? 'remove' : 'add']('e-menu-icon-right');
+                menuObj.hamburgerMode = true;
+                menuObj.showItemOnClick = true;
+                break;
+            case 'Desktop':
+                container.classList.remove('deviceLayout', 'tabletview');
+                menuObj.hamburgerMode = false;
+                menuObj.showItemOnClick = false;
+                break;
+        }
+    }
+    // custom code start
+    function menuCreated() {
+        if (ej.base.Browser.isDevice) {
+            ej.base.select('.property-section').remove();
+            ej.base.select('.sb-mobile-setting').classList.add('sb-hide');
+            ej.base.select('#layoutcontainer').removeAttribute('class');
+            ej.base.select('#layoutcontainer').removeAttribute('id');
+            ej.base.select('#menu').style.height = '363px';
+        }
+    }
+    // custom code end
+</script>
+<style>
+    /**
+    * ej2 Menu styles customization
+    */
+    .deviceLayout #menu {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        height: 363px;
+    }
+
+    .deviceLayout #menu::-webkit-scrollbar {
+        width: 0;
+    }
+</style>
+@*custom code start*@
+<style>
+    /**
+    * ej2 Menu styles
+    */
+    .menu-control {
+        text-align: center;
+    }
+
+    #layoutcontainer:not(.deviceLayout) {
+        margin-top: 45px;
+    }
+
+    .deviceLayout {
+        line-height: initial;
+        border: 1px solid black;
+        width: 285px;
+        height: 505px;
+        margin: auto;
+        margin-bottom: 15px;
+        border-radius: 28px;
+        position: relative;
+        background-image: linear-gradient(to top, #ffffff, #f5f5f5);
+    }
+
+        .deviceLayout.tabletview {
+            width: 767px;
+        }
+
+        .deviceLayout .speaker {
+            border: 1px solid black;
+            border-radius: 5px;
+            width: 20%;
+            height: 5px;
+            margin: 15px auto 0px auto;
+            position: relative;
+        }
+
+        .deviceLayout .outerButton {
+            width: 30px;
+            height: 30px;
+            border: 1px solid black;
+            border-radius: 50%;
+            position: absolute;
+            bottom: calc(0% + 10px);
+            left: calc(50% - 15px);
+        }
+
+        .deviceLayout .camera {
+            position: absolute;
+            left: calc(-15% - 10px);
+            top: -100%;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: 1px solid black;
+        }
+
+        .deviceLayout .layout {
+            border: 1px solid black;
+            margin: 20px 13px 0px 13px;
+        }
+
+    .layout #container {
+        height: 405px;
+        background-color: white;
+        overflow: hidden;
+    }
+
+    #header {
+        width: 100%;
+        background-color: #7b8cfb;
+    }
+</style>
+@*custom code end*@
+@section Title{
+                    <title>ASP.NET Core Menu Bar Hamburger Mode Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Hamburger Mode in ASP.NET Core Menu Bar Control</h1>
+                }

@@ -1,0 +1,165 @@
+@using Syncfusion.EJ2
+
+
+@section ControlsSection{
+    <div>
+        <div class="col-lg-9 control-section">
+            <div class="content-wrapper">
+                @{
+                    var dict = new Dictionary<string, object>();
+                    dict.Add("number", true);
+                    dict.Add("min", 0);
+                }
+                <ejs-treegrid id="TreeGrid" dataSource="ViewBag.dataSource" childMapping="Children" height="350" treeColumnIndex="1" allowPaging="true" allowSorting="true" allowReordering="true"
+                              load="load" actionBegin="actionBegin" actionComplete="actionComplete" expanded="expanded" collapsed="collapsed" columnDragStart="columnDragStart"
+                              beginEdit="beginEdit" rowDeselected="rowDeselected" rowSelected="rowSelected" rowSelecting="rowSelecting" rowDeselecting="rowDeselecting" dataBound="ondataBound"
+                              columnDrag="columnDrag" columnDrop="columnDrop" created="create">
+                    <e-treegrid-editsettings allowEditing="true"></e-treegrid-editsettings>
+                    <e-treegrid-pagesettings pageSize="10"></e-treegrid-pagesettings>
+                    <e-treegrid-columns>
+                        <e-treegrid-column field="TaskId" headerText="Task ID" isPrimaryKey="true" validationRules="@(new { required=true, number=true})" textAlign="Right" width="100"></e-treegrid-column>
+                        <e-treegrid-column field="TaskName" headerText="Task Name" validationRules="@(new { required=true})" editType="stringedit" width="210"></e-treegrid-column>
+                        <e-treegrid-column field="StartDate" headerText=" Start Date" validationRules="@(new { date=true})" editType="datepickeredit" textAlign="Right" format="yMd" type="date" width="150"></e-treegrid-column>
+                        <e-treegrid-column field="Duration" headerText="Duration" validationRules="@(dict)" editType="numericedit" textAlign="Right" edit="@(new{@params=new{format="n"}})" width="120"></e-treegrid-column>
+                    </e-treegrid-columns>
+                </ejs-treegrid>
+            </div>
+        </div>
+        <div class="col-lg-3 property-section">
+            <table id="property" title="Event Trace">
+                <tr>
+                    <td>
+                        <div class="eventarea" style="height: 245px;overflow: auto">
+                            <span class="EventLog" id="EventLog" style="word-break: normal;"></span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="evtbtn" style="padding-bottom: 10px">
+                            <ejs-button id="clear" cssClass="btn btn-default" content="Clear"></ejs-button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
+    <script>
+        document.getElementById('clear').onclick = () => {
+            document.getElementById('EventLog').innerHTML = '';
+        };
+        function collapsing() {
+            appendElement('TreeGrid <b>collapsing</b> event called<hr>');
+        }
+        function collapsed() {
+            appendElement('TreeGrid <b>collapsed</b> event called<hr>');
+        }
+        function expanded() {
+            appendElement('TreeGrid <b>expanded</b> event called<hr>');
+        }
+        function expanding() {
+            appendElement('TreeGrid <b>expanding</b> event called<hr>');
+        }
+        function beginEdit() {
+            appendElement('TreeGrid <b>beginEdit</b> event called<hr>');
+        }
+        function columnDragStart() {
+            appendElement('TreeGrid <b>columnDragStart</b> event called<hr>');
+        }
+        function columnDrop() {
+            appendElement('TreeGrid <b>columnDrop</b> event called<hr>');
+        }
+        function columnDrag() {
+            appendElement('TreeGrid <b>columnDrag</b> event called<hr>');
+        }
+        function load() {
+            appendElement('TreeGrid <b>load</b> event called<hr>');
+        }
+        function create() {
+            appendElement('TreeGrid <b>create</b> event called<hr>');
+        }
+        function actionBegin() {
+            appendElement('TreeGrid <b>actionBegin</b> event called<hr>');
+        }
+        function actionComplete() {
+            appendElement('TreeGrid <b>actionComplete</b> event called<hr>');
+        }
+        function ondataBound() {
+            appendElement('TreeGrid <b>dataBound</b> event called<hr>');
+        }
+        function rowSelecting() {
+            appendElement('TreeGrid <b>rowSelecting</b> event called<hr>');
+        }
+        function rowSelected() {
+            appendElement('TreeGrid <b>rowSelected</b> event called<hr>');
+        }
+        function rowDeselecting() {
+            appendElement('TreeGrid <b>rowDeselecting</b> event called<hr>');
+        }
+        function rowDeselected() {
+            appendElement('TreeGrid <b>rowDeselected</b> event called<hr>');
+        }
+        function appendElement(html) {
+            var span = document.createElement('span');
+            span.innerHTML = html;
+            var log = document.getElementById('EventLog');
+            log.insertBefore(span, log.firstChild);
+        }
+    </script>
+
+    @*custom code start*@
+
+    <style>
+        #EventLog b {
+            color: #388e3c;
+        }
+
+        hr {
+            margin: 1px 10px 1px 0px;
+            border-top: 1px solid #eee;
+        }
+    </style>
+
+    @*custom code end*@
+}
+
+@*custom code start*@
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Events in ASP.NET Core Tree Grid control. Explore here for more details."/>
+                }
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates all the events that have been triggered on all the TreeGrid operations with the help of Event Trace
+            panel.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            The TreeGrid triggers events based on its actions. The events can be used as an extension
+            point to perform custom operations.
+        </p>
+        <p>
+            In this demo, perform TreeGrid actions like paging, sorting, reordering, filtering etc. and see
+            the <strong>Event Trace</strong> panel for the events emitted.
+        </p>
+        <p>
+            More information on the Grid events can be found in the documentation section.
+        </p>
+    </div>
+}
+
+@*custom code end*@
+@section Title{
+                    <title>ASP.NET Core Tree Grid Events Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Events in ASP.NET Core Tree Grid Control</h1>
+                }

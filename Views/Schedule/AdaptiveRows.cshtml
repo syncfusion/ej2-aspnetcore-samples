@@ -1,0 +1,94 @@
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+    <div class="col-lg-9 control-section">
+        <div class="content-wrapper">
+            <ejs-schedule id="schedule" width="100%" height="650px" selectedDate="new DateTime(DateTime.Today.Year, 8, 2)" currentView="TimelineWeek" rowAutoHeight="true">
+                <e-schedule-views>
+                    <e-schedule-view option="TimelineDay"></e-schedule-view>
+                    <e-schedule-view option="TimelineWeek"></e-schedule-view>
+                </e-schedule-views>
+                <e-schedule-group enableCompactView="false" resources="@ViewBag.ResourceNames"></e-schedule-group>
+                <e-schedule-resources>
+                    <e-schedule-resource dataSource="@ViewBag.RoomDatas" field="RoomId" title="Room Type" name="MeetingRoom" allowMultiple="true" textField="name" idField="id" colorField="color"></e-schedule-resource>
+                </e-schedule-resources>
+                <e-schedule-eventsettings dataSource="@ViewBag.datasource">
+                    <e-eventsettings-fields>
+                        <e-field-subject name="Subject" title="Summary"></e-field-subject>
+                        <e-field-location name="Location" title="Location"></e-field-location>
+                        <e-field-description name="Description" title="Comments"></e-field-description>
+                        <e-field-starttime name="StartTime" title="From"></e-field-starttime>
+                        <e-field-endtime name="EndTime" title="To"></e-field-endtime>
+                    </e-eventsettings-fields>
+                </e-schedule-eventsettings>
+            </ejs-schedule>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties" style="width: 100%">
+            <tbody>
+                <tr style="height: 50%">
+                    <td style="width: 100%">
+                        <ejs-checkbox id="adaptive-rows" change="onChange" checked="true" label="Row Auto Height"></ejs-checkbox>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <style>
+        .e-schedule .e-timeline-view .e-resource-left-td {
+            width: 120px;
+        }
+
+        .e-schedule .e-timeline-view .e-resource-text {
+            padding-left: 20px;
+        }
+
+        .e-schedule .e-timeline-view .e-block-appointment {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+
+    <script type="text/javascript">
+        function onChange(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            scheduleObj.rowAutoHeight = args.checked;
+        }
+    </script>
+}
+@*custom code start*@
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Row Auto Height in ASP.NET Core Scheduler control. Explore here for more details."/>
+                }
+@*custom code end*@
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This example showcases how the work-cells of Scheduler auto-adjust its height based on the number of
+            appointments present in those time ranges.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this example, <code>rowAutoHeight</code> property is set as <code>true</code> to auto-adjust the height
+            of work cells based
+            on the number of appointments present in the same time ranges. Also, this functionality is applicable only on
+            all the timeline views as well as on the calendar month view. When this option is disabled, the height of the
+            work
+            cells remains static and at the time of exceeding appointments count, the <code>+n more</code> text indicator
+            will be
+            shown at the bottom of the cells.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Scheduler Row Auto Height Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Row Auto Height in ASP.NET Core Scheduler Control</h1>
+                }

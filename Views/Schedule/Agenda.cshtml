@@ -1,0 +1,103 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="col-lg-9 control-section">
+        <div class="schedule-wrapper">
+            <ejs-schedule id="schedule" width="100%" height="650px" selectedDate="new DateTime(DateTime.Today.Year, 6, 20)" currentView="Agenda">
+                <e-schedule-eventsettings dataSource="@ViewBag.appointments"></e-schedule-eventsettings>
+                <e-schedule-views>
+                    <e-schedule-view option="Agenda" allowVirtualScrolling="false"></e-schedule-view>
+                </e-schedule-views>
+            </ejs-schedule>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id='property' title='Properties' class='property-panel-table' style="width: 100%;">
+            <tbody>
+                <tr style="height: 50px">
+                    <td style="width: 100%;">
+                        <div>
+                            <ejs-dropdownlist id="virtualscroll" dataSource="@ViewBag.data" change="onScrollChange" value="@("false")" floatLabelType="Always" placeholder="Allow Virtual Scrolling">
+                                <e-dropdownlist-fields text="Name" value="Value"></e-dropdownlist-fields>
+                            </ejs-dropdownlist>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td style="width: 100%;">
+                        <div>
+                            <ejs-dropdownlist id="hideemptydays" dataSource="@ViewBag.data" change="onChange" value="@("true")" floatLabelType="Always" placeholder="Hide Empty Days">
+                                <e-dropdownlist-fields text="Name" value="Value"></e-dropdownlist-fields>
+                            </ejs-dropdownlist>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td style="width: 100%;">
+                        <div>
+                            <ejs-numerictextbox id="agendadayscount" format="n0" value="7" min="1" max="15" Type="text" change="onCountChange" floatLabelType="Always" placeholder="Days Count"></ejs-numerictextbox>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script type="text/javascript">
+        function onScrollChange(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            var allowVS = (args.value === "true") ? true : false;
+            scheduleObj.views = [{ option: "Agenda", allowVirtualScrolling: allowVS }];
+            scheduleObj.dataBind();
+        }
+        function onChange(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            scheduleObj.hideEmptyAgendaDays = (args.value === "true") ? true : false;
+            scheduleObj.dataBind();
+        }
+        function onCountChange(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            scheduleObj.agendaDaysCount = args.value !== null ? args.value : 7;
+            scheduleObj.dataBind();
+        }
+    </script>
+}
+
+@*custom code start*@
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Agenda View in ASP.NET Core Scheduler control. Explore here for more details."/>
+                }
+@*custom code end*@
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This demo showcases the agenda view and the configurations available in it.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            In this demo, Agenda view is set as active view on Scheduler and made its <code>allowVirtualScrolling</code> option as false. With this
+            settings, the Agenda view loads the initial data for the next 7 days count from the date value assigned to the
+            <code>selectedDate</code> property of the Schedule. The initial data loading for 7 days count is due to the default value assigned to the
+            <code>agendaDaysCount</code> property which can be customized as per the user needs.
+        </p>
+        <p>
+            When the <code>allowVirtualScrolling</code> property is set to true, the user is allowed to scroll through all the events simply by
+            scrolling up and down upto the last event available in Schedule.
+        </p>
+        <p>
+            By default, the days which doesn't have any events will be hidden on this view - but by setting
+            <code>hideEmptyAgendaDays</code> property to false will allow the
+            <code>No Events</code> text to be displayed against the dates that has no events.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Scheduler Agenda View Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Agenda View in ASP.NET Core Scheduler Control</h1>
+                }

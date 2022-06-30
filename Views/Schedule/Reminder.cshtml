@@ -1,0 +1,87 @@
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+    <div class="control-section">
+        <ejs-schedule id="Schedule" height="550" created="onCreated" destroyed="onDestroyed" timezone="UTC">
+            <e-schedule-eventsettings dataSource="@ViewBag.appointments"></e-schedule-eventsettings>
+        </ejs-schedule>
+        <ejs-toast id="schedule-reminder" cssClass="e-schedule-reminder e-toast-info" newestOnTop="true" showCloseButton="true" timeOut="0" target=".e-schedule">
+            <e-toast-position X="Right" Y="Top"></e-toast-position>
+            <e-toast-animationsettings>
+                <e-toast-animationsettingsshow effect="SlideRightIn"></e-toast-animationsettingsshow>
+                <e-toast-animationsettingshide effect="SlideRightOut"></e-toast-animationsettingshide>
+            </e-toast-animationsettings>
+        </ejs-toast>
+    </div>
+
+    <script id="reminder-template" type="text/x-template">
+        <div class="e-toast-template">
+            <div class="e-toast-message">
+                <div class="e-toast-title">${Subject}</div>
+                <div class="e-toast-content">${StartTime.toLocaleTimeString()} - ${EndTime.toLocaleTimeString()}</div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/javascript">
+        var reminderInterval;
+
+        function onCreated() {
+            reminderInterval = setInterval(refreshEventReminder, 10000);
+        }
+
+        function onDestroyed() {
+            if (reminderInterval) {
+                clearInterval(reminderInterval);
+            }
+        }
+
+        function refreshEventReminder() {
+            var scheduleObj = document.querySelector('.e-schedule').ej2_instances[0];
+            var toastObjReminder = document.querySelector('.e-toast').ej2_instances[0];
+            var eventCollection = scheduleObj.getCurrentViewEvents();
+            eventCollection.forEach(function (event, i) {
+                var dateFormat = function (date) {
+                    return new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds());
+                }
+                var startTime = dateFormat(event[scheduleObj.eventFields.startTime]);
+                var currentTime = dateFormat(new Date(new Date().toUTCString().slice(0, -3)));
+                var difference = currentTime.getTime() - startTime.getTime() ;
+                if (difference >= 0 && difference <= 10000) {
+                    toastObjReminder.show({
+                        template: (ej.base.compile(document.getElementById("reminder-template").innerHTML.trim())(event)[0]).outerHTML
+                    });
+                }
+            });
+        }
+    </script>
+}
+
+@*custom code start*@
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Reminder in ASP.NET Core Scheduler control. Explore here for more details."/>
+                }
+@*custom code end*@
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This demo showcases an event reminder notification that will be displayed after 10 seconds of sample getting loaded.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            In this example, the <code>Toast</code> component is used to show the reminder notification. The reminder notification will be displayed after 10 seconds.
+            We can also customize the notification interval as per our needs.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Scheduler Reminder Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Reminder in ASP.NET Core Scheduler Control</h1>
+                }

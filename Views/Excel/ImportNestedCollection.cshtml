@@ -1,0 +1,164 @@
+@using Syncfusion.EJ2
+
+@section ActionDescription{
+    This sample demonstrates how to use Nested Collection in spreadsheets using XlsIO.
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Import Nested Collection in ASP.NET Core Excel (XlsIO) library. Explore here for more details."/>
+                }
+@section Description{
+	Essential XlsIO allows you to import data directly from nested collection objects with import data layout and group options.
+    <br />
+	<br />This sample demonstrates the usage of Nested Collection objects using Essential XlsIO.
+}
+@section ControlsSection{
+<div class="control-section">
+    @{Html.BeginForm("ImportNestedCollection", "Excel", FormMethod.Post);
+        <div class="rowdiv">
+            <p style="font-weight:normal">
+                Click the "Create Document" button to view the created Excel document. Please note that the Microsoft Excel viewer or Microsoft Excel is required to view the Excel document.
+            </p>
+            </div>
+            <br />
+            @*<div class="rowdiv">
+                <div class="celldiv">
+                    <label style="font-weight:normal">
+                        Layout Options
+                    </label> &nbsp;
+                    <select name="FilterType" id="filterType" onchange="OnTypeChange()" class="e-dropdown-popup">
+                        <option>Default</option>
+                        <option>Merge</option>
+                        <option>Repeat</option>
+                    </select>
+                </div>
+            </div>
+            <br />*@
+            <div class="rowdiv">
+                <div class="celldiv">
+                    <table>
+                        <tr>
+                            <td style="width:110px;">
+                                <label style="font-weight:normal">
+                                    Layout Options
+                                </label>
+                            </td>
+                            <td>
+                                <select name="LayoutOptions" id="layoutOption" style="width:160px;">
+                                    <option>Default</option>
+                                    <option>Merge</option>
+                                    <option>Repeat</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <br />
+            <div class="rowdiv">
+                <div class="celldiv">
+                    <table>
+                        <tr>
+                            <td style="width:110px;"></td>
+                            <td>
+                                <input id="chb1" type="checkbox" name="checkbox" onchange="checkboxClick()" value="Group" />
+                                <label id="lb4" style="font-weight:normal">Apply Group</label>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="rowdiv" name="Group Option" id="groupOption">
+                <br/>
+                <div class="celldiv">
+                    <table>
+                        <tr>
+                            <td style="width:110px;"></td>
+                            <td>
+                                <label id="lb1" style="font-weight:normal">Option</label>
+                                <br />
+                                <input id="rdbExpand" type="radio" name="rdb1" checked="checked" value="Expand" onchange="radioBtnClick()" />
+                                <label id="lb2" style="font-weight:normal">Expand</label>
+                                <br />
+                                <input id="rdbCollapse" type="radio" name="rdb1" value="Collapse" onchange="radioBtnClick()" />
+                                <label id="lb3" style="font-weight:normal">Collapse at Level</label>
+                                &nbsp;&nbsp;
+                                <input id="txb1" name="textBox" type="text" value="1" style="width:40px;" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <br />
+            <div class="celldiv">
+                <table>
+                    <tr>
+                        <td style="width:110px;"></td>
+                        <td>
+                            <input id="generate" class="e-btn" type="submit" name="button" value="Create Document" style="width:160px; text-transform:capitalize" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <script type="text/javascript">
+                function ready() {
+                    document.getElementById("groupOption").hidden = true;
+                    document.getElementById("txb1").hidden = true;
+                }
+                window.onload = ready;
+            </script>
+            <script type="text/javascript">
+                function checkboxClick() {
+                    var other = document.getElementById("chb1").checked;
+                    if (other == false) {
+                        document.getElementById("groupOption").hidden = true;
+                    }
+                    else {
+                        document.getElementById("groupOption").hidden = false;
+                    }
+                }
+            </script>
+            <script type="text/javascript">
+                function radioBtnClick() {
+                    var other = document.getElementById("rdbCollapse").checked;
+                    if (other == false) {
+                        document.getElementById("txb1").hidden = true;
+                    }
+                    else {
+                        document.getElementById("txb1").hidden = false;
+                    }
+                }
+            </script>
+
+            <style>
+                .ename {
+                    font-weight: bold;
+                    display: block !important;
+                    opacity: .87;
+                }
+
+                .eimg {
+                    padding: 10px 8px;
+                    width: 16px;
+                    height: 16px;
+                    float: left;
+                }
+
+                .e-dropdownbase .e-list-item * {
+                    display: block;
+                }
+            </style>
+        }
+    </div>
+}
+@section Scripts{
+    <script type="text/javascript">
+        ready();
+    </script>
+
+}
+@section Title{
+                    <title>ASP.NET Core Excel (XlsIO) library - Import Nested Collection Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Import Nested Collection in ASP.NET Core Excel (XlsIO) Library</h1>
+                }

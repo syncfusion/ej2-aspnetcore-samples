@@ -1,0 +1,205 @@
+@using Syncfusion.EJ2;
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Gradient Color in ASP.NET Core LinearGauge control. Explore here for more details."/>
+                }
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample shows how linear gradient color and radial gradient color are applied to the linear gauge elements.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            The linear gauge supports gradient coloring in a linear or radial manner. The gradient type can be changed using the <b>Gradient Type</b> dropdown list in the properties panel. In the same way, the element for which the gradient color should be applied is decided by the <b>Elements</b> dropdown list.
+        </p>
+    </div>
+}
+@section ControlsSection {
+@{ 
+    var labelFont = new Syncfusion.EJ2.LinearGauge.LinearGaugeFont { FontFamily = "Segoe UI", Opacity = 1 };
+}
+
+    <div class="col-lg-8 control-section">
+        <div style="width:92% ;margin-bottom: 50px;margin-left:10px;">
+        <ejs-lineargauge id="gauge" load="gaugeLoad" orientation="Horizontal">
+            <e-lineargauge-container width="30" offset="30"> </e-lineargauge-container>
+            <e-lineargauge-axes>
+                <e-lineargauge-axis>
+                    <e-axis-line width="0"></e-axis-line>
+                    <e-axis-labelstyle font="labelFont">
+                    </e-axis-labelstyle>
+                </e-lineargauge-axis>
+            </e-lineargauge-axes>
+        </ejs-lineargauge>
+        </div>
+    </div>
+    <div class="col-md-4 property-section">
+        <table id="property" title="Properties" style="width: 100%">
+            <tr style="height: 50px;">
+                <td>
+                    <div> Gradient Type </div>
+                </td>
+                <td>
+                    <div>
+                        <select autocomplete="off" id="gradient">
+                            <option value="linear">Linear Gradient</option>
+                            <option value="radial">Radial Gradient</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr style="height: 50px;">
+                <td>
+                    <div> Elements </div>
+                </td>
+                <td>
+                    <div>
+                        <select autocomplete="off" id="element">
+                            <option value="range">Range</option>
+                            <option value="pointer">Pointer</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+}
+<style>
+    .property-panel-table div {
+        padding-left: 0px;
+    }
+</style>
+    <script>
+        var gauge;
+        var rangeLinearGradient = {
+            startValue: '0%',
+            endValue: '100%',
+            colorStop: [
+            { color: '#fef3f9', offset: '0%', opacity: 1 },
+            { color: '#f54ea2', offset: '100%', opacity: 1 }]
+        };
+        var rangeRadialGradient = {
+            radius: '65%',
+            outerPosition: { x: '50%', y: '70%' },
+            innerPosition: { x: '60%', y: '60%' },
+            colorStop: [
+            { color: '#fff5f5', offset: '5%', opacity: 0.9 },
+            { color: '#f54ea2', offset: '100%', opacity: 0.9 }]
+        };
+        var pointerLinearGradient = {
+            startValue: '0%',
+            endValue: '100%',
+            colorStop: [
+            { color: '#fef3f9', offset: '0%', opacity: 1 },
+            { color: '#f54ea2', offset: '100%', opacity: 1 }]
+        };
+        var pointerRadialGradient = {
+            radius: '60%',
+            outerPosition: { x: '50%', y: '50%' },
+            innerPosition: { x: '50%', y: '50%' },
+            colorStop: [
+            { color: '#fff5f5', offset: '0%', opacity: 0.9 },
+            { color: '#f54ea2', offset: '100%', opacity: 0.8 }]
+        };
+        var linearCheck = true;
+        window.gaugeLoad = function (args) {
+            if (window.gaugeLoaded)
+                return;
+            window.gaugeLoaded = true;
+            var theme = themeName ? themeName : 'Material';
+            args.gauge.theme = (theme.charAt(0).toUpperCase() +
+                theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+            window.gauge = args.gauge;
+            var axis = args.gauge.axes[0];
+            axis.majorTicks = {
+                height: 0,
+                interval: 25
+            };
+            axis.labelStyle = {
+                offset: 55
+            };
+            axis.pointers = [{
+                value: 80,
+                markerType: 'Triangle',
+                height: 25,
+                width: 35,
+                placement: 'Near',
+                offset: -44,
+                color: '#f54ea2',
+            }];
+            axis.ranges = [{
+                start: 0, end: 80,
+                startWidth: 30, endWidth: 30,
+                color: '#f54ea2', offset: 30,
+
+            }];
+            axis.minorTicks = {
+                height: 0
+            };
+            if (linearCheck) {
+                args.gauge.axes[0].ranges[0].linearGradient = rangeLinearGradient;
+                linearCheck = false;
+            }
+    }
+        window.addEventListener('load', function () {
+            function changeGradient() {
+                var gradientValue = gradientType.value;
+                var elementValue = element.value;
+                if (gradientValue === "radial" && elementValue === "range") {
+                    gauge.axes[0].ranges[0].linearGradient = null;
+                    gauge.axes[0].ranges[0].radialGradient = rangeRadialGradient;
+                    gauge.axes[0].pointers[0].linearGradient = null;
+                    gauge.axes[0].pointers[0].radialGradient = null;
+                    gauge.refresh();
+                }
+                if (elementValue === "range" && gradientValue === "linear") {
+                    gauge.axes[0].ranges[0].linearGradient = rangeLinearGradient;
+                    gauge.axes[0].ranges[0].radialGradient = null;
+                    gauge.axes[0].pointers[0].linearGradient = null;
+                    gauge.axes[0].pointers[0].radialGradient = null;
+                    gauge.refresh();
+                }
+                if (gradientValue === "radial" && elementValue === "pointer") {
+                    gauge.axes[0].pointers[0].radialGradient = pointerRadialGradient;
+                    gauge.axes[0].pointers[0].linearGradient = null;
+                    gauge.axes[0].ranges[0].linearGradient = null;
+                    gauge.axes[0].ranges[0].radialGradient = null;
+                    gauge.refresh();
+                }
+                if (gradientValue === "linear" && elementValue === "pointer") {
+                    gauge.axes[0].pointers[0].linearGradient = pointerLinearGradient;
+                    gauge.axes[0].pointers[0].radialGradient = null;
+                    gauge.axes[0].ranges[0].linearGradient = null;
+                    gauge.axes[0].ranges[0].radialGradient = null;
+                    gauge.refresh();
+                }
+            }
+            var gradientType = new ej.dropdowns.DropDownList({
+                index: 0,
+                placeholder: 'Select gradient type',
+                width: '100%',
+                change: function () {
+                    changeGradient();
+                }
+            });
+            gradientType.appendTo('#gradient');
+            var element = new ej.dropdowns.DropDownList({
+                index: 0,
+                placeholder: 'Select element type',
+                width: '100%',
+                change: function () {
+                    changeGradient();
+                }
+            });
+            element.appendTo('#element');
+        });
+    </script>
+    }
+    @section Title{
+                    <title>ASP.NET Core LinearGauge Gradient Color Example - Syncfusion Demos </title> 
+                }
+    @section Header{
+                    <h1 class='sb-sample-text'>Example of Gradient Color in ASP.NET Core LinearGauge Control</h1>
+                }

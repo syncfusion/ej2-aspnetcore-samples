@@ -1,0 +1,362 @@
+@using Syncfusion.EJ2;
+@using Syncfusion.EJ2.Notifications;
+@using Syncfusion.EJ2.DropDowns;
+@using Syncfusion.EJ2.Buttons;
+@using EJ2CoreSampleBrowser.Controllers.Toast;
+
+@using Syncfusion.EJ2.Inputs;
+@{
+    List<dropData> easingData = new List<dropData>();
+    easingData.Add(new dropData { Id = "ease", Value = "Ease" });
+    easingData.Add(new dropData { Id = "linear", Value = "Linear" });
+
+    List<dropData> directionData = new List<dropData>();
+    directionData.Add(new dropData { Id = "Rtl", Value = "Right to Left" });
+    directionData.Add(new dropData { Id = "Ltr", Value = "Left to Right" });
+
+    List<dropData> animationData = new List<dropData>();
+    animationData.Add(new dropData { Id = "SlideBottomIn", Value = "Slide Bottom In" });
+    animationData.Add(new dropData { Id = "FadeIn", Value = "Fade In" });
+    animationData.Add(new dropData { Id = "FadeZoomIn", Value = "Fade Zoom In" });
+    animationData.Add(new dropData { Id = "FadeZoomOut", Value = "Fade Zoom Out" });
+    animationData.Add(new dropData { Id = "FlipLeftDownIn", Value = "Flip Left Down In" });
+    animationData.Add(new dropData { Id = "FlipLeftDownOut", Value = "Flip Left Down Out" });
+    animationData.Add(new dropData { Id = "FlipLeftUpIn", Value = "Flip Left Up In" });
+    animationData.Add(new dropData { Id = "FlipLeftUpOut", Value = "Flip Left Up Out" });
+    animationData.Add(new dropData { Id = "FlipRightDownIn", Value = "Flip Right Down In" });
+    animationData.Add(new dropData { Id = "FlipRightDownOut", Value = "Flip Right Down Out" });
+    animationData.Add(new dropData { Id = "FlipRightUpIn", Value = "Flip Right Up In" });
+    animationData.Add(new dropData { Id = "FlipRightUpOut", Value = "Flip Right Up Out" });
+    animationData.Add(new dropData { Id = "SlideBottomOut", Value = "Slide Bottom Out" });
+    animationData.Add(new dropData { Id = "SlideLeftIn", Value = "Slide Left In" });
+    animationData.Add(new dropData { Id = "SlideLeftOut", Value = "Slide Left Out" });
+    animationData.Add(new dropData { Id = "SlideRightIn", Value = "Slide Right In" });
+    animationData.Add(new dropData { Id = "SlideRightOut", Value = "Slide Right Out" });
+    animationData.Add(new dropData { Id = "SlideTopIn", Value = "Slide Top In" });
+    animationData.Add(new dropData { Id = "SlideTopOut", Value = "Slide Top Out" });
+    animationData.Add(new dropData { Id = "ZoomIn", Value = "Zoom In" });
+    animationData.Add(new dropData { Id = "ZoomOut", Value = "Zoom Out" });
+}
+@section ControlsSection{
+    <div class="col-lg-12 control-section toast-api-section">
+        <div class="control_wrapper">
+            <ejs-toast id="toastApi" close="onclose" beforeOpen="onBeforeOpen" created="created">
+                <e-toast-position X="Right" Y="Bottom"></e-toast-position>
+            </ejs-toast>
+            <div class="row">
+                <div class="col-lg-6 padding">
+                    <div class="input-form">
+                        <div class="e-float-input">
+                            <input class="e-input" id="toast_input_title" required="">
+                            <span class="e-float-line"></span>
+                            <label class="e-float-text">Enter the title</label>
+                        </div>
+                    </div>
+                    <div class="input-form">
+                        <div class="e-float-input">
+                            <textarea class="e-input" id="toast_input_content" rows="3" required=""></textarea>
+                            <label class="e-float-text">Enter the content</label>
+                        </div>
+                    </div>
+                    <div class="group-form e-group">
+                        <ejs-checkbox id="closeButton" label="Show Close Button" change="closeOnChange"></ejs-checkbox>
+                    </div>
+                    <div class="group-form">
+                        <ejs-checkbox id="progressBar" label="Show Progress Bar" change="OnProgressChange"></ejs-checkbox>
+                    </div>
+                    <div class="group-form">
+                        <ejs-checkbox id="newestOnTop" label="Newest On Top" change="closeNewestOnChange" checked="true"></ejs-checkbox>
+                    </div>
+                    <div class="group-form">
+                        <ejs-checkbox id="prevDuplicates" label="Prevent Duplicates" change="OnPrevDubChange"></ejs-checkbox>
+                    </div>
+                    <div class="group-form">
+                        <ejs-checkbox id="actionButtons" label="Action Buttons" change="OnactionBtnChange"></ejs-checkbox>
+                    </div>
+                    <div class="input-form">
+                        <ejs-dropdownlist id="Direction" dataSource="directionData" floatLabelType="Auto" change="onDirectionChange" placeholder="ProgressDirection" created="directionCreated" index="0">
+                            <e-dropdownlist-fields text="Value" value="Id"></e-dropdownlist-fields>
+                        </ejs-dropdownlist>
+                    </div>
+                    <div class="input-form">
+                        <div class="e-float-input e-input-group">
+                            <input class="e-input" id="timeOut" name="Digits" value="5000" digits="true" data-digits-message="Please enter digits only." required="">
+                            <span class="e-float-line"></span>
+                            <label class="e-float-text" for="Digits">TimeOut</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 padding">
+                    <div class="input-form">
+                        <h4> Show Animation</h4>
+                        <div class="e-float-input">
+                            <input class="e-input" id="showDuration" value="400" required="">
+                            <span class="e-float-line"></span>
+                            <label class="e-float-text">Duration</label>
+                        </div>
+                    </div>
+                    <div class="input-form">
+                        <ejs-dropdownlist id="ShowEasing" dataSource="easingData" change="onShowEase" placeholder="Select an Easing" created="showEasingCreated" index="0">
+                            <e-dropdownlist-fields text="Value" value="Id"></e-dropdownlist-fields>
+                        </ejs-dropdownlist>
+                    </div>
+                    <div class="input-form">
+                        <ejs-dropdownlist id="ShowAnimation" dataSource="animationData" change="showChange" placeholder="Select an Animation" created="showAnimationCreated" index="0">
+                            <e-dropdownlist-fields text="Value" value="Id"></e-dropdownlist-fields>
+                        </ejs-dropdownlist>
+
+                    </div>
+                    <div class="input-form e-group">
+                        <h4> Hide Animation</h4>
+                        <div class="e-float-input">
+                            <ejs-textbox id="hideDuration" cssClass="e-input" value="400" placeholder="Duration"></ejs-textbox>
+                        </div>
+                    </div>
+                    <div class="input-form">
+                        <ejs-dropdownlist id="HideEasing" dataSource="easingData" change="onHideEase" placeholder="Select an Easing" created="hideEasingCreated" index="0">
+                            <e-dropdownlist-fields text="Value" value="Id"></e-dropdownlist-fields>
+                        </ejs-dropdownlist>
+                    </div>
+                    <div class="input-form">
+                        <ejs-dropdownlist id="HideAnimation" dataSource="animationData" change="hideChange" placeholder="Select an Animation" created="hideAnimationCreated" index="1">
+                            <e-dropdownlist-fields text="Value" value="Id"></e-dropdownlist-fields>
+                        </ejs-dropdownlist>
+                    </div>
+                </div>
+            </div>
+            <div class="row center">
+                <ejs-button id="toastBtnShow" cssClass="e-btn e-primary" content="Show Toasts"></ejs-button>
+                <ejs-button id="toastBtnHide" cssClass="e-btn e-primary e-hide-toast" content="Hide all"></ejs-button>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var btnEleShow = document.getElementById('toastBtnShow');
+        var btnEleHide = document.getElementById('toastBtnHide');
+        var prevDuplicates = false;
+        var toastObj, showEasingObj, showAnimationObj, hideEasingObj, hideAnimationObj, directionObj;
+        btnEleShow.onclick = function () { showToast(); };
+        btnEleHide.onclick = function () {
+            toastObj.hide('All');
+        };
+
+        document.onclick = function (e){
+            if (e.target !== btnEleShow) {
+                toastObj.hide('All');
+            }
+        };
+    function created() {
+        toastObj = this;
+    }
+    function showEasingCreated() {
+        showEasingObj = this;
+    }
+    function directionCreated() {
+        directionObj = this;
+    }
+    function showAnimationCreated() {
+        showAnimationObj = this;
+    }
+    function hideEasingCreated() {
+        hideEasingObj = this;
+    }
+    function hideAnimationCreated() {
+        hideAnimationObj = this;
+    }
+        function showToast() {
+            var title = (document.getElementById('toast_input_title')).value;
+            var content = (document.getElementById('toast_input_content')).value;
+            if (title === '' && content === '') {
+                content = 'You have created a Toast message';
+            }
+            var showDuration = parseInt((document.getElementById('showDuration')).value, 10);
+            var hideDuration = parseInt((document.getElementById('hideDuration')).value, 10);
+            var timeOut = parseInt((document.getElementById('timeOut')).value, 10);
+            toastObj.show(
+                {
+                    title: title, content: content, timeOut: timeOut,
+                    animation: {
+                        show: { duration: showDuration },
+                        hide: { duration: hideDuration }
+                    }, target: document.body
+                });
+        }
+
+
+    setTimeout(
+            () => {
+                showChange();
+            }, 500);
+       
+        setTimeout(
+            () => {
+                hideChange();
+            }, 500);
+       
+
+
+    
+        function onShowEase(e) {
+            toastObj.animation.show.easing = showEasingObj.value;
+        }
+
+        function onDirectionChange() {
+            toastObj.progressDirection = directionObj.value;
+        }
+
+    function onHideEase(e) {
+        toastObj.animation.hide.easing = hideEasingObj.value;
+        }
+
+    function showChange() {
+        toastObj.animation.show.effect = showAnimationObj.value;
+        }
+
+    function hideChange() {
+        toastObj.animation.hide.effect = hideAnimationObj.value;
+        }
+
+        function onclose(e) {
+            if (e.toastContainer.childElementCount === 0) {
+                btnEleHide.style.display = 'none';
+            }
+        }
+
+        // Toast beforeOpen Event Function
+        function onBeforeOpen(e) 
+        {
+        btnEleHide.style.display = 'inline-block';
+            if (prevDuplicates) {
+                e.cancel = preventDuplicate(e);
+            }
+        }
+
+        // Toast preventDuplicate Function for toast title
+        function preventDuplicate(e) {
+            var toastEle = e.element;
+            var toasts = e.toastObj.element.children;
+            for (var i = 0; i < toasts.length; i++) {
+                var toastTitle = (toasts[i]).querySelector('.e-toast-title');
+                var toastMessage = (toasts[i]).querySelector('.e-toast-message');
+                if (toastTitle && toastTitle.isEqualNode(toastEle.querySelector('.e-toast-title'))) {
+                    return true;
+                }
+                if (!toastTitle && toastMessage && toastMessage.isEqualNode(toastEle.querySelector('.e-toast-message'))) {
+                    return true;
+                }
+
+            }
+            return false;
+        }
+
+        function closeOnChange(e) {
+            e.checked ? toastObj.showCloseButton = true : toastObj.showCloseButton = false;
+        }
+        function OnProgressChange(e) {
+            e.checked ? toastObj.showProgressBar = true : toastObj.showProgressBar = false;
+        }
+        function closeNewestOnChange(e) {
+            e.checked ? toastObj.newestOnTop = true : toastObj.newestOnTop = false;
+        }
+        function OnPrevDubChange(e) {
+            prevDuplicates = e.checked;
+        }
+        function onActionBtnClick(e) {
+            alert('Action button is clicked');
+        }
+        function OnactionBtnChange(e) {
+            if (e.checked) {
+                toastObj.buttons = [{ model: { content: '<div class="e-toast-btn"> Click Here </div>' }, click: onActionBtnClick }];
+            } else { toastObj.buttons = []; }
+        }
+
+    </script>
+    <style>
+        /* custom code start */
+        .toast-api-section .input-form {
+            margin: 33px 0;
+        }
+
+        .toast-api-section .group-form {
+            margin: 25px 0;
+        }
+
+            .toast-api-section .group-form.e-group {
+                margin-top: 35px;
+            }
+
+        .toast-api-section .row .padding {
+            padding: 15px;
+        }
+
+        .toast-api-section .row.center {
+            text-align: center;
+        }
+
+        .toast-api-section .row {
+            padding: 0 15px;
+        }
+        /* custom code end */
+          .e-btn.e-hide-toast{
+         display: none
+     }
+    </style>
+}
+
+@section ActionDescription{
+
+
+    <div id="action-description">
+        <p>This sample demonstrates all the API functionalities available in Toast.</p>
+    </div>
+
+
+
+}
+@section Description{
+
+
+   <div id="description">
+    <p>In this sample, with help of text inputs toast header title and content text can be provided.</p>
+    <ul>
+        <li>
+            <code>Action Buttons</code> – Provide support to add a button inside toast to interact with it.
+        </li>
+        <li>
+            <code>Prevent Duplicates</code> – Disable the user to create same toast message multiple times.
+        </li>
+        <li>
+            <code> TimeOut</code> – Allows to set time in millisecond to close toast.
+        </li>
+        <li>
+            <code> Progress Bar</code> – Visualizes the time out of toast as an indicator.
+        </li>
+        <li>
+            <code> Animation</code> – Enables to define the toast show and hide animation.
+        </li>
+        <li>
+            <code>Close button</code> – Show close button to hide toast irrespective of time out.
+        </li>
+    </ul>
+    <p>
+        More information about Toast can be found in this
+        <a href="https://ej2.syncfusion.com/aspnetcore/documentation/toast/getting-started/" target="_blank"> documentation section</a>.
+    </p>
+</div>
+
+
+}
+
+@*custom code start*@
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the API in ASP.NET Core Toast control. Explore here for more details."/>
+                }
+
+@*custom code end*@
+@section Title{
+                    <title>ASP.NET Core Toast API Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of API in ASP.NET Core Toast Control</h1>
+                }

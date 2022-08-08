@@ -1,0 +1,202 @@
+@using Syncfusion.EJ2
+@{
+    var alertanimation = new Syncfusion.EJ2.Popups.DialogAnimationSettings { Effect = Syncfusion.EJ2.Popups.DialogEffect.None };
+    var confirmanimation = new Syncfusion.EJ2.Popups.DialogAnimationSettings { Effect = Syncfusion.EJ2.Popups.DialogEffect.None };
+    var promptanimation = new Syncfusion.EJ2.Popups.DialogAnimationSettings { Effect = Syncfusion.EJ2.Popups.DialogEffect.None };
+    var alertbutton = new
+    {
+        content = "Dismiss",
+        isPrimary = true
+    };
+    var confirmbutton = new
+    {
+        content = "Yes",
+        isPrimary = true
+    };
+    var confirmbutton1 = new
+    {
+        content = "No",
+    };
+    var promptbutton = new
+    {
+        content = "Connect",
+        isPrimary = true
+    };
+    var promptbutton1 = new
+    {
+        content = "Cancel",
+    };
+}
+@section ControlsSection{
+    <div class=" col-lg-12 control-section" id="target">
+        <ejs-button id="alertBtn" class="dlgbtn" type="button" content="Alert"></ejs-button>
+        <ejs-button id="confirmBtn" class="dlgbtn" type="button" content="Confirm"></ejs-button>
+        <ejs-button id="promptBtn" class="dlgbtn" type="button" content="Prompt"></ejs-button>
+        <ejs-dialog id="alert_dialog" animationSettings="alertanimation" open="dialogOpen" close="dialogClose" visible="false" created="onLoadalert" target="#target" width="250px" header="Low Battery">
+            <e-content-template>
+                <div>10% of battery remaining</div>
+            </e-content-template>
+            <e-dialog-buttons>
+                <e-dialog-dialogbutton buttonModel="alertbutton" click="alertBtnClick"></e-dialog-dialogbutton>
+            </e-dialog-buttons>
+        </ejs-dialog>
+        <ejs-dialog id="confirm_dialog" animationSettings="confirmanimation" open="dialogOpen" close="dialogClose" visible="false" created="onLoadconfirm" width="400px" target="#target" header="Delete Multiple Items" showCloseIcon="true">
+            <e-content-template>
+                <div>Are you sure you want to permanently delete these items?</div>
+            </e-content-template>
+            <e-dialog-buttons>
+                <e-dialog-dialogbutton buttonModel="confirmbutton" click="confirmBtnClick"></e-dialog-dialogbutton>
+                <e-dialog-dialogbutton buttonModel="confirmbutton1" click="confirmBtnClick"></e-dialog-dialogbutton>
+            </e-dialog-buttons>
+        </ejs-dialog>
+        <ejs-dialog id="prompt_dialog" animationSettings="promptanimation" open="dialogOpen" close="dialogClose" visible="false" created="onLoadprompt" target="#target" width="330px" header="Join Wi-Fi network">
+            <e-content-template>
+                <table class='Table'>
+                    <tbody>
+                        <tr>
+                            <td>SSID:</td>
+                        </tr>
+                        <tr>
+                            <td><b>AndroidAP</b></td>
+                        </tr>
+                        <tr>
+                            <td>Password:</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class='e-input-group'>
+                                    <input type='password' id='password' name='Required' class='e-input'>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </e-content-template>
+            <e-dialog-buttons>
+                <e-dialog-dialogbutton buttonModel="promptbutton" click="promptBtnClick"></e-dialog-dialogbutton>
+                <e-dialog-dialogbutton buttonModel="promptbutton1" click="promptBtnClick"></e-dialog-dialogbutton>
+            </e-dialog-buttons>
+        </ejs-dialog>
+    </div>
+}
+<style>
+    .e-btn-hide {
+        display: none;
+    }
+
+    .Table {
+        border-collapse: separate;
+        border-spacing: 10px;
+        width: 85%;
+        margin: 0px -5px 0px;
+    }
+
+    .dlgbtn {
+        margin-right: 10px;
+    }
+
+    /* custom code start */
+    #target {
+        height: 100%;
+        min-height: 350px;
+    }
+
+    @@media screen and (min-width: 150px) and (max-width: 480px) {
+        .control-section {
+            margin-bottom: 30px;
+        }
+
+        .control-wrapper {
+            margin-bottom: 0px;
+        }
+    }
+    /* custom code end */
+</style>
+
+@section PreScripts {
+    <script>
+        var alertObj, confirmObj, promptObj;
+        var buttons = document.querySelectorAll('.dlgbtn');
+        function onLoadalert() {
+            alertObj = this;
+            document.getElementById('alertBtn').onclick = function () {
+                alertObj.show();
+            };
+        }
+        function onLoadconfirm() {
+            confirmObj = this;
+            document.getElementById('confirmBtn').onclick = function () {
+                confirmObj.show();
+            };
+        }
+        function onLoadprompt() {
+            promptObj = this;
+            document.getElementById('promptBtn').onclick = function () {
+                promptObj.show();
+            };
+            document.getElementById('password').addEventListener('focus', function () {
+                this.parentElement.classList.add('e-input-focus');
+            });
+            document.getElementById('password').addEventListener('blur', function () {
+                this.parentElement.classList.remove('e-input-focus');
+            });
+        }
+        function alertBtnClick() {
+            alertObj.hide();
+        }
+        function confirmBtnClick() {
+            confirmObj.hide();
+        }
+        function promptBtnClick() {
+            promptObj.hide();
+        }
+        function dialogClose() {
+            buttons[0].classList.remove('e-btn-hide');
+            buttons[1].classList.remove('e-btn-hide');
+            buttons[2].classList.remove('e-btn-hide');
+        }
+        function dialogOpen() {
+            buttons[0].classList.add('e-btn-hide');
+            buttons[1].classList.add('e-btn-hide');
+            buttons[2].classList.add('e-btn-hide');
+        }
+    </script>
+}
+
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This example demonstrates the different types of Dialog like alert, confirm, and prompt.
+            The buttons "Alert", "Confirm", and "Prompt" will be shown after closing the alert Dialog.
+            These buttons are used to open the corresponding Dialogs.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            The Dialog control is used to display messages such as supplementary content like images and text,
+            and an interactive content like form components within a web page. The following are the two types of Dialogs:
+            <ul>
+                <li>Alert - Used to show errors, warnings, and information that needs user awareness.</li>
+                <li>Prompt - Used to get input from the user.</li>
+                <li>Confirmation - Used to get approval from the user that appears before any critical action.</li>
+            </ul>
+        </p>
+    </div>
+}
+
+@*custom code start*@
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Custom Dialogs in ASP.NET Core Dialog control. Explore here for more details."/>
+                }
+
+@*custom code end*@
+@section Title{
+                    <title>ASP.NET Core Dialog Custom Dialogs Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Custom Dialogs in ASP.NET Core Dialog Control</h1>
+                }

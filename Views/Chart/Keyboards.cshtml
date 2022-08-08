@@ -1,0 +1,287 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="control-section" align="center">
+        <ejs-chart id="keyboard_container" selectionMode="Point" selectionPattern="DiagonalForward" legendClick="window.clickLegend" load="window.onChartLoad" enableSideBySidePlacement="false" enableAnimation="false" title="Quarterly Sales Chart">
+            <e-chart-chartarea>
+                <e-chartarea-border width="0"></e-chartarea-border>
+            </e-chart-chartarea>
+            <e-chart-zoomsettings enableSelectionZooming="true"></e-chart-zoomsettings>
+			<e-chart-tooltipsettings enable="true">
+            </e-chart-tooltipsettings>
+            <e-chart-primaryxaxis title="Manager" valueType="Category">
+                <e-majorgridlines width="0"></e-majorgridlines>
+                <e-labelstyle size="0px"></e-labelstyle>
+                <e-majorticklines width="0"></e-majorticklines>
+            </e-chart-primaryxaxis>
+            <e-chart-primaryyaxis maximum="120" title="Sales in Percentage" labelFormat="{value}%" stripLines="ViewBag.yAxisStrips">
+                <e-linestyle width="0"></e-linestyle>
+                <e-majorticklines width="0"></e-majorticklines>
+            </e-chart-primaryyaxis>
+            <e-series-collection>
+                <e-series name="Quarter 1" dataSource="ViewBag.dataSource" xName="xValue" yName="yValue" type="Column"></e-series>
+                <e-series name="Quarter 2" dataSource="ViewBag.dataSource1" xName="xValue" yName="yValue" type="Column"></e-series>
+                <e-series name="Quarter 3" dataSource="ViewBag.dataSource2" xName="xValue" yName="yValue" type="Column"></e-series>
+                <e-series name="Quarter 4" dataSource="ViewBag.dataSource3" xName="xValue" yName="yValue" type="Column"></e-series>
+            </e-series-collection>
+        </ejs-chart>
+    </div>
+
+    <script>
+        var materialColors = ["#00bdae", "#404041", "#357cd2", "#e56590", "#f8b883", "#70ad47", "#dd8abd", "#7f84e8", "#7bb4eb",
+        "#ea7a57", "#404041", "#00bdae"];
+        var materialDarkColors = ["#9ECB08", "#56AEFF", "#C57AFF", "#61EAA9", "#EBBB3E", "#F45C5C", "#8A77FF", "#63C7FF", "#FF84B0",
+        "#F7C928"];
+        var fabricColors = ["#4472c4", "#ed7d31", "#ffc000", "#70ad47", "#5b9bd5", "#c1c1c1", "#6f6fe2", "#e269ae", "#9e480e",
+        "#997300", "#4472c4", "#70ad47", "#ffc000", "#ed7d31"];
+        var bootstrapColors = ["#a16ee5", "#f7ce69", "#55a5c2", "#7ddf1e", "#ff6ea6", "#7953ac", "#b99b4f", "#407c92", "#5ea716",
+        "#b91c52"];
+        var highContrastColors = ["#79ECE4", "#E98272", "#DFE6B6", "#C6E773", "#BA98FF", "#FA83C3", "#00C27A", "#43ACEF", "#D681EF",
+        "#D8BC6E"];
+        var bootstrap5Colors = ["#262E0B", "#668E1F", "#AF6E10", "#862C0B", "#1F2D50", "#64680B", "#311508", "#4C4C81", "#0C7DA0",
+        "#862C0B"];
+        var bootstrap5DarkColors = ["#5ECB9B", "#A860F1", "#EBA844", "#557EF7", "#E9599B", "#BFC529", "#3BC6CF", "#7A68EC", "#74B706",
+        "#EA6266"];
+        var fluentColors = ["#614570", "#4C6FB1", "#CC6952", "#3F579A", "#4EA09B", "#6E7A89", "#D4515C", "#E6AF5D", "#639751",
+        "#9D4D69"];
+        var fluentDarkColors = ["#8AB113", "#2A72D5", "#43B786", "#584EC6", "#E85F9C", "#6E7A89", "#EA6266", "#EBA844", "#26BC7A",
+        "#BC4870"];
+        var tailwindColors = ["#5A61F6", "#65A30D", "#334155", "#14B8A6", "#8B5CF6", "#0369A1", "#F97316", "#9333EA", "#F59E0B",
+        "#15803D"];
+        var tailwindDarkColors = ["#8B5CF6", "#22D3EE", "#F87171", "#4ADE80", "#E879F9", "#FCD34D", "#F97316", "#2DD4BF", "#F472B6",
+        "#10B981"];
+           
+        var FontColor = "#353535";
+        var seriesIndex = 0;
+        var Segments = [[0, 5 ], [ 7, 12 ], [14, 19 ], [21, 26 ] ];
+
+        window.clickLegend = function(args) {
+            seriesIndex = 0;
+            getStriplineValues(args.series.name);
+        }
+        
+
+        var getStriplineValues = function(legendClickedName) {
+            var chart = document.getElementById('keyboard_container').ej2_instances[0];
+            for (var i = 0; i < chart.series.length; i++) {
+                var name = chart.series[i].name;
+                var visible = name === legendClickedName ? !chart.series[i].visible : chart.series[i].visible;
+                if (seriesIndex > 3) {
+                    seriesIndex = 0;
+                }
+                if (name == "Quarter 1") {
+                    chart.primaryYAxis.stripLines[0].visible = chart.primaryYAxis.stripLines[1].visible = visible;
+                    if (chart.primaryYAxis.stripLines[0].visible) {
+                        chart.primaryYAxis.stripLines[0].segmentStart = chart.primaryYAxis.stripLines[1].segmentStart = Segments[seriesIndex][0];
+                        chart.primaryYAxis.stripLines[0].segmentEnd = chart.primaryYAxis.stripLines[1].segmentEnd = Segments[seriesIndex][1];
+                        seriesIndex++;
+                    }
+                }
+                else if (name == "Quarter 2") {
+                    chart.primaryYAxis.stripLines[2].visible = chart.primaryYAxis.stripLines[3].visible = visible;
+                    if (chart.primaryYAxis.stripLines[2].visible) {
+                        chart.primaryYAxis.stripLines[2].segmentStart = chart.primaryYAxis.stripLines[3].segmentStart = Segments[seriesIndex][0];
+                        chart.primaryYAxis.stripLines[2].segmentEnd = chart.primaryYAxis.stripLines[3].segmentEnd = Segments[seriesIndex][1];
+                        seriesIndex++;
+                    }
+                }
+                else if (name == "Quarter 3") {
+                    chart.primaryYAxis.stripLines[4].visible = chart.primaryYAxis.stripLines[5].visible = visible;
+                    if (chart.primaryYAxis.stripLines[4].visible) {
+                        chart.primaryYAxis.stripLines[4].segmentStart = chart.primaryYAxis.stripLines[5].segmentStart = Segments[seriesIndex][0];
+                        chart.primaryYAxis.stripLines[4].segmentEnd = chart.primaryYAxis.stripLines[5].segmentEnd = Segments[seriesIndex][1];
+                        seriesIndex++;
+                    }
+                }
+                else {
+                    chart.primaryYAxis.stripLines[6].visible = chart.primaryYAxis.stripLines[7].visible = visible;
+                    if (chart.primaryYAxis.stripLines[6].visible) {
+                        chart.primaryYAxis.stripLines[6].segmentStart = chart.primaryYAxis.stripLines[7].segmentStart = Segments[seriesIndex][0];
+                        chart.primaryYAxis.stripLines[6].segmentEnd = chart.primaryYAxis.stripLines[7].segmentEnd = Segments[seriesIndex][1];
+                        seriesIndex++;
+                    }
+                }
+            }
+            chart.refresh();
+    };
+
+        window.onChartLoad = function (args) {
+            var selectedTheme = location.hash.split('/')[1];
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "80%";
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+            FontColor = args.chart.theme.indexOf("Dark") > -1 || args.chart.theme.indexOf("HighContrast") > -1 ? "#F3F2F1" : "#353535";
+            var FillColors;
+            if (args.chart.theme === 'MaterialDark') {
+                FillColors = materialDarkColors;
+            }
+            else if (args.chart.theme === 'Material') {
+                FillColors = materialColors;
+            }
+            else if (args.chart.theme.indexOf("fabric") > -1) {
+                FillColors = fabricColors;
+            }
+            else if (args.chart.theme === 'Bootstrap5Dark') {
+                FillColors = bootstrap5DarkColors;
+            }
+            else if (args.chart.theme === 'Bootstrap5') {
+                FillColors = bootstrap5Colors;
+            }
+            else if (args.chart.theme.indexOf("bootstrap") > -1) {
+                FillColors = bootstrapColors;
+            }
+            else if (args.chart.theme === 'TailwindDark') {
+                FillColors = tailwindDarkColors;
+            }
+            else if (args.chart.theme === 'Tailwind') {
+                FillColors = tailwindColors;
+            }
+            else if (args.chart.theme.indexOf("highcontrast") > -1) {
+                FillColors = highContrastColors;
+            }
+            else if (args.chart.theme === 'FluentDark') {
+                FillColors = fluentDarkColors;
+            }
+            else {
+                FillColors = fluentColors;
+            }
+            args.chart.primaryYAxis.stripLines[0].color = FillColors[0 % 10];
+            args.chart.primaryYAxis.stripLines[2].color = FillColors[1 % 10];
+            args.chart.primaryYAxis.stripLines[4].color = FillColors[2 % 10];
+            args.chart.primaryYAxis.stripLines[6].color = FillColors[3 % 10];
+            args.chart.primaryYAxis.stripLines[1].textStyle.color = FontColor;
+            args.chart.primaryYAxis.stripLines[3].textStyle.color = FontColor;
+            args.chart.primaryYAxis.stripLines[5].textStyle.color = FontColor; 
+            args.chart.primaryYAxis.stripLines[7].textStyle.color = FontColor;
+        }
+
+        
+    </script>
+    @*custom code start*@
+    <style>
+        #control-container {
+            padding: 0px !important;
+        }
+    </style>
+}
+
+@section Scripts {
+
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Keyboard navigation in ASP.NET Core Chart control. Explore here for more details."/>
+                }
+@*custom code end*@
+@section ActionDescription{
+    <p>
+         Keyboard shortcuts can be used to interact with chart functionality. In the example below, various key combinations can be used to interact with the chart.
+    </p>
+}
+@section Description{
+    <i>The key combinations listed below can be used in the chart to initiate various actions.</i>
+    <ul>
+         <li>
+            <b>FOCUS ELEMENTS</b>
+            <ul>
+                <li>
+                    <span class="key-class"><kbd>Alt</kbd> + <kbd>J</kbd></span>
+                    <span> - Moves the focus to the chart element.</span>
+                </li>
+				<li>
+                    <span class="key-class"><kbd>Tab</kbd></span>
+                    <span> - Moves the focus to the next element in the chart.</span>
+                </li>
+				<li>
+                    <span class="key-class"><kbd>Shift</kbd> + <kbd>Tab</kbd></span>
+                    <span> - Moves the focus to the previous element in the chart.</span>
+                </li>
+            </ul>
+        </li>
+		<li>
+		   <b>SERIES</b>
+		    <ul>
+                <li>
+                    <span class="key-class"><kbd>Down arrow</kbd></span>
+                    <span> - Moves the focus to the data point left side from the selected point.</span>
+                </li>
+                <li>
+                    <span class="key-class"><kbd>Up arrow</kbd></span>
+                    <span> - Moves the focus to the data point right side from the selected point.</span>
+                </li>
+                <li>
+                    <span class="key-class"><kbd>Left arrow</kbd></span>
+                    <span> - Moves the focus to the next series in our chart.</span>
+                </li>
+                <li>
+                    <span class="key-class"><kbd>Right arrow</kbd></span>
+                    <span> - Moves the focus to the previous series in our chart.</span>
+                </li>
+				<li>
+                    <span class="key-class"><kbd>ESC</kbd></span>
+                    <span> - Cancel the tooltip for the data point.</span>
+                </li>
+				<li>
+                    <span class="key-class"><kbd>Enter</kbd>/<kbd>Space</kbd></span>
+                    <span> - Selects the data point in the series.</span>
+                </li>
+			</ul>
+		</li>
+		<li>
+		   <b>Legend </b>
+		    <ul>
+                <li>
+                    <span class="key-class"><kbd>Down</kbd>/<kbd>Left arrow</kbd></span>
+                    <span> - Moves the focus to the legend left side from the selected legend.</span>
+                </li>
+                <li>
+                    <span class="key-class"><kbd>Up</kbd>/<kbd>Right arrow</kbd></span>
+                    <span> - Moves the focus to the legend right side from the selected legend.</span>
+                </li>
+                <li>
+                    <span class="key-class"><kbd>Enter</kbd>/<kbd>Space</kbd></span>
+                    <span> - Toggles the visibility of the corresponding series.</span>
+                </li>
+			</ul>
+		</li>
+		<li>
+            <b>ZOOMING AND PANNING</b>
+            <ul>
+                <li>
+                    <span class="key-class"><kbd>Ctrl</kbd> + <kbd>+</kbd></span>
+                    <span> - Zoom in the chart.</span>
+                </li>
+				<li>
+                    <span class="key-class"><kbd>Ctrl</kbd> + <kbd>-</kbd></span>
+                    <span> - Zoom out the chart.</span>
+                </li>
+				<li>
+                    <span class="key-class"><kbd>Down</kbd>/<kbd>Up arrow</kbd></span>
+                    <span> - Pans the chart vertically.</span>
+                </li>
+                <li>
+                    <span class="key-class"><kbd>Left</kbd>/<kbd>Right arrow</kbd></span>
+                    <span> - Pans the chart horizontally.</span>
+                </li>
+				<li>
+                    <span class="key-class"><kbd>R</kbd></span>
+                    <span> - Reset the zoomed chart.</span>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <b>PRINT</b>
+            <ul>
+                <li>
+                    <span class="key-class"><kbd>Ctrl</kbd> + <kbd>P</kbd></span>
+                    <span> - Prints the chart.</span>
+                </li>
+            </ul>
+        </li>
+    </ul>
+}
+@section Title{
+                    <title>ASP.NET Core Chart Print Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Print in ASP.NET Core Chart Control</h1>
+                }

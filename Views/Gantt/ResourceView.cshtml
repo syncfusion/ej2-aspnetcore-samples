@@ -1,0 +1,100 @@
+@using Syncfusion.EJ2.Gantt;
+@section ControlsSection{
+    <div class="control-section">
+        <div class="row">
+            <div class="col-md-12">
+                @{
+                    List<object> toolbarItems = new List<object>();
+                    toolbarItems.Add("Add");
+                    toolbarItems.Add("Edit");
+                    toolbarItems.Add("Update");
+                    toolbarItems.Add("Delete");
+                    toolbarItems.Add("Cancel");
+                    toolbarItems.Add("ExpandAll");
+                    toolbarItems.Add("CollapseAll");
+                    toolbarItems.Add(new { text = "Show/Hide Overallocation", tooltipText = "Show/Hide Overallocation", id = "showhidebar" });
+                }
+                <ejs-gantt id='ResourceView' dataSource="ViewBag.dataSource" resources="ViewBag.projectResources" 
+                           viewType="ResourceView" allowResizing="true" allowSelection="true" highlightWeekends="true"
+                           treeColumnIndex="1" height="450px" showOverAllocation="true"
+                           projectStartDate="03/28/2019" projectEndDate="05/18/2019"
+                           toolbar=toolbarItems toolbarClick="toolbarClick">
+                    <e-gantt-editsettings allowAdding="true" allowEditing="true" allowDeleting="true"
+                                          allowTaskbarEditing="true" showDeleteConfirmDialog="true"></e-gantt-editsettings>
+                    <e-gantt-columns>
+                        <e-gantt-column field="TaskId" visible="false"></e-gantt-column>
+                        <e-gantt-column field="TaskName" headerText="Name" width="250"></e-gantt-column>
+                        <e-gantt-column field="Work" headerText="Work"></e-gantt-column>
+                        <e-gantt-column field="Progress"></e-gantt-column>
+                        <e-gantt-column field="ResourceGroup" headerText="Group"></e-gantt-column>
+                        <e-gantt-column field="StartDate"></e-gantt-column>
+                        <e-gantt-column field="Duration"></e-gantt-column>
+                    </e-gantt-columns>
+                    <e-gantt-labelSettings rightLabel="Resources"></e-gantt-labelSettings>
+                    <e-gantt-splitterSettings columnIndex="3"></e-gantt-splitterSettings>
+
+                    <e-gantt-resourcefields id="ResourceId" name="ResourceName" unit="ResourceUnit" group="ResourceGroup">
+                    </e-gantt-resourcefields>
+                    <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate"
+                                        endDate="EndDate" duration="Duration" progress="Progress" dependency="Predecessor"
+                                        child="SubTasks" work="Work" resourceInfo="Resources">
+                    </e-gantt-taskfields>
+
+                    <e-gantt-editdialogfields>
+                        <e-gantt-editdialogfield type="General"></e-gantt-editdialogfield>
+                        <e-gantt-editdialogfield type="Dependency"></e-gantt-editdialogfield>
+                        <e-gantt-editdialogfield type="Resources"></e-gantt-editdialogfield>
+                    </e-gantt-editdialogfields>
+                </ejs-gantt>
+	<script>	
+		function toolbarClick(args) {
+        if (args.item.id === 'showhidebar') {
+            var ganttObj = document.getElementById("ResourceView").ej2_instances[0];
+            ganttObj.showOverAllocation = ganttObj.showOverAllocation ? false : true;
+        }
+        }
+    </script>
+            </div>
+        </div>
+    </div>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample explains the Resource break down view in the Gantt chart that is how to visualize the list of tasks assigned to each resource in hierarchy manner and switch the resources as per the users need by task editing mode. If the no resources are mapped in a task, then it will come under the “unassigned Tasks” category.
+            This feature can be enabled by setting the <code>viewType</code> property to “ResourceView”.
+        </p>
+    </div>
+
+}
+@section Description{
+
+    <div id="description">
+        <p>
+            In this example, you can see the resource break down from a bulk of tasks done by mapping the predefined resource IDs to each task and resource information can be shown by using the <code>labelSetting</code> property.
+            Using the toolbar action, you can perform CRUD operation for resource allocation based on their availability and task complexity.
+            The resources and tasks assigned to those resources can be grouped into categories. Resources can be mapped using the <code>resourceFields:</code>.</br>
+            <code>ID</code>: To map resource ID.</br>
+            <code>Name</code>: To map resource name.</br>
+            <code>Unit</code>: To map resource unit.</br>
+            <code>Group</code>: To map resource group.</br></br>
+        </p>
+        <p style="font-weight: 500">Injecting Module:</p>
+        <p>
+            The Gantt control features are segregated into individual feature-wise modules. To use a selection,
+            inject the <code>Selection</code> module using the <code>Gantt.Inject(Selection)</code> method.
+            To edit, inject the <code>Toolbar</code> module using the <code>Gantt.Inject(Toolbar)</code> method and Edit module using the <code>Gantt.Inject(Edit)</code> method.
+        </p>
+    </div>
+
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Resource View in ASP.NET Core Gantt control. Explore here for more details."/>
+                }
+@section Title{
+                    <title>ASP.NET Core Gantt Resource View Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Resource View in ASP.NET Core Gantt Control</h1>
+                }

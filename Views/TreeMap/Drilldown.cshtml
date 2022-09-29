@@ -1,0 +1,193 @@
+@using Syncfusion.EJ2.TreeMap;
+
+@section ControlsSection{
+    @{
+        var palette = new string[] { "#9999ff", "#CCFF99", "#FFFF99", "#FF9999", "#FF99FF", "#FFCC66" };
+        var levelBorder = new TreeMapBorder { Color = "black", Width = 0.5 };
+        var border = new TreeMapBorder { Color = "black", Width = 0.5 };
+        var labelStyle = new TreeMapFont { Size = "0px" };
+        var titleFont = new TreeMapFont { FontFamily = "Segoe UI" };
+    }
+<div class="col-lg-9 control-section">
+    <ejs-treemap id="container" load="treemapLoad" tooltipRendering="tooltipChange" drillStart="drillDownChange" format="n" useGroupingSeparator="true" palette="palette" dataSource="ViewBag.dataSource" enableDrillDown="true" weightValuePath="Population">
+        <e-treemap-titlesettings text="List of countries by population"></e-treemap-titlesettings>
+        <e-treemap-leafitemsettings showLabels="false" labelPath="Name" border="levelBorder" labelStyle="titleFont"></e-treemap-leafitemsettings>
+        <e-treemap-tooltipsettings visible="true" format="${Name} : ${Population}" textStyle="titleFont"></e-treemap-tooltipsettings>
+        <e-treemap-levels>
+            <e-treemap-level groupPath="Continent" border="levelBorder" headerStyle="titleFont"></e-treemap-level>
+            <e-treemap-level groupPath="States" border="levelBorder" headerStyle="titleFont"></e-treemap-level>
+            <e-treemap-level groupPath="Region" headerStyle="labelStyle" border="levelBorder"></e-treemap-level>
+        </e-treemap-levels>
+    </ejs-treemap>
+    <div style="float: right; margin-right: 10px;">
+        Source:
+        <a href="https://en.wikipedia.org/wiki/List_of_continents_by_population" target="_blank">en.wikipedia.org</a>
+    </div>
+</div>
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties" style="width: 100%">
+            <tbody>
+                <tr>
+                    <td>
+                        <div> Drill Down View</div>
+                    </td>
+                    <td>
+                        <div style="padding-left: 10px;padding-top:0px">
+                            <ejs-checkbox id="drillView" change="drillViewChange"></ejs-checkbox>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div> Enable Bread Crumb </div>
+                    </td>
+                    <td>
+                        <div style="padding-left: 10px;padding-top:0px">
+                            <ejs-checkbox id="enablebread" change="enablebreadChange"></ejs-checkbox>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>BreadCrumb Connector</div>
+                    </td>
+                    <td>
+                        <div style="padding-left: 10px">
+                            <input type="text" value=" - " id="breadcrumbText" disabled="true" style="width: 100%;">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>Header Alignment</div>
+                    </td>
+                    <td>
+                        <div style="padding-left: 10px">
+                            <select name="selectIndex" autocomplete="off" id="headerAlignment">
+                                <option value="Near" selected>Near</option>
+                                <option value="Far">Far</option>
+                                <option value="Center">Center</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>Label Alignment</div>
+                    </td>
+                    <td>
+                        <div style="padding-left: 10px">
+                            <select name="direction" autocomplete="off" id="labelAlignment">
+                                <option value="Near" selected>Near</option>
+                                <option value="Far">Far</option>
+                                <option value="Center">Center</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+}
+<style>
+    .property-panel-table div {
+        padding-left: 0px;
+    }
+    tr {
+        height: 50px;
+    }
+</style>
+<script>
+    @* custom code start *@
+    function treemapLoad(args) {
+        window.treemap = args.treemap;
+        var theme = themeName ? themeName : 'Material';
+        args.treemap.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+    }
+    @* custom code end *@
+    function drillDownChange(args) {
+        if (args.item[Object.keys(args.item)[0]].length === 1) {
+            args.treemap.levels[2].showHeader = true;
+        } else {
+            args.treemap.levels[2].showHeader = false;
+        }
+    }
+
+    function tooltipChange(args) {
+        if (args.item['groupIndex'] !== 2) {
+            args.cancel = true;
+        }
+    }
+
+    function drillViewChange(args) {
+            window.treemap.drillDownView = args.checked;
+            window.treemap.refresh();
+    }
+
+    function enablebreadChange(args) {
+        var value = document.getElementById('breadcrumbText').value;
+        window.treemap.enableBreadcrumb = args.checked;
+        var breadCrumbText = document.getElementById('breadcrumbText');
+        if (args.checked) {
+            breadCrumbText.disabled = false;
+        } else {
+            breadCrumbText.disabled = true;
+        }
+            window.treemap.refresh();
+    }
+
+    window.onload = function () {
+        window.headerAlignment = new ej.dropdowns.DropDownList({
+            index: 0,
+            width: '100%',
+            change: function () {
+                for (var i= 0; i < treemap.levels.length - 1; i++) {
+                    window.treemap.levels[i].headerAlignment = window.headerAlignment.value;
+                }
+                window.treemap.refresh();
+            }
+        });
+        window.headerAlignment.appendTo('#headerAlignment');
+
+        window.labelAlignment = new ej.dropdowns.DropDownList({
+            index: 0,
+            width: '100%',
+            change: function () {
+                window.treemap.levels[2].headerAlignment = window.labelAlignment.value;
+                window.treemap.refresh();
+            }
+        });
+        window.labelAlignment.appendTo('#labelAlignment');
+
+        document.getElementById('breadcrumbText').onchange = () => {
+            var value = (window.document.getElementById('breadcrumbText')).value;
+            window.treemap.breadcrumbConnector = value;
+            window.treemap.refresh();
+        }
+    }
+    
+</script>
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Drilldown in ASP.NET Core TreeMap control. Explore here for more details."/>
+                }
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates drill down with the continents in top level, followed by regions and countries. By clicking a continent, you can view the items available in that continent more clearly.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this example you can see how to render treemap with multiple items and drill it further.Tooltip is enabled in this example. To see the tooltip in action, hover the mouse over an item or tap an item in touch enabled devices.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core TreeMap Drilldown Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Drilldown in ASP.NET Core TreeMap Control</h1>
+                }

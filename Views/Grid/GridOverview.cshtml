@@ -1,0 +1,520 @@
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+    <link href="~/styles/Grid/style.css" rel="stylesheet" />
+    <div class="control-section">
+        <div id="default" style="padding-bottom: 18px;">
+            <ejs-dropdownlist id="DataRange" dataSource="@ViewBag.Data" placeholder="Select a Data Range" index="0" change="valueChange" width="220px">
+                <e-dropdownlist-fields text="Text" value="Value"></e-dropdownlist-fields>
+            </ejs-dropdownlist>
+            <span id='msg'></span>
+        </div>
+        <ejs-grid id="GridOverview" allowFiltering="true" allowSorting="true" height="600" rowHeight="38" enableHover="false" enableHeaderFocus="true" load="load" queryCellInfo="queryCellInfo" dataBound="startTimer" actionComplete="complete" enableVirtualization="true" allowSelection="true">
+            <e-grid-filtersettings type="Menu"></e-grid-filtersettings>
+            <e-grid-loadingIndicator indicatorType="Shimmer"></e-grid-loadingIndicator>
+            <e-grid-selectionsettings persistSelection="true" type="Multiple" checkboxOnly="true"></e-grid-selectionsettings>
+            <e-grid-columns>
+                <e-grid-column field="" type="checkbox" width="60" allowFiltering="false" allowSorting="false"></e-grid-column>
+                <e-grid-column field="EmployeeID" headerText="Employee ID" isPrimaryKey="true" visible="false" textAlign="Right" width="120"></e-grid-column>
+                <e-grid-column field="Employees" headerText="Employee Name" clipMode="EllipsisWithTooltip" template="#empTemplate" width="200"></e-grid-column>
+                <e-grid-column field="Designation" headerText="Designation" clipMode="EllipsisWithTooltip" width="170"></e-grid-column>
+                <e-grid-column field="Mail" headerText="Mail" width="230"></e-grid-column>
+                <e-grid-column field="Location" headerText="Location" template="#coltemplate" width="140"></e-grid-column>
+                <e-grid-column field="Status" headerText="Status" template="#statusTemplate" width="150"></e-grid-column>
+                <e-grid-column field="Trustworthiness" headerText="Trustworthiness" template="#trustTemplate" width="200"></e-grid-column>
+                <e-grid-column field="Rating" headerText="Rating" template="#ratingTemplate" width="160"></e-grid-column>
+                <e-grid-column field="Software" headerText="Software" allowSorting="false" allowFiltering="false" template="#progessTemplate" width="180"></e-grid-column>
+                <e-grid-column field="CurrentSalary" headerText="Current Salary" format="C2" textAlign="Right" width="160"></e-grid-column>
+                <e-grid-column field="Address" headerText="Address" width="240"></e-grid-column>
+            </e-grid-columns>
+        </ejs-grid>
+
+    </div>
+
+
+    <script type="text/x-jsrender" id="progessTemplate">
+        <div id="myProgress" class="pbar">
+            <div id="myBar" class="bar">
+                <div id="pbarlabel" class="barlabel"></div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/x-jsrender" id="ratingTemplate">
+        <div class="rating">
+            <span class="star"></span>
+            <span class="star"></span>
+            <span class="star"></span>
+            <span class="star"></span>
+            <span class="star"></span>
+        </div>
+    </script>
+
+    <script type="text/x-jsrender" id="empTemplate">
+        <div>
+            <div class="empimg">
+                <span class="e-userimg">
+                </span>
+            </div>
+            <span id="Emptext">${Employees}</span>
+        </div>
+    </script>
+
+    <script type="text/x-jsrender" id="trustTemplate">
+        <img style="width: 31px; height: 24px" src="@Url.Content("~/styles/images/grid/${Trustworthiness}.png")" />
+        <span id="Trusttext">${Trustworthiness}</span>
+    </script>
+
+    <script type="text/x-jsrender" id="statusTemplate">
+        <div id="status" class="statustemp">
+            <span class="statustxt">${Status}</span>
+        </div>
+    </script>
+
+    <script type="text/x-jsrender" id="StatusItemTemp">
+        ${statusDetail(data)}
+    </script>
+
+    <script id="coltemplate" type="text/x-template">
+        <div class="image">
+            <img src="@Url.Content("~/styles/images/grid/Map.png")" class="e-image" alt="${Location}" /> &nbsp
+            <span id="locationtext">${Location}</span>
+        </div>
+    </script>
+
+
+    <script type="text/javascript">
+        var hostUrl = 'http://localhost:62928/';
+        var urlapi = new ej.data.DataManager({
+            url: hostUrl + "api/UrlDataSource",
+            adaptor: new ej.data.UrlAdaptor()
+        });
+        var dReady = false;
+        var theme;
+        var dtTime = false;
+        var isDataBound = false;
+        var isDataChanged = true;
+        var intervalFun;
+        var clrIntervalFun;
+        var clrIntervalFun1;
+        var clrIntervalFun2;
+        var dropSlectedIndex = null;
+        var stTime;
+        stTime = performance.now();
+        function trustTemp(e) {
+            if (e.Trustworthiness == "Select All") {
+                return '';
+            }
+                  var name = e.Trustworthiness;
+            var newsrcFolder = '@Url.Content("~/styles/images/grid/")';
+            var newsrc = newsrcFolder + name + '.png';
+            return '<img style="width: 31px; height: 24px" src="' + newsrc + '" /> <span id="Trusttext">' + e.Trustworthiness + '</span>'
+        }
+        function ratingDetail(e) {
+            var grid = document.querySelector(".e-grid").ej2_instances[0]
+            var div = document.createElement('div');
+            div.className = 'rating';
+            var span;
+            for (var i = 0; i < 5; i++) {
+                if (i < e.Rating) {
+                    span = document.createElement('span');
+                    span.className = 'star checked';
+                    div.appendChild(span);
+                } else {
+                    span = document.createElement('span');
+                    span.className = 'star';
+                    div.appendChild(span);
+                }
+            }
+            return div.outerHTML;
+        }
+
+        function statusDetail(e) {
+            var grid = document.querySelector(".e-grid").ej2_instances[0]
+            var div = document.createElement('div');
+            var span;
+            span = document.createElement('span');
+            if (e.Status === "Active") {
+                span.className = 'statustxt e-activecolor';
+                span.textContent = "Active"
+                div.className = 'statustemp e-activecolor'
+            }
+            if (e.Status === "Inactive") {
+                span = document.createElement('span');
+                span.className = 'statustxt e-inactivecolor';
+                span.textContent = "Inactive"
+                div.className = 'statustemp e-inactivecolor'
+            }
+            div.appendChild(span);
+            return div.outerHTML;
+        }
+        function load(args) {
+            this.dataSource = urlapi;
+            this.query = new ej.data.Query().addParams('dataCount', '1000');
+            this.on('data-ready', function () {
+                dReady = true;
+            });
+        }
+        function complete(args) {
+            if (args.requestType === "filterchoicerequest" && (args.filterModel.options.field === "Trustworthiness" || args.filterModel.options.field === "Rating"
+                || args.filterModel.options.field === "Status")) {
+                var span = args.filterModel.dialogObj.element.querySelectorAll('.e-selectall')[0];
+                if (!ej.base.isNullOrUndefined(span)) {
+                    ej.base.closest(span, '.e-ftrchk').classList.add("e-hide");
+                }
+            }
+        }
+        function queryCellInfo(args) {
+            if (args.column.field === 'Employees') {
+                if (args.data.EmployeeImg === 'usermale') {
+                    args.cell.querySelector('.e-userimg').classList.add("sf-icon-Male");
+                } else {
+                    args.cell.querySelector('.e-userimg').classList.add("sf-icon-FeMale");
+                }
+            }
+            if (args.column.field === 'Status') {
+                if (args.cell.textContent === "Active") {
+                    args.cell.querySelector(".statustxt").classList.add("e-activecolor");
+                    args.cell.querySelector(".statustemp").classList.add("e-activecolor");
+                }
+                if (args.cell.textContent === "Inactive") {
+                    args.cell.querySelector(".statustxt").classList.add("e-inactivecolor");
+                    args.cell.querySelector(".statustemp").classList.add("e-inactivecolor");
+                }
+            }
+            if (args.column.field === 'Rating') {
+                if (args.column.field === 'Rating') {
+                    for (var i = 0; i < args.data.Rating; i++) {
+                        args.cell.querySelectorAll("span")[i].classList.add("checked");
+                    }
+                }
+            }
+            if (args.column.field === "Software") {
+                if (args.data.Software <= 20) {
+                    args.data.Software = args.data.Software + 30;
+                }
+                args.cell.querySelector(".bar").style.width = args.data.Software + "%";
+                args.cell.querySelector(".barlabel").textContent = args.data.Software + "%";
+                if (args.data.Status === "Inactive") {
+                    args.cell.querySelector(".bar").classList.add("progressdisable");
+                }
+            }
+        }
+        function startTimer(args) {
+            clearTimeout(clrIntervalFun);
+            clearInterval(intervalFun);
+            dtTime = true;
+        }
+        function valueChange() {
+            var grid = document.getElementById("GridOverview").ej2_instances[0];
+            this.closePopup();
+            dropSlectedIndex = null;
+            var index = this.value;
+            clearTimeout(clrIntervalFun2);
+            clrIntervalFun2 = setTimeout(function () {
+                isDataChanged = true;
+                stTime = null;
+                var contentElement = grid.contentModule.getPanel().firstChild;
+                contentElement.scrollLeft = 0;
+                contentElement.scrollTop = 0;
+                grid.pageSettings.currentPage = 1;
+                stTime = performance.now();
+                if (grid.query.params.length > 1) {
+                    for (var i = 0; i < grid.query.params.length; i++) {
+                        if (grid.query.params[i].key === 'dataCount') {
+                            grid.query.params[i].value = index.toString();
+                            break;
+                        }
+                    }
+                }
+                else {
+                    grid.query.params[0].value = index.toString();
+                }
+                grid.setProperties({ dataSource: urlapi });
+            }, 100);
+        }
+
+        document.getElementById('GridOverview').addEventListener('DOMSubtreeModified', function () {
+            if (dReady && stTime && isDataChanged) {
+                var msgEle = document.getElementById('msg');
+                var val = (performance.now() - stTime).toFixed(0);
+                stTime = null;
+                dtTime = false;
+                dReady = false;
+                isDataChanged = false;
+                msgEle.innerHTML = 'Load Time: ' + "<b>" + val + "</b>" + '<b>ms</b>';
+                msgEle.classList.remove('e-hide');
+            }
+        });
+
+    </script>
+
+    <style>
+        .fabric .empimg {
+            background-color: #0078d6;
+        }
+
+        .material .empimg {
+            background-color: #e3165b;
+        }
+
+        .highcontrast .empimg {
+            background-color: #ffd939;
+        }
+        
+        .fluent .empimg {
+            background-color: #106EBE;
+        }
+
+        _:-ms-fullscreen, :root .highcontrast .e-userimg.sf-icon-Male::before,
+        _:-ms-fullscreen, :root .highcontrast .e-userimg.sf-icon-FeMale::before {
+            color: black;
+        }
+
+        .highcontrast .e-userimg.sf-icon-Male::before,
+        .highcontrast .e-userimg.sf-icon-FeMale::before {
+            color: black;
+        }
+
+        .bootstrap .empimg {
+            background-color: #0078d6;
+        }
+        
+        .bootstrap4 .empimg {
+            background-color: #0078d6;
+        }
+
+        .bootstrap5 .empimg {
+            background-color: #0078d6;
+        }
+
+        #Emptext {
+            top: -12px;
+            left: 41px;
+            position: relative;
+        }
+
+        .e-grid.e-rtl #Emptext {
+            top: -12px;
+            left: -41px;
+            position: relative;
+        }
+
+        .empimg {
+            height: 27px;
+            width: 29px;
+            border-radius: 14px;
+        }
+
+        .e-userimg.sf-icon-Male::before,
+        .e-userimg.sf-icon-FeMale::before {
+            font-size: 13px;
+        }
+
+        .e-userimg.sf-icon-Male, .e-userimg.sf-icon-FeMale {
+            margin: 0px 8px;
+            line-height: 26px;
+            color: white;
+            font-size: 13px;
+        }
+
+            .e-userimg.sf-icon-Male::before {
+                content: '\e700';
+            }
+
+            .e-userimg.sf-icon-FeMale::before {
+                content: '\e701';
+            }
+
+        .highcontrast .e-grid td.e-rowcell.e-selectionbackground.e-active {
+            background-color: transparent;
+            color: white;
+        }
+
+        td.e-rowcell.e-selectionbackground.e-active {
+            background-color: transparent;
+        }
+
+        .highcontrast #msg {
+            color: #FFFFFF
+        }
+
+        .e-bigger .e-grid .statustxt {
+            position: relative;
+            top: -2px;
+        }
+
+        .rating .star {
+            font-size: 132%;
+            color: lightgrey;
+        }
+
+            .rating .star.checked {
+                color: #ffa600;
+            }
+
+            .rating .star:before {
+                content: '★';
+            }
+
+        td.e-rowcell .statustxt.e-activecolor {
+            color: #00cc00;
+            position: relative;
+            top: 9px;
+        }
+
+        td.e-rowcell .statustxt.e-inactivecolor {
+            color: #e60000;
+            position: relative;
+            top: 9px;
+        }
+
+        .bootstrap5 td.e-rowcell .statustxt.e-inactivecolor,
+        .bootstrap5 td.e-rowcell .statustxt.e-activecolor {
+            top: 8px;
+        }
+
+        .bootstrap5 .e-checkboxfiltertext .statustemp .statustxt.e-activecolor,
+        .bootstrap5 .e-checkboxfiltertext .statustemp .statustxt.e-inactivecolor {
+            position: relative;
+            top: 1.5px;
+        }
+
+        .e-bigger.bootstrap5 .e-checkboxfiltertext .statustemp .statustxt.e-activecolor,
+        .e-bigger.bootstrap5 .e-checkboxfiltertext .statustemp .statustxt.e-inactivecolor {
+            top: -0.5px;
+        }
+
+        .bootstrap5 .e-checkboxfiltertext #Trusttext {
+            margin-left: -4px;
+        }
+
+        .statustemp.e-inactivecolor {
+            background-color: #ffd7cc;
+        }
+
+        .statustemp.e-activecolor {
+            background-color: #ccffcc;
+        }
+
+        .statustxt.e-activecolor {
+            color: #00cc00;
+        }
+
+        .statustxt.e-inactivecolor {
+            color: #e60000;
+        }
+
+        #Trusttext {
+            position: relative;
+            top: 1px;
+        }
+
+        .e-image {
+            height: 13px;
+            width: 14px;
+        }
+
+        .statustemp.e-inactivecolor {
+            width: 64px;
+        }
+
+        .statustemp.e-activecolor {
+            width: 57px;
+        }
+
+        .statustemp {
+            position: relative;
+            height: 19px;
+            border-radius: 5px;
+            text-align: center
+        }
+
+        #msg {
+            font-family: "Segoe UI", "GeezaPro", "DejaVu Serif", sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            opacity: 0.95;
+            color: #333;
+            float: right;
+            margin-top: 3px;
+        }
+
+        @@media only screen and (max-width: 370px) {
+            #msg {
+                float: left;
+                margin-top: 3px;
+            }
+
+            #GridOverview {
+                margin-top: 36px;
+            }
+        }
+
+        #samplecontainer {
+            padding-top: 5px;
+        }
+
+        #myProgress {
+            position: relative;
+            height: 18px;
+            width: 10em;
+            text-align: left;
+            background-color: white;
+        }
+
+        .highcontrast .e-grid #myProgress {
+            background-color: black;
+        }
+
+        #myBar {
+            position: absolute;
+            width: 10%;
+            height: 100%;
+            background-color: #00b300;
+        }
+
+            #myBar.progressdisable {
+                background-color: #df2222;
+            }
+
+        #pbarlabel {
+            position: relative;
+            left: 10px;
+            line-height: 18px;
+            font-size: 10px;
+            color: white;
+        }
+    </style>
+
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This sample demonstrates the overview of basic grid features with its performance metrics of large data. To change datasource count, select rows and columns count from dropdown.</p>
+    </div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Overview in ASP.NET Core Data Grid control. Explore here for more details."/>
+                }
+
+@section Description{
+    <div id="description">
+        <p>
+            The Grid is used to display and manipulate tabular data with configuration options to control the way the data is presented
+            and manipulated. It will pull the data from a data source, such as IEnumerable, OData web services,
+            or <code>DataManager</code> binding data fields to columns. Also, displaying a column header to identify the field with
+            support for grouped records.
+        </p>
+        <p>
+            In this demo, Grid features such as <code>Virtual Scrolling, Filtering, Sorting, Column Template, filter template </code> etc... are used along with large data source.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Data Grid Overview Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Overview in ASP.NET Core Data Grid Control</h1>
+                }

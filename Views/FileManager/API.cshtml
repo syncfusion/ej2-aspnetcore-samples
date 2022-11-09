@@ -1,0 +1,100 @@
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+    <div class="col-lg-8 control-section">
+        <div class="control_wrapper">
+             <!-- File Manager API sample -->
+            <ejs-filemanager id="filemanager" view="@Syncfusion.EJ2.FileManager.ViewType.LargeIcons">
+                <e-filemanager-ajaxsettings url="http://ej2services.syncfusion.com/api/FileManager/FileOperations"
+                                            downloadUrl="http://ej2services.syncfusion.com/api/FileManager/Download"
+                                            uploadUrl="http://ej2services.syncfusion.com/api/FileManager/Upload"
+                                            getImageUrl="http://ej2services.syncfusion.com/api/FileManager/GetImage">
+                </e-filemanager-ajaxsettings>
+                <e-filemanager-navigationpanesettings visible="false"></e-filemanager-navigationpanesettings>
+            </ejs-filemanager>
+        </div>
+    </div>
+    <div class="col-lg-4 property-section">
+        <div id="property" title="Properties">
+            <table id="property" title="Properties">
+                <tbody>
+                    <tr>
+                        <td style="width: 50%">
+                            <div style="font-size:14px">Toolbar</div>
+                        </td>
+                        <td style="width: 50%;padding-right: 10px;text-align: center;">
+                            <div>
+                                <ejs-checkbox id="toolbar" checked="true" name="toolbar" change="onToolbarChange"></ejs-checkbox>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This sample demonstrates the properties of FileManager component from the property pane. Select any properties from the property pane to customize the FileManager.</p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>The File Manager component is used to explore a file system through a web application, similar to the windows explorer for windows. It supports the basic file operations such as create, rename, delete.</p>
+
+        <p>
+            <b>Note: </b>File Manager's upload functionality is restricted in the online demo. If you need to test upload functionality, please install
+            <a target="_blank" href="https://www.syncfusion.com/downloads">Syncfusion Essential Studio </a>on your machine and run the demo.
+        </p>
+    </div>
+}
+@section PreScripts{
+    <script>
+
+        function onToolbarChange(args) {
+            var fileObject = document.getElementById('filemanager').ej2_instances[0];
+            fileObject.toolbarSettings.visible = args.checked;
+        }
+    </script>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the API in ASP.NET Core File Manager control. Explore here for more details."/>
+                }
+
+<style>
+
+    .property-panel-table div {
+        padding-left: 0;
+        padding-top: 0;
+    }
+
+    #navPane {
+        padding-top: 5px;
+    }
+
+    #property tr {
+        height: 50px;
+    }
+
+    #tool {
+        padding-top: 5px;
+    }
+
+    body.material-dark .property-panel-section {
+        color: #ffffff;
+    }
+
+    #navPane_toggle,
+    #tool_toggle {
+        width: 100px;
+    }
+</style>
+@section Title{
+                    <title>ASP.NET Core File Manager API Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of API in ASP.NET Core File Manager Control</h1>
+                }

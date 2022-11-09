@@ -1,0 +1,72 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+
+    <div class="control-section" align="center">
+        <div id="container">
+            <ejs-stockchart id="stockchartperiod" load="stockload" enablePeriodSelector="false" tooltipRender="tooltipRender">
+                <e-stockchart-chartarea>
+                    <e-stockchartarea-border width="0"></e-stockchartarea-border>
+                </e-stockchart-chartarea>
+                <e-stockchart-primaryxaxis>
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                    <e-crosshairtooltip enable="true"></e-crosshairtooltip>
+                </e-stockchart-primaryxaxis>
+                <e-stockchart-primaryyaxis>
+                    <e-linestyle width="0"></e-linestyle>
+                    <e-majorticklines width="0" color="transparent"></e-majorticklines>
+                </e-stockchart-primaryyaxis>
+                <e-stockchart-crosshairsettings enable="true"></e-stockchart-crosshairsettings>
+                <e-stockchart-tooltipsettings enable="true"></e-stockchart-tooltipsettings>
+                <e-stockchart-series-collection>
+                    <e-stockchart-series type='Area' xName='x' yName='close' name='google' opacity="0.5"> </e-stockchart-series>
+                </e-stockchart-series-collection>
+            </ejs-stockchart>
+        </div>
+    </div>
+    <script src="~/scripts/StockChartData/aapl.js"></script>
+    <script>
+        var data = aapl;
+        function stockload(args) {
+            @*custom code start*@
+            letselectedTheme: string = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            @*custom code end*@
+            args.stockChart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+            args.stockChart.series[0].dataSource = data;
+        }
+        function tooltipRender(args) {
+            if (args.text.split('<br/>')[4]) {
+                let target = parseFloat(args.text.split('<br/>')[4].split('<b>')[1].split('</b>')[0]);
+                let value = (target / 100000000).toFixed(1) + 'B';
+                args.text = args.text.replace(args.text.split('<br/>')[4].split('<b>')[1].split('</b>')[0], value);
+            }
+
+        }
+
+    </script>
+}
+@*custom code start*@
+@section Scripts {
+
+}
+@*custom code end*@
+@section ActionDescription{
+    <p>
+        This sample visualizes stock chart with plot band on y axis.
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can see how to highlight a particular range in stock chart. Period and range selector help us to navigate different of data. AreaSeries is used to represent selected data value.
+    </p>
+    <br>
+}
+@section Title{
+                    <title>ASP.NET Core StockChart Hide PeriodSelector Example - Syncfusion Demos </title> 
+                }
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Hide PeriodSelector in ASP.NET Core StockChart control. Explore here for more details."/>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Hide PeriodSelector in ASP.NET Core StockChart Control</h1>
+                }

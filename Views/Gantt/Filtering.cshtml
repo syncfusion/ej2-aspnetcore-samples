@@ -1,0 +1,138 @@
+@using Syncfusion.EJ2.Gantt;
+@section ControlsSection{
+    <div class="control-section">
+        <div class="row">
+            <div class="col-lg-9 control-section">
+                <ejs-gantt id='Filtering' dataSource="ViewBag.dataSource" dateFormat="MM/dd/yyyy hh:mm:ss"
+                           treeColumnIndex="0" height="450px" allowFiltering="true"
+                           includeWeekend="true" durationUnit="Hour"
+                           projectEndDate="07/25/1969"
+                           projectStartDate="07/16/1969 01:00:00 AM" actionComplete="window.actionComplete">
+                    <e-gantt-filtersettings type="Menu"></e-gantt-filtersettings>
+                    <e-gantt-filtersettings hierarchyMode="Parent"></e-gantt-filtersettings>
+                    <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate"
+                                        endDate="EndDate" duration="Duration" dependency="Predecessor"
+                                        child="SubTasks">
+                    </e-gantt-taskfields>
+                    <e-gantt-columns>
+                        <e-gantt-column field="TaskName" headerText="Task Name" width="250" clipMode="EllipsisWithTooltip"></e-gantt-column>
+                        <e-gantt-column field="StartDate"></e-gantt-column>
+                        <e-gantt-column field="Duration"></e-gantt-column>
+                        <e-gantt-column field="EndDate"></e-gantt-column>
+                        <e-gantt-column field="Predecessor"></e-gantt-column>
+                    </e-gantt-columns>
+                    <e-gantt-splittersettings columnIndex="3"></e-gantt-splittersettings>
+                    <e-gantt-timelinesettings timelineUnitSize="60">
+                        <e-timelinesettings-toptier unit="Day" format="MMM dd, y"></e-timelinesettings-toptier>
+                        <e-timelinesettings-bottomtier unit="Hour" format="h.mm a"></e-timelinesettings-bottomtier>
+                    </e-gantt-timelinesettings>
+                    <e-gantt-labelsettings rightLabel="TaskName"></e-gantt-labelsettings>
+                    <e-gantt-dayworkingtimecollection>
+                        <e-gantt-dayworkingtime from="0" to="24"></e-gantt-dayworkingtime>
+                    </e-gantt-dayworkingtimecollection>
+                </ejs-gantt>
+                <div style="float: right; margin: 10px;">
+                Source:
+                <a href="https://en.wikipedia.org/wiki/Apollo_11#Launch_and_flight_to_lunar_orbit"
+                   target='_blank'>https://en.wikipedia.org/</a>
+            </div>
+            </div>
+            <div class="col-lg-3 property-section">
+                <table id="property" title="Properties" style="width: 100%;">
+                    <tr>
+                        <td class="left-side">Filter Type</td>
+                        <td style="padding-right: 10px">
+                            <ejs-dropdownlist id="type" dataSource="@ViewBag.typedropdata" width="100px" placeholder="Select a Type" change="onTypeChange" index="0" popupHeight="220px">
+                                <e-dropdownlist-fields text="type" value="id"></e-dropdownlist-fields>
+                            </ejs-dropdownlist>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="left-side">Hierarchy Mode</td>
+                        <td style="padding-right: 10px">
+                            <ejs-dropdownlist id="mode" dataSource="@ViewBag.modedropdata" width="100px" placeholder="Select Mode" change="onModeChange" index="1" popupHeight="220px">
+                                <e-dropdownlist-fields text="type" value="id"></e-dropdownlist-fields>
+                            </ejs-dropdownlist>
+                        </td>
+                    </tr>
+                </table>
+    </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        window.actionComplete = function (args) {
+            var gantt = document.getElementById("Filtering").ej2_instances[0];
+            if (args.requestType == "filterafteropen" && (args.columnName === "StartDate" || args.columnName === "EndDate") && gantt.filterSettings.type === "Menu") {
+                args.filterModel.dlgDiv.querySelector('.e-datetimepicker').ej2_instances[0].min = new Date(1969, 5, 1);
+                args.filterModel.dlgDiv.querySelector('.e-datetimepicker').ej2_instances[0].max = new Date(1969, 8, 30);
+                args.filterModel.dlgDiv.querySelector('.e-datetimepicker').ej2_instances[0].showTodayButton = false;
+                args.filterModel.dlgDiv.querySelector('.e-datetimepicker').ej2_instances[0].dataBind();
+            }
+        }
+         function onTypeChange(e) {
+            var gantt = document.getElementById("Filtering").ej2_instances[0];
+            var type = e.value;
+            gantt.filterSettings.type = type;
+        }
+        function onModeChange(e) {
+            var gantt = document.getElementById("Filtering").ej2_instances[0];
+            var mode = e.value;
+            gantt.filterSettings.hierarchyMode = mode;
+        }
+    </script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample visualizes the manned lunar mission, which landed the first human on the Moon using the Apollo 11 spacecraft in the year 1969. It also demonstrates the filtering feature available in the Gantt chart. You can filter a particular column using the filter menu available in the columns. This sample is also enabled with the toolbar searching option to filter the Gantt content across all the columns.
+        </p>
+    </div>
+}
+@section Description{
+
+    <div id="description">
+        <p>
+            The filtering feature enables the user to view reduced amount of records based on filter criteria. The column
+            menu filtering can be enabled by setting the <code>allowFiltering</code> property as <code>true</code> and toolbar
+            search box can
+            be enabled
+            by including the search item in the <code>toolbar</code> property.
+            <p>Gantt supports the following filter types. They are </p>
+            <ul>
+                <li><code>Menu</code></li>
+                <li><code>Excel</code></li>
+            </ul>
+        Gantt chart also provides support for a set of filtering modes with <code>hierarchyMode</code> property. The
+        filter modes available in the Gantt chart are as follows.
+        <ol>
+            <li>
+                <code>Parent</code> - This is the default filter hierarchy mode in Gantt chart. The filtered records are
+                displayed with their
+                parent records. If the filtered records do not have any parent record, then the filtered record alone will be
+                displayed.
+            </li>
+            <li>
+                <code>Child</code> - The filtered records are displayed with their child record. If the filtered records do
+                not have any
+                child records, then only the filtered records will be displayed.
+            </li>
+            <li>
+                <code>Both</code> - The filtered records are displayed with both their parent and child records. If the
+                filtered records do
+                not have any parent and child records, then only the filtered records will be displayed.
+            </li>
+            <li><code>None</code> - Only the filtered records will be displayed.</li>
+        </ol>
+        </p>
+    </div>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Filtering in ASP.NET Core Gantt control. Explore here for more details."/>
+                }
+@section Title{
+                    <title>ASP.NET Core Gantt Filtering Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Filtering in ASP.NET Core Gantt Control</h1>
+                }

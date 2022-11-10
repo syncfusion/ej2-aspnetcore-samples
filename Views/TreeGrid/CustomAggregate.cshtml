@@ -1,0 +1,133 @@
+@using Syncfusion.EJ2
+
+
+@section ControlsSection{
+    <div class="control-section">
+        <ejs-treegrid id="TreeGrid" dataSource="ViewBag.dataSource" height="400" DataBound="ondataBound" childMapping="Children" width="Auto" treeColumnIndex="1">
+            <e-treegrid-aggregates>
+                <e-treegrid-aggregate>
+                    <e-treegrid-aggregate-columns>
+                        <e-treegrid-aggregate-column field="Category" type="Custom" footerTemplate="Count of <input type='text' id='dropdown' /> : ${Custom}" customAggregate=@("customAggregateFn")></e-treegrid-aggregate-column>
+                    </e-treegrid-aggregate-columns>
+                </e-treegrid-aggregate>
+            </e-treegrid-aggregates>
+            <e-treegrid-columns>
+                <e-treegrid-column field="ID" headerText="Order ID" textAlign="Right" width="60"></e-treegrid-column>
+                <e-treegrid-column field="Name" headerText="Order Name" width="170"></e-treegrid-column>
+                <e-treegrid-column field="Category" headerText="Category" width="180"></e-treegrid-column>
+                <e-treegrid-column field="Units" headerText="Units" textAlign="Right" width="60"></e-treegrid-column>
+                <e-treegrid-column field="UnitPrice" headerText="Unit Price" textAlign="Right" format="C0" width="85"></e-treegrid-column>
+                <e-treegrid-column field="Units" headerText="Units" textAlign="Right" format="C0" width="90"></e-treegrid-column>
+            </e-treegrid-columns>
+        </ejs-treegrid>
+    </div>
+
+    @*custom code start*@
+
+    <style>
+
+        .e-input {
+            padding: 1px !important;
+        }
+
+        .e-summarycell.e-templatecell {
+            pointer-events: visible !important;
+        }
+    </style>
+
+    @*custom code end*@
+
+    <script>
+        var value = "Frozen Seafood";
+        var listObj;
+        var foods = [
+            { food: 'Frozen Seafood' },
+            { food: 'Dairy' },
+            { food: 'Edible' },
+            { food: 'Solid crystals' },
+        ];
+        function ondataBound(args) {
+            if (!ej.base.isNullOrUndefined(listObj)) {
+                listObj.destroy();
+            }
+            listObj = new ej.dropdowns.DropDownList({
+                dataSource: foods,
+                fields: { value: 'food' },
+                placeholder: 'Select a Category',
+                width: '142px',
+                value: value,
+                change: function () {
+                    setTimeout(function () {
+                        var treegrid = document.getElementById("TreeGrid").ej2_instances[0];
+                        value = listObj.value.toString();
+                        treegrid.refresh();
+                    }, 300);
+                }
+            });
+            listObj.appendTo('#dropdown');
+        }
+        function customAggregateFn(data) {
+            var sampleData = ej.grids.getObject('result', data);
+            var countLength;
+            countLength = 0;
+            sampleData.filter(function (item) {
+                var data = ej.grids.getObject('Category', item);
+                if (data === value) {
+                    countLength++;
+                }
+            });
+            return countLength;
+        }
+    </script>
+
+
+}
+
+@*custom code start*@
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Custom Aggregate in ASP.NET Core Tree Grid control. Explore here for more details."/>
+                }
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This sample demonstrates custom aggregate functionality of the TreeGrid. In this sample, the custom aggregate value for the columns "Category" is displayed in column footer with dropdown to display the count of selected category name.</p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            The TreeGrid supports aggregates which will be displayed at the footer and every hierarchy level.
+            The aggregate configurations can be provided by the <code>Aggregates</code> property.
+        </p>
+        <p>The built-in aggregates are,</p>
+        <ul>
+            <li><code>Sum</code></li>
+            <li><code>Average</code></li>
+            <li><code>Min</code></li>
+            <li><code>Max</code></li>
+            <li><code>Count</code></li>
+            <li><code>TrueCount</code></li>
+            <li><code>FalseCount</code></li>
+            <li>
+                <code>Custom</code> - Requires the <code>CustomAggregate</code> property to perform aggregation.
+                The custom aggregate value can be accessed inside template using the key <code>${Custom}</code>
+            </li>
+        </ul>
+        <p>
+            In this demo, the footerTemplate property shows the custom aggregate value for the columns “Category” in column footer to display the count of category name.
+        </p>
+        <p>The template expression should be provided inside <code>${...}</code> the interpolation syntax.</p>
+        <p>
+            More information about aggregate can be found in this documentation section.
+        </p>
+    </div>
+}
+
+@*custom code end*@
+@section Title{
+                    <title>ASP.NET Core Tree Grid Custom Aggregate Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Custom Aggregate in ASP.NET Core Tree Grid Control</h1>
+                }

@@ -1,0 +1,119 @@
+@using Syncfusion.EJ2.Maps;
+@section ControlsSection{
+    @{
+        var data1 = new[] { new { latitude = 63.54855223203644, longitude = 108.6328125 } };
+        var data2 = new[] { new { latitude = -23.88583769986199, longitude = 134.296875 } };
+        var data3 = new[] { new { latitude = 16.97274101999902, longitude = 20.390625 } };
+        var data4 = new[] { new { latitude = 51.83577752045248, longitude = 23.5546875 } };
+        var data5 = new[] { new { latitude = 59.88893689676585, longitude = -109.3359375 } };
+        var data6 = new[] { new { latitude = -6.64607562172573, longitude = -54.54687499999999 } };
+        var data = new[]
+        {
+            new { latitude = 37.6276571, longitude = -122.4276688, name = "San Bruno"},
+            new { latitude = 33.5302186, longitude = -117.7418381, name = "Laguna Niguel"},
+            new { latitude = 40.7424509, longitude = -74.0081468, name = "New York"},
+            new { latitude = -23.5268201, longitude = -46.6489927, name = "Bom Retiro"},
+            new { latitude = 43.6533855, longitude = -79.3729994, name = "Toronto"},
+            new { latitude = 48.8773406, longitude = 2.3299627, name = "Paris"},
+            new { latitude = 52.4643089, longitude = 13.4107368, name = "Berlin"},
+            new { latitude = 19.1555762, longitude = 72.8849595, name = "Mumbai"},
+            new { latitude = 35.6628744, longitude = 139.7345469, name = "Minato"},
+            new { latitude = 51.5326602, longitude = -0.1262422, name = "London"}
+        };
+        var tooltip = new MapsTooltipSettings
+        {
+            Visible = true,
+            ValuePath = "name",
+            TextStyle = new MapsFont {
+                FontFamily = "Segoe UI"
+            }
+        };
+        var text = new Syncfusion.EJ2.Maps.MapsFont
+        {
+            Size = "16px",
+            FontFamily = "Segoe UI"            
+        };
+        var layerText = new Syncfusion.EJ2.Maps.MapsFont
+        {
+            FontFamily = "Segoe UI"
+        };
+
+        var propertyPath = new[] { "continent" };
+    }
+    <div class="control-section">
+        <div class="row">
+            <div class="col-md-12">
+                <ejs-maps id="maps" load="window.onMapLoad">
+                    <e-maps-titlesettings text="YouTube office locations" alignment="@Alignment.Center" textStyle="text"></e-maps-titlesettings>
+                    <e-maps-zoomsettings enable="false"></e-maps-zoomsettings>
+                    <e-maps-legendsettings visible="true"></e-maps-legendsettings>
+                    <e-maps-layers>
+                        <e-maps-layer dataSource="ViewBag.dataSource" shapeData="ViewBag.mapdata" shapePropertyPath="propertyPath" shapeDataPath="continent">
+                            <e-layersettings-tooltipsettings valuePath="name" visible="true" textStyle="layerText" ></e-layersettings-tooltipsettings>
+                            <e-layersettings-shapesettings colorValuePath="color"></e-layersettings-shapesettings>
+                            <e-layersettings-markers>
+                                <e-layersettings-marker visible="true" dataSource="data" shape="@MarkerType.Image" imageUrl="../styles/images/maps/ballon.png" height="20" width="20" animationDuration="0" tooltipSettings="tooltip" offset="new { x = 1, y = -10 }"></e-layersettings-marker>
+                                <e-layersettings-marker visible="true" template="<div class='markerTemplate' id='marker1' style='font-size: 12px; color: white;font-family: Segoe UI;'>Asia</div>" dataSource="data1"></e-layersettings-marker>
+                                <e-layersettings-marker visible="true" template="<div class='markerTemplate' id='marker2' style='font-size: 12px; color: white;font-family: Segoe UI;'>Australia</div>" dataSource="data2"></e-layersettings-marker>
+                                <e-layersettings-marker visible="true" template="<div class='markerTemplate' id='marker3' style='font-size: 12px; color: white;font-family: Segoe UI;'>Africa</div>" dataSource="data3"></e-layersettings-marker>
+                                <e-layersettings-marker visible="true" template="<div class='markerTemplate' id='marker4' style='font-size: 12px; color: white;font-family: Segoe UI;'>Europe</div>" dataSource="data4"></e-layersettings-marker>
+                                <e-layersettings-marker visible="true" template="<div class='markerTemplate' id='marker5' style='font-size: 12px; color: white; width:50px;font-family: Segoe UI;'>North America</div>" dataSource="data5"></e-layersettings-marker>
+                                <e-layersettings-marker visible="true" template="<div class='markerTemplate' id='marker6' style='font-size: 12px; color: white; width: 50px;font-family: Segoe UI;'>South America</div>" dataSource="data6"></e-layersettings-marker>
+                            </e-layersettings-markers>
+                        </e-maps-layer>
+                    </e-maps-layers>
+                </ejs-maps>
+                <div style="float: right; margin-right: 10px;">Source:<a href="https://craft.co/youtube/locations" target="_blank">craft.co/youtube/locations</a></div>
+            </div>
+        </div>
+    </div>
+}
+<style>
+    .markerTemplate {
+        font-size: 12px;
+        color: white;
+        text-shadow: 0px 1px 1px black;
+        font-weight: 500
+    }
+</style>
+@*custom code start*@
+<script>
+    function onMapLoad(args) {
+        var theme = themeName ? themeName : "Material";
+        args.maps.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+    }
+</script>
+@*custom code end*@
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Default Functionalities in ASP.NET Core Maps control. Explore here for more details."/>
+                }
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample visualizes the continents in the world by rendering these in a map layer. Also marks the office locations of YouTube in the world using markers.
+        </p>
+    </div>
+}
+@section Description{
+
+    <div id="description">
+        <p>
+            In this example, you can see how to render a map with the provided GeoJSON data. Group of shapes can be combined to form a layer of the map. You can bind the desired colors from the data source to the map shapes. The marker templates are used to display the names for shapes and mark specific locations. Legend is enabled in this example to represent each continent.
+        </p>
+        <p>
+            Tooltip is enabled in this example. To see the tooltip in action, hover the mouse over a marker or tap a marker in touch enabled devices.
+        </p>
+        <br />
+        <p style="font-weight: 500">Injecting Module</p>
+        <p>
+            Maps component features are segregated into individual feature-wise modules. To use a marker, inject the <code>Marker</code> module using the <code>Maps.Inject(Marker)</code> method, and use a legend by injecting the <code>Legend</code> module.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Maps Default Functionalities Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Default Functionalities in ASP.NET Core Maps Control</h1>
+                }

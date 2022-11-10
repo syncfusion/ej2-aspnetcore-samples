@@ -1,0 +1,87 @@
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+    <div class=" control-section">
+        <div class="sample-container">
+            <!-- File Manager Directory upload feature sample -->
+            <ejs-filemanager id="filemanager" created="onCreated">
+                <e-filemanager-ajaxsettings url="https://ej2services.syncfusion.com/production/web-services/api/FileManager/FileOperations"
+                                            downloadUrl="https://ej2services.syncfusion.com/production/web-services/api/FileManager/Download"
+                                            uploadUrl="https://ej2services.syncfusion.com/production/web-services/api/FileManager/Upload"
+                                            getImageUrl="https://ej2services.syncfusion.com/production/web-services/api/FileManager/GetImage">
+                </e-filemanager-ajaxsettings>
+            </ejs-filemanager>
+        </div>
+    </div>
+
+}
+
+@section PreScripts{
+    <script>
+        
+        function onCreated(args) {
+            var fileObject = document.getElementById("filemanager").ej2_instances[0];
+            document.getElementById('filemanager_tb_upload').onclick = function (args) {
+                args.stopPropagation();
+            };
+            var items = [{ text: 'Folder' }, { text: 'Files' }];
+             var drpDownBtn = new ej.splitbuttons.DropDownButton(
+               {
+                 items: items,
+                 select: (args) => {
+                   if (args.item.text === 'Folder') {
+                     fileObject.uploadSettings.directoryUpload = true;
+                   } else {
+                     fileObject.uploadSettings.directoryUpload = false;
+                   }
+                   setTimeout(function () {
+                     let uploadBtn = document.querySelector('.e-file-select-wrap button');
+                     uploadBtn.click();
+                   }, 100);
+                 }
+               },
+               '#filemanager_tb_upload'
+             );
+        }
+    </script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This sample demonstrates the folder (directory) upload feature of File Manager component. Select <b>Folder</b> from toolbar item to select and upload a folder.</p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            In this demo, a folder upload enabled by setting <code>directoryUpload</code> as true.
+            It allows to select or drop a folder to upload all its contents including hierarchy folders and files.
+        </p>
+        <p>
+            The folder (directory) upload is supported for the following file system providers,
+            <li> Physical provider</li>
+            <li> NodeJS provider</li>
+            <li> Azure provider</li>
+            <li> Amazon S3 provider</li>
+        </p>
+        <p>
+            The <b>File Manager</b> component is used to explore a file system through a web application, similar to the windows explorer for windows. It supports all the basic file operations such as create, rename, delete, refresh and so on.
+        </p>
+        <p>
+            <b>Note: </b>File Manager's upload functionality is restricted in the online demo. If you need to test upload functionality, please install
+            <a target="_blank" href="https://www.syncfusion.com/downloads">Syncfusion Essential Studio </a>on your machine and run the demo.
+        </p>
+
+    </div>
+}
+
+@section Meta{
+    <meta name="description" content="This example demonstrates how to upload the folder (directory) by using custom toolbar item with in a ASP.NET Core File Manager control." />
+}
+@section Title{
+    <title>ASP.NET Core File Manager Directory Upload Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Directory Upload in ASP.NET Core File Manager Control</h1>
+}

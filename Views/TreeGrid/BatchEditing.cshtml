@@ -1,0 +1,85 @@
+@using Syncfusion.EJ2
+
+@{
+    ViewData["Title"] = "BatchEditing";
+}
+
+<h2>BatchEditing</h2>
+
+@section ControlsSection{
+    <div class="control-section">
+        @{
+            var dict = new Dictionary<string, object>();
+            dict.Add("number", true);
+            dict.Add("min", 0);
+        }
+        <ejs-treegrid id="TreeGrid" dataSource="ViewBag.dataSource" height="400" childMapping="Children" treeColumnIndex="1" toolbar="@(new List<string>() { "Add", "Delete", "Update", "Cancel" })">
+            <e-treegrid-editsettings allowAdding="true" allowEditing="true" allowDeleting="true" mode="Batch" newRowPosition="Below"></e-treegrid-editsettings>
+            <e-treegrid-columns>
+                <e-treegrid-column field="TaskId" headerText="Task ID" isPrimaryKey="true" validationRules="@(new { required=true, number=true})" textAlign="Right" width="90"></e-treegrid-column>
+                <e-treegrid-column field="TaskName" headerText="Task Name" validationRules="@(new { required=true})" editType="stringedit" width="220"></e-treegrid-column>
+                <e-treegrid-column field="StartDate" headerText=" Start Date" validationRules="@(new { date=true})" editType="datepickeredit" textAlign="Right" format="yMd" type="date" width="130"></e-treegrid-column>
+                <e-treegrid-column field="Duration" headerText="Duration" validationRules="@(dict)" editType="numericedit" textAlign="Right" edit="@(new{@params=new{format="n"}})" width="100"></e-treegrid-column>
+                <e-treegrid-column field="Progress" headerText="Progress" textAlign="Right" width="80" editType="numericedit" validationRules="@(dict)" edit="@(new{@params=new{format="n"}})"></e-treegrid-column>
+                <e-treegrid-column field="Priority" headerText="Priority" width="90" editType="stringedit" validationRules="@(new { required=true})"></e-treegrid-column>
+            </e-treegrid-columns>
+        </ejs-treegrid>
+
+    </div>
+}
+
+@*custom code start*@
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Batch Editing in ASP.NET Core Tree Grid control. Explore here for more details."/>
+                }
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates CRUD operations in Tree Grid. You can perform CRUD operations as follows,
+        </p>
+        <ul>
+            <li><code>Add </code> - To add new record, click Add toolbar button.</li>
+            <li><code>Edit</code> - To edit record, double click a cell.</li>
+            <li><code>Delete</code> - To delete record, click toolbar Delete button after selected a row.</li>
+            <li><code>Update, Cancel</code> - You can save or discard changes by click toolbar Update and Cancel button respectively.</li>
+        </ul>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            The Tree Grid supports CRUD operations. This CRUD operations can be configured in Tree Grid using <code>editSettings</code>. Also, it has different modes to manipulate the datasource.
+        </p>
+        <p>
+            The available modes are,
+        </p>
+        <ul>
+            <li><code>Row </code></li>
+            <li><code>Cell</code></li>
+            <li><code>Dialog</code></li>
+            <li><code>Batch</code></li>
+        </ul>
+        <p>
+            In this demo, Batch mode is enabled for editing by defining <code>editSettings.mode</code> as <code>Batch</code> with <code>editSettings.newRowPosition</code> as <code>Below</code>. You can start editing by double clicking a cell and can change the cell value. The edited cell will be highlighted while navigating to a new cell, so that you know which cells had been edited. You can bulk save the edited data to the datasource by click on the toolbar's update button.
+        </p>
+        <p>
+            <br /> More information about Batch Editing can be found in this <code>
+                <a target="_blank" class="code"
+                   href="https://ej2.syncfusion.com/aspnetcore/documentation/treegrid/editing/#batch">
+                    documentation section.
+                </a>
+            </code>
+        </p>
+    </div>
+}
+
+@*custom code end*@
+@section Title{
+                    <title>ASP.NET Core Tree Grid Batch Editing Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Batch Editing in ASP.NET Core Tree Grid Control</h1>
+                }

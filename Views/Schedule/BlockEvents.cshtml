@@ -1,0 +1,118 @@
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+    <div class="control-section">
+        <div class="content-wrapper">
+            <div class="schedule-container">
+                <ejs-schedule id="schedule" width="100%" height="650px" cssClass="block-events" resourceHeaderTemplate="#resource-template" currentView="TimelineDay" selectedDate="new DateTime(DateTime.Today.Year, 8, 2)">
+                    <e-schedule-group enableCompactView="false" resources="@ViewBag.Resources"></e-schedule-group>
+                    <e-schedule-resources>
+                        <e-schedule-resource dataSource="@ViewBag.Employees" field="EmployeeId" title="Employees" name="Employee" textField="text" idField="id" colorField="color" groupIDField="groupId" allowMultiple="false"></e-schedule-resource>
+                    </e-schedule-resources>
+                    <e-schedule-views>
+                        <e-schedule-view option="Day"></e-schedule-view>
+                        <e-schedule-view option="TimelineDay"></e-schedule-view>
+                        <e-schedule-view option="TimelineMonth"></e-schedule-view>
+                    </e-schedule-views>
+                    <e-schedule-eventsettings dataSource="@ViewBag.datasource">
+                    </e-schedule-eventsettings>
+                </ejs-schedule>
+            </div>
+
+        </div>
+    </div>
+    <style>
+        .e-schedule .template-wrap {
+            width: 100%;
+        }
+
+        .e-schedule .e-vertical-view .e-resource-cells {
+            height: 58px;
+        }
+
+        .e-schedule .e-timeline-view .e-resource-left-td,
+        .e-schedule .e-timeline-month-view .e-resource-left-td {
+            width: 170px;
+        }
+
+        .e-schedule .e-resource-cells.e-child-node .employee-category,
+        .e-schedule .e-resource-cells.e-child-node .employee-name {
+            padding: 5px
+        }
+
+        .e-schedule .employee-image {
+            width: 45px;
+            height: 40px;
+            float: left;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .e-schedule .employee-name {
+            font-size: 13px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: normal;
+        }
+
+        .e-schedule .employee-designation {
+            font-size: 10px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: normal;
+        }
+    </style>
+
+    <script id="resource-template" type="text/x-template">
+        <div class="template-wrap">
+            <div class="employee-category">
+                ${getEmployeeImage(data)}
+                <div class="employee-name">${getEmployeeName(data)}</div>
+                <div class="employee-designation">${getEmployeeDesignation(data)}</div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/javascript">
+        function getEmployeeName(value) {
+            return value.resourceData[value.resource.textField];
+        }
+
+        function getEmployeeImage(value) {
+            let resourceName = value.resourceData[value.resource.textField];
+            var path = "@Url.Content("~/css/schedule/images/")";
+            var src = path + resourceName.toLowerCase() + ".png";
+            return '<img class="employee-image" src=' + src + '></img>';
+        }
+
+        function getEmployeeDesignation(value) {
+            return value.resourceData.designation;
+        }
+    </script>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Blocking Dates and Time in ASP.NET Core Scheduler control. Explore here for more details."/>
+                }
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This example shows how to block specific time intervals or days on the Scheduler.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this example, few blocked events are defined to block the specific time range with the text “Unavailable”.
+            No events can be created on those blocked time range as well as edited through it. These blocked events can be
+            defined by setting <code>isBlock</code> field to true within the <code>eventSettings</code> and assigned
+            altogether with the events <code>dataSource</code>.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Scheduler Blocking Dates and Time Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Blocking Dates and Time in ASP.NET Core Scheduler Control</h1>
+                }

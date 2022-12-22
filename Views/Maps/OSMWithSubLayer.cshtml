@@ -1,0 +1,54 @@
+﻿@using Syncfusion.EJ2.Maps;
+@section ControlsSection{
+    @{
+
+        var TextStyle = new MapsFont { Size = "16px", FontFamily = "inherit" };
+        var Shape = new MapsShapeSettings { Fill = "#5100a3", Opacity = 0.4 };
+    }
+    <div class="control-section">
+        <div class="row">
+            <div class="col-md-12">
+                <ejs-maps id="maps" load="window.onMapLoad">
+                    <e-maps-titlesettings alignment="@Syncfusion.EJ2.Maps.Alignment.Center" text="Location of Africa continent in the World map" textStyle="@TextStyle">
+                    </e-maps-titlesettings>
+                    <e-maps-zoomsettings enable="true"></e-maps-zoomsettings>
+                    <e-maps-layers>
+                        <e-maps-layer layerType="@Syncfusion.EJ2.Maps.ShapeLayerType.OSM">
+                        </e-maps-layer>
+                        <e-maps-layer type="@Syncfusion.EJ2.Maps.Type.SubLayer" shapeData="ViewBag.mapdata" shapeSettings="@Shape"></e-maps-layer>
+                    </e-maps-layers>
+                </ejs-maps>
+                <div style="float: right">
+                    <a href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap contributors</a>
+                </div><br />
+                <div style="float: right; margin-right: 10px;">
+                    Source:
+                    <a href="https://www.whatarethe7continents.com/biggest-largest-smallest-continents/" target="_blank">Seven Continents</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script>
+    function onMapLoad(args) {
+        @* custom code start *@
+        var theme = themeName ? themeName : "Material";
+        args.maps.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+        @* custom code end *@
+    }    
+</script>
+@section Description{
+    <div id="description">
+        <p>
+            In this example, you can see how to render the geometric layers as sublayer on the OpenStreetMap. The outline of Africa continent is rendered using GeoJSON data on the top of the OpenStreetMap.
+        </p>
+    </div>
+}
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample visualizes the location of Africa continent in the World map.
+        </p>
+    </div>
+}

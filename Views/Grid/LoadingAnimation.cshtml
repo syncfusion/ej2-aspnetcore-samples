@@ -1,0 +1,76 @@
+﻿@section ControlsSection{
+    <div class="col-lg-9 control-section">
+        <div class="control-wrapper">           
+                <ejs-grid id="Grid"  allowPaging="true" allowSorting="true" allowFiltering="true">
+                    <e-grid-loadingIndicator indicatorType="Shimmer"></e-grid-loadingIndicator>
+                    <e-grid-pageSettings pageCount="3"></e-grid-pageSettings>                    
+                    <e-data-manager url="https://ej2services.syncfusion.com/production/web-services/api/UrlDataSource" adaptor="UrlAdaptor"></e-data-manager>
+                    <e-grid-columns>
+                        <e-grid-column field="EmployeeID" headerText="Employee ID" width="130" textAlign="Right" ></e-grid-column>
+                        <e-grid-column field="Employees" headerText="Employee Name" width="145"></e-grid-column>
+                        <e-grid-column field="Designation"  headerText="Designation" width="130"></e-grid-column>
+                        <e-grid-column field="CurrentSalary" headerText="CurrentSalary"  format="C2" textAlign="Right" width="130"></e-grid-column>
+                    </e-grid-columns>
+                </ejs-grid>                
+    </div>
+</div>
+
+<div class="col-lg-3 property-section">    
+    <h4>Properties</h4>
+    <table id="property" title="Properties" style="width: 100%;">             
+        <tr>
+            <td class="left-side">Indicator Type</td>
+            <td>
+                <ejs-dropdownlist id="dropdown" dataSource="@ViewBag.data" change="onChange" index="0" popupHeight="220px"></ejs-dropdownlist>
+            </td>
+        </tr>
+    </table>
+</div>
+
+    <script>
+        function onChange() {
+            var grid = document.getElementById("Grid").ej2_instances[0];
+            var dropdown = document.getElementById("dropdown").ej2_instances[0]
+            if (dropdown.value === 'Shimmer') {
+                grid.loadingIndicator.indicatorType = 'Shimmer';
+                grid.refresh();
+            } else {
+                grid.loadingIndicator.indicatorType = 'Spinner';
+                grid.refresh();
+            }
+        }
+    </script>
+   }
+@section ActionDescription{
+	<div id="action-description">
+		<p>This sample shows the loading indicator while grid loading and refreshing when using remote data. In this sample, you can change the loading indicators from the properties panel.
+		</p>
+	</div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Loading Animation in ASP.NET Core Data Grid control. Explore here for more details."/>
+                }
+
+@section Description{
+    <div id="description">
+     <p>
+       The grid has an option to show a loading indicator in-between the time of fetching the data and binding it to the grid during initial rendering or refreshing or after performing any grid action like sorting, filtering, grouping, and more.
+    </p>
+    <p>The Grid supports the following loading indicator types. They are: </p>
+        <ul>
+            <li><code>Spinner</code></li>
+            <li><code>Shimmer</code></li>
+        </ul>
+    <p>Use the loading indicator by setting the <code>loadingIndicator.indicatorType</code> property as <code>Spinner</code> or <code>Shimmer</code>. The default value of the indicatorType is <code>Spinner</code>.</p>
+    <p> In this demo, the <code>Shimmer</code> type is initially enabled. If you want to use the default value of the loading indicator, use the dropdown to change it.
+    </p>
+	
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Data Grid Loading Animation Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Loading Animation in ASP.NET Core Data Grid Control</h1>
+                }

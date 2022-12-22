@@ -1,0 +1,181 @@
+@{
+    ViewData["Title"] = "VeriticalOrientation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var sliderValue = new int[] { 30, 70 };
+}
+
+@using Syncfusion.EJ2
+@section ControlsSection{
+<div class="col-lg-8 control-section">
+    <div class="content-wrapper">
+        <table class="slider_table">
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="sliderwrap">
+                            <ejs-slider id="default" value="30" orientation=Vertical created="onCreated"></ejs-slider>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="sliderwrap">
+                            <ejs-slider id="minrange" type=MinRange orientation=Vertical value="30"></ejs-slider>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="sliderwrap">
+                            <ejs-slider id="range" orientation=Vertical type=Range value=sliderValue></ejs-slider>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
+
+    <div class="col-lg-4 property-section">
+        <table id="property" title="Properties">
+            <tbody>
+                <tr>
+                    <td style="width: 50%">
+                        <div class="userselect">Ticks</div>
+                    </td>
+                    <td style="width: 50%;padding-right: 10px">
+                        <div style="padding-left: 0;padding-top: 0">
+                            <ejs-checkbox id="ticks" checked="false" change="enableDisableTicks"></ejs-checkbox>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr id="slider-showon">
+                    <td style="width: 50%">
+                        <div class="userselect">Tooltip</div>
+                    </td>
+                    <td style="width: 50%;padding-right: 10px">
+                        <div style="padding-left: 0;padding-top: 0">
+                            <ejs-checkbox id="tooltip" checked="false" change="enableDisableTooltip"></ejs-checkbox>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Vertical Orientation in ASP.NET Core Range Slider control. Explore here for more details."/>
+                }
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the rendering of Slider component in Vertical orientation. Drag the thumb over the bar for selecting
+            the values between min and max.
+        </p>
+
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            The Slider component allows to select a value or range of values in-between a min and max range, by dragging the thumb
+            over the slider bar in vertical orientation. Three types of sliders in vertical orientation are:
+        </p>
+        <ul>
+            <li>Default - allows to select a single value in vertical orientation.</li>
+            <li>
+                MinRange – allows to select a single value, but highlights with a range selection from the min value to the current
+                handle value in vertical orientation.
+            </li>
+            <li>
+                Range – allows to select a range of values with two handles, where the handles are connected with a range selection
+                in vertical orientation.
+            </li>
+        </ul>
+        <p>The dragInterval is used to drag both handles using the range bar which is also applicable only to the range slider.</p>
+        <p>
+            In this demo, the default, MinRange, and range slider types can be seen.
+        </p>
+
+    </div>
+}
+
+<style>
+    .content-wrapper {
+        width: 80%;
+        margin: 0 auto;
+        min-width: 185px;
+    }
+
+    .sliderwrap {
+        height: 375px;
+        margin-top: 10px;
+        width: 60%;
+        margin: auto;
+    }
+
+    .e-bigger .content-wrapper {
+        width: 80%;
+    }
+
+    .sliderwrap .e-lbl {
+        display: block;
+        font-size: 11px;
+        font-weight: 500;
+        margin-top: 15px;
+        margin-left: -10px;
+    }
+
+    .sliderwrap:last-child .e-lbl {
+        margin-left: -2px;
+    }
+
+    .slider_table td {
+        text-align: center;
+    }
+
+    .slider_table {
+        border: 0;
+        width: 100%
+    }
+</style>
+
+<script type="text/javascript">
+    function enableDisableTicks(args) {
+        let ticks = { placement: args.checked ? 'Before' : 'None', largeStep: 20, smallStep: 5, showSmallTicks: true };
+        defaultTicks = document.getElementById("default")
+        defaultTicks.ej2_instances[0].ticks = ticks;
+        minrangeTicks = document.getElementById("minrange")
+        minrangeTicks.ej2_instances[0].ticks = ticks;
+        rangeTicks = document.getElementById("range")
+        rangeTicks.ej2_instances[0].ticks = ticks;
+    }
+
+    function enableDisableTooltip(args) {
+        let tooltip = { isVisible: args.checked, placement: 'Before' };
+        defaulttooltip = document.getElementById("default")
+        defaulttooltip.ej2_instances[0].tooltip = tooltip;
+        minrangetooltip = document.getElementById("minrange")
+        minrangetooltip.ej2_instances[0].tooltip = tooltip;
+        rangetooltip = document.getElementById("range")
+        rangetooltip.ej2_instances[0].tooltip = tooltip;
+    }
+    function onCreated() {
+        if(document.getElementById('right-pane')) {
+        document.getElementById('right-pane').addEventListener('scroll', onScroll);
+        }
+    }
+    function onScroll() {
+        var slider = [document.getElementById("default").ej2_instances[0], document.getElementById("minrange").ej2_instances[0], document.getElementById("range").ej2_instances[0]];
+        slider.forEach(function (slider) {
+            // Refreshing each slider tooltip object position
+            slider.refreshTooltip(slider.tooltipTarget);
+        });
+    }
+</script>
+@section Title{
+                    <title>ASP.NET Core Range Slider Vertical Orientation Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Vertical Orientation in ASP.NET Core Range Slider Control</h1>
+                }

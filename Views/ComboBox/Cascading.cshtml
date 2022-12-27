@@ -1,0 +1,109 @@
+@using Syncfusion.EJ2
+@{
+    var state = new State().StateList();
+    var country = new Country().CountryList();
+    var cities = new Cities().CitiesList();
+    var popupHeight = "auto";
+}
+@section ControlsSection{
+<div class="col-lg-12 control-section">
+    <div class='control-wrapper'>
+        <div class="padding-top">
+            <ejs-combobox id="country" placeholder="Select a country" allowCustom="false" popupHeight="auto" dataSource="@country" change="countrychange">
+                <e-combobox-fields text="CountryName" value="CountryId"></e-combobox-fields>
+            </ejs-combobox>
+
+        </div>
+        <div class="padding-top">
+            <ejs-combobox id="state" enabled="false" placeholder="Select a state" allowCustom="false" popupHeight="@popupHeight" dataSource="@state" change="statechange">
+                <e-combobox-fields text="StateName" value="StateId"></e-combobox-fields>
+            </ejs-combobox>
+        </div>
+        <div class="padding-top">
+            <ejs-combobox id="city" placeholder="Select a city" enabled="false" allowCustom="false" popupHeight="@popupHeight" dataSource="@cities">
+                <e-combobox-fields text="CityName" value="CityId"></e-combobox-fields>
+            </ejs-combobox>
+        </div>
+    </div>
+</div>
+    @*custom code start*@
+
+    <style>
+        .control-wrapper {
+            margin: 0 auto;
+            width: 250px;
+        }
+
+        .control-section .padding-top {
+            padding-top: 35px
+        }
+    </style>
+    @*custom code end*@
+    <script type="text/javascript">
+        function countrychange() {
+            var state = document.getElementById('state').ej2_instances[0];
+            var city = document.getElementById('city').ej2_instances[0];
+            var country = document.getElementById('country').ej2_instances[0];
+            // disable the state DropDownList
+            state.enabled = true;
+            // frame the query based on selected value in country DropDownList.
+            var tempQuery = new ej.data.Query().where('CountryId', 'equal', country.value);
+            // set the framed query based on selected value in country DropDownList.
+            state.query = tempQuery;
+            // set null value to state DropDownList text property
+            state.text = null;
+            // bind the property changes to state DropDownList
+            state.dataBind();
+            // set null value to city DropDownList text property
+            city.text = null;
+            // disable the city DropDownList
+            city.enabled = false;
+            // bind the property changes to City DropDownList
+            city.dataBind();
+        }
+        function statechange() {
+            var city = document.getElementById('city').ej2_instances[0];
+            var state = document.getElementById('state').ej2_instances[0];
+            city.enabled = true;
+            // Query the data source based on state DropDownList selected value
+            var tempQuery1 = new ej.data.Query().where('StateId', 'equal', state.value);
+            // set the framed query based on selected value in city DropDownList.
+            city.query = tempQuery1;
+            //clear the existing selection
+            city.text = null;
+            // bind the property change to city DropDownList
+            city.dataBind();
+
+        }
+    </script>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Cascading in ASP.NET Core ComboBox control. Explore here for more details."/>
+                }
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the cascading functionalities of the ComboBox. Choose a country from countries ComboBox, then respective states will be loaded in the second ComboBox
+            and the same has to done between states and cities ComboBox.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            The <code>Cascading</code> ComboBox is the series of ComboBox, where the value of one ComboBox depends on the another
+            ComboBox value. This can be configured by using the <code>change</code> event of parent ComboBox. Within
+            that change event handler, you should load the data to child ComboBox based on the selected value of parent ComboBox.
+        </p>
+        <p>
+            More information on the Cascading feature configuration can be found in the
+            <a href="http://ej2.syncfusion.com/aspnet/documentation/?syntax=tag" target="_blank"> documentation section</a>.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core ComboBox Cascading Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Cascading in ASP.NET Core ComboBox Control</h1>
+                }

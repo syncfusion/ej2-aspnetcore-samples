@@ -1,0 +1,94 @@
+@using Syncfusion.EJ2.Gantt;
+@section ControlsSection{
+    <div class="control-section">
+        @{
+
+            List<object> toolbarItems = new List<object>();
+            toolbarItems.Add(new { text = "Insert task", tooltipText = "Insert task at top", id = "toolbarAdd", prefixIcon = "e-add-icon tb-icons" });
+        }
+        <div class="row">
+            <div class="col-md-12">
+                <div class="content-wrapper">
+                    <ejs-gantt id='Unscheduled' dataSource="ViewBag.dataSource" height="450px"
+                               projectStartDate="01/01/2019"
+                               projectEndDate="01/20/2019" toolbarClick="toolbarClick"
+                               toolbar=toolbarItems allowUnscheduledTasks="true">
+                        <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate"
+                                            endDate="EndDate" duration="Duration">
+                        </e-gantt-taskfields>
+                        <e-gantt-editSettings allowAdding="true" allowEditing="true" allowDeleting="true"></e-gantt-editSettings>
+                        <e-gantt-columns>
+                            <e-gantt-column field="TaskId" width="90"></e-gantt-column>
+                            <e-gantt-column field="TaskName" width="80"></e-gantt-column>
+                            <e-gantt-column field="StartDate" width="120"></e-gantt-column>
+                            <e-gantt-column field="EndDate" width="120"></e-gantt-column>
+                            <e-gantt-column field="Duration" width="90"></e-gantt-column>
+                        </e-gantt-columns>
+                        <e-gantt-splitterSettings columnIndex="4"></e-gantt-splitterSettings>
+                        <e-gantt-labelSettings leftLabel="TaskName" rightLabel="TaskType"></e-gantt-labelSettings>
+                    </ejs-gantt>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        #Unscheduled .e-add-icon:before {
+            content: "\e506"
+        }
+        .bootstrap4 #Unscheduled .e-add-icon:before {
+            content: "\e783"
+        }
+		.tailwind #Unscheduled .e-add-icon:before,
+		.tailwind-dark #Unscheduled .e-add-icon:before {
+		   content: "\e7dd"
+		}
+        .bootstrap5 #Unscheduled .e-add-icon:before,
+        .bootstrap5-dark #Unscheduled .e-add-icon:before,
+        .tailwind #Unscheduled .e-add-icon:before, .tailwind-dark #Unscheduled .e-add-icon:before,
+        .fluent #Unscheduled .e-add-icon:before, .fluent-dark #Unscheduled .e-add-icon:before {
+            content: "\e836"
+        }
+    </style>
+    <script type="text/javascript">
+        window.toolbarClick = function (args) {
+            var gantt = document.getElementById("Unscheduled").ej2_instances[0];
+            var data = {
+                Duration: null,
+                StartDate: null,
+                EndDate: null,
+                TaskType: ''
+            };
+            gantt.addRecord(data);
+        }
+        window.load = function (args) {
+            var gantt = document.getElementById("Unscheduled").ej2_instances[0];
+            gantt.toolbarClick = window.toolbarClick;
+        }
+    </script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample visualizes the support for displaying unscheduled tasks in Gantt and adding empty rows using the custom toolbar button.
+        </p>
+    </div>
+}
+@section Description{
+    <p>
+        Unscheduled tasks are tasks in a project that are not scheduled with proper dates or duration at the commencement of the project.
+        These tasks can be scheduled properly at any time during project implementation based on factors such as resource availability, dependent tasks, and more.
+        This example shows how to display the unscheduled tasks in Gantt by enabling the <code>allowUnscheuldedTasks</code> property.
+        This also shows how to add an empty row in Gantt by using a custom toolbar button click action. By using the <code>toolbarClick</code> event and <code>addRecord</code> method,
+        an empty row can be added at the top of the rows with undefined task details.
+    </p>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Unscheduled Tasks in ASP.NET Core Gantt control. Explore here for more details."/>
+                }
+@section Title{
+                    <title>ASP.NET Core Gantt Unscheduled Tasks Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Unscheduled Tasks in ASP.NET Core Gantt Control</h1>
+                }

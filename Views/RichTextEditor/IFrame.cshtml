@@ -1,0 +1,102 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="control-section">
+        <div class="control-wrapper">
+            <ejs-richtexteditor id="iframe" created="created" height="500" actionBegin="handleFullScreen" actionComplete="actionCompleteHandler">
+                <e-content-template>
+                    <p>
+                        The Rich Text Editor component is a WYSIWYG ('what you see is what you get') editor that provides the best user experience to create and update the content.
+                        Users can format their content using standard toolbar commands.
+                    </p>
+                    <p><b> Key features:</b></p>
+                    <ul>
+                        <li><p> Provides IFRAME and DIV modes </p></li>
+                        <li><p> Capable of handling markdown editing.</p></li>
+                        <li><p> Contains a modular library to load the necessary functionality on demand.</p></li>
+                        <li><p> Provides a fully customizable toolbar.</p></li>
+                        <li><p> Provides HTML view to edit the source directly for developers.</p></li>
+                        <li><p> Supports third - party library integration.</p></li>
+                        <li><p> Allows a preview of modified content before saving it.</p></li>
+                        <li><p> Handles images, hyperlinks, video, hyperlinks, uploads, etc.</p></li>
+                        <li><p> Contains undo / redo manager.</p></li>
+                        <li><p> Creates bulleted and numbered lists.</p></li>
+                    </ul>
+                </e-content-template>
+                <e-richtexteditor-iframesettings enable="true"></e-richtexteditor-iframesettings>
+                <e-richtexteditor-toolbarsettings items="@ViewBag.items"></e-richtexteditor-toolbarsettings>
+                <e-richtexteditor-filemanagersettings enable="true" path="/Pictures/Food" ajaxSettings="@ViewBag.ajaxSettings"></e-richtexteditor-filemanagersettings>
+            </ejs-richtexteditor>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var rteObj;
+        function created() {
+            rteObj = this;
+        }
+        function handleFullScreen(e) {
+            var sbCntEle = document.querySelector('.sb-content.e-view');
+            var sbHdrEle = document.querySelector('.sb-header.e-view');
+            if (e.targetItem === 'Maximize') {
+                if (ej.base.Browser.isDevice && ej.base.Browser.isIos) {
+                    ej.base.addClass([sbCntEle, sbHdrEle], ['hide-header']);
+                }
+            }
+            else if (e.targetItem === 'Minimize') {
+                if (ej.base.Browser.isDevice && ej.base.Browser.isIos) {
+                    ej.base.removeClass([sbCntEle, sbHdrEle], ['hide-header']);
+                }
+            }
+        }
+        function actionCompleteHandler() {
+            setTimeout(function () { rteObj.toolbarModule.refreshToolbarOverflow(); }, 400);
+        }
+    </script>
+    <style>
+        .e-rte-content body {
+            color: black;
+            background-color: white;
+        }
+        /* custom code start */
+        .sb-header {
+            z-index: 100;
+        }
+
+        .sb-content.e-view.hide-header {
+            top: 0 !important;
+        }
+
+        .sb-header.e-view.hide-header {
+            display: none;
+        }
+        /* custom code end */
+    </style>
+}
+
+@*custom code start*@
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the IFrame in ASP.NET Core Rich Text Editor control. Explore here for more details."/>
+                }
+
+@*custom code end*@
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This sample demonstrates the default rendering of the Rich Text Editor in <code>iframe mode</code>.</p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            The Rich Text Editor is WYSIWYG ("what you see is what you get") editor that is used to create and edit content, and return valid HTML markup. The editor provides a standard toolbar to format content using its commands. The toolbar contains commands to align the text, insert link, insert image,
+            insert list, undo/redo the operation, HTML view, and more.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Rich Text Editor IFrame Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of IFrame in ASP.NET Core Rich Text Editor Control</h1>
+                }

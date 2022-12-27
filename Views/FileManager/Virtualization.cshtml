@@ -1,0 +1,60 @@
+﻿@using Syncfusion.EJ2
+
+@section ControlsSection{
+    <div class=" control-section">
+        <div class="sample-container">
+            <!-- File Manager virtualization feature sample -->
+            <ejs-filemanager id="filemanager" beforeSend="onBeforeSend">
+                <e-filemanager-ajaxsettings url="https://ej2services.syncfusion.com/production/web-services/api/FileManager/FileOperations"
+                                            downloadUrl="https://ej2services.syncfusion.com/production/web-services/api/FileManager/Download"
+                                            uploadUrl="https://ej2services.syncfusion.com/production/web-services/api/FileManager/Upload"
+                                            getImageUrl="https://ej2services.syncfusion.com/production/web-services/api/FileManager/GetImage">
+                </e-filemanager-ajaxsettings>
+            </ejs-filemanager>
+
+        </div>
+    </div>
+
+}
+
+@section PreScripts{
+    <script>
+        function onBeforeSend(args) {
+            var data = JSON.parse(args.ajaxSettings.data);
+            // Add custom parameter rootFolderName
+             data.rootFolderName = "FileBrowser";
+            // Add custom parameter in ajax settings
+             args.ajaxSettings.data = JSON.stringify(data);
+        }
+    </script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+         <p>This sample demonstrates UI virtualization of the File Manager component. Scroll the items in details view or large icons view to load the folders/files dynamically. The folder 'Documents' and 'Text Documents' has large set of files in below sample.</p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>In the demo, enabled virtualization by using <code>virtualizationSettings.enable</code> property as true. Specify the number of files/folders to render on initial rendering through following APIs.</p>
+        <ul>
+            <li>For details view, specify count by using<code>virtualizationSettings.detailsViewItemsCount</code></li>
+            <li>For large icons view, specify count by using <code>virtualizationSettings.largeIconsViewItemsCount</code></li>
+        </ul>
+        <p>
+            <b>Note: </b>File Manager’s upload functionality is restricted in the online demo. If you need to test upload functionality, please install
+            <a target="_blank" href="https://www.syncfusion.com/downloads">Syncfusion Essential Studio </a>on your machine and run the demo.
+        </p>
+    </div>
+}
+
+@section Meta{
+    <meta name="description" content="This example demonstrates the how to enable the virtual scrolling feature in a ASP.NET Core File Manager control." />
+}
+@section Title{
+    <title>ASP.NET Core File Manager Virtualization Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Virtualization in ASP.NET Core File Manager Control</h1>
+}

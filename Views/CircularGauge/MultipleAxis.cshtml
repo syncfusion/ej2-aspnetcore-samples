@@ -1,0 +1,196 @@
+@using Syncfusion.EJ2;
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Multiple Axis in ASP.NET Core CircularGauge control. Explore here for more details."/>
+                }
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample visualizes the multiple axes in the gauge and options are available to change the direction, start, and end angle of an axis.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this example, you can see how to render and configure multipe axes in gauge. Use <code>axes</code> collection
+            to render multiple axis in gauge. Each axis can be customized with its own <code>pointer</code> and <code>scales</code>.
+        </p>
+        <br>
+        <p>
+            In this sample, two axes with a pointer have been used.
+        </p>
+        <p>
+            More information on the axis can be found in this
+            <a target="_blank" href="http://ej2.syncfusion.com/documentation">documentation section</a>.
+        </p>
+    </div>
+}
+@section ControlsSection{
+@{ 
+    var axis1LabelFont = new Syncfusion.EJ2.CircularGauge.CircularGaugeFont { FontFamily = "Segoe UI", Opacity = 1 };
+    var axis2LabelFont = new Syncfusion.EJ2.CircularGauge.CircularGaugeFont { FontFamily = "Segoe UI", Opacity = 1, Color = "#E84011" };
+}
+    <div class="col-md-8 control-section">
+        <div class="content-wrapper">
+            <ejs-circulargauge id="circular" title='Gauge with Multiple Axes' load="gaugeload">
+                <e-circulargauge-axes>
+                    <e-circulargauge-axis startAngle="220" endAngle="140" minimum="0" maximum="160" radius="95%">
+                        <e-axis-linestyle width="1.5"></e-axis-linestyle>
+                        <e-axis-labelstyle autoAngle="true" position="@Syncfusion.EJ2.CircularGauge.Position.Inside" hiddenLabel="@Syncfusion.EJ2.CircularGauge.HiddenLabel.None" font="axis1LabelFont" />
+                        <e-axis-majorticks position="@Syncfusion.EJ2.CircularGauge.Position.Inside" width="2" height="10"></e-axis-majorticks>
+                        <e-axis-minorticks height="5" width="2" position="@Syncfusion.EJ2.CircularGauge.Position.Inside"></e-axis-minorticks>
+                    </e-circulargauge-axis>
+                    <e-circulargauge-axis startAngle="220" endAngle="140" minimum="0" maximum="240" radius="95%">
+                        <e-axis-linestyle width="1.5" color="#E84011"></e-axis-linestyle>
+                        <e-axis-labelstyle autoAngle="true" position="@Syncfusion.EJ2.CircularGauge.Position.Outside" hiddenLabel="@Syncfusion.EJ2.CircularGauge.HiddenLabel.None" font="axis2LabelFont" />
+                        <e-axis-majorticks position="@Syncfusion.EJ2.CircularGauge.Position.Outside" width="2" height="10" color="#E84011"></e-axis-majorticks>
+                        <e-axis-minorticks height="5" width="2" color="#E84011" position="@Syncfusion.EJ2.CircularGauge.Position.Outside"></e-axis-minorticks>
+                    </e-circulargauge-axis>
+                </e-circulargauge-axes>
+            </ejs-circulargauge>
+        </div>
+    </div>
+    <div class="col-md-4 property-section">
+        <table id="property" title="Properties" style="width: 100%; margin-left: -10px">
+            <tbody>
+                <tr>
+                    <td>
+                        <div> Axis </div>
+                    </td>
+                    <td>
+                        <div>
+                            <select id="axisIndex" class="form-control" style="width:90%">
+                                <option value="0" selected="true">Axis 1</option>
+                                <option value="1">Axis 2</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div> Direction </div>
+                    </td>
+                    <td>
+                        <div>
+                            <select id="axisDirection" class="form-control" style="width:90%">
+                                <option value="ClockWise" selected="true">ClockWise</option>
+                                <option value="AntiClockWise">AntiClockWise</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div style="margin-top: 10px">Start Angle</div>
+                    </td>
+                    <td>
+                        <div>
+                            <input type="range" id="startAngle" value="220" min="0" max="360" style="width:80%; margin-top: 10px">
+                        </div>
+                    </td>
+                    <td style="width: 10%;padding-top: 20px;text-align: center;">
+                        <span id='start' style="margin-left: -20px;">220</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div style="margin-top: 20px">End Angle</div>
+                    </td>
+                    <td>
+                        <div>
+                            <input type="range" id="endAngle" value="140" min="0" max="360" style="width:80%; margin-top: 20px">
+                        </div>
+                    </td>
+                    <td style="width: 10%;padding-top: 30px;text-align: center;">
+                        <span id='end' style="margin-left: -20px;">140</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+}
+<script>
+    var circulargauge;
+    window.addEventListener('load', function () {
+        var axisIndex = 0;
+        var axis;
+        var direction;
+        axis = new ej.dropdowns.DropDownList({
+            index: 0, width: '100%',
+            change: function () {
+                axisIndex = +axis.value;
+                direction.value = circulargauge.axes[axisIndex].direction;
+                var startAngle = circulargauge.axes[axisIndex].startAngle;
+                var endAngle = circulargauge.axes[axisIndex].endAngle;
+                document.getElementById('start').innerHTML = startAngle.toString();
+                document.getElementById('end').innerHTML = endAngle.toString();
+                document.getElementById('startAngle').value = startAngle.toString();
+                document.getElementById('endAngle').value = endAngle.toString();
+            }
+        });
+        axis.appendTo('#axisIndex');
+        direction = new ej.dropdowns.DropDownList({
+            index: 0, width: '100%',
+            change: function () {
+                circulargauge.axes[axisIndex].direction = direction.value.toString();
+                circulargauge.axes[0].pointers[0].animation.enable = false;
+                circulargauge.axes[1].pointers[0].animation.enable = false;
+                circulargauge.refresh();
+            }
+        });
+        direction.appendTo('#axisDirection');
+        document.getElementById('startAngle').onpointermove = document.getElementById('startAngle').ontouchmove =
+            document.getElementById('startAngle').onchange = function () {
+                var value = parseInt(document.getElementById('startAngle').value, 10);
+                circulargauge.axes[0].pointers[0].animation.enable = false;
+                circulargauge.axes[1].pointers[0].animation.enable = false;
+                circulargauge.axes[axisIndex].startAngle = value;
+            document.getElementById('start').innerHTML = value.toString();
+                circulargauge.axes[axisIndex].labelStyle.hiddenLabel =
+                    ej.circulargauge.isCompleteAngle(circulargauge.axes[axisIndex].startAngle, circulargauge.axes[axisIndex].endAngle) ?
+                        'First' : 'None';
+                circulargauge.refresh();
+            };
+        document.getElementById('endAngle').onpointermove = document.getElementById('endAngle').ontouchmove =
+            document.getElementById('endAngle').onchange = function () {
+                var value = parseInt(document.getElementById('endAngle').value, 10);
+                circulargauge.axes[0].pointers[0].animation.enable = false;
+                circulargauge.axes[1].pointers[0].animation.enable = false;
+                circulargauge.axes[axisIndex].endAngle = value;
+            document.getElementById('end').innerHTML = value.toString();
+                circulargauge.axes[axisIndex].labelStyle.hiddenLabel =
+                    ej.circulargauge.isCompleteAngle(circulargauge.axes[axisIndex].startAngle, circulargauge.axes[axisIndex].endAngle) ?
+                        'First' : 'None';
+                circulargauge.refresh();
+            };
+    });
+    window.gaugeload = function (args) {
+        @* custom code start *@
+        var theme = themeName ? themeName : 'Material';
+        args.gauge.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+        @* custom code end *@
+        if (window.gaugeLoaded)
+            return;
+        window.gaugeLoaded = true;
+         circulargauge = args.gauge;
+        var axis = args.gauge.axes[0];
+        var axis1 = args.gauge.axes[1];
+        axis.pointers = [{
+            value: 80, radius: '100%',
+            markerHeight: 15, markerWidth: 15, type: 'Marker',
+            markerShape: 'Triangle',
+        }];
+        args.gauge.axes[1].pointers = [{
+            value: 120, radius: '100%', color: '#C62E0A',
+            markerHeight: 15, markerWidth: 15, type: 'Marker',
+            markerShape: 'InvertedTriangle',
+        }]
+    }
+</script>
+@section Title{
+                    <title>ASP.NET Core CircularGauge Multiple Axis Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Multiple Axis in ASP.NET Core CircularGauge Control</h1>
+                }

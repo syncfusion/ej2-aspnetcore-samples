@@ -1,0 +1,148 @@
+@using Syncfusion.EJ2;
+@section ControlsSection{
+    @{
+        var labelFont = new Syncfusion.EJ2.LinearGauge.LinearGaugeFont { FontFamily = "Segoe UI", Opacity = 1 };
+    }
+    <div class="col-md-8 control-section">
+        <div class="content-wrapper">
+            <ejs-lineargauge id="linear" load="gaugeLoad" title='Temperature Measure'>
+                <e-lineargauge-axes>
+                    <e-lineargauge-axis minimum="0" maximum="180">
+                        <e-axis-line width="0"></e-axis-line>
+                        <e-axis-labelstyle font="labelFont"></e-axis-labelstyle>
+                        <e-axis-majorticks interval="20" color="#9e9e9e" height="20"></e-axis-majorticks>
+                        <e-axis-minorticks height="10" color="#9e9e9e"></e-axis-minorticks>
+                    </e-lineargauge-axis>
+                    <e-lineargauge-axis minimum="0" maximum="180" opposedPosition="true">
+                        <e-axis-line width="0"></e-axis-line>
+                        <e-axis-labelstyle font="labelFont"></e-axis-labelstyle>
+                        <e-axis-majorticks interval="20" height="20"></e-axis-majorticks>
+                    </e-lineargauge-axis>
+                </e-lineargauge-axes>
+            </ejs-lineargauge>
+        </div>
+    </div>
+    <div class="col-md-4 property-section">
+        <table id="property" title="Properties" style="width: 100%">
+            <tbody>
+                <tr>
+                    <td>
+                        <div style="margin-left:-10px">Orientation</div>
+                    </td>
+                    <td>
+                        <div style="margin-left:-10px">
+                            <select name="selectIndex" autocomplete="off" id="orientationMode">
+                                <option value="Vertical" selected="">Vertical</option>
+                                <option value="Horizontal">Horizontal</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height:55px;">
+                    <td>
+                        <div style="margin-left:-10px;">Container Type</div>
+                    </td>
+                    <td>
+                        <div style="margin-left:-10px">
+                            <select name="selectIndex" autocomplete="off" id="containerMode">
+                                <option value="Thermometer">Thermometer</option>
+                                <option value="Normal" selected="">Normal</option>
+                                <option value="RoundedRectangle">RoundedRectangle</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+}
+<script>
+    var random, usage;
+    window.addEventListener("load", function (event) {
+        var containerMode = new ej.dropdowns.DropDownList({
+            index: 0,
+            placeholder: 'Select Range Bar Color',
+            width: '100%',
+            change: function () {
+                gauge.container.type = containerMode.value;
+                gauge.refresh();
+            }
+        });
+        containerMode.appendTo('#containerMode');
+        var orientationMode = new ej.dropdowns.DropDownList({
+            index: 0,
+            placeholder: 'Select Range Bar Color',
+            width: '100%',
+            change: function () {
+                gauge.orientation = orientationMode.value;
+                gauge.refresh();
+            }
+        });
+        orientationMode.appendTo('#orientationMode');
+    });
+
+    var gauge;
+    window.gaugeLoad = function (args) {
+        @* custom code start *@
+        var theme = themeName ? themeName : 'Material';
+        args.gauge.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+        @* custom code end *@
+        if (window.gaugeLoaded)
+            return;
+        window.gaugeLoaded = true;
+        gauge = args.gauge;
+        gauge.container = {
+            width: 13,
+                roundedCornerRadius: 5,
+                    type: 'Thermometer'
+        },
+        args.gauge.orientation = "Horizontal";
+        var axis = args.gauge.axes[0];
+
+        axis.pointers = [
+            {
+                value: 90,
+                height: 13,
+                width: 13,
+                roundedCornerRadius: 5,
+                type: 'Bar',
+                color: '#f02828'
+            }
+        ];
+
+        gauge.axes[1].pointers = [{ width: 0 }];
+        gauge.orientation = 'Vertical';
+    }
+</script>
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Container in ASP.NET Core LinearGauge control. Explore here for more details."/>
+                }
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the type of containers used in linear gauge. Orientation and container type of linear gauge can be changed by using <code>Orientation</code> and <code>Container Type</code> options
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            This sample demonstrates the orientation and container customization in linear gauge. The gauge can be rendered either in
+            vertical or horizontal orientation. And you can use <code>type</code> property in container to change the
+            type of the container.
+        </p>
+        <br>
+        <p>
+            More information about container can be found in this
+            <a target="_blank" href="http://ej2.syncfusion.com/documentation">documentation section</a>.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core LinearGauge Container Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Container in ASP.NET Core LinearGauge Control</h1>
+                }

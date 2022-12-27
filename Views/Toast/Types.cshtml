@@ -1,0 +1,182 @@
+@using Syncfusion.EJ2
+@using Syncfusion.EJ2.Notifications;
+@section ControlsSection{
+    <div class="col-lg-12 control-section toast-default-section">
+        <div class="control_wrapper">
+            <ejs-toast id="toast_type" close="onclose" beforeOpen="onBeforeOpen" created="created">
+                <e-toast-position X="Right"></e-toast-position>
+            </ejs-toast>
+            <div id="toast_types">
+                <div>
+                    <ejs-button id="info_Toast" content="Info Message" cssClass="e-btn e-control e-info"></ejs-button>
+                    <ejs-button id="success_Toast" content="Success Message" cssClass="e-btn e-control e-success"></ejs-button>
+                    <ejs-button id="warning_Toast" content="Warning Message" cssClass="e-btn e-control e-warning"></ejs-button>
+                    <ejs-button id="error_Toast" content="Danger Message" cssClass="e-btn e-control e-danger"></ejs-button>
+                </div>
+                <div style="padding-top: 15px">
+                    <ejs-button id="hideToast" content="Hide All" cssClass="e-btn e-control e-hide"></ejs-button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var toastObj;
+    var toasts = [
+            { title: 'Warning!', content: 'There was a problem with your network connection.', cssClass: 'e-toast-warning', icon: 'e-warning toast-icons' },
+            { title: 'Success!', content: 'Your message has been sent successfully.', cssClass: 'e-toast-success', icon: 'e-success toast-icons' },
+            { title: 'Error!', content: 'A problem has been occurred while submitting your data.', cssClass: 'e-toast-danger', icon: 'e-error toast-icons' },
+            { title: 'Information!', content: 'Please read the comments carefully.', cssClass: 'e-toast-info', icon: 'e-info toast-icons' }];
+        var btnEleHide = document.getElementById('hideToast');
+        setTimeout(
+            () => {
+                toastObj.target = document.body;
+                toastObj.show(toasts[3]);
+            }, 500);
+    function created() {
+        toastObj = this;
+    }
+        var infoBtn = document.getElementById('info_Toast');
+        var warnBtn = document.getElementById('warning_Toast');
+        var successBtn = document.getElementById('success_Toast');
+        var errorBtn = document.getElementById('error_Toast');
+        document.onclick = function (e) {
+            if (e.target !== infoBtn && e.target !== warnBtn && e.target !== successBtn && e.target !== errorBtn) {
+                toastObj.hide('All');
+            }
+        };
+
+        document.getElementById('hideToast').onclick = function () {
+            toastObj.hide('All');
+        };
+        infoBtn.onclick = function () {
+            toastObj.show(toasts[3]);
+        };
+        warnBtn.onclick = function () {
+            toastObj.show(toasts[0]);
+        };
+        successBtn.onclick = function () {
+            toastObj.show(toasts[1]);
+        };
+        errorBtn.onclick = function () {
+            toastObj.show(toasts[2]);
+        };
+        function onclose(e) {
+            if (e.toastContainer.childElementCount === 0) {
+                btnEleHide.style.display = 'none';
+            }
+        }
+        function onBeforeOpen() {
+            btnEleHide.style.display = 'inline-block';
+        }
+    </script>
+    <style>
+  @@font-face {
+    font-family: 'Toast_icons';
+    src: url(data:application/x-font-ttf;charset=utf-8;base64,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) format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  #toast_types button {
+    margin: 5px;
+    min-width: 160px;
+    max-width: 160px;
+  }
+  /* custom code start */
+  #toast_types {
+    text-align: center;
+  }
+  /* custom code end */
+
+  .toast-icons {
+    font-family: 'Toast_icons' !important;
+    speak: none;
+    font-size: 55px;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  #toast_type .e-toast-icon.e-icons {
+    height: auto;
+    font-size: 30px;
+  }
+        
+  .bootstrap5 #toast_type .e-toast-icon.e-icons,
+  .bootstrap5-dark #toast_type .e-toast-icon.e-icons {
+    height: 25px;
+  }
+
+  .toast-icons.e-success::before {
+    content: "\e701";
+  }
+
+  .toast-icons.e-error::before {
+    content: "\e700";
+  }
+
+  .toast-icons.e-info::before {
+    content: "\e704";
+  }
+
+  .toast-icons.e-warning::before {
+    content: "\e703";
+  }
+    </style>
+}
+
+@section ActionDescription{
+
+
+    <div id="action-description">
+        <p>This sample demonstrates 4-predefined toast colors for various scenarios which can be using CSS class.</p>
+    </div>
+
+
+
+}
+@section Description{
+
+
+  <div id="description">
+    <p>The toast supports the following 4 different essential colors for various situations. Here we have achieved success, danger, warning, info notifications with corresponding icon and text message. All the classes should be added with .e-toast class.</p>
+    <ul>
+        <li>
+            Information -  The <b>e-toast-info</b> class applies the color and background for showing toast information.
+        </li>
+        <li>
+            Success -  The <b>e-toast-success</b> class applies the color and background for notifying success action.
+        </li>
+        <li>
+            Warning -  The <b>e-toast-warning</b> class applies the color and background for showing warning message.
+        </li>
+        <li>
+            Danger -  The <b>e-toast-danger</b> class applies the color and background for showing error/failure toast.
+        </li>
+    </ul>
+    <p>
+        More information about Toast can be found in this
+        <a href="https://ej2.syncfusion.com/aspnetcore/documentation/toast/getting-started/" target="_blank"> documentation section</a>.
+    </p>
+</div>
+
+
+}
+
+@*custom code start*@
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Types in ASP.NET Core Toast control. Explore here for more details."/>
+                }
+
+@*custom code end*@
+@section Title{
+                    <title>ASP.NET Core Toast Types Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Types in ASP.NET Core Toast Control</h1>
+                }

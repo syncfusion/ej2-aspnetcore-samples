@@ -1,0 +1,159 @@
+@using Syncfusion.EJ2.Maps;
+@section ControlsSection{
+    @{
+
+        var colorMaps = new List<Syncfusion.EJ2.Maps.MapsColorMapping>
+        {
+                       new MapsColorMapping{
+                            From= 580000, To= 2800000, Color= "#dae8f1", Label= "<3M"
+                        },
+                        new MapsColorMapping{
+                From= 2800000, To= 5280000, Color= "#b0cde1", Label= "3-6M"
+                        },
+                        new MapsColorMapping{
+                From= 5280000, To= 8260000, Color= "#90bad8", Label= "6-9M"
+                        },
+                        new MapsColorMapping{
+                From= 8260000, To= 11660000, Color= "#6ea7d2", Label= "9-12M"
+                        },
+                        new MapsColorMapping{
+                From= 11660000, To= 19600000, Color= "#4c96cb", Label= "12-20M"
+                        },
+                        new MapsColorMapping{
+                From= 19600000, To= 26500000, Color= "#3182bd", Label= "20-25M"
+                        },
+                        new MapsColorMapping{
+                From= 26500000, To= 38400000, Color= "#004374", Label= ">25M"
+                        }
+
+};
+        var border = new MapsBorder
+        {
+            Width = 0.5,
+            Color = "gray",
+            Opacity = 1
+        };
+        var propertyPath = new[] { "name" };
+        var layerStyle = new MapsFont
+        {
+            FontFamily = "Segoe UI"
+        };
+    }
+    <div class="col-lg-9 control-section">
+        <div id="maps">
+            <ejs-maps id="maps" load="onMapLoad" allowPrint="true" format="n" useGroupingSeparator="true" tooltipRender="tooltipRender">
+                <e-maps-titlesettings alignment="@Syncfusion.EJ2.Maps.Alignment.Center" text="State-wise US population - 2010" textStyle="layerStyle"></e-maps-titlesettings>
+                <e-maps-zoomsettings enable="false"></e-maps-zoomsettings>
+                <e-maps-legendsettings mode="@LegendMode.Interactive" alignment="@Alignment.Center" height="10" width="350" visible="true" position="@Syncfusion.EJ2.Maps.LegendPosition.Bottom" labelDisplayMode="@LabelIntersectAction.Trim"></e-maps-legendsettings>
+                <e-maps-layers>
+                    <e-maps-layer shapeData="ViewBag.mapdata" dataSource="ViewBag.datasource" shapePropertyPath="propertyPath" shapeDataPath="name">
+                        <e-layersettings-shapesettings border="border" colorValuePath="population" colorMapping="colorMaps">
+                        </e-layersettings-shapesettings>
+                        <e-layersettings-tooltipsettings visible="true" valuePath="population" format="State: ${name} <br> Population: ${population}" textStyle="layerStyle"></e-layersettings-tooltipsettings>
+                    </e-maps-layer>
+                </e-maps-layers>
+            </ejs-maps>
+           
+        </div>
+        <div style="float: right; margin-right: 10px;">
+            Source:
+            <a href="https://en.wikipedia.org/wiki/List_of_members_of_the_United_Nations_Security_Council" target="_blank">en.wikipedia.org</a>
+        </div>
+    </div>
+    <div class="col-md-3 property-section">
+        <table id="property" title="Properties" style="width: 100%">
+            <tbody>
+                <tr id="button-control" style="height: 50px">
+                    <td align="center">
+						<div>
+							<ejs-button id="togglebtn" content="Print" isPrimary=true></ejs-button>
+						</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+<style>
+	#button-control {
+		width: 100%;
+		text-align: center;
+	}
+	.e-play-icon::before {
+		content: '\e34b';
+	}
+    .e-view.fabric .e-play-icon::before, .e-view.fabric-dark .e-play-icon::before {
+        content: '\e7df';
+    }
+
+    .e-view.bootstrap .e-play-icon::before {
+        content: '\ebd2';
+    }
+
+    .e-view.bootstrap4 .e-play-icon::before {
+        content: '\e743';
+    }
+
+    .e-view.fluent .e-play-icon::before, .e-view.fluent-dark .e-play-icon::before {
+        content: '\e75d';
+    }
+
+    .e-view.tailwind .e-play-icon::before, .e-view.tailwind-dark .e-play-icon::before {
+        content: '\e76c';
+    }
+
+    .e-view.highcontrast .e-play-icon::before {
+        content: '\ebf9';
+    }
+
+    .e-view.bootstrap5 .e-play-icon::before, .e-view.bootstrap5-dark .e-play-icon::before {
+        content: '\e75d';
+    }
+</style>
+}
+<script>
+	function tooltipRender(args) {
+        if (args.options.toString().indexOf('density') > -1) {
+            args.cancel = true;
+        }
+    }    @* custom code start *@
+    function onMapLoad(args) {
+        window.maps = args.maps;
+        var theme = themeName ? themeName : "Material";
+        args.maps.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+    }
+    @* custom code end *@
+    window.onload = function () {
+        document.getElementById('togglebtn').onclick = () => {
+            window.maps.print();
+        };
+    };
+</script>
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample illustrates the print feature in Maps. By clicking the Print button, you can print the maps directly from the browser.
+        </p>
+    </div>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Print in ASP.NET Core Maps control. Explore here for more details."/>
+                }
+@section Description{
+    <div id="description">
+        <p>
+            In this example, you can see how to render and configure the print functionality. The rendered maps can be printed directly from the browser by calling the <code>print</code> method when <code>AllowPrint</code> is set as true. Also this sample visualizes the State-wise US population in the year 2010.
+        </p>
+        <p>
+            More information about print can be found in this
+            <a target="_blank"
+               href="https://ej2.syncfusion.com/documentation/maps/print/#print ">documentation section</a>.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Maps Print Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Print in ASP.NET Core Maps Control</h1>
+                }

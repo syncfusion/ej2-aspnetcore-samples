@@ -1,0 +1,99 @@
+@using Syncfusion.EJ2;
+@section ActionDescription{
+    This sample deomonstrates how to convert spreadsheets to PDF documents using XlsIO.
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Excel To PDF in ASP.NET Core Excel (XlsIO) library. Explore here for more details."/>
+                }
+
+@section Description{
+    This sample illustrates the conversion of Microsoft Excel document to PDF.
+    <br />
+    <br />Essential XlsIO allows to export Excel document to PDF by using the <i>Convert</i> method of <i>ExcelToPDFConverter</i> class.
+    <br />
+    <br /><b>Features:</b>
+    <br />
+    <br />
+    <ul>
+        <li>Supports conversion of Excel document to PDF document with cell values, cell styles, tables, charts, autoshapes, pictures, etc.</li>
+    </ul>
+    <br />
+    <b>Note:</b> Installation of Essential PDF is necessary to run this sample
+    <br />
+}
+@section ControlsSection{
+    <div class="control-section">
+        @{Html.BeginForm("ExcelToPDF", "Excel", FormMethod.Post, new { enctype = "multipart/form-data" });
+            {
+                <br />
+                <label style="font-weight:normal">Select Document</label>
+                <br />
+                <input type="file" name="file" />
+                <br />
+                <div>
+                    <p style="font-weight:normal">
+						Click the "Convert to PDF" button will convert the Excel document to PDF. PDF viewer is needed to view the converted PDF document.
+					</p>
+                    <br />
+                    <div class="rowdiv">
+                        <label style="font-weight:normal">
+                            PDF Page Setup options
+                        </label>
+                    </div>
+                    <div class="rowdiv">
+                        <div class="celldiv">
+                            &nbsp; &nbsp; &nbsp;
+                            <input type="radio" id="noScaleRadioBtn" name="Group1" value="NoScaling" />
+                            <label for="noScaleRadioBtn" style="font-weight:normal">
+                                NoScaling
+                            </label>
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;
+                            <input type="radio" id="allRowsRadioBtn" name="Group1" value="FitAllRowsOnOnePage" />
+                            <label for="allRowsRadioBtn" style="font-weight:normal">
+                                FitAllRowsOnOnePage
+                            </label>
+                        </div>
+                        <br />
+                        <div class="celldiv">
+                            &nbsp; &nbsp; &nbsp;
+                            <input type="radio" id="allColumnRadioBtn" name="Group1" value="FitAllColumnsOnOnePage" />
+                            <label for="allColumnRadioBtn" style="font-weight:normal">
+                                FitAllColumnsOnOnePage
+                            </label>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" id="fitSheetRadioBtn" name="Group1" value="FitSheetOnOnePage" checked="checked" />
+                            <label for="fitSheetRadioBtn" style="font-weight:normal">
+                                FitSheetOnOnePage
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="celldiv">
+                    <input type="checkbox" id="checkfontStream" name="checkboxStream" value="Font Stream" />
+                    <label for="checkfontStream" style="font-weight:normal">
+                        Font Stream
+                    </label>
+                    <br />
+                    <p style="font-weight:normal">Missing fonts in the device will be substituted from embedded resource.</p>
+                </div>
+                <br />
+                <div style="margin-top: 8px">
+                    <input id="generate" name="Button" class="e-btn" type="submit" value="Convert to PDF" style="width:170px; text-transform:capitalize" />
+                    <br />
+                    <div class="text-danger">
+                        @ViewBag.Message
+                    </div>
+                </div>
+                Html.EndForm();
+            }
+        }
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Excel (XlsIO) library - Excel To PDF Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Excel To PDF in ASP.NET Core Excel (XlsIO) Library</h1>
+                }

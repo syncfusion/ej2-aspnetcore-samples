@@ -1,0 +1,69 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+    @{
+        var series = new string[0];
+        var indicator = new string[0];
+    }
+
+    <div class="control-section" align="center">
+        <div id="container">
+            <ejs-stockchart id="stockchartline" load="stockload" title="Plot Line on Y axis" seriesType="series" indicatorType="indicator">
+                <e-stockchart-border width="0"></e-stockchart-border>
+                <e-stockchart-primaryxaxis>
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                </e-stockchart-primaryxaxis>
+                <e-stockchart-primaryyaxis interval="40">
+                    <e-linestyle color="transparent"></e-linestyle>
+                    <e-majorticklines width="0" color="transparent"></e-majorticklines>
+                    <e-crosshairtooltip enable="true"></e-crosshairtooltip>
+                </e-stockchart-primaryyaxis>
+                <e-stockchart-series-collection>
+                    <e-stockchart-series type='Line' xName='x' yName='close' name='google'> </e-stockchart-series>
+                </e-stockchart-series-collection>
+            </ejs-stockchart>
+        </div>
+    </div>
+    <script src="~/scripts/StockChartData/aman.js"></script>
+    <script>
+        var data = aman;
+
+        function stockload(args) {
+            @*custom code start*@
+            letselectedTheme: string = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.stockChart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+            @*custom code end*@
+            args.stockChart.series[0].dataSource = data;
+            args.stockChart.primaryYAxis = {
+                stripLines: [{ start: 320, sizeType: 'Pixel', size: 1, color: 'green', dashArray: '10,5' },
+                { start: 380, sizeType: 'Pixel', size: 1, color: 'red', dashArray: '10,5' }]
+             }
+        }
+    </script>
+}
+@*custom code start*@
+@section Scripts {
+
+}
+@*custom code end*@
+@section ActionDescription{
+    <p>
+        This sample visualizes stock chart with plot line on y axis.
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can see how to render and configure the Stock chart.
+        <code>LineSeries</code> is used to represent selected data value.
+    </p>
+    <br>
+}
+@section Title{
+                    <title>ASP.NET Core StockChart Plot Lines Example - Syncfusion Demos </title> 
+                }
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Plot Lines in ASP.NET Core StockChart control. Explore here for more details."/>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Plot Lines in ASP.NET Core StockChart Control</h1>
+                }

@@ -1,0 +1,88 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+    @{ 
+        var series = new string[0];
+        var indicator = new string[0];
+        var line = new string[0];
+        var export = new string[0];
+    }
+
+    <div class="control-section" align="center">
+        <div id="container">
+            <ejs-stockchart id="stockchartintraday" load="stockload" title="AAPL stock prices by Minutes" seriesType="series" indicatorType="indicator" trendlineType="line" exportType="export">
+                <e-stockchart-chartarea>
+                    <e-stockchartarea-border width="0"></e-stockchartarea-border>
+                </e-stockchart-chartarea>
+                <e-stockchart-primaryxaxis>
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                    <e-crosshairtooltip enable="true"></e-crosshairtooltip>
+                </e-stockchart-primaryxaxis>
+                <e-stockchart-primaryyaxis>
+                    <e-linestyle width="0"></e-linestyle>
+                    <e-majorticklines width="0" color="transparent"></e-majorticklines>
+                    <e-crosshairtooltip enable="true"></e-crosshairtooltip>
+                </e-stockchart-primaryyaxis>
+                <e-stockchart-crosshairsettings enable="true"></e-stockchart-crosshairsettings>
+                <e-stockchart-tooltipsettings enable="false"></e-stockchart-tooltipsettings>
+                <e-stockchart-series-collection>
+                    <e-stockchart-series type='Line' xName='x' yName='y' name='google'> </e-stockchart-series>
+                </e-stockchart-series-collection>
+                <e-stockchart-stockchartperiods>
+                    <e-stockchart-stockchartperiod interval="1" intervalType="Minutes" text="1m"></e-stockchart-stockchartperiod>
+                    <e-stockchart-stockchartperiod interval="30" intervalType="Minutes" text="30m"></e-stockchart-stockchartperiod>
+                    <e-stockchart-stockchartperiod interval="1" intervalType="Hours" text="1H"></e-stockchart-stockchartperiod>
+                    <e-stockchart-stockchartperiod interval="12" intervalType="Hours" text="12H" selected="true"></e-stockchart-stockchartperiod>
+                    <e-stockchart-stockchartperiod interval="1" intervalType="Days" text="1D"></e-stockchart-stockchartperiod>
+                </e-stockchart-stockchartperiods>
+            </ejs-stockchart>
+        </div>
+    </div>
+    <script>
+        function stockload(args) {
+            @*custom code start*@
+            letselectedTheme: string = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.stockChart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+            @*custom code end*@
+            let series1 = [];
+            let point1;
+            let value = 80;
+            for (var i = 1; i < 1440; i++) {
+                if (Math.random() > .5) {
+                    value += Math.random();
+                } else {
+                    value -= Math.random();
+                }
+                point1 = { x: new Date(2000, 1, 1, 0, i), y: value.toFixed(1) };
+                series1.push(point1);
+            }
+            args.stockChart.series[0].dataSource = series1;
+        }
+        
+    </script>
+}
+
+@section Scripts {
+
+}
+
+@section ActionDescription{
+    <p>
+        This sample visualizes data for intraday using stock chart. Period and range selector help us to navigate different of data.
+    </p>
+}
+@section Description{
+    <p>
+        In this sample, you can configure the stock with intra day data.
+    </p>
+    <br>
+}
+@section Title{
+                    <title>ASP.NET Core StockChart Intraday Example - Syncfusion Demos </title> 
+                }
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Intraday in ASP.NET Core StockChart control. Explore here for more details."/>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Intraday in ASP.NET Core StockChart Control</h1>
+                }

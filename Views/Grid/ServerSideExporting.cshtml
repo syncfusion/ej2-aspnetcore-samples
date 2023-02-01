@@ -1,0 +1,84 @@
+@using System.Linq
+@{
+    ViewData["Title"] = "DefaultExporting";
+}
+
+
+@section ControlsSection{
+    <div class="control-section">
+        <ejs-grid id="Grid" dataSource="@ViewBag.DataSource" height="400" allowPaging="true" toolbarClick="toolbarClick" toolbar=@(new List<string>() {"ExcelExport", "PdfExport", "CsvExport" })>
+            <e-grid-columns>
+                <e-grid-column field="OrderID" headerText="Order ID" width="100" textAlign="Right"></e-grid-column>
+                <e-grid-column field="CustomerID" headerText="CustomerID" width="100"></e-grid-column>
+                <e-grid-column field="OrderDate" headerText="Order Date" format="yMd" width="100" textAlign="Right"></e-grid-column>
+                <e-grid-column field="Freight" headerText="Freight" format="C2" width="100" textAlign="Right"></e-grid-column>
+                <e-grid-column field="ShipCountry" headerText="ShipCountry" width="100"></e-grid-column>
+            </e-grid-columns>
+        </ejs-grid>
+    </div>
+
+
+    <script>
+
+        function toolbarClick(args) {
+            var gridObj = document.getElementById("Grid").ej2_instances[0];
+            if (args.item.id === 'Grid_pdfexport') {
+                gridObj.serverPdfExport("@Url.Action("PdfExport", "Grid")");
+            }
+            if (args.item.id === 'Grid_excelexport') {
+                gridObj.serverExcelExport("@Url.Action("ExcelExport", "Grid")");
+            }
+            if (args.item.id === 'Grid_csvexport') {
+                gridObj.serverCsvExport("@Url.Action("CsvExport", "Grid")");
+            }
+        }
+    </script>
+
+
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the server-side exporting of the Grid, which allows you to export its data to the Excel, CSV, and PDF formats using server-side actions.
+            Use the toolbar buttons to export Grid data to the desired format.
+        </p>
+    </div>
+}
+
+@section Meta{
+    <meta name="description" content="This example demonstrates the Server-side Exporting in ASP.NET MVC Data Grid control. Explore here for more details." />
+}
+
+@section Description{
+    <div id="description">
+
+        <p> Server-side exporting is implemented by using the <a target="_blank" href="https://www.nuget.org/packages/Syncfusion.EJ2.GridExport.Core/">Syncfusion.EJ2.GridExport </a> library </p>
+        <p>
+            In this demo, ExcelExport, CsvExport, and PdfExport items are defined in the toolbar, and for these toolbar items we have defined actions in toolbarClick event to export the Grid data using the
+            <code>
+                <a target="_blank" class="code"
+                   href="https://ej2.syncfusion.com/javascript/documentation/api/grid/#serverexcelexport">
+                    serverExcelExport
+                </a>
+            </code>
+            <code>
+                <a target="_blank" class="code"
+                   href="https://ej2.syncfusion.com/javascript/documentation/api/grid/#servercsvexport">
+                    serverCsvExport
+                </a>
+            </code>and <code>
+                <a target="_blank" class="code"
+                   href="https://ej2.syncfusion.com/javascript/documentation/api/grid/#serverpdfexport">
+                    serverPdfExport
+                </a>
+            </code>	methods.
+        </p>
+    </div>
+}
+@section Title{
+    <title>ASP.NET MVC Data Grid Server-side Exporting Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Server-side Exporting in ASP.NET MVC Data Grid Control</h1>
+}

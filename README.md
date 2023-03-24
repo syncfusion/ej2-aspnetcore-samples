@@ -24,11 +24,11 @@ Clone the repository. This repository contains the .NET Core 3.1 and .NET 6 proj
 * Open the command prompt from the demos directory.
 * Run the demo using the following command.
    
-   To run .NET Core 3.1 ASP.NET Core project
-   > `dotnet run --project EJ2CoreSampleBrowser.csproj`
-
    To run .NET 6 ASP.NET Core project
    > `dotnet run --project EJ2CoreSampleBrowser_NET6.csproj`
+
+   To run .NET 7 ASP.NET Core project
+   > `dotnet run --project EJ2CoreSampleBrowser_NET7.csproj`
 
 ### Run the demo using Visual Studio
 

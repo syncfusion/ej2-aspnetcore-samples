@@ -9,38 +9,43 @@
         };
 
     }
-<div class="control-section">
-    <div id="container" align='center'>
-        <ejs-chart id="lineContainer"  load="window.onChartLoad" title="Temperature Variation"
+<div class="control-section" align="center">
+    
+        <ejs-chart id="lineContainer"  load="load" title="Temperature Variation"
                   isTransposed="true">
             <e-chart-chartarea>
                 <e-chartarea-border width="0"></e-chartarea-border>
             </e-chart-chartarea>
-            <e-chart-primaryxaxis valueType="Category" >
+            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category">
                 <e-majorgridlines width="0"></e-majorgridlines>
+                <e-majorticklines width="0"></e-majorticklines>
             </e-chart-primaryxaxis>
-            <e-chart-primaryyaxis edgeLabelPlacement="Shift" labelFormat = "{value}˚F">
+            <e-chart-primaryyaxis edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift" labelFormat = "{value}˚F" title="Temperature (In Fahrenheit)">
                 <e-majorticklines width="0"></e-majorticklines>
                 <e-linestyle width="0"></e-linestyle>
             </e-chart-primaryyaxis>
             <e-series-collection>
-                <e-series dataSource="ViewBag.dataSource" xName="x" high="high" low="low" name="California" width=2 type="@Syncfusion.EJ2.Charts.ChartSeriesType.RangeColumn"></e-series>
-                <e-series dataSource="ViewBag.dataSource1" xName="x" high="high" low="low" name="Colorado" width=2 type="@Syncfusion.EJ2.Charts.ChartSeriesType.RangeColumn"></e-series>
+                <e-series dataSource="ViewBag.ChartPoints" xName="Month" high="CA_HighTemp" low="CA_LowTemp" columnSpacing="0.1" tooltipMappingName="Text" type="@Syncfusion.EJ2.Charts.ChartSeriesType.RangeColumn">
+                    <e-series-marker>
+                        <e-series-datalabel visible="true" position="@Syncfusion.EJ2.Charts.LabelPosition.Outer">
+                        </e-series-datalabel>
+                    </e-series-marker>
+                </e-series>
             </e-series-collection>
-            <e-chart-tooltipsettings enable="true"></e-chart-tooltipsettings>
+            <e-chart-tooltipsettings enable="true" header="<b>${point.tooltip}</b>" enableMarker="false" format="Temperature : <b>${point.low} - ${point.high}</b>"></e-chart-tooltipsettings>
         </ejs-chart>
     </div>
     @*custom code start*@
     <script>
-        window.onChartLoad = function (args) {
+        function load(args) {
             var selectedTheme = location.hash.split('/')[1];
             selectedTheme = selectedTheme ? selectedTheme : 'Material';
             args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
-            args.chart.width = ej.base.Browser.isDevice ? "100%" : "60%";
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
         }
     </script>
     @*custom code end*@
-</div>
+
 }
 @*custom code start*@
 @section Scripts {
@@ -58,22 +63,19 @@
 @*custom code end*@
 @section ActionDescription{
     <p>
-        This sample illustrates a range column series by inversing its X and Y  Axes. Tooltip shows the information about the data points.
+        This sample shows the maximum and minimum temperatures for several months with the default range column series inverted. The tooltip shows the information for each data point.
     </p>
 }
 @section Description{
     <p>
-        In this example, you can see how to render and configure the range column type chart with inverted manner. You can use <code>border</code>,
-        <code>fill</code> properties to customize the columns. <code>dataLabel</code> are used to represent individual data
-        and its value.
+        In this example, you can see how to render and configure the range column chart in an inverted manner. You can use <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.Chart.html#Syncfusion_EJ2_Charts_Chart_IsTransposed">IsTransposed</a> property to invert your chart.
     </p>
     <p>
-        Tooltip is enabled in this example, to see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+        <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover over a point or tap on a point in touch-enabled devices.
     </p>
-
     <p>
         More information on the range column series can be found in this
-        <a target="_blank" href="http://ej2.syncfusion.com/documentation/chart/api-series.html#type-chartseriestype">documentation section</a>.
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/chart-types#column-charts">documentation section</a>.
     </p>
 }
 @section Title{

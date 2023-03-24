@@ -8,201 +8,58 @@
         };
 
     }
-    <div class="control-section col-lg-9" align='center'>
-        <ejs-accumulationchart id="container" title="Mobile Browser Statistics" load="load" enableAnimation="false">
+    <div class="control-section" align='center'>
+        <ejs-accumulationchart id="container" title="Browser Market Share" load="load" enableAnimation="false" enableBorderOnMouseMove="false">
             <e-accumulationchart-center x="50%" y="50%"></e-accumulationchart-center>
-            <e-accumulationchart-tooltipsettings enable="true"></e-accumulationchart-tooltipsettings>
+            <e-accumulationchart-tooltipsettings enable="true" format="<b>${point.x}</b><br>Browser Share: <b>${point.y}%</b>" header=""></e-accumulationchart-tooltipsettings>
             <e-accumulationchart-legendsettings visible="false">
             </e-accumulationchart-legendsettings>
             <e-accumulation-series-collection>
-                <e-accumulation-series dataSource="ViewBag.dataSource" xName="xValue" yName="yValue" name="Browser" radius="70%" startAngle="0" endAngle="360" explodeIndex="5" explode="true" explodeOffset="10%">
-                    <e-accumulationseries-datalabel name="text" visible="true">
+                <e-accumulation-series dataSource="ViewBag.ChartPoints" xName="Browser" yName="Users" name="Browser" innerRadius="0%" explodeIndex="0" explode="true" explodeOffset="10%">
+                    <e-accumulationseries-datalabel name="DataLabelMappingName" visible="true" position="@Syncfusion.EJ2.Charts.AccumulationLabelPosition.Outside">
                         <e-font fontWeight="600"></e-font>
+                        <e-connectorstyle length="20px" type="@Syncfusion.EJ2.Charts.ConnectorType.Curve"></e-connectorstyle>
                     </e-accumulationseries-datalabel>
                 </e-accumulation-series>
             </e-accumulation-series-collection>
         </ejs-accumulationchart>
     </div>
-    <div class="col-lg-3 property-section">
-        <table id="property" title="Properties" style="width: 100%">
-            <tbody>
-                <tr style="height: 50px">
-                    <td style="width: 50%">
-                        <div>
-                            Pie Angle
-                        </div>
-                    </td>
-                    <td style="width: 40%;">
-                        <div data-role="rangeslider">
-                            <input type="range" name="range-min" id="pieangle" value="0" min="0" max="360" style="width:90%">
-                        </div>
-                    </td>
-                    <td style="width: 30%;">
-                        <p id="anglevalue" style="font-weight: normal;padding-top:15px">0</p>
-                    </td>
-                </tr>
-                <tr style="height: 50px">
-                    <td style="width: 30%">
-                        <div>
-                            Outer Radius
-                        </div>
-                    </td>
-                    <td style="width: 40%;">
-                        <div data-role="rangeslider">
-                            <input type="range" name="range-min" id="pieradius" value="70" min="0" max="80" style="width:90%">
-                        </div>
-                    </td>
-                    <td style="width: 30%;">
-                        <p id="radius" style="font-weight: normal;padding-top:15px">0.70</p>
-                    </td>
-                </tr>
-                <tr style="height: 50px">
-                    <td style="width: 30%">
-                        <div>
-                            Explode Radius
-                        </div>
-                    </td>
-                    <td style="width: 40%;">
-                        <div data-role="rangeslider">
-                            <input type="range" name="range-min" id="pieexploderadius" value="10" min="0" max="40" style="width:90%">
-                        </div>
-                    </td>
-                    <td style="width: 30%;">
-                        <p id="exploderadius" style="font-weight: normal;padding-top:15px">0.10</p>
-                    </td>
-                </tr>
-                <tr style="height: 50px">
-                    <td style="width: 30%">
-                        <div>
-                            Explode Index
-                        </div>
-                    </td>
-                    <td style="width: 70%;">
-                        <div data-role="rangeslider">
-                            <input type="range" name="range-min" id="pieexplodeindex" value="5" min="0" max="5" style="width:90%">
-                        </div>
-                    </td>
-                    <td style="width: 30%;">
-                        <p id="explodeindex" style="font-weight: normal;padding-top:15px">5</p>
-                    </td>
-                </tr>
-                <tr style="height: 50px">
-                    <td style="width: 30%">
-                        <div>
-                            Center X
-                        </div>
-                    </td>
-                    <td style="width: 70%;">
-                        <div data-role="rangeslider">
-                            <input type="range" name="range-min" id="x" value="50" min="0" max="100" style="width:90%">
-                        </div>
-                    </td>
-                    <td style="width: 60%;">
-                        <div data-role="rangeslider">
-                            <p id="xvalue" style="font-weight: normal;padding-top:10px;">50%</p>
-                        </div>
-                    </td>
-                </tr>
-                <tr style="height: 50px">
-                    <td style="width: 30%">
-                        <div>
-                            Center Y
-                        </div>
-                    </td>
-                    <td style="width: 70%;">
-                        <div data-role="rangeslider">
-                            <input type="range" name="range-min" id="y" value="50" min="0" max="100" style="width:90%">
-                        </div>
-                    </td>
-                    <td style="width: 60%;">
-                        <div data-role="rangeslider">
-                            <p id="yvalue" style="font-weight: normal;padding-top:10px;">50%</p>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    
     <script>
         function load(args) {
             var indexedTheme = location.hash.split('/')[1];
             indexedTheme = indexedTheme ? indexedTheme : 'Material';
             args.accumulation.theme = (indexedTheme.charAt(0).toUpperCase() + indexedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+            args.accumulation.series[0].startAngle = ej.base.Browser.isDevice ? 70 : 30;
+            args.accumulation.series[0].radius = ej.base.Browser.isDevice ? "40%" : "60%";
+            args.accumulation.series[0].dataSource[0].Browser = ej.base.Browser.isDevice ? 'Chrome' : 'Chrome';
+            args.accumulation.series[0].dataSource[1].Browser = ej.base.Browser.isDevice ? ' ' : 'UC Browser';
+            args.accumulation.series[0].dataSource[2].Browser = ej.base.Browser.isDevice ? ' ' : 'Internet Explorer';
+            args.accumulation.series[0].dataSource[3].Browser = ej.base.Browser.isDevice ? ' ' : 'Sogou Explorer';
+            args.accumulation.series[0].dataSource[4].Browser = ej.base.Browser.isDevice ? ' ' : 'QQ';
+            args.accumulation.series[0].dataSource[5].Browser = ej.base.Browser.isDevice ? 'Safari' : 'Safari';
+            args.accumulation.series[0].dataSource[6].Browser = ej.base.Browser.isDevice ? 'Opera' : 'Opera';
+            args.accumulation.series[0].dataSource[7].Browser = ej.base.Browser.isDevice ? 'Edge' : 'Edge';
+            args.accumulation.series[0].dataSource[8].Browser = ej.base.Browser.isDevice ? 'Others' : 'Others';
+            args.accumulation.series[0].dataSource[0].Users = ej.base.Browser.isDevice ? 59.28 : 59.28;
+            args.accumulation.series[0].dataSource[1].Users = ej.base.Browser.isDevice ? ' ' : 4.37;
+            args.accumulation.series[0].dataSource[2].Users = ej.base.Browser.isDevice ? ' ' : 6.12;
+            args.accumulation.series[0].dataSource[3].Users = ej.base.Browser.isDevice ? ' ' : 1.73;
+            args.accumulation.series[0].dataSource[4].Users = ej.base.Browser.isDevice ? ' ' : 3.96;
+            args.accumulation.series[0].dataSource[5].Users = ej.base.Browser.isDevice ? 4.73 : 4.73;
+            args.accumulation.series[0].dataSource[6].Users = ej.base.Browser.isDevice ? 6.12 : 3.12;
+            args.accumulation.series[0].dataSource[7].Users = ej.base.Browser.isDevice ? 7.48 : 7.48;
+            args.accumulation.series[0].dataSource[8].Users = ej.base.Browser.isDevice ? 22.39 : 9.57;
+            args.accumulation.series[0].dataSource[0].DataLabelMappingName = ej.base.Browser.isDevice ? 'Chrome: 59.28%' : 'Chrome: 59.28%';
+            args.accumulation.series[0].dataSource[1].DataLabelMappingName = ej.base.Browser.isDevice ? ' ' : 'UC Browser: 4.37%';
+            args.accumulation.series[0].dataSource[2].DataLabelMappingName = ej.base.Browser.isDevice ? ' ' : 'Internet Explorer: 6.12%';
+            args.accumulation.series[0].dataSource[3].DataLabelMappingName = ej.base.Browser.isDevice ? ' ' : 'Sogou Explorer: 1.73%';
+            args.accumulation.series[0].dataSource[4].DataLabelMappingName = ej.base.Browser.isDevice ? ' ' : 'QQ: 3.96%';
+            args.accumulation.series[0].dataSource[5].DataLabelMappingName = ej.base.Browser.isDevice ? 'Safari <br> 4.73%' : 'Safari: 4.73%';
+            args.accumulation.series[0].dataSource[6].DataLabelMappingName = ej.base.Browser.isDevice ? 'Opera: 3.12%' : 'Opera: 3.12%';
+            args.accumulation.series[0].dataSource[7].DataLabelMappingName = ej.base.Browser.isDevice ? 'Edge: 7.48%' : 'Edge: 7.48%';
+            args.accumulation.series[0].dataSource[8].DataLabelMappingName = ej.base.Browser.isDevice ? 'Others: 25.39%' : 'Others: 9.57%';
         }
-        function anglechange(value) {
-            var pie = document.getElementById("container").ej2_instances[0];
-            pie.series[0].startAngle = +value;
-            pie.series[0].endAngle = +value;
-            document.getElementById('anglevalue').innerHTML = value.toString();
-            pie.removeSvg();
-            pie.refreshSeries();
-            pie.refreshChart();
-        }
-
-        document.getElementById('pieangle').onpointermove = document.getElementById('pieangle').ontouchmove =
-            document.getElementById('pieangle').onchange = (e) => {
-                anglechange(+(document.getElementById('pieangle')).value);
-            };
-        function radiuschange(value) {
-            var pie = document.getElementById("container").ej2_instances[0];
-            pie.series[0].radius = value + '%';
-            document.getElementById('radius').innerHTML = (value / 100).toFixed(2);
-            pie.removeSvg();
-            pie.refreshSeries();
-            pie.refreshChart();
-        }
-
-        document.getElementById('pieradius').onpointermove = document.getElementById('pieradius').ontouchmove =
-            document.getElementById('pieradius').onchange = (e) => {
-                radiuschange(+(document.getElementById('pieradius')).value);
-            };
-        function exploderadius(value) {
-            var pie = document.getElementById("container").ej2_instances[0];
-            pie.series[0].explodeOffset = value + '%';
-            pie.series[0].animation.enable = false;
-            document.getElementById('exploderadius').innerHTML = (value / 100).toFixed(2);
-            pie.removeSvg();
-            pie.refreshSeries();
-            pie.refreshChart();
-        }
-
-        document.getElementById('pieexploderadius').onpointermove = document.getElementById('pieexploderadius').ontouchmove =
-            document.getElementById('pieexploderadius').onchange = (e) => {
-                exploderadius(+(document.getElementById('pieexploderadius')).value);
-            };
-        function explodeIndex(value) {
-            var pie = document.getElementById("container").ej2_instances[0];
-            pie.visibleSeries[0].explodeIndex = +value;
-            document.getElementById('explodeindex').innerHTML = value.toString();
-            pie.removeSvg();
-            pie.refreshSeries();
-            pie.refreshChart();
-        }
-
-        document.getElementById('pieexplodeindex').onpointermove = document.getElementById('pieexplodeindex').ontouchmove =
-            document.getElementById('pieexplodeindex').onchange = (e) => {
-                explodeIndex(+(document.getElementById('pieexplodeindex')).value);
-            };
-        function xchange(value) {
-            var pie = document.getElementById("container").ej2_instances[0];
-            pie.center.x = value + '%';
-            document.getElementById('xvalue').innerHTML = value + '%';
-            pie.removeSvg(); pie.refreshSeries(); pie.refreshChart();
-        }
-        document.getElementById('x').onpointermove = document.getElementById('x').ontouchmove =
-            document.getElementById('x').onchange = function (e) {
-                xchange(+(document.getElementById('x')).value);
-            };
-        function ychange(value) {
-            var pie = document.getElementById("container").ej2_instances[0];
-            pie.center.y = value + '%';
-            document.getElementById('yvalue').innerHTML = value + '%';
-            pie.removeSvg(); pie.refreshSeries(); pie.refreshChart();
-        }
-        document.getElementById('y').onpointermove = document.getElementById('y').ontouchmove =
-            document.getElementById('y').onchange = function (e) {
-                ychange(+(document.getElementById('y')).value);
-            };
 
     </script>
 }
@@ -214,14 +71,23 @@
 @section ActionDescription{
 
     <div id="action-description">
-        This sample demonstrates pie chart for mobile browser usage statistics. Datalabel shows the Information about the points.
+        <p>
+            This <a target="_blank" href="https://www.syncfusion.com/aspnet-core-ui-controls/charts/chart-types/pie-chart">ASP.NET Core Pie Chart</a> example demonstrates a pie chart for mobile browsers usage statistics. Datalabels show information about the points.
+        </p>
     </div>
 }
 @section Description {
     <div id="description">
-        In this example, you can see how to render and configure the pie chart. You can use the <code>border</code> and <code>fill</code> properties to customize the pie point. <code>dataLabel</code> is used to represent individual data and its value.
-
-        Tooltip is enabled in this example. To see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+        <p>
+            In this example, you can see how to render and configure a pie chart. The pie chart is a circular graphic, which is ideal for displaying categories as a proportion or a percentage of the whole . The radius of the pie chart can be customized using the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.AccumulationSeries.html#Syncfusion_EJ2_Charts_AccumulationSeries_Radius">Radius</a> property.
+        </p>
+        <p>
+            <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+        </p>
+        <p>
+            More information about the pie series can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/accumulation-chart/pie-dough-nut#pie-chart">documentation section</a>.
+        </p>
     </div>
 
 }

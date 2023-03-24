@@ -18,29 +18,29 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
     {
         public IActionResult StepArea()
         {
-            List<StepAreaChartData> chartData = new List<StepAreaChartData>
+            List<StepAreaChartData> ChartPoints = new List<StepAreaChartData>
             {
-                new StepAreaChartData { xValue = 2000, yValue = 416, yValue1 = 180 },
-                new StepAreaChartData { xValue = 2001, yValue = 490, yValue1 = 240 },
-                new StepAreaChartData { xValue = 2002, yValue = 470, yValue1 = 370 },
-                new StepAreaChartData { xValue = 2003, yValue = 500, yValue1 = 200 },
-                new StepAreaChartData { xValue = 2004, yValue = 449, yValue1 = 229 },
-                new StepAreaChartData { xValue = 2005, yValue = 470, yValue1 = 210 },
-                new StepAreaChartData { xValue = 2006, yValue = 437, yValue1 = 337 },
-                new StepAreaChartData { xValue = 2007, yValue = 458, yValue1 = 258 },
-                new StepAreaChartData { xValue = 2008, yValue = 500, yValue1 = 300 },
-                new StepAreaChartData { xValue = 2009, yValue = 473, yValue1 = 173 },
-                new StepAreaChartData { xValue = 2010, yValue = 520, yValue1 = 220 },
-                new StepAreaChartData { xValue = 2011, yValue = 520, yValue1 = 220 },
+                new StepAreaChartData { Period = 2000, RenewableResourcesProduction = 416, NonRenewableResourcesProduction = 180 },
+                new StepAreaChartData { Period = 2001, RenewableResourcesProduction = 490, NonRenewableResourcesProduction = 240 },
+                new StepAreaChartData { Period = 2002, RenewableResourcesProduction = 470, NonRenewableResourcesProduction = 370 },
+                new StepAreaChartData { Period = 2003, RenewableResourcesProduction = 500, NonRenewableResourcesProduction = 200 },
+                new StepAreaChartData { Period = 2004, RenewableResourcesProduction = 449, NonRenewableResourcesProduction = 229 },
+                new StepAreaChartData { Period = 2005, RenewableResourcesProduction = 470, NonRenewableResourcesProduction = 210 },
+                new StepAreaChartData { Period = 2006, RenewableResourcesProduction = 437, NonRenewableResourcesProduction = 337 },
+                new StepAreaChartData { Period = 2007, RenewableResourcesProduction = 458, NonRenewableResourcesProduction = 258 },
+                new StepAreaChartData { Period = 2008, RenewableResourcesProduction = 500, NonRenewableResourcesProduction = 300 },
+                new StepAreaChartData { Period = 2009, RenewableResourcesProduction = 473, NonRenewableResourcesProduction = 173 },
+                new StepAreaChartData { Period = 2010, RenewableResourcesProduction = 520, NonRenewableResourcesProduction = 220 },
+                new StepAreaChartData { Period = 2011, RenewableResourcesProduction = 520, NonRenewableResourcesProduction = 220 }
             };
-            ViewBag.dataSource = chartData;
+            ViewBag.ChartPoints = ChartPoints;
             return View();
         }
         public class StepAreaChartData
         {
-            public double xValue;
-            public double yValue;
-            public double yValue1;
+            public double Period;
+            public double RenewableResourcesProduction;
+            public double NonRenewableResourcesProduction;
         }
     }
 }

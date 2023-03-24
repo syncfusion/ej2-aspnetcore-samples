@@ -53,7 +53,7 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
                 fileStreamResult.FileDownloadName = "template.pdf";
                 return fileStreamResult;
             }
-            else if (submit == "Generate PDF")
+            else if (submit == "Fill Form")
             {
                 string basePath = _hostingEnvironment.WebRootPath;
                 string dataPath = string.Empty;

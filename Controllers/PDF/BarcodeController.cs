@@ -27,6 +27,9 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
         [HttpPost]
         public ActionResult Barcode(string InsideBrowser)
         {
+            string basePath = _hostingEnvironment.WebRootPath;
+            string dataPath = string.Empty;
+            dataPath = basePath + @"/PDF/";
             //Create a new instance of PdfDocument class.
             PdfDocument document = new PdfDocument();
 
@@ -39,108 +42,98 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
             //Create a solid brush
             PdfBrush brush = PdfBrushes.Black;
 
-            # region 2D Barcode
-
+            #region 2D Barcode
             //Set the font
-            PdfFont font = new PdfStandardFont(PdfFontFamily.Helvetica, 15f, PdfFontStyle.Bold);
-
+            PdfFont font = new PdfStandardFont(PdfFontFamily.Helvetica, 15f, PdfFontStyle.Bold); 
             PdfPen pen = new PdfPen(brush, 0.5f);
             float width = page.GetClientSize().Width;
-
-            float xPos = page.GetClientSize().Width / 2;
-
+            float xPos = page.GetClientSize().Width / 2; 
             PdfStringFormat format = new PdfStringFormat();
             format.Alignment = PdfTextAlignment.Center;
-
             // Draw String
             g.DrawString("2D Barcodes", font, brush, new PointF(xPos, 10), format);
-
             #region QR Barcode
             font = new PdfStandardFont(PdfFontFamily.Helvetica, 12f, PdfFontStyle.Bold);
-            g.DrawString("QR Barcode", font, brush, new PointF(10, 70));
-
-            PdfQRBarcode qrBarcode = new PdfQRBarcode();
-
+            g.DrawString("QR Barcode", font, brush, new PointF(10, 65)); 
+            PdfQRBarcode qrBarcode = new PdfQRBarcode(); 
             // Sets the Input mode to Binary mode
-            qrBarcode.InputMode = InputMode.BinaryMode;
-
+            qrBarcode.InputMode = InputMode.BinaryMode; 
             // Automatically select the Version
-            qrBarcode.Version = QRCodeVersion.Auto;
-
+            qrBarcode.Version = QRCodeVersion.Auto; 
             // Set the Error correction level to high
-            qrBarcode.ErrorCorrectionLevel = PdfErrorCorrectionLevel.High;
-
+            qrBarcode.ErrorCorrectionLevel = PdfErrorCorrectionLevel.High; 
             // Set dimension for each block
             qrBarcode.XDimension = 2;
             qrBarcode.Text = "Syncfusion Essential Studio Enterprise edition $995";
-
             // Draw the QR barcode
-            qrBarcode.Draw(page, new PointF(25, 100));
-
+            qrBarcode.Draw(page, new PointF(25, 95));
             font = new PdfStandardFont(PdfFontFamily.TimesRoman, 9, PdfFontStyle.Regular);
-
-            g.DrawString("Input Type :   Eight Bit Binary", font, brush, new PointF(250, 140));
-            g.DrawString("Encoded Data : Syncfusion Essential Studio Enterprise edition $995", font, brush, new PointF(250, 160));
-
-            g.DrawLine(pen, new PointF(0, 230), new PointF(width, 230));
-
+            g.DrawString("Input Type :Eight Bit Binary", font, brush, new PointF(250, 130));
+            g.DrawString("Encoded Data : Syncfusion Essential Studio Enterprise edition $995", font, brush, new PointF(250, 145));
+            g.DrawLine(pen, new PointF(0, 205), new PointF(width, 205));
             #endregion
-
+            #region QRCode with logo
+            font = new PdfStandardFont(PdfFontFamily.Helvetica, 12f, PdfFontStyle.Bold);
+            g.DrawString("QR Barcode with logo", font, brush, new PointF(10, 220));
+            PdfQRBarcode qrbarcodelogo = new PdfQRBarcode();
+            // Sets the Input mode to Binary mode
+            qrbarcodelogo.InputMode = InputMode.BinaryMode; 
+            // Automatically select the Version
+            qrbarcodelogo.Version = QRCodeVersion.Auto; 
+            // Set the Error correction level to high
+            qrbarcodelogo.ErrorCorrectionLevel = PdfErrorCorrectionLevel.High; 
+            // Set dimension for each block
+            qrbarcodelogo.XDimension = 2;
+            qrbarcodelogo.Text = "https://www.syncfusion.com"; 
+            //Set the logo image to QR barcode.
+            FileStream imageStream = new FileStream(dataPath + "qrcodelogo.png", FileMode.Open, FileAccess.Read);            
+            //Create QR Barcode logo.
+            QRCodeLogo qRCodeLogo = new QRCodeLogo(imageStream);
+            //Set the QR barcode logo.
+            qrbarcodelogo.Logo = qRCodeLogo; 
+            // Draw the QR barcode
+            qrbarcodelogo.Draw(page, new PointF(25, 250));
+            font = new PdfStandardFont(PdfFontFamily.TimesRoman, 9, PdfFontStyle.Regular); 
+            g.DrawString("Encoded Data : https://www.syncfusion.com", font, brush, new PointF(250, 270)); 
+            g.DrawLine(pen, new PointF(0, 340), new PointF(width, 340));
+            #endregion
             #region Datamatrix
             font = new PdfStandardFont(PdfFontFamily.Helvetica, 12f, PdfFontStyle.Bold);
-            g.DrawString("DataMatrix Barcode", font, brush, new PointF(10, 270));
-
-            PdfDataMatrixBarcode dataMatrixBarcode = new PdfDataMatrixBarcode("5575235 Win7 4GB 64bit 7Jun2010");
-
+            g.DrawString("DataMatrix Barcode", font, brush, new PointF(10, 355)); 
+            PdfDataMatrixBarcode dataMatrixBarcode = new PdfDataMatrixBarcode("5575235 Win7 4GB 64bit 7Jun2010"); 
             // Set dimension for each block
-            dataMatrixBarcode.XDimension = 4;
-
+            dataMatrixBarcode.XDimension = 4; 
             // Draw the barcode
-            dataMatrixBarcode.Draw(page, new PointF(25, 310));
-
-            font = new PdfStandardFont(PdfFontFamily.TimesRoman, 9, PdfFontStyle.Regular);
-
-            g.DrawString("Symbol Type : Square", font, brush, new PointF(250, 360));
-            g.DrawString("Encoded Data : 5575235 Win7 4GB 64bit 7Jun2010", font, brush, new PointF(250, 380));
-
+            dataMatrixBarcode.Draw(page, new PointF(25, 385));
+            font = new PdfStandardFont(PdfFontFamily.TimesRoman, 9, PdfFontStyle.Regular); 
+            g.DrawString("Symbol Type : Square", font, brush, new PointF(250, 405));
+            g.DrawString("Encoded Data : 5575235 Win7 4GB 64bit 7Jun2010", font, brush, new PointF(250, 425)); 
             pen = new PdfPen(brush, 0.5f);
-            g.DrawLine(pen, new PointF(0, 430), new PointF(width, 430));
-
-            string text = "TYPE 3523 - ETWS/N FE- SDFHW 06/08";
-
-            dataMatrixBarcode = new PdfDataMatrixBarcode(text);
-
+            g.DrawLine(pen, new PointF(0, 500), new PointF(width, 500));
+            string text = "TYPE 3523 - ETWS/N FE- SDFHW 06/08"; 
+            dataMatrixBarcode = new PdfDataMatrixBarcode(text); 
             // rectangular matrix
-            dataMatrixBarcode.Size = PdfDataMatrixSize.Size16x48;
-
-            dataMatrixBarcode.XDimension = 4;
-
-            dataMatrixBarcode.Draw(page, new PointF(25, 470));
-
-            g.DrawString("Symbol Type : Rectangle", font, brush, new PointF(250, 490));
-            g.DrawString("Encoded Data : " + text, font, brush, new PointF(250, 510));
-
-            pen = new PdfPen(brush, 0.5f);
-
-            g.DrawLine(pen, new PointF(0, 570), new PointF(width, 570));
+            dataMatrixBarcode.Size = PdfDataMatrixSize.Size16x48; 
+            dataMatrixBarcode.XDimension = 4; 
+            dataMatrixBarcode.Draw(page, new PointF(25, 520));
+            g.DrawString("Symbol Type : Rectangle", font, brush, new PointF(250, 540));
+            g.DrawString("Encoded Data : " + text, font, brush, new PointF(250, 560));
+            pen = new PdfPen(brush, 0.5f); 
+            g.DrawLine(pen, new PointF(0, 620), new PointF(width, 620));
             font = new PdfStandardFont(PdfFontFamily.Helvetica, 12f, PdfFontStyle.Bold);
-            g.DrawString("PDF417 Barcode", font, brush, new PointF(10, 620));
+            g.DrawString("PDF417 Barcode", font, brush, new PointF(10, 650));
             Pdf417Barcode pdf417Barcode = new Pdf417Barcode();
             pdf417Barcode.Text = "https://www.syncfusion.com/";
             pdf417Barcode.ErrorCorrectionLevel = Pdf417ErrorCorrectionLevel.Auto;
             pdf417Barcode.XDimension = 1f;
             pdf417Barcode.Size = new SizeF(200, 50);
-            pdf417Barcode.Draw(page,new PointF(25,670));
-
-
+            pdf417Barcode.Draw(page, new PointF(25, 680));
             font = new PdfStandardFont(PdfFontFamily.TimesRoman, 9, PdfFontStyle.Regular);
-            g.DrawString("Encoded Data : https://www.syncfusion.com/", font, brush, new PointF(250, 680));
-
-
+            g.DrawString("Encoded Data : https://www.syncfusion.com/", font, brush, new PointF(250, 700));
             #endregion
-            # endregion
-
-            # region 1D Barcode
+            #endregion
+            
+            #region 1D Barcode
 
             page = document.Pages.Add();
             g = page.Graphics;

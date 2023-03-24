@@ -1,111 +1,122 @@
 @using Syncfusion.EJ2
 @section ControlsSection{
-   <div class="control-section">
-        <div id="container" align='center'>
-            <ejs-chart id="lineContainer"  load="window.onChartLoad" loaded="window.onChartLoaded" title="Trade in Food Groups"
-                      pointRender="window.pointRender" tooltipRender="window.tooltipRender">
-                <e-chart-primaryxaxis valueType="Category" interval="1" tickPosition="Inside" labelPosition="Inside">
+    <div class="control-section" align="center">
+        
+        <ejs-chart id="lineContainer"  load="load" title="Literacy rate by Country in 2015"
+                   pointRender="pointRender" enableSideBySidePlacement="false">
+            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category" interval="1" labelPosition="@Syncfusion.EJ2.Charts.AxisPosition.Outside">
                 <e-majorgridlines width="0"></e-majorgridlines>
-                    <e-labelstyle color="#ffffff"></e-labelstyle>
-                </e-chart-primaryxaxis>
-                <e-chart-primaryyaxis minimum="0" maximum="300" interval="50">
-                    <e-majorgridlines width="0"></e-majorgridlines>
-                    <e-majorticklines width="0"></e-majorticklines>
-                    <e-minorgridlines width="0"></e-minorgridlines>
-                    <e-minorticklines width="0"></e-minorticklines>
-                    <e-linestyle width="0"></e-linestyle>
-                    <e-labelstyle color="transparent"></e-labelstyle>
-                </e-chart-primaryyaxis>
-                <e-chart-chartarea>
-                    <e-chartarea-border width="0"></e-chartarea-border>
-                </e-chart-chartarea>
-                <e-series-collection>
-                    <e-series dataSource="ViewBag.dataSource" xName="x" yName="y" name="Tiger" width=2 type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
-                        <e-series-marker>
-                            <e-series-datalabel visible="true" position="Top">
-                                <e-font color="#ffffff" fontWeight="600"></e-font>
-                            </e-series-datalabel>
-                        </e-series-marker>
-                        <e-series-cornerradius bottomLeft="10" bottomRight="10" topLeft="10" topRight="10"></e-series-cornerradius>
-                    </e-series>
-                </e-series-collection>
-                <e-chart-tooltipsettings enable="false"></e-chart-tooltipsettings>
-                <e-chart-legendsettings visible="false"></e-chart-legendsettings>
-            </ejs-chart>
-        </div>
+            </e-chart-primaryxaxis>
+            <e-chart-primaryyaxis minimum="0" maximum="100" interval="25" labelFormat="{value}%">
+                <e-majorticklines width="0"></e-majorticklines>
+                <e-minorticklines width="0"></e-minorticklines>
+                <e-linestyle width="0"></e-linestyle>
+            </e-chart-primaryyaxis>
+            <e-chart-chartarea>
+                <e-chartarea-border width="0"></e-chartarea-border>
+            </e-chart-chartarea>
+            <e-series-collection>
+                <e-series dataSource="ViewBag.ChartPoints" xName="Country" yName="Rate" opacity="0.5" columnWidth="0.8" enableTooltip="false" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                    <e-series-marker>
+                        <e-series-datalabel visible="false" position="@Syncfusion.EJ2.Charts.LabelPosition.Top">
+                            <e-font color="#ffffff" fontWeight="600"></e-font>
+                        </e-series-datalabel>
+                    </e-series-marker>
+                </e-series>
+                <e-series dataSource="ViewBag.ChartPoints" xName="Country" yName="Literacy_Rate" tooltipMappingName="Text" columnWidth="0.8" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                    <e-series-marker>
+                        <e-series-datalabel visible="true" name="Text" position="@Syncfusion.EJ2.Charts.LabelPosition.Top">
+                            <e-font color="#ffffff" fontWeight="600"></e-font>
+                        </e-series-datalabel>
+                    </e-series-marker>
+                </e-series>
+            </e-series-collection>
+            <e-chart-tooltipsettings enable="true" header="<b>${point.x}</b>" format="Rate : <b>${point.tooltip}</b>"></e-chart-tooltipsettings>
+            <e-chart-legendsettings visible="false"></e-chart-legendsettings>
+        </ejs-chart>
     </div>
+
     <script>
-        window.pointRender = function (args) {
-            var materialColors = ['#00bdae', '#404041', '#357cd2', '#e56590', '#f8b883', '#70ad47', '#dd8abd', '#7f84e8', '#7bb4eb',
-                '#ea7a57', '#404041', '#00bdae'];
-            var fabricColors = ['#4472c4', '#ed7d31', '#ffc000', '#70ad47', '#5b9bd5',
-                '#c1c1c1', '#6f6fe2', '#e269ae', '#9e480e', '#997300', '#4472c4', '#70ad47', '#ffc000', '#ed7d31'];
-            var bootstrapColors = ['#a16ee5', '#f7ce69', '#55a5c2', '#7ddf1e', '#ff6ea6',
-                '#7953ac', '#b99b4f', '#407c92', '#5ea716', '#b91c52'];
-            var highContrastColors = ['#79ECE4', '#E98272', '#DFE6B6', '#C6E773', '#BA98FF',
-                '#FA83C3', '#00C27A', '#43ACEF', '#D681EF', '#D8BC6E'];
+        function pointRender(args) {
             var selectedTheme = location.hash.split('/')[1];
-            selectedTheme = selectedTheme ? selectedTheme : 'Material';
-            if (selectedTheme && selectedTheme.indexOf('fabric') > -1) {
-                args.fill = fabricColors[args.point.index % 10];
-            } else if (selectedTheme === 'material') {
-                args.fill = materialColors[args.point.index % 10];
-            } else if (selectedTheme === 'bootstrap') {
-                args.fill = bootstrapColors[args.point.index % 10];
-            } else {
-                args.fill = highContrastColors[args.point.index % 10];
+            selectedTheme = selectedTheme ? selectedTheme : 'material';
+            if (selectedTheme && selectedTheme.indexOf('fabric-dark') > -1) {
+                 if (args.series.yName === "Rate")
+                       args.fill = "f9fafb";
+            }
+            else if (selectedTheme && selectedTheme.indexOf('fabric') > -1) {
+                 if (args.series.yName === "Rate")
+                       args.fill = "grey";
+            }
+            else if (selectedTheme === 'material-dark') {
+                 if (args.series.yName === "Rate")
+                       args.fill = "f9fafb";
+            }
+            else if (selectedTheme === 'material') {
+                 if (args.series.yName === "Rate")
+                       args.fill = "grey";
+            }
+            else if (selectedTheme === 'bootstrap5-dark') {
+                 if (args.series.yName === "Rate")
+                       args.fill = "#f9fafb";
+            }
+            else if (selectedTheme === 'bootstrap5') {
+                 if (args.series.yName === "Rate")
+                       args.fill = "grey";
+            }
+            else if (selectedTheme === 'bootstrap-dark') {
+                 if (args.series.yName === "Rate")
+                       args.fill = "f9fafb";
+            }
+            else if (selectedTheme === 'bootstrap') {
+                 if (args.series.yName === "Rate")
+                       args.fill = "grey";
+            }
+            else if (selectedTheme === 'highcontrast') {
+                 if (args.series.yName === "Rate")
+                       args.fill = "#f9fafb";
+            }
+            else if (selectedTheme === 'fluent-dark') {
+                 if (args.series.yName === "Rate")
+                       args.fill = "#f9fafb";
+            }
+            else if (selectedTheme === 'fluent') {
+                 if (args.series.yName === "Rate")
+                       args.fill = "grey";
+            }
+            else if (selectedTheme === 'tailwind-dark') {
+                 if (args.series.yName === "Rate")
+                       args.fill = "#f9fafb";
+            }
+            else if (selectedTheme === 'tailwind') {
+                 if (args.series.yName === "Rate")
+                       args.fill = "grey";
+            }
+            else {
+                 if (args.series.yName === "Rate")
+                       args.fill = "grey";
             }
         }
-        window.onChartLoad = function (args) {
+        function load(args) {
             var selectedTheme = location.hash.split('/')[1];
             selectedTheme = selectedTheme ? selectedTheme : 'Material';
             args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
-            args.chart.width = ej.base.Browser.isDevice ? "100%" : "60%";
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "77%";
+            args.chart.series[0].cornerRadius.bottomLeft = ej.base.Browser.isDevice ? 12 : 35;
+            args.chart.series[0].cornerRadius.bottomRight = ej.base.Browser.isDevice ? 12 : 35;
+            args.chart.series[0].cornerRadius.topLeft = ej.base.Browser.isDevice ? 12 : 35;
+            args.chart.series[0].cornerRadius.topRight = ej.base.Browser.isDevice ? 12 : 35;
+            args.chart.series[1].cornerRadius.bottomLeft = ej.base.Browser.isDevice ? 12 : 35;
+            args.chart.series[1].cornerRadius.bottomRight = ej.base.Browser.isDevice ? 12 : 35;
+            args.chart.series[1].cornerRadius.topLeft = ej.base.Browser.isDevice ? 12 : 35;
+            args.chart.series[1].cornerRadius.topRight = ej.base.Browser.isDevice ? 12 : 35;
+            args.chart.series[1].marker.dataLabel.enableRotation = ej.base.Browser.isDevice ? "true" : "false";
+            args.chart.series[1].marker.dataLabel.angle = ej.base.Browser.isDevice ? -90 : 0;
+            args.chart.series[1].marker.dataLabel.font.size = ej.base.Browser.isDevice ? "9px" : "11px";
+            args.chart.primaryXAxis.labelIntersectAction = ej.base.Browser.isDevice?'None':'Rotate45';
+            args.chart.primaryXAxis.labelRotation = ej.base.Browser.isDevice?'-45':'0';
         }
 
-        window.onChartLoaded = function (args) {
-            var count = 0;
-                args.chart.loaded = null;
-                setInterval(
-                    function () {
-                        if (count === 0) {
-                            args.chart.series[0].dataSource = [
-                                { x: 'Egg', y: 206 },
-                                { x: 'Fish', y: 123 },
-                                { x: 'Misc', y: 48 },
-                                { x: 'Tea', y: 240 },
-                                { x: 'Fruits', y: 170 }
-
-                            ];
-                            args.chart.animate();
-                            count++;
-                        }
-                        else if (count === 1) {
-                            args.chart.series[0].dataSource = [
-                                { x: 'Egg', y: 86 },
-                                { x: 'Fish', y: 173 },
-                                { x: 'Misc', y: 188 },
-                                { x: 'Tea', y: 109 },
-                                { x: 'Fruits', y: 100 }
-
-                            ];
-                            args.chart.animate();
-                            count++;
-                        }
-                        else if (count === 2) {
-                            args.chart.series[0].dataSource = [
-                                { x: 'Egg', y: 156 },
-                                { x: 'Fish', y: 33 },
-                                { x: 'Misc', y: 260 },
-                                { x: 'Tea', y: 200 },
-                                { x: 'Fruits', y: 30 }
-
-                            ];
-                            args.chart.animate();
-                            count = 0;
-                        }
-                    }, 2000);
-        }
     </script>
 }
 @*custom code start*@
@@ -125,25 +136,15 @@
 @*custom code end*@
 @section ActionDescription{
     <p>
-        This sample visualizes the Olympic medal count in Rio with default column series in the chart.
-        Data points values are showed by using data label.
+        This sample shows the literacy rate by country in 2015 with the default column series in the chart.
     </p>
 }
 @section Description{
     <p>
-        In this example, you can see how to render and configure the column type charts. Column type charts are used for comparing
-        the frequency, count, total or average of data in different categories. You can use <code>border</code>,
-        <code>fill</code> properties to customize the vertical rect. <code>dataLabel</code> is used to represent individual
-        data and its value.
+        In this example, you can see how to render and configure the column chart. The column chart is used to compare the frequency, count, total, or average of data in different categories. You can use the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.ChartCornerRadius.html">ChartCornerRadius</a> option to customize the vertical rectangle, resulting in a rounded column.
     </p>
     <p>
-        Tooltip is enabled in this example, to see the tooltip in action, hover a point or tap on a point in touch enabled devices.
-    </p>
-    <br>
-
-    <p>
-        More information on the column series can be found in this
-        <a target="_blank" href="http://ej2.syncfusion.com/documentation/chart/api-series.html#type-chartseriestype">documentation section</a>.
+        <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover a point or tap on a point in touch enabled devices.
     </p>
 }
 @section Title{

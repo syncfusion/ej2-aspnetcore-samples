@@ -18,34 +18,24 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
     {
         public IActionResult DataLabelTemplate()
         {
-            List<TemplateData> data = new List<TemplateData>
+            List<TemplateData> PopulationDetails = new List<TemplateData>
             {
-                new TemplateData { x= 2010, y= 1014 }, 
-                new TemplateData { x= 2011, y= 1040 },
-                new TemplateData { x= 2012, y= 1065 }, 
-                new TemplateData { x= 2013, y= 1110 },
-                new TemplateData { x= 2014, y= 1130 }, 
-                new TemplateData { x= 2015, y= 1153 },
-                new TemplateData { x= 2016, y= 1175 }
+                new TemplateData { Sports= "Tennis", Boys= 50, Girls= 38 },
+                new TemplateData { Sports= "Badminton", Boys= 30, Girls= 40 },
+                new TemplateData { Sports= "Cycling", Boys= 37, Girls= 20 },
+                new TemplateData { Sports= "Football", Boys= 60, Girls= 21 },
+                new TemplateData { Sports= "Hockey", Boys= 15, Girls= 8 }
             };
-            ViewBag.dataSource = data;
-            List<TemplateData> data1 = new List<TemplateData>
-            {
-                new TemplateData { x= 2010, y= 990 },
-                new TemplateData { x= 2011, y= 1010 },
-                new TemplateData { x= 2012, y= 1030 },
-                new TemplateData { x= 2013, y= 1070 },
-                new TemplateData { x= 2014, y= 1105 },
-                new TemplateData { x= 2015, y= 1138 },
-                new TemplateData { x= 2016, y= 1155 }
-            };
-            ViewBag.dataSource1 = data1;
+            ViewBag.PopulationDetails = PopulationDetails;
+            ViewBag.margin = new { Right = 30 };
+            ViewBag.margin1 = new { Right = 15 };
             return View();
         }
         public class TemplateData
         {
-            public double x;
-            public double y;
+            public string Sports;
+            public double Boys;
+            public double Girls;
         }
     }
 }

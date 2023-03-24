@@ -8,6 +8,7 @@ var config = require('./wwwroot/scripts/samplelist.js');
 var beautify = require('json-beautify');
 var configJson = JSON.parse(fs.readFileSync('./config.json'));
 var fsPath = require('path');
+var shelljs = require('shelljs');
 require("@syncfusion/ej2-staging");
 
 gulp.task('generate-searchlist', function (done) {
@@ -268,6 +269,18 @@ gulp.task('sitemap-generate', function (done) {
         fs.writeFileSync('./' + configJson.appName + '-net6/wwwroot/sitemap-demos.xml', siteMapFile, 'utf-8');
     } else {
         fs.writeFileSync('./sitemap-demos.xml', siteMapFile, 'utf-8');
+    }
+    done();
+});
+
+gulp.task('code-leaks-analysis', function (done) {
+    var codeLeaksReport = JSON.parse(fs.readFileSync('GitLeaksReport.json', 'utf-8'));
+    if (Object(codeLeaksReport).length <= 0) {
+        console.log("<- No Leaks Found ->");
+        shelljs.exec('rm GitLeaksReport.json')
+    }
+    else {
+        throw "Please clear the Git Leaks reported issues";
     }
     done();
 });

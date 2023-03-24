@@ -31,57 +31,57 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
             };
             ViewBag.yAxisStrips = yAxisStrips;
 
-            List<KeyBoardData> chartData = new List<KeyBoardData>
+            List<KeyBoardData> Quarter1 = new List<KeyBoardData>
             {
-               new KeyBoardData { xValue = "Jan 15", yValue = 10 },
-               new KeyBoardData { xValue = "Jan 31", yValue = 15 },
-               new KeyBoardData { xValue = "Feb 15", yValue = 15 },
-               new KeyBoardData { xValue = "Feb 28", yValue = 20 },
-               new KeyBoardData { xValue = "March 15", yValue = 20 },
-               new KeyBoardData { xValue = "March 31", yValue = 25 },
-               new KeyBoardData { xValue = "March", yValue = null }
+                new KeyBoardData { Month = "Jan 15", Sales = 10 },
+                new KeyBoardData { Month = "Jan 31", Sales = 15 },
+                new KeyBoardData { Month = "Feb 15", Sales = 15 },
+                new KeyBoardData { Month = "Feb 28", Sales = 20 },
+                new KeyBoardData { Month = "March 15", Sales = 20 },
+                new KeyBoardData { Month = "March 31", Sales = 25 },
+                new KeyBoardData { Month = "March", Sales = null }
             };
 
-            List<KeyBoardData> chartData1 = new List<KeyBoardData>
+            List<KeyBoardData> Quarter2 = new List<KeyBoardData>
             {
-               new KeyBoardData { xValue = "Apr 15", yValue = 36 },
-               new KeyBoardData { xValue = "Apr 30", yValue = 48 },
-               new KeyBoardData { xValue = "May 15", yValue = 43 },
-               new KeyBoardData { xValue = "May 31", yValue = 59 },
-               new KeyBoardData { xValue = "Jun 15", yValue = 35 },
-               new KeyBoardData { xValue = "Jun 30", yValue = 50 },
-               new KeyBoardData { xValue = "Jun", yValue = null }
+                new KeyBoardData { Month = "Apr 15", Sales = 36 },
+                new KeyBoardData { Month = "Apr 30", Sales = 48 },
+                new KeyBoardData { Month = "May 15", Sales = 43 },
+                new KeyBoardData { Month = "May 31", Sales = 59 },
+                new KeyBoardData { Month = "Jun 15", Sales = 35 },
+                new KeyBoardData { Month = "Jun 30", Sales = 50 },
+                new KeyBoardData { Month = "Jun", Sales = null }
             };
-            List<KeyBoardData> chartData2 = new List<KeyBoardData>
+            List<KeyBoardData> Quarter3 = new List<KeyBoardData>
             {
-               new KeyBoardData { xValue = "Jul 15", yValue = 30 },
-               new KeyBoardData { xValue = "Jul 31", yValue = 45 },
-               new KeyBoardData { xValue = "Aug 15", yValue = 30 },
-               new KeyBoardData { xValue = "Aug 31", yValue = 55 },
-               new KeyBoardData { xValue = "Sep 15", yValue = 57 },
-               new KeyBoardData { xValue = "Sep 30", yValue = 60 },
-               new KeyBoardData { xValue = "Sep", yValue = null }
+                new KeyBoardData { Month = "Jul 15", Sales = 30 },
+                new KeyBoardData { Month = "Jul 31", Sales = 45 },
+                new KeyBoardData { Month = "Aug 15", Sales = 30 },
+                new KeyBoardData { Month = "Aug 31", Sales = 55 },
+                new KeyBoardData { Month = "Sep 15", Sales = 57 },
+                new KeyBoardData { Month = "Sep 30", Sales = 60 },
+                new KeyBoardData { Month = "Sep", Sales = null }
             };
-            List<KeyBoardData> chartData3 = new List<KeyBoardData>
+            List<KeyBoardData> Quarter4 = new List<KeyBoardData>
             {
-               new KeyBoardData { xValue = "Oct 15", yValue = 60 },
-               new KeyBoardData { xValue = "Oct 31", yValue = 70 },
-               new KeyBoardData { xValue = "Nov 15", yValue = 70 },
-               new KeyBoardData { xValue = "Nov 30", yValue = 70 },
-               new KeyBoardData { xValue = "Dec 15", yValue = 90 },
-               new KeyBoardData { xValue = "Dec 31", yValue = 100 }
+                new KeyBoardData { Month = "Oct 15", Sales = 60 },
+                new KeyBoardData { Month = "Oct 31", Sales = 70 },
+                new KeyBoardData { Month = "Nov 15", Sales = 70 },
+                new KeyBoardData { Month = "Nov 30", Sales = 70 },
+                new KeyBoardData { Month = "Dec 15", Sales = 90 },
+                new KeyBoardData { Month = "Dec 31", Sales = 100 }
             };
-            ViewBag.dataSource = chartData;
-            ViewBag.dataSource1 = chartData1;
-            ViewBag.dataSource2 = chartData2;
-            ViewBag.dataSource3 = chartData3;
+            ViewBag.Quarter1 = Quarter1;
+            ViewBag.Quarter2 = Quarter2;
+            ViewBag.Quarter3 = Quarter3;
+            ViewBag.Quarter4 = Quarter4;
             return View();
         }
 
         public class KeyBoardData
         {
-            public string xValue;
-            public double? yValue;
+            public string Month;
+            public double? Sales;
 
         }
     }

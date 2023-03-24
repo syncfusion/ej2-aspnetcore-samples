@@ -21,26 +21,24 @@ namespace EJ2CoreSampleBrowser.Controllers
 
         public IActionResult DataEditing()
         {
-            List<DataEditingData> chartData = new List<DataEditingData>
+            List<DataEditingData> ConsumerDetails = new List<DataEditingData>
             {
-                new DataEditingData { xValue = "2005", y = 21, y1= 21},
-                new DataEditingData { xValue = "2006", y = 60, y1= 22},
-                new DataEditingData { xValue = "2007", y = 45, y1= 36 },
-                new DataEditingData { xValue = "2008", y = 50, y1= 34},
-                new DataEditingData { xValue = "2009", y = 74, y1= 54 },
-                new DataEditingData { xValue = "2010", y = 65, y1= 55},
-                new DataEditingData { xValue = "2011", y = 85, y1= 60}
-                
-             };
-            ViewBag.dataSource = chartData;
+                new DataEditingData { Period = "2005", ProductA_Sales = 21, ProductB_Sales= 28},
+                new DataEditingData { Period = "2006", ProductA_Sales = 24, ProductB_Sales= 44},
+                new DataEditingData { Period = "2007", ProductA_Sales = 36, ProductB_Sales= 48},
+                new DataEditingData { Period = "2008", ProductA_Sales = 38, ProductB_Sales= 50},
+                new DataEditingData { Period = "2009", ProductA_Sales = 54, ProductB_Sales= 66},
+                new DataEditingData { Period = "2010", ProductA_Sales = 57, ProductB_Sales= 78},
+                new DataEditingData { Period = "2011", ProductA_Sales = 70, ProductB_Sales= 84}
+            };
+            ViewBag.ConsumerDetails = ConsumerDetails;
             return View();
         }
-        
         public class DataEditingData
         {
-            public string xValue;
-            public double y;
-            public double y1;
+            public string Period;
+            public double ProductA_Sales;
+            public double ProductB_Sales;
         }
     }
 }

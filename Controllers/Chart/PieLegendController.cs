@@ -21,24 +21,25 @@ namespace EJ2CoreSampleBrowser.Controllers
 
         public IActionResult PieLegend()
         {
-            List<pieDataPoints> chartData = new List<pieDataPoints>  
+            List<PieDataPoints> PieChartPoints = new List<PieDataPoints>  
             {
-                new pieDataPoints { x =  "Internet Explorer", y = 6.12, text="Internet <br> Explorer" },
-                new pieDataPoints { x =  "Chrome", y = 57.28, text="Chrome" },
-                new pieDataPoints { x =  "Safari", y = 4.73, text="Safari" },
-                new pieDataPoints { x =  "QQ", y = 5.96, text="QQ" },
-                new pieDataPoints { x =  "UC Browser", y = 4.37, text="UC Browser" },
-                new pieDataPoints { x =  "Edge", y = 7.48, text="Edge" },
-                new pieDataPoints { x =  "Others", y = 14.06, text="Others" }
+                new PieDataPoints { ExpenseCategory =  "Internet Explorer", ExpensePercentage = 6.12, legendName="Internet <br> Explorer", DataLabelMappingName = "6.12%" },
+                new PieDataPoints { ExpenseCategory =  "Chrome", ExpensePercentage = 57.28, legendName="Chrome", DataLabelMappingName = "57.28%" },
+                new PieDataPoints { ExpenseCategory =  "Safari", ExpensePercentage = 4.73, legendName="Safari", DataLabelMappingName = "4.73%" },
+                new PieDataPoints { ExpenseCategory =  "QQ", ExpensePercentage = 5.96, legendName="QQ", DataLabelMappingName = "5.96%" },
+                new PieDataPoints { ExpenseCategory =  "UC Browser", ExpensePercentage = 4.37, legendName="UC Browser", DataLabelMappingName = "4.37%" },
+                new PieDataPoints { ExpenseCategory =  "Edge", ExpensePercentage = 7.48, legendName="Edge", DataLabelMappingName = "7.48%" },
+                new PieDataPoints { ExpenseCategory =  "Others", ExpensePercentage = 14.06, legendName="Others", DataLabelMappingName = "14.06%" }
             };
-            ViewBag.dataSource = chartData;
+            ViewBag.PieChartPoints = PieChartPoints;
             return View();
         }
-        public class pieDataPoints
+        public class PieDataPoints
         {
-            public string x;
-            public double y;
-            public string text;
+            public string ExpenseCategory;
+            public double ExpensePercentage;
+            public string legendName;
+            public string DataLabelMappingName;
         }
     }
 }

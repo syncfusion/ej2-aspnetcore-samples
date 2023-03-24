@@ -18,33 +18,25 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
     {
         public IActionResult NegativeStack()
         {
-            List<NegativeStackChartData> chartData = new List<NegativeStackChartData>
+            List<NegativeStackChartData> ChartPoints = new List<NegativeStackChartData>
             {
-                    new NegativeStackChartData { x= "4.5", y= 31 },
-                    new NegativeStackChartData { x= "4.8", y= 37 },
-                    new NegativeStackChartData { x= "5.1", y= 49 },
-                    new NegativeStackChartData { x= "5.4", y= 57 },
-                    new NegativeStackChartData { x= "5.7", y= 63 },
-                    new NegativeStackChartData { x= "6", y= 69 }
+                new NegativeStackChartData { Height = "4.5", Female = 31, Male = -31, Text = "31 KG", Female_Text = "31 KG" },
+                new NegativeStackChartData { Height = "4.8", Female = 37, Male = -39, Text = "39 KG", Female_Text = "37 KG" },
+                new NegativeStackChartData { Height = "5.1", Female = 49, Male = -52, Text = "52 KG", Female_Text = "49 KG" },
+                new NegativeStackChartData { Height = "5.4", Female = 57, Male = -64, Text = "64 KG", Female_Text = "57 KG" },
+                new NegativeStackChartData { Height = "5.7", Female = 63, Male = -70, Text = "70 KG", Female_Text = "63 KG" },
+                new NegativeStackChartData { Height = "6", Female = 69, Male = -74, Text = "74 KG", Female_Text = "69 KG" }
             };
-            ViewBag.dataSource = chartData;
-            List<NegativeStackChartData> chartData1 = new List<NegativeStackChartData>
-            {
-                new NegativeStackChartData { x= "4.5", y= -31, text= "31 KG" },
-                new NegativeStackChartData { x= "4.8", y= -39, text= "39 KG" },
-                new NegativeStackChartData { x= "5.1", y= -52, text= "52 KG" },
-                new NegativeStackChartData { x= "5.4", y= -64, text= "64 KG" },
-                new NegativeStackChartData { x= "5.7", y= -70, text= "70 KG" },
-                new NegativeStackChartData { x= "6", y= -74, text= "74 KG" }
-            };
-            ViewBag.dataSource1 = chartData1;
+            ViewBag.ChartPoints = ChartPoints;
             return View();
         }
         public class NegativeStackChartData
         {
-            public string x;
-            public double y;
-            public string text;
+            public string Height;
+            public double Female;
+            public double Male;
+            public string Text;
+            public string Female_Text;
         }
     }
 }

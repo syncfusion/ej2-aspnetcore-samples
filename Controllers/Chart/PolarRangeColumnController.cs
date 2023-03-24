@@ -18,24 +18,24 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
     {
         public IActionResult PolarRangeColumn()
         {
-            List<PolarRangeColumnData> data = new List<PolarRangeColumnData>
+            List<PolarRangeColumnData> ChartPoints = new List<PolarRangeColumnData>
             {
-                new PolarRangeColumnData { x= "Jan", low= 2, high= 7 }, 
-                new PolarRangeColumnData { x= "Feb", low= 3, high= 7 },
-                new PolarRangeColumnData { x= "Mar", low= 3, high= 7 }, 
-                new PolarRangeColumnData { x= "Apr", low= 4, high= 9 },
-                new PolarRangeColumnData { x= "May", low= 6, high= 11 }, 
-                new PolarRangeColumnData { x= "June", low= 8, high= 14 }
+                new PolarRangeColumnData { Month = "Jan", MinTemp = 2, MaxTemp = 7 },
+                new PolarRangeColumnData { Month = "Feb", MinTemp = 3, MaxTemp = 7 },
+                new PolarRangeColumnData { Month = "Mar", MinTemp = 3, MaxTemp = 7 },
+                new PolarRangeColumnData { Month = "Apr", MinTemp = 4, MaxTemp = 9 },
+                new PolarRangeColumnData { Month = "May", MinTemp = 6, MaxTemp = 11 },
+                new PolarRangeColumnData { Month = "June", MinTemp = 8,MaxTemp = 14 }
             };
-            ViewBag.dataSource = data;
+            ViewBag.ChartPoints = ChartPoints;
             ViewBag.select = new string[] { "Polar", "Radar" };
             return View();
         }
         public class PolarRangeColumnData
         {
-            public string x;
-            public double low;
-            public double high;
+            public string Month;
+            public double MinTemp;
+            public double MaxTemp;
         }
     }
 }

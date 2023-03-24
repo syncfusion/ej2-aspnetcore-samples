@@ -18,42 +18,24 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
     {
         public IActionResult StackedBar()
         {
-            List<StackedBarChartData> chartData = new List<StackedBarChartData>
+            List<StackedBarChartData> ChartPoints = new List<StackedBarChartData>
             {
-                new StackedBarChartData { x= "Jan", y= 6 },
-                new StackedBarChartData { x= "Feb", y= 8 },
-                new StackedBarChartData { x= "Mar", y= 12 },
-                new StackedBarChartData { x= "Apr", y= 15.5 },
-                new StackedBarChartData { x= "May", y= 20 },
-                new StackedBarChartData { x= "Jun", y= 24 }
+                new StackedBarChartData { Month = "Jan", AppleSales = 6, OrangeSales = 6, Wastage = -1 },
+                new StackedBarChartData { Month = "Feb", AppleSales = 8, OrangeSales = 8, Wastage = -1.5 },
+                new StackedBarChartData { Month = "Mar", AppleSales = 12, OrangeSales = 11, Wastage = -2 },
+                new StackedBarChartData { Month = "Apr", AppleSales = 15.5, OrangeSales = 16, Wastage = -2.5 },
+                new StackedBarChartData { Month = "May", AppleSales = 20, OrangeSales = 21, Wastage = -3 },
+                new StackedBarChartData { Month = "Jun", AppleSales = 24, OrangeSales = 25, Wastage = -3.5 }
             };
-            ViewBag.dataSource = chartData;
-            List<StackedBarChartData> chartData1 = new List<StackedBarChartData>
-            {
-                new StackedBarChartData { x= "Jan", y= 6 },
-                new StackedBarChartData { x= "Feb", y= 8 },
-                new StackedBarChartData { x= "Mar", y= 11 },
-                new StackedBarChartData { x= "Apr", y= 16 },
-                new StackedBarChartData { x= "May", y= 21 },
-                new StackedBarChartData { x= "Jun", y= 25 }
-            };
-            ViewBag.dataSource1 = chartData1;
-            List<StackedBarChartData> chartData2 = new List<StackedBarChartData>
-            {
-                new StackedBarChartData { x= "Jan", y= -1 },
-                new StackedBarChartData { x= "Feb", y= -1.5 },
-                new StackedBarChartData { x= "Mar", y= -2 },
-                new StackedBarChartData { x= "Apr", y= -2.5 },
-                new StackedBarChartData { x= "May", y= -3 },
-                new StackedBarChartData { x= "Jun", y= -3.5 }
-            };
-            ViewBag.dataSource2 = chartData2;
+            ViewBag.ChartPoints = ChartPoints;
             return View();
         }
         public class StackedBarChartData
         {
-            public string x;
-            public double y;
+            public string Month;
+            public double AppleSales;
+            public double OrangeSales;
+            public double Wastage;
         }
     }
 }

@@ -20,7 +20,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
         {
             List<ChartSegment> segments = new List<ChartSegment>();
             ChartSegment segment1 = new ChartSegment();
-            segment1.Value = new DateTime(2016, 5, 1);
+            segment1.Value = new DateTime(2016, 4, 1);
             segment1.Color = "url(#winter)";
             segments.Add(segment1);
 

@@ -4,26 +4,28 @@
 
         var Polar = "Polar";
     }
-    <div class="control-section col-lg-9">        
-            <ejs-chart id="container" load="window.onChartLoad" title="Average Sales Comparison">
+    <div class="col-lg-8 control-section">        
+            <ejs-chart id="container" load="load" title="Average Sales Comparison">
                 <e-chart-tooltipsettings enable="true">
                 </e-chart-tooltipsettings>
-                <e-chart-primaryxaxis interval="1" coefficient="100" labelPlacement="OnTicks" valueType="Category"></e-chart-primaryxaxis>
+                <e-chart-legendsettings enableHighlight="true">
+                </e-chart-legendsettings>
+                <e-chart-primaryxaxis interval="1" coefficient="100" labelPlacement="@Syncfusion.EJ2.Charts.LabelPlacement.OnTicks" valueType="@Syncfusion.EJ2.Charts.ValueType.Category"></e-chart-primaryxaxis>
                 <e-chart-primaryyaxis title="Revenue in Millios" labelFormat="{value}M"></e-chart-primaryyaxis>
                 <e-series-collection>
-                    <e-series dataSource="ViewBag.dataSource" opacity=0.5 name="Product A" xName="x" width="2" yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Polar" drawType="@Syncfusion.EJ2.Charts.ChartDrawType.Area">
+                    <e-series dataSource="ViewBag.ChartPoints" opacity="0.5" name="Product A" xName="Period" width="2" yName="ProductRevenue_A" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Polar" drawType="@Syncfusion.EJ2.Charts.ChartDrawType.Area">
                         <e-series-border color="transparent" width="0"></e-series-border>
                     </e-series>
-                    <e-series dataSource="ViewBag.dataSource1" opacity=0.5 name="Product B" xName="x" width="2" yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Polar" drawType="@Syncfusion.EJ2.Charts.ChartDrawType.Area">
+                    <e-series dataSource="ViewBag.ChartPoints" opacity="0.5" name="Product B" xName="Period" width="2" yName="ProductRevenue_B" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Polar" drawType="@Syncfusion.EJ2.Charts.ChartDrawType.Area">
                         <e-series-border color="transparent" width="0"></e-series-border>
                     </e-series>
-                    <e-series dataSource="ViewBag.dataSource2" opacity=0.5 name="Product C" xName="x" width="2" yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Polar" drawType="@Syncfusion.EJ2.Charts.ChartDrawType.Area">
+                    <e-series dataSource="ViewBag.ChartPoints" opacity="0.5" name="Product C" xName="Period" width="2" yName="ProductRevenue_C" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Polar" drawType="@Syncfusion.EJ2.Charts.ChartDrawType.Area">
                         <e-series-border color="transparent" width="0"></e-series-border>
                     </e-series>
                 </e-series-collection>
             </ejs-chart>
         </div>
-        <div class="col-lg-3 property-section">
+        <div class="col-lg-4 property-section">
             <div class="property-panel-section">
                 <div class="property-panel-content">
                     <table id="property" class="property-panel-table" title="Properties" style="width: 100%">
@@ -41,7 +43,7 @@
         </div>
     <script>
     @*custom code start*@
-        window.onChartLoad = function (args) {
+        function load(args) {
             var selectedTheme = location.hash.split('/')[1];
             selectedTheme = selectedTheme ? selectedTheme : 'Material';
             args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
@@ -51,7 +53,7 @@
             var chart = document.getElementById('container').ej2_instances[0];
             chart.series[0].type = this.value;
             chart.series[1].type = this.value;
-            chart.series[2].type = this.value;            
+            chart.series[2].type = this.value;
             chart.refresh();
         }
     </script>
@@ -70,21 +72,19 @@
 @*custom code end*@
 @section ActionDescription{
     <p>
-        This sample demonstrates polar series with area type for average sales comparison of products in recent year.  The switching between polar and radar series can be done by using <code>Series Type</code> in property panel.
+        This sample shows the average product sales comparison for 6 years in polar and radar charts.
     </p>
 }
 @section Description{
     <p>
-        In this example, you can see how to render and configure the area type charts. Similar to line type series, but the area
-        get closed and filled with series color. You can use <code>border</code>, <code>fill</code> properties to
-        customize the area. <code>marker</code> and <code>dataLabel</code> are used to represent individual data and its
-        value. Legend is enabled in this example with series type shape.
+        In this example, you can see how to render and configure polar and radar charts with an area series. Switching between polar and radar series can be done using <b>Series Type</b> in the property panel.
     </p>
-    <br>
-    
     <p>
-        More information on the Polar series can be found in this
-        <a target="_blank" href="http://ej2.syncfusion.com/documentation/chart/api-axis.html#valuetype-valuetype">documentation section</a>.
+        <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+    </p>
+    <p>
+        More information about the polar and radar chart with an area series can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/polar-radar#draw-types">documentation section</a>.
     </p>
 }
 @section Title{

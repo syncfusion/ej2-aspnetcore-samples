@@ -51,6 +51,9 @@ namespace EJ2CoreSampleBrowser.Controllers.Excel
 
                 //Enable the incremental formula
                 application.EnableIncrementalFormula = true;
+		
+		//Disable the chart cache serialization
+		application.IsChartCacheEnabled =false;
 
                 //Load the existing Excel document into IWorkbook
                 FileStream sampleFile = new FileStream(basePath + @"/XlsIO/CallCenterTemplate.xlsx", FileMode.Open);

@@ -18,25 +18,27 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
     {
         public IActionResult Waterfall()
         {
-            List<WaterfallChartData> chartData = new List<WaterfallChartData>
+            List<WaterfallChartData> ChartPoints = new List<WaterfallChartData>
             {
-                    new WaterfallChartData { x= "Income", y= 4711 },
-                    new WaterfallChartData { x= "Sales", y= -1015 },
-                    new WaterfallChartData { x= "Development", y= -688 },
-                    new WaterfallChartData { x= "Revenue", y= 1030 },
-                    new WaterfallChartData { x= "Balance" },
-                    new WaterfallChartData { x= "Expense", y= -361 },
-                    new WaterfallChartData { x= "Tax", y= -695 },
-                    new WaterfallChartData { x= "Net Profit" }
+                new WaterfallChartData { X = "Income", Y = 971  },
+                new WaterfallChartData { X = "Sales", Y = -101 },
+                new WaterfallChartData { X = "Development", Y = -268 },
+                new WaterfallChartData { X = "Revenue", Y = 403 },
+                new WaterfallChartData { X = "Balance" },
+                new WaterfallChartData { X = "Expense", Y = -136 },
+                new WaterfallChartData { X = "Tax", Y = -365 },
+                new WaterfallChartData { X = "Net Profit" }
             };
-            ViewBag.dataSource = chartData;
+            ViewBag.ChartPoints = ChartPoints;
             ViewBag.intermediateSumIndexes = new int[] {4};
             ViewBag.sumIndexes = new int[] {7};
+            ViewBag.connector = new {width = 2, length = 1, color = "#5F6A6A"};
             return View();
         }
-        public class WaterfallChartData {
-            public string x;
-            public double y;
+        public class WaterfallChartData 
+        {
+            public string X;
+            public double Y;
         }
     }
 }

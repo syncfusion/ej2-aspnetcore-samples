@@ -5,12 +5,13 @@
             <ejs-accumulationchart id="container" title="Food Comparison Chart" load="load">
                 <e-accumulationchart-legendsettings visible="false">
                 </e-accumulationchart-legendsettings>
-                <e-accumulationchart-tooltipsettings enable="true"></e-accumulationchart-tooltipsettings>
+                <e-accumulationchart-tooltipsettings enable="true" format="${point.x}: <b>${point.y}cal</b>" header=""></e-accumulationchart-tooltipsettings>
                 <e-accumulation-series-collection>
-                    <e-accumulation-series dataSource="ViewBag.dataSource" xName="xValue" yName="yValue" type="@Syncfusion.EJ2.Charts.AccumulationType.Pyramid" width="45%" height="80%"
-                                           neckWidth="15%" gapRatio="0.03" name="Food" explode="true">
-                        <e-accumulationseries-datalabel visible="true" position="@Syncfusion.EJ2.Charts.AccumulationLabelPosition.Inside" name="text">
+                    <e-accumulation-series dataSource="ViewBag.ChartPoints" xName="Foods" yName="Calories" type="@Syncfusion.EJ2.Charts.AccumulationType.Pyramid" width="45%" height="80%"
+                                           neckWidth="15%" gapRatio="0.03" name="Food">
+                        <e-accumulationseries-datalabel visible="true" position="@Syncfusion.EJ2.Charts.AccumulationLabelPosition.Outside" name="DataLabelMappingName">
                             <e-font fontWeight="600"></e-font>
+                            <e-connectorstyle length="20px"></e-connectorstyle>
                         </e-accumulationseries-datalabel>
                     </e-accumulation-series>
                 </e-accumulation-series-collection>
@@ -23,10 +24,9 @@
             var indexedTheme = location.hash.split('/')[1];
             indexedTheme = indexedTheme ? indexedTheme : 'Material';
             args.accumulation.theme = (indexedTheme.charAt(0).toUpperCase() + indexedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
-            if (args.accumulation.availableSize.width < args.accumulation.availableSize.height) {
-                args.accumulation.series[0].width = '80%';
-                args.accumulation.series[0].height = '60%';
-            }
+            args.accumulation.series[0].dataLabel.textWrap = ej.base.Browser.isDevice ? "Wrap" : "Normal";
+            args.accumulation.series[0].dataLabel.maxWidth = ej.base.Browser.isDevice ? 80 : NaN;
+            args.accumulation.series[0].dataSource[4].DataLabelMappingName = ej.base.Browser.isDevice ? "Bread, Rice,<br> Pasta: 930 cal" : "Bread, Rice, Pasta: 930 cal";
         }
     </script>
     @*custom code end*@
@@ -40,20 +40,21 @@
 
     <div id="action-description">
         <p>
-            This sample visualizes food comparison data by using pyramid series.
-            Datalabel shows the Information about the points.
+            This <a target="_blank" href="https://www.syncfusion.com/aspnet-core-ui-controls/charts/chart-types/pyramid-chart">ASP.NET Core Pyramid Chart</a> visualizes food comparison data by using pyramid series.
         </p>
     </div>
 }
 @section Description {
     <div id="description">
-        <p> In this example, you can see how to render pyramid chart. <code>dataLabel</code> is used to represent individual data and its value.</p>
-        <p> <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover a point or tap on a point in touch enabled devices.</p>
-        <p> <code>Legends</code> are disabled in this example, the information about it can be read using <code>Tooltip</code>.</p>
-        <p><b>Injecting Module</b></p>
         <p>
-            Chart component features are segregated into individual feature-wise modules. To use Pyramid series, we need to inject
-            <code>PyramidSeries</code> module into <code>services</code>.
+            In this example, you can see how to render and configure a pyramid chart. This chart is shaped like a triangle, with lines dividing it into sections of varying widths. Depending on the Y coordinate, the width indicates a level of hierarchy among other categories. The <code>DataLabel</code> represents individual data and its value.
+        </p>
+        <p>
+            <code>Tooltip</code> is enabled in this example, to see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+        </p>
+        <p>
+            More information about the pyramid series can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/accumulation-chart/pyramid">documentation section</a>.
         </p>
     </div>
 

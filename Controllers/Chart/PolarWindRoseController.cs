@@ -18,38 +18,37 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
     {
         public IActionResult PolarWindRose()
         {
-            List<PolarWindRoseData> data = new List<PolarWindRoseData>
+            List<PolarWindRoseData> ChartPoints = new List<PolarWindRoseData>
             {
-                  new PolarWindRoseData { x= "N", y= 1, y1= 0.8, y2= 0.8, y3= 0.3, y4= 0.2, y5= 0.2 },
-                  new PolarWindRoseData { x= "NNE", y= 0.9, y1= 0.7, y2= 0.7, y3= 0.3, y4= 0.2, y5= 0.2 },
-                  new PolarWindRoseData { x= "NE", y= 0.7, y1= 0.8, y2= 0.5, y3= 1.1, y4= 1.2, y5= 0.5 },
-                  new PolarWindRoseData { x= "ENE", y= 0.9, y1= 1, y2= 0.4, y3= 0.9, y4= 1, y5= 0.4 },
-                  new PolarWindRoseData { x= "E", y= 0.9, y1= 0.6, y2= 0.9, y3= 0.5, y4= 0.7, y5= 0.4 },
-                  new PolarWindRoseData { x= "ESE", y= 0.8, y1= 0.5, y2= 0.7, y3= 0.3, y4= 0.8, y5= 0.3 },
-                  new PolarWindRoseData { x= "SE", y= 0.7, y1= 0.4, y2= 0.6, y3= 0.5, y4= 0.5, y5= 0.3 },
-                  new PolarWindRoseData { x= "SSE", y= 1.4, y1= 0.4, y2= 0.5, y3= 0.4, y4= 0.6, y5= 0.2 },
-                  new PolarWindRoseData { x= "S", y= 2, y1= 1.2, y2= 0.6, y3= 0.6, y4= 0.4, y5= 0.4 },
-                  new PolarWindRoseData { x= "SSW", y= 2, y1= 2.5, y2= 2, y3= 1, y4= 0.5, y5= 0.3 },
-                  new PolarWindRoseData { x= "SW", y= 2.2, y1= 2, y2= 1.8, y3= 1, y4= 0.4, y5= 0.2 },
-                  new PolarWindRoseData { x= "WSW", y= 1.8, y1= 1.1, y2= 0.8, y3= 0.1, y4= 0.4, y5= 0.2 },
-                  new PolarWindRoseData { x= "W", y= 1.6, y1= 1.8, y2= 2.1, y3= 1, y4= 0.4, y5= 0.4 },
-                  new PolarWindRoseData { x= "WNW", y= 1.2, y1= 1.2, y2= 1.5, y3= 1.3, y4= 1.1, y5= 1.2 },
-                  new PolarWindRoseData { x= "NW", y= 2, y1= 2.5, y2= 2, y3= 1, y4= 0.2, y5= 0.7 },
-                  new PolarWindRoseData { x= "NNW", y= 1.8, y1= 1.1, y2= 0.8, y3= 0.1, y4= 0.4, y5= 0.2 }
+                  new PolarWindRoseData { XValue = "N", YValue= 1, YValue1= 0.8, YValue2= 0.8, YValue3= 0.3, YValue4= 0.2, YValue5= 0.2 },
+                  new PolarWindRoseData { XValue = "NNE", YValue= 0.9, YValue1= 0.7, YValue2= 0.7, YValue3= 0.3, YValue4= 0.2, YValue5= 0.2 },
+                  new PolarWindRoseData { XValue = "NE", YValue= 0.7, YValue1= 0.8, YValue2= 0.5, YValue3= 1.1, YValue4= 1.2, YValue5= 0.5 },
+                  new PolarWindRoseData { XValue = "ENE", YValue= 0.9, YValue1= 1, YValue2= 0.4, YValue3= 0.9, YValue4= 1, YValue5= 0.4 },
+                  new PolarWindRoseData { XValue = "E", YValue= 0.9, YValue1= 0.6, YValue2= 0.9, YValue3= 0.5, YValue4= 0.7, YValue5= 0.4 },
+                  new PolarWindRoseData { XValue = "ESE", YValue= 0.8, YValue1= 0.5, YValue2= 0.7, YValue3= 0.3, YValue4= 0.8, YValue5= 0.3 },
+                  new PolarWindRoseData { XValue = "SE", YValue= 0.7, YValue1= 0.4, YValue2= 0.6, YValue3= 0.5, YValue4= 0.5, YValue5= 0.3 },
+                  new PolarWindRoseData { XValue = "SSE", YValue= 1.4, YValue1= 0.4, YValue2= 0.5, YValue3= 0.4, YValue4= 0.6, YValue5= 0.2 },
+                  new PolarWindRoseData { XValue = "S", YValue= 2, YValue1= 1.2, YValue2= 0.6, YValue3= 0.6, YValue4= 0.4, YValue5= 0.4 },
+                  new PolarWindRoseData { XValue = "SSW", YValue= 2, YValue1= 2.5, YValue2= 2, YValue3= 1, YValue4= 0.5, YValue5= 0.3 },
+                  new PolarWindRoseData { XValue = "SW", YValue= 2.2, YValue1= 2, YValue2= 1.8, YValue3= 1, YValue4= 0.4, YValue5= 0.2 },
+                  new PolarWindRoseData { XValue = "WSW", YValue= 1.8, YValue1= 1.1, YValue2= 0.8, YValue3= 0.1, YValue4= 0.4, YValue5= 0.2 },
+                  new PolarWindRoseData { XValue = "W", YValue= 1.6, YValue1= 1.8, YValue2= 2.1, YValue3= 1, YValue4= 0.4, YValue5= 0.4 },
+                  new PolarWindRoseData { XValue = "WNW", YValue= 1.2, YValue1= 1.2, YValue2= 1.5, YValue3= 1.3, YValue4= 1.1, YValue5= 1.2 },
+                  new PolarWindRoseData { XValue = "NW", YValue= 2, YValue1= 2.5, YValue2= 2, YValue3= 1, YValue4= 0.2, YValue5= 0.7 },
+                  new PolarWindRoseData { XValue = "NNW", YValue= 1.8, YValue1= 1.1, YValue2= 0.8, YValue3= 0.1, YValue4= 0.4, YValue5= 0.2 }
             };
-            ViewBag.dataSource = data;
-            ViewBag.select = new string[] { "Polar", "Radar" };
+            ViewBag.ChartPoints = ChartPoints;
             return View();
         }
         public class PolarWindRoseData
         {
-            public string x;
-            public double y;
-            public double y1;
-            public double y2;
-            public double y3;
-            public double y4;
-            public double y5;
+            public string XValue;
+            public double YValue;
+            public double YValue1;
+            public double YValue2;
+            public double YValue3;
+            public double YValue4;
+            public double YValue5;
         }
     }
 }

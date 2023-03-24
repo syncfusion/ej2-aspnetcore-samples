@@ -327,6 +327,8 @@ function sbHeaderClick(action, preventSearch) {
     if (preventSearch !== true && !searchOverlay.classList.contains('sb-hide')) {
         searchOverlay.classList.add('sb-hide');
         searchButton.classList.remove('active');
+	searchEle.classList.remove('e-popup-open');
+        searchEle.classList.add('e-popup-close');
         setPressedAttribute(searchButton);
     }
     var curPopup;

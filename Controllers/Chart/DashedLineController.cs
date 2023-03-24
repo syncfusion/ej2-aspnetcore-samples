@@ -21,25 +21,33 @@ namespace EJ2CoreSampleBrowser.Controllers
 
         public IActionResult DashedLine()
         {
-            List<DashedLineChartData> chartData = new List<DashedLineChartData>
+            List<DashedLineChartData> ChartData = new List<DashedLineChartData>
             {
-                new DashedLineChartData { xValue = new DateTime(2005, 01, 01), yValue = 12, yValue1 = 9.5 },
-                new DashedLineChartData { xValue = new DateTime(2006, 01, 01), yValue = 10.6, yValue1 = 19.9 },
-                new DashedLineChartData { xValue = new DateTime(2007, 01, 01), yValue = 15.6, yValue1 = 25.2 },
-                new DashedLineChartData { xValue = new DateTime(2008, 01, 01), yValue = 38.6, yValue1 = 36 },
-                new DashedLineChartData { xValue = new DateTime(2009, 01, 01), yValue = 27.4, yValue1 = 16.6 },
-                new DashedLineChartData { xValue = new DateTime(2010, 01, 01), yValue = 23.5, yValue1 = 14.2 },
-                new DashedLineChartData { xValue = new DateTime(2011, 01, 01), yValue = 16.6, yValue1 = 10.3 },
+                new DashedLineChartData { Period= "Jan", Banana_ProductionRate= 100 },
+                new DashedLineChartData { Period= "Feb", Banana_ProductionRate= 110 },
+                new DashedLineChartData { Period= "Mar", Banana_ProductionRate= 125 },
+                new DashedLineChartData { Period= "Apr", Banana_ProductionRate= 150 },
+                new DashedLineChartData { Period= "May", Banana_ProductionRate= 140 },
+                new DashedLineChartData { Period= "Jun", Banana_ProductionRate= 160 }
             };
-            ViewBag.dashedDataSource = chartData;
+            ViewBag.ChartData = ChartData;
+            List<DashedLineChartData> ChartDataValues = new List<DashedLineChartData>
+            {
+                new DashedLineChartData { Period= "Jun", Banana_ProductionRate= 160 },
+                new DashedLineChartData { Period= "Jul", Banana_ProductionRate= 170 },
+                new DashedLineChartData { Period= "Aug", Banana_ProductionRate= 180 },
+                new DashedLineChartData { Period= "Sep", Banana_ProductionRate= 190 },
+                new DashedLineChartData { Period= "Oct", Banana_ProductionRate= 200 },
+                new DashedLineChartData { Period= "Nov", Banana_ProductionRate= 230 },
+                new DashedLineChartData { Period= "Dec", Banana_ProductionRate= 270 }
+            };
+            ViewBag.ChartDataValues = ChartDataValues;
             return View();
         }
-
         public class DashedLineChartData
         {
-            public DateTime xValue;
-            public double yValue;
-            public double yValue1;
+            public string Period;
+            public double Banana_ProductionRate;
         }
     }
 }

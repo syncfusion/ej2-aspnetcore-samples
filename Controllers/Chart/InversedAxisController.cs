@@ -21,19 +21,24 @@ namespace EJ2CoreSampleBrowser.Controllers
 
         public IActionResult InversedAxis()
         {
-            List<CategoryData> chartData = new List<CategoryData>
+            List<InversedAxisChartData> ChartPoints = new List<InversedAxisChartData>
             {
-                new CategoryData { x = "2008", y = 1.5 },
-                new CategoryData { x = "2009", y = 7.6 },
-                new CategoryData { x = "2010", y = 11 },
-                new CategoryData { x = "2011", y = 16.2 },
-                new CategoryData { x = "2012", y = 18 },
-                new CategoryData { x = "2013", y = 21.4 },
-                new CategoryData { x = "2014", y = 16 },
-                new CategoryData { x = "2015", y = 17.1 },
+                new InversedAxisChartData { Year = "2008", ExchangeRate = 1.5 },
+                new InversedAxisChartData { Year = "2009", ExchangeRate = 7.6 },
+                new InversedAxisChartData { Year = "2010", ExchangeRate = 11 },
+                new InversedAxisChartData { Year = "2011", ExchangeRate = 16.2 },
+                new InversedAxisChartData { Year = "2012", ExchangeRate = 18 },
+                new InversedAxisChartData { Year = "2013", ExchangeRate = 21.4 },
+                new InversedAxisChartData { Year = "2014", ExchangeRate = 16 },
+                new InversedAxisChartData { Year = "2015", ExchangeRate = 17.1 }
              };
-            ViewBag.dataSource = chartData;
+            ViewBag.ChartPoints = ChartPoints;
             return View();
-        }        
+        }
+        public class InversedAxisChartData
+        {
+            public string Year;
+            public double ExchangeRate;
+        }
     }
 }

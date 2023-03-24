@@ -18,28 +18,28 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
     {
         public IActionResult SplineArea()
         {
-            List<SplineAreaChartData> chartData = new List<SplineAreaChartData>
+            List<SplineAreaChartData> ChartPoints = new List<SplineAreaChartData>
             {
-                new SplineAreaChartData { xValue = new DateTime(2002, 01, 01), yValue = 2.2, yValue1 = 2, yValue2 = 0.8  },
-                new SplineAreaChartData { xValue = new DateTime(2003, 01, 01), yValue = 3.4, yValue1 = 1.7, yValue2 = 1.3 },
-                new SplineAreaChartData { xValue = new DateTime(2004, 01, 01), yValue = 2.8, yValue1 = 1.8, yValue2 = 1.1 },
-                new SplineAreaChartData { xValue = new DateTime(2005, 01, 01), yValue = 1.6, yValue1 = 2.1, yValue2 = 1.6 },
-                new SplineAreaChartData { xValue = new DateTime(2006, 01, 01), yValue = 2.3, yValue1 = 2.3, yValue2 = 2 },
-                new SplineAreaChartData { xValue = new DateTime(2007, 01, 01), yValue = 2.5, yValue1 = 1.7, yValue2 = 1.7 },
-                new SplineAreaChartData { xValue = new DateTime(2008, 01, 01), yValue = 2.9, yValue1 = 1.5, yValue2 = 2.3 },
-                new SplineAreaChartData { xValue = new DateTime(2009, 01, 01), yValue = 3.8, yValue1 = 2.8, yValue2 = 2.7 },
-                new SplineAreaChartData { xValue = new DateTime(2010, 01, 01), yValue = 1.4, yValue1 = 1.5, yValue2 = 1.1 },
-                new SplineAreaChartData { xValue = new DateTime(2011, 01, 01), yValue = 3.1, yValue1 = 2.3, yValue2 = 2.3 },
+                new SplineAreaChartData { Period = new DateTime(2002, 01, 01), US_InflationRate = 2.2, FR_InflationRate = 2, GER_InflationRate = 0.8  },
+                new SplineAreaChartData { Period = new DateTime(2003, 01, 01), US_InflationRate = 3.4, FR_InflationRate = 1.7, GER_InflationRate = 1.3 },
+                new SplineAreaChartData { Period = new DateTime(2004, 01, 01), US_InflationRate = 2.8, FR_InflationRate = 1.8, GER_InflationRate = 1.1 },
+                new SplineAreaChartData { Period = new DateTime(2005, 01, 01), US_InflationRate = 1.6, FR_InflationRate = 2.1, GER_InflationRate = 1.6 },
+                new SplineAreaChartData { Period = new DateTime(2006, 01, 01), US_InflationRate = 2.3, FR_InflationRate = 2.3, GER_InflationRate = 2 },
+                new SplineAreaChartData { Period = new DateTime(2007, 01, 01), US_InflationRate = 2.5, FR_InflationRate = 1.7, GER_InflationRate = 1.7 },
+                new SplineAreaChartData { Period = new DateTime(2008, 01, 01), US_InflationRate = 2.9, FR_InflationRate = 1.5, GER_InflationRate = 2.3 },
+                new SplineAreaChartData { Period = new DateTime(2009, 01, 01), US_InflationRate = 1.1, FR_InflationRate = 0.5, GER_InflationRate = 2.7 },
+                new SplineAreaChartData { Period = new DateTime(2010, 01, 01), US_InflationRate = 1.4, FR_InflationRate = 1.5, GER_InflationRate = 1.1 },
+                new SplineAreaChartData { Period = new DateTime(2011, 01, 01), US_InflationRate = 1.1, FR_InflationRate = 1.3, GER_InflationRate = 1.5 }
             };
-            ViewBag.dataSource = chartData;
+            ViewBag.ChartPoints = ChartPoints;
             return View();
         }
         public class SplineAreaChartData
         {
-            public DateTime xValue;
-            public double yValue;
-            public double yValue1;
-            public double yValue2;
+            public DateTime Period;
+            public double US_InflationRate;
+            public double FR_InflationRate;
+            public double GER_InflationRate;
         }
     }
 }

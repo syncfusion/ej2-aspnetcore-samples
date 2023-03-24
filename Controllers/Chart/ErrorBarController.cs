@@ -18,26 +18,25 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
     {
         public IActionResult ErrorBar()
         {
-            List<ErrorBarData> chartData = new List<ErrorBarData>
+            List<ErrorBarData> ChartPoints = new List<ErrorBarData>
             {
-                new ErrorBarData { x= "IND", y= 24 }, 
-                new ErrorBarData { x= "AUS", y= 20 }, 
-                new ErrorBarData { x= "USA", y= 35 },
-                new ErrorBarData { x= "DEU", y= 27 }, 
-                new ErrorBarData { x= "ITA", y= 30 },
-                new ErrorBarData { x= "UK", y= 41 }, 
-                new ErrorBarData { x= "RUS", y= 26 }
+                new ErrorBarData { Items = "Printer", Quality = 750, Error=50 },
+                new ErrorBarData { Items = "Desktop", Quality = 500, Error=70 },
+                new ErrorBarData { Items = "Charger", Quality = 550, Error=60 },
+                new ErrorBarData { Items = "Mobile", Quality = 575, Error=80 },
+                new ErrorBarData { Items = "Keyboard", Quality = 400, Error=20 },
+                new ErrorBarData { Items = "Power Bank", Quality = 450, Error=90 },
+                new ErrorBarData { Items = "Laptop", Quality = 650, Error=40 },
+                new ErrorBarData { Items = "Battery", Quality = 525, Error=84 }
             };
-            ViewBag.datasource = chartData;
-            ViewBag.type = new String[] { "Fixed", "Percentage", "StandardDeviation", "StandardError", "Custom" };
-            ViewBag.mode = new String[] { "Vertical", "Horizontal", "Both" };
-            ViewBag.direction = new String[] { "Plus", "Minus", "Both" };
+            ViewBag.ChartPoints = ChartPoints;
             return View();
         }
         public class ErrorBarData
         {
-            public string x;
-            public double y;
+            public string? Items;
+            public double Quality;
+            public double Error;
         }
     }
 }

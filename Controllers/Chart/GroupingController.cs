@@ -21,25 +21,32 @@ namespace EJ2CoreSampleBrowser.Controllers
 
         public IActionResult Grouping()
         {
-            List<PieData> chartData = new List<PieData>  
+            List<GroupingChartData> ChartPoints = new List<GroupingChartData>
             {
-                new PieData { xValue =  "China", yValue = 26, text = "China: 26" },
-                new PieData { xValue =  "Russia", yValue = 19, text = "Russia: 19" },
-                new PieData { xValue =  "Japan", yValue = 12, text = "Germany: 17" },
-                new PieData { xValue =  "France", yValue = 10, text = "France: 10" },
-                new PieData { xValue =  "South Korea", yValue = 9, text = "South korea: 9" },
-                new PieData { xValue =  "Great Britain", yValue = 27, text = "France: 27" },
-                new PieData { xValue =  "Italy", yValue = 8, text = "Italy: 8" },
-                new PieData { xValue =  "Australia", yValue = 8, text = "Australia: 8" },
-                new PieData { xValue =  "Netherlands", yValue = 8, text = "Netherlands: 8" },
-                new PieData { xValue =  "Hungery", yValue = 8, text = "HUngery: 8" },
-                new PieData { xValue =  "Brazil", yValue = 7, text = "Brazil: 7" },
-                new PieData { xValue =  "Spain", yValue = 7, text = "Spain: 7" },
-                new PieData { xValue =  "Kenya", yValue = 7, text = "Kenya: 7" },
+                new GroupingChartData { Country =  "China",         Medal = 26, DataLabelMappingName = "China: 26" },
+                new GroupingChartData { Country =  "Russia",        Medal = 19, DataLabelMappingName = "Russia: 19" },
+                new GroupingChartData { Country =  "Germany",       Medal = 17, DataLabelMappingName = "Germany: 17" },
+                new GroupingChartData { Country =  "Japan",         Medal = 12, DataLabelMappingName = "Japan: 12" },
+                new GroupingChartData { Country =  "France",        Medal = 10, DataLabelMappingName = "France: 10" },
+                new GroupingChartData { Country =  "South Korea",   Medal = 9,  DataLabelMappingName = "South Korea: 9" },
+                new GroupingChartData { Country =  "Great Britain", Medal = 27, DataLabelMappingName = "Great Britain: 27" },
+                new GroupingChartData { Country =  "Italy",         Medal = 8,  DataLabelMappingName = "Italy: 8" },
+                new GroupingChartData { Country =  "Australia",     Medal = 8,  DataLabelMappingName = "Australia: 8" },
+                new GroupingChartData { Country =  "Netherlands",   Medal = 8,  DataLabelMappingName = "Netherlands: 8" },
+                new GroupingChartData { Country =  "Hungary",       Medal = 8,  DataLabelMappingName = "Hungary: 8" },
+                new GroupingChartData { Country =  "Brazil",        Medal = 7,  DataLabelMappingName = "Brazil: 7" },
+                new GroupingChartData { Country =  "Spain",         Medal = 7,  DataLabelMappingName = "Spain: 7" },
+                new GroupingChartData { Country =  "Kenya",         Medal = 6,  DataLabelMappingName = "Kenya: 6" }
             };
-            ViewBag.dataSource = chartData;
+            ViewBag.ChartPoints = ChartPoints;
             ViewBag.data = new string[] { "Point", "Value" };
             return View();
-        }        
+        }
+        public class GroupingChartData
+        {
+            public string Country;
+            public double Medal;
+            public string DataLabelMappingName;
+        }
     }
 }

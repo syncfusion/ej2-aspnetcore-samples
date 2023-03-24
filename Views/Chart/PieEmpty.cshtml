@@ -3,22 +3,22 @@
     @{
         var Drop = "Drop";
     }
-    <div class="control-section col-lg-9" align='center'>
-        <ejs-accumulationchart id="container" title="Annual Product wise Profit Analysis" load="load">
-            <e-accumulationchart-tooltipsettings enable="true"></e-accumulationchart-tooltipsettings>
+    <div class="col-lg-8 control-section">
+        <ejs-accumulationchart id="container" title="Annual Product-Wise Profit Analysis" load="load" enableSmartLabels="false" enableBorderOnMouseMove="false" textRender="textRender">
+            <e-accumulationchart-tooltipsettings enable="true" header="" format="<b>${point.x}</b><br> Profit: <b>$${point.y}K</b>"></e-accumulationchart-tooltipsettings>
             <e-accumulationchart-legendsettings visible="false">
             </e-accumulationchart-legendsettings>
             <e-accumulation-series-collection>
-                <e-accumulation-series xName="x" yName="y" name="Profit">
-                    <e-accumulationseries-datalabel name="text" visible="true">
-                        <e-font fontWeight="600" color="white"></e-font>
+                <e-accumulation-series xName="Product" yName="ProfitPercentage" name="Profit" radius="80%">
+                    <e-accumulationseries-datalabel position="@Syncfusion.EJ2.Charts.AccumulationLabelPosition.Inside" enableRotation="true" visible="true">
+                        <e-font fontWeight="600"></e-font>
                     </e-accumulationseries-datalabel>
                     <e-accumulationseries-emptypointsettings fill="#e6e6e6"></e-accumulationseries-emptypointsettings>
                 </e-accumulation-series>
             </e-accumulation-series-collection>
         </ejs-accumulationchart>
     </div>
-    <div class="col-lg-3 property-section">
+    <div class="col-lg-4 property-section">
         <table id="property" title="Properties" style="width: 100%">
             <tbody>
                 <tr style="height: 50px">
@@ -40,22 +40,26 @@
             indexedTheme = indexedTheme ? indexedTheme : 'Material';
             args.accumulation.theme = (indexedTheme.charAt(0).toUpperCase() + indexedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
             args.accumulation.dataSource = [
-                { x : "Rice",  y : 80 },
-                { x : "Wheat", y : null },
-                { x : "Oil",   y : 70 },
-                { x : "Corn",  y : 60 },
-                { x : "Gram",  y : null },
-                { x : "Milk",  y : 70 },
-                { x : "Peas",  y : 80 },
-                { x : "Fruit", y : 60 },
-                { x : "Butter",y : null }
+                { Product : "Rice",  ProfitPercentage : 80 },
+                { Product : "Wheat", ProfitPercentage : null },
+                { Product : "Oil",   ProfitPercentage : 70 },
+                { Product : "Corn",  ProfitPercentage : 60 },
+                { Product : "Gram",  ProfitPercentage : null },
+                { Product : "Milk",  ProfitPercentage : 70 },
+                { Product : "Peas",  ProfitPercentage : 80 },
+                { Product : "Fruit", ProfitPercentage : 60 },
+                { Product : "Butter",ProfitPercentage : null }
             ];
         }
+        
         function onChange(args) {
             var pie = document.getElementById("container").ej2_instances[0];
             pie.series[0].emptyPointSettings.mode = this.value;
             pie.refresh();
-
+        }
+        
+        function textRender(args){
+            args.text = args.point.x + ": $" + args.point.y + "K";
         }
     </script>
 }
@@ -69,15 +73,24 @@
 @section ActionDescription{
 
     <div id="action-description">
-        This sample demonstrates pie chart with empty points. For pie chart, you can change start angle of chart by Pie Angle in properties panel. Outer radius for pie chart can be changed by Outer Radius. Explode Index and explode radius for chart can be changed by Explode Radius and Explode Index.
+        <p>
+            This sample illustrates the annual product-wise profit analysis of an organization with empty point functionality in the pie series.
+        </p>
     </div>
 }
     @*custom code end*@
 @section Description {
     <div id="description">
-        In this example, you can see how to render and configure the pie chart. You can use the border and fill properties to customize the pie point. dataLabel is used to represent individual data and its value.
-
-        Tooltip is enabled in this example. To see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+        <p>
+            In this example, you can see how to render and configure the pie series with empty points. The empty point in the chart can be handled using the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.AccumulationSeries.html#Syncfusion_EJ2_Charts_AccumulationSeries_EmptyPointSettings">EmptyPointSettings</a> property.
+        </p>
+        <p>
+            <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+        </p>
+        <p>
+            More information about the empty points can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/accumulation-chart/empty-points">documentation section</a>.
+        </p>
     </div>
 
 }

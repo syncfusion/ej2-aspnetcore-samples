@@ -6,18 +6,17 @@
 
 @section ControlsSection{
     <div class="control-section">
-        <ejs-grid id="Grid" dataSource="ViewBag.dataSource" height="400" allowResizing="true">
-            <e-grid-columns>
-                <e-grid-column field="OrderID" headerText="Order ID" minWidth="120" width="200" maxWidth="300" textAlign="Right" ></e-grid-column>
-                <e-grid-column field="CustomerID" headerText="Customer Name" minWidth="8" width="200" ></e-grid-column>
-                <e-grid-column field="OrderDate" headerText=" Order Date" textAlign="Right" format="yMd" minWidth="8" width="200"></e-grid-column>
-                <e-grid-column field="Freight" headerText="Freight" textAlign="Right" format="C2" width="150" minWidth="8"></e-grid-column>
-                <e-grid-column field="ShipName"  headerText="Ship Name" minWidth="8" width="300"></e-grid-column>
-                <e-grid-column field="ShippedDate" headerText="Shipped Date" textAlign="Right" format="yMd" allowResizing="false" width="200"></e-grid-column>
-                <e-grid-column field="ShipCountry"  headerText="Ship Country" minWidth="8" width="200"></e-grid-column>
-                <e-grid-column field="ShipCity"  headerText="Ship City"  minWidth="8" width="200"></e-grid-column>
-            </e-grid-columns>
-        </ejs-grid>
+        <div style="overflow-x: auto; margin-left: 4px;">
+            <ejs-grid id="Grid" dataSource="ViewBag.dataSource" height="400" allowResizing="true" width="850" autoFit="true">
+                <e-grid-columns>
+                    <e-grid-column field="OrderID" headerText="Order ID" minWidth="100" width="150" maxWidth="200" textAlign="Right" ></e-grid-column>
+                    <e-grid-column field="CustomerID" headerText="Customer Name" minWidth="8" width="150" ></e-grid-column>
+                    <e-grid-column field="Freight" headerText="Freight" textAlign="Right" format="C2" width="120" minWidth="8"></e-grid-column>
+                    <e-grid-column field="ShippedDate" headerText="Shipped Date" textAlign="Right" format="yMd" allowResizing="false" width="150"></e-grid-column>
+                    <e-grid-column field="ShipCountry"  headerText="Ship Country" minWidth="8" width="150"></e-grid-column>
+                </e-grid-columns>
+            </ejs-grid>
+        </div>
     </div>
 
    
@@ -26,8 +25,7 @@
 
 @section ActionDescription{
 	<div id="action-description">
-		<p>This sample demonstrates the Grid column resizing feature. Click and drag at the right corner of each column header to
-        resize the column.
+		<p>This sample demonstrates the Grid column rendering with a specified width. This sample also shows how to enable the resizing feature. Click and drag the right corner of each column header to resize it.
 		</p>
 	</div>
 }
@@ -38,18 +36,21 @@
 
 @section Description{
     <div id="description">
-		<p>The Grid columns can be resized by clicking and dragging at the right corner of columns header. To enable column, resize
-        behavior, set <code>allowResizing</code> property as true. You can also prevent the resize of the particular column by setting
-        <code>columns->allowResizing</code> as false in columns definition. And, by double clicking at the right corner of column header,
-        the respective column width will get auto adjusted to its fit by <code>autoFitColumns</code> method.
+        <p>
+            By default, if the total width of the columns is less than the width of the Grid, columns will automatically fill to the grid's width. The Grid's AutoFit feature prevents Grid columns from filling more than their specified width by enabling the <code>autoFit</code> as true.
+        </p>
+        <br/>
+
+		<p>The Grid columns can be resized by clicking and dragging at the right edge of column's header. To enable column, resize behavior, set the <code>allowResizing</code> property to true. You can also prevent the resize of a particular column by setting
+        <code>columns->allowResizing</code> to false in columns definition. And, by double clicking at the right edge of column header, the respective column width will get auto adjusted to its fit using the <code>autoFitColumns</code> method.
 
 		</p>
 		<br/>
 
 		<p>
-			In this demo, allowResizing feature have enabled through by setting the <code> allowResizing </code> property to
-			true and <b>Order ID</b> column can be resized between the range of <code>minWidth (120px)</code> and <code>maxWidth (300px).</code> 
-			Also, column resizing has been disabled in the <b>Shipped Date</b> column.
+			In this demo, the allowResizing feature is enabled by setting the <code>allowResizing</code> property to true and <b>Order ID</b> column can be resized
+            between the range of <code>minWidth (100px)</code> and <code>maxWidth (200px).</code> 
+			Also, column resizing is disabled for the <b>Shipped Date</b> column.
 		</p>
 
     </div>

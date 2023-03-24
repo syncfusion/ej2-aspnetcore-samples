@@ -18,42 +18,24 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
     {
         public IActionResult StackedBar100()
         {
-            List<StackedBar100ChartData> chartData = new List<StackedBar100ChartData>
+            List<StackedBar100ChartData> ChartPoints = new List<StackedBar100ChartData>
             {
-                new StackedBar100ChartData { x= "Jan", y= 6 },
-                new StackedBar100ChartData { x= "Feb", y= 8 },
-                new StackedBar100ChartData { x= "Mar", y= 12 },
-                new StackedBar100ChartData { x= "Apr", y= 15.5 },
-                new StackedBar100ChartData { x= "May", y= 20 },
-                new StackedBar100ChartData { x= "Jun", y= 24 }
+                new StackedBar100ChartData { Month = "Jan", AppleSales = 6, OrangeSales = 6, Wasteage = 1 },
+                new StackedBar100ChartData { Month = "Feb", AppleSales = 8, OrangeSales = 8, Wasteage = 1.5 },
+                new StackedBar100ChartData { Month = "Mar", AppleSales = 12, OrangeSales = 11, Wasteage = 2 },
+                new StackedBar100ChartData { Month = "Apr", AppleSales = 15, OrangeSales = 16, Wasteage = 2.5 },
+                new StackedBar100ChartData { Month = "May", AppleSales = 20, OrangeSales = 21, Wasteage = 3 },
+                new StackedBar100ChartData { Month = "Jun", AppleSales = 24, OrangeSales = 25, Wasteage = 3.5 }
             };
-            ViewBag.dataSource = chartData;
-            List<StackedBar100ChartData> chartData1 = new List<StackedBar100ChartData>
-            {
-                new StackedBar100ChartData { x= "Jan", y= 6 },
-                new StackedBar100ChartData { x= "Feb", y= 8 },
-                new StackedBar100ChartData { x= "Mar", y= 11 },
-                new StackedBar100ChartData { x= "Apr", y= 16 },
-                new StackedBar100ChartData { x= "May", y= 21 },
-                new StackedBar100ChartData { x= "Jun", y= 25 }
-            };
-            ViewBag.dataSource1 = chartData1;
-            List<StackedBar100ChartData> chartData2 = new List<StackedBar100ChartData>
-            {
-                new StackedBar100ChartData { x= "Jan", y= 1 },
-                new StackedBar100ChartData { x= "Feb", y= 1.5 },
-                new StackedBar100ChartData { x= "Mar", y= 2 },
-                new StackedBar100ChartData { x= "Apr", y= 2.5 },
-                new StackedBar100ChartData { x= "May", y= 3 },
-                new StackedBar100ChartData { x= "Jun", y= 3.5 }
-            };
-            ViewBag.dataSource2 = chartData2;
+            ViewBag.ChartPoints = ChartPoints;
             return View();
         }
         public class StackedBar100ChartData
         {
-            public string x;
-            public double y;
+            public string Month;
+            public double AppleSales;
+            public double OrangeSales;
+            public double Wasteage;
         }
     }
 }

@@ -18,15 +18,27 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
     {
         public IActionResult TrendLines()
         {
-            List<ChartTrendline> lines = new List<ChartTrendline>();
-            ChartTrendline line = new ChartTrendline();
-            line.Type = TrendlineTypes.Linear;
-            line.Width = 3; line.Name = "Linear";
-            line.Fill = "#C64A75";
-            lines.Add(line);
-            ViewBag.trendLines = lines;
-            ViewBag.type = new String[] { "Linear", "Exponential", "Power", "Logarithmic", "Polynomial", "MovingAverage" };
+            List<TrendlinesChartData> ChartPoints = new List<TrendlinesChartData>
+            {
+                new TrendlinesChartData {Period = 1947, Rupees = 4.76},
+                new TrendlinesChartData {Period = 1967, Rupees = 7.50},
+                new TrendlinesChartData {Period = 1974, Rupees = 8.10},
+                new TrendlinesChartData {Period = 1989, Rupees = 16.64},
+                new TrendlinesChartData {Period = 1990, Rupees = 17.32},
+                new TrendlinesChartData {Period = 2000, Rupees = 43.56},
+                new TrendlinesChartData {Period = 2007, Rupees = 39.27},
+                new TrendlinesChartData {Period = 2013, Rupees = 56.57},
+                new TrendlinesChartData {Period = 2019, Rupees = 71.74},
+                new TrendlinesChartData {Period = 2020, Rupees = 76.67},
+                new TrendlinesChartData {Period = 2021, Rupees = 72.75}
+            };
+            ViewBag.ChartPoints = ChartPoints;
             return View();
+        }
+        public class TrendlinesChartData
+        {
+            public double Period;
+            public double Rupees;
         }
     }
 }

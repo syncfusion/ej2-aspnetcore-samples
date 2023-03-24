@@ -6,21 +6,24 @@
     }
     <div class="col-lg-8 control-section">
         <div id="container" align='center'>
-            <ejs-chart id="emtpyContainer" load="window.onChartLoad" title="Annual Product-Wise Profit Analysis">
-                <e-chart-tooltipsettings enable="true">
+            <ejs-chart id="emtpyContainer" load="load" title="Annual Product-Wise Profit Analysis">
+                <e-chart-tooltipsettings enable="true" enableMarker="false">
                 </e-chart-tooltipsettings>
-                <e-chart-primaryxaxis title="Product" valueType="Category" interval=1></e-chart-primaryxaxis>
-                <e-chart-primaryyaxis title="Profit" minimum=0
-            maximum=100 interval=20 labelFormat="{value}%"></e-chart-primaryyaxis>
+                <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category" interval=1>
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                    <e-majorticklines width="0"></e-majorticklines>
+                </e-chart-primaryxaxis>
+                <e-chart-primaryyaxis minimum=0 maximum=100 interval=20 labelFormat="{value}%">
+                    <e-linestyle width="0"></e-linestyle>
+                    <e-majorticklines width="0"></e-majorticklines>
+                </e-chart-primaryyaxis>
                 <e-chart-chartarea>
                     <e-chartarea-border width="0"></e-chartarea-border>
                 </e-chart-chartarea>
-                <e-chart-legendsettings visible="false">
-                </e-chart-legendsettings>
                 <e-series-collection>
-                    <e-series xName="x" yName="y" name="Profit" width=2 type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
-                        <e-series-marker visible="true" height="10" width="10"></e-series-marker>
-                        <e-series-emptypointsettings fill="#e6e6e6"></e-series-emptypointsettings>
+                    <e-series xName="Product" yName="Profit" width=2 type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                        <e-series-marker visible="false" height="7" width="7"></e-series-marker>
+                        <e-series-emptypointsettings fill="#e6e6e6" mode="@Syncfusion.EJ2.Charts.EmptyPointMode.Gap"></e-series-emptypointsettings>
                     </e-series>
                 </e-series-collection>
             </ejs-chart>
@@ -51,34 +54,41 @@
         </table>
     </div>
     <script>
-        window.onChartLoad = function (args) {
+        function load(args) {
             @*custom code start*@
             var selectedTheme = location.hash.split('/')[1];
             selectedTheme = selectedTheme ? selectedTheme : 'Material';
             args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+            args.chart.primaryXAxis.labelRotation = ej.base.Browser.isDevice?'-45':'0';
             @*custom code end*@
             args.chart.dataSource = [
-                { x : "Rice",  y : 80 },
-                { x : "Wheat", y : null },
-                { x : "Oil",   y : 70 },
-                { x : "Corn",  y : 60 },
-                { x : "Gram",  y : null },
-                { x : "Milk",  y : 70 },
-                { x : "Peas",  y : 80 },
-                { x : "Fruit", y : 60 },
-                { x : "Butter",y : null }
+                { Product : "Rice",  Profit : 80 },
+                { Product : "Wheat", Profit : null },
+                { Product : "Oil",   Profit : 70 },
+                { Product : "Corn",  Profit : 60 },
+                { Product : "Gram",  Profit : null },
+                { Product : "Milk",  Profit : 70 },
+                { Product : "Peas",  Profit : 80 },
+                { Product : "Fruit", Profit : 60 },
+                { Product : "Butter",Profit : null }
             ];
         }
-        function seriesChange() {
-            var chart = emtpyContainer.ej2_instances[0];
-            chart.series[0].type = seriestype.ej2_instances[0].text;
+        var seriesChange = function () {
+            var seriestype = document.getElementById('seriestype').ej2_instances[0];
+            var chart = document.getElementById('emtpyContainer').ej2_instances[0];
+            chart.series[0].type = seriestype.value;
+            if (seriestype.value === "Spline"){
+                   chart.series[0].marker.visible = true;
+            }
             chart.refresh();
-        }
-        function modeChange() {
-            var chart = emtpyContainer.ej2_instances[0];
-            chart.series[0].emptyPointSettings.mode = emptypointmode.ej2_instances[0].text;
+        }       
+                        
+        var modeChange = function () {
+            var emptymode = document.getElementById('emptypointmode').ej2_instances[0];
+            var chart = document.getElementById('emtpyContainer').ej2_instances[0];
+            chart.series[0].emptyPointSettings.mode = emptymode.value;
             chart.refresh();
-        }
+        }     
     </script>
 }
 @*custom code start*@
@@ -96,20 +106,20 @@
 @*custom code end*@
 @section ActionDescription{
     <p>
-        This sample illustrates the empty point functionality in chart series. The mode of empty point can be changed by using <code>Empty Point Mode</code> in property panel.
+        This sample illustrates the annual profit by product analysis of an organization with empty point functionality.
     </p>
 }
 @section Description{
     <p>
-        In this example, you can see how to render and configure the empty points. You can use <code>border</code>,
-        <code>fill</code>, <code>mode</code> properties to customize the empty points.
+        In this example, you can see how to render and configure empty points for a chart. Users can customize the empty points using <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.ChartEmptyPointSettingsBuilder.html">ChartEmptyPointSettings</a> in series. Default empty point
+        <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.ChartEmptyPointSettings.html#Syncfusion_EJ2_Charts_ChartEmptyPointSettings_Mode">Mode</a> is <b>Gap</b>.
     </p>
     <p>
-        Tooltip is enabled in this example, to see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+        <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover over a point or tap on a point in touch-enabled devices.
     </p>
     <p>
-        More information on the empty points can be found in this
-        <a target="_blank" href="http://ej2.syncfusion.com/documentation/chart/api-series.html#type-chartseriestype">documentation section</a>.
+        More information about the empty points can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/working-with-data#empty-points">documentation section</a>.
     </p>
 }
 @section Title{

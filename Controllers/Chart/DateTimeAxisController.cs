@@ -21,25 +21,25 @@ namespace EJ2CoreSampleBrowser.Controllers
 
         public IActionResult DateTimeAxis()
         {
-            List<DateTimeData> chartData = new List<DateTimeData>
+            List<DateTimeData> ChartPoints = new List<DateTimeData>
             {
-                new DateTimeData { xValue = new DateTime(2016, 3, 1), yValue1 = 6.3, yValue2 = -5.3},
-                new DateTimeData { xValue = new DateTime(2016, 4, 1), yValue1 = 13.3, yValue2 = 1.0 },
-                new DateTimeData { xValue = new DateTime(2016, 5, 1), yValue1 = 18.0, yValue2 = 6.9 },
-                new DateTimeData { xValue = new DateTime(2016, 6, 1), yValue1 = 19.8, yValue2 = 9.4 },
-                new DateTimeData { xValue = new DateTime(2016, 7, 1), yValue1 = 18.1, yValue2 = 7.6 },
-                new DateTimeData { xValue = new DateTime(2016, 8, 1), yValue1 = 13.1, yValue2 = 2.6 },
-                new DateTimeData { xValue = new DateTime(2016, 9, 1), yValue1 = 4.1, yValue2 = -4.9 },
-                            };
-            ViewBag.dataSource = chartData;
+                new DateTimeData { Period = new DateTime(2016, 3, 07), MaxTemp = 6.3,  MinTemp = -5.3},
+                new DateTimeData { Period = new DateTime(2016, 4, 15), MaxTemp = 13.3, MinTemp = 1.0 },
+                new DateTimeData { Period = new DateTime(2016, 5, 10), MaxTemp = 18.0, MinTemp = 6.9 },
+                new DateTimeData { Period = new DateTime(2016, 6, 17), MaxTemp = 19.8, MinTemp = 9.4 },
+                new DateTimeData { Period = new DateTime(2016, 7, 13), MaxTemp = 18.1, MinTemp = 7.6 },
+                new DateTimeData { Period = new DateTime(2016, 8, 11), MaxTemp = 13.1, MinTemp = 2.6 },
+                new DateTimeData { Period = new DateTime(2016, 9, 16), MaxTemp = 4.1,  MinTemp = -4.9 }
+            };
+            ViewBag.ChartPoints = ChartPoints;
             return View();
         }
 
         public class DateTimeData
         {
-            public DateTime xValue;
-            public double yValue1;
-            public double yValue2;
+            public DateTime Period;
+            public double MaxTemp;
+            public double MinTemp;
         }
     }
 }

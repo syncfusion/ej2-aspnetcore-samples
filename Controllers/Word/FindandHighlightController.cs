@@ -42,7 +42,8 @@ namespace EJ2CoreSampleBrowser.Controllers.Word
                 //Find the first occurrence of the text in the Word document.
                 TextSelection text = doc.Find(regex);
                 //Set the highlight color for the text.
-                text.GetAsOneRange().CharacterFormat.HighlightColor = Syncfusion.Drawing.Color.Green;
+                if (text != null)               
+                    text.GetAsOneRange().CharacterFormat.HighlightColor = Syncfusion.Drawing.Color.Green;
                 try
                 {
                     FormatType type = FormatType.Docx;

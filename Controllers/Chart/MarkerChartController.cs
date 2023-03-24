@@ -18,43 +18,25 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
     {
         public IActionResult MarkerChart()
         {
-            List<SymbolsData> chartData = new List<SymbolsData>
+            List<SymbolsData> ChartPoints = new List<SymbolsData>
             {
-                new SymbolsData { x= "WW", y= 12, text= "World Wide" },
-                new SymbolsData { x= "EU", y= 9.9, text= "Europe" },
-                new SymbolsData { x= "APAC", y= 4.4, text= "Asia Pacific" },
-                new SymbolsData { x= "LATAM", y= 6.4, text= "Latin America" },
-                new SymbolsData { x= "MEA", y= 30, text= "Middle East Africa" },
-                new SymbolsData { x= "NA", y= 25.3, text= "North America" }    
+                new SymbolsData { Country = "World Wide", FBUser_07 = 12, FBUser_08 = 22, FBUser_09 = 38.3, TooltipMappingName = "World Wide"},
+                new SymbolsData { Country = "Europe", FBUser_07 = 9.9, FBUser_08 = 26, FBUser_09 = 45.2, TooltipMappingName = "Europe" },
+                new SymbolsData { Country = "Asia Pacific", FBUser_07 = 6.4, FBUser_08 = 9.6, FBUser_09 = 18.2, TooltipMappingName = "Asia Pacific"},
+                new SymbolsData { Country = "Latin America", FBUser_07 = 4.4, FBUser_08 = 28, FBUser_09 = 46.7, TooltipMappingName = "Latin America"},
+                new SymbolsData { Country = "Middle East Africa", FBUser_07 = 30, FBUser_08 = 45.7, FBUser_09 = 61.5, TooltipMappingName = "Middle East Africa"},
+                new SymbolsData { Country = "North America", FBUser_07 = 25.3, FBUser_08 = 35.9, FBUser_09 = 64, TooltipMappingName = "North America"}
             };
-            ViewBag.dataSource = chartData;
-            List<SymbolsData> chartData1 = new List<SymbolsData>
-            {
-                new SymbolsData { x= "WW", y= 22, text= "World Wide" },
-                new SymbolsData { x= "EU", y= 26, text= "Europe" },
-                new SymbolsData { x= "APAC", y= 9.3, text= "Asia Pacific" },
-                new SymbolsData { x= "LATAM", y= 28, text= "Latin America" },
-                new SymbolsData { x= "MEA", y= 45.7, text= "Middle East Africa" },
-                new SymbolsData { x= "NA", y= 35.9, text= "North America" }
-            };
-            ViewBag.dataSource1 = chartData1;
-            List<SymbolsData> chartData2 = new List<SymbolsData>
-            {
-                new SymbolsData { x= "WW", y= 38.3, text= "World Wide" },
-                new SymbolsData { x= "EU", y= 45.2, text= "Europe" },
-                new SymbolsData { x= "APAC", y= 18.2, text= "Asia Pacific" },
-                new SymbolsData { x= "LATAM", y= 46.7, text= "Latin America" },
-                new SymbolsData { x= "MEA", y= 61.5, text= "Middle East Africa" },
-                new SymbolsData { x= "NA", y= 64, text= "North America" }
-            };
-            ViewBag.dataSource2 = chartData2;
+            ViewBag.ChartPoints = ChartPoints;
             return View();
         }
         public class SymbolsData
         {
-            public string x;
-            public double y;
-            public string text;
+            public string Country;
+            public double FBUser_07;
+            public double FBUser_08;
+            public double FBUser_09;
+            public string TooltipMappingName;
         }
     }
 }

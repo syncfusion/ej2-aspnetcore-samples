@@ -1,28 +1,38 @@
 @using Syncfusion.EJ2
 @section ControlsSection{
-    <div class="control-section col-lg-9" align='center'>
-        <ejs-chart id="container" title="Internet Users – 2016" load="load">
-            <e-chart-tooltipsettings enable="true" shared="true">
-            </e-chart-tooltipsettings>
-            <e-chart-primaryxaxis valueType="Category"
-                                  interval=1
-                                  isIndexed=true>
+    <div class="col-lg-10 control-section">
+        <ejs-chart id="container" title="GDP by Countries" load="load">
+            <e-chart-chartarea>
+                <e-chartarea-border width="0"></e-chartarea-border>
+            </e-chart-chartarea>
+            <e-chart-legendsettings visible="true">
+            </e-chart-legendsettings>
+            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category"
+                                  interval="1"
+                                  isIndexed="true">
+                <e-majorticklines width="0"></e-majorticklines>
                 <e-crosshairtooltip enable="true"></e-crosshairtooltip>
             </e-chart-primaryxaxis>
-            <e-chart-primaryyaxis title="GDP Growth Rate"
-                                  labelFormat="{value}%"></e-chart-primaryyaxis>
-            <e-chart-crosshairsettings enable=true lineType="Vertical"></e-chart-crosshairsettings>
+            <e-chart-primaryyaxis labelFormat="{value}%">
+                <e-majorticklines width="0"></e-majorticklines>
+            </e-chart-primaryyaxis>
             <e-series-collection>
-                <e-series dataSource="ViewBag.dataSource" name="2015" xName="x" width="2" opacity="1" yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
-                    <e-series-marker visible="false" height="10" width="10"></e-series-marker>
+                <e-series dataSource="ViewBag.GDP_2015" name="2015" xName="Country" width="2" opacity="1" yName="GDPGrowthRate" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                    <e-series-marker visible="false" height="10" width="10">
+                        <e-series-datalabel visible="true" position="@Syncfusion.EJ2.Charts.LabelPosition.Top" name="TextMapping">
+                        </e-series-datalabel>
+                    </e-series-marker>
                 </e-series>
-                <e-series dataSource="ViewBag.dataSource2" name="2016" xName="x" width="2" opacity="1" yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
-                    <e-series-marker visible="false" height="10" width="10"></e-series-marker>
+                <e-series dataSource="ViewBag.GDP_2016" name="2016" xName="Country" width="2" opacity="1" yName="GDPGrowthRate" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                    <e-series-marker visible="false" height="10" width="10">
+                        <e-series-datalabel visible="true" position="@Syncfusion.EJ2.Charts.LabelPosition.Top" name="TextMapping">
+                        </e-series-datalabel>
+                    </e-series-marker>
                 </e-series>
             </e-series-collection>
         </ejs-chart>
     </div>
-    <div class="col-lg-3 property-section">
+    <div class="col-lg-2 property-section">
         <table id="property" title="Properties" style="width: 100%">
             <tbody>
                 <tr style="height: 50px">
@@ -40,13 +50,25 @@
             </tbody>
         </table>
     </div>
-
+    <style>
+        #isIndexed:hover {
+             cursor: pointer !important;
+        }
+        path[id^=container_Series_0_Point_] {
+             cursor: pointer !important;
+        }
+    </style>
     <script>
     @*custom code start*@
         function load(args) {
             var indexedTheme = location.hash.split('/')[1];
             indexedTheme = indexedTheme ? indexedTheme : 'Material';
             args.chart.theme = (indexedTheme.charAt(0).toUpperCase() + indexedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+            args.chart.primaryXAxis.labelIntersectAction = ej.base.Browser.isDevice?'None':'Rotate45';
+            args.chart.series[0].marker.dataLabel.enableRotation = ej.base.Browser.isDevice?'true':'false';
+            args.chart.series[1].marker.dataLabel.enableRotation = ej.base.Browser.isDevice?'true':'false';
+            args.chart.series[0].marker.dataLabel.angle = ej.base.Browser.isDevice?-90:0;
+            args.chart.series[1].marker.dataLabel.angle = ej.base.Browser.isDevice?-90:0;
         }
     @*custom code end*@    
         document.getElementById('isIndexed').onchange = () => {
@@ -58,15 +80,13 @@
                 chart.series[1].type = 'Column';
                 chart.series[0].marker.visible = false;
                 chart.series[1].marker.visible = false;
-                chart.primaryXAxis.labelRotation = 0;
-                chart.crosshair.line.width = 1;
+                chart.primaryXAxis.labelRotation = -45;
             } else {
                 chart.series[0].type = 'Line';
                 chart.series[1].type = 'Line';
                 chart.series[0].marker.visible = true;
                 chart.series[1].marker.visible = true;
                 chart.primaryXAxis.labelRotation = 90;
-                chart.crosshair.line.width = 0;
             }
             chart.refresh();
         };
@@ -82,22 +102,19 @@
 
     <div id="action-description">
         <p>
-            In this example, you can see how to indexed axis in chart. For indexed category axis you can use <code>isIndexed</code> property.
+            This sample shows an indexed category axis in a chart with details about GDP growth across different countries.
         </p>
     </div>
 }
 @section Description {
     <div id="description">
-    <p>
-        In this example, you can see how to indexed axis in chart. For indexed category axis you can use <code>isIndexed</code> property.
-    </p>
-    <p>
-        Hover the chart area to view trackball and its tooltip. Touch and hold to enable trackball in touch enabled devices.
-    </p>
-    <p>
-        More information on the indexed axis can be found in this &nbsp;
-        <a target="_blank" href="http://ej2.syncfusion.com/react/documentation/chart/api-series.html#type-chartseriestype">documentation section</a>.
-    </p>
+        <p>
+            The category axis is also rendered on the basis of the index values in the data source. To render the indexed category axis, set <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.ChartAxis.html#Syncfusion_EJ2_Charts_ChartAxis_ValueType">ValueType</a> to <b>Category</b> and <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.ChartAxis.html#Syncfusion_EJ2_Charts_ChartAxis_IsIndexed">IsIndexed</a> property to <b>true</b>.
+        </p>
+        <p>
+            More information about the indexed category axis can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/category-axis#indexed-category-axis">documentation section</a>.
+        </p>
     </div>
 
 }

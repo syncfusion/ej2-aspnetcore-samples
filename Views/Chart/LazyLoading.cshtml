@@ -6,11 +6,11 @@
     }
     <div class="col-md-8 control-section" align="center">
         <div id="spinner"> </div>
-        <ejs-chart id="container" load="window.onChartLoad" scrollEnd="scrollEnd" loaded="loaded" title="Network Load">
+        <ejs-chart id="container" load="load" scrollEnd="scrollEnd" loaded="loaded" title="Network Load">
             <e-chart-chartarea>
                 <e-chartarea-border width="0"></e-chartarea-border>
             </e-chart-chartarea>
-            <e-chart-primaryxaxis edgeLabelPlacement="Shift" title="Day" valueType="DateTime" skeleton="yMMM" skeletonType="Date">
+            <e-chart-primaryxaxis edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift" title="Day" valueType="@Syncfusion.EJ2.Charts.ValueType.DateTime" skeleton="yMMM" skeletonType="@Syncfusion.EJ2.Charts.SkeletonType.Date">
                 <e-scrollbarSettings enable="true" pointsLength="1000"></e-scrollbarSettings>
                 <e-majorgridlines width="1"></e-majorgridlines>
             </e-chart-primaryxaxis>
@@ -85,7 +85,7 @@
         function numCreated(args) {
             pointslength = document.getElementById('period').ej2_instances[0];
         }
-        window.onChartLoad = function (args) {
+        function load(args) {
             var selectedTheme = location.hash.split("/")[1];
             args.chart.series[0].dataSource = GetDateTimeData(new Date(2009, 0, 1), new Date(2009, 8, 1)),
                 args.chart.primaryXAxis.scrollbarSettings.range = { minimum: new Date(2009, 0, 1), maximum: new Date(2014, 0, 1) }

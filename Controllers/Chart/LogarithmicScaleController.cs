@@ -21,23 +21,27 @@ namespace EJ2CoreSampleBrowser.Controllers
 
         public IActionResult LogarithmicScale()
         {
-            List<DateTimeData> chartData = new List<DateTimeData>
+            List<LogarithmicScaleChartData> ChartPoints = new List<LogarithmicScaleChartData>
             {
-                new DateTimeData {xValue = new DateTime(1995, 1, 1), yValue1 =80  },
-                new DateTimeData {xValue = new DateTime(1996, 1, 1), yValue1 =200  },
-                new DateTimeData {xValue = new DateTime(1997, 1, 1), yValue1 =400  },
-                new DateTimeData {xValue = new DateTime(1998, 1, 1), yValue1 = 600  },
-                new DateTimeData {xValue = new DateTime(1999, 1, 1), yValue1 = 700 },
-                new DateTimeData {xValue = new DateTime(2000, 1, 1), yValue1 = 1400 },
-                new DateTimeData {xValue = new DateTime(2001, 1, 1), yValue1 = 2000 } ,
-                new DateTimeData {xValue = new DateTime(2002, 1, 1), yValue1 = 4000 },
-                new DateTimeData {xValue = new DateTime(2003, 1, 1), yValue1 = 6000 },
-                new DateTimeData {xValue = new DateTime(2004, 1, 1), yValue1 = 8000  },
-                new DateTimeData {xValue = new DateTime(2005, 1, 1), yValue1 = 11000  },
-
-                            };
-            ViewBag.dataSource = chartData;
+                new LogarithmicScaleChartData { Period = new DateTime(1995, 1, 1),  ProfitInfo = 80  },
+                new LogarithmicScaleChartData { Period = new DateTime(1996, 1, 1),  ProfitInfo = 200 },
+                new LogarithmicScaleChartData { Period = new DateTime(1997, 1, 1),  ProfitInfo = 400 },
+                new LogarithmicScaleChartData { Period = new DateTime(1998, 1, 1),  ProfitInfo = 600 },
+                new LogarithmicScaleChartData { Period = new DateTime(1999, 1, 1),  ProfitInfo = 700 },
+                new LogarithmicScaleChartData { Period = new DateTime(2000, 1, 1),  ProfitInfo = 1400 },
+                new LogarithmicScaleChartData { Period = new DateTime(2001, 1, 1),  ProfitInfo = 2000 },
+                new LogarithmicScaleChartData { Period = new DateTime(2002, 1, 1),  ProfitInfo = 4000 },
+                new LogarithmicScaleChartData { Period = new DateTime(2003, 1, 1),  ProfitInfo = 6000 },
+                new LogarithmicScaleChartData { Period = new DateTime(2004, 1, 1),  ProfitInfo = 8000 },
+                new LogarithmicScaleChartData { Period = new DateTime(2005, 1, 1),  ProfitInfo = 11000 }
+            };
+            ViewBag.ChartPoints = ChartPoints;
             return View();
-        }        
+        }
+        public class LogarithmicScaleChartData
+        {
+            public DateTime Period;
+            public double ProfitInfo;
+        }
     }
 }

@@ -21,24 +21,26 @@ namespace EJ2CoreSampleBrowser.Controllers
 
         public IActionResult Pie()
         {
-            List<PieData> chartData = new List<PieData>  
+            List<PieChartData> ChartPoints = new List<PieChartData>
             {
-                new PieData { xValue =  "Chrome", yValue = 37, text = "37%" },
-                new PieData { xValue =  "UC Browser", yValue = 17, text = "17%" },
-                new PieData { xValue =  "iPhone", yValue = 19, text = "19%" },
-                new PieData { xValue =  "Others", yValue = 4, text = "4%" },
-                new PieData { xValue =  "Opera", yValue = 11, text = "11%" },
-                new PieData { xValue =  "Android", yValue = 12, text = "12%" },                
+                new PieChartData { Browser= "Chrome",            Users= 59.28, DataLabelMappingName= "Chrome: 59.28%" },
+                new PieChartData { Browser= "UC Browser",        Users= 4.37,  DataLabelMappingName= "UC Browser: 4.37%" },
+                new PieChartData { Browser= "Internet Explorer", Users= 6.12,  DataLabelMappingName= "Internet Explorer: 6.12%" },                
+                new PieChartData { Browser= "Sogou Explorer",    Users= 1.73,  DataLabelMappingName= "Sogou Explorer: 1.73%" },
+                new PieChartData { Browser= "QQ",                Users= 3.96,  DataLabelMappingName= "QQ: 3.96%" },
+                new PieChartData { Browser= "Safari",            Users= 4.73,  DataLabelMappingName= "Safari: 4.73%" },
+                new PieChartData { Browser= "Opera",             Users= 3.12,  DataLabelMappingName= "Opera: 3.12%" },            
+                new PieChartData { Browser= "Edge",              Users= 7.48,  DataLabelMappingName= "Edge: 7.48%" },
+                new PieChartData { Browser= "Others",            Users= 9.57,  DataLabelMappingName= "Others: 9.57%" }
             };
-            ViewBag.dataSource = chartData;
+            ViewBag.ChartPoints = ChartPoints;
             return View();
         }
-
-        public class PieData
+        public class PieChartData
         {
-            public string xValue;
-            public double yValue;
-            public string text;
+            public string Browser;
+            public double Users;
+            public string DataLabelMappingName;
         }
     }
 }

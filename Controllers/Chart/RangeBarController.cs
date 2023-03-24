@@ -18,33 +18,32 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
     {
         public IActionResult RangeBar()
         {
-            List<RangeBarChartData> chartData = new List<RangeBarChartData>
+            List<RangeBarChartData> ChartPoints = new List<RangeBarChartData>
             {
-                new RangeBarChartData { x= "Jul", low= 28, high= 72 },
-                new RangeBarChartData { x= "Aug", low= 18, high= 65 }, 
-                new RangeBarChartData { x= "Sep", low= 56, high= 87 },
-                new RangeBarChartData { x= "Oct", low= 40, high= 78 },
-                new RangeBarChartData { x= "Nov", low= 43, high= 64 }, 
-                new RangeBarChartData { x= "Dec", low= 28, high= 54 }
+                new RangeBarChartData { Month = "Jan", CA_LowTemp = 28, CA_HighTemp = 72, Text = "January", CO_LowTemp = 38, CO_HighTemp = 78 },
+                new RangeBarChartData { Month = "Feb", CA_LowTemp = 25, CA_HighTemp = 75, Text = "February", CO_LowTemp = 38, CO_HighTemp = 78 },
+                new RangeBarChartData { Month = "Mar", CA_LowTemp = 18, CA_HighTemp = 65, Text = "March", CO_LowTemp = 27, CO_HighTemp = 78 },
+                new RangeBarChartData { Month = "Apr", CA_LowTemp = 22, CA_HighTemp = 69, Text = "April", CO_LowTemp = 38, CO_HighTemp = 78 },
+                new RangeBarChartData { Month = "May", CA_LowTemp = 56, CA_HighTemp = 87, Text = "May", CO_LowTemp = 28, CO_HighTemp = 79 },
+                new RangeBarChartData { Month = "Jun", CA_LowTemp = 48, CA_HighTemp = 75, Text = "June", CO_LowTemp = 38, CO_HighTemp = 78 },
+                new RangeBarChartData { Month = "Jul", CA_LowTemp = 40, CA_HighTemp = 78, Text = "July", CO_LowTemp = 37, CO_HighTemp = 66 },
+                new RangeBarChartData { Month = "Aug", CA_LowTemp = 35, CA_HighTemp = 73, Text = "August", CO_LowTemp = 38, CO_HighTemp = 78 },
+                new RangeBarChartData { Month = "Sep", CA_LowTemp = 43, CA_HighTemp = 64, Text = "September", CO_LowTemp = 25, CO_HighTemp = 52 },
+                new RangeBarChartData { Month = "Oct", CA_LowTemp = 38, CA_HighTemp = 77, Text = "October", CO_LowTemp = 38, CO_HighTemp = 78 },
+                new RangeBarChartData { Month = "Nov", CA_LowTemp = 28, CA_HighTemp = 54, Text = "November", CO_LowTemp = 20, CO_HighTemp = 60 },
+                new RangeBarChartData { Month = "Dec", CA_LowTemp = 29, CA_HighTemp = 56, Text = "December", CO_LowTemp = 20, CO_HighTemp = 60 }
             };
-            ViewBag.dataSource = chartData;
-            List<RangeBarChartData> chartData1 = new List<RangeBarChartData>
-            {
-                    new RangeBarChartData { x= "Jul", low= 38, high= 78 },
-                    new RangeBarChartData { x= "Aug", low= 27, high= 78 },
-                    new RangeBarChartData { x= "Sep", low= 28, high= 79 },
-                    new RangeBarChartData { x= "Oct", low= 37, high= 66 },
-                    new RangeBarChartData { x= "Nov", low= 25, high= 52 },
-                    new RangeBarChartData { x= "Dec", low= 20, high= 60 }
-            };
-            ViewBag.dataSource1 = chartData1;
+            ViewBag.ChartPoints = ChartPoints;
             return View();
         }
         public class RangeBarChartData
         {
-            public string x;
-            public double low;
-            public double high;
+            public string Month;
+            public double CA_LowTemp;
+            public double CA_HighTemp;
+            public string Text;
+            public double CO_LowTemp;
+            public double CO_HighTemp;
         }
     }
 }

@@ -1,17 +1,18 @@
 @using Syncfusion.EJ2
 @section ControlsSection{
     @{
-        var Shift = "Shift";
-        var Trim = "Trim";
+        var Hide = "Hide";
+        var None = "None";
         var Outside = "Outside";
     }
-    <div class="control-section col-md-8" align="center">
+    <div class="col-lg-7 control-section" align="center">
         <ejs-chart id="container" title="Internet Users in Millons" pointRender="labelRender" load="load">
             <e-chart-chartarea>
                 <e-chartarea-border width="0"></e-chartarea-border>
             </e-chart-chartarea>
-            <e-chart-primaryxaxis valueType="Category" labelIntersectAction="Hide" interval="1">
+            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category" labelIntersectAction="@Syncfusion.EJ2.Charts.LabelIntersectAction.Hide" maximumLabelWidth="34" enableTrim="false" edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift" labelPosition="@Syncfusion.EJ2.Charts.AxisPosition.Outside" interval="1">
                 <e-majorgridlines width="0"></e-majorgridlines>
+                <e-majorticklines width="0"></e-majorticklines>
             </e-chart-primaryxaxis>
             <e-chart-primaryyaxis>
                 <e-majorgridlines width="0"></e-majorgridlines>
@@ -20,73 +21,75 @@
                 <e-labelstyle size="0px"></e-labelstyle>
             </e-chart-primaryyaxis>
             <e-series-collection>
-                <e-series dataSource="ViewBag.dataSource" name="Users" xName="x" width="2" opacity="1" yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                <e-series dataSource="ViewBag.ChartPoints" name="Users" xName="Country" width="2" opacity="1" yName="User" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
                     <e-series-marker>
-                        <e-series-datalabel visible="true" position="Top" >
+                        <e-series-datalabel visible="true" position="@Syncfusion.EJ2.Charts.LabelPosition.Top" name="DataLabelMappingName">
                             <e-font color="#ffffff" fontWeight="600"></e-font>
                         </e-series-datalabel>
                     </e-series-marker>
                 </e-series>
             </e-series-collection>
             <e-chart-legendsettings visible="false"></e-chart-legendsettings>
-            <e-chart-tooltipsettings enable="true"></e-chart-tooltipsettings>
+            <e-chart-tooltipsettings enable="true" header="" format="<b>${point.x}</b> <br> Internet Users : <b>${point.y}M</b>"></e-chart-tooltipsettings>
         </ejs-chart>
     </div>
-    <div class="col-md-4 property-section">
+    <div class="col-lg-5 property-section">
         <table id="property" title="Properties" style="width: 100%">
             <tbody>
-                <tr style="height: 50px">
-                    <td style="width: 40%">
-                        <div>Intersect Action:</div>
-                    </td>
-                    <td style="width: 60%;">
+            <tr style="height: 50px">
+                <td style="width: 40%">
+                    <div>Intersect Action:</div>
+                </td>
+                <td style="width: 60%;">
 
-                        <ejs-dropdownlist id="intersect" dataSource="@ViewBag.interSect" change="intersect" value="Trim" popupHeight="220px"></ejs-dropdownlist>
+                    <ejs-dropdownlist id="intersect" dataSource="@ViewBag.interSect" change="intersect" value="Hide" popupHeight="220px"></ejs-dropdownlist>
 
-                    </td>
-                </tr>
-                <tr style="height: 50px">
-                    <td style="width: 60%">
-                        <div>Edge Label Placement:</div>
-                    </td>
-                    <td style="width: 40%;">
-                        <ejs-dropdownlist id="edgeLabel" dataSource="@ViewBag.edgeLabel" change="edgeLabel" value="Shift" popupHeight="220px"></ejs-dropdownlist>
-                    </td>
-                </tr>
-                <tr style="height: 50px">
-                    <td style="width: 60%">
-                        <div>Label Position:</div>
-                    </td>
-                    <td style="width: 40%;">
-                        <ejs-dropdownlist id="labelPosition" dataSource="@ViewBag.labelPosition" value="Outside" change="labelPosition" index="0" popupHeight="220px"></ejs-dropdownlist>
-                    </td>
-                </tr>
-                <tr style="height: 50px">
-                    <td style="width: 50%">
-                        <div>
-                            Enable Trim:
-                        </div>
-                    </td>
-                    <td style="width: 50%;">
-                        <div>
-                            <input type="checkbox" id="Trim" unchecked="">
-                        </div>
-                    </td>
-                </tr>
-                <tr style="height: 50px">
-                    <td style="width: 60%">
-                        <div>Maximum Label Width:</div>
-                    </td>
-                    <td style="width: 40%;">
-                        <div style='margin-top: 0px;'>
-                            <ejs-numerictextbox id="labelWidth" min="1" value="34" width="120" change="labelWidth"></ejs-numerictextbox>
-                        </div>
-                    </td>
-                </tr>
+                </td>
+            </tr>
+            <tr style="height: 50px">
+                <td style="width: 60%">
+                    <div>Edge Label Placement:</div>
+                </td>
+                <td style="width: 40%;">
+                    <ejs-dropdownlist id="edgeLabel" dataSource="@ViewBag.edgeLabel" change="edgeLabel" value="None" popupHeight="220px"></ejs-dropdownlist>
+                </td>
+            </tr>
+            <tr style="height: 50px">
+                <td style="width: 60%">
+                    <div>Label Position:</div>
+                </td>
+                <td style="width: 40%;">
+                    <ejs-dropdownlist id="labelPosition" dataSource="@ViewBag.labelPosition" value="Outside" change="labelPosition" index="0" popupHeight="220px"></ejs-dropdownlist>
+                </td>
+            </tr>
+            <tr style="height: 50px">
+                <td style="width: 50%">
+                    <div>
+                        Enable Trim:
+                    </div>
+                </td>
+                <td style="width: 50%;">
+                    <div>
+                        <input type="checkbox" id="Trim" unchecked="">
+                    </div>
+                </td>
+            </tr>
+            <tr style="height: 50px">
+                <td style="width: 60%">
+                    <div>Maximum Label Width:</div>
+                </td>
+                <td style="width: 40%;">
+                    <ejs-numerictextbox id="labelWidth" min="1" max="120" value="34" width="200" step="1" change="labelWidth"></ejs-numerictextbox>
+                </td>
+            </tr>
             </tbody>
         </table>
     </div>
-
+    <style>
+        #Trim:hover {
+             cursor: pointer !important;
+        }
+    </style>
     <script>
         function labelRender(args) {
             var selectedTheme = themeName ? themeName : "Material";
@@ -126,6 +129,8 @@
         function load(args) {
             var selectedTheme = themeName ? themeName : 'Material';
             args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+            args.chart.series[0].marker.dataLabel.enableRotation = ej.base.Browser.isDevice?'true':'false';
+            args.chart.series[0].marker.dataLabel.angle = ej.base.Browser.isDevice?'-90':'0';
         }
          @*custom code end*@
         function intersect(args) {
@@ -173,38 +178,39 @@
 
     <div id="action-description">
         <p>
-            This sample illustrates the Rio Olympic’s gold medal count by using smart labels in the chart. The smart label placement for a series can be shown, when it contains more of points.
+            This example shows the smart label placement for the chart axis labels.
         </p>
     </div>
 }
 @section Description {
     <div id="description">
         <p>
-            In this example, you can see how to arrange the axis labels and how to trim the axis label smartly. When the Axis labels overlap with each other based on
-            the chart dimensions and label size, you can use the <code>labelIntersectAction</code> property of the axis
-            to avoid overlapping.
+            In this example, you can see how the axis labels are smartly arranged when they overlap with each other using the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.ChartAxis.html#Syncfusion_EJ2_Charts_ChartAxis_LabelIntersectAction">LabelIntersectAction</a> property in the axis.
         </p>
         <p>
-            Chart supports the following, which can be set using <code>labelIntersectAction</code> property.
+            The following are the <code>LabelIntersectAction</code> property values and their behaviors:
         </p>
         <ul>
-            <li><code>Hide</code> - Hide the label when it intersects.</li>
-            <li><code>Trim</code> - Trim the label when it intersects.</li>
-            <li><code>Wrap</code> - Wrap the label when it intersects.</li>
-            <li><code>MultipleRows</code> - Arrange the label in multiple row when it intersects.</li>
-            <li><code>Rotate45</code> - Rotate the label to 45 degree when it intersects.</li>
-            <li><code>Rotate90</code> - Rotate the label to 90 degree when it intersects.</li>
-            <li><code>None</code> - Shows all the labels.</li>
+            <li><b>Hide</b> - Hide the label when it intersects.</li>
+            <li><b>Trim</b> - Trim the label when it intersects.</li>
+            <li><b>Wrap</b> - Wrap the label when it intersects.</li>
+            <li><b>MultipleRows</b> - Arrange the label in multiple row when it intersect.</li>
+            <li><b>Rotate45</b> - Rotate the label to 45 degree when it intersects.</li>
+            <li><b>Rotate90</b> - Rotate the label to 90 degree when it intersects.</li>
+            <li><b>None</b> - Shows all the labels.</li>
         </ul>
-        <br>
         <p>
-            Chart supports three types of edge labels placement which can be set using the <code>edgeLabelPlacement</code> property.
+            Chart handles edge labels placement using the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.ChartAxis.html#Syncfusion_EJ2_Charts_ChartAxis_EdgeLabelPlacement">EdgeLabelPlacement</a> property. Its values and their behaviors are:
         </p>
         <ul>
-            <li><code>None</code> - No action will be performed.</li>
-            <li><code>Hide</code> - Edge label will be hidden .</li>
+            <li><code>None</code> - No action is performed.</li>
+            <li><code>Hide</code> - Edge label is hidden.</li>
             <li><code>Shift</code> - Shifts the edge labels.</li>
         </ul>
+        <p>
+            More information on the smart axis labels can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/axis-labels#smart-axis-labels">documentation section</a>.
+        </p>
     </div>
 
 }

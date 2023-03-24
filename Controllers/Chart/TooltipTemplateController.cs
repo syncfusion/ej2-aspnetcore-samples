@@ -18,27 +18,27 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
     {
         public IActionResult TooltipTemplate()
         {
-            List<TooltipTemplateData> data = new List<TooltipTemplateData>
+            List<TooltipTemplateData> ConsumerDetails = new List<TooltipTemplateData>
             {
-                new TooltipTemplateData { xValue = "2002", yValue = 1.16 },
-                new TooltipTemplateData { xValue = "2003", yValue = 2.34 },
-                new TooltipTemplateData { xValue = "2004", yValue = 2.16 },
-                new TooltipTemplateData { xValue = "2005", yValue = 2.10 },
-                new TooltipTemplateData { xValue = "2006", yValue = 1.81 },
-                new TooltipTemplateData { xValue = "2007", yValue = 2.05 },
-                new TooltipTemplateData { xValue = "2008", yValue = 2.50 },
-                new TooltipTemplateData { xValue = "2009", yValue = 2.22 },
-                new TooltipTemplateData { xValue = "2010", yValue = 2.21 },
-                new TooltipTemplateData { xValue = "2011", yValue = 2.00 },
-                new TooltipTemplateData { xValue = "2012", yValue = 2.27 },
+                new TooltipTemplateData { Year = 2002, Productivity = 1.61 },
+                new TooltipTemplateData { Year = 2003, Productivity = 2.34 },
+                new TooltipTemplateData { Year = 2004, Productivity = 2.16 },
+                new TooltipTemplateData { Year = 2005, Productivity = 2.10 },
+                new TooltipTemplateData { Year = 2006, Productivity = 1.81 },
+                new TooltipTemplateData { Year = 2007, Productivity = 2.05 },
+                new TooltipTemplateData { Year = 2008, Productivity = 2.50 },
+                new TooltipTemplateData { Year = 2009, Productivity = 2.22 },
+                new TooltipTemplateData { Year = 2010, Productivity = 2.21 },
+                new TooltipTemplateData { Year = 2011, Productivity = 2.00 },
+                new TooltipTemplateData { Year = 2012, Productivity = 1.70 }
             };
-            ViewBag.dataSource = data;
+            ViewBag.ConsumerDetails = ConsumerDetails;
             return View();
         }
         public class TooltipTemplateData
         {
-            public string xValue;
-            public double yValue;
+            public double Year;
+            public double Productivity;
         }
     }
 }

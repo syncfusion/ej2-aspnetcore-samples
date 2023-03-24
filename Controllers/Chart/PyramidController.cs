@@ -21,25 +21,22 @@ namespace EJ2CoreSampleBrowser.Controllers
 
         public IActionResult Pyramid()
         {
-
-            List<PyramidData> chartData = new List<PyramidData>  
+            List<PyramidChartData> ChartPoints = new List<PyramidChartData>
             {
-                new PyramidData { xValue =  "Sweet Treats", yValue = 120, text = "120 cal" },
-                new PyramidData { xValue =  "Milk, Youghnut, Cheese", yValue = 435, text = "435 cal" },
-                new PyramidData { xValue =  "Vegetables", yValue = 470, text = "470 cal" },
-                new PyramidData { xValue =  "Meat, Poultry, Fish", yValue = 475, text = "475 cal" },           
-                new PyramidData { xValue =  "Fruits", yValue = 520, text = "520 cal" },
-                new PyramidData { xValue =  "Bread, Rice, Pasta", yValue = 930, text = "930 cal" },
+                new PyramidChartData { Foods =  "Milk, Youghnut, Cheese", Calories = 435, DataLabelMappingName = "Milk, Youghnut, Cheese: 435 cal" },
+                new PyramidChartData { Foods =  "Vegetables",             Calories = 470, DataLabelMappingName = "Vegetables: 470 cal" },
+                new PyramidChartData { Foods =  "Meat, Poultry, Fish",    Calories = 475, DataLabelMappingName = "Meat, Poultry, Fish: 475 cal" },                
+                new PyramidChartData { Foods =  "Fruits",                 Calories = 520, DataLabelMappingName = "Fruits: 520 cal" },
+                new PyramidChartData { Foods =  "Bread, Rice, Pasta",     Calories = 930, DataLabelMappingName = "Bread, Rice, Pasta: 930 cal" }
             };
-            ViewBag.dataSource = chartData;
+            ViewBag.ChartPoints = ChartPoints;
             return View();
         }
-
-        public class PyramidData
+        public class PyramidChartData
         {
-            public string xValue;
-            public double yValue;
-            public string text;
+            public string Foods;
+            public double Calories;
+            public string DataLabelMappingName;
         }
     }
 }

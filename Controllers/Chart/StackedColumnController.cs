@@ -18,44 +18,24 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
     {
         public IActionResult StackedColumn()
         {
-            List<StackedColumnChartData> chartData = new List<StackedColumnChartData>
+            List<StackedColumnChartData> ChartPoints = new List<StackedColumnChartData>
             {
-                    new StackedColumnChartData { x= "2014", y= 111.1 },
-                    new StackedColumnChartData { x= "2015", y= 127.3 },
-                    new StackedColumnChartData { x= "2016", y= 143.4 },
-                    new StackedColumnChartData { x= "2017", y= 159.9 }
+                new StackedColumnChartData { Year = "2013", General = 9628912, Honda = 4298390, Suzuki = 2842133, BMW = 2006366 },
+                new StackedColumnChartData { Year = "2014", General = 9609326, Honda = 4513769, Suzuki = 3016710, BMW = 2165566 },
+                new StackedColumnChartData { Year = "2015", General = 7485587, Honda = 4543838, Suzuki = 3034081, BMW = 2279503 },
+                new StackedColumnChartData { Year = "2016", General = 7793066, Honda = 4999266, Suzuki = 2945295, BMW = 2359756 },
+                new StackedColumnChartData { Year = "2017", General = 6856880, Honda = 5235842, Suzuki = 3302336, BMW = 2505741 }
             };
-            ViewBag.dataSource = chartData;
-            List<StackedColumnChartData> chartData1 = new List<StackedColumnChartData>
-            {
-                    new StackedColumnChartData { x= "2014", y= 76.9 },
-                    new StackedColumnChartData { x= "2015", y= 99.5 },
-                    new StackedColumnChartData { x= "2016", y= 121.7 },
-                    new StackedColumnChartData { x= "2017", y= 142.5 }
-            };
-            ViewBag.dataSource1 = chartData1;
-            List<StackedColumnChartData> chartData2 = new List<StackedColumnChartData>
-            {
-                    new StackedColumnChartData { x= "2014", y= 66.1 },
-                    new StackedColumnChartData { x= "2015", y= 79.3 },
-                    new StackedColumnChartData { x= "2016", y= 91.3 },
-                    new StackedColumnChartData { x= "2017", y= 102.4 }
-            };
-            ViewBag.dataSource2 = chartData2;
-            List<StackedColumnChartData> chartData3 = new List<StackedColumnChartData>
-            {
-                    new StackedColumnChartData { x= "2014", y= 34.1 },
-                    new StackedColumnChartData { x= "2015", y= 38.2 },
-                    new StackedColumnChartData { x= "2016", y= 44.0 },
-                    new StackedColumnChartData { x= "2017", y= 51.6 }
-            };
-            ViewBag.dataSource3 = chartData3;
+            ViewBag.ChartPoints = ChartPoints;
             return View();
         }
         public class StackedColumnChartData
         {
-            public string x;
-            public double y;
+            public string Year;
+            public double General;
+            public double Honda;
+            public double Suzuki;
+            public double BMW;
         }
     }
 }

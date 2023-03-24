@@ -18,16 +18,22 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
     {       
         public IActionResult Print()
         {
-            List<exportData> chartData = new List<exportData>
+            List<PrintChartData> ChartPoints = new List<PrintChartData>
             {
-               new exportData { xValue = "John", yValue = 10000 },
-               new exportData { xValue = "Jake", yValue = 12000 },
-               new exportData { xValue = "Peter", yValue = 18000 },
-               new exportData { xValue = "James", yValue = 11000 },
-               new exportData { xValue = "Mary", yValue = 9700 }
+                new PrintChartData { Manager = "John",  SalesInfo = 10, DataLabelMappingName = "$10k" },
+                new PrintChartData { Manager = "Jake",  SalesInfo = 12, DataLabelMappingName = "$12k" },
+                new PrintChartData { Manager = "Peter", SalesInfo = 18, DataLabelMappingName = "$18k" },
+                new PrintChartData { Manager = "James", SalesInfo = 11, DataLabelMappingName = "$11k" },
+                new PrintChartData { Manager = "Mary",  SalesInfo = 9.7, DataLabelMappingName = "$9.7k"  }
             };
-            ViewBag.dataSource = chartData;
+            ViewBag.ChartPoints = ChartPoints;
             return View();
-        }        
+        }
+        public class PrintChartData
+        {
+            public string Manager;
+            public double SalesInfo;
+            public string DataLabelMappingName;
+        }
     }
 }

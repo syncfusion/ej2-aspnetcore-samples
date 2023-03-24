@@ -3,6 +3,17 @@
     <div class="control-section">
         <div class="row">
             <div class="col-md-12">
+                <div class="container switch-control" style="display: flex;">
+            <div>
+                <label for="checked" style="margin: 5px;font-size: 15px;"> Allow Taskbar DragAndDrop </label>
+                <ejs-switch id="checked" change="dragDropChange"></ejs-switch>
+            </div>
+            <div>
+                <label for="unchecked" style="margin: 5px;font-size: 15px;"> Allow Taskbar Overlap </label>
+                <ejs-switch id="unchecked" change="overlapChange" checked="true"></ejs-switch>
+            </div>
+        </div>
+        <div>
                 <ejs-gantt id='ResourceMultiTaskbar' dataSource="ViewBag.dataSource" resources="ViewBag.projectResources" 
                            viewType="ResourceView" allowResizing="true" allowSelection="true" highlightWeekends="true"
                            treeColumnIndex="1" height="450px" showOverAllocation="true" enableMultiTaskbar="true"
@@ -29,9 +40,28 @@
                                         child="SubTasks" work="Work" expandState="isExpand" resourceInfo="Resources">
                     </e-gantt-taskfields>
                 </ejs-gantt>
+                </div>
             </div>
         </div>
     </div>
+    <script>
+        function dragDropChange(args) {
+             var ganttObj =document.getElementsByClassName('e-gantt')[0].ej2_instances[0];
+             if (args.checked) {
+                ganttObj.allowTaskbarDragAndDrop = true;
+             } else {
+                ganttObj.allowTaskbarDragAndDrop = false;
+             }
+        }
+        function overlapChange(args) {
+             var ganttObj =document.getElementsByClassName('e-gantt')[0].ej2_instances[0];
+             if (args.checked) {
+                ganttObj.allowTaskbarOverlap = true;
+             } else {
+                ganttObj.allowTaskbarOverlap = false;
+             }
+        }
+</script>
 }
 
 @section ActionDescription{
@@ -46,6 +76,9 @@
 @section Description{
 
     <div id="description">
+       <p>
+        In this example, you can enable taskbar drag and drop from one resource to another resource vertically by enabling <code>allowTaskbarDragAndDrop</code> property. Also, you can prevent the taskbar overlap  in resource task by disabling the <code>allowTaskbarOverlap</code> property.
+      </p>
        <p>
         In this example, you can see that, the resource breaks down from a bulk of tasks can be done by mapping the pre-defined resource ID-s to each task and the resource information can be shown by using the labelSetting property.
         Using the toolbar action, you can perform the CRUD operation for the resource allocation based on their availability and task complexity.

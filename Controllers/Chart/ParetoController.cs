@@ -18,21 +18,21 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
     {
         public IActionResult PareTo()
         {
-            List<PareToData> chartData = new List<PareToData>
+            List<PareToData> ChartPoints = new List<PareToData>
             {
-                new PareToData { x= "Traffic", y= 56 }, 
-                new PareToData { x= "Child Care", y= 44.8 },
-                new PareToData { x= "Transport", y= 27.2 }, 
-                new PareToData { x= "Weather", y= 19.6 },
-                new PareToData { x= "Emergency", y= 6.6 }
+                new PareToData { DefectCategory = "Button Defect", Y = 23 },
+                new PareToData { DefectCategory = "Pocket Defect", Y = 16 },
+                new PareToData { DefectCategory = "Coller Defect", Y = 10 },
+                new PareToData { DefectCategory = "Cuff Defect", Y = 7 },
+                new PareToData { DefectCategory = "Sleeve Defect", Y = 6 }
             };
-            ViewBag.dataSource = chartData;
+            ViewBag.ChartPoints = ChartPoints;
             return View();
         }
         public class PareToData
         {
-            public string x;
-            public double y;
+            public string DefectCategory;
+            public double Y;
         }
     }
 }

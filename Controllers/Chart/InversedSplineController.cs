@@ -21,25 +21,28 @@ namespace EJ2CoreSampleBrowser.Controllers
 
         public IActionResult InversedSpline()
         {
-            List<InversedLineChartData> chartData = new List<InversedLineChartData>
+            List<InversedLineChartData> ChartPoints = new List<InversedLineChartData>
             {
-                new InversedLineChartData { xValue = "Jan", yValue = -1, yValue1 = 7 },
-                new InversedLineChartData { xValue = "Mar", yValue = 12, yValue1 = 2 },
-                new InversedLineChartData { xValue = "Apr", yValue = 25, yValue1 = 13 },
-                new InversedLineChartData { xValue = "Jun", yValue = 31, yValue1 = 21 },
-                new InversedLineChartData { xValue = "Aug", yValue = 26, yValue1 = 26 },
-                new InversedLineChartData { xValue = "Oct", yValue = 14, yValue1 = 10 },
-                new InversedLineChartData { xValue = "Dec", yValue = 8, yValue1 = 0 },
+                new InversedLineChartData { Month = 2000, LDN_Temperature = -1, FR_Temperature = 10 },
+                new InversedLineChartData { Month = 2002, LDN_Temperature = -1, FR_Temperature = 7 },
+                new InversedLineChartData { Month = 2004, LDN_Temperature = 25, FR_Temperature = 13 },
+                new InversedLineChartData { Month = 2005, LDN_Temperature = 31, FR_Temperature = 16 },
+                new InversedLineChartData { Month = 2007, LDN_Temperature = 14, FR_Temperature = 11 },
+                new InversedLineChartData { Month = 2010, LDN_Temperature = 8, FR_Temperature = 10 },
+                new InversedLineChartData { Month = 2011, LDN_Temperature = 8, FR_Temperature = 15 },
+                new InversedLineChartData { Month = 2013, LDN_Temperature = 8, FR_Temperature = 20 },
+                new InversedLineChartData { Month = 2014, LDN_Temperature = 8, FR_Temperature = 17 },
+                new InversedLineChartData { Month = 2015, LDN_Temperature = 8, FR_Temperature = 5 }
             };
-            ViewBag.dataSource = chartData;
+            ViewBag.ChartPoints = ChartPoints;
             return View();
         }
 
         public class InversedLineChartData
         {
-            public String xValue;
-            public double yValue;
-            public double yValue1;
+            public double Month;
+            public double LDN_Temperature;
+            public double FR_Temperature;
         }
     }
 }

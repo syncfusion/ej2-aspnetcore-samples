@@ -1,18 +1,17 @@
 @using Syncfusion.EJ2
 @section ControlsSection{
 
-<div class="control-section">
-    <div id="title" align="center" style="font-size: 15px; font-style: normal;font-family: 'Segoe UI'; font-weight: 500;">AAPL Historical</div>
+<div class="control-section" align="center">
 
-    <ejs-chart id="chart" align="center" load="window.load" axisLabelRender="axisLabelRender"  sharedTooltipRender=" sharedTooltipRender" pointRender="pointRender">
-        <e-chart-tooltipsettings enable="true" shared="true">
+    <ejs-chart id="chart" align="center" title="AAPL Historical" load="load" axisLabelRender="axisLabelRender">
+        <e-chart-tooltipsettings enable="true" shared="true" header="" format="<b>Apple Inc.(AAPL)</b> <br> High : <b>${point.high}</b> <br> Low : <b>${point.low}</b> <br> Open : <b>${point.open}</b> <br> Close : <b>${point.close}</b> <br> Volume : <b>${point.volume}</b>">
         </e-chart-tooltipsettings>
-        <e-chart-primaryxaxis valueType="DateTime">
+        <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.DateTime">
             <e-crosshairtooltip enable="true"></e-crosshairtooltip>
             <e-majorgridlines width="0"></e-majorgridlines>
         </e-chart-primaryxaxis>
-        <e-chart-primaryyaxis title="Volume" rangePadding="None" opposedPosition="true">
-            <e-majorgridlines width="0"></e-majorgridlines>
+        <e-chart-primaryyaxis title="Volume" opposedPosition="true" labelFormat="{value}M">
+            <e-majorgridlines width="1"></e-majorgridlines>
             <e-majorticklines width="0"></e-majorticklines>
             <e-linestyle width="0"></e-linestyle>
         </e-chart-primaryyaxis>
@@ -25,61 +24,40 @@
             <e-chart-row height="70%"></e-chart-row>
         </e-chart-rows>
         <e-chart-axes>
-            <e-chart-axis name="secondary" opposedPosition=true rowIndex=1 rangePadding="None"
-                          labelFormat="n0" title="Price" plotOffset=30 >
+            <e-chart-axis name="secondary" opposedPosition=true rowIndex=1 rangePadding="@Syncfusion.EJ2.Charts.ChartRangePadding.None"
+                          labelFormat="n0" title="Price" plotOffset=20 maximum="150">
                 <e-linestyle width="0"></e-linestyle>
+                <e-majorgridlines width="1"></e-majorgridlines>
             </e-chart-axis>
         </e-chart-axes>
-        <e-chart-crosshairsettings enable=true lineType="Vertical"></e-chart-crosshairsettings>
         <e-series-collection>
-            <e-series xName="x" yName="volume"
+            <e-series xName="x" yName="volume" enableTooltip="false" name="volume"
                       type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column"></e-series>
-            <e-series xName="x" yName="y" low="low" high="high" open="open" close="close" name="Apple Inc" yAxisName="secondary" bearFillColor="#2ecd71" bullFillColor="#e74c3d"
+            <e-series xName="x" low="low" high="high" open="open" close="close" volume="volume" name="Apple Inc.(AAPL)" yAxisName="secondary" bearFillColor="#2ecd71" bullFillColor="#e74c3d"
                       type="@Syncfusion.EJ2.Charts.ChartSeriesType.Candle"></e-series>
-
         </e-series-collection>
     </ejs-chart>
 </div>
-    <script src="~/scripts/chart/stock-chart-data.js"></script>
+    <script src="~/scripts/chart/hilo-data.js"></script>
     <script type="text/javascript">
-        var data = chartData;
+        var ChartPoints = hiloData;
         var zoomFactor, zoomPosition;
         var pointColors = [];
         var selectedTheme = location.hash.split('/')[1];
         selectedTheme = selectedTheme ? selectedTheme : 'Material';
         var theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
 
-        window.load = function (args) {
+        function load(args) {
             args.chart.theme = theme;
-            args.chart.width = ej.base.Browser.isDevice ? "100%" : "80%";
-            args.chart.series[0].dataSource = chartData;
-            args.chart.series[1].dataSource = chartData;
-            args.chart.primaryXAxis.zoomFactor = zoomFactor;
-            args.chart.primaryXAxis.zoomPosition = zoomPosition;
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+            args.chart.series[0].dataSource = ChartPoints;
+            args.chart.series[1].dataSource = ChartPoints;
         }
-        var getLabelText = function (value) {
-            return (((value) / 1000000000)).toFixed(1) + 'bn';
-        };
-        axisLabelRender = function (args) {
-            if (args.axis.name === 'primaryYAxis') {
-                args.text = getLabelText(+args.text);
-            }
-			if (args.axis.name === 'secondary') {
-                args.text = '$' + args.text;
-            }
-
-        };
-        pointRender = function (args) {
-            if (args.series.type === 'Candle') { pointColors.push(args.fill); } else {
-                args.fill = pointColors[args.point.index];
-            }
+        
+        function axisLabelRender(args) {
+            args.text = args.text.replace("0000000M","M");
         };
 
-         sharedTooltipRender = function (args) {
-            if (!args.series[0].index) {
-                args.text[0] = 'Volume : <b>' + getLabelText(args.text[0].split('<b>')[1].split('</b>')[0]) + '</b>';
-            }
-        };
     </script>
 }
 @*custom code start*@
@@ -91,25 +69,21 @@
 @section ActionDescription{
     <div id="action-description">
         <p>
-            This sample visualizes the AAPL historical data with default HILO series in the chart.
-            Tooltip and crosshair shows the information about the data and period.
+            This sample visualizes the AAPL stock price with a default candlestick series. The tooltip and crosshair show information about the stock price.
         </p>
     </div>
 }
 @section Description{
     <div id="description">
         <p>
-            In this example, you can see how to render and configure the Hilo type series. You can use the <code>border</code> and 
-            <code>fill</code> properties to customize the area.
+            In this example, you can see how to render and configure the candlestick series. This chart shows financial data and trends at equal intervals. It can often be combined with line and column charts to show the closing value of the stock and volume of the data.
         </p>
         <p>
-            Tooltip is enabled in this example. To see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+            <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover a point or tap on a point in touch enabled devices.
         </p>
-
-
         <p>
-            More information on the Hilo series can be found in this
-            <a target="_blank" href="http://ej2.syncfusion.com/documentation/chart/api-series.html#type-chartseriestype">documentation section</a>.
+            More information about the candle series can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/financial-types#candle">documentation section</a>.
         </p>
     </div>
 }

@@ -22,55 +22,52 @@ namespace EJ2CoreSampleBrowser.Controllers
         public IActionResult AxisCrossing()
         {
 
-            List<AxisData> scatterData = new List<AxisData>
+            List<AxesCrossingData> LinePoints = new List<AxesCrossingData>
             {
-                new AxisData { xValue = -6, yValue1 = 2},
-                new AxisData { xValue = -3, yValue1 = -4 },
-                new AxisData { xValue = 1.5, yValue1 = 3.5 },
-                new AxisData { xValue = 6, yValue1 = 4.5},
+                new AxesCrossingData { XValue = -6,     YValue = 2      },
+                new AxesCrossingData { XValue = -5,     YValue = 0      },
+                new AxesCrossingData { XValue = -4.511, YValue = -0.977 },
+                new AxesCrossingData { XValue = -3,     YValue = -4     },
+                new AxesCrossingData { XValue = -1.348, YValue = -1.247 },
+                new AxesCrossingData { XValue = -0.6,   YValue = 0      },
+                new AxesCrossingData { XValue = 0,      YValue = 1      },
+                new AxesCrossingData { XValue = 1.5,    YValue = 3.5    },
+                new AxesCrossingData { XValue = 6,      YValue = 4.5    }
+            };
 
-                            };
-
-            List<AxisData> splineData = new List<AxisData>
+            List<AxesCrossingData> SplinePoints = new List<AxesCrossingData>
             {
-                new AxisData { xValue = -6, yValue1 = 2},
-                new AxisData { xValue = -5.291, yValue1 = 0.1 },
-                new AxisData { xValue = -5, yValue1 = -0.77},
-                new AxisData { xValue = -3, yValue1 = -4},
-                new AxisData { xValue = -0.6, yValue1 = -0.965},
-                new AxisData { xValue = -0.175, yValue1 = 0.1},
-                new AxisData { xValue = 0.1, yValue1 = 0.404},
-                new AxisData { xValue = 1.5, yValue1 = 3.5},
-                new AxisData { xValue = 3.863, yValue1 = 5.163},
-                new AxisData { xValue = 6, yValue1 = 4.5},
+                new AxesCrossingData { XValue = -6,    YValue = 2      },
+                new AxesCrossingData { XValue = -5.291,YValue = 0      },
+                new AxesCrossingData { XValue = -5,    YValue = -0.774 },
+                new AxesCrossingData { XValue = -3,    YValue = -4     },
+                new AxesCrossingData { XValue = -0.6,  YValue = -0.965 },
+                new AxesCrossingData { XValue = -0.175,YValue = 0.1    },
+                new AxesCrossingData { XValue = 0,     YValue = 0.404  },
+                new AxesCrossingData { XValue = 1.5,   YValue = 3.5    },
+                new AxesCrossingData { XValue = 3.863, YValue = 5.163  },
+                new AxesCrossingData { XValue = 6,     YValue = 4.5    }
+            };
 
-                            };
-
-            List<AxisData> lineData = new List<AxisData>
+            List<AxesCrossingData> ScatterPoints = new List<AxesCrossingData>
             {
-                new AxisData { xValue = -6, yValue1 = 2},
-                new AxisData { xValue = -5, yValue1 = 0.1 },
-                new AxisData { xValue = -4.511, yValue1 = -0.977},
-                new AxisData { xValue = -3, yValue1 = -4},
-                new AxisData { xValue = -1.348, yValue1 = -1.247},
-                new AxisData { xValue = -0.6, yValue1 = 0.11},
-                new AxisData { xValue = 0.1, yValue1 = 1},
-                new AxisData { xValue = 1.5, yValue1 = 3.5},
-                new AxisData { xValue = 6, yValue1 = 4.5},
-
-                            };
-            ViewBag.scatter = scatterData;
-            ViewBag.spline = splineData;
-            ViewBag.line = lineData;
-            ViewBag.axis = new String[] { "xAxis", "yAxis" };
+                new AxesCrossingData { XValue = -6,  YValue = 2   },
+                new AxesCrossingData { XValue = -3,  YValue = -4  },
+                new AxesCrossingData { XValue = 1.5, YValue = 3.5 },
+                new AxesCrossingData { XValue = 6,   YValue = 4.5 }
+            };
+            
+            ViewBag.ScatterPoints = ScatterPoints;
+            ViewBag.SplinePoints = SplinePoints;
+            ViewBag.LinePoints = LinePoints;
+            ViewBag.axis = new string[] { "X", "Y" };
             return View();
         }
 
-        public class AxisData
+        public class AxesCrossingData
         {
-            public Nullable<double> xValue;
-            public Nullable<double> yValue1;
-           
+            public double XValue;
+            public double YValue;
         }
     }
 }

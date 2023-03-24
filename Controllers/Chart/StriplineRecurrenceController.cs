@@ -18,18 +18,19 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
     {
         public IActionResult StriplineRecurrence()
         {
-            List<DateTimeData> chartData = new List<DateTimeData>
+            List<StripLineRecurrenceChartData> PollutionReports = new List<StripLineRecurrenceChartData>
             {
-                 new DateTimeData { xValue = new DateTime(1970, 1, 1), yValue1 = 16500, yValue2 = 8000 },
-                 new DateTimeData { xValue = new DateTime(1975, 1, 1), yValue1 = 16000, yValue2 = 7600 },
-                 new DateTimeData { xValue = new DateTime(1980, 1, 1), yValue1 = 15400, yValue2 = 6400 },
-                 new DateTimeData { xValue = new DateTime(1985, 1, 1), yValue1 = 15800, yValue2 = 3700 },
-                 new DateTimeData { xValue = new DateTime(1990, 1, 1), yValue1 = 14000, yValue2 = 7200 },
-                 new DateTimeData { xValue = new DateTime(1995, 1, 1), yValue1 = 10500, yValue2 = 2300 },
-                 new DateTimeData { xValue = new DateTime(2000, 1, 1), yValue1 = 13300, yValue2 = 4000 },
-                 new DateTimeData { xValue = new DateTime(2005, 1, 1), yValue1 = 12800, yValue2 = 4800 }
+                new StripLineRecurrenceChartData { Period = new DateTime(1970, 1, 1), PollutionRate1 = 16500, PollutionRate2 = 8000 },
+                new StripLineRecurrenceChartData { Period = new DateTime(1975, 1, 1), PollutionRate1 = 16000, PollutionRate2 = 7600 },
+                new StripLineRecurrenceChartData { Period = new DateTime(1980, 1, 1), PollutionRate1 = 15400, PollutionRate2 = 6400 },
+                new StripLineRecurrenceChartData { Period = new DateTime(1985, 1, 1), PollutionRate1 = 15800, PollutionRate2 = 3700 },
+                new StripLineRecurrenceChartData { Period = new DateTime(1990, 1, 1), PollutionRate1 = 14000, PollutionRate2 = 7200 },
+                new StripLineRecurrenceChartData { Period = new DateTime(1995, 1, 1), PollutionRate1 = 10500, PollutionRate2 = 2300 },
+                new StripLineRecurrenceChartData { Period = new DateTime(2000, 1, 1), PollutionRate1 = 13300, PollutionRate2 = 4000 },
+                new StripLineRecurrenceChartData { Period = new DateTime(2005, 1, 1), PollutionRate1 = 12800, PollutionRate2 = 4800 }
             };
-            ViewBag.dataSource = chartData;
+            ViewBag.PollutionReports = PollutionReports;
+            
             List<ChartStripLine> xAxisStrips = new List<ChartStripLine>
             {
                 new ChartStripLine {
@@ -52,11 +53,11 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
             return View();
         }
 
-        public class DateTimeData
+        public class StripLineRecurrenceChartData
         {
-            public DateTime xValue;
-            public double yValue1;
-            public double yValue2;
+            public DateTime Period;
+            public double PollutionRate1;
+            public double PollutionRate2;
         }
 
 

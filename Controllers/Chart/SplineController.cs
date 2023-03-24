@@ -21,26 +21,26 @@ namespace EJ2CoreSampleBrowser.Controllers
 
         public IActionResult Spline()
         {
-            List<SplineChartData> chartData = new List<SplineChartData>
+            List<SplineChartData> SplineData = new List<SplineChartData>
             {
-                new SplineChartData { xValue = "Sun", yValue = 15, yValue1 = 10, yValue2 = 2 },
-                new SplineChartData { xValue = "Mon", yValue = 22, yValue1 = 18, yValue2 = 12 },
-                new SplineChartData { xValue = "Tue", yValue = 32, yValue1 = 28, yValue2 = 22 },
-                new SplineChartData { xValue = "Wed", yValue = 31, yValue1 = 28, yValue2 = 23 },
-                new SplineChartData { xValue = "Thu", yValue = 29, yValue1 = 26, yValue2 = 19 },
-                new SplineChartData { xValue = "Fri", yValue = 24, yValue1 = 20, yValue2 = 13 },
-                new SplineChartData { xValue = "Sat", yValue = 18, yValue1 = 15, yValue2 = 8 },
+                new SplineChartData { Days = "Sun", MaxTemp = 15, AvgTemp = 10, MinTemp = 2 },
+                new SplineChartData { Days = "Mon", MaxTemp = 22, AvgTemp = 18, MinTemp = 12 },
+                new SplineChartData { Days = "Tue", MaxTemp = 32, AvgTemp = 28, MinTemp = 22 },
+                new SplineChartData { Days = "Wed", MaxTemp = 31, AvgTemp = 28, MinTemp = 23 },
+                new SplineChartData { Days = "Thu", MaxTemp = 29, AvgTemp = 26, MinTemp = 19 },
+                new SplineChartData { Days = "Fri", MaxTemp = 24, AvgTemp = 20, MinTemp = 13 },
+                new SplineChartData { Days = "Sat", MaxTemp = 18, AvgTemp = 15, MinTemp = 8 }
             };
-            ViewBag.dataSource = chartData;
+            ViewBag.SplineData = SplineData;
             return View();
         }
 
         public class SplineChartData
         {
-            public string xValue;
-            public double yValue;
-            public double yValue1;
-            public double yValue2;
+            public string Days;
+            public double MaxTemp;
+            public double AvgTemp;
+            public double MinTemp;
         }
     }
 }

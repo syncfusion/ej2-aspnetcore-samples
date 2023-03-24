@@ -21,21 +21,27 @@ namespace EJ2CoreSampleBrowser.Controllers
 
         public IActionResult DateTimeCategoryAxis()
         {
-            List<DateTimeData> chartData = new List<DateTimeData>
+            List<DateTimeCategoryData> ChartPoints = new List<DateTimeCategoryData>
             {
-                new DateTimeData { xValue = new DateTime(2017, 12, 20), yValue1 = 21},
-                new DateTimeData { xValue = new DateTime(2017, 12, 21), yValue1 = 24 },
-                new DateTimeData { xValue = new DateTime(2017, 12, 22), yValue1 = 24},
-                new DateTimeData { xValue = new DateTime(2017, 12, 26), yValue1 = 70},
-                new DateTimeData { xValue = new DateTime(2017, 12, 27), yValue1 = 75 },
-                new DateTimeData { xValue = new DateTime(2018, 1, 2), yValue1 = 82 },
-                new DateTimeData { xValue = new DateTime(2018, 1, 3), yValue1 = 53 },
-                new DateTimeData { xValue = new DateTime(2018, 1, 4), yValue1 = 54 },
-                new DateTimeData { xValue = new DateTime(2018, 1, 5), yValue1 = 53},
-                new DateTimeData { xValue = new DateTime(2018, 1, 8), yValue1 = 45 },
+                new DateTimeCategoryData { Period = new DateTime(2017, 12, 20), Sales = 21, DataLabelMappingName="21M"},
+                new DateTimeCategoryData { Period = new DateTime(2017, 12, 21), Sales = 24, DataLabelMappingName="24M" },
+                new DateTimeCategoryData { Period = new DateTime(2017, 12, 22), Sales = 24, DataLabelMappingName="24M"},
+                new DateTimeCategoryData { Period = new DateTime(2017, 12, 26), Sales = 70, DataLabelMappingName="70M"},
+                new DateTimeCategoryData { Period = new DateTime(2017, 12, 27), Sales = 75, DataLabelMappingName="75M"},
+                new DateTimeCategoryData { Period = new DateTime(2018, 1, 2), Sales = 82, DataLabelMappingName="82M"},
+                new DateTimeCategoryData { Period = new DateTime(2018, 1, 3), Sales = 53, DataLabelMappingName="53M"},
+                new DateTimeCategoryData { Period = new DateTime(2018, 1, 4), Sales = 54, DataLabelMappingName="54M"},
+                new DateTimeCategoryData { Period = new DateTime(2018, 1, 5), Sales = 53, DataLabelMappingName="53M"},
+                new DateTimeCategoryData { Period = new DateTime(2018, 1, 8), Sales = 45, DataLabelMappingName="45M"}
             };
-            ViewBag.dataSource = chartData;
+            ViewBag.ChartPoints = ChartPoints;
             return View();
-        }        
+        }     
+        public class DateTimeCategoryData
+        {
+            public DateTime Period;
+            public double Sales;
+            public string DataLabelMappingName;
+        }
     }
 }

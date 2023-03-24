@@ -75,7 +75,7 @@
                     </e-format>
                 </e-conditionalformatsettings>
             </e-datasourcesettings>
-            <e-gridSettings columnWidth="120" rowHeight="36" allowSelection="true">
+            <e-gridSettings columnWidth="120" rowHeight="36" allowSelection="true" excelQueryCellInfo="exportQueryCellInfo">
                 <e-selectionSettings mode="Cell" cellSelectionMode="Box"></e-selectionSettings>
             </e-gridSettings>
             <e-displayOption view="Both"></e-displayOption>
@@ -269,6 +269,11 @@
         args.customToolbar.splice(9, 0, {
             type: 'Separator'
         });
+    }
+    function exportQueryCellInfo(args) {
+        if (args.cell.axis === 'value' && args.cell.value === undefined) {
+            args.style.numberFormat = undefined;
+        }
     }
 </script>
 }

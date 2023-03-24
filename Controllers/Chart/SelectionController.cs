@@ -21,25 +21,25 @@ namespace EJ2CoreSampleBrowser.Controllers
 
         public IActionResult Selection()
         {
-            List<SelectionData> chartData = new List<SelectionData>
+            List<SelectionData> ChartPoints = new List<SelectionData>
             {
-                new SelectionData { x = "CHN", y1 = 17, y2 = 54, y3 = 9 },
-                new SelectionData { x = "USA", y1 = 19, y2 = 67, y3 = 14 },
-                new SelectionData { x = "IDN", y1 = 29, y2 = 65, y3 = 6 },
-                new SelectionData { x = "JAP", y1 = 13, y2 = 61, y3 = 26 },
-                new SelectionData { x = "BRZ", y1 = 24, y2 = 68, y3 = 8 },
-       
-             };
-            ViewBag.dataSource = chartData;
-            ViewBag.selection = new String[] { "Point", "Series", "Cluster" };
+                new SelectionData { Country = "China", Children = 17, Adult = 54, SeniorAdult = 9  },
+                new SelectionData { Country = "USA", Children = 19, Adult = 67, SeniorAdult = 14 },
+                new SelectionData { Country = "India", Children = 29, Adult = 65, SeniorAdult = 6  },
+                new SelectionData { Country = "Japan", Children = 13, Adult = 61, SeniorAdult = 26 },
+                new SelectionData { Country = "Brazil", Children = 24, Adult = 68, SeniorAdult = 8  }
+            };
+            ViewBag.ChartPoints = ChartPoints;
+            // ViewBag.data = new string[] { "Point", "Series", "Cluster"};
+            // ViewBag.datapattern = new string[] { "None", "Turquoise", "Chessboard", "Triangle", "Box", "Bubble" };
             return View();
         }
         public class SelectionData
         {
-            public string x;
-            public double y1;
-            public double y2;
-            public double y3;
+            public string Country;
+            public double Children;
+            public double Adult;
+            public double SeniorAdult;
         }
     }
 }

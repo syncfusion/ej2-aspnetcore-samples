@@ -18,31 +18,30 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
     {
         public IActionResult PolarColumn()
         {
-            List<PolarColumnData> data = new List<PolarColumnData>
+            List<PolarColumnData> ChartPoints = new List<PolarColumnData>
             {
-                new PolarColumnData { text= "Japan", x= "JPN", y= 137.9, y1= 127.6, y2= 108.8 },
-                new PolarColumnData { text= "Indonesia", x= "IDN", y= 85.0, y1= 246.9, y2= 45.5 },
-                new PolarColumnData { text= "Russia", x= "RUS", y= 237.1, y1= 143.5, y2= 41.2 },
-                new PolarColumnData { text= "Vietnam", x= "VNM", y= 127.7, y1= 88.8, y2= 18.0 },
-                new PolarColumnData { text= "Pakistan", x= "PAK", y= 126.1, y1= 179.2 },
-                new PolarColumnData { text= "Nigeria", x= "NGA", y= 175.0, y1= 168.8, y2= 12.7 },
-                new PolarColumnData { text= "Germany", x= "DEU", y= 113.6, y1= 81.9, y2= 46.0 },
-                new PolarColumnData { text= "Bangladesh", x= "BGS", y= 116.0, y1= 154.7, y2= 34.6 },
-                new PolarColumnData { text= "Philippines", x= "PHL", y= 109.5, y1= 96.7, y2= 16.6 },
-                new PolarColumnData { text= "Mexico", x= "MEX", y= 102.7, y1= 120.8, y2= 19.8 }
+                new PolarColumnData { TooltipMappingName= "Japan", Country = "Japan", MobileSubscriber = 137.9, Population = 127.6, NetworkSubscriber = 108.8 },
+                new PolarColumnData { TooltipMappingName= "Indonesia", Country = "Indonesia", MobileSubscriber = 85.0, Population = 246.9, NetworkSubscriber = 45.5 },
+                new PolarColumnData { TooltipMappingName= "Russia", Country = "Russia", MobileSubscriber = 237.1, Population = 143.5, NetworkSubscriber = 41.2 },
+                new PolarColumnData { TooltipMappingName= "Vietnam", Country = "Vietnam", MobileSubscriber = 127.7, Population = 88.8, NetworkSubscriber = 18.0 },
+                new PolarColumnData { TooltipMappingName= "Pakistan", Country = "Pakistan", MobileSubscriber = 126.1, Population = 179.2 },
+                new PolarColumnData { TooltipMappingName= "Nigeria", Country = "Nigeria", MobileSubscriber = 175.0, Population = 168.8, NetworkSubscriber = 12.7 },
+                new PolarColumnData { TooltipMappingName= "Germany", Country = "Germany", MobileSubscriber = 113.6, Population = 81.9, NetworkSubscriber = 46.0 },
+                new PolarColumnData { TooltipMappingName= "Bangladesh", Country = "Bangladesh", MobileSubscriber = 116.0, Population = 154.7, NetworkSubscriber = 34.6 },
+                new PolarColumnData { TooltipMappingName= "Philippines", Country = "Philippines", MobileSubscriber = 109.5, Population = 96.7, NetworkSubscriber = 16.6 },
+                new PolarColumnData { TooltipMappingName= "Mexico", Country = "Mexico", MobileSubscriber = 102.7, Population = 120.8, NetworkSubscriber = 19.8 }
             };
-            ViewBag.dataSource = data;
-            ViewBag.select = new string[] { "Polar", "Radar" };
-            ViewBag.format = "${point.text} : <b>${point.y}%</b>";
+            ViewBag.ChartPoints = ChartPoints;
+            ViewBag.select  = new string[] { "Polar", "Radar" };
             return View();
         }
         public class PolarColumnData
         {
-            public string text;
-            public string x;
-            public double y;
-            public double y1;
-            public double y2;
+            public string TooltipMappingName;
+            public string Country;
+            public double MobileSubscriber;
+            public double Population;
+            public double NetworkSubscriber;
         }
     }
 }

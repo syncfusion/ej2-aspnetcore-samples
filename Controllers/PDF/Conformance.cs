@@ -133,7 +133,7 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
 
             MemoryStream stream = new MemoryStream();
             document.Save(stream);
-            document.Close();
+            document.Close(true);
             stream.Position = 0;
             //Download the PDF document in the browser.
             FileStreamResult fileStreamResult = new FileStreamResult(stream, "application/pdf");

@@ -18,23 +18,25 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
     {
         public IActionResult ColumnPlacement()
         {
-            List<ColumnPlacementChartData> chartData = new List<ColumnPlacementChartData>
+            List<ColumnPlacementChartData> ChartPoints = new List<ColumnPlacementChartData>
             {
-                new ColumnPlacementChartData { x= "Jamesh", yValue= 10, yValue1=5, yValue2=4, yValue3=1, text= "Total 10" },
-                new ColumnPlacementChartData { x= "Michael", yValue= 9, yValue1=4, yValue2=3, yValue3=2, text= "Total 9" }, 
-                new ColumnPlacementChartData { x= "John", yValue= 11, yValue1=5, yValue2=4, yValue3=2, text= "Total 11" }
+                new ColumnPlacementChartData { ConsumerName = "Jamesh", TotalCount = 10, AppleCount = 5, OrangeCount = 4, GrapesCount = 1, DataLabelMappingName = "Total 10" },
+                new ColumnPlacementChartData { ConsumerName = "Michael", TotalCount = 9, AppleCount = 4, OrangeCount = 3, GrapesCount = 2, DataLabelMappingName = "Total 9" },
+                new ColumnPlacementChartData { ConsumerName = "John", TotalCount = 11, AppleCount = 5, OrangeCount = 4, GrapesCount = 2, DataLabelMappingName = "Total 11" },
+                new ColumnPlacementChartData { ConsumerName = "Jack", TotalCount = 8, AppleCount = 5, OrangeCount = 2, GrapesCount = 1, DataLabelMappingName = "Total 8" },
+                new ColumnPlacementChartData { ConsumerName = "Lucas", TotalCount = 10, AppleCount = 6, OrangeCount = 3, GrapesCount = 1, DataLabelMappingName = "Total 10" }
             };
-            ViewBag.dataSource = chartData;
+            ViewBag.ChartPoints = ChartPoints;
             return View();
         }
         public class ColumnPlacementChartData
         {
-            public string x;
-            public double yValue;
-            public double yValue1;
-            public double yValue2;
-            public double yValue3;
-            public string text;
+            public string ConsumerName;
+            public double TotalCount;
+            public double AppleCount;
+            public double OrangeCount;
+            public double GrapesCount;
+            public string DataLabelMappingName;
         }
     }
 }

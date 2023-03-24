@@ -1,21 +1,31 @@
 @using Syncfusion.EJ2
 @section ControlsSection{
     <script src="~/scripts/chart/financial-data.js"></script>
-    <div class="control-section col-lg-9" align="center">
+    <div class="col-lg-9 control-section" align="center">
 
-        <ejs-chart id="container" load="window.onChartLoad" title="Sales Comparision" pointRender="labelRender">
+        <ejs-chart id="container" load="load" title="Sales Comparision" pointRender="labelRender">
             <e-chart-chartarea>
                 <e-chartarea-border width="0"></e-chartarea-border>
             </e-chart-chartarea>
-            <e-chart-primaryxaxis title="Manager" valueType="Category">
-                <e-majorgridlines width="0"></e-majorgridlines>
-            </e-chart-primaryxaxis>
-            <e-chart-primaryyaxis minimum="0" maximum="20000" title="Sales" >
+            <e-chart-primaryxaxis interval="1" valueType="@Syncfusion.EJ2.Charts.ValueType.Category">
                 <e-majorgridlines width="0"></e-majorgridlines>
                 <e-majorticklines width="0"></e-majorticklines>
+            </e-chart-primaryxaxis>
+            <e-chart-primaryyaxis labelFormat="${value}k" minimum="0" maximum="20" interval="4">
+                <e-majorgridlines width="0"></e-majorgridlines>
+                <e-majorticklines width="0"></e-majorticklines>
+                <e-linestyle width="0"></e-linestyle>
             </e-chart-primaryyaxis>
+            <e-chart-legendsettings visible="false">
+            </e-chart-legendsettings>
             <e-series-collection>
-                <e-series dataSource="ViewBag.dataSource" xName="xValue" yName="yValue" type="Column"></e-series>
+                <e-series dataSource="ViewBag.ChartPoints" xName="Manager" yName="SalesInfo" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                    <e-series-marker>
+                        <e-series-datalabel name="DataLabelMappingName" visible="true" position="@Syncfusion.EJ2.Charts.LabelPosition.Top">
+                            <e-font fontWeight="600" color="#ffffff"></e-font>
+                        </e-series-datalabel>
+                    </e-series-marker>
+                </e-series>
             </e-series-collection>
         </ejs-chart>
     </div>
@@ -24,7 +34,10 @@
             <tbody>
                 <tr id="button-control" style="height: 50px">
                     <td align="center">
-                        <ejs-button id="button" content="Print" iconCss="e-icons e-print-icon" cssClass="e-flat" isPrimary="true"></ejs-button>
+                        <div>
+                            <p><b>Print the chart</b></p><br>
+                            <ejs-button id="button" content="Print" cssClass="e-control e-btn e-lib e-primary" isPrimary="true"></ejs-button>
+                        </div>
                     </td>
                 </tr>
             </tbody>
@@ -33,7 +46,7 @@
 
     <script>
     @*custom code start*@
-        window.onChartLoad = function (args) {
+        function load(args) {
             var selectedTheme = location.hash.split('/')[1];
             selectedTheme = selectedTheme ? selectedTheme : 'Material';
             args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
@@ -43,7 +56,7 @@
             var chart = document.getElementById('container').ej2_instances[0];
             chart.print();
         };
-        var labelRender = function (args) {
+        function labelRender(args) {
             var selectedTheme = location.hash.split('/')[1];
             selectedTheme = selectedTheme ? selectedTheme : 'Material';
             if (selectedTheme && selectedTheme.indexOf('fabric') > -1) {
@@ -116,17 +129,16 @@
 @*custom code end*@
 @section ActionDescription{
     <p>
-        This sample visualizes print feature in chart control.
+        This sample demonstrates the print option in the charts.
     </p>
 }
 @section Description{
     <p>
-        This sample demonstrates the print feature in chart
+        By clicking the <b>Print</b> button, you can print a chart directly from the browser using the print method.
     </p>
-    <br>
     <p>
-        More information on the area series can be found in this
-        <a target="_blank" href="http://ej2.syncfusion.com/documentation/chart/api-series.html#type-chartseriestype">documentation section</a>.
+        More information about the print can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/chart-print?cs-save-lang=1&cs-lang=razor#print">documentation section</a>.
     </p>
 }
 @section Title{

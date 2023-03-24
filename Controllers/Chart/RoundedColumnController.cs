@@ -18,22 +18,26 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
     {
         public IActionResult RoundedColumn()
         {
-            List<RoundedColumnChartData> chartData = new List<RoundedColumnChartData>
+            List<RoundedColumnChartData> ChartPoints = new List<RoundedColumnChartData>
             {
-                  new RoundedColumnChartData { x= "Egg", y= 106, text= "Egg" },
-                  new RoundedColumnChartData { x= "Fish", y= 103, text= "Fish" },
-                  new RoundedColumnChartData { x= "Misc", y= 198, text= "Misc" },
-                  new RoundedColumnChartData { x= "Tea", y= 189, text= "Tea" },
-                  new RoundedColumnChartData { x= "Fruits", y= 250, text= "Fruits" }
+                new RoundedColumnChartData { Country = "Sierra Leone", Rate = 100, Literacy_Rate = 48.1, Text = "48.1%" },
+                new RoundedColumnChartData { Country = "South Sudan", Rate = 100, Literacy_Rate = 26.8, Text = "26.8%" },
+                new RoundedColumnChartData { Country = "Nepal", Rate = 100, Literacy_Rate = 64.7, Text = "64.7%" },
+                new RoundedColumnChartData { Country = "Gambia", Rate = 100, Literacy_Rate = 55.5, Text = "55.5%" },
+                new RoundedColumnChartData { Country = "Gyana", Rate = 100, Literacy_Rate = 88.5, Text = "88.5%" },
+                new RoundedColumnChartData { Country = "Kenya", Rate = 100, Literacy_Rate = 78.0, Text = "78.0%" },
+                new RoundedColumnChartData { Country = "Singapore", Rate = 100, Literacy_Rate = 96.8, Text = "96.8%" },
+                new RoundedColumnChartData { Country = "Niger", Rate = 100, Literacy_Rate = 19.1, Text = "19.1%" },
             };
-            ViewBag.dataSource = chartData;
+            ViewBag.ChartPoints = ChartPoints;
             return View();
         }
         public class RoundedColumnChartData
         {
-            public string x;
-            public double y;
-            public string text;
+            public string Country;
+            public double Rate;
+            public double Literacy_Rate;
+            public string Text;
         }
     }
 }

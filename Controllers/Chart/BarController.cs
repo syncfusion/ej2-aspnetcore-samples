@@ -18,28 +18,23 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
     {
         public IActionResult Bar()
         {
-            List<BarChartData> chartData = new List<BarChartData>
+            List<BarChartData> ChartPoints = new List<BarChartData>
             {
-                new BarChartData { x= "Egg", y= 2.2 }, 
-                new BarChartData { x= "Fish", y= 2.4 },
-                new BarChartData { x= "Misc", y= 3 }, 
-                new BarChartData { x= "Tea", y= 3.1 }
+                new BarChartData { Country = "Canada",  GDP = 3.05 , WorldShare = 2.04 },
+                new BarChartData { Country = "Italy", GDP = 1.50 , WorldShare = 2.40 },
+                new BarChartData { Country = "Germany",  GDP = 2.22, WorldShare = 4.56 },
+                new BarChartData { Country = "India", GDP = 6.68 , WorldShare = 3.28  },
+                new BarChartData { Country = "France",  GDP = 1.82, WorldShare = 3.19 },
+                new BarChartData { Country = "Japan",  GDP = 1.71, WorldShare = 6.02 }
             };
-            ViewBag.dataSource = chartData;
-            List<BarChartData> chartData1 = new List<BarChartData>
-            {
-                    new BarChartData { x= "Egg", y= 1.2 },
-                    new BarChartData { x= "Fish", y= 1.3 },
-                    new BarChartData { x= "Misc", y= 1.5 },
-                    new BarChartData { x= "Tea", y= 2.2 }
-            };
-            ViewBag.dataSource1 = chartData1;
+            ViewBag.ChartPoints = ChartPoints;
             return View();
         }
         public class BarChartData
         {
-            public string x;
-            public double y;
+            public string Country;
+            public double GDP;
+            public double WorldShare;
         }
     }
 }

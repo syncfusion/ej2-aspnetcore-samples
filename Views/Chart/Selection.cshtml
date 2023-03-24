@@ -4,28 +4,33 @@
       var Point = "Point";
     }
     <div class="control-section col-md-8">
-        <ejs-chart id="container" load="onChartLoad" title="Age Distribution by Country"
-                  selectionMode="Point">
+        <ejs-chart id="container" load="load" title="Age Distribution by Country"
+                  selectionMode="@Syncfusion.EJ2.Charts.SelectionMode.Point" isMultiSelect="false" selectionPattern="@Syncfusion.EJ2.Charts.SelectionPattern.None" highlightMode="@Syncfusion.EJ2.Charts.HighlightMode.None" highlightPattern="@Syncfusion.EJ2.Charts.SelectionPattern.None">
             <e-chart-chartarea>
                 <e-chartarea-border width="0"></e-chartarea-border>
             </e-chart-chartarea>
-            <e-chart-primaryxaxis valueType="Category" interval="1" >
+            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category" interval="1">
                 <e-majorgridlines width="0"></e-majorgridlines>
+                <e-majorticklines width="0"></e-majorticklines>
             </e-chart-primaryxaxis>
-            <e-chart-primaryyaxis title="Countries" interval="20"></e-chart-primaryyaxis>
+            <e-chart-primaryyaxis title="Distribution" interval="20" labelFormat="{value}%">
+                <e-majorticklines width="0"></e-majorticklines>
+                <e-linestyle width="0"></e-linestyle>
+            </e-chart-primaryyaxis>
             <e-chart-legendsettings visible="true" toggleVisibility="false"></e-chart-legendsettings>
             <e-series-collection>
-                <e-series dataSource="ViewBag.dataSource" xName='x' yName='y1' name='Age 0-14' width=2 type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                <e-series dataSource="ViewBag.ChartPoints" xName="Country" yName="Children" name="Age 0-14" width=2 columnSpacing="0.1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
                    <e-series-animation enable="false"></e-series-animation>
                 </e-series>
-                <e-series dataSource="ViewBag.dataSource" xName='x' yName='y2' name='Age 15-64' width=2 type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                <e-series dataSource="ViewBag.ChartPoints" xName="Country" yName="Adult" name="Age 15-64" width=2 columnSpacing="0.1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
                     <e-series-animation enable="false"></e-series-animation>
                 </e-series>
-                <e-series dataSource="ViewBag.dataSource" xName='x' yName='y3' name='Age 65 & Above' width=2 type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                <e-series dataSource="ViewBag.ChartPoints" xName="Country" yName="SeniorAdult" name="Age 65 & Above" width=2 columnSpacing="0.1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
                     <e-series-animation enable="false"></e-series-animation>
                 </e-series>
             </e-series-collection>
             <e-chart-tooltipsettings enable="false"></e-chart-tooltipsettings>
+            <e-chart-legendsettings visible="true" toggleVisibility="false"></e-chart-legendsettings>
         </ejs-chart>
     </div>
     <div class="col-md-4 property-section">
@@ -77,7 +82,7 @@
                 <td style="width: 60%">
                     <div>Highlight Color:</div>
                 </td>
-                <td style="width: 40%;">
+                <td>
                     <ejs-colorpicker id="element" value="null" mode="Palette" change="onChange"></ejs-colorpicker>
                 </td>
             </tr>
@@ -109,11 +114,11 @@
             chart.highlightColor = args.currentValue.hex;
             chart.dataBind();
         }
-        onChartLoad = function (args) {
+        function load(args) {
             var selectedTheme = location.hash.split('/')[1];
             selectedTheme = selectedTheme ? selectedTheme : 'Material';
             args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
-        }
+        };
 @*custom code end*@
       var mode = new ej.dropdowns.DropDownList({
             index: 0,
@@ -194,42 +199,46 @@
 @section ActionDescription{
     <div id="action-description">
         <p>
-           This sample demonstrates the selection behavior and its mode along with the highlight and highlight patterns in the chart.
+           This sample demonstrates the different modes of selection and highlight behavior in the charts.
         </p>
     </div>
 }
 @section Description{
     <div id="description">
         <p>
-            In this sample, any point or series can be selected in the chart by clicking on or touching the point. You can also change the selection mode by changing the <code>Selection Mode</code> option in the properties panel. You can enable multiple selections with the <code>Enable Multi Selection</code> option. You can also select a point while loading a chart using the <code>SelectedDataIndexes</code> option.
-
-While hovering the point, the point is highlighted using the <code>Enable Highlight</code> option, as well as you can set different highlight patterns and colors using the <code>Highlight Patterns</code> and <code>Highlight Color</code> option.
+            In this sample, any point or series can be selected in a chart by clicking on or touching the point. You can change the <b>Selection Mode</b> option in the properties panel. You can also enable multiple selection. You can select a point while loading a chart using the
+            <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.ChartSelectedDataIndexes.html">SelectedDataIndexes</a> option.
         </p>
         <p>
-            Tap to select a point or series, double tap and drag to enable rectangular selection in touch enabled devices.
+            Highlight the points in the sample using the <b>Enable Highlight</b> option. You can set different <b>highlight patterns</b> and <b>colors</b>.
         </p>
         <p>
-            Chart supports five mode of selection which can be set using the <code>SelectionMode</code> property.
+            Selection can be set using the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.SelectionMode.html">SelectionMode</a> property, and it supports the following modes.
         </p>
         <ul>
-            <li><code>Series</code> - Select the series in chart.</li>
-            <li><code>Point</code> - Select a point in the series .</li>
-            <li><code>Cluster</code> - Select a group of points in the chart.</li>
-            <li><code>DragXY</code> - Rectangular selection with respect to both axis.</li>
-            <li><code>DragX</code> - Rectangular selection with respect to horizontal axis.</li>
-            <li><code>DragY</code> - Rectangular selection with respect to vertical axis.</li>
+            <li>
+                <code>Series</code> - Select the series in the chart.
+            </li>
+            <li>
+                <code>Point</code> - Select a point in the series.
+            </li>
+            <li>
+                <code>Cluster</code> - Select a group of points in the chart.
+            </li>
+            <li>
+                <code>DragXY</code> - Rectangular selection with respect to both axes.
+            </li>
+            <li>
+                <code>DragX</code> - Rectangular selection with respect to horizontal axis.
+            </li>
+            <li>
+                <code>DragY</code> - Rectangular selection with respect to vertical axis.
+            </li>
         </ul>
-
-        <p><b>Injecting Module</b></p>
         <p>
-            Chart component features are segregated into individual feature-wise modules. To use selection feature, we need to inject
-            <code>Selection</code> module into <code>services</code>.
+            More information about the selection can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/selection">documentation section</a>.
         </p>
-        <br/>
-         <p>
-        More information about selection can be found in this
-        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/selection/">documentation section</a>.
-    </p>
     </div>
 }
 @section Title{

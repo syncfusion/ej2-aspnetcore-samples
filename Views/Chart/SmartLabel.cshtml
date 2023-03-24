@@ -1,26 +1,40 @@
 @using Syncfusion.EJ2
 @section ControlsSection{
-   <div class="control-section">
-        <div id="container" align='center'>
-            <ejs-accumulationchart id="container" title="Rio Olympics Gold " load="load" enableBorderOnMouseMove="false">
-                <e-accumulation-series-collection>
-                    <e-accumulation-series dataSource="ViewBag.dataSource" xName="xValue" yName="yValue" name="RIO" startAngle="60">
-                    <e-accumulationseries-datalabel visible="true" name="text" position="Outside">
-                        <e-connectorstyle type="Curve" length="20px"></e-connectorstyle>
+    <div class="control-section" align="center">
+        
+        <ejs-accumulationchart id="container" title="Rio Olympics Gold" load="load" enableBorderOnMouseMove="false" enableSmartLabels="true">
+            <e-accumulation-series-collection>
+                <e-accumulation-series dataSource="ViewBag.ChartPoints" xName="Country" yName="Medal" startAngle="60">
+                    <e-accumulationseries-datalabel visible="true" name="DataLabelMappingName" position="@Syncfusion.EJ2.Charts.AccumulationLabelPosition.Outside">
+                        <e-connectorstyle type="@Syncfusion.EJ2.Charts.ConnectorType.Curve" length="20px"></e-connectorstyle>
+                        <e-font fontWeight="600"></e-font>
                     </e-accumulationseries-datalabel>
-                    </e-accumulation-series>
-                </e-accumulation-series-collection>
-                <e-accumulationchart-legendsettings visible="false"></e-accumulationchart-legendsettings>
-                <e-accumulationchart-tooltipsettings enable="true" format="${point.x} : <b>${point.y}%</b>"></e-accumulationchart-tooltipsettings>
-            </ejs-accumulationchart>
-        </div>
+                </e-accumulation-series>
+            </e-accumulation-series-collection>
+            <e-accumulationchart-legendsettings visible="false"></e-accumulationchart-legendsettings>
+            <e-accumulationchart-tooltipsettings enable="true" format="<b>${point.x}</b><br> Gold Medals: <b>${point.y}</b>" header=""></e-accumulationchart-tooltipsettings>
+        </ejs-accumulationchart>
     </div>
+
     @*custom code start*@
     <script>
         function load(args) {
             var indexedTheme = location.hash.split('/')[1];
             indexedTheme = indexedTheme ? indexedTheme : 'Material';
             args.accumulation.theme = (indexedTheme.charAt(0).toUpperCase() + indexedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+            args.accumulation.series[0].radius = ej.base.Browser.isDevice ? "40%" : "65%";
+            args.accumulation.series[0].dataSource[0].DataLabelMappingName = ej.base.Browser.isDevice ? "USA: 46" : "United States of America: 46";
+            args.accumulation.series[0].dataSource[4].DataLabelMappingName = ej.base.Browser.isDevice ? "KZ: 3" : "Kazhakastan: 3";
+            args.accumulation.series[0].dataSource[5].DataLabelMappingName = ej.base.Browser.isDevice ? "NZ: 4" : "New Zealand: 4";
+            args.accumulation.series[0].dataSource[6].DataLabelMappingName = ej.base.Browser.isDevice ? "KR: 9" : "South Korea: 9";
+            args.accumulation.series[0].dataSource[7].DataLabelMappingName = ej.base.Browser.isDevice ? "GB: 27" : "Great Britain: 27";
+            args.accumulation.series[0].dataSource[8].DataLabelMappingName = ej.base.Browser.isDevice ? "CH: 3" : "Switzerland: 3";
+            args.accumulation.series[0].dataSource[9].DataLabelMappingName = ej.base.Browser.isDevice ? "ASTL: 8" : "Australia: 8";
+            args.accumulation.series[0].dataSource[10].DataLabelMappingName = ej.base.Browser.isDevice ? "NL: 8" : "Netherlands: 8";
+            args.accumulation.series[0].dataSource[12].DataLabelMappingName = ej.base.Browser.isDevice ? "Uzbekistan: <br> 4" : "Uzebekistan: 4";
+            args.accumulation.series[0].dataSource[16].DataLabelMappingName = ej.base.Browser.isDevice ? "AR: 3" : "Argentina: 3";
+            args.accumulation.series[0].dataSource[17].DataLabelMappingName = ej.base.Browser.isDevice ? "SA: 2" : "South Africa: 2";
+            args.accumulation.series[0].dataSource[18].DataLabelMappingName = ej.base.Browser.isDevice ? "KP: 2" : "North Korea: 2";
         }
     </script>
 
@@ -34,39 +48,20 @@
 @section ActionDescription{
 
     <p>
-        Labels in an axis can be placed smartly when it intersects with each other. Intersect action and edge label placement can be changed by using property panel.
+        This sample shows the gold medal count scored by each country at the Rio Olympic Games using smart labels on the chart.
     </p>
 }
 @section Description {
     <div id="description">
         <p>
-            In this example, you can see how to arrange the axis labels smartly. When the Axis labels overlap with each other based on
-            the chart dimensions and label size, you can use the <code>labelIntersectAction</code> property of the axis
-            to avoid overlapping.
+            In this example, you can see how the labels can be arranged smartly without overlapping. You can use the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.AccumulationChart.html#Syncfusion_EJ2_Charts_AccumulationChart_EnableSmartLabels">EnableSmartLabels</a> property to enable or disable the support.
         </p>
         <p>
-            Chart supports the following by which can be set using <code>labelIntersectAction</code> property.
+            <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover a point or tap on a point in touch enabled devices.
         </p>
-        <ul>
-            <li><code>Hide</code> - Hide the label when it intersect.</li>
-            <li><code>Trim</code> - Trim the label when it intersect.</li>
-            <li><code>Wrap</code> - Wrap the label when it intersect.</li>
-            <li><code>MultipleRows</code> - Arrange the label in multiple row when it intersect.</li>
-            <li><code>Rotate45</code> - Rotate the label to 45 degree when it intersect.</li>
-            <li><code>Rotate90</code> - Rotate the label to 90 degree when it intersect.</li>
-            <li><code>None</code> - Shows all the labels.</li>
-        </ul>
         <p>
-            Chart supports three types of edge labels placement which can be set using <code>edgeLabelPlacement</code> property.
-        </p>
-        <ul>
-            <li><code>None</code> - No action will be performed.</li>
-            <li><code>Hide</code> - Edge label will be hidden .</li>
-            <li><code>Shift</code> - Shifts the edge labels.</li>
-        </ul>
-        <p>
-            More information on the smart axis labels can be found in this &nbsp;
-            <a target="_blank" href="http://ej2.syncfusion.com/react/documentation/chart/api-series.html#type-chartseriestype">documentation section</a>.
+            More information on the smart labels can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/accumulation-chart/data-label#smart-labels">documentation section</a>.
         </p>
     </div>
 

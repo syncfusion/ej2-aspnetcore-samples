@@ -34,7 +34,7 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
             {
                 return File(imageFileStream, "application/image", "image.tiff");
             }
-            else if (createPDF == "Generate PDF")
+            else if (createPDF == "Convert to PDF")
             {
                 //Create a new PDF document
                 PdfDocument document = new PdfDocument();

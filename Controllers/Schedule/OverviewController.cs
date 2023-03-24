@@ -137,6 +137,10 @@ namespace EJ2CoreSampleBrowser.Controllers
             weekNumbersData.Add(new { Name = "First Full Week", Value = "FirstFullWeek" });
             weekNumbersData.Add(new { Name = "First Four-Day Week", Value = "FirstFourDayWeek" });
             ViewBag.WeekNumber = weekNumbersData;
+            List<object> tooltipData = new List<object>();
+            tooltipData.Add(new { Name = "Off", Value = "Off" });
+            tooltipData.Add(new { Name = "On", Value = "On" });
+            ViewBag.Tooltip = tooltipData;
 
             ViewBag.Appointments = GenerateEvents();
 

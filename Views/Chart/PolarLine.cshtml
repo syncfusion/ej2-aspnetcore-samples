@@ -3,71 +3,78 @@
     @{
         var Polar = "Polar";
     }
-    <div class="control-section col-lg-9">
-        <ejs-chart id="container" load="window.onChartLoad" title="Alaska Weather Statistics - 2016">
+    <div class="col-lg-8 control-section">
+        <ejs-chart id="container" load="load" title="Alaska Weather Statistics - 2016">
             <e-chart-tooltipsettings enable="true">
             </e-chart-tooltipsettings>
-            <e-chart-primaryxaxis interval="1" labelPlacement="OnTicks" valueType="Category" title="Months"></e-chart-primaryxaxis>
-            <e-chart-primaryyaxis title="Temperature (Celsius)" minimum="-25" maximum="25" interval="10" edgeLabelPlacement="Shift" labelFormat="{value}°C"></e-chart-primaryyaxis>
+            <e-chart-legendsettings enableHighlight="true">
+            </e-chart-legendsettings>
+            <e-chart-primaryxaxis interval="1" labelPlacement="@Syncfusion.EJ2.Charts.LabelPlacement.OnTicks" valueType="@Syncfusion.EJ2.Charts.ValueType.Category" title="Months" isInversed="false" startAngle="0"></e-chart-primaryxaxis>
+            <e-chart-primaryyaxis title="Temperature (Celsius)" minimum="-25" maximum="25" interval="10" isInversed="false" edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift" labelFormat="{value}°C"></e-chart-primaryyaxis>
             <e-series-collection>
-                <e-series dataSource="ViewBag.dataSource" name="Germany" xName="xValue" width="2" opacity="1" yName="yValue" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Polar">
-                    <e-series-marker visible="true" height="10" width="10" shape="Pentagon"></e-series-marker>
+                <e-series dataSource="ViewBag.ChartPoints" name="Germany" xName="Month" width="2" opacity="1" isClosed="true" yName="GER_Temp" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Polar" drawType="@Syncfusion.EJ2.Charts.ChartDrawType.Line">
+                    <e-series-marker visible="true" height="7" width="7" shape="@Syncfusion.EJ2.Charts.ChartShape.Pentagon" isFilled="true"></e-series-marker>
                 </e-series>
-                <e-series dataSource="ViewBag.dataSource" name="England" xName="xValue" width="2" opacity="1" yName="yValue1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Polar">
-                    <e-series-marker visible="true" height="10" width="10" shape="Diamond"></e-series-marker>
+                <e-series dataSource="ViewBag.ChartPoints" name="England" xName="Month" width="2" opacity="1" isClosed="true" yName="ENG_Temp" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Polar" drawType="@Syncfusion.EJ2.Charts.ChartDrawType.Line">
+                    <e-series-marker visible="true" height="7" width="7" shape="@Syncfusion.EJ2.Charts.ChartShape.Pentagon" isFilled="true"></e-series-marker>
                 </e-series>
             </e-series-collection>
         </ejs-chart>
     </div>
-    <div class="col-lg-3 property-section">
+    <div class="col-lg-4 property-section">
         <table id="property" title="Properties" style="width: 100%">
             <tbody>
-                <tr style="height: 50px">
-                    <td style="width: 50%">
-                        <div>
-                            Series Type:
-                        </div>
-                    </td>
-                    <td style="width: 50%;">
-                        <ejs-dropdownlist id="series" dataSource="@ViewBag.data" change="onChange" value="Polar" index="0" popupHeight="220px"></ejs-dropdownlist>
-                    </td>
-                </tr>
-                <tr style="height: 50px">
-                    <td style="width: 50%">
-                        <div>Closed: </div>
-                    </td>
-                    <td style="width: 50%;">
-                        <div>
-                            <input type="checkbox" id="isClosed" checked="">
-                        </div>
-                    </td>
-                </tr>
-                <tr style="height: 50px">
-                    <td style="width: 30%">
-                        <div>
-                            Start Angle:
-                            <p id="startAngleValue" style="font-weight: normal;">0</p>
-                        </div>
-                    </td>
-                    <td style="width: 70%;">
-                        <div data-role="rangeslider">
-                            <input type="range" name="range-min" id="startangle" value="0" min="0" max="360" style="width:90%">
-                        </div>
-                    </td>
-                </tr>
-                <tr style="height: 50px">
-                    <td style="width: 50%">
-                        <div>Inversed: </div>
-                    </td>
-                    <td style="width: 50%;">
-                        <div>
-                            <input type="checkbox" id="isinversed">
-                        </div>
-                    </td>
-                </tr>
+            <tr style="height: 50px">
+                <td style="width: 70%">
+                    <div>
+                        Series Type:
+                    </div>
+                </td>
+                <td style="width: 50%;">
+                    <ejs-dropdownlist id="series" dataSource="@ViewBag.data" change="onChange" value="Polar" index="0" popupHeight="220px"></ejs-dropdownlist>
+                </td>
+            </tr>
+            <tr style="height: 50px">
+                <td style="width: 50%">
+                    <div>Closed: </div>
+                </td>
+                <td style="width: 50%;">
+                    <div>
+                        <input type="checkbox" id="isClosed" checked="">
+                    </div>
+                </td>
+            </tr>
+            <tr style="height: 50px">
+                <td style="width: 50%">
+                    <div>
+                        Start Angle:
+                    </div>
+                </td>
+                <td style="width: 20%;">
+                    <ejs-numerictextbox id="startangle" min="0" max="360" step="10" value="0" width="120" change="angleChange"></ejs-numerictextbox>
+                </td>
+            </tr>
+            <tr style="height: 50px">
+                <td style="width: 50%">
+                    <div>Inversed: </div>
+                </td>
+                <td style="width: 50%;">
+                    <div>
+                        <input type="checkbox" id="isinversed">
+                    </div>
+                </td>
+            </tr>
             </tbody>
         </table>
     </div>
+    <style>
+        #isClosed:hover {
+            cursor: pointer !important;
+        }
+        #isinversed:hover {
+            cursor: pointer !important;
+        }
+    </style>
     <script>
         document.getElementById('isClosed').onchange = () => {
             var chart = document.getElementById('container').ej2_instances[0];
@@ -88,15 +95,7 @@
             chart.dataBind();
         };        
                 
-        document.getElementById('startangle').onpointermove = document.getElementById('startangle').ontouchmove = () => {
-            var chart = document.getElementById('container').ej2_instances[0];
-            var element = (document.getElementById('startangle'));
-            chart.primaryXAxis.startAngle = parseInt(element.value, 10);
-            document.getElementById('startAngleValue').innerHTML = parseInt(element.value, 10) + '';
-            chart.series[0].animation.enable = false;
-            chart.series[1].animation.enable = false;
-            chart.refresh();
-        };
+   
         function onChange(args) {
             var chart = document.getElementById("container").ej2_instances[0];
             chart.series[0].type = this.value;
@@ -104,10 +103,20 @@
 
         }
         @* custom code start *@
-        window.onChartLoad = function (args) {
+        function load(args) {
             var selectedTheme = themeName ? themeName : 'Material';
             args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
         }
+        
+        var angleChange= function () {
+            var chart = document.getElementById("container").ej2_instances[0];
+            var angle = document.getElementById("startangle").ej2_instances[0];
+            chart.primaryXAxis.startAngle = angle.value;
+            chart.series[0].animation.enable = false;
+            chart.series[1].animation.enable = false;
+            chart.refresh();
+        }
+        
         @* custom code end *@
     </script>
 }
@@ -126,23 +135,20 @@
 @*custom code end*@
 @section ActionDescription{
     <p>
-        This sample visualizes the consumer price data with default line series in the chart.
-        Data points are enhanced with marker and tooltip
+        This <a target="_blank" href="https://www.syncfusion.com/aspnet-core-ui-controls/charts/chart-types/radar-chart">ASP.NET Core Polar Radar Line Chart</a> example visualizes data about Alaska Weather Statistics - 2016 with a default polar line series.
     </p>
 }
 @section Description{
     <p>
-        In this example, you can see how to render and configure the line type charts. Line type charts are used to represent time-dependent data, showing trends in data at equal intervals.
-        You can use <code>dashArray</code>, <code>width</code>, <code>fill</code> properties to customize the line. <code>marker</code> and <code>dataLabel</code> are used to represent individual data and its value.
+        In this example, you can see how to render and configure polar and radar charts with a line series. The type of series can be changed using the <b>Series Type</b> dropdown list in the properties panel. Also, the angle can be changed and the series can be inversed using
+        <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.ChartAxis.html#Syncfusion_EJ2_Charts_ChartAxis_StartAngle">Start Angle</a> and <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.ChartAxis.html#Syncfusion_EJ2_Charts_ChartAxis_IsInversed">Inversed</a> properties.
     </p>
     <p>
-        Tooltip is enabled in this example, to see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+        <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover a point or tap on a point in touch enabled devices.
     </p>
-    <br>
-   
     <p>
-        More information on the line series can be found in this
-        <a target="_blank" href="http://ej2.syncfusion.com/documentation/chart/api-series.html#type-chartseriestype">documentation section</a>.
+        More information about the polar and radar series with a line type chart can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/polar-radar#draw-types">documentation section</a>.
     </p>
 }
 @section Title{

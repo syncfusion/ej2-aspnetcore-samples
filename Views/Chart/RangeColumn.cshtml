@@ -1,33 +1,38 @@
 @using Syncfusion.EJ2
 @section ControlsSection{
-    <div class="control-section">
-        <div id="container" align='center'>
-            <ejs-chart id="lineContainer"  load="window.onChartLoad" title="Temperature Variation">
-                <e-chart-chartarea>
-                    <e-chartarea-border width="0"></e-chartarea-border>
-                </e-chart-chartarea>
-                <e-chart-primaryxaxis valueType="Category" >
-                    <e-majorgridlines width="0"></e-majorgridlines>
-                </e-chart-primaryxaxis>
-                <e-chart-primaryyaxis maximum="20" labelFormat="{value}˚C" edgeLabelPlacement="Shift">
-                    <e-majorticklines width="0"></e-majorticklines>
-                    <e-linestyle width="0"></e-linestyle>
-                </e-chart-primaryyaxis>
-                <e-series-collection>
-                    <e-series dataSource="ViewBag.dataSource" xName="x" high="high" low="low" name="India" width=2 type="@Syncfusion.EJ2.Charts.ChartSeriesType.RangeColumn"></e-series>
-                    <e-series dataSource="ViewBag.dataSource1" xName="x" high="high" low="low" name="Germany" width=2 type="@Syncfusion.EJ2.Charts.ChartSeriesType.RangeColumn"></e-series>
-                </e-series-collection>
-                <e-chart-tooltipsettings enable="true"></e-chart-tooltipsettings>
-            </ejs-chart>
-        </div>
+    <div class="control-section" align="center">
+        
+        <ejs-chart id="lineContainer"  load="load" title="Temperature Variation by Week">
+            <e-chart-chartarea>
+                <e-chartarea-border width="0"></e-chartarea-border>
+            </e-chart-chartarea>
+            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category">
+                <e-majorgridlines width="0"></e-majorgridlines>
+                <e-majorticklines width="0"></e-majorticklines>
+            </e-chart-primaryxaxis>
+            <e-chart-primaryyaxis maximum="20" labelFormat="{value}˚C" title="Temperature (In Celsius)" edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift">
+                <e-majorticklines width="0"></e-majorticklines>
+                <e-linestyle width="0"></e-linestyle>
+            </e-chart-primaryyaxis>
+            <e-series-collection>
+                <e-series dataSource="ViewBag.ChartPoints" xName="Days" high="IND_HighTemp" low="IND_LowTemp" name="India" columnSpacing="0.1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.RangeColumn">
+                    <e-series-marker>
+                        <e-series-datalabel visible="true" position="@Syncfusion.EJ2.Charts.LabelPosition.Outer"></e-series-datalabel>
+                    </e-series-marker>
+                </e-series>
+            </e-series-collection>
+            <e-chart-tooltipsettings enable="true" header="<b>${point.x}</b>" format="Temperature : <b>${point.low} - ${point.high}</b>"></e-chart-tooltipsettings>
+            <e-chart-legendsettings visible="false" enableHighlight="true"></e-chart-legendsettings>
+        </ejs-chart>
+       
     </div>
     @*custom code start*@
     <script>
-        window.onChartLoad = function (args) {
+        function load(args) {
             var selectedTheme = location.hash.split('/')[1];
             selectedTheme = selectedTheme ? selectedTheme : 'Material';
             args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
-            args.chart.width = ej.base.Browser.isDevice ? "100%" : "60%";
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
         }
     </script>
 @*custom code end*@
@@ -48,22 +53,19 @@
 @*custom code end*@
 @section ActionDescription{
     <p>
-        This sample visualizes the maximum and minimum temperatures for a week of different countries with default range column series in the chart. Tooltip shows the information about the data points.
+        This <a target="_blank" href="https://www.syncfusion.com/aspnet-core-ui-controls/charts/chart-types/range-column-chart">ASP.NET Core Range Column Chart</a> example visualizes the maximum and minimum temperatures for a week in different countries with the default range column series.
     </p>
 }
 @section Description{
     <p>
-        In this example, you can see how to render and configure the range column type chart. You can use <code>border</code>,
-        <code>fill</code> properties to customize the columns. <code>dataLabel</code> are used to represent individual data
-        and its value.
+        In this example, you can see how to render and configure the range column chart. The range column chart is used to display a range of data by plotting two y-values per data point. The two y-values are used as the upper and lower bounds of a column.
     </p>
     <p>
-        Tooltip is enabled in this example, to see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+        <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover over a point or tap on a point in touch-enabled devices.
     </p>
-
     <p>
-        More information on the range column series can be found in this
-        <a target="_blank" href="http://ej2.syncfusion.com/documentation/chart/api-series.html#type-chartseriestype">documentation section</a>.
+        More information about the range column series can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/chart-types#column-charts">documentation section</a>.
     </p>
 }
 @section Title{

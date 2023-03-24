@@ -18,21 +18,30 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
     {
         public IActionResult Column()
         {
-            List<ColumnChartData> chartData = new List<ColumnChartData>
+            List<ColumnChartData> ChartPoints = new List<ColumnChartData>
             {
-                new ColumnChartData { x= "USA", yValue= 46, yValue1=37, yValue2=38 }, 
-                new ColumnChartData { x= "GBR", yValue= 27, yValue1=23, yValue2=17 }, 
-                new ColumnChartData { x= "CHN", yValue= 26, yValue1=18, yValue2=26 }
+                new ColumnChartData { Country = "GBR", GoldMedal = 27, SilverMedal = 23, BronzeMedal = 17, MappingName = "Great Britain" },
+                new ColumnChartData { Country = "CHN", GoldMedal = 26, SilverMedal = 18, BronzeMedal = 26, MappingName = "China" },
+                new ColumnChartData { Country = "AUS", GoldMedal = 8, SilverMedal = 11, BronzeMedal = 10, MappingName = "Australia" },
+                new ColumnChartData { Country = "RUS", GoldMedal = 19, SilverMedal = 17, BronzeMedal = 20, MappingName = "Russia" },
+                new ColumnChartData { Country = "GER", GoldMedal = 17, SilverMedal = 10, BronzeMedal = 15, MappingName = "Germany" },
+                new ColumnChartData { Country = "UA", GoldMedal = 2, SilverMedal = 5, BronzeMedal = 24, MappingName = "Ukraine" },       
+                new ColumnChartData { Country = "ES", GoldMedal = 7, SilverMedal = 4, BronzeMedal = 6, MappingName = "Spain" },
+                new ColumnChartData { Country = "UZB", GoldMedal = 4, SilverMedal = 2, BronzeMedal = 7, MappingName = "Uzbekistan" },
+                new ColumnChartData { Country = "JPN", GoldMedal = 12, SilverMedal = 8, BronzeMedal = 21, MappingName = "Japan" },
+                new ColumnChartData { Country = "NL", GoldMedal = 8, SilverMedal = 7, BronzeMedal = 4, MappingName = "NetherLand" },
+                new ColumnChartData { Country = "USA", GoldMedal = 46, SilverMedal = 37, BronzeMedal = 38, MappingName = "United States" },
             };
-            ViewBag.dataSource = chartData;
+            ViewBag.ChartPoints = ChartPoints;
             return View();
         }
         public class ColumnChartData
         {
-            public string x;
-            public double yValue;
-            public double yValue1;
-            public double yValue2;
+            public string Country;
+            public double GoldMedal;
+            public double SilverMedal;
+            public double BronzeMedal;
+            public string MappingName;
         }
     }
 }

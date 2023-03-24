@@ -21,18 +21,24 @@ namespace EJ2CoreSampleBrowser.Controllers
 
         public IActionResult MultipleAxis()
         {
-            List<CategoryData> chartData = new List<CategoryData>
+            List<MultipleAxesChartData> ChartPoints = new List<MultipleAxesChartData>
             {
-                new CategoryData { x = "SUN", y = 35, y2 = 30 },
-                new CategoryData { x = "MON", y = 40, y2 = 28 },
-                new CategoryData { x = "TUE", y = 50, y2 = 29 },
-                new CategoryData { x = "WED", y = 70, y2 = 30 },
-                new CategoryData { x = "THU", y = 65, y2 = 33 },
-                new CategoryData { x = "FRI", y = 55, y2 = 32},
-                new CategoryData { x = "SAT", y = 50, y2 = 34 },                
-             };
-            ViewBag.dataSource = chartData;
+                new MultipleAxesChartData { Day = "SUN", DEU_Temp = 35, JPN_Temp = 31 },
+                new MultipleAxesChartData { Day = "MON", DEU_Temp = 40, JPN_Temp = 28 },
+                new MultipleAxesChartData { Day = "TUE", DEU_Temp = 50, JPN_Temp = 29 },
+                new MultipleAxesChartData { Day = "WED", DEU_Temp = 70, JPN_Temp = 30 },
+                new MultipleAxesChartData { Day = "THU", DEU_Temp = 65, JPN_Temp = 33 },
+                new MultipleAxesChartData { Day = "FRI", DEU_Temp = 55, JPN_Temp = 32},
+                new MultipleAxesChartData { Day = "SAT", DEU_Temp = 50, JPN_Temp = 34 },          
+            };
+            ViewBag.ChartPoints = ChartPoints;
             return View();
-        }        
+        }
+        public class MultipleAxesChartData
+        {
+            public string Day;
+            public double DEU_Temp;
+            public double JPN_Temp;
+        }
     }
 }

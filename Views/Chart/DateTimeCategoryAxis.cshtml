@@ -3,25 +3,27 @@
      <div class="control-section">
         <div id="container" align='center'>
             <ejs-chart id="lineContainer" title="Sales comparison of a Product" load=" load" >
-                <e-chart-tooltipsettings enable="true">
-                </e-chart-tooltipsettings>
                 <e-chart-legendsettings visible="false"></e-chart-legendsettings>
                 <e-chart-chartarea>
                     <e-chartarea-border width="0"></e-chartarea-border>
                 </e-chart-chartarea>
-                <e-chart-primaryxaxis valueType="DateTimeCategory" intervalType="Days" skeleton="Ed"
-                                edgeLabelPlacement="Shift" title="Business Days">
+                <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.DateTimeCategory" intervalType="@Syncfusion.EJ2.Charts.IntervalType.Days" skeleton="Ed"
+                                      title="Business Days">
                     <e-majorgridlines width="0"></e-majorgridlines>
                 </e-chart-primaryxaxis>
                 <e-chart-primaryyaxis labelFormat="{value}M"
-                                rangePadding="None" minimum=0
+                                rangePadding="@Syncfusion.EJ2.Charts.ChartRangePadding.None" minimum=0
                                 maximum=100 interval=20>
                     <e-majorticklines width="0"></e-majorticklines>
                     <e-minorticklines width="0"></e-minorticklines>
                     <e-linestyle width="0"></e-linestyle>
                 </e-chart-primaryyaxis>
                 <e-series-collection>
-                    <e-series dataSource="ViewBag.dataSource" name="Warmest" xName="xValue" width="2" opacity="1" yName="yValue1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column"></e-series>
+                    <e-series dataSource="ViewBag.ChartPoints" name="Product" xName="Period" width="2" opacity="1" yName="Sales" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                        <e-series-marker>
+                            <e-series-datalabel visible="true" position="@Syncfusion.EJ2.Charts.LabelPosition.Top" name="DataLabelMappingName"></e-series-datalabel>
+                        </e-series-marker>
+                    </e-series>
                 </e-series-collection>
             </ejs-chart>
         </div>
@@ -32,7 +34,11 @@
             var indexedTheme = location.hash.split('/')[1];
             indexedTheme = indexedTheme ? indexedTheme : 'Material';
             args.chart.theme = (indexedTheme.charAt(0).toUpperCase() + indexedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
-            args.chart.width = ej.base.Browser.isDevice ? "100%" : "60%";
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+            args.chart.primaryXAxis.labelIntersectAction = ej.base.Browser.isDevice?'None':'Rotate45';
+            args.chart.primaryXAxis.labelRotation = ej.base.Browser.isDevice?'-45':'0';
+            args.chart.series[0].marker.dataLabel.enableRotation = ej.base.Browser.isDevice?'true':'false';
+            args.chart.series[0].marker.dataLabel.angle = ej.base.Browser.isDevice?'-90':'0';
             @*custom code end*@
             args.chart.primaryXAxis.stripLines = [
                 { visible: true, start: new Date(2017, 11, 20), end: new Date(2017, 11, 27), color: 'skyblue', opacity: 0.5, },
@@ -41,11 +47,11 @@
             args.chart.annotations = [
                 {
                     x: new Date(2017, 11, 22), y: 90, coordinateUnits: 'Point',
-                    content: '<div style="color:#FF0000;font-family: bold; font-weight: 600">Christmas Offer<br> Dec 2017</div>',
+                    content: '<div style="color:#0000ff;font-family: bold; font-weight: 600">Christmas Offer<br> Dec 2017</div>',
                 },
                 {
                     x: new Date(2018, 0, 4), y: 90, coordinateUnits: 'Point',
-                    content: '<div style="color:#FF0000;font-family: bold; font-weight: 800">New Year Offer<br> Jan 2018</div>',
+                    content: '<div style="color:#0000ff;font-family: bold; font-weight: 800">New Year Offer<br> Jan 2018</div>',
                 }
             ];
         }
@@ -60,26 +66,19 @@
 @section ActionDescription{
     <div id="action-description">
         <p>
-            This sample illustrates sales of a product in business days.
-            Data points in this sample are enhanced with tooltip.
+            This sample shows the date-time category axis with sample data about the sales of a product on different business days.
         </p>
-
     </div>
 }
 
 @section Description{
     <div id="description">
         <p>
-            In this sample, you can see how to render and configure the date time category axis.
-            Date time category axis is used to represent only business days in datetime axis.
+            The date-time category axis is used to display date-time values with nonlinear intervals. For example, business days alone can be depicted here in a week. To use a date-time category axis, set the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.ChartAxis.html#Syncfusion_EJ2_Charts_ChartAxis_ValueType">ValueType</a> in axis to <b>DateTimeCategory</b>.
         </p>
         <p>
-            Tooltip is enabled in this example. To see the tooltip in action, hover a point or tap a point in touch enabled devices.
-        </p>
-       
-        <p>
-            More information on the date time category can be found in this &nbsp;
-            <a target="_blank" href="http://ej2.syncfusion.com/react/documentation/chart/api-series.html#type-chartseriestype">documentation section</a>.
+            More information about the DateTime Category Axis can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/date-time-axis#datetimecategory-axis">documentation section</a>.
         </p>
     </div>
 }

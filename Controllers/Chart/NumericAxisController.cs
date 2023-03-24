@@ -21,23 +21,23 @@ namespace EJ2CoreSampleBrowser.Controllers
 
         public IActionResult NumericAxis()
         {
-            List<DoubleData> chartData = new List<DoubleData>
+            List<DoubleData> ChartPoints = new List<DoubleData>
             {
-                new DoubleData { xValue = 16, yValue1 = 2, yValue2= 7},
-                new DoubleData { xValue = 17, yValue1 = 14, yValue2 = 7 },
-                new DoubleData { xValue = 18, yValue1 = 7, yValue2 = 11 },
-                new DoubleData { xValue = 19, yValue1 = 7, yValue2 = 8 },
-                new DoubleData { xValue = 20, yValue1 = 10, yValue2 = 24 },
-                            };
-            ViewBag.dataSource = chartData;
+                new DoubleData { Over = 16, ENG_Score = 2, WI_Score = 7},
+                new DoubleData { Over = 17, ENG_Score = 14, WI_Score = 7 },
+                new DoubleData { Over = 18, ENG_Score = 7, WI_Score = 11 },
+                new DoubleData { Over = 19, ENG_Score = 7, WI_Score = 8 },
+                new DoubleData { Over = 20, ENG_Score = 10, WI_Score = 24 }
+            };
+            ViewBag.ChartPoints = ChartPoints;
             return View();
         }
 
         public class DoubleData
         {
-            public double xValue;
-            public double yValue1;
-            public double yValue2;
+            public double Over;
+            public double ENG_Score;
+            public double WI_Score;
         }
     }
 }

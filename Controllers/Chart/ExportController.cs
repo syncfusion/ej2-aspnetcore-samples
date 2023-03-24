@@ -19,28 +19,28 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
        
         public IActionResult Export()
         {
-            List<exportData> chartData = new List<exportData>
+            List<ExportData> ChartPoints = new List<ExportData>
             {
-                    new exportData {xValue="DEZ", yValue = 35.5},
-                    new exportData {xValue="CHN", yValue = 18.3},
-                    new exportData {xValue="ITA", yValue = 17.6},
-                    new exportData {xValue="JPN", yValue = 13.6},
-                    new exportData {xValue="US", yValue = 12},
-                    new exportData {xValue="ESP", yValue = 5.6},
-                    new exportData {xValue="FRA", yValue = 4.6},
-                    new exportData {xValue="AUS", yValue = 3.3},
-                    new exportData {xValue="BEL", yValue = 3},
-                    new exportData {xValue="UK", yValue = 2.9},                  
+                new ExportData {Country="India", GigaWatts = 35.5, DataLabelMappingName="35.5"},
+                new ExportData {Country="China", GigaWatts = 18.3, DataLabelMappingName="18.3"},
+                new ExportData {Country="Italy", GigaWatts = 17.6, DataLabelMappingName="17.6"},
+                new ExportData {Country="Japan", GigaWatts = 13.6, DataLabelMappingName="13.6"},
+                new ExportData {Country="United state", GigaWatts = 12, DataLabelMappingName="12"},
+                new ExportData {Country="Spain", GigaWatts = 5.6, DataLabelMappingName="5.6"},
+                new ExportData {Country="France", GigaWatts = 4.6, DataLabelMappingName="4.6"},
+                new ExportData {Country="Australia", GigaWatts = 3.3, DataLabelMappingName="3.3"},
+                new ExportData {Country="Belgium", GigaWatts = 3, DataLabelMappingName="3"},
+                new ExportData {Country="United Kingdom", GigaWatts = 2.9, DataLabelMappingName="2.9"},
             };
-            ViewBag.dataSource = chartData;
+            ViewBag.ChartPoints = ChartPoints;
             ViewBag.mode = new String[] { "JPEG", "PNG", "SVG", "PDF" };
             return View();
         }
-        public class exportData
+        public class ExportData
         {
-            public string xValue;
-            public double yValue;
-            
+            public string Country;
+            public double GigaWatts;
+            public string DataLabelMappingName;
         }
 
     }

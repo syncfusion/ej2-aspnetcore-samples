@@ -21,19 +21,25 @@ namespace EJ2CoreSampleBrowser.Controllers
 
         public IActionResult CategoryAxis()
         {
-            List<CategoryData> chartData = new List<CategoryData>
+            List<CategoryAxisData> ChartPoints = new List<CategoryAxisData>
             {
-                new CategoryData { x = "Germany", y = 72, country = "GER: 72" },
-                new CategoryData { x = "Russia", y = 103.1, country = "RUS: 103.1" },
-                new CategoryData { x = "Brazil", y = 139.1, country = "BRZ: 139.1" },
-                new CategoryData { x = "India", y = 462.1, country = "IND: 462.1" },
-                new CategoryData { x = "China", y = 721.4, country = "CHN: 721.4" },
-                new CategoryData { x = "United States<br>of America", y = 286.9, country = "USA: 286.9" },
-                new CategoryData { x = "Great Britain", y = 115.1, country = "GBR: 115.1" },
-                new CategoryData { x = "Nigeria", y = 97.2, country = "NGR: 97.2" },
+                new CategoryAxisData { Country = "Germany", Users = 72, TooltipMappingName = "GER: 72" },
+                new CategoryAxisData { Country = "Russia", Users = 103.1, TooltipMappingName = "RUS: 103.1" },
+                new CategoryAxisData { Country = "Brazil", Users = 139.1, TooltipMappingName = "BRZ: 139.1" },
+                new CategoryAxisData { Country = "India", Users = 462.1, TooltipMappingName = "IND: 462.1" },
+                new CategoryAxisData { Country = "China", Users = 721.4, TooltipMappingName = "CHN: 721.4" },
+                new CategoryAxisData { Country = "United States<br>Of America", Users = 286.9, TooltipMappingName = "USA: 286.9" },
+                new CategoryAxisData { Country = "Great Britain", Users = 115.1, TooltipMappingName = "GBR: 115.1" },
+                new CategoryAxisData { Country = "Nigeria", Users = 97.2, TooltipMappingName = "NGR: 97.2" }
              };
-            ViewBag.dataSource = chartData;
+            ViewBag.ChartPoints = ChartPoints;
             return View();
-        }        
+        }   
+        public class CategoryAxisData
+        {
+            public string Country;
+            public double Users;
+            public string TooltipMappingName;
+        }
     }
 }

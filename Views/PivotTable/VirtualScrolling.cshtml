@@ -13,7 +13,7 @@
             <span id="performanceTime">Time Taken: 0 sec</span>
         </div>
         <div class="content-wrapper">
-            <ejs-pivotview id="pivotview" width="860" height="300" enablevirtualization="true" dataBound="onDataBound">
+            <ejs-pivotview id="pivotview" width="860" height="300" enablevirtualization="true" dataBound="onDataBound" load="onLoad">
                 <e-datasourcesettings expandall="true" enablesorting="false">
                     <e-formatsettings>
                         <e-field name="Price" format="C0" maximumsignificantdigits="10" minimumsignificantdigits="1" usegrouping="true"></e-field>
@@ -134,6 +134,13 @@
                 isInit = false;
                 button.disabled = true;
                 document.getElementById('popup').style.display = 'none';
+            }
+        }
+
+        function onLoad() {
+            var pivotObj = document.getElementById('pivotview').ej2_instances[0];
+            if (ej.base.Browser.isDevice) {
+                pivotObj.width = '100%';
             }
         }
 

@@ -20,36 +20,36 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
         {
             List<AreaNegativeChartData> MaryValues = new List<AreaNegativeChartData>
             {
-                new AreaNegativeChartData { Vegetable = "Onion",  Price = 3000 },
-                new AreaNegativeChartData { Vegetable = "Potato", Price = 4000 },
-                new AreaNegativeChartData { Vegetable = "Tomato", Price = -4000 },
-                new AreaNegativeChartData { Vegetable = "Corn", Price = -2000 },
-                new AreaNegativeChartData { Vegetable = "Carrot", Price = 5000 }
+                new AreaNegativeChartData { Vegetable = new DateTime(2017, 01, 01),  Price = 3000 },
+                new AreaNegativeChartData { Vegetable = new DateTime(2018, 01, 01), Price = 4000 },
+                new AreaNegativeChartData { Vegetable = new DateTime(2019, 01, 01), Price = -4000 },
+                new AreaNegativeChartData { Vegetable = new DateTime(2020, 01, 01),   Price = -2000 },
+                new AreaNegativeChartData { Vegetable = new DateTime(2021, 01, 01), Price = 5000 }
             };
             List<AreaNegativeChartData> PatriciaValues = new List<AreaNegativeChartData>
             {
-                new AreaNegativeChartData { Vegetable = "Onion",  Price = 2000 },
-                new AreaNegativeChartData { Vegetable = "Potato", Price = 3000 },
-                new AreaNegativeChartData { Vegetable = "Tomato", Price = 4000 },
-                new AreaNegativeChartData { Vegetable = "Corn", Price = 2000 },
-                new AreaNegativeChartData { Vegetable = "Carrot", Price = 3000 }
+                new AreaNegativeChartData { Vegetable = new DateTime(2017, 01, 01),  Price = 2000 },
+                new AreaNegativeChartData { Vegetable = new DateTime(2018, 01, 01), Price = 3000 },
+                new AreaNegativeChartData { Vegetable = new DateTime(2019, 01, 01), Price = 4000 },
+                new AreaNegativeChartData { Vegetable = new DateTime(2020, 01, 01),   Price = 2000 },
+                new AreaNegativeChartData { Vegetable = new DateTime(2021, 01, 01), Price = 3000 }
             };
             List<AreaNegativeChartData> LindaValues = new List<AreaNegativeChartData>
             {
-                new AreaNegativeChartData { Vegetable = "Onion",  Price = 2000 },
-                new AreaNegativeChartData { Vegetable = "Potato", Price = -1000 },
-                new AreaNegativeChartData { Vegetable = "Tomato", Price = -3000 },
-                new AreaNegativeChartData { Vegetable = "Corn", Price = 4000 },
-                new AreaNegativeChartData { Vegetable = "Carrot", Price = 1000 }
+                new AreaNegativeChartData { Vegetable = new DateTime(2017, 01, 01),  Price = 2000 },
+                new AreaNegativeChartData { Vegetable = new DateTime(2018, 01, 01), Price = -1000 },
+                new AreaNegativeChartData { Vegetable = new DateTime(2019, 01, 01), Price = -3000 },
+                new AreaNegativeChartData { Vegetable = new DateTime(2020, 01, 01),   Price = 4000 },
+                new AreaNegativeChartData { Vegetable = new DateTime(2021, 01, 01), Price = 1000 }
             };
-            ViewBag.dataSource1 = MaryValues;
-            ViewBag.dataSource2 = PatriciaValues;
-            ViewBag.dataSource3 = LindaValues;
+            ViewBag.MaryValues = MaryValues;
+            ViewBag.PatriciaValues = PatriciaValues;
+            ViewBag.LindaValues = LindaValues;
             return View();
         }
         public class AreaNegativeChartData
         {
-            public string Vegetable;
+            public DateTime Vegetable;
             public double Price;
         }
     }

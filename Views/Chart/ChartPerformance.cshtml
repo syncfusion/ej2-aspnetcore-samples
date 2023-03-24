@@ -2,8 +2,8 @@
 @section ControlsSection{
     <div class="col-lg-12 control-section">
             <div id="container" align="center">
-                <ejs-chart id="Chart" load="window.onChartLoad" title="Chart with 100k points" width="90%">
-                    <e-chart-primaryxaxis interval="1" valueType="DateTime" intervalType="Years" edgeLabelPlacement="Shift" title="Years">
+                <ejs-chart id="Chart" load="load" title="Chart with 100k points" width="90%">
+                    <e-chart-primaryxaxis interval="1" valueType="@Syncfusion.EJ2.Charts.ValueType.DateTime" intervalType="@Syncfusion.EJ2.Charts.IntervalType.Years" edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift" title="Years">
                         <e-majorgridlines width="0"></e-majorgridlines>
                     </e-chart-primaryxaxis>
                     <e-chart-primaryyaxis interval="2000" minimum="0" maximum="12000" title="Values">
@@ -15,7 +15,7 @@
                     <e-chart-chartarea>
                         <e-chartarea-border width="0"></e-chartarea-border>
                     </e-chart-chartarea>
-                    <e-chart-zoomsettings enableSelectionZooming="true" mode="X"></e-chart-zoomsettings>
+                    <e-chart-zoomsettings enableSelectionZooming="true" mode="@Syncfusion.EJ2.Charts.ZoomMode.X"></e-chart-zoomsettings>
                     <e-series-collection>
                         <e-series dataSource="@ViewBag.chartPoints" name="Series" xName="x" yName="y" fill="url(#fluent-gradient-chart)" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Area">
                         <e-series-border width="2" color="borderColor"></e-series-border>
@@ -31,7 +31,7 @@
             var valueUrl = "url";
             var borderColor;
             var fillColor;
-            window.onChartLoad = function (args) {
+            function load(args) {
                 var selectedTheme = location.hash.split("/")[1];
                 selectedTheme = selectedTheme ? selectedTheme : "Material";
                 args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));

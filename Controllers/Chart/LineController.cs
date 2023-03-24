@@ -23,23 +23,28 @@ namespace EJ2CoreSampleBrowser.Controllers
         {
             List<LineChartData> chartData = new List<LineChartData>
             {
-                new LineChartData { xValue = new DateTime(2005, 01, 01), yValue = 21, yValue1 = 28 },
-                new LineChartData { xValue = new DateTime(2006, 01, 01), yValue = 24, yValue1 = 44 },
-                new LineChartData { xValue = new DateTime(2007, 01, 01), yValue = 36, yValue1 = 48 },
-                new LineChartData { xValue = new DateTime(2008, 01, 01), yValue = 38, yValue1 = 50 },
-                new LineChartData { xValue = new DateTime(2009, 01, 01), yValue = 54, yValue1 = 66 },
-                new LineChartData { xValue = new DateTime(2010, 01, 01), yValue = 57, yValue1 = 78 },
-                new LineChartData { xValue = new DateTime(2011, 01, 01), yValue = 70, yValue1 = 84 },
+                new LineChartData { Period = new DateTime(2012, 01, 01), Can_Growth = 11.0, Viet_Growth = 19.5, Mal_Growth = 7.1, Egy_Growth = 8.2, Ind_Growth = 9.3 },
+                new LineChartData { Period = new DateTime(2013, 01, 01), Can_Growth = 12.9, Viet_Growth = 17.5, Mal_Growth = 6.8, Egy_Growth = 7.3, Ind_Growth = 7.8 },
+                new LineChartData { Period = new DateTime(2014, 01, 01), Can_Growth = 13.4, Viet_Growth = 15.5, Mal_Growth = 4.1, Egy_Growth = 7.8, Ind_Growth = 6.2  },
+                new LineChartData { Period = new DateTime(2015, 01, 01), Can_Growth = 13.7, Viet_Growth = 10.3, Mal_Growth = 2.8, Egy_Growth = 6.8, Ind_Growth = 5.3 },
+                new LineChartData { Period = new DateTime(2016, 01, 01), Can_Growth = 12.7, Viet_Growth = 7.8, Mal_Growth = 2.8, Egy_Growth = 5.0, Ind_Growth = 4.8 },
+                new LineChartData { Period = new DateTime(2017, 01, 01), Can_Growth = 12.5, Viet_Growth = 5.7, Mal_Growth = 3.8, Egy_Growth = 5.5, Ind_Growth = 4.9 },
+                new LineChartData { Period = new DateTime(2018, 01, 01), Can_Growth = 12.7, Viet_Growth = 5.9, Mal_Growth = 4.3, Egy_Growth = 6.5, Ind_Growth = 4.4 },
+                new LineChartData { Period = new DateTime(2019, 01, 01), Can_Growth = 12.4, Viet_Growth = 5.6, Mal_Growth = 4.7, Egy_Growth = 6.8, Ind_Growth = 2.6 },
+                new LineChartData { Period = new DateTime(2020, 01, 01), Can_Growth = 13.5, Viet_Growth = 5.3, Mal_Growth = 5.6, Egy_Growth = 6.6, Ind_Growth = 2.3 }
             };
-            ViewBag.dataSource = chartData;
+            ViewBag.ChartData = chartData;
             return View();
         }
 
         public class LineChartData
         {
-            public DateTime xValue;
-            public double yValue;
-            public double yValue1;
+            public DateTime Period;
+            public double Can_Growth;
+            public double Viet_Growth;
+            public double Mal_Growth;
+            public double Egy_Growth;
+            public double Ind_Growth;
         }
     }
 }

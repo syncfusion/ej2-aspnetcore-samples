@@ -18,32 +18,32 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
     {
         public IActionResult StackedLine()
         {
-            List<StackedChartData> chartData = new List<StackedChartData>
+            List<StackedLineChartData> ChartPoints = new List<StackedLineChartData>
             {
-                new StackedChartData { x = "Food" , y = 90, y1 = 40 , y2 = 70, y3 = 120},
-                new StackedChartData { x = "Transport", y = 80, y1 = 90, y2 = 110, y3 = 70 },
-                new StackedChartData { x = "Medical",y = 50, y1 = 80, y2 = 120, y3 = 50 },
-                new StackedChartData { x = "Clothes",y = 70, y1 = 30, y2 = 60, y3 = 180 },
-                new StackedChartData { x = "Personal Care", y = 30, y1 = 80, y2 = 80, y3 = 30 },
-                new StackedChartData { x = "Books", y = 10, y1 = 40, y2 = 30, y3 = 270},
-                new StackedChartData { x = "Fitness",y = 100, y1 = 30, y2 = 70, y3 = 40 },
-                new StackedChartData { x = "Electricity", y = 55, y1 = 95, y2 = 55, y3 = 75},
-                new StackedChartData { x = "Tax", y = 20, y1 = 50, y2 = 40, y3 = 65 },
-                new StackedChartData { x = "Pet Care", y = 40, y1 = 20, y2 = 80, y3 = 95 },
-                new StackedChartData { x = "Education", y = 45, y1 = 15, y2 = 45, y3 = 195 },
-                new StackedChartData { x = "Entertainment", y = 75, y1 = 45, y2 = 65, y3 = 115 }
+                new StackedLineChartData { ExpensesCategory= "Jan", JohnExpenses= 90, PeterExpenses= 40, SteveExpenses= 70,  CharleExpenses= 120 },
+                new StackedLineChartData { ExpensesCategory= "Feb", JohnExpenses= 80, PeterExpenses= 90, SteveExpenses= 110, CharleExpenses= 70  },
+                new StackedLineChartData { ExpensesCategory= "Mar", JohnExpenses= 50, PeterExpenses= 80, SteveExpenses= 120, CharleExpenses= 50  },
+                new StackedLineChartData { ExpensesCategory= "Apr", JohnExpenses= 70, PeterExpenses= 30, SteveExpenses= 60,  CharleExpenses= 180 },
+                new StackedLineChartData { ExpensesCategory= "May", JohnExpenses= 30, PeterExpenses= 80, SteveExpenses= 80,  CharleExpenses= 30  },
+                new StackedLineChartData { ExpensesCategory= "Jun", JohnExpenses= 10, PeterExpenses= 40, SteveExpenses= 30,  CharleExpenses= 270 },
+                new StackedLineChartData { ExpensesCategory= "Jul", JohnExpenses= 100,PeterExpenses= 30, SteveExpenses= 70,  CharleExpenses= 40  },
+                new StackedLineChartData { ExpensesCategory= "Aug", JohnExpenses= 55, PeterExpenses= 95, SteveExpenses= 55,  CharleExpenses= 75  },
+                new StackedLineChartData { ExpensesCategory= "Sep", JohnExpenses= 20, PeterExpenses= 50, SteveExpenses= 40,  CharleExpenses= 65  },
+                new StackedLineChartData { ExpensesCategory= "Oct", JohnExpenses= 40, PeterExpenses= 20, SteveExpenses= 80,  CharleExpenses= 95  },
+                new StackedLineChartData { ExpensesCategory= "Nov", JohnExpenses= 45, PeterExpenses= 15, SteveExpenses= 45,  CharleExpenses= 195 },
+                new StackedLineChartData { ExpensesCategory= "Dec", JohnExpenses= 75, PeterExpenses= 45, SteveExpenses= 65,  CharleExpenses= 115 }
             };
-            ViewBag.dataSource = chartData;
+            ViewBag.ChartPoints = ChartPoints;
             return View();
         }
 
-        public class StackedChartData
+        public class StackedLineChartData
         {
-            public string x;
-            public double y;
-            public double y1;
-            public double y2;
-            public double y3;
+            public string ExpensesCategory;
+            public double JohnExpenses;
+            public double PeterExpenses;
+            public double SteveExpenses;
+            public double CharleExpenses;
         }
     }
 }

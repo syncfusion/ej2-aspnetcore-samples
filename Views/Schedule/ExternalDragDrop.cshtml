@@ -32,7 +32,7 @@
                 <div class="title-container">
                     <h2 class="title-text">Waiting List</h2>
                 </div>
-                <ejs-treeview id="tree" allowDragAndDrop="true" dragArea=".content-wrapper" nodeDragStop="onTreeDragStop" nodeDragging="onTreeDrag" nodeDragStart="onTreeDragStart" nodeTemplate="#treeTemplate" cssClass="treeview-external-drag">
+                <ejs-treeview id="tree" allowDragAndDrop="true" dragArea=".content-wrapper" nodeDragStop="onTreeDragStop" nodeSelecting="onItemSelecting" nodeDragging="onTreeDrag" nodeDragStart="onTreeDragStart" nodeTemplate="#treeTemplate" cssClass="treeview-external-drag">
                     <e-treeview-fields dataSource="ViewBag.treeDataSource" id="Id" text="Name"></e-treeview-fields>
                 </ejs-treeview>
             </div>
@@ -316,6 +316,10 @@
                     remove(elements[i]);
                 }
             }
+        }
+
+        function onItemSelecting(args){
+            args.cancel = true;
         }
 
         function onTreeDragStop(event) {

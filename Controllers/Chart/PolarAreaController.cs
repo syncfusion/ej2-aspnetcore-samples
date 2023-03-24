@@ -18,43 +18,25 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
     {
         public IActionResult PolarArea()
         {
-            List<PolarAreaChartData> chartData = new List<PolarAreaChartData>
+            List<PolarAreaChartData> ChartPoints = new List<PolarAreaChartData>
             {
-                new PolarAreaChartData { x= "2000", y= 4 }, 
-                new PolarAreaChartData { x= "2001", y= 3.0 },
-                new PolarAreaChartData { x= "2002", y= 3.8 }, 
-                new PolarAreaChartData { x= "2003", y= 3.4 },
-                new PolarAreaChartData { x= "2004", y= 3.2 }, 
-                new PolarAreaChartData { x= "2005", y= 3.9 }
+                new PolarAreaChartData { Period = "2000", ProductRevenue_A = 4  , ProductRevenue_B = 2.6, ProductRevenue_C = 2.8},
+                new PolarAreaChartData { Period = "2001", ProductRevenue_A = 3.0, ProductRevenue_B = 2.8, ProductRevenue_C = 2.5 },
+                new PolarAreaChartData { Period = "2002", ProductRevenue_A = 3.8, ProductRevenue_B = 2.6, ProductRevenue_C = 2.8 },
+                new PolarAreaChartData { Period = "2003", ProductRevenue_A = 3.4, ProductRevenue_B = 3  , ProductRevenue_C = 3.2 },
+                new PolarAreaChartData { Period = "2004", ProductRevenue_A = 3.2, ProductRevenue_B = 3.6, ProductRevenue_C = 2.9 },
+                new PolarAreaChartData { Period = "2005", ProductRevenue_A = 3.9, ProductRevenue_B = 3  , ProductRevenue_C = 2   }
             };
-            ViewBag.dataSource = chartData;
-            List<PolarAreaChartData> chartData1= new List<PolarAreaChartData>
-            {
-                new PolarAreaChartData { x= "2000", y= 2.6 }, 
-                new PolarAreaChartData { x= "2001", y= 2.8 },
-                new PolarAreaChartData { x= "2002", y= 2.6 }, 
-                new PolarAreaChartData { x= "2003", y= 3 },
-                new PolarAreaChartData { x= "2004", y= 3.6 }, 
-                new PolarAreaChartData { x= "2005", y= 3 }
-            };
-            ViewBag.dataSource1 = chartData1;
-            List<PolarAreaChartData> chartData2 = new List<PolarAreaChartData>
-            {
-                new PolarAreaChartData { x= "2000", y= 2.8 },
-                new PolarAreaChartData { x= "2001", y= 2.5 },
-                new PolarAreaChartData { x= "2002", y= 2.8 },
-                new PolarAreaChartData { x= "2003", y= 3.2 },
-                new PolarAreaChartData { x= "2004", y= 2.9 },
-                new PolarAreaChartData { x= "2005", y= 2 }
-            };
-            ViewBag.dataSource2 = chartData2;
+            ViewBag.ChartPoints = ChartPoints;
             ViewBag.select = new string[] { "Polar", "Radar" };
             return View();
         }
         public class PolarAreaChartData
         {
-            public string x;
-            public double y;
+            public string Period;
+            public double ProductRevenue_A;
+            public double ProductRevenue_B;
+            public double ProductRevenue_C;
         }
     }
 }

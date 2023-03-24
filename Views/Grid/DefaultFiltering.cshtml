@@ -1,0 +1,110 @@
+@{
+    ViewData["Title"] = "Filtering";
+}
+
+@section ControlsSection{
+    <div class="col-lg-9 control-section">
+        <div class="control-wrapper">
+            <ejs-grid id="Grid" dataSource="ViewBag.datasource" allowFiltering="true" allowPaging="true">
+                <e-grid-pagesettings pageCount="5"></e-grid-pagesettings>
+                <e-grid-columns>
+                    <e-grid-column field="CategoryName" headerText="Category Name" textAlign="Right" width="150"></e-grid-column>
+                    <e-grid-column field="ProductName" headerText="Product Name" width="150"></e-grid-column>
+                    <e-grid-column field="UnitsInStock" headerText="Units in Stock" textAlign="Right" width="150"></e-grid-column>
+                    <e-grid-column field="Discontinued" headerText="Discontinued" width="150" displayAsCheckBox="true" textAlign="Center" type="boolean"></e-grid-column>
+                </e-grid-columns>
+
+            </ejs-grid>
+        </div>
+    </div>
+
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties" style="width: 100%;">
+            <tbody>
+                <tr>
+                    <td style="width: 60%">
+                        <div style="padding-left: 0px">Enable Filterbar Operator</div>
+                    </td>
+                    <td style="width: 30%;padding-bottom: 10px">
+                        <div>
+                            <ejs-checkbox id="filterbarOperator" change="filterbarOperator"></ejs-checkbox>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function filterbarOperator(args) {
+            var grid = document.getElementById("Grid").ej2_instances[0];
+            if (this.checked) {
+                grid.filterSettings.showFilterBarOperator = true;
+            } else {
+                grid.filterSettings.showFilterBarOperator = false;
+            }
+            grid.clearFiltering();
+
+        }
+
+    </script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the Grid's default filtering feature. Type a value in the filterbar and press enter to filter a particular column.
+        </p>
+    </div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Default Filtering in ASP.NET Core Data Grid control. Explore here for more details."/>
+                }
+
+@section Description{
+    <div id="description">
+        <p>
+            The filtering feature enables the user to view a reduced amount of records based on filter criteria. It can be enabled
+            by setting the <code>allowFiltering</code> property to true. A filter bar row will be rendered next to header which allows users to filter
+        data by entering text within its cells.
+        </p>
+        <p>The Filterbar uses two modes which specifies how to start filtering. They are,</p>
+        <ul>
+            <li><code>Onenter</code> - Enabled by default, filter will be initiated when the <code>Enter</code> key is pressed.</li>
+            <li>
+                <code>Immediate</code> - Filter will start after user finishes typing. There will be a time delay of <i>1500ms</i> to initiate
+                filter after the user stops typing. It can be overridden using the <code>filterSettings->immediateModeDelay</code> property.
+            </li>
+        </ul>
+        <p>In this demo, you can type the text in the filter bar cells to filter.</p>
+        <p>
+            Additionally, the records can also be filtered based on the selected filterbar operator. It can be enabled by setting
+            <br />
+            <code>filterSettings->showFilterBarOperator</code> property to true.
+        </p>
+        <p>In this demo,</p>
+        <ul>
+            <li>To enable or disable filterbar operator feature, check or uncheck the checkbox in the properties panel.</li>
+            <li>Select the required filtering operator in the dropdown list on the filter bar cell and type the text to start filtering.</li>
+            <li>Now, the addition of new filter operators such as "Does Not Contain", "Does Not End With", "Does Not Start With", "Empty", "Not Empty", "Null", "Not Null", "Like", and "Wildcard search" greatly enhance the filtering feature of the Grid.</li>
+         </ul>
+        <p>For example, when the <b>Like</b> search operator is used:</p>
+        <ul>
+            <li>%a% - Filters words containing the character 'a'</li>
+            <li>a%  - Filters words ending with 'a'</li>
+            <li>%a  - Filters words starting with 'a'</li>
+         </ul>
+        <p>For example when the <b>Wildcard</b> search operator is used:</p>
+        <ul>
+            <li>a*b - Filters words that start with 'a' and end with 'b'</li>
+        </ul>
+        <br />
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Data Grid Default Filtering Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Default Filtering in ASP.NET Core Data Grid Control</h1>
+                }

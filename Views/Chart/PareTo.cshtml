@@ -1,0 +1,83 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+
+    <div class="control-section">
+        <div id="container" align='center'>
+            <ejs-chart id="lineContainer" load="load" title="Pareto chart - Defects in Shirts">
+                <e-chart-tooltipsettings enable="true" shared="false">
+                </e-chart-tooltipsettings>
+                <e-chart-chartarea>
+                    <e-chartarea-border width="0"></e-chartarea-border>
+                </e-chart-chartarea>
+                <e-chart-legendsettings visible="false">
+                </e-chart-legendsettings>
+                <e-chart-primaryxaxis labelIntersectAction="@Syncfusion.EJ2.Charts.LabelIntersectAction.Rotate45" interval="1" valueType="@Syncfusion.EJ2.Charts.ValueType.Category">
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                    <e-minorgridlines width="0"></e-minorgridlines>
+                    <e-majorticklines width="0"></e-majorticklines>
+                    <e-minorticklines width="0"></e-minorticklines>
+                    <e-linestyle width="0"></e-linestyle>
+                </e-chart-primaryxaxis>
+                <e-chart-primaryyaxis title="Frequency of Occurence" minimum="0" maximum="25" interval="5">
+                    <e-majorgridlines width="1"></e-majorgridlines>
+                    <e-minorgridlines width="1"></e-minorgridlines>
+                    <e-majorticklines width="0"></e-majorticklines>
+                    <e-minorticklines width="0"></e-minorticklines>
+                    <e-linestyle width="0"></e-linestyle>
+                </e-chart-primaryyaxis>
+                <e-series-collection>
+                    <e-series dataSource="ViewBag.ChartPoints" width="2" name="Defect" xName="DefectCategory" yName="Y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Pareto">
+                        <e-series-marker visible="true"></e-series-marker>
+                    </e-series>
+                </e-series-collection>
+            </ejs-chart>
+        </div>
+    </div>
+        @*custom code start*@
+    <script>
+        function load(args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+        }
+    </script>
+        @*custom code end*@
+}
+    @*custom code start*@
+@section Scripts {
+
+}
+
+<style>
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Pareto Chart in ASP.NET Core Chart control. Explore here for more details."/>
+                }
+    @*custom code end*@
+@section ActionDescription{
+    <p>
+        This sample illustrates a pareto chart with line and column series.
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can see how to render and configure a pareto chart. The pareto chart is used to find the cumulative values of the data in different categories. It is a combination of the column and line series. The initial values are shown in the column chart and the cumulative values are shown in the line chart.
+    </p>
+    <p>
+        <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+    </p>
+    <p>
+        More information about the pareto series can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/other-types#pareto-chart">documentation section</a>.
+    </p>
+}
+@section Title{
+                    <title>ASP.NET Core Chart Pareto Chart Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Pareto Chart in ASP.NET Core Chart Control</h1>
+                }

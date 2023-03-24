@@ -1,0 +1,101 @@
+﻿@using Syncfusion.EJ2.Maps;
+@section ControlsSection{
+    @{
+        var TextStyle = new MapsFont { Size = "16px", FontFamily = "inherit" };
+        var CenterPosition = new MapsCenterPosition { Latitude = 27.0902, Longitude = -105.7129 };
+        var Markers = new List<Syncfusion.EJ2.Maps.MapsMarker>
+        {
+            new Syncfusion.EJ2.Maps.MapsMarker
+            {
+                Visible=  true,
+                Offset = new { x=2, y= -7 },
+                Template = "<div><img src=../styles/images/maps/ballon.png style='height:30px; margin-left: -12px;margin-top: 5px; width: 20px;'></img></div>",
+                TooltipSettings = new MapsTooltipSettings{ Visible=true, ValuePath="name" },
+                DataSource = new[] { new { name="Mexico City", latitude= 24.2005, longitude= -102.832 } }
+            },
+            new Syncfusion.EJ2.Maps.MapsMarker
+            {
+                Visible = true,
+                Template = "<div><img src=../styles/images/maps/group.svg style='height:15px; margin-left: -9px; width: 15px;'></img></div>",
+                TooltipSettings = new MapsTooltipSettings{ Visible = true, ValuePath="name" },
+                DataSource = new[] { new { name="Mexico City", latitude=23.6445, longitude=-102.832 } },
+            },
+            new Syncfusion.EJ2.Maps.MapsMarker
+            {
+                Visible=  true,
+                Offset = new { x=2, y= -7 },
+                Template = "<div style=font-weight:500;font-size:13px;text-align:left>Mexico</div>",
+                TooltipSettings = new MapsTooltipSettings{ Visible=true, ValuePath="name" },
+                DataSource = new[] { new { name="Mexico City", latitude= 24.0005, longitude= -101.200 } }
+            },
+            new Syncfusion.EJ2.Maps.MapsMarker
+            {
+                Visible=  true,
+                Template = "<div><img src=../styles/images/maps/oval.svg style=height:15px;width:15px;></img></div>",
+                TooltipSettings = new MapsTooltipSettings{ Visible=true, ValuePath="name" },
+                DataSource = new[] { new { name="Los Angeles", latitude=34.0522, longitude=-118.2437 } }
+            },
+            new Syncfusion.EJ2.Maps.MapsMarker
+            {
+                Visible=  true,
+                Template = "<div><div style=text-align:right;font-weight:500;font-size: 13px;>Los Angeles</br>International Airport</div></div>",
+                DataSource = new[] { new { name="Los Angeles City", latitude=34.7000, longitude=-121.5000 } }
+            },
+                new Syncfusion.EJ2.Maps.MapsMarker
+            {
+                Visible=  true,
+                Template = "<div><img src=../styles/images/maps/map-tooltip.svg style='height:50px;margin-left:-10px; width:100px;'></img></div>",
+                DataSource = new[] { new { latitude=28.5, longitude=-110.50 } }
+            }
+        };
+    }
+    <div class="control-section">
+        <div class="row">
+            <div class="col-md-12">
+                <ejs-maps id="maps" load="window.mapLoad" centerPosition="CenterPosition">
+                    <e-maps-titlesettings alignment="@Syncfusion.EJ2.Maps.Alignment.Center" text="Flight route from Los Angeles to Mexico city" textStyle="@TextStyle">
+                    </e-maps-titlesettings>
+                    <e-maps-zoomsettings zoomFactor="5" enable="false"></e-maps-zoomsettings>
+                    <e-maps-layers>
+                        <e-maps-layer layerType="@Syncfusion.EJ2.Maps.ShapeLayerType.OSM" markerSettings="@Markers">
+                            <e-layersettings-navigationlines>
+                                <e-layersettings-navigationline visible="true" angle="-0.05" Width="8" color="#00ace6" latitude="new[] { 23.6445, 34.0522 }" longitude="new[] { -102.832, -118.2437 }">
+                                </e-layersettings-navigationline>                               
+                            </e-layersettings-navigationlines>
+                        </e-maps-layer>
+                    </e-maps-layers>
+                </ejs-maps>
+                <div style="float: right">
+                    <a href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap contributors</a>
+                </div><br />
+                <div style="float: right; margin-right: 10px;">
+                    Source:
+                    <a href="https://en.wikipedia.org/wiki/Headquarters_of_the_United_Nations" target="_blank">en.wikipedia.org</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">        
+        function mapLoad(args) {
+            @* custom code start *@
+            var theme = themeName ? themeName : "Material";
+            args.maps.theme = (theme.charAt(0).toUpperCase() +
+                theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+            @* custom code end *@
+        }
+    </script>
+}
+@section Description{
+     <div id="description">
+        <p>
+            In this example, you can see how to render the navigation lines in the OpenStreetMap. The source and destination locations have been denoted using the marker template.
+        </p>       
+    </div>
+}
+@section ActionDescription{
+   <div id="action-description">
+        <p>
+            This sample illustrates the flight route from Los Angeles to Mexico City using navigation lines in the OpenStreetMap.
+       </p>
+    </div>
+}

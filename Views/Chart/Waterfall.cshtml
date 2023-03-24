@@ -1,0 +1,107 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="control-section">
+        <div id="container" align="center">
+            <ejs-chart id="container" title="Company Revenue and Profit" 
+                      load="load">
+                <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category">
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                    <e-majorticklines width="0"></e-majorticklines>
+                </e-chart-primaryxaxis>
+                <e-chart-primaryyaxis minimum="0" maximum="1250" interval="250" title="USD" labelFormat="{value}K">
+                    <e-majorticklines width="0"></e-majorticklines>
+                    <e-linestyle width="0"></e-linestyle>
+                </e-chart-primaryyaxis>
+                <e-chart-chartarea>
+                    <e-chartarea-border width="0"></e-chartarea-border>
+                </e-chart-chartarea>
+                <e-chart-tooltipsettings enable="true" header="" format="<b>${point.x}</b> <br> Product Revenue : <b>${point.y}</b>">
+                </e-chart-tooltipsettings>
+                <e-chart-legendsettings visible="false"></e-chart-legendsettings>
+                <e-series-collection>
+                    <e-series dataSource="ViewBag.ChartPoints" width=2 negativeFillColor="#e56590" connector="ViewBag.connector"
+                              xName="X" yName="Y" intermediateSumIndexes="ViewBag.intermediateSumIndexes" sumIndexes="ViewBag.sumIndexes"
+                              name="USA" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Waterfall">
+                        <e-series-border width="1" color="black"></e-series-border>
+                        <e-series-marker>
+                            <e-series-datalabel visible="true">
+                            </e-series-datalabel>
+                        </e-series-marker>
+                    </e-series>
+                </e-series-collection>
+            </ejs-chart>
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+        @*custom code start*@
+        function load(args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+            args.chart.primaryXAxis.labelIntersectAction = ej.base.Browser.isDevice?'None':'Rotate45';
+            args.chart.primaryXAxis.labelRotation = ej.base.Browser.isDevice?'-45':'0';
+        }
+        @*custom code  end*@
+    </script>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Waterfall in ASP.NET Core Chart control. Explore here for more details."/>
+                }
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample visualizes the revenue and profits of a company using the default waterfall series chart. The tooltip provides details on the profits made by each department.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this example, you can see how to render and configure the waterfall chart. The waterfall chart explains the gradual change in the quantitative value of an entity that is subject to changes by increments or decrements.
+        </p>
+        <p>
+            <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover over a point or tap on a point in touch-enabled devices.
+        </p>
+        <p>
+            More information about the waterfall series can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/other-types#waterfall-chart">documentation section</a>.
+        </p>
+    </div>
+}
+    @*custom code start*@
+@section Scripts {
+}
+
+    <style>
+    #control-container {
+        padding: 0px !important;
+    }
+
+    #container_Series_0_Connector_ {
+        stroke-dasharray: 4px 4px;
+        stroke-linejoin: round; stroke-linecap: round;
+        -webkit-animation: dash 1s linear infinite;
+        animation: dash 1s linear infinite;
+    }
+
+    @@-webkit-keyframes dash {
+        100% {
+            stroke-dashoffset: -20px;
+        }
+    }
+
+    @@keyframes dash {
+        100% {
+            stroke-dashoffset: -20px;
+        }
+    }
+    </style>
+    @*custom code end*@
+@section Title{
+                    <title>ASP.NET Core Chart Waterfall Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Waterfall in ASP.NET Core Chart Control</h1>
+                }

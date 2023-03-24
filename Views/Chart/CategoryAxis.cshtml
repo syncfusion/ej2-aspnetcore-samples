@@ -1,0 +1,105 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+   <div class="control-section">
+        <div id="container" align='center'>
+            <ejs-chart id="lineContainer" title="Internet Users – 2016" load="load" pointRender="labelRender" >
+                <e-chart-legendsettings visible="false"></e-chart-legendsettings>
+                <e-chart-chartarea>
+                    <e-chartarea-border width="0"></e-chartarea-border>
+                </e-chart-chartarea>
+                <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category" enableTrim="false">
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                    <e-majorticklines width="0"></e-majorticklines>
+                </e-chart-primaryxaxis>
+                <e-chart-primaryyaxis minimum=0 maximum=800
+                                edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift" labelFormat="{value}M">
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                    <e-majorticklines width="0"></e-majorticklines>
+                    <e-linestyle width="0"></e-linestyle>
+                    <e-labelstyle color="Transparent"></e-labelstyle>
+                </e-chart-primaryyaxis>
+                <e-series-collection>
+                    <e-series dataSource="ViewBag.ChartPoints" name="Users" xName="Country" width="2" tooltipMappingName="TooltipMappingName" yName="Users" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Bar">
+                        <e-series-marker>
+                            <e-series-datalabel visible="true" position="@Syncfusion.EJ2.Charts.LabelPosition.Top">
+                                <e-font color="#ffffff" fontWeight="600"></e-font>  
+                            </e-series-datalabel>
+                        </e-series-marker>
+                    </e-series>
+                </e-series-collection>
+            </ejs-chart>
+        </div>
+    </div>
+
+    <script>
+        function labelRender(args) {
+            var selectedTheme = themeName ? themeName : 'Material';
+            var materialColors = ['#00bdae', '#404041', '#357cd2', '#e56590', '#f8b883', '#70ad47', '#dd8abd', '#7f84e8', '#7bb4eb',
+                '#ea7a57', '#404041', '#00bdae'];
+            var fabricColors = ['#4472c4', '#ed7d31', '#ffc000', '#70ad47', '#5b9bd5',
+                '#c1c1c1', '#6f6fe2', '#e269ae', '#9e480e', '#997300', '#4472c4', '#70ad47', '#ffc000', '#ed7d31'];
+            var bootstrapColors = ['#a16ee5', '#f7ce69', '#55a5c2', '#7ddf1e', '#ff6ea6',
+                '#7953ac', '#b99b4f', '#407c92', '#5ea716', '#b91c52'];
+            var highContrastColors = ['#79ECE4', '#E98272', '#DFE6B6', '#C6E773', '#BA98FF',
+                '#FA83C3', '#00C27A', '#43ACEF', '#D681EF', '#D8BC6E'];
+            var fluentColors = ["#614570", "#4C6FB1", "#CC6952", "#3F579A", "#4EA09B", "#6E7A89", "#D4515C", "#E6AF5D", "#639751", "#9D4D69"];
+            var fluentDarkColors = ["#8AB113", "#2A72D5", "#43B786", "#584EC6", "#E85F9C", "#6E7A89", "#EA6266", "#EBA844", "#26BC7A", "#BC4870"];
+            if (selectedTheme && selectedTheme.indexOf('fabric') > -1) {
+                args.fill = fabricColors[args.point.index % 10];
+            }
+            else if (selectedTheme === 'material') {
+                args.fill = materialColors[args.point.index % 10];
+            }
+            else if (selectedTheme === 'highcontrast') {
+                args.fill = highContrastColors[args.point.index % 10];
+            }
+            else if (selectedTheme === 'fluent') {
+                args.fill = fluentColors[args.point.index % 10];
+            } 
+            else if (selectedTheme === 'fluent-dark') {
+                args.fill = fluentDarkColors[args.point.index % 10];
+            }
+            else {
+                args.fill = bootstrapColors[args.point.index % 10];
+            }
+        };
+
+        function load(args) {
+            @* custom code start *@
+            var indexedTheme = themeName ? themeName : 'Material';
+            args.chart.theme = (indexedTheme.charAt(0).toUpperCase() + indexedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+            @* custom code end *@ 
+            args.chart.series[0].marker.dataLabel.font.size = ej.base.Browser.isDevice ? '9px' : '11px';
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+        }
+
+    </script>
+
+}
+@*custom code start*@
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Category Axis in ASP.NET Core Chart control. Explore here for more details."/>
+                }
+@*custom code end*@
+@section ActionDescription{
+    <p>
+        This sample shows a category axis in a chart with details about internet users across different countries.
+    </p>
+}
+@section Description{
+    <div id="description">
+        <p>
+            You can use the category axis to represent string values instead of numbers in the chart. To use the category axis, set <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.ChartAxis.html#Syncfusion_EJ2_Charts_ChartAxis_ValueType">ValueType</a> in axis to <b>Category</b>.
+        </p>
+        <p>
+            More information about the category axis can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/category-axis">documentation section</a>.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Chart Category Axis Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Category Axis in ASP.NET Core Chart Control</h1>
+                }

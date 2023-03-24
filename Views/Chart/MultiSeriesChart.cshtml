@@ -1,0 +1,81 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+<div class="control-section">
+    <div id="container" align="center">
+        <ejs-chart id="lineContainer" load="load" title="Annual Growth of GDP in France">
+            <e-chart-chartarea>
+                <e-chartarea-border width="0"></e-chartarea-border>
+            </e-chart-chartarea>
+            <e-chart-tooltipsettings enable="true"></e-chart-tooltipsettings>
+            <e-chart-legendsettings enableHighlight="true">
+            </e-chart-legendsettings>
+            <e-chart-primaryxaxis title="Years"
+                                  labelIntersectAction="@Syncfusion.EJ2.Charts.LabelIntersectAction.Rotate45" 
+                                  valueType="@Syncfusion.EJ2.Charts.ValueType.Category">
+                <e-majorgridlines width="0"></e-majorgridlines>
+                <e-majorticklines width="0"></e-majorticklines>
+            </e-chart-primaryxaxis>
+            <e-chart-primaryyaxis title="Growth (in Billion)" minimum=-3 maximum=3 interval=1 labelFormat="{value}B">
+                <e-majorticklines width="0"></e-majorticklines>
+                <e-linestyle width="0"></e-linestyle>
+            </e-chart-primaryyaxis>
+            <e-series-collection>
+                <e-series dataSource="ViewBag.ChartPoints" name="Private Consumption" xName="Period" yName="PVT_Consumption" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StackingColumn"></e-series>
+                <e-series dataSource="ViewBag.ChartPoints" name="Government Consumption" xName="Period" yName="GOVT_Consumption" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StackingColumn"></e-series>
+                <e-series dataSource="ViewBag.ChartPoints" name="Investment" xName="Period" yName="Investment" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StackingColumn"></e-series>
+                <e-series dataSource="ViewBag.ChartPoints" name="Net Foreign Trade" xName="Period" yName="Trade" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StackingColumn"></e-series>
+                <e-series dataSource="ViewBag.ChartPoints" name="GDP" xName="Period" width="2" opacity="0.6" yName="GDP" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Line">
+                    <e-series-marker visible="true" height="7" width="7"></e-series-marker>
+                </e-series>
+            </e-series-collection>
+        </ejs-chart>
+    </div>
+</div>
+@*custom code start*@
+    <script>
+        function load(args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+        }
+    </script>
+    @*custom code end*@
+}
+@*custom code start*@
+@section Scripts {
+
+}
+
+<style>
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Multi-Series Chart in ASP.NET Core Chart control. Explore here for more details."/>
+                }
+@*custom code end*@
+@section ActionDescription{
+    <p>
+        This sample shows the annual growth of Gross Domestic Product (GDP) in France in a combination of line and stacked column series. A tooltip shows information about the data points.
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can see how to render and configure different type of charts. You can chart multiple variables on the y-axis.
+    </p>
+    <p>
+        <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+    </p>
+    <p>
+        More information about the multiple series can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/chart-series#multiple-series">documentation section</a>.
+    </p>
+}
+@section Title{
+                    <title>ASP.NET Core Chart Multi-Series Chart Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Multi-Series Chart in ASP.NET Core Chart Control</h1>
+                }

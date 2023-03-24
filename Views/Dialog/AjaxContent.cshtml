@@ -1,0 +1,164 @@
+@using Syncfusion.EJ2
+@{
+    var ajaxbutton = new
+    {
+        content = "More Details",
+        isPrimary = true
+    };
+}
+@section ControlsSection{
+<div class="col-lg-12 control-section" id="target">
+    <ejs-button id="dialogBtn" content="Open"></ejs-button>
+    <ejs-dialog id="ajax_dialog" width="500px" showCloseIcon="true" created="dialogCreated" open="dialogOpen" target="#target" close="dialogClose" header="<span class='e-avatar template-image e-avatar-xsmall image'></span>What's Coming from Microsoft this Fall">
+        <e-content-template>
+            On October 17, Microsoft will release its Fall Creators Update for the Windows 10 platform.Much like itscounterpart, the Spring Creators Update, the release is set to deliver more features to Windows 10 forboth developers and users with particular emphasis this time around on app modernization, mixed reality and gamedevelopment and software updates. App modernization is the term Microsoft used in its press event features that hat will affect most Windows 10 users and developers.
+        </e-content-template>
+        <e-dialog-buttons>
+            <e-dialog-dialogbutton buttonModel="ajaxbutton" click="dlgButtonClick"></e-dialog-dialogbutton>
+        </e-dialog-buttons>
+    </ejs-dialog>
+</div>
+}
+<style>
+    /* custom code start */
+    #target {
+        height: 100%;
+        min-height: 350px;
+    }
+    /* custom code end */
+
+    .bootstrap .e-dialog .e-dlg-header >img.img1 {
+        margin-top: 1px;
+    }
+
+    .tailwind .e-dialog .e-dlg-header >img.img1,
+    .tailwind-dark .e-dialog .e-dlg-header >img.img1,
+    .bootstrap5 .e-dialog .e-dlg-header >img.img1,
+    .bootstrap5-dark .e-dialog .e-dlg-header >img.img1,
+    .bootstrap4 .e-dialog .e-dlg-header >img.img1,
+    .fluent .e-dialog .e-dlg-header >img.img1,
+    .fluent-dark .e-dialog .e-dlg-header >img.img1 {
+        margin-top: 0px;
+    }
+
+    div#control-content {
+        height: 400px;
+    }
+
+    .e-dlg-header-content {
+        min-height: 65px;
+    }
+
+    .tailwind .e-dlg-header-content,
+    .tailwind-dark .e-dlg-header-content,
+    .bootstrap5 .e-dlg-header-content,
+    .bootstrap5-dark .e-dlg-header-content,
+    .bootstrap4 .e-dlg-header-content {
+       min-height: 50px; 
+    }
+
+    .e-bigger .e-dialog .e-icon-dlg-close::before {
+        top: 0px;
+    }
+
+    @@media screen and (min-width: 150px) and (max-width: 480px) {
+        .control-section {
+            margin-bottom: 30px;
+        }
+
+        .control-wrapper {
+            margin-bottom: 0px;
+        }
+    }
+    .material .e-dialog {
+        height: 245px;
+    }
+    .material.e-bigger .e-dialog {
+        height: 270px;
+    }
+    .fabric .e-dialog, .bootstrap .e-dialog, .highcontrast .e-dialog {
+        height: 322px;
+    }
+    .e-dialog .e-dlg-header-content .e-dlg-header .e-avatar.template-image {
+        background-image: url(@Url.Content("~/css/Dialog/images/2.png"));
+        vertical-align: middle;
+        display: inline-block;
+        background-color: transparent;
+        border-radius: 0;
+        height: 20px;
+        width: 20px;
+        float: left;
+        margin-top: 5px;
+        margin-right: 10px;
+    }
+</style>
+
+@section PreScripts {
+    <script>
+        var dialogObj;
+        var lessContent = 'On October 17, Microsoft will release its Fall Creators Update for the Windows 10 platform. Much like its previous counterpart, the Spring Creators Update, the release is set to deliver more features to Windows 10 for both developers and users, with particular emphasis this time around on app modernization, mixed reality, and game development and software updates. App modernization is the term Microsoft used in its press event to encompass the features that will affect most Windows 10 users and developers.';
+        function dlgButtonClick() {
+            if (document.querySelector('.e-footer-content .e-btn').textContent === 'More Details') {
+                var ajax = new ej.base.Ajax(baseurl + 'css/Dialog/blog.html', 'GET', true);
+                ajax.send().then();
+                ajax.onSuccess = function (data) {
+                    dialogObj.setProperties(
+                        { content: data }
+                    );
+                };
+                dialogObj.buttons = [{ click: dlgButtonClick, buttonModel: { content: 'Less Details', isPrimary: true } }];
+                dialogObj.dataBind();
+            }
+            else {
+                dialogObj.content = lessContent;
+                dialogObj.buttons = [{ click: dlgButtonClick, buttonModel: { content: 'More Details', isPrimary: true } }];
+                dialogObj.dataBind();
+            }
+        }
+        function dialogCreated() {
+            dialogObj = this;
+        }
+        function dialogClose() {
+            document.getElementById('dialogBtn').style.display = 'block';
+        }
+        function dialogOpen() {
+            document.getElementById('dialogBtn').style.display = 'none';
+            /* custom code start */
+            document.getElementById("ajax_dialog").ej2_instances[0].zIndex = 10000;
+            /* custom code end */
+        }
+        document.getElementById('dialogBtn').onclick = function () {
+            dialogObj.show();
+        };
+    </script>
+}
+
+@section ActionDescription{
+<div id="action-description">
+    <p>
+        This example demonstrates that the content of dialog can be loaded from external HTML file. Click "more details" on dialog to load the content dynamically from external HTML file. Click “open” to show the dialog again, if it is closed.
+    </p>
+</div>
+}
+
+@section Description{
+<div id="description">
+    <p>
+        The user can load dialog's content dynamically from external source like external file using AJAX library. The AJAX library can make the request and load dialog's content using its success event.
+    </p>
+</div>
+}
+
+@*custom code start*@
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Ajax Content in ASP.NET Core Dialog control. Explore here for more details."/>
+                }
+
+@*custom code end*@
+@section Title{
+                    <title>ASP.NET Core Dialog Ajax Content Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Ajax Content in ASP.NET Core Dialog Control</h1>
+                }

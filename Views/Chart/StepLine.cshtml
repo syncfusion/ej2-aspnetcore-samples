@@ -1,0 +1,72 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="control-section" align="center">
+        
+        <ejs-chart id="lineContainer" load="load" title="Fruit Production Statistics">
+            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.DateTime" minimum="new DateTime(1971, 01, 1)" maximum="new DateTime(2012, 01, 1)" edgelabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift">
+                <e-majorgridlines width="0"></e-majorgridlines>
+            </e-chart-primaryxaxis>
+            <e-chart-primaryyaxis interval="10" labelFormat="{value}%" title="Production (In Percentage)">
+                <e-majorticklines width="0"></e-majorticklines>
+                <e-linestyle width="0"></e-linestyle>
+            </e-chart-primaryyaxis>
+            <e-chart-chartarea>
+                <e-chartarea-border width="0"></e-chartarea-border>
+            </e-chart-chartarea>
+            <e-series-collection>
+                <e-series dataSource="ViewBag.StepLineData" xName="Period" width="5" opacity="1" yName="AUS_UnemploymentRate" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StepLine">
+                    <e-series-marker visible="true" height="7" width="7"></e-series-marker>
+                </e-series>
+            </e-series-collection>
+            <e-chart-tooltipsettings enable="true" shared="true" header="<b>Fruit Production</b>" format="${point.x} : <b>${point.y}"></e-chart-tooltipsettings>
+        </ejs-chart>
+    </div>
+    
+    @*custom code start*@
+    <script>
+        function load(args) {
+            var selectedTheme = location.hash.split("/")[1];
+            selectedTheme = selectedTheme ? selectedTheme : "Material";
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+        }
+    </script>
+@*custom code end*@
+}
+@*custom code start*@
+@section Scripts {
+
+}
+
+<style>
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Step Line in ASP.NET Core Chart control. Explore here for more details."/>
+                }
+@*custom code end*@
+@section ActionDescription{
+    <p>
+        This <a target="_blank" href="https://www.syncfusion.com/aspnet-core-ui-controls/charts/chart-types/stepline-chart">ASP.NET MVC Step Line Chart</a> example visualizes the fruit production statistics with default step line series in the chart.
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can see how to render and configure a step line chart. This chart forms the step line progress by connecting points using vertical and horizontal lines. <code>Markers</code> are used to represent individual data and its values.
+    </p>
+    <p>
+        <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+    </p>
+    <p>
+        More information about the step line series can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/chart-types#line-charts">documentation section</a>.
+    </p>
+}
+@section Title{
+                    <title>ASP.NET Core Chart Step Line Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Step Line in ASP.NET Core Chart Control</h1>
+                }

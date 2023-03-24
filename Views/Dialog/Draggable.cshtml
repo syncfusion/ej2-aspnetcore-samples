@@ -1,0 +1,103 @@
+@using Syncfusion.EJ2
+@{
+    var defaultanimation = new Syncfusion.EJ2.Popups.DialogAnimationSettings { Effect = Syncfusion.EJ2.Popups.DialogEffect.None };
+}
+
+@section ControlsSection {
+    <div class="col-lg-12 control-section" id="target">
+        <ejs-button id="dialogBtn" cssClass="dlgbtn" content="Open Dialog"></ejs-button>
+        <ejs-dialog id="defaultDialog" allowDragging="true" isModal="true" animationSettings="defaultanimation" visible="true" width="300px" target="#target" open="dialogOpen"
+                    close="dialogClose" showCloseIcon="true" header="Drag Me!!!">
+            <e-content-template>
+                <span>This is a dialog with draggable support.</span>
+            </e-content-template>
+        </ejs-dialog>
+    </div>
+}
+
+@section PreScripts{
+    <script>
+        document.getElementById('dialogBtn').onclick = function () {
+            var dialogObj = document.getElementById('defaultDialog').ej2_instances[0];
+            dialogObj.show();
+        };
+        function dialogClose() {
+            document.getElementById('dialogBtn').style.display = 'block';
+        }
+        function dialogOpen() {
+            document.getElementById('dialogBtn').style.display = 'none';
+            /* custom code start */
+            document.getElementById("defaultDialog").ej2_instances[0].zIndex = 10000;
+            /* custom code end */
+        }
+    </script>
+}
+
+<style>
+    .e-btn-hide {
+        display: none;
+    }
+    /* custom code start */
+    #control-container {
+        padding: 0px !important;
+    }
+
+    #confirmDialog {
+        height: 135px;
+    }
+    .dlgbtn {
+        margin-right: 10px;
+    }
+
+    #container {
+        height: 100%;
+        min-height: 280px;
+        position: relative;
+    }
+
+    @@media screen and (min-width: 150px) and (max-width: 480px) {
+        .control-section {
+            margin-bottom: 30px;
+        }
+
+        .control-wrapper {
+            margin-bottom: 0px;
+        }
+    }
+    /* custom code end */
+</style>
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This example demonstrates the drag-and-drop operation of the dialog control.
+            To begin drag-and-drop operation, select a dialog's header using mouse and drop them in the desired location.
+            The dialog can be dragged within the sample container.
+            Enable the "open dialog" button to reopen the dialog if it is closed.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            The drag-and-drop operation is enabled using the <code>allowDragging</code> property. when you configure the <code>target</code> property,
+            the dialog can be dragged within its target container alone.
+            The drag-and-drop feature is used to reposition the dialog dynamically.
+        </p>
+    </div>
+}
+
+@*custom code start*@
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Draggable in ASP.NET Core Dialog control. Explore here for more details."/>
+                }
+
+@*custom code end*@
+@section Title{
+                    <title>ASP.NET Core Dialog Draggable Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Draggable in ASP.NET Core Dialog Control</h1>
+                }

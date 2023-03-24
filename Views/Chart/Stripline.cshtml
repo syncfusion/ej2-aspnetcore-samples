@@ -1,0 +1,98 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+    @{
+        var Vertical = "Vertical";
+    }
+    <div class="control-section" align="center">
+        <ejs-chart id="container" title="Customer Satisfaction Rating" load="load">
+            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category">
+                <e-majorgridlines width="0"></e-majorgridlines>
+                <e-majorticklines width="0"></e-majorticklines>
+            </e-chart-primaryxaxis>
+            <e-chart-primaryyaxis minimum="80" maximum="100" interval="5" rangePadding="@Syncfusion.EJ2.Charts.ChartRangePadding.None" labelFormat="{value}%" stripLines="ViewBag.yAxis">
+                <e-majorticklines width="0"></e-majorticklines>
+                <e-linestyle color="#808080"></e-linestyle>
+            </e-chart-primaryyaxis>
+            <e-chart-chartarea>
+                <e-chartarea-border width="0"></e-chartarea-border>
+            </e-chart-chartarea>
+            <e-chart-legendsettings visible="true" enableHighlight="true"></e-chart-legendsettings>
+            <e-chart-tooltipsettings enable="true" header="" format="<b>${point.x}</b> <br> Ratings : <b>${point.y}</b>"></e-chart-tooltipsettings>
+            <e-series-collection>
+                <e-series xName="Day" yName="Temperature" name="Product A" width="2" dataSource="ViewBag.WeatherReportsA" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline">
+                    <e-series-marker visible="true" height="7" width="7"></e-series-marker>
+                </e-series>
+                <e-series xName="Day" yName="Temperature" name="Product B" width="2" dataSource="ViewBag.WeatherReportsB" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline">
+                    <e-series-marker visible="true" height="7" width="7"></e-series-marker>
+                </e-series>
+                <e-series xName="Day" yName="Temperature" name="Product C" width="2" dataSource="ViewBag.WeatherReportsC" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline">
+                    <e-series-marker visible="true" height="7" width="7"></e-series-marker>
+                </e-series>
+            </e-series-collection>
+        </ejs-chart>
+    </div>
+    
+    <script>
+        function load(args) {
+            @*custom code start*@
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+            @*custom code end*@
+        }
+        
+    </script>
+    @*custom code start*@
+    <style>
+        #control-container {
+            padding: 0px !important;
+        }
+
+        #control-container {
+            padding: 0px !important;
+        }
+    </style>
+    @*custom code end*@
+}
+@*custom code start*@
+@section Scripts {
+
+}
+
+<style>
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Strip Line in ASP.NET Core Chart control. Explore here for more details."/>
+                }
+@*custom code end*@
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample highlights a certain temperature range recorded over a year using the strip line feature.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this example, you can see how to render and configure a strip line for the chart. Use the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.ChartStripLine.html#Syncfusion_EJ2_Charts_ChartStripLine_Start">Start</a> and <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.ChartStripLine.html#Syncfusion_EJ2_Charts_ChartStripLine_End">End</a> properties in the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.ChartStripLine.html">ChartStripline</a> option to add a strip line to an axis. You can add more than one strip line to the axis.
+        </p>
+        <p>
+            <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover a point or tap one on touch-enabled devices.
+        </p>
+        <p>
+            More information about the stripline can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/strip-line">documentation section</a>.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Chart Strip Line Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Strip Line in ASP.NET Core Chart Control</h1>
+                }

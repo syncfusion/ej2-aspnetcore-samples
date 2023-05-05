@@ -1,0 +1,92 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="control-section" align="center">
+        
+        <ejs-chart id="splineContainer" load="load" title="Motor Vehicle Production by Manufacturer">
+            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category" labelIntersectAction="@Syncfusion.EJ2.Charts.LabelIntersectAction.Rotate45">
+                <e-majorgridlines width="0"></e-majorgridlines>
+                <e-minorgridlines width="0"></e-minorgridlines>
+                <e-majorticklines width="0"></e-majorticklines>
+                <e-minorticklines width="0"></e-minorticklines>
+            </e-chart-primaryxaxis>
+            <e-chart-primaryyaxis rangePadding="@Syncfusion.EJ2.Charts.ChartRangePadding.None" interval="20">
+                <e-majorgridlines width="1"></e-majorgridlines>
+                <e-majorticklines width="0"></e-majorticklines>
+                <e-minorticklines width="0"></e-minorticklines>
+                <e-linestyle width="0"></e-linestyle>
+            </e-chart-primaryyaxis>
+            <e-series-collection>
+                <e-series dataSource="ViewBag.ChartPoints" xName="Year" yName="General" name="General Motors" width="2" columnWidth="0.5" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StackingColumn100">
+                    <e-series-border width="1" color="#ffffff"></e-series-border>
+                </e-series>
+                <e-series dataSource="ViewBag.ChartPoints" xName="Year" yName="Honda" name="Honda" width="2" columnWidth="0.5" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StackingColumn100">
+                    <e-series-border width="1" color="#ffffff"></e-series-border>
+                </e-series>
+                <e-series dataSource="ViewBag.ChartPoints" xName="Year" yName="Suzuki" name="Suzuki" width="2" columnWidth="0.5" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StackingColumn100">
+                    <e-series-border width="1" color="#ffffff"></e-series-border>
+                </e-series>
+                <e-series dataSource="ViewBag.ChartPoints" xName="Year" yName="BMW" name="BMW" width="2" columnWidth="0.5" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StackingColumn100">
+                    <e-series-border width="1" color="#ffffff"></e-series-border>
+                </e-series>
+            </e-series-collection>
+            <e-chart-tooltipsettings enable="true" format="${point.x} : <b>${point.y} (${point.percentage}%)</b>"></e-chart-tooltipsettings>
+            <e-chart-chartarea>
+                <e-chartarea-border width="0"></e-chartarea-border>
+            </e-chart-chartarea>
+            <e-chart-legendsettings visible="true" enableHighlight="true"></e-chart-legendsettings>
+        </ejs-chart>
+    </div>
+
+    @*custom code start*@
+    <script>
+        function load(args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+        }
+    </script>
+@*custom code end*@
+}
+@*custom code start*@
+@section Scripts {
+
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the 100% Stacked Column in ASP.NET Core Chart control. Explore here for more details."/>
+                }
+@*custom code end*@
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This <a target="_blank" href="https://www.syncfusion.com/aspnet-core-ui-controls/charts/chart-types/100-stacked-column-chart">ASP.NET Core 100% Stacked Column Chart</a> example visualizes motor vehicle production by manufacturer with a default stacked column series. The legend in the sample shows the information about those series.
+        </p>
+    </div>
+}
+@section Description{
+    <div>
+        <p>
+            In this example, you can see how to render and configure the 100% stacked column chart. The 100% stacked column chart displays multiple series of data as stacked columns, ensuring that the cumulative proportion of each stacked element always totals 100%.
+        </p>
+        <p>
+            <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover over a point or tap on a point in touch-enabled devices.
+        </p>
+        <p>
+            More information about the 100% stacked column series can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/chart-types/stack-column100">documentation section</a>.
+        </p>
+    </div>
+}
+@*custom code start*@
+<style>
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@*custom code end*@
+@section Title{
+                    <title>ASP.NET Core Chart 100% Stacked Column Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of 100% Stacked Column in ASP.NET Core Chart Control</h1>
+                }

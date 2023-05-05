@@ -1,0 +1,221 @@
+@using Syncfusion.EJ2;
+@using Syncfusion.EJ2.Navigations;
+@{
+    List<object> menuItems = new List<object>();
+        menuItems.Add(new
+        {
+            text = "Appliances",
+            items = new List<object>()
+            {
+                new {
+                    text= "Kitchen",
+                    items = new List<object>()
+                    {
+                        new { text= "Electric Cookers" },
+                        new { text= "Coffee Makers" },
+                        new { text= "Blenders" },
+                        new { text= "Microwave Ovens" }
+                    }
+                },
+                new {
+                    text= "Television",
+                    items = new List<object>()
+                    {
+                        new { text= "Our Exclusive TVs" },
+                        new { text= "Smart TVs" },
+                        new { text= "Big Screen TVs" }
+                    }
+                },
+                new { text= "Washing Machine" },
+                new {
+                    text= "Refrigerators",
+                    items = new List<object>()
+                    {
+                        new { text= "Inverter ACs" },
+                        new { text= "Split ACs" },
+                        new { text= "Window ACs" }
+                    }
+                },
+                new { text= "Air Conditioners" },
+                new { text= "Water Purifiers" },
+                new { text= "Air Purifiers" },
+                new { text= "Chimneys" },
+                new { text= "Inverters" },
+                new { text= "Healthy Living" },
+                new { text= "Vacuum Cleaners" },
+                new { text= "Room Heaters" },
+                new { text= "New Launches" }
+            }
+        });
+
+        menuItems.Add(new
+        {
+            text = "Accessories",
+            items = new List<object>()
+            {
+                new {
+                    text= "Mobile",
+                    items = new List<object>()
+                    {
+                        new { text= "Headphones" },
+                        new { text= "Batteries" },
+                        new { text= "Memory Cards" },
+                        new { text= "Power Banks" },
+                        new { text= "Mobile Cases" },
+                        new { text= "Screen Protectors" },
+                        new { text= "Data Cables" },
+                        new { text= "Chargers" },
+                        new { text= "Selfie Sticks" },
+                        new { text= "OTG Cable" }
+                    }
+                },
+                new { text= "Laptops" },
+                new {
+                    text= "Desktop PC",
+                    items = new List<object>()
+                    {
+                        new { text= "Pendrives" },
+                        new { text= "External Hard Disks" },
+                        new { text= "Monitors" },
+                        new { text= "Keyboards" }
+                    }
+                },
+                new {
+                    text= "Camera",
+                    items = new List<object>()
+                    {
+                        new { text= "Lens" },
+                        new { text= "Tripods" }
+                    }
+                }
+            }
+        });
+
+        menuItems.Add(new
+        {
+            text = "Fashion",
+            items = new List<object>()
+            {
+                new { text = "Men" },
+                new { text = "Women" }
+            }
+        });
+
+        menuItems.Add(new
+        {
+            text = "Home & Living",
+            items = new List<object>()
+            {
+                new { text= "Furniture" },
+                new { text= "Decor" },
+                new { text= "Smart Home Automation" },
+                new { text= "Dining & Serving" }
+            }
+        });
+
+        menuItems.Add(new
+        {
+            text = "Entertainment",
+            items = new List<object>()
+            {
+                new { text= "Televisions" },
+                new { text= "Home Theatres" },
+                new { text= "Gaming Laptops" }
+            }
+        });
+
+        menuItems.Add(new
+        {
+            text = "Contact Us",
+        });
+
+        menuItems.Add(new
+        {
+            text = "Help",
+        });
+
+        MenuAnimationSettings animationSettings = new MenuAnimationSettings()
+        {
+            Duration = 800
+        };
+}
+@section ControlsSection{
+    <div class="control-section">
+        <div class="scrollable-menu-control">
+            <ejs-menu id="menu" items="menuItems" cssClass="e-custom-scroll" enableScrolling="true" beforeOpen="onBeforeOpen" animationSettings="animationSettings"></ejs-menu>
+        </div>
+    </div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Scrollable in ASP.NET Core Menu Bar control. Explore here for more details."/>
+                }
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This sample demonstrates the <code>Scrollable</code> option in the Menu component. Click the scroll arrows to view the hidden menu items.</p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            The menu component supports horizontal and vertical scrolling to render large menus and submenus in an adaptive way. This can be achieved by enabling the <code>enableScrolling</code> property and by restricting the corresponding menu/submenu size.
+        </p>
+        <p>
+            In this demo, the parent menu is horizontally scrollable while the submenu and nested submenu are vertically scrollable.
+        </p>
+        <p>
+            More information about menu can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/menu">
+                documentation
+            </a> section.
+        </p>
+    </div>
+}
+
+<script>
+    function onBeforeOpen(args) {
+        // Restricting sub menu wrapper height
+        if (args.parentItem.text === 'Appliances') {
+            ej.base.closest(args.element, '.e-menu-wrapper').style.height = '320px';
+        }
+        if (args.parentItem.text === 'Mobile') {
+            ej.base.closest(args.element, '.e-menu-wrapper').style.height = '260px';
+        }
+    }
+</script>
+@*custom code start*@
+<style>
+
+    /**
+    * ej2 Menu styles
+    */
+    .scrollable-menu-control {
+        margin-top: 45px;
+        text-align: center;
+    }
+
+    /**
+    * Restricting the parent menu wrapper size
+    */
+    .scrollable-menu-control .e-menu-wrapper.e-custom-scroll {
+        width: 492px;
+    }
+    .e-bigger .scrollable-menu-control .e-menu-wrapper.e-custom-scroll {
+        width: 565px;
+    }
+
+    @@media only screen and (max-width: 500px) {
+        .e-bigger .scrollable-menu-control .e-menu-wrapper.e-custom-scroll {
+            width: 290px;
+        }
+    }
+</style>
+@*custom code end*@
+@section Title{
+                    <title>ASP.NET Core Menu Bar Scrollable Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Scrollable in ASP.NET Core Menu Bar Control</h1>
+                }

@@ -1,0 +1,347 @@
+@using Syncfusion.EJ2;
+@using Syncfusion.EJ2.Navigations;
+@{
+    var dataManager = new DataManager()
+    {
+        Url = "https://services.syncfusion.com/aspnet/production/api/schedule",
+        Adaptor = "ODataV4Adaptor",
+        CrossDomain = true
+    };
+
+    List<object> componentList = new List<object>();
+    componentList.Add(new
+    {
+        text = "DropdownList",
+        id = "list-01",
+        name = "DropdownList"
+    });
+    componentList.Add(new
+    {
+        text = "DatePicker",
+        id = "list-02",
+        name = "DatePicker"
+    });
+    componentList.Add(new
+    {
+        text = "Calendar",
+        id = "list-03",
+        name = "Calendar"
+    });
+    componentList.Add(new
+    {
+        text = "FileUpload",
+        id = "list-04",
+        name = "FileUpload"
+    });
+    componentList.Add(new
+    {
+        text = "RichTextEditor",
+        id = "list-05",
+        name = "RichTextEditor"
+    });
+
+    var headerTextOne = new TabHeader { Text = "DataGrid" };
+    var headerTextTwo = new TabHeader { Text = "Chart" };
+    var headerTextThree = new TabHeader { Text = "Scheduler" };
+
+    List<GridData> gridDataSource = new List<GridData>
+    {
+        new GridData { OrderID = 10248, CustomerID = "VINET", EmployeeID = 5, OrderDate = new DateTime(1991, 05, 15), ShipName = "Vins et alcools Chevalier", ShipCity = "Reims", ShipAddress = "59 rue de l Abbaye", ShipRegion = "CJ", ShipPostalCode = "51100", ShipCountry = "France", Freight = (decimal?)32.38 },
+        new GridData { OrderID = 10249, CustomerID = "TOMSP", EmployeeID = 6, OrderDate = new DateTime(1952, 02, 19), ShipName = "Toms Spezialitäten", ShipCity = "Münster", ShipAddress = "Luisenstr. 48", ShipRegion = "CJ", ShipPostalCode = "44087", ShipCountry = "Germany", Freight = (decimal?)11.61 },
+        new GridData { OrderID = 10250, CustomerID = "HANAR", EmployeeID = 4, OrderDate = new DateTime(1963, 08, 30), ShipName = "Hanari Carnes", ShipCity = "Rio de Janeiro", ShipAddress = "Rua do Paço, 67", ShipRegion = "RJ", ShipPostalCode = "05454-876", ShipCountry = "Brazil", Freight = (decimal?)65.83 },
+        new GridData { OrderID = 10251, CustomerID = "VICTE", EmployeeID = 3, OrderDate = new DateTime(1937, 09, 19), ShipName = "Victuailles en stock", ShipCity = "Lyon", ShipAddress = "2, rue du Commerce", ShipRegion = "CJ", ShipPostalCode = "69004", ShipCountry = "France", Freight = (decimal?)41.34 },
+        new GridData { OrderID = 10252, CustomerID = "SUPRD", EmployeeID = 2, OrderDate = new DateTime(1955, 03, 04), ShipName = "Suprêmes délices", ShipCity = "Charleroi", ShipAddress = "Boulevard Tirou, 255", ShipRegion = "CJ", ShipPostalCode = "B-6000", ShipCountry = "Belgium", Freight = (decimal?)51.3 }
+    };
+    List<LineData> chartDataSource = new List<LineData>
+    {
+        new LineData { month = "Jan", sales = 35 },
+        new LineData { month = "Feb", sales = 28 },
+        new LineData { month = "Mar", sales = 34 },
+        new LineData { month = "Apr", sales = 32 },
+        new LineData { month = "May", sales = 40 },
+        new LineData { month = "Jun", sales = 32 },
+        new LineData { month = "Jul", sales = 35 },
+        new LineData { month = "Aug", sales = 55 },
+        new LineData { month = "Sep", sales = 38 },
+        new LineData { month = "Oct", sales = 30 },
+        new LineData { month = "Nov", sales = 25 },
+        new LineData { month = "Dec", sales = 32 },
+    };
+    var sportsData = new string[] { "Badminton", "Cricket", "Football", "Golf", "Tennis" };
+}
+
+@section ControlsSection{
+    <div id="TabContainer">
+        <div class="col-lg-4" style="margin-top: 10px;">
+            <div class='property-panel-header'>List of Components</div>
+            <ejs-treeview id="Tab_TreeView" allowDragAndDrop="true" dragArea="#TabContainer" nodeDragStop="onNodeDragStop" nodeDragging="onNodeDrag" cssClass="treeview-external-drag-tab">
+                <e-treeview-fields dataSource="componentList" id="id" text="text"></e-treeview-fields>
+            </ejs-treeview>
+        </div>
+        <div class="col-lg-8 content-wrapper control-section">
+            <ejs-tab id="ej2Tab" height="auto" created="onTabCreate" dragArea="#TabContainer" selected="selectedTab" onDragStart="onTabDragStart" dragged="onDraggedTab" allowDragAndDrop="true">
+                <e-tab-tabitems>
+                    <e-tab-tabitem header="headerTextOne" content="#DataGrid"></e-tab-tabitem>
+                    <e-tab-tabitem header="headerTextTwo" content="#Chart"></e-tab-tabitem>
+                    <e-tab-tabitem header="headerTextThree" content="#Schedule"></e-tab-tabitem>
+                </e-tab-tabitems>
+            </ejs-tab>
+            <div class="content">
+                <div style="display: none" id="grid">
+                    <ejs-grid id="DataGrid" dataSource="gridDataSource">
+                        <e-grid-columns>
+                            <e-grid-column field="OrderID" headerText="Order ID" width="120" textAlign="Right" type="number"></e-grid-column>
+                            <e-grid-column field="CustomerID" headerText="Customer ID" width="140" type="string"></e-grid-column>
+                            <e-grid-column field="Freight" headerText="Freight" width="120" textAlign="Right" format="C"></e-grid-column>
+                            <e-grid-column field="OrderDate" headerText="Order Date" width="140" format="yMd"></e-grid-column>
+                        </e-grid-columns>
+                    </ejs-grid>
+                </div>
+                <div style="display: none" id="chart">
+                    <ejs-chart id="Chart" height="300px">
+                        <e-chart-primaryxaxis valueType="Category"></e-chart-primaryxaxis>
+                        <e-series-collection>
+                            <e-series dataSource="chartDataSource" xName="month" yName="sales" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Line"></e-series>
+                        </e-series-collection>
+                    </ejs-chart>
+                </div>
+                <div style="display: none" id="schedule">
+                    <ejs-schedule cssClass="Scheduler" id="Schedule" height="500" selectedDate="new DateTime(2022, 9, 20)" readonly="true">
+                        <e-schedule-eventsettings dataSource="dataManager">
+                        </e-schedule-eventsettings>
+                    </ejs-schedule>
+                </div>
+                <div style="display: none" id="dropdownList">
+                    <ejs-dropdownlist id="Tab_DropdownList" width="200" dataSource="@sportsData" placeholder="Select a game" cssClass="DropdownList">
+                    </ejs-dropdownlist>
+                </div>
+                <div style="display: none" id="datePicker">
+                    <ejs-datepicker id="Tab_DatePicker" width="200" cssClass="DatePicker" placeholder="Enter date"></ejs-datepicker>
+                </div>
+                <div style="display: none" id="calendar">
+                    <ejs-calendar id="Tab_Calendar" cssClass="Calendar"></ejs-calendar>
+                </div>
+                <div style="display: none" id="fileUpload">
+                    <ejs-uploader id="Tab_FileUpload" cssClass="FileUpload" autoUpload="false"></ejs-uploader>
+                </div>
+                <div style="display: none" id="richTextEditor">
+                    <ejs-richtexteditor id="Tab_RichTextEditor" height="340" cssClass="RichTextEditor">
+                        <e-content-template>
+                            <p>
+                                The Rich Text Editor control is WYSIWYG ('what you see is what you get') editor that provides the best user experience to create and update the content.
+                                Users can format their content using standard toolbar commands.
+                            </p>
+                            <p><b> Key features:</b></p>
+
+                            <ul>
+                                <li><p> Provides &lt; IFRAME &gt; and &lt; DIV &gt; modes </p></li>
+
+                                <li><p> Capable of handling markdown editing.</p></li>
+
+                                <li><p> Contains a modular library to load the necessary functionality on demand.</p></li>
+
+                                <li><p> Provides a fully customizable toolbar.</p></li>
+
+                                <li><p> Provides HTML view to edit the source directly for developers.</p></li>
+
+                                <li><p> Supports third - party library integration.</p></li>
+
+                                <li><p> Allows preview of modified content before saving it.</p></li>
+
+                                <li><p> Handles images, hyperlinks, video, hyperlinks, uploads, etc.</p></li>
+
+                                <li><p> Contains undo / redo manager.</p></li>
+
+                                <li><p> Creates bulleted and numbered lists.</p></li>
+
+                            </ul>
+                        </e-content-template>
+                    </ejs-richtexteditor>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section ActionDescription{
+    <p>
+        This example illustrates how to reorder tabs and add tabs from an external source(list of components) by drag and drop. Here, you can drag and drop the items from TreeView into Tab.
+    </p>
+}
+
+@section Description{
+    <p>
+        In this example, the <code>allowDragAndDrop</code> property is used to enable drag and drop and the <code>dragArea</code> property is used to define the draggable area.
+    </p>
+    <p>
+        In this example, the list of components is rendered using the <code>treeview</code> component. We can drag the item from the treeview component to the tab component by using the <code>nodeDragStop</code> event of the treeview component and add the same item with the help of the <code>addTab</code> public method of Tab and remove this item from the treeview by using the <code>removeNodes</code> method.
+    </p>
+    <p>
+        In the same way, we can drag the tab item within the tab component and also add the tab item to the treeview component. Here, we can drop the tab item in the treeview component by using the <code>dragged</code> event of the tab component. In this case, we can remove the dropped item from tab with the help of the <code>removeTab</code> public method and add the item to the treeview in its <code>addNodes</code> public method.
+    </p>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Drag and Drop in ASP.NET Core Tab control. Explore here for more details."/>
+                }
+
+<script>
+    var tabObj;
+    var rteObj;
+    var chartObj;
+    var scheduleObj;
+    var treeViewObj;
+    var draggedItemHeader;
+    var i = 0;
+    function onNodeDragStop(args) {
+        var dropElement = args.target.closest('#ej2Tab .e-toolbar-item');
+        if (dropElement != null) {
+            var tabElement = document.querySelector('#ej2Tab');
+            var itemPosition = (((args.event.type.indexOf('touch') > -1) ? args.event.changedTouches[0].clientX
+                : args.event.clientX) < dropElement.getBoundingClientRect().left + dropElement.offsetWidth / 2) ? 0 : 1;
+            var dropItemIndex = [].slice.call(tabElement.querySelectorAll('.e-toolbar-item')).indexOf(dropElement) + itemPosition;
+            var tabContent;
+            if (args.draggedNodeData.text === 'DataGrid' || args.draggedNodeData.text === 'Chart') {
+                tabContent = document.getElementById(args.draggedNodeData.text);
+            }
+            else {
+                tabContent = document.querySelector('.' + args.draggedNodeData.text);
+            }
+            var newTabItem = [{ header: { 'text': args.draggedNodeData.text.toString() }, content: (tabContent) }];
+            tabObj.addTab(newTabItem, dropItemIndex);
+            treeViewObj.removeNodes([args.draggedNode]);
+        }
+        args.cancel = true;
+    }
+    function onNodeDrag(args) {
+        if (!ej.base.isNullOrUndefined(args.target.closest('.tabContent'))) {
+            args.dropIndicator = 'e-no-drop';
+        } else if (!ej.base.isNullOrUndefined(args.target.closest('#ej2Tab .e-tab-header'))) {
+            args.dropIndicator = 'e-drop-in';
+        }
+    }
+    function onTabCreate() {
+        var tabElement = document.getElementById('ej2Tab');
+        if (!ej.base.isNullOrUndefined(tabElement)) {
+            tabElement.querySelector('.e-tab-header').classList.add('e-droppable');
+            tabElement.querySelector('.e-content').classList.add('tabContent');
+        }
+        tabObj = document.getElementById("ej2Tab").ej2_instances[0];
+        treeViewObj = document.getElementById("Tab_TreeView").ej2_instances[0];
+    }
+    function selectedTab(args) {
+        var rteElement = document.getElementById("Tab_RichTextEditor");
+        var scheduleElement = document.getElementById("Schedule");
+        var chartElement = document.getElementById("Chart");
+        if (tabObj.items[args.selectedIndex].header.text === 'RichTextEditor' && (!ej.base.isNullOrUndefined(rteElement) && !ej.base.isNullOrUndefined(rteElement.ej2_instances[0]))) {
+            rteObj = rteElement.ej2_instances[0];
+            rteObj.refreshUI();
+        }
+        if (tabObj.items[args.selectedIndex].header.text === 'Scheduler' && (!ej.base.isNullOrUndefined(scheduleElement) && !ej.base.isNullOrUndefined(scheduleElement.ej2_instances[0]))) {
+            scheduleObj = scheduleElement.ej2_instances[0];
+            scheduleObj.refresh();
+        }
+        if (tabObj.items[args.selectedIndex].header.text === 'Chart' && (!ej.base.isNullOrUndefined(chartElement) && !ej.base.isNullOrUndefined(chartElement.ej2_instances[0]))) {
+            chartObj = chartElement.ej2_instances[0];
+            chartObj.refresh();
+        }
+    }
+    function onTabDragStart(args) {
+        draggedItemHeader = tabObj.items[args.index].header.text;
+    }
+    function onDraggedTab(args) {
+        var dragTabIndex = Array.prototype.indexOf.call(tabObj.element.querySelectorAll('.e-toolbar-item'), args.draggedItem);
+        var dropNode = args.target.closest('#Tab_TreeView .e-list-item');
+        if (dropNode != null && !args.target.closest('#ej2Tab .e-toolbar-item')) {
+            args.cancel = true;
+            var dropContainer = (document.querySelector('.treeview-external-drag-tab')).querySelectorAll('.e-list-item');
+            var dropIndex = Array.prototype.indexOf.call(dropContainer, dropNode);
+            var newNode = { id: 'list' + i, text: draggedItemHeader };
+            var tabContent;
+            tabContent = document.getElementsByClassName(draggedItemHeader)[0];
+            switch (draggedItemHeader) {
+                case 'DropdownList': ;
+                    document.querySelector('#dropdownList').appendChild(tabContent);
+                    break;
+                case 'DatePicker':
+                    document.querySelector('#datePicker').appendChild(tabContent);
+                    break;
+                case 'Calendar':
+                    document.querySelector('#calendar').appendChild(tabContent);
+                    break;
+                case 'FileUpload':
+                    document.querySelector('#fileUpload').appendChild(tabContent);
+                    break;
+                case 'RichTextEditor': ;
+                    document.querySelector('#richTextEditor').appendChild(tabContent);
+                    break;
+                case 'Scheduler':
+                    document.querySelector('#schedule').appendChild(tabContent);
+                    break;
+                case 'DataGrid':
+                    tabContent = document.getElementById(draggedItemHeader);
+                    document.querySelector('#grid').appendChild(tabContent);
+                    break;
+                case 'Chart':
+                    tabContent = document.getElementById(draggedItemHeader);
+                    document.querySelector('#chart').appendChild(tabContent);
+                    break;
+            }
+            tabObj.removeTab(dragTabIndex);
+            treeViewObj.addNodes([newNode], 'TreeView', dropIndex);
+        }
+    }
+</script>
+
+<style>
+    #ej2Tab .e-content .e-item {
+        font-size: 12px;
+        padding: 10px;
+        text-align: justify;
+    }
+
+    #ej2Tab .e-upload {
+        width: 300px;
+    }
+
+    .property-panel-header {
+        text-align: center;
+        padding-bottom: 0;
+    }
+
+    .treeview-external-drag-tab .e-list-item,
+    .e-bigger .treeview-external-drag-tab .e-list-item {
+        border: 0.5px solid #E1E7EC;
+        line-height: 15px;
+        padding: 0 5px;
+    }
+
+        .treeview-external-drag-tab .e-list-item.e-hover > .e-fullrow,
+        .treeview-external-drag-tab .e-list-item.e-active > .e-fullrow,
+        .treeview-external-drag-tab .e-list-item.e-active.e-hover > .e-fullrow,
+        .e-bigger .treeview-external-drag-tab .e-list-item.e-hover > .e-fullrow,
+        .e-bigger .treeview-external-drag-tab .e-list-item.e-active > .e-fullrow,
+        .e-bigger .treeview-external-drag-tab .e-list-item.e-active.e-hover > .e-fullrow {
+            background-color: transparent;
+            border-color: transparent;
+            box-shadow: none !important;
+        }
+
+    .sb-property-border {
+        border-right: none;
+    }
+    #TabContainer {
+        display: flex;
+    }
+    @@media (max-width: 550px) {
+        #TabContainer {
+            display: block;
+        }
+    }
+</style>
+@section Title{
+                    <title>ASP.NET Core Tab Drag and Drop Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Drag and Drop in ASP.NET Core Tab Control</h1>
+                }

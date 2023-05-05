@@ -1,0 +1,335 @@
+@using Syncfusion.EJ2;
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Data Sample in ASP.NET Core CircularGauge control. Explore here for more details."/>
+                }
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the live data sample in circular gauge.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            Pointer values in the gauge can be updated dynamically by using the <code>setPointerValue</code> method.
+            In this example, a stock price changes over the countries are shown by using a gauge.
+        </p>
+        <p>
+            More information on the gauge and its methods can be found in this
+            <a target="_blank" href="http://ej2.syncfusion.com/documentation"> documentation section</a>.
+        </p>
+    </div>
+}
+@section ControlsSection{
+    @{
+        var OrderData = new[] {
+new {
+Country = "Germany",
+Sales = 500,
+Target = 400,
+vsTarget = 300
+},
+new {
+Country = "USA",
+Sales = 1000,
+Target = 600,
+vsTarget = 360
+},
+new {
+Country = "UK",
+Sales = 600,
+Target = 700,
+vsTarget = -100
+}
+};
+        var labelFont = new Syncfusion.EJ2.CircularGauge.CircularGaugeFont { FontFamily = "Segoe UI", Opacity = 1, Size = "0px", FontWeight = "Regular", Color = "transparent" };
+    }
+    <div class="control-section" style="border-right:0px;">
+        <div class="content-wrapper">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <ejs-circulargauge id="circular" style="height:250px;" load="gaugeload1">
+                                <e-circulargauge-axes>
+                                    <e-circulargauge-axis startAngle="230" endAngle="130" radius="80%">
+                                        <e-axis-linestyle width="8" color="transparent"></e-axis-linestyle>
+                                        <e-axis-labelstyle offset="-5" font="labelFont"></e-axis-labelstyle>
+                                        <e-axis-majorticks width="0" color="transparent"></e-axis-majorticks>
+                                        <e-axis-minorticks width="0" color="transparent"></e-axis-minorticks>
+                                    </e-circulargauge-axis>
+                                </e-circulargauge-axes>
+                            </ejs-circulargauge>
+                        </div>
+                        <div class="col-sm-4">
+                            <ejs-circulargauge id="circular2" style="height:250px;" load="gaugeload2">
+                                <e-circulargauge-axes>
+                                    <e-circulargauge-axis startAngle="230" endAngle="130" radius="80%">
+                                        <e-axis-linestyle width="8" color="transparent"></e-axis-linestyle>
+                                        <e-axis-labelstyle offset="-5" font="labelFont"></e-axis-labelstyle>
+                                        <e-axis-majorticks width="0" color="transparent"></e-axis-majorticks>
+                                        <e-axis-minorticks width="0" color="transparent"></e-axis-minorticks>
+                                    </e-circulargauge-axis>
+                                </e-circulargauge-axes>
+                            </ejs-circulargauge>
+                        </div>
+                        <div class="col-sm-4">
+                            <ejs-circulargauge id="circular3" style="height:250px;" load="gaugeload3">
+                                <e-circulargauge-axes>
+                                    <e-circulargauge-axis startAngle="230" endAngle="130" radius="80%">
+                                        <e-axis-linestyle width="8" color="transparent"></e-axis-linestyle>
+                                        <e-axis-labelstyle offset="-5" font="labelFont"></e-axis-labelstyle>
+                                        <e-axis-majorticks width="0" color="transparent"></e-axis-majorticks>
+                                        <e-axis-minorticks width="0" color="transparent"></e-axis-minorticks>
+                                    </e-circulargauge-axis>
+                                </e-circulargauge-axes>
+                            </ejs-circulargauge>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <ejs-grid id="grid" dataSource="OrderData">
+                            <e-grid-columns>
+                                <e-grid-column field="Country" headerText="Country" width="80"></e-grid-column>
+                                <e-grid-column field="Sales" headerText="Sales $" width="80"></e-grid-column>
+                                <e-grid-column field="Target" headerText="Target $" width="80"></e-grid-column>
+                                <e-grid-column field="vsTarget" headerText="vs Target" width="80"></e-grid-column>
+                            </e-grid-columns>
+                        </ejs-grid>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script>
+    var germany, usa, uk, grid;
+    window.commonAxesProperties = function (gauge, axis) {
+        axis.ranges = [{
+            start: 0, end: 50,
+            startWidth: 15, endWidth: 15,
+            color: '#EC121C'
+        }, {
+            start: 50, end: 100,
+            startWidth: 15, endWidth: 15,
+            color: '#45EA0C'
+        }];
+    }
+    window.gaugeload1 = function (args) {
+        @* custom code start *@
+        var theme = themeName ? themeName : 'Material';
+        args.gauge.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+        @* custom code end *@
+        if (window.gaugeLoaded)
+            return;
+        window.gaugeLoaded = true;
+        var axis = args.gauge.axes[0];
+        commonAxesProperties(args.gauge, axis);
+        axis.annotations = [{
+            content: '#germany',
+            angle: 180, zIndex: 1,
+            radius: '30%'
+        }, {
+            content: '<div style="color:#9E9E9E;font-size:16px;font-family:Roboto">Germany</div>',
+            angle: 180, zIndex: 1,
+            radius: '65%'
+            }];
+
+        axis.pointers = [{
+            value: 75, radius: '60%', enableAnimation:true,
+            animation: { enable: false },
+            pointerWidth: 5,
+            cap: {
+                radius: 6,
+                border: { width: 0 }
+            },
+            needleTail: {
+                length: '25%'
+            }
+        }]
+    }
+    window.gaugeload2 = function (args) {
+        @* custom code start *@
+        var theme = location.hash.split('/')[1];
+        theme = theme ? theme : 'Material';
+        args.gauge.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+        @* custom code end *@
+        if (window.gaugeLoaded2)
+            return;
+        window.gaugeLoaded2 = true;
+        var axis = args.gauge.axes[0];
+        commonAxesProperties(args.gauge, axis);
+        axis.annotations = [{
+            content: '#usa',
+            angle: 180, zIndex: 1,
+            radius: '30%'
+        }, {
+            content: '<div style="color:#9E9E9E;font-size:16px;font-family:Roboto">USA</div>',
+            angle: 180, zIndex: 1,
+            radius: '65%'
+        }];
+
+        axis.pointers = [{
+            value: 60, radius: '60%',
+            animation: { enable: false },
+            pointerWidth: 5,
+            cap: {
+                radius: 6,
+                border: { width: 0 }
+            },
+            needleTail: {
+                length: '25%'
+            }
+        }];
+    }
+    window.gaugeload3 = function (args) {
+        @* custom code start *@
+        var theme = location.hash.split('/')[1];
+        theme = theme ? theme : 'Material';
+        args.gauge.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+        @* custom code end *@
+        if (window.gaugeLoaded3)
+            return;
+        window.gaugeLoaded3 = true;
+        var axis = args.gauge.axes[0];
+        commonAxesProperties(args.gauge, axis);
+        axis.annotations = [{
+            content: '#uk',
+            angle: 180, zIndex: 1,
+            radius: '30%'
+        }, {
+            content: '<div style="color:#9E9E9E;font-size:16px;font-family:Roboto">UK</div>',
+            angle: 180, zIndex: 1,
+            radius: '65%'
+        }];
+
+        axis.pointers = [{
+            value: 25, radius: '60%',
+            animation: { enable: false },
+            pointerWidth: 5,
+            cap: {
+                radius: 6,
+                border: { width: 0 }
+            },
+            needleTail: {
+                length: '25%'
+            }
+        }];
+    }
+
+    window.addEventListener('load', function (event) {
+
+        window.toolTipInterval1 = window.setInterval(function () {
+            if (document.getElementById('grid')) {
+                if(!grid)
+                    grid = document.getElementById("grid").ej2_instances[0];
+                if (!germany)
+                    germany = document.getElementById("circular").ej2_instances[0];
+                if (!usa)
+                    usa = document.getElementById("circular2").ej2_instances[0];
+                if (!uk)
+                    uk = document.getElementById("circular3").ej2_instances[0];
+                var value1 = Math.round(Math.random() * (90 - 55) + 55);
+                var value2 = Math.round(Math.random() * (75 - 60) + 60);
+                var value3 = Math.round(Math.random() * (40 - 10) + 10);
+                var gridData1 = 4 * value1;
+                var gridData2 = 6 * value2;
+                var gridData3 = 7 * value3;
+                var orderData_1 = [
+                    {
+                        'Country': 'Germany',
+                        'Sales': 500,
+                        'Target': 400,
+                        'vsTarget': gridData1
+                    }, {
+                        'Country': 'USA',
+                        'Sales': 1000,
+                        'Target': 600,
+                        'vsTarget': gridData2
+                    }, {
+                        'Country': 'UK',
+                        'Sales': 600,
+                        'Target': 700,
+                        'vsTarget': -gridData3
+                    }
+                ];
+               var data_1 = new ej.data.DataManager(orderData_1).executeLocal(new ej.data.Query().take(3));
+               grid.dataSource = data_1;
+                grid.refresh();
+
+                if (value1) {
+                    germany.axes[0].pointers[0].animation.enable = false;
+                    germany.axes[0].pointers[0].value = value1;
+                    germany.axes[0].annotations[0].content = "#germany";
+                    germany.refresh();
+                }
+                if (value2) {
+                    usa.axes[0].pointers[0].animation.enable = false;
+                    usa.axes[0].pointers[0].value = value2;
+                    usa.axes[0].annotations[0].content = "#usa";
+                    usa.refresh();
+                }
+                if (value3) {
+                    uk.axes[0].pointers[0].animation.enable = false;
+                    uk.axes[0].pointers[0].value = value3;
+                    uk.axes[0].annotations[0].content = "#uk";
+                    uk.refresh();
+                }
+            }
+            else {
+                clearInterval(window.toolTipInterval1);
+            }
+        }, 1000);
+    });
+</script>
+@*custom code start*@
+<style>
+    #templateWrap img {
+        width: 16px;
+        height: 16px;
+        margin-top: 4px;
+    }
+
+    #templateWrap .des {
+        float: right;
+        padding-left: 5px;
+    }
+</style>
+@*custom code end*@
+<script id="germany" type="text/x-template">
+    <div id='templateWrap'>
+        <img src="../styles/images/circulargauge/positive.png" alt="Positive value for Germany"/>
+        <div class='des'>
+            <div style="color:#424242;font-size:20px;font-family:Roboto">${pointers[0].value}%</div>
+        </div>
+    </div>
+</script>
+<script id="usa" type="text/x-template">
+    <div id='templateWrap'>
+        <img src="../styles/images/circulargauge/positive.png" alt="Positive value for USA" />
+        <div class='des'>
+            <div style="color:#424242;font-size:20px;font-family:Roboto">${pointers[0].value}%</div>
+        </div>
+    </div>
+</script>
+<script id="uk" type="text/x-template">
+    <div id='templateWrap'>
+        <img src="../styles/images/circulargauge/negative.png" alt="Negative value for UK" />
+        <div class='des'>
+            <div style="color:#424242;font-size:20px;font-family:Roboto">${pointers[0].value}%</div>
+        </div>
+    </div>
+</script>
+@section Title{
+                    <title>ASP.NET Core CircularGauge Data Sample Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Data Sample in ASP.NET Core CircularGauge Control</h1>
+                }

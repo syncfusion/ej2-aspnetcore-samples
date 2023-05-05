@@ -1,0 +1,76 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+     <div class="control-section" align="center">
+        
+            <ejs-chart id="lineContainer" load="load" title="Data Consumption" >
+                <e-chart-chartarea>
+                    <e-chartarea-border width="0"></e-chartarea-border>
+                </e-chart-chartarea>
+                <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.DateTime" minimum="new DateTime(2021, 11, 15)" maximum="new DateTime(2021, 11, 24)" labelFormat="dd MMM" edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift">
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                    <e-labelstyle fontStyle="bold"></e-labelstyle>
+                </e-chart-primaryxaxis>
+                <e-chart-primaryyaxis minimum="0" maximum="5" interval="1" labelFormat="{value}MB" >
+                    <e-linestyle width="0"></e-linestyle>
+                    <e-majorticklines width="0"></e-majorticklines>
+                </e-chart-primaryyaxis>
+                <e-chart-tooltipsettings enable="true" format="${point.x} : <b>${point.y}</b>"></e-chart-tooltipsettings>
+                <e-chart-legendsettings enableHighlight="true"></e-chart-legendsettings>
+                <e-series-collection>
+                    <e-series dataSource="ViewBag.ChartPoints" name="Andrew" xName="Period" opacity=0.5 width=2 yName="US_InflationRate" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Area">
+                        <e-series-border width="2"></e-series-border>
+                        <e-series-marker isFilled="true" visible="true" height="7" width="7"></e-series-marker>
+                    </e-series>
+                    <e-series dataSource="ViewBag.ChartPoints" name="Thomas" xName="Period" opacity=0.5 width=2 yName="IN_InflationRate" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Area">
+                        <e-series-border width="2"></e-series-border>
+                        <e-series-marker isFilled="true" visible="true" height="7" width="7" shape="@Syncfusion.EJ2.Charts.ChartShape.Diamond"></e-series-marker>
+                    </e-series>
+                </e-series-collection>
+            </ejs-chart>
+        </div>
+    
+    @*custom code start*@
+    <script>
+        function load(args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+        }
+    </script>
+        @*custom code end*@
+}
+    @*custom code start*@
+@section Scripts {
+
+}
+
+<style>
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Area Empty in ASP.NET Core Chart control. Explore here for more details."/>
+                }
+@*custom code end*@
+@section ActionDescription{
+    <p>
+        This sample illustrates an area series with empty points. Data points with null points are shown here.
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can see how to render an area series with empty points. Also, a legend is enabled in the shape of the series.
+    </p>
+    <p>
+        More information about the empty points can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/working-with-data#empty-points">documentation section</a>.
+    </p>
+}
+@section Title{
+                    <title>ASP.NET Core Chart Area Empty Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Area Empty in ASP.NET Core Chart Control</h1>
+                }

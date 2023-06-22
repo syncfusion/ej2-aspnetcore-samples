@@ -1,0 +1,266 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+   
+<div class="control-section">
+    <h4 align="center" style="font-family: Segoe UI;font-weight: 500; font-style:normal; font-size:15px;">Inflation vs Goods Consumers</h4>
+    <ejs-rangenavigator id="container" align="center" height="120" labelPosition="Outside" valueType="Logarithmic" labelIntersectAction="None"
+                        interval=1 load="onChartLoad" changed="changed" labelRender="labelRenderEvent" tooltipRender="tooltipRenderEvent">
+        <e-rangenavigator-tooltip enable="true"></e-rangenavigator-tooltip>
+        <e-rangenavigator-rangenavigatorseriescollection>
+            <e-rangenavigator-rangenavigatorseries xName="x" yName="y" width="2" type="StepLine">
+            </e-rangenavigator-rangenavigatorseries>
+        </e-rangenavigator-rangenavigatorseriescollection>
+    </ejs-rangenavigator>
+
+    <ejs-chart id="chart" load="chartLoad" height="350" align="center">
+        <e-chart-primaryxaxis valueType="Logarithmic" edgeLabelPlacement="Shift" title="Number of Goods Consumers"
+                              interval="1">
+            <e-majorgridlines width="0"></e-majorgridlines>
+        </e-chart-primaryxaxis>
+        <e-chart-primaryyaxis title="Inflation" minimum="0" maximum="100" labelFormat="{value}%" interval="20">
+            <e-linestyle width="0"></e-linestyle>
+            <e-majorticklines width="0"></e-majorticklines>
+        </e-chart-primaryyaxis>
+        <e-chart-chartarea>
+            <e-chartarea-border color="transparent" width="0"></e-chartarea-border>
+        </e-chart-chartarea>
+        <e-series-collection>
+            <e-series xName="x" width="2" yName="y" type="StepArea">
+                <e-series-animation enable="false"></e-series-animation>
+                <e-series-marker visible="true"></e-series-marker>
+            </e-series>
+        </e-series-collection>
+        <e-chart-chartarea>
+            <e-chartarea-border width="0"></e-chartarea-border>
+        </e-chart-chartarea>
+    </ejs-chart>
+</div>
+    <script>
+        var data = [];
+        var max = 100;
+        for (var i = 0; i < 100; i++) {
+            data.push({
+                x: Math.pow(10, i * 0.1),
+                y: Math.floor(Math.random() * (80 - 30 + 1)) + 30
+            });
+        }
+        var selectedTheme = location.hash.split('/')[1];
+        selectedTheme = selectedTheme ? selectedTheme : 'Material';
+        var theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1));
+        var logthemes = ['bootstrap5', 'bootstrap5dark', 'tailwind', 'tailwinddark', 'material', 'materialdark', 'bootstrap4', 'bootstrap', 'bootstrapdark', 'fabric', 'fabricdark', 'highcontrast', 'fluent', 'fluentdark', 'material3', 'material3dark'];
+        var borderColor = ['#6355C7', '#8F80F4', '#5A61F6', '#8B5CF6', '#00bdae', '#9ECB08', '#a16ee5', '#a16ee5', '#a16ee5', '#4472c4', '#4472c4', '#79ECE4', '#1AC9E6', '#1AC9E6', '#6355C7', '#4EAAFF'];
+        var regionColor = ['rgba(99, 85, 199, 0.3)', 'rgba(143, 128, 244, 0.3)', 'rgba(90, 97, 246, 0.3)', 'rgba(139, 92, 246, 0.3)', 'rgba(0, 189, 174, 0.3)',
+            'rgba(158, 203, 8, 0.3)', 'rgba(161, 110, 229, 0.3)', 'rgba(161, 110, 229, 0.3)', 'rgba(161, 110, 229, 0.3)', 'rgba(68, 114, 196, 0.3)',
+            'rgba(68, 114, 196, 0.3)', 'rgba(121, 236, 228, 0.3)', 'rgba(26, 201, 230, 0.3)', 'rgba(26, 201, 230, 0.3)', 'rgba(99, 85, 199, 0.3)', 'rgba(78, 170, 255, 0.3)'];
+
+        window.onChartLoad = function (args) {
+               @*custom code start*@
+            var selectedTheme = themeName ? themeName : 'Material';
+            args.rangeNavigator.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+            args.rangeNavigator.width = ej.base.Browser.isDevice ? "100%" : "80%";
+               @*custom code end*@
+            args.rangeNavigator.series[0].dataSource = data;
+            args.rangeNavigator.value = [4, 6];            
+        }
+
+        changed = function (args) {
+            if (document.getElementById('chart').childNodes.length > 1) {
+                var chart = document.getElementById('chart').ej2_instances[0];
+                chart.primaryXAxis.zoomPosition = args.zoomPosition;
+                chart.primaryXAxis.zoomFactor = args.zoomFactor;
+                chart.dataBind();
+            }
+
+        }
+
+        chartLoad = function (args) {
+            var selectedTheme = themeName ? themeName : 'Material';
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "80%";
+            args.chart.series[0].dataSource = data;
+            args.chart.series[0].fill = 'url(#' + theme.toLowerCase() + '-gradient-chart)';
+            args.chart.series[0].border = { width: 2, color: borderColor[logthemes.indexOf(theme.toLowerCase())] };
+        }
+
+        labelRenderEvent = function (args) {
+            args.text = (+args.text).toExponential().toLocaleUpperCase();
+        }
+
+        tooltipRenderEvent = function (args) {
+            args.text = [(+(+args.text).toFixed(1)).toExponential(1).toString().toLocaleUpperCase()];
+        }
+    </script>
+}
+   @*custom code start*@
+@section Scripts {
+
+}
+
+<style>
+    #control-container {
+        padding: 0px !important;
+    }
+
+    #material-gradient-chart stop {
+        stop-color: #00bdae;
+    }
+
+    #fabric-gradient-chart stop {
+        stop-color: #4472c4;
+    }
+
+    #bootstrap-gradient-chart stop {
+        stop-color: #a16ee5;
+    }
+
+    #material-dark-gradient-chart stop {
+        stop-color: #9ECB08;
+    }
+
+    #fabric-dark-gradient-chart stop {
+        stop-color: #4472c4;
+    }
+
+    #bootstrap-dark-gradient-chart stop {
+        stop-color: #a16ee5;
+    }
+
+    #tailwind-dark-gradient-chart stop {
+        stop-color: #8B5CF6;
+    }
+
+    #bootstrap4-gradient-chart stop {
+        stop-color: #a16ee5;
+    }
+
+    #highcontrast-gradient-chart stop {
+        stop-color: #79ECE4;
+    }
+
+    #tailwind-gradient-chart stop {
+        stop-color: #5A61F6;
+    }
+
+    #bootstrap5-gradient-chart stop {
+        stop-color: #6355C7;
+    }
+
+    #bootstrap5-dark-gradient-chart stop {
+        stop-color: #8F80F4;
+    }
+
+    #fluent-gradient-chart stop {
+        stop-color: #1AC9E6;
+    }
+
+    #fluent-dark-gradient-chart stop {
+        stop-color: #1AC9E6;
+    }
+    
+    #material3-gradient-chart stop {
+         stop-color: #6355C7;
+    }
+    
+    #material3-dark-gradient-chart stop {
+         stop-color: #4EAAFF;
+    }
+
+    .chart-gradient stop[offset="0"] {
+        stop-opacity: 0.9;
+    }
+
+    .chart-gradient stop[offset="1"] {
+        stop-opacity: 0.3;
+    }
+</style>
+   @*custom code end*@
+<svg style="height: 0">
+    <defs>
+        <linearGradient id="material-gradient-chart" style="opacity: 0.75" class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0"></stop>
+            <stop offset="1"></stop>
+        </linearGradient>
+        <linearGradient id="fabric-gradient-chart" style="opacity: 0.75" class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0"></stop>
+            <stop offset="1"></stop>
+        </linearGradient>
+        <linearGradient id="bootstrap-gradient-chart" style="opacity: 0.75" class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0"></stop>
+            <stop offset="1"></stop>
+        </linearGradient>
+        <linearGradient id="bootstrap4-gradient-chart" style="opacity: 0.75" class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0"></stop>
+            <stop offset="1"></stop>
+        </linearGradient>
+        <linearGradient id="highcontrast-gradient-chart" style="opacity: 0.75" class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0"></stop>
+            <stop offset="1"></stop>
+        </linearGradient>
+        <linearGradient id="tailwind-gradient-chart" style="opacity: 0.75" class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0"></stop>
+            <stop offset="1"></stop>
+        </linearGradient>
+        <linearGradient id="material-dark-gradient-chart" style="opacity: 0.75" class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0"></stop>
+            <stop offset="1"></stop>
+        </linearGradient>
+        <linearGradient id="fabric-dark-gradient-chart" style="opacity: 0.75" class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0"></stop>
+            <stop offset="1"></stop>
+        </linearGradient>
+        <linearGradient id="bootstrap-dark-gradient-chart" style="opacity: 0.75" class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0"></stop>
+            <stop offset="1"></stop>
+        </linearGradient>
+        <linearGradient id="tailwind-dark-gradient-chart" style="opacity: 0.75" class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0"></stop>
+            <stop offset="1"></stop>
+        </linearGradient>
+        <linearGradient id="bootstrap5-gradient-chart" style="opacity: 0.75" class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0"></stop>
+            <stop offset="1"></stop>
+        </linearGradient>
+        <linearGradient id="bootstrap5-dark-gradient-chart" style="opacity: 0.75" class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0"></stop>
+            <stop offset="1"></stop>
+        </linearGradient>
+        <linearGradient id="fluent-gradient-chart" style="opacity: 0.75" class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+             <stop offset="0"></stop>
+             <stop offset="1"></stop>
+         </linearGradient>
+        <linearGradient id="fluent-dark-gradient-chart" style="opacity: 0.75" class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0"></stop>
+            <stop offset="1"></stop>
+        </linearGradient>
+        <linearGradient id="material3-gradient-chart" style="opacity: 0.75" class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0"></stop>
+            <stop offset="1"></stop>
+        </linearGradient>
+        <linearGradient id="material3-dark-gradient-chart" style="opacity: 0.75" class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0"></stop>
+            <stop offset="1"></stop>
+        </linearGradient>
+
+    </defs>
+</svg>
+   @*custom code start*@
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Logarithmic Axis in ASP.NET Core Range Selector control. Explore here for more details."/>
+                }
+   @*custom code end*@
+@section ActionDescription{
+    <p>
+        This sample demonstrates the rendering of logarithmic axis in the range navigator.
+    </p>
+}
+@section Description{
+    <p>
+        Logarithmic axis uses logarithmic scale and it is very useful in visualizing when the data has values with both lower order of magnitude (eg: 10^-6) and higher order of magnitude (eg: 10^6). To render Logarithmic axis, set <code>valueType</code> to <code>Logarithmic</code>. Tooltip is enabled in this example, to see the tooltip in action, while the selected range is changed.
+    </p>
+}
+@section Title{
+                    <title>ASP.NET Core Range Selector Logarithmic Axis Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Logarithmic Axis in ASP.NET Core Range Selector Control</h1>
+                }

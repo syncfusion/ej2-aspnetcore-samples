@@ -1,0 +1,83 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <script src="~/scripts/chart/financial-data.js"></script>
+
+    <div class="control-section" align="center">
+        <ejs-chart id="container" load="load" title="Sales Vs Profit Margin" isTransposed="true">
+            <e-chart-chartarea>
+                <e-chartarea-border width="0"></e-chartarea-border>
+            </e-chart-chartarea>
+            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category">
+                <e-majorgridlines width="0"></e-majorgridlines>
+                <e-majorticklines width="0"></e-majorticklines>
+            </e-chart-primaryxaxis>
+            <e-chart-legendsettings visible="false" position="@Syncfusion.EJ2.Charts.LegendPosition.Right"></e-chart-legendsettings>
+            <e-chart-primaryyaxis minimum="11000" maximum="15000" interval="1000" title="Sales in Billion" edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift">
+                <e-majorgridlines width="0"></e-majorgridlines>
+                <e-majorticklines width="0"></e-majorticklines>
+                <e-linestyle width="0"></e-linestyle>
+            </e-chart-primaryyaxis>
+            <e-chart-axes>
+                <e-chart-axis name="yAxis2"
+                              opposedPosition=true
+                              minimum=0 maximum=4 interval=0.5
+                              title="Profit(In Percentage)" labelFormat="{value}%" edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift">
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                    <e-majorticklines width="0"></e-majorticklines>
+                    <e-linestyle width="0"></e-linestyle>
+                </e-chart-axis>
+            </e-chart-axes>
+            <e-series-collection>
+                <e-series dataSource="ViewBag.chartPoints" xName="Year" yName="column" width=2 name="Sales" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column"></e-series>
+                <e-series dataSource="ViewBag.chartPoints" xName="Year" yName="series" yAxisName="yAxis2" width=2 name="Profit Margin" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Line">
+                    <e-series-marker isFilled="true" visible="true" height="7" width="7"></e-series-marker>
+                </e-series>
+            </e-series-collection>
+            <e-chart-tooltipsettings enable="true"></e-chart-tooltipsettings>
+        </ejs-chart>
+    </div>
+    <script>
+
+        function load(args) {
+            @*custom code start*@
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+            @*custom code end*@
+        };              
+    </script>
+}
+@*custom code start*@
+@section Scripts {
+}
+
+<style>
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Vertical in ASP.NET Core Chart control. Explore here for more details."/>
+                }
+@*custom code end*@
+@section ActionDescription{
+    <p>
+        This sample illustrates a sales versus profit margin analysis using a vertical chart by changing the orientation of the x-axis to vertical and the y-axis to horizontal.
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can see how to render and configure a vertical chart. Use the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.Chart.html#Syncfusion_EJ2_Charts_Chart_IsTransposed">IsTransposed</a> property to render the chart vertically.
+    </p>
+    <p>
+        More information about the vertical chart can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/chart-types/vertical-chart">documentation section</a>.
+    </p>
+}
+@section Title{
+                    <title>ASP.NET Core Chart Vertical Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Vertical in ASP.NET Core Chart Control</h1>
+                }

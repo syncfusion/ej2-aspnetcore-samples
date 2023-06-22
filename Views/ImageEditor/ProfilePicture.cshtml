@@ -1,0 +1,294 @@
+@using Syncfusion.EJ2
+@{
+    var open = new
+    {
+        content = "Open",
+        isPrimary = false,
+        cssClass = "e-custom-img-btn e-img-custom-open"
+    };
+    var reset = new
+    {
+        content = "Reset",
+        isPrimary = false,
+        cssClass = "e-custom-img-btn e-img-custom-reset"
+    };
+    var rotate = new
+    {
+        content = "Rotate",
+        isPrimary = false,
+		cssClass = "e-custom-img-btn e-img-custom-rotate"
+    };
+    var done = new
+    {
+        content = "Apply",
+        isPrimary = true,
+		cssClass = "e-custom-img-btn e-img-custom-apply"
+    };
+    var imageTool = new string[] {};
+}
+@section ControlsSection{
+   
+<div class="col-lg-12 control-section e-img-editor-sample">
+    <div class="e-profile e-hide">
+        <div class="e-custom-wrapper">
+            <canvas id="img-canvas" style="max-width: 200px; max-height: 200px;"></canvas>
+            <img alt="img" id="custom-img" crossorigin="anonymous" src="../images/ImageEditor/profile.png"
+                 style="display: none;" />
+            <input type="file" id="img-upload" style="display:none" accept="image/*" />
+            <span id="custom-edit" class="e-custom-edit">
+                <span class="e-custom-icon sb-icons"></span>
+            </span>
+        </div>
+    </div>
+</div>
+
+<div id="profile-dialog">
+     <ejs-dialog id="dialog" height="420px" width="340px" target=".sb-desktop-wrapper" position="ViewBag.popupPosition" header="Edit Profile Image"
+                    showCloseIcon="true" visible="false" closeOnEscape="true" open="dialogOpen">
+            <e-content-template>
+                <div class='dlg-content'>
+                    <ejs-imageeditor id="image-editor" created="created" fileOpened="imageEditorOpen" toolbar="imageTool"></ejs-imageeditor>
+                </div>
+            </e-content-template>
+            <e-dialog-buttons>
+                <e-dialog-dialogbutton buttonModel="open" click="openBtn"></e-dialog-dialogbutton>
+                <e-dialog-dialogbutton buttonModel="reset" click="resetBtn"></e-dialog-dialogbutton>
+                <e-dialog-dialogbutton buttonModel="rotate" click="rotateBtn"></e-dialog-dialogbutton>
+                <e-dialog-dialogbutton buttonModel="done" click="doneBtn"></e-dialog-dialogbutton>
+            </e-dialog-buttons>
+     </ejs-dialog>
+</div>
+
+<script>
+    var img = document.querySelector('#custom-img');
+    var imgSrc = '';
+    img.onload = function () {
+        if (imgSrc === '') {
+            var canvas = document.querySelector('#img-canvas');
+            var ctx = canvas.getContext('2d');
+            canvas.width = img.width < img.height ? img.width : img.height;
+            canvas.height = canvas.width;
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            document.querySelector('.e-profile').classList.remove('e-hide');
+        }
+    };
+
+    function openBtn() {
+        document.getElementById('img-upload').click();
+    }
+  
+    function imageEditorOpen() {
+        var imageEditor = ej.base.getComponent(document.getElementById('image-editor'), 'image-editor');
+        imageEditor.select('circle');
+    }
+
+    function resetBtn() {
+        var imageEditor = ej.base.getComponent(document.getElementById('image-editor'), 'image-editor');
+        imageEditor.reset();
+    }
+
+    function rotateBtn() {
+        var imageEditor = ej.base.getComponent(document.getElementById('image-editor'), 'image-editor');
+        imageEditor.rotate(-90);
+    }
+
+    function doneBtn() {
+        var imageEditor = ej.base.getComponent(document.getElementById('image-editor'), 'image-editor');
+        imageEditor.crop();
+        var croppedData = imageEditor.getImageData();
+        var canvas = document.querySelector('#img-canvas');
+        var ctx = canvas.getContext('2d');
+        var parentDiv = document.querySelector('.e-profile');
+        var tempCanvas = parentDiv.appendChild(ej.base.createElement('canvas'));
+        var tempContext = tempCanvas.getContext('2d');
+        tempCanvas.width = croppedData.width;
+        tempCanvas.height = croppedData.height;
+        tempContext.putImageData(croppedData, 0, 0);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(tempCanvas, 0, 0, canvas.width, canvas.height);
+        tempCanvas.remove();
+        parentDiv.style.borderRadius = '100%';
+        canvas.style.backgroundColor = '#fff';
+        var dialogObj = ej.base.getComponent(document.getElementById('dialog'), 'dialog');
+        dialogObj.hide();
+        if (imgSrc !== '') {
+		    var img = document.querySelector('#custom-img');
+            img.src = imgSrc;
+		}
+    }
+
+    function created() {
+        var imageEditorObj = ej.base.getComponent(document.getElementById('image-editor'), 'image-editor');
+        imageEditorObj.theme = window.location.href.split('#/')[1];
+        imageEditorObj.update();
+    }
+
+    function dialogOpen() {
+        var imageEditor = ej.base.getComponent(document.getElementById('image-editor'), 'image-editor');
+        var img = document.querySelector('#custom-img');
+        imageEditor.open(img.src);
+    }
+     
+    document.getElementById('custom-edit').onclick = function () {
+        var dialogObj = ej.base.getComponent(document.getElementById('dialog'), 'dialog');
+        var imageEditorObj = ej.base.getComponent(document.getElementById('image-editor'), 'image-editor');
+        imageEditorObj.update();
+        dialogObj.show();
+    };
+
+    document.getElementById('img-upload').onchange = function (args) {
+        var URL = window.URL;
+        var url = URL.createObjectURL(args.target.files[0]);
+        var imageEditor = ej.base.getComponent(document.getElementById('image-editor'), 'image-editor');
+        imageEditor.open(url.toString());
+        document.getElementById('img-upload').value = null;
+        imgSrc = url.toString();
+    };
+	
+    document.getElementsByClassName('sb-desktop-wrapper')[0].onclick = function (args) {
+        var dialogObj = ej.base.getComponent(document.getElementById('dialog'), 'dialog');
+        if (args.target && (args.target.className.indexOf('e-img-editor-sample') > -1 || args.target.className.indexOf('sb-content') > -1)) {
+            dialogObj.hide();
+        }
+    };
+</script>
+ 
+}
+
+@section Meta{
+    <meta name="description" content="Image Editor"/>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>The Image Editor component provides built-in support to rotate an image using the rotate method and support to crop an image using the select and crop methods.</p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>In this demo, Image Editor is rendered within a dialog and opens an image by passing its URL path to the open method of the Image Editor control.</p>
+        <p> The following operations are supported in the Image Editor. :  </p>
+        <ul>
+            <li><b>Selection</b> : Multiple selection options are available. The selection region can be a square or circle, customized to various aspect ratios, and customized by dragging and resizing.</li>
+            <li><b>Crop</b> : The image can be cropped based on the selection.</li>
+            <li><b>Rotate</b> : The image can be rotated both clockwise and anticlockwise by 90 degrees.</li>
+        </ul>
+        <p>
+            More information about Image Editor can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/image-editor/getting-started"> documentation section</a>.
+        </p>
+    </div>
+}
+
+@*custom code start*@
+<style>
+    .dlg-content {
+        height: 100%;
+        width: 100%;
+    }
+
+    .e-profile {
+        width: 200px;
+        height: 200px;
+        position: absolute;
+        left: 50%;
+        -webkit-transform: translate(-50%, 30%);
+        transform: translate(-50%, 30%);
+        border-radius: 50%;
+    }
+
+    .e-custom-wrapper {
+        position: relative;
+    }
+
+    .e-custom-edit {
+        position: absolute;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background-color: blue;
+        top: calc(100% - 54px);
+        left: calc(100% - 47px);
+    }
+
+    .e-custom-icon::before {
+        content: '\e911';
+        font-size: 28px;
+        color: white;
+        left: 5px;
+        top: 4px;
+	line-height: initial;
+        position: absolute;
+    }
+
+	.tailwind .e-custom-icon::before,
+    .tailwind-dark .e-custom-icon::before {
+        top: 6px;
+    }
+	
+    #custom-edit:hover {
+        cursor: pointer;
+    }
+
+    canvas#img-canvas {
+        border-radius: 50%;
+        border: 4px solid darkgrey;
+    }
+
+    .e-img-custom-open {
+        float: left;
+		margin-left: 0 !important;
+    }
+
+    .e-img-custom-reset {
+        float: left;
+    }
+	
+	.e-bigger #profile-dialog .e-dlg-header {
+		font-size: 18px !important;
+	}
+
+    .highcontrast .e-custom-img-btn,
+    .fabric .e-custom-img-btn,
+    .fabric-dark .e-custom-img-btn {
+        padding: 2px 10px !important;
+    }
+
+    .e-bigger .e-custom-img-btn {
+        font-size: 14px !important;
+        padding: 6px 10px !important;
+    }
+
+    .e-bigger.highcontrast .e-custom-img-btn,
+    .e-bigger.fabric .e-custom-img-btn,
+    .e-bigger.fabric-dark .e-custom-img-btn,
+    .e-bigger.material .e-custom-img-btn,
+    .e-bigger.material-dark .e-custom-img-btn {
+        padding: 3px 10px !important;
+    }
+    .e-bigger.bootstrap .e-custom-img-btn,
+    .e-bigger.bootstrap-dark .e-custom-img-btn {
+        padding: 1px 10px !important;
+    }
+
+    .e-img-editor-sample .e-hide {
+	    display: none;
+    }
+
+    .material3 .e-custom-img-btn,
+    .material3-dark .e-custom-img-btn,
+    .e-bigger.material3 .e-custom-img-btn,
+    .e-bigger.material3-dark .e-custom-img-btn
+    { 
+        margin-left: 3px !important;
+    }
+</style>
+@*custom code end*@
+
+@section Title{
+    <title>ASP.NET Core ImageEditor Profile Picture Example - Syncfusion Demos </title> 
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Profile Picture in ASP.NET Core ImageEditor Control</h1>
+}

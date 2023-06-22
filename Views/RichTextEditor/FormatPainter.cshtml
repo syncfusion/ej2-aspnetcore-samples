@@ -1,0 +1,134 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="col-lg-8 control-section">
+        <div class="content-wrapper" id="all-option-sample">
+            <ejs-richtexteditor id= "formatPainterRTE" created= "created" >
+                <e-content-template>
+                    <h3>Format Painter</h3>
+                    <p>
+                        A Format Painter is a Rich Text Editor feature allowing users to quickly 
+                        <span style="background-color: rgb(198, 140, 83);"><strong>copy</strong></span>
+                        and 
+                        <span style="background-color: rgb(198, 140, 83);"><strong>paste</strong></span>
+                        formatting from one text to another. With a rich text editor, utilize the format painter as follows:
+                    </p>
+                    <ul>
+                        <li>
+                            Select the text whose format you want to copy.
+                        </li>
+                        <li>
+                            Click on the <strong><em>Format Painter</em></strong> button in the toolbar. It may look like a paintbrush icon.
+                        </li>
+                        <li>
+                            The cursor will change to a <strong>paintbrush</strong> icon. Click and drag the cursor over the text you want to apply the copied format.
+                        </li>
+                        <li>
+                            Release the mouse button to apply the format.
+                        </li>
+                    </ul>
+                    <p>
+                        Using the format painter in a rich text editor can save you time when formatting a large document, You can quickly 
+                        copy and apply formatting
+                        to <span style="background-color: rgb(198, 140, 83);"><strong>multiple sections</strong></span>. 
+                        It's a helpful tool for anyone who works with text editing regularly, such as writers, editors, and content creators.
+                    </p>
+                </e-content-template>
+               <e-richtexteditor-toolbarsettings items="@ViewBag.Items"></e-richtexteditor-toolbarsettings>
+            </ejs-richtexteditor>
+        </div>
+    </div>
+    <div class="col-lg-4 property-section">
+        <div title="Properties">
+            <table id="property" title="Properties">
+                <tbody>
+                    <tr>
+                        <td>
+                            <div>Allowed Formats</div>
+                            <div>
+                                <ejs-textbox id="allowedFormatInput"  placeholder="span; strong; em; sup, sub; code;"  floatLabelType="Never" cssClass="e-outline" blur= "setAllowedFormats"></ejs-textbox>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>Denied Formats</div>
+                            <div>
+                                <ejs-textbox id="deniedFormatInput"  placeholder="span(important)[title]{background-color,color};"  floatLabelType="Never" cssClass="e-outline"  blur="setDeniedFormats"></ejs-textbox>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var formatPainterRTE;
+        function created() {
+            formatPainterRTE = this;
+        }
+        function setAllowedFormats(e) {
+            formatPainterRTE.formatPainterSettings.allowedFormats = e.value;
+        }
+        function setDeniedFormats(e) {
+            formatPainterRTE.formatPainterSettings.deniedFormats = e.value;
+        }
+    </script>
+}   
+@section Meta{
+    <meta name="description" content="This demo explains how to use Format Painter feature of the Rich Text Editor control." />
+}
+@section ActionDescription{
+    <div id="action-description">
+        <p>This demo demonstrates the Format Painter feature of the Rich Text Editor control. With Format Painter, copy and apply styles from one content to another.</p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>The <b>Format Painter</b> feature allows you to copy the formats and apply them to content without formatting thus saving time to reformat the content.</p>
+            <ul>
+                <li>
+                    Format painter can be accessed via the toolbar or the keyboard shortcuts.
+                </li>
+                <li>
+                    The sticky mode can be enabled by double-clicking the toolbar button, and it can be utilized to apply a format to multiple locations.            
+                </li>
+            </ul>
+        <p><b>Keyboard Shortcut</b></p>
+        <ul>
+            <li>
+                <kbd>ALT + SHIFT + C</kbd> - Copy the selection format or current range.
+            </li>
+            <li>
+                <kbd>ALT + SHIFT + V</kbd> - Paint the copied format.
+            </li>
+            <li>
+                <kbd>ESC</kbd> - Remove the previously copied format and disable the sticky mode.
+            </li>
+        </ul>
+        <p>The following settings are available to customize the format painter in the <code>formatPainterSettings</code> property.</p>
+        <ul>
+            <li><p>Fill the <code>Allowed Formats</code> input with selectors only whose format styles will be allowed. For example: </p></li>
+                <ul>
+                    <li>
+                        <code>span; strong; em; </code> as the input allows only the span, strong, and em format styles to be copied.
+                    </li>
+                </ul>
+            <li><p>Fill the <code>Denied Formats</code> input with selectors only whose format styles will be explicitly prohibited. For example:</p>
+                <ul>
+                    <li>
+                        <code>@Html.Raw("span(important)[title]{{background-color,color}")</code> as the input will remove only the <code>important</code> class,
+                        <code>title</code> attribute, <code>color</code> and <code>background-color</code>
+                        of the span element. All other format styles will be copied. 
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Rich Text Editor Format Painter Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Format Painter in ASP.NET Core Rich Text Editor Control</h1>
+                }

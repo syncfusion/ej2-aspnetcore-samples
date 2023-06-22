@@ -1,0 +1,140 @@
+@using Syncfusion.EJ2;
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Tooltip in ASP.NET Core CircularGauge control. Explore here for more details."/>
+                }
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample visualizes the tooltip of pointer value and ranges in gauge. To see the tooltip in action, hover pointer or tap the pointer.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this example, you can see how to show the tooltip for pointer and ranges in gauge. To see the tooltip in action, hover pointer or range bar or tap on pointer or range bar in touch enabled devices.
+        </p>
+        <br>        
+        <p>
+            More information on the tooltip can be found in this
+            <a target="_blank" href="http://ej2.syncfusion.com/documentation">documentation section</a>.
+        </p>
+    </div>
+}
+@section ControlsSection{
+    <div class="control-section" style="border-right:0px;">
+        <div class="content-wrapper">
+            <ejs-circulargauge id="circular" title= 'Tooltip Customization'
+                        enablePointerDrag= "true" load="gaugeload" tooltipRender="tooltipRender" dragEnd="dragEnd">
+                <e-circulargauge-titlestyle size="15px" color="grey"></e-circulargauge-titlestyle>
+                <e-circulargauge-tooltip enable="true" enableAnimation="false" type='new string[]{"Pointer", "Range"}'></e-circulargauge-tooltip>
+                <e-circulargauge-axes>
+                    <e-circulargauge-axis startAngle="240" endAngle="120" minimum="0" maximum="120" radius="90%">
+                        <e-axis-linestyle width="0" color="transparent"></e-axis-linestyle>
+                        <e-axis-majorticks color="white" offset="-5" height="12"></e-axis-majorticks>
+                        <e-axis-minorticks width="0" height="0" color="transparent"></e-axis-minorticks>
+                        <e-circulargauge-pointers>
+                            <e-circulargauge-pointer value="70" radius="60%" color="#33BCBD">
+                                <e-pointer-cap radius="10">
+                                    <e-pointers-cap-border color="#33BCBD" width="5"></e-pointers-cap-border>
+                                </e-pointer-cap>
+                                <e-pointer-animation enable="true" duration="1500"></e-pointer-animation>
+                            </e-circulargauge-pointer>
+                        </e-circulargauge-pointers>
+                        <e-circulargauge-ranges>
+                            <e-circulargauge-range start="0" end="50" radius="102%" startWidth="10" endWidth="10" color="#3A5DC8"></e-circulargauge-range>
+                            <e-circulargauge-range start="50" end="120" radius="102%" startWidth="10" endWidth="10" color="#33BCBD"></e-circulargauge-range>
+                        </e-circulargauge-ranges>
+                    </e-circulargauge-axis>
+                </e-circulargauge-axes>
+            </ejs-circulargauge>
+        </div>
+    </div>
+}
+<script>
+    var circulargauge; 
+    window.tooltipRender = function (args) {
+	    var imageName, borderColor, textColor;
+        if (args.pointer) {
+            imageName = ((args.pointer.currentValue >= 0 && args.pointer.currentValue <= 50) ? 'range1' : 'range3');
+            borderColor = ((args.pointer.currentValue >= 0 && args.pointer.currentValue <= 50) ? '#3A5DC8' : '#33BCBD');
+            textColor = circulargauge.theme.toLowerCase() === 'highcontrast' ? 'White' : borderColor;
+            if (circulargauge.theme.toLowerCase() === 'highcontrast') {
+                args.tooltip.template = '<div id="templateWrap" style="border:2px solid ' + borderColor +
+                    ';background-color:black"><img src="../styles/images/circulargauge/' + imageName + '.png"/><div class="des" style="color: ' +
+                    textColor + '"><span>${value} MPH</span></div></div>';
+            } else {
+                args.tooltip.template = '<div id="templateWrap" style="border:2px solid ' + borderColor +
+                '"><img src="../styles/images/circulargauge/' + imageName + '.png"/><div class="des" style="color: ' +
+                borderColor + '"><span>${value} MPH</span></div></div>';
+            }
+            
+        } else if (args.range) {
+            imageName = ((args.range.start >= 0 && args.range.end <= 50)) ? 'range1' : 'range3';
+            borderColor = ((args.range.start >= 0 && args.range.end <= 50)) ? '#3A5DC8' : '#33BCBD';
+            textColor = circulargauge.theme.toLowerCase() === 'highcontrast' ? 'White' : borderColor;
+            var start = args.range.start;
+            var end = args.range.end;
+            if (circulargauge.theme.toLowerCase() === 'highcontrast') {
+                args.tooltip.rangeSettings.template = '<div id=templateWrap style="padding:5px;border:2px solid' + borderColor + ';color: ' +
+                    textColor + ';background-color:black"><img src="../styles/images/circulargauge/' + imageName +
+                    '.png"/> <span>' + start + ' - ' + end + ' MPH  </span> </div>';
+            } else {
+                args.tooltip.rangeSettings.template = '<div id=templateWrap style="padding:5px;border:2px solid' + borderColor + ';color: ' +
+                borderColor + '"><img src="../styles/images/circulargauge/' + imageName +
+                '.png"/> <span>' + start + ' - ' + end + ' MPH  </span> </div>';
+            }
+            
+        }     
+    }
+	window.dragEnd = function (args) {
+		if (args.currentValue >= 0 && args.currentValue <= 50) {
+            args.pointer.color = "#3A5DC8";
+            args.pointer.cap.border.color = "#3A5DC8";
+        } else {
+            args.pointer.color = "#33BCBD";
+            args.pointer.cap.border.color = "#33BCBD";
+        }
+		args.pointer.value = args.currentValue;
+        args.pointer.animation.enable = false;
+        circulargauge.refresh();
+	}
+    window.gaugeload = function (args) {
+        @* custom code start *@
+        var theme = themeName ? themeName : 'Material';
+        args.gauge.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+        @* custom code end *@
+        circulargauge = args.gauge;
+        var axis = args.gauge.axes[0];
+        axis.labelStyle.font = {
+            size: "13px",
+            color: "#424242",
+            fontFamily: "Roboto"
+        };
+    }
+</script>
+<style>
+    #templateWrap img {
+        border-radius: 30px;
+        width: 30px;
+        height: 30px;
+        margin: 0 auto;
+    }
+    #templateWrap {
+        background: #fff;
+        padding: 3px;
+        border-radius: 2px;
+    }
+    #templateWrap .des {
+        float: right;
+        padding-left: 10px;
+        line-height: 30px;
+    }
+</style>
+@section Title{
+                    <title>ASP.NET Core CircularGauge Tooltip Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Tooltip in ASP.NET Core CircularGauge Control</h1>
+                }

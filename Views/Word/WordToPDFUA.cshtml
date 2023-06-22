@@ -1,0 +1,64 @@
+@using Syncfusion.EJ2
+@{ViewBag.Title = "    Essential DocIO (Word) : Word To PDF/UA : Syncfusion";}
+@section ControlsSection{
+    <div class="control-section">
+        @{Html.BeginForm("WordToPDFUA", "Word", FormMethod.Post, new { enctype = "multipart/form-data" });
+            {
+                <div style="margin-top: 10px;font-size:14px">
+                    Click the button to view the generated PDF/UA document being converted from Word document using .NET Word (DocIO) library and .NET PDF library. Please note that PDF viewer is required to view the resultant PDF.
+                    <div style="margin-top: 10px">
+                        <div>
+                            <input type="button" value="Choose File" onclick="openPage()">
+                            <input type="text" id="fileNameBox" value="WordtoPDF.docx" readonly="readonly" style="border:none" />
+                            <input type="file" name="file" id="fileUpload" accept=".doc,.docx,.rtf,.dot,.dotm,.dotx,docm,.xml" style="display:block;visibility:hidden;width:0;height:0;">
+                            <br />
+                        </div>
+                        <div style="margin-top: 8px">
+                            <input class="e-btn" type="submit" value="Convert to PDF" name="button" style="width:170px; text-transform:capitalize" />
+                            <br />
+                            <div class="text-danger">
+                                @ViewBag.Message
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                Html.EndForm();
+            }
+        }
+    </div>
+
+}
+<script>
+    function openPage() {
+        document.getElementById('fileUpload').click();
+        document.getElementById('fileUpload').addEventListener('change', readFile, false);
+    }
+    function readFile(evt) {
+        var upoadedFiles = evt.target.files;
+
+        filename = upoadedFiles[0].name;
+        document.getElementById('fileNameBox').value = filename;
+    }
+</script>
+
+@section ActionDescription{
+    <div>
+        This sample demonstrates how to convert a Word document to PDF/UA (Section 508 compliant) using .NET Word (DocIO) library and .NET PDF library.
+    </div>
+}
+@section Description{
+    <div>
+        This feature is used for people who require assistive technologies when the electronic content is ready. The .NET Word (DocIO) library supports converting a Word document to a tagged PDF with Section 508 compliant. For more information about Word to PDF/UA, see this 
+        <a href="https://help.syncfusion.com/file-formats/docio/word-to-pdf#accessible-pdf-document">documentation</a>
+        section.
+    </div>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Word to PDF/UA in ASP.NET Core Word (DocIO) library. Explore here for more details."/>
+                }
+@section Title{
+                    <title>ASP.NET Core Word (DocIO) library - Word to PDF/UA Example - Syncfusion Demos</title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Word to PDF/UA in ASP.NET Core Word (DocIO) Library</h1>
+                }

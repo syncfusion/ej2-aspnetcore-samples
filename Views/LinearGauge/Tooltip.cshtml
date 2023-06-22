@@ -1,0 +1,206 @@
+@using Syncfusion.EJ2;
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Tooltip in ASP.NET Core LinearGauge control. Explore here for more details."/>
+                }
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample visualizes the tooltip for pointer in gauge. To see tooltip in action, hover pointer or tap the pointer.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            This sample demonstrates the measuring scale by using the linear gauge. Tooltip is used to track the pointer value closer
+            to the current mouse position or touch contact. You can show the tooltip for an individual marker or bar pointer
+            by hover or tap on the pointer in touch enabled devices.
+            <br>
+        <p>
+            More information about tooltip can be found in this
+            <a target="_blank" href="http://ej2.syncfusion.com/documentation">documentation section</a>.
+        </p>
+    </div>
+}
+@section ControlsSection{
+    @{
+        var labelFont = new Syncfusion.EJ2.LinearGauge.LinearGaugeFont { FontFamily = "Segoe UI", Opacity = 1 };
+    }
+    <div class="control-section" style="border-right:0px;">
+        <div class="content-wrapper">
+            <ejs-lineargauge id="linear" load="gaugeLoad" orientation="Horizontal" axisLabelRender="labelRender"
+                             tooltipRender="renderTooltip" loaded="gaugeLoaded" resized="gaugeResized">
+                <e-lineargauge-axes>
+                    <e-lineargauge-axis maximum="10" minimum="0">
+                        <e-axis-line offset="140"></e-axis-line>
+                    </e-lineargauge-axis>
+                    <e-lineargauge-axis opposedPosition="true" minimum="0" maximum="25"></e-lineargauge-axis>
+                </e-lineargauge-axes>
+            </ejs-lineargauge>
+        </div>
+    </div>
+}
+<script>
+     var gauge;
+    window.gaugeLoad = function (args) {
+        @* custom code start *@
+        var theme = themeName ? themeName : 'Material';
+        args.gauge.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+        @* custom code end *@
+         gauge = args.gauge;
+         args.gauge.orientation = "Horizontal";
+         var axis = args.gauge.axes[0];
+
+         gauge.container = {
+             width: 140,
+                 border: {
+                 width: 2,
+                     color: '#a6a6a6'
+             }
+         };
+         gauge.tooltip = {
+             enable: true,
+             textStyle: {
+                 fontFamily: 'Segoe UI'
+             }
+         };
+         axis.majorTicks = {
+             interval: 1
+         };
+         axis.minorTicks = {
+             interval: 0.2
+         };
+         axis.pointers = [{
+             type: 'Bar',
+             value: 5.4,
+             offset: 15,
+             color: '#ff66b3'
+         }];
+
+         axis = gauge.axes[1];
+         axis.line = {
+             offset: -140,
+         },
+             axis.majorTicks = {
+                 interval: 1
+             },
+             axis.minorTicks = {
+                 interval: 0.2
+             },
+             axis.pointers = [{
+                 type: 'Bar',
+                 offset: -15,
+                 value: 16.5,
+                 color: '#4d94ff'
+             }];
+
+         var annotation = gauge.annotations[0];
+        annotation.content = '<div id="first"><h1 style="font-size:15px;font-family: Segoe UI">Inches</h1></div>',
+         annotation.x = 35;
+         annotation.zIndex = '1';
+         annotation.y = -58;
+         annotation.axisIndex = 0;
+         annotation.axisValue = 5.4;
+
+         args.gauge.annotations[1] = new ej.lineargauge.Annotation(args.gauge);
+         annotation = args.gauge.annotations[1];
+         annotation.propName = "annotations";
+        annotation.content = '<div id="second"><h1 style="font-size:15px;font-family: Segoe UI">Centimeters</h1></div>';
+         annotation.axisIndex = 1;
+         annotation.axisValue = 16.5;
+         annotation.y = 52;
+         annotation.x = 50;
+         annotation.zIndex = '1';
+
+         var width = parseInt(((this.width, this.element.offsetWidth) || this.element.offsetWidth || 600), 10);
+         if (width < 500) {
+             gaugeMobileSize();
+         }
+         else {
+             gaugeDesktopSize();
+        }
+        if (args.gauge.theme.toLowerCase().indexOf('dark') > 1 || args.gauge.theme.toLowerCase() === 'highcontrast') {
+            args.gauge.annotations[0].content = '<div id="first"><h1 style="font-size:15px; color: #DADADA;font-family: Segoe UI">Inches</h1></div>';
+            args.gauge.annotations[1].content = '<div id="second"><h1 style="font-size:15px; color: #DADADA;font-family: Segoe UI">Centimeters</h1></div>';
+        }
+
+    }
+    function renderTooltip(args) {
+        args.content = (args.axis.visibleRange.max === 25) ? args.content + ' cm' : args.content + ' in';
+    }
+    function labelRender(args) {
+        if (args.axis.visibleRange.min === args.value || args.axis.visibleRange.max === args.value) {
+            args.text = '';
+        }
+    }
+    function gaugeMobileSize() {
+        gauge.axes[1].majorTicks.interval = 2;
+        gauge.axes[1].minorTicks.interval = 1;
+        gauge.orientation = 'Vertical';
+        gauge.annotations[0].x = -57;
+        gauge.annotations[0].y = -30;
+        gauge.annotations[1].x = 50;
+        gauge.annotations[1].y = -45;
+    }
+    function gaugeDesktopSize() {
+        gauge.axes[1].majorTicks.interval = 1;
+        gauge.axes[1].minorTicks.interval = 0.5;
+        gauge.orientation = 'Horizontal';
+        gauge.annotations[0].x = 35;
+        gauge.annotations[0].y = -58;
+        gauge.annotations[1].x = 50;
+        gauge.annotations[1].y = 52;
+    }
+    function gaugeResized(args) {
+        if (args.currentSize.width < 500) {
+            gaugeMobileSize();
+        }
+        else {
+            gaugeDesktopSize();
+        }
+    }
+
+    function gaugeLoaded(args) {
+        if (document.getElementById('tooltipContainer')) {
+            if (gauge.availableSize.width < 500) {
+                document.getElementById('tooltipContainer_Annotation_0').style.transform = 'rotate(270deg)';
+                document.getElementById('tooltipContainer_Annotation_1').style.transform = 'rotate(270deg)';
+            }
+            else {
+                document.getElementById('tooltipContainer_Annotation_0').style.transform = '';
+                document.getElementById('tooltipContainer_Annotation_1').style.transform = '';
+            }
+        }
+    }
+</script>
+
+<style>
+    #templateWrap img {
+        border-radius: 30px;
+        width: 30px;
+        height: 30px;
+        margin: 0 auto;
+    }
+
+    #templateWrap .des {
+        float: right;
+        padding-left: 10px;
+        line-height: 30px;
+    }
+</style>
+<script id="gauge-tooltip" type="text/x-template">
+    <div id='templateWrap'>
+        <img src="/styles/images/circulargauge/range1.png" />
+        <img src="/styles/images/circulargauge/range3.png" />
+        <div class='des'>
+            <span>${Math.round(pointers[0].value)} MPH</span>
+        </div>
+    </div>
+</script>
+@section Title{
+                    <title>ASP.NET Core LinearGauge Tooltip Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Tooltip in ASP.NET Core LinearGauge Control</h1>
+                }

@@ -1,0 +1,133 @@
+@using Syncfusion.EJ2;
+@using EJ2CoreSampleBrowser.Controllers.Carousel;
+@{
+    List<CarouselDataBinding> datasrc = new List<CarouselDataBinding>();
+    datasrc.Add(new CarouselDataBinding
+    {
+        Id = 1,
+        ImgPath = "./../css/carousel/images/san-francisco.jpg",
+        Title = "San Francisco",
+        Content = "San Francisco, officially the City and County of San Francisco, is a cultural, commercial, and financial center in the U.S. state of California. Located in Northern California, San Francisco is the 17th most populous city proper in the United States, and the fourth most populous in California.",
+        URL = "https://en.wikipedia.org/wiki/San_Francisco"
+    });
+    datasrc.Add(new CarouselDataBinding
+    {
+        Id = 2,
+        ImgPath = "./../css/carousel/images/london.jpg",
+        Title = "London",
+        Content = "London, the capital of England and the United Kingdom, is a 21st-century city with history stretching back to Roman times. At its centre stand the imposing Houses of Parliament, the iconic ‘Big Ben’ clock tower and Westminster Abbey, site of British monarch coronations.",
+        URL = "https://en.wikipedia.org/wiki/London"
+    });
+    datasrc.Add(new CarouselDataBinding
+    {
+        Id = 3,
+        ImgPath = "./../css/carousel/images/tokyo.jpg",
+        Title = "Tokyo",
+        Content = "Tokyo, Japan’s busy capital, mixes the ultramodern and the traditional, from neon-lit skyscrapers to historic temples. The opulent Meiji Shinto Shrine is known for its towering gate and surrounding woods. The Imperial Palace sits amid large public gardens.",
+        URL = "https://en.wikipedia.org/wiki/Tokyo"
+    });
+    datasrc.Add(new CarouselDataBinding
+    {
+        Id = 4,
+        ImgPath = "./../css/carousel/images/moscow.jpg",
+        Title = "Moscow",
+        Content = "Moscow, on the Moskva River in western Russia, is the nation’s cosmopolitan capital. In its historic core is the Kremlin, a complex that’s home to the president and tsarist treasures in the Armoury. Outside its walls is Red Square, Russia`s symbolic center.",
+        URL = "https://en.wikipedia.org/wiki/Moscow"
+    });
+}
+@section ControlsSection{
+    <div class="col-lg-12 control-section db-carousel-section">
+        <div class="e-sample-resize-container carousel-sample">
+            <ejs-carousel id="dbCarousel" cssClass="db-carousel" dataSource="@datasrc" buttonsVisibility="Hidden" itemTemplate="#itemTemplate" animationEffect="Fade">
+            </ejs-carousel>
+        </div>
+    </div>
+}
+
+@section ActionDescription{
+    <p>
+        This sample demonstrates the basic rendering of the <a href="https://www.syncfusion.com/aspnet-core-ui-controls/carousel" target="_blank">ASP.NET Core Carousel </a> component by binding <code>DataSource</code> property.
+    </p>
+}
+
+@section Description{
+    <p>
+        In this demo, products and its details available in our Syncfusion has been shown as slide show. The data to the
+        ASP.NET Core Carousel component is bound using <code>dataSource</code> property. Also,
+        <code>itemTemplate</code> is used to customize the slides of the carousel.
+    </p>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Data Binding in ASP.NET Core Carousel control. Explore here for more details."/>
+                }
+
+<style>
+    .db-carousel-section .carousel-sample {
+        border: 1px solid #e5e5e5;
+        border-radius: 0.5em;
+        margin: 0 auto 2em;
+        max-width: 420px;
+        height: 420px;
+    }
+
+    .db-carousel {
+        background-color: inherit;
+        border-radius: 0.5em;
+    }
+
+        .db-carousel .e-carousel-items .e-carousel-item .card-title,
+        .db-carousel .e-carousel-items .e-carousel-item .card-text {
+            opacity: 0;
+            text-align: justify;
+            transform: translateY(20px);
+        }
+
+        .db-carousel .e-carousel-items .e-carousel-item.e-active .card-title,
+        .db-carousel .e-carousel-items .e-carousel-item.e-active .card-text {
+            opacity: 1;
+            transform: translateY(0px);
+        }
+
+        .db-carousel .e-carousel-items .e-carousel-item .card-title {
+            font-size: 20px;
+            transition: transform 0.4s ease 0.2s;
+        }
+
+        .db-carousel .e-carousel-items .e-carousel-item .card-text {
+            font-size: 14px;
+            transition: transform 0.4s ease 0.2s;
+        }
+
+        .db-carousel .e-carousel-indicators {
+            height: 3em;
+        }
+
+            .db-carousel .e-carousel-indicators.e-default .e-indicator-bar .e-indicator div {
+                background-color: #e7e7e7;
+            }
+
+    @@media screen and (max-width: 480px) {
+        .db-carousel-section .carousel-sample {
+            width: 100%;
+            height: 440px;
+        }
+    }
+</style>
+
+<script id="itemTemplate" type="text/x-template">
+    <div class="card">
+        <img src=${ImgPath} class="card-img-top" alt=${Title} style="height:210px;width:100%;" />
+        <div class="card-body" style="padding:1rem;">
+            <h5 class="card-title">${Title}</h5>
+            <p class="card-text">${Content}</p>
+        </div>
+    </div>
+</script>
+
+@section Title{
+                    <title>ASP.NET Core Carousel Data Binding Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Data Binding in ASP.NET Core Carousel Control</h1>
+                }

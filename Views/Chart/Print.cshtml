@@ -1,0 +1,165 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <script src="~/scripts/chart/financial-data.js"></script>
+    <div class="col-lg-9 control-section" align="center">
+
+        <ejs-chart id="container" load="load" title="Sales Comparision" pointRender="labelRender">
+            <e-chart-chartarea>
+                <e-chartarea-border width="0"></e-chartarea-border>
+            </e-chart-chartarea>
+            <e-chart-primaryxaxis interval="1" valueType="@Syncfusion.EJ2.Charts.ValueType.Category">
+                <e-majorgridlines width="0"></e-majorgridlines>
+                <e-majorticklines width="0"></e-majorticklines>
+            </e-chart-primaryxaxis>
+            <e-chart-primaryyaxis labelFormat="${value}k" minimum="0" maximum="20" interval="4">
+                <e-majorgridlines width="0"></e-majorgridlines>
+                <e-majorticklines width="0"></e-majorticklines>
+                <e-linestyle width="0"></e-linestyle>
+            </e-chart-primaryyaxis>
+            <e-chart-legendsettings visible="false">
+            </e-chart-legendsettings>
+            <e-series-collection>
+                <e-series dataSource="ViewBag.ChartPoints" xName="Manager" yName="SalesInfo" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                    <e-series-marker>
+                        <e-series-datalabel name="DataLabelMappingName" visible="true" position="@Syncfusion.EJ2.Charts.LabelPosition.Top">
+                            <e-font fontWeight="600" color="#ffffff"></e-font>
+                        </e-series-datalabel>
+                    </e-series-marker>
+                </e-series>
+            </e-series-collection>
+        </ejs-chart>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties" style="width: 100%">
+            <tbody>
+                <tr id="button-control" style="height: 50px">
+                    <td align="center">
+                        <div>
+                            <p><b>Print the chart</b></p><br>
+                            <ejs-button id="button" content="Print" iconCss="e-icons e-print-icon" cssClass="e-flat" isPrimary="true"></ejs-button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+    @*custom code start*@
+        function load(args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+        }
+        @*custom code end*@
+        document.getElementById('button').onclick = () => {
+            var chart = document.getElementById('container').ej2_instances[0];
+            chart.print();
+        };
+        function labelRender(args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            var materialColors = ["#00bdae", "#404041", "#357cd2", "#e56590", "#f8b883", "#70ad47", "#dd8abd", "#7f84e8", "#7bb4eb",
+                "#ea7a57", "#404041", "#00bdae"];
+            var fabricColors = ["#4472c4", "#ed7d31", "#ffc000", "#70ad47", "#5b9bd5",
+                "#c1c1c1", "#6f6fe2", "#e269ae", "#9e480e", "#997300", "#4472c4", "#70ad47", "#ffc000", "#ed7d31"];
+            var bootstrapColors = ["#a16ee5", "#f7ce69", "#55a5c2", "#7ddf1e", "#ff6ea6",
+                "#7953ac", "#b99b4f", "#407c92", "#5ea716", "#b91c52"];
+            var highContrastColors = ["#79ECE4", "#E98272", "#DFE6B6", "#C6E773", "#BA98FF",
+                "#FA83C3", "#00C27A", "#43ACEF", "#D681EF", "#D8BC6E"];
+            var fluentColors = ['#1AC9E6', '#DA4CB2', '#EDBB40', '#AF4BCF', '#FF7266', '#1BD565', '#EE993D', '#5887FF', '#EC548D',
+                '#7D39C0'];
+            var fluentDarkColors = ['#1AC9E6', '#DA4CB2', '#EDBB40', '#AF4BCF', '#FF7266', '#1BD565', '#EE993D', '#5887FF', '#EC548D',
+                '#7D39C0'];
+            if (selectedTheme && selectedTheme.indexOf('fabric') > -1) {
+                args.fill = fabricColors[args.point.index % 10];
+            }
+            else if (selectedTheme === 'material') {
+                args.fill = materialColors[args.point.index % 10];
+            }
+            else if (selectedTheme === 'highcontrast') {
+                args.fill = highContrastColors[args.point.index % 10];
+            }
+            else if (selectedTheme === 'fluent') {
+                args.fill = fluentColors[args.point.index % 10];
+            } 
+            else if (selectedTheme === 'fluent-dark') {
+                args.fill = fluentDarkColors[args.point.index % 10];
+            }
+            else {
+                args.fill = bootstrapColors[args.point.index % 10];
+            }
+        };
+    </script>
+    @*custom code start*@
+    <style>
+        #control-container {
+            padding: 0px !important;
+        }
+
+        .e-print-icon::before {
+            content: '\e34b';
+        }
+
+        .e-view.fabric .e-print-icon::before, .e-view.fabric-dark .e-print-icon::before {
+            content: '\e7df';
+        }
+
+        .e-view.bootstrap .e-print-icon::before {
+            content: '\ebd2';
+        }
+
+        .e-view.bootstrap4 .e-print-icon::before {
+            content: '\e743';
+        }
+
+        .e-view.tailwind .e-print-icon::before, .e-view.tailwind-dark .e-print-icon::before {
+            content: '\e76c';
+        }
+
+        .e-view.highcontrast .e-print-icon::before {
+            content: '\ebf9';
+        }
+
+        .e-view.bootstrap5 .e-print-icon::before, .e-view.bootstrap5-dark .e-print-icon::before {
+            content: '\e75d';
+        }
+
+        .e-view.fluent .e-print-icon::before, .e-view.fluent-dark .e-print-icon::before {
+            content: '\e75d';
+        }
+
+        .e-view.material3 .e-print-icon::before, .e-view.material3-dark .e-print-icon::before {
+            content: '\e75d';
+        }
+    </style>
+}
+
+@section Scripts {
+
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Print in ASP.NET Core Chart control. Explore here for more details."/>
+                }
+@*custom code end*@
+@section ActionDescription{
+    <p>
+        This sample demonstrates the print option in the charts.
+    </p>
+}
+@section Description{
+    <p>
+        By clicking the <b>Print</b> button, you can print a chart directly from the browser using the print method.
+    </p>
+    <p>
+        More information about the print can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/chart-print?cs-save-lang=1&cs-lang=razor#print">documentation section</a>.
+    </p>
+}
+@section Title{
+                    <title>ASP.NET Core Chart Print Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Print in ASP.NET Core Chart Control</h1>
+                }

@@ -1,0 +1,240 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="control-section">
+        <div class="control-wrapper">
+            <ejs-richtexteditor id="defaultRTE" showCharCount="true" actionBegin="handleFullScreen" actionComplete="actionCompleteHandler" maxLength="2000" created="created">
+                <e-content-template>
+                    <div>
+                        <p>The Rich Text Editor is a WYSIWYG ('what you see is what you get') editor useful to create and edit content and return the valid <a href='https://ej2.syncfusion.com/aspnetcore/documentation/rich-text-editor/formation/?no-cache=1#markdown-editor'>HTML markup</a> or <a href='https://ej2.syncfusion.com/aspnetcore/documentation/rich-text-editor/formation/?no-cache=1#html-editor'>markdown</a> of the content</p>
+                        <p><b> Toolbar </b></p>
+                        <ol>
+                            <li>
+                                <p> The Toolbar contains commands to align the text, insert a link, insert an image, insert list, undo / redo operations, HTML view, etc </p>
+                            </li>
+                            <li>
+                                <p> The Toolbar is fully customizable </p>
+                            </li>
+                        </ol>
+                        <p><b> Links </b></p>
+                        <ol>
+                            <li>
+                                <p> You can insert a hyperlink with its corresponding dialog</p>
+                            </li>
+                            <li>
+                                <p> Attach a hyperlink to the displayed text. </p>
+                            </li>
+                            <li>
+                                <p> Customize the quick toolbar based on the hyperlink </p>
+                            </li>
+                        </ol>
+                        <p><b> Image.</b></p>
+                        <ol>
+                            <li>
+                                <p> Allows you to insert images from an online source as well as the local computer</p>
+                            </li>
+                            <li>
+                                <p> You can upload an image</p>
+                            </li>
+                            <li>
+                                <p> Provides an option to customize the quick toolbar for an image </p>
+                            </li>
+                        </ol>
+                        <img alt='Logo' src="@Url.Content("~/images/RichTextEditor/RTEImage-Feather.png")" style='width: 300px' />
+                    </div>
+                </e-content-template>
+                <e-richtexteditor-toolbarsettings items="@ViewBag.tools"></e-richtexteditor-toolbarsettings>
+                <e-richtexteditor-quicktoolbarsettings table="@ViewBag.table"></e-richtexteditor-quicktoolbarsettings>
+                <e-richtexteditor-filemanagersettings enable="true" path="/Pictures/Food" ajaxSettings="@ViewBag.ajaxSettings"></e-richtexteditor-filemanagersettings>
+            </ejs-richtexteditor>
+        </div>
+    </div>
+    <link href="~/css/richtexteditor/codemirror.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/css/css.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/htmlmixed/htmlmixed.js" type="text/javascript"></script>
+    <style>
+        .e-code-mirror::before {
+            content: '\e345';
+        }
+
+        .e-html-preview::before {
+            content: '\e350';
+        }
+
+        .CodeMirror-linenumber,
+        .CodeMirror-gutters {
+            display: none;
+        }
+
+        .sb-header {
+            z-index: 100;
+        }
+
+        .fabric-dark .cm-s-default .cm-tag,
+        .bootstrap5-dark .cm-s-default .cm-tag,
+        .material-dark .cm-s-default .cm-tag,
+        .tailwind-dark .cm-s-default .cm-tag,
+        .highcontrast .cm-s-default .cm-tag {
+            color: #00ff00;
+        }
+
+        .fabric-dark .cm-s-default .cm-string,
+        .bootstrap5-dark .cm-s-default .cm-string,
+        .material-dark .cm-s-default .cm-string,
+        .tailwind-dark .cm-s-default .cm-string {
+            color: blue;
+        }
+
+        .highcontrast .cm-s-default .cm-string {
+            color: #ffd939;
+        }
+
+        .fabric-dark .cm-s-default .cm-attribute,
+        .bootstrap5-dark .cm-s-default .cm-attribute,
+        .material-dark .cm-s-default .cm-attribute,
+        .tailwind-dark .cm-s-default .cm-attribute,
+        .highcontrast .cm-s-default .cm-attribute {
+            color: #f00;
+        }
+        
+        .fabric-dark .CodeMirror,
+        .bootstrap5-dark .CodeMirror,
+        .material-dark .CodeMirror,
+        .tailwind-dark .CodeMirror {
+            background:  #303030;
+        }
+
+        .highcontrast .CodeMirror {
+            background: black;
+        }
+
+        .sb-content.e-view.hide-header {
+            top: 0 !important;
+        }
+
+        .sb-header.e-view.hide-header {
+            display: none;
+        }
+
+        .e-richtexteditor .e-rte-content .e-content pre {
+            padding: 10px;
+            background: #F4F5F7;
+        }
+
+        .fabric-dark .e-richtexteditor .e-rte-content .e-content pre,
+        .bootstrap5-dark .e-richtexteditor .e-rte-content .e-content pre,
+        .material-dark .e-richtexteditor .e-rte-content .e-content pre,
+        .tailwind-dark .e-richtexteditor .e-rte-content .e-content pre,
+        .highcontrast .e-richtexteditor .e-rte-content .e-content pre {
+            padding: 10px;
+            background: #303030;
+        }
+    </style>
+    <script type="text/javascript">
+        var rteObj, myCodeMirror, textArea;
+        function created() {
+            rteObj = this;
+            textArea = rteObj.contentModule.getEditPanel();
+        }
+        function mirrorConversion(e) {
+            var id = rteObj.getID() + 'mirror-view';
+            var mirrorView = rteObj.element.querySelector('#' + id);
+            var charCount = rteObj.element.querySelector('.e-rte-character-count');
+            if (e.targetItem === 'Preview') {
+                textArea.style.display = 'block';
+                mirrorView.style.display = 'none';
+                textArea.innerHTML = myCodeMirror.getValue();
+                charCount.style.display = 'block';
+            }
+            else {
+                if (!mirrorView) {
+                    mirrorView = ej.base.createElement('div', { className: 'e-content' });
+                    mirrorView.id = id;
+                    textArea.parentNode.appendChild(mirrorView);
+                }
+                else {
+                    mirrorView.innerHTML = '';
+                }
+                textArea.style.display = 'none';
+                mirrorView.style.display = 'block';
+                renderCodeMirror(mirrorView, defaultRTE.value);
+                charCount.style.display = 'none';
+            }
+        }
+        function renderCodeMirror(mirrorView, content) {
+            myCodeMirror = CodeMirror(mirrorView, {
+                value: content,
+                lineNumbers: true,
+                mode: 'text/html',
+                lineWrapping: true,
+            });
+        }
+        function handleFullScreen(e) {
+            var sbCntEle = document.querySelector('.sb-content.e-view');
+            var sbHdrEle = document.querySelector('.sb-header.e-view');
+            if (e.targetItem === 'Maximize') {
+                if (ej.base.Browser.isDevice && ej.base.Browser.isIos) {
+                    ej.base.addClass([sbCntEle, sbHdrEle], ['hide-header']);
+                }
+            }
+            else if (e.targetItem === 'Minimize') {
+                if (ej.base.Browser.isDevice && ej.base.Browser.isIos) {
+                    ej.base.removeClass([sbCntEle, sbHdrEle], ['hide-header']);
+                }
+            }
+        }
+        function actionCompleteHandler(e) {
+            if (e.targetItem && (e.targetItem === 'SourceCode' || e.targetItem === 'Preview')) {
+                this.sourceCodeModule.getPanel().style.display = 'none';
+                mirrorConversion(e);
+            }
+            else {
+                setTimeout(function () { rteObj.toolbarModule.refreshToolbarOverflow(); }, 1000);
+            }
+        }
+    </script>
+}
+
+@*custom code start*@
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Overview in ASP.NET Core Rich Text Editor control. Explore here for more details."/>
+                }
+
+@*custom code end*@
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This sample demonstrates the full features of Rich Text Editor that includes all the tools and functionalities.</p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>This sample used <code>Code mirror</code> plugins helps to highlight the HTML content and when changes happens in code view, the same has been reflected in preview mode. </p>
+        <p>The editor’s toolbar contains commands to format the content. The toolbar consists of:</p>
+        <ul>
+            <li><code>Lists</code> - NumberFormat list and BulletFormat list types.</li>
+            <li><code>Links</code> - A hyperlink can be inserted into the editor for quick access to related information.</li>
+            <li><code>Image</code> - Inserts and manages images.</li>
+            <li><code>Table</code> - Inserts and manages Tables.</li>
+            <li><code>Alignment</code> - Aligns the content with left, center, and right margins.</li>
+            <li><code>Undo/Redo</code> - Allows undo/redo operations.</li>
+            <li><code>Indent/ Outdent</code> - Increases/decreases the indent level of the content.</li>
+            <li><code>Font</code> - Able to do styling on text like font family, size, fore color and background color.</li>
+            <li><code>Lower / Upper case</code> – Changes the casing of the selected text.</li>
+            <li><code>SubScript / SuperScript</code> - Makes the selected text as subscript (lower)/superscript(upper).</li>
+            <li><code>FullScreen</code> - Stretches the editor to the maximum width and height of the browser window.</li>
+            <li><code>Format</code> – Formats the sentence in different ways such as heading level, quotation, and code snippet</li>
+            <li><code>Styles</code> – Allows you to apply inline styles to the selected content like bold, italic, and more.</li>
+            <li><code>Insert Code</code> - Allows you to apply code format to the selected parent nodes. In the above sample, the style for the code format ('pre' tag) is applied by adding the background color.</li>
+            <li><code>Insert Emoticon</code> - Inserts the emoticon to the editor</li>
+        </ul>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Rich Text Editor Overview Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Overview in ASP.NET Core Rich Text Editor Control</h1>
+                }

@@ -1,0 +1,171 @@
+@{
+    ViewData["Title"] = "Icons";
+}
+
+@using Syncfusion.EJ2
+
+@section ControlsSection {
+<div class="col-lg-8 control-section msg-icon-section">
+    <div class="content-section">
+        <ejs-button id="btn1" content="Show Default Message" cssClass="e-outline e-primary msg-hidden"></ejs-button>
+        <ejs-message id="msg_default_icon" showCloseIcon="true" closed="defaultClosed" content="Editing is restricted"></ejs-message>
+        <ejs-button id="btn2" content="Show Info Message" cssClass="e-outline e-primary e-info msg-hidden"></ejs-button>
+        <ejs-message id="msg_info_icon" severity="Info" showCloseIcon="true" closed="infoClosed" content="Please read the comments carefully"></ejs-message>
+        <ejs-button id="btn3" content="Show Success Message" cssClass="e-outline e-primary e-success msg-hidden"></ejs-button>
+        <ejs-message id="msg_success_icon" severity="Success" showCloseIcon="true" closed="successClosed" content="Your message has been sent successfully"></ejs-message>
+        <ejs-button id="btn4" content="Show Warning Message" cssClass="e-outline e-primary e-warning msg-hidden"></ejs-button>
+        <ejs-message id="msg_warning_icon" severity="Warning" showCloseIcon="true" closed="warningClosed" content="There was a problem with your network connection"></ejs-message>
+        <ejs-button id="btn5" content="Show Error Message" cssClass="e-outline e-primary e-error msg-hidden"></ejs-button>
+        <ejs-message id="msg_error_icon" severity="Error" showCloseIcon="true" closed="errorClosed" content="A problem occurred while submitting your data"></ejs-message>
+    </div>
+</div>
+<div class="col-lg-4 property-section">
+    <div class="property-panel-section">
+        <div class="property-panel-content">
+            <table id="property" title="Properties">
+                <tbody>
+                    <tr>
+                        <td>
+                            <ejs-checkbox id="showIcon" label='Severity Icon' checked="true" change="severityIconChange">
+                            </ejs-checkbox>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <ejs-checkbox id="showCloseIcon" label='Close Icon' checked="true" change="closeIconChange"></ejs-checkbox>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    document.getElementById("btn1").onclick = function (e) {
+        var msgDefault = ej.base.getComponent(document.getElementById("msg_default_icon"), "message");
+        var defaultBtn = ej.base.getComponent(document.getElementById("btn1"), "btn");
+        show(msgDefault, defaultBtn);
+    }
+
+    document.getElementById("btn2").onclick = function (e) {
+        var msgInfo = ej.base.getComponent(document.getElementById("msg_info_icon"), "message");
+        var infoBtn = ej.base.getComponent(document.getElementById("btn2"), "btn");
+        show(msgInfo, infoBtn);
+    }
+
+    document.getElementById("btn3").onclick = function (e) {
+        var msgSuccess = ej.base.getComponent(document.getElementById("msg_success_icon"), "message");
+        var successBtn = ej.base.getComponent(document.getElementById("btn3"), "btn");
+        show(msgSuccess, successBtn);
+    }
+
+    document.getElementById("btn4").onclick = function (e) {
+        var msgWarning = ej.base.getComponent(document.getElementById("msg_warning_icon"), "message");
+        var warningBtn = ej.base.getComponent(document.getElementById("btn4"), "btn");
+        show(msgWarning, warningBtn);
+    }
+
+    document.getElementById("btn5").onclick = function (e) {
+        var msgError = ej.base.getComponent(document.getElementById("msg_error_icon"), "message");
+        var errorBtn = ej.base.getComponent(document.getElementById("btn5"), "btn");
+        show(msgError, errorBtn);
+    }
+
+    function defaultClosed() {
+        var defaultBtn = ej.base.getComponent(document.getElementById("btn1"), "btn");
+        defaultBtn.element.classList.remove("msg-hidden");
+    }
+
+    function infoClosed() {
+        var infoBtn = ej.base.getComponent(document.getElementById("btn2"), "btn");
+        infoBtn.element.classList.remove("msg-hidden");
+    }
+
+    function warningClosed() {
+        var warningBtn = ej.base.getComponent(document.getElementById("btn4"), "btn");
+        warningBtn.element.classList.remove("msg-hidden");
+    }
+
+    function successClosed() {
+        var successBtn = ej.base.getComponent(document.getElementById("btn3"), "btn");
+        successBtn.element.classList.remove("msg-hidden");
+    }
+
+    function errorClosed() {
+        var errorBtn = ej.base.getComponent(document.getElementById("btn5"), "btn");
+        errorBtn.element.classList.remove("msg-hidden");
+    }
+
+    function severityIconChange(args) {
+        changeProp("showIcon", args.checked);
+    }
+
+    function closeIconChange(args) {
+        changeProp("showCloseIcon", args.checked);
+    }
+
+    function show(message, btn) {
+        message.visible = true;
+        btn.element.classList.add("msg-hidden");
+    }
+
+    function changeProp(prop, value) {
+        var msgTypes = ["default", "info", "success", "warning", "error"];
+        for (var i = 0; i <= 4; i++) {
+            var msgObj = ej.base.getComponent(document.getElementById("msg_" + msgTypes[i] + "_icon"), "message");
+            if (msgObj) {
+                if (value) {
+                    msgObj[prop] = true;
+                } else {
+                    msgObj[prop] = false;
+                }
+            }
+        }
+    }
+</script>
+
+<style>
+    .msg-icon-section .content-section {
+        margin: 0 auto;
+        max-width: 520px;
+        padding-top: 10px;
+    }
+
+    .msg-icon-section .e-message {
+        margin: 10px 0;
+    }
+
+    .msg-icon-section .e-btn {
+        display: block;
+        margin: 10px 0;
+    }
+
+    .msg-icon-section .e-btn.msg-hidden {
+        display: none;
+    }
+</style>
+}
+
+@section ActionDescription {
+<div id="action-description">
+    <p>This sample demonstrates the visibility customization of severity and close icons of the ASP.NET Core Message control. Click the close icon to hide the message. Click the button to restore the hidden message. Check or uncheck the check box to show or hide the visibility of the severity icon. Check or uncheck the check box to show or hide the visibility of the close icon.</p>
+</div>
+}
+@section Description {
+<div id="description">
+    <p>The Message control can be rendered with and without the severity and close icons. The close icon is used to hide the message.</p>
+    <p>In this sample, the Message control is rendered with a severity icon and a close icon. The visibility of the severity icon is handled by the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Notifications.Message.html#Syncfusion_EJ2_Notifications_Message_ShowIcon">showIcon</a> property. The visibility of the close icon is handled by the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Notifications.Message.html#Syncfusion_EJ2_Notifications_Message_ShowCloseIcon">showCloseIcon</a> property.</p>
+</div>
+}
+
+@section Meta{
+<meta name="description" content="This example demonstrates the Icons in ASP.NET Core Message control. Explore here for more details." />
+}
+
+@section Title {
+    <title>ASP.NET Core Message Icons Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Icons in ASP.NET Core Message Control</h1>
+}

@@ -1,0 +1,256 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="col-lg-9 control-section">
+        <div class="schedule-wrapper">
+            <ejs-schedule id="schedule" width="100%" height="650px" selectedDate="new DateTime(DateTime.Today.Year, 2, 15)" actionBegin="onActionBegin" actionComplete="onActionComplete" eventRendered="onEventRendered">
+                <e-schedule-eventsettings dataSource="@ViewBag.appointments"></e-schedule-eventsettings>
+                <e-schedule-views>
+                    <e-schedule-view option="Month"></e-schedule-view>
+                </e-schedule-views>
+            </ejs-schedule>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id='property' title='Properties' class='property-panel-table' style="width: 100%;">
+            <tbody>
+                <tr style="height: 50px">
+                    <td style="width: 90%">
+                        <div>
+                            <ejs-checkbox id="headerbar" checked="true" label="Show/Hide Header bar" change="onChange"></ejs-checkbox>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <style type="text/css">
+        .e-schedule .e-schedule-toolbar .user-icon {
+            background-image: url('@Url.Content("~/css/schedule/images/nancy.png")');
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            border-radius: 50%;
+            height: 24px !important;
+            width: 24px !important;
+        }
+
+        .e-schedule .e-schedule-toolbar .e-toolbar-items .e-schedule-user-icon .e-tbar-btn:hover {
+            background-color: inherit;
+        }
+
+        .e-schedule .e-schedule-toolbar .e-toolbar-items .e-schedule-user-icon .e-tbar-btn-text {
+            display: none;
+        }
+
+        .e-schedule .e-schedule-toolbar .e-toolbar-pop .e-schedule-user-icon .e-tbar-btn-text {
+            padding-left: 8px !important;
+        }
+
+        .e-profile-wrapper {
+            width: 210px;
+            height: 80px;
+            background-color: #fafafa;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+            .e-profile-wrapper .profile-container {
+                display: flex;
+                padding: 10px;
+            }
+
+            .e-profile-wrapper .profile-image {
+                background-image: url('@Url.Content("~/css/schedule/images/nancy.png")');
+                background-position: center center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                border-radius: 50%;
+                box-shadow: inset 0 0 1px #e0e0e0, inset 0 0 14px rgba(0, 0, 0, 0.2);
+                width: 60px;
+                height: 60px;
+            }
+
+            .e-profile-wrapper .content-wrap {
+                padding-left: 10px;
+            }
+
+            .e-profile-wrapper .name {
+                font-size: 14px;
+                line-height: 20px;
+                font-weight: 500;
+                margin-top: 2px;
+            }
+
+            .e-profile-wrapper .destination {
+                font-size: 12px;
+            }
+
+            .e-profile-wrapper .status-icon {
+                height: 6px;
+                width: 6px;
+                background: green;
+                border-radius: 100%;
+                float: left;
+                margin-right: 4px;
+                margin-top: 4px;
+            }
+
+            .e-profile-wrapper .status {
+                font-size: 11px;
+                line-height: normal;
+            }
+
+            .highcontrast .e-profile-wrapper {
+                border: 1px solid #969696
+            }
+            .highcontrast .e-profile-wrapper .profile-container {
+                background-color: #000;
+            }
+
+        .tailwind-dark .e-profile-wrapper {
+            background-color: #374151;
+            border: 0.5px solid #4b5563;
+        }
+
+        .bootstrap5-dark .e-profile-wrapper {
+            background-color: rgb(40, 45, 49);
+            border: 0.5px solid #4b5563;
+        }
+
+            .tailwind .e-profile-wrapper .destination,
+            .tailwind-dark .e-profile-wrapper .destination {
+                font-size: 11px;
+            }
+
+        .bootstrap-dark .e-profile-wrapper {
+            background-color: #1a1a1a;
+        }
+
+        .fluent-dark .e-profile-wrapper {
+            background-color: #201f1e;
+        }
+
+        .fabric-dark .e-profile-wrapper {
+            background-color: #333232;
+        }
+
+        .material-dark .property-panel-header {
+            color: #fff;
+        }
+
+        .material-dark .e-profile-wrapper {
+            color: #fff;
+            border: 0.5px solid #616161;
+            background-color: #212121;
+        }
+
+        .material3-dark .e-profile-wrapper {
+            border: 0.5px solid #444746;
+            background-color: #302c38;
+        }
+    </style>
+
+    <script src="~/scripts/schedule/applyCategoryColor.js"></script>
+    <script type="text/javascript">
+        var profilePopup;
+        function onActionBegin(args) {
+            if (args.requestType === 'toolbarItemRendering') {
+                var userIconItem = {
+                    align: 'Right', prefixIcon: 'user-icon', text: 'Nancy', cssClass: 'e-schedule-user-icon'
+                };
+                args.items.push(userIconItem);
+            }
+        }
+        function onActionComplete(args) {
+            var scheduleElement = document.getElementById('schedule');
+            if (args.requestType === 'toolBarItemRendered') {
+                var userIconEle = scheduleElement.querySelector('.e-schedule-user-icon');
+                userIconEle.onclick = function () {
+                    profilePopup.relateTo = userIconEle;
+                    profilePopup.dataBind();
+                    if (profilePopup.element.classList.contains('e-popup-close')) {
+                        profilePopup.show();
+                    } else {
+                        profilePopup.hide();
+                    }
+                };
+            }
+            var userContentEle = ej.base.createElement('div', {
+                className: 'e-profile-wrapper'
+            });
+            scheduleElement.parentElement.appendChild(userContentEle);
+
+            var userIconEle = scheduleElement.querySelector('.e-schedule-user-icon');
+            var getDOMString = ej.base.compile('<div class="profile-container"><div class="profile-image">' +
+                '</div><div class="content-wrap"><div class="name">Nancy</div>' +
+                '<div class="destination">Product Manager</div><div class="status">' +
+                '<div class="status-icon"></div>Online</div></div></div> ');
+            var output = getDOMString({});
+            profilePopup = new ej.popups.Popup(userContentEle, {
+                content: output[0],
+                relateTo: userIconEle,
+                position: { X: 'left', Y: 'bottom' },
+                collision: { X: 'flip', Y: 'flip' },
+                targetType: 'relative',
+                viewPortElement: scheduleElement,
+                width: 210,
+                height: 80
+            });
+            profilePopup.hide();
+        }
+        function onChange(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            profilePopup.hide();
+            scheduleObj.showHeaderBar = args.checked;
+            scheduleObj.dataBind();
+        }
+        function onEventRendered(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            applyCategoryColor(args, scheduleObj.currentView);
+        }
+    </script>
+}
+
+@*custom code start*@
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Header Bar in ASP.NET Core Scheduler control. Explore here for more details."/>
+                }
+@*custom code end*@
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This demo shows the way of adding custom items into the Scheduler header bar. Here, an employee image is added to the
+            header bar, clicking on which will open the popup showing that person's short profile information.
+        </p>
+    </div>
+
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            In this demo, a popup has been designed separately with a person’s profile info and kept in a hidden state initially. A custom
+            item has been added to the Scheduler header bar within the
+            <code>actionBegin</code> event by checking for the request type as
+            <code>toolbarItemRendering</code> which triggers at the time of header bar items rendering on the Schedule.
+        </p>
+        <p>
+            Once the items are added, the click action is being bound to it in the
+            <code>actionComplete</code> event by checking for the request type as
+            <code>toolbarItemRendered</code> which triggers after the items are rendered on the Schedule. The appropriate action of showing or hiding the popup
+            on clicking the custom item has been done within it.
+        </p>
+        <p>
+            In case, if the header bar of Scheduler needs to be hidden, it can be done by setting false to
+            <code>showHeaderBar</code> property.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Scheduler Header Bar Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Header Bar in ASP.NET Core Scheduler Control</h1>
+                }

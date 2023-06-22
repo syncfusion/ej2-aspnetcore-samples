@@ -1,0 +1,265 @@
+@using Syncfusion.EJ2
+@{
+    var rangeValue = new int[] { 25, 75 };
+}
+@section ControlsSection{
+    <div class="col-lg-8 control-section">
+        <div class="content-wrapper">
+            <div class='sliderwrap'>
+                <label class="userselect">MinRange Slider With Limits</label>
+                <ejs-slider id="minrange" value="25" min="0" max="100" step="1" type="MinRange">
+                    <e-slider-ticksdata placement="Before" largeStep="20" smallStep="5" showSmallTicks="true"></e-slider-ticksdata>
+                    <e-slider-tooltipdata isVisible="true" placement="Before" showOn="Focus"></e-slider-tooltipdata>
+                    <e-slider-limitsdata enabled="true" minStart="10" minEnd="40"></e-slider-limitsdata>
+                </ejs-slider>
+            </div>
+            <div class='sliderwrap'>
+                <label class="userselect">Range Slider With Limits</label>
+                <ejs-slider id="range" value="rangeValue" min="0" max="100" step="1" type="Range" created="created">
+                    <e-slider-ticksdata placement="Before" largeStep="20" smallStep="5" showSmallTicks="true"></e-slider-ticksdata>
+                    <e-slider-tooltipdata isVisible="true" placement="Before" showOn="Focus"></e-slider-tooltipdata>
+                    <e-slider-limitsdata enabled="true" minStart="10" minEnd="40" maxStart="60" maxEnd="90"></e-slider-limitsdata>
+                </ejs-slider>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 property-section property-custom">
+        <table id="property" title="Properties">
+            <tbody>
+                <tr>
+                    <td style="width: 50%">
+                        <div class="userselect">MinStart</div>
+                    </td>
+                    <td style="width: 50%">
+                        <ejs-numerictextbox id="minStart" value="10" min="0" max="100" step="1" change="minStartChange"></ejs-numerictextbox>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 50%">
+                        <div class="userselect">MinEnd</div>
+                    </td>
+                    <td style="width: 50%">
+                        <ejs-numerictextbox id="minEnd" value="40" min="0" max="100" step="1" change="minEndChange"></ejs-numerictextbox>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 50%">
+                        <div class="userselect">MaxStart</div>
+                    </td>
+                    <td style="width: 50%">
+                        <ejs-numerictextbox id="maxStart" value="60" min="0" max="100" step="1" change="maxStartChange"></ejs-numerictextbox>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 50%">
+                        <div class="userselect">MaxEnd</div>
+                    </td>
+                    <td style="width: 50%">
+                        <ejs-numerictextbox id="maxEnd" value="90" min="0" max="100" step="1" change="maxEndChange"></ejs-numerictextbox>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 50%">
+                        <div class="userselect">Lock First Handle</div>
+                    </td>
+                    <td style="width: 50%">
+                        <ejs-checkbox id="fixedOne" change="fixOne"></ejs-checkbox>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 50%">
+                        <div class="userselect">Lock Second Handle</div>
+                    </td>
+                    <td style="width: 50%">
+                        <ejs-checkbox id="fixedSecond" change="fixSecond"></ejs-checkbox>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script type="text/javascript">
+        var minrangeObj;
+        var rangeObj;
+        function created() {
+            minrangeObj = document.getElementById('minrange').ej2_instances[0];
+            rangeObj = document.getElementById('range').ej2_instances[0];
+            if (document.getElementById('right-pane')) {
+                document.getElementById('right-pane').addEventListener('scroll', onScroll);
+            }
+        }
+
+        // Eventlisteners to lock first handle of the both sliders
+        function fixOne(args) {
+            minrangeObj.limits.startHandleFixed = args.checked;
+            rangeObj.limits.startHandleFixed = args.checked;
+        }
+
+        // Eventlisteners to lock second handle of the both sliders
+        function fixSecond(args) {
+            minrangeObj.limits.endHandleFixed = args.checked;
+            rangeObj.limits.endHandleFixed = args.checked;
+        }
+
+        // Eventlisteners to change limit values for both sliders
+        function minStartChange(args) {
+            minrangeObj.limits.minStart = args.value;
+            rangeObj.limits.minStart = args.value;
+        }
+
+        function minEndChange(args) {
+            minrangeObj.limits.minEnd = args.value;
+            rangeObj.limits.minEnd = args.value;
+        }
+
+        function maxStartChange(args) {
+            minrangeObj.limits.maxStart = args.value;
+            rangeObj.limits.maxStart = args.value;
+        }
+
+        function maxEndChange(args) {
+            minrangeObj.limits.maxEnd = args.value;
+            rangeObj.limits.maxEnd = args.value;
+        }
+
+        // Handler used to reposition the tooltip on page scroll
+        function onScroll() {
+            var slider = [minrangeObj, rangeObj];
+            slider.forEach((slider) => {
+                slider.refreshTooltip(slider.tooltipTarget);
+            });
+        }
+
+    </script>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Limits in ASP.NET Core Range Slider control. Explore here for more details."/>
+                }
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the rendering of Slider component with limits. Drag the thumb over the bar for selecting the
+            values between assigned limit values. Change the values in the property pane to set different limit values.
+        </p>
+
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            The limits are used to limit between certain range. When the limits are assigned, draggable limited area will be in the dark
+            shadow color of the current theme. The limits APIs are explained below.
+        </p>
+        <p>
+            <table>
+                <tr>
+                    <td>
+                        <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Inputs.SliderLimitData.html#Syncfusion_EJ2_Inputs_SliderLimitData_MinStart">minStart</a>
+                    </td>
+                    <td>
+                        - &nbsp;&nbsp;Used to set minimum limit value for first handle.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Inputs.SliderLimitData.html#Syncfusion_EJ2_Inputs_SliderLimitData_MinEnd">minEnd</a>
+                    </td>
+                    <td>
+                        - &nbsp;&nbsp;Used to set maximum limit value for first handle.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Inputs.SliderLimitData.html#Syncfusion_EJ2_Inputs_SliderLimitData_MaxStart">maxStart</a>
+                    </td>
+                    <td>
+                        - &nbsp;&nbsp;Used to set minimum limit value for second handle.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Inputs.SliderLimitData.html#Syncfusion_EJ2_Inputs_SliderLimitData_MaxEnd">maxEnd</a>
+                    </td>
+                    <td>
+                        - &nbsp;&nbsp;Used to set maximum limit value for first handle.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Inputs.SliderLimitData.html#Syncfusion_EJ2_Inputs_SliderLimitData_StartHandleFixed">startHandleFixed</a>
+                    </td>
+                    <td>
+                        - &nbsp;&nbsp;Used to lock the first handle in the current position.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Inputs.SliderLimitData.html#Syncfusion_EJ2_Inputs_SliderLimitData_EndHandleFixed">endHandleFixed</a>
+                    </td>
+                    <td>
+                        - &nbsp;&nbsp;Used to lock the second handle in the current position.
+                    </td>
+                </tr>
+            </table>
+        </p>
+        <p> In this demo, Limits with MinRange and range Slider is demonstrated.</p>
+        <ul>
+            <li>MinRange Slider – In this sample, the minimum and maximum limit of the slider is set to 10 and 40 respectively.</li>
+            <li>
+                Range Slider – In this sample, the minimum and maximum limit of the first handle is set to 10 and 40 respectively
+                and the minimum and maximum limit of the second handle is set to 60 and 90 respectively.
+            </li>
+        </ul>
+        <p>
+            For more information, refer to the
+            <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Inputs.Slider.html#Syncfusion_EJ2_Inputs_Slider_Limits">limits</a> section from the documentation.
+        </p>
+    </div>
+}
+
+<style>
+    .content-wrapper {
+        width: 52%;
+        margin: 0 auto;
+        min-width: 185px;
+    }
+
+    .sliderwrap {
+        margin-top: 45px;
+    }
+
+    .e-bigger .content-wrapper {
+        width: 80%;
+    }
+
+    .sliderwrap label {
+        padding-bottom: 50px;
+        font-size: 13px;
+        font-weight: 500;
+        margin-top: 15px;
+    }
+
+    .userselect {
+        -webkit-user-select: none;
+        /* Safari 3.1+ */
+        -moz-user-select: none;
+        /* Firefox 2+ */
+        -ms-user-select: none;
+        /* IE 10+ */
+        user-select: none;
+        /* Standard syntax */
+    }
+
+    .property-custom td {
+        padding: 5px;
+    }
+</style>
+@section Title{
+                    <title>ASP.NET Core Range Slider Limits Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Limits in ASP.NET Core Range Slider Control</h1>
+                }

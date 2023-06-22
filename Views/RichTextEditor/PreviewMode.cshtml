@@ -1,0 +1,250 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="control-section">
+        <div class="control-wrapper">
+            <ejs-richtexteditor id="default" created="created" editorMode="Markdown" actionComplete="actionComplete" actionBegin="handleFullScreen">
+                <e-content-template>
+                    In Rich Text Editor, you click the toolbar buttons to format the words and the changes are visible immediately.
+                    Markdown is not like that. When you format the word in Markdown format, you need to add Markdown syntax to the word to indicate which words
+                    and phrases should look different from each other
+
+Rich Text Editor supports markdown editing when the editorMode set as **markdown** and using both *keyboard interaction* and *toolbar action*, you can apply the formatting to text.
+
+We can add our own custom formation syntax for the Markdown formation, [sample link](https://ej2.syncfusion.com/javascript/demos/#/material/rich-text-editor/markdown-editor-custom-format.html).
+
+The third-party library <b>Marked</b> is used in this sample to convert markdown into HTML content
+                </e-content-template>
+                <e-richtexteditor-toolbarsettings items="@ViewBag.items"></e-richtexteditor-toolbarsettings>
+            </ejs-richtexteditor>
+        </div>
+    </div>
+    <style>
+        .e-richtexteditor textarea.e-content {
+            float: left;
+            border-right: 1px solid rgba(0, 0, 0, 0.12);
+        }
+
+        .e-richtexteditor .e-rte-content .e-content {
+            min-height: 150px;
+        }
+
+        .e-richtexteditor .e-rte-content {
+            overflow: hidden;
+        }
+
+        .e-icon-btn.e-active .e-md-preview::before {
+            content: '\e350';
+        }
+
+        .e-icon-btn .e-md-preview::before {
+            content: '\e345';
+        }
+
+        .bootstrap4 .e-icon-btn.e-active .e-md-preview::before {
+            content: '\e790';
+        }
+
+        .bootstrap4 .e-icon-btn .e-md-preview::before {
+            content: '\e787';
+        }
+        
+        .tailwind .e-icon-btn .e-md-preview::before,
+        .tailwind-dark .e-icon-btn .e-md-preview::before {
+            content: '\e7d0';
+        }
+        
+        .fluent .e-icon-btn.e-active .e-md-preview::before,
+        .fluent-dark .e-icon-btn.e-active .e-md-preview::before,
+        .tailwind .e-icon-btn.e-active .e-md-preview::before,
+        .tailwind-dark .e-icon-btn.e-active .e-md-preview::before,
+        .bootstrap5 .e-icon-btn.e-active .e-md-preview::before,
+        .bootstrap5 .e-icon-btn.e-active .e-md-preview::before {
+            content: '\e80e';
+        }
+
+        .tailwind .e-icon-btn .e-md-preview::before,
+        .tailwind-dark .e-icon-btn .e-md-preview::before,
+        .bootstrap5 .e-icon-btn .e-md-preview::before,
+        .bootstrap5-dark .e-icon-btn .e-md-preview::before,
+        .fluent .e-icon-btn .e-md-preview::before,
+        .fluent-dark .e-icon-btn .e-md-preview::before,
+        .material3 .e-icon-btn .e-md-preview::before,
+        .material3-dark .e-icon-btn .e-md-preview::before {
+            content: '\e7de';
+        }
+
+        .e-rte-content .e-content {
+            float: right;
+            width: 50%;
+            overflow: auto;
+            height: inherit;
+            padding: 8px;
+            height: 100%;
+        }
+
+            .e-rte-content .e-content.e-pre-source {
+                width: 100%;
+            }
+
+        .highcontrast .e-richtexteditor textarea.e-content {
+            border-right: 1px solid #fff;
+        }
+        /* custom code start */
+        .sb-header {
+            z-index: 100;
+        }
+
+        .sb-content.e-view.hide-header {
+            top: 0 !important;
+        }
+
+        .sb-header.e-view.hide-header {
+            display: none;
+        }
+        /* custom code end */
+    </style>
+    <script type="text/javascript">
+        var rteObj, textArea, mdsource, mdSplit, htmlPreview;
+        function created() {
+            rteObj = this;
+            textArea = rteObj.contentModule.getEditPanel();
+            textArea.addEventListener('keyup', function (e) { markdownConversion(); });
+            mdsource = document.getElementById('preview-code');
+            mdsource.addEventListener('click', function (e) {
+                fullPreview({ mode: true, type: 'preview' });
+                if (e.currentTarget.classList.contains('e-active')) {
+                    rteObj.disableToolbarItem(['Bold', 'Italic', 'StrikeThrough', '|',
+                        'Formats', 'OrderedList', 'UnorderedList', '|',
+                        'CreateLink', 'Image', 'Undo', 'Redo', 'CreateTable']);
+                    e.currentTarget.parentElement.nextElementSibling.classList.add('e-overlay');
+                }
+                else {
+                    rteObj.enableToolbarItem(['Bold', 'Italic', 'StrikeThrough', '|',
+                        'Formats', 'OrderedList', 'UnorderedList', '|',
+                        'CreateLink', 'Image', 'Undo', 'Redo', 'CreateTable']);
+                    e.currentTarget.parentElement.nextElementSibling.classList.remove('e-overlay');
+                }
+            });
+            mdSplit = document.getElementById('MD_Preview');
+            mdSplit.addEventListener('click', function (e) {
+                if (rteObj.element.classList.contains('e-rte-full-screen')) {
+                    fullPreview({ mode: true, type: '' });
+                }
+                mdsource.classList.remove('e-active');
+                if (!rteObj.element.classList.contains('e-rte-full-screen')) {
+                    rteObj.showFullScreen();
+                }
+            });
+        }
+        function actionComplete(e) {
+            if (e.targetItem === 'Maximize' && ej.base.isNullOrUndefined(e.args)) {
+                fullPreview({ mode: true, type: '' });
+            }
+            else if (!mdSplit.parentElement.classList.contains('e-overlay')) {
+                if (e.targetItem === 'Minimize') {
+                    textArea.style.display = 'block';
+                    textArea.style.width = '100%';
+                    if (htmlPreview) {
+                        htmlPreview.style.display = 'none';
+                    }
+                    mdSplit.classList.remove('e-active');
+                    mdsource.classList.remove('e-active');
+                }
+                markdownConversion();
+            }
+            setTimeout(function () { rteObj.toolbarModule.refreshToolbarOverflow(); }, 400);
+        }
+        function markdownConversion() {
+            if (mdSplit.classList.contains('e-active')) {
+                var id = rteObj.getID() + 'html-preview';
+                var htmlPreview = rteObj.element.querySelector('#' + id);
+                htmlPreview.innerHTML = marked(rteObj.contentModule.getEditPanel().value);
+            }
+        }
+        function fullPreview(e) {
+            var id = rteObj.getID() + 'html-preview';
+            htmlPreview = rteObj.element.querySelector('#' + id);
+            if ((mdsource.classList.contains('e-active') || mdSplit.classList.contains('e-active')) && e.mode) {
+                mdsource.classList.remove('e-active');
+                mdSplit.classList.remove('e-active');
+                mdsource.parentElement.title = 'Preview';
+                textArea.style.display = 'block';
+                textArea.style.width = '100%';
+                htmlPreview.style.display = 'none';
+            }
+            else {
+                mdsource.classList.add('e-active');
+                mdSplit.classList.add('e-active');
+                if (!htmlPreview) {
+                    htmlPreview = ej.base.createElement('div', { className: 'e-content' });
+                    htmlPreview.id = id;
+                    textArea.parentNode.appendChild(htmlPreview);
+                }
+                if (e.type === 'preview') {
+                    textArea.style.display = 'none';
+                    htmlPreview.classList.add('e-pre-source');
+                }
+                else {
+                    htmlPreview.classList.remove('e-pre-source');
+                    textArea.style.width = '50%';
+                }
+                htmlPreview.style.display = 'block';
+                htmlPreview.innerHTML = marked(rteObj.contentModule.getEditPanel().value);
+                mdsource.parentElement.title = 'Code View';
+            }
+        }
+        function handleFullScreen(e) {
+            var sbCntEle = document.querySelector('.sb-content.e-view');
+            var sbHdrEle = document.querySelector('.sb-header.e-view');
+            if (e.targetItem === 'Maximize') {
+                if (ej.base.Browser.isDevice && ej.base.Browser.isIos) {
+                    ej.base.addClass([sbCntEle, sbHdrEle], ['hide-header']);
+                }
+            }
+            else if (e.targetItem === 'Minimize') {
+                if (ej.base.Browser.isDevice && ej.base.Browser.isIos) {
+                    ej.base.removeClass([sbCntEle, sbHdrEle], ['hide-header']);
+                }
+            }
+        }
+        loadExternalFile();
+        // Dynamically load the marked.js file
+        function loadExternalFile() {
+            var script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.19/marked.js';
+            document.getElementsByTagName('head')[0].appendChild(script);
+        }
+    </script>
+}
+
+@*custom code start*@
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Preview in ASP.NET Core Rich Text Editor control. Explore here for more details."/>
+                }
+
+@*custom code end*@
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates how to preview markdown changes in Rich Text Editor.
+            Type or edit the display text, and apply format to view the preview of markdown.
+            You can preview the markdown changes immediately in the preview area.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            The Rich Text Editor allows you to preview markdown changes immediately using <code>preview</code>.
+            The third-party library <code>Marked</code> is used in this sample to convert markdown into HTML content.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Rich Text Editor Preview Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Preview in ASP.NET Core Rich Text Editor Control</h1>
+                }

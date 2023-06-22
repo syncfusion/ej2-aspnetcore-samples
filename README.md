@@ -9,7 +9,7 @@ The following topics can help you to use the Syncfusion ASP.NET Core Components 
 * [ASP.NET Core documentation](https://ej2.syncfusion.com/aspnetcore/documentation/introduction)
 * [ASP.NET Core components catalog](#aspnet-core-components-catalog)
 * [License](#license)
-* [Support and feedback](#support-and-feedback)
+* [Support and feedback](#support-and-feedback) 
 
 ## Requirements to run the demo
 

@@ -11,6 +11,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Syncfusion.EJ2.Diagrams;
+using Syncfusion.EJ2.DropDowns;
+using Syncfusion.EJ2.Navigations;
 
 namespace EJ2CoreSampleBrowser.Controllers.Diagram
 {
@@ -139,8 +141,44 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
                 // Tooltip = { Content = "Draw"}
             });
             ViewBag.userhandle = Userhandle;
+            
             ViewBag.getTool = "getTool";
             ViewBag.nodes = nodes;
+
+            List<ToolbarItem> items = new List<ToolbarItem>();
+            {
+                items.Add(new ToolbarItem { PrefixIcon = "e-icons e-group-1", TooltipText = "Group", Disabled = true });
+                items.Add(new ToolbarItem { PrefixIcon = "e-icons e-ungroup-1", TooltipText = "UnGroup", Disabled = true });
+                items.Add(new ToolbarItem { Type = ItemType.Separator });
+                items.Add(new ToolbarItem { PrefixIcon = "e-icons e-bring-forward", TooltipText = "Bring Forward", Disabled = true });
+                items.Add(new ToolbarItem { PrefixIcon = "e-icons e-bring-to-front", TooltipText = "Bring To Front", Disabled = true });
+                items.Add(new ToolbarItem { PrefixIcon = "e-icons e-send-backward", TooltipText = "Send Backward", Disabled = true });
+                items.Add(new ToolbarItem { PrefixIcon = "e-icons e-send-to-back", TooltipText = "Send To Back", Disabled = true });
+                items.Add(new ToolbarItem { Type = ItemType.Separator });
+                items.Add(new ToolbarItem { Template = "#fontfamily", Type = ItemType.Input, TooltipText = "Font Family" });
+                items.Add(new ToolbarItem { Type = ItemType.Separator });
+                items.Add(new ToolbarItem { Template = "#fontSize", Type = ItemType.Input, TooltipText = "Font Size" });
+                items.Add(new ToolbarItem { PrefixIcon = "e-icons e-bold", TooltipText = "Bold", Disabled = true });
+                items.Add(new ToolbarItem { PrefixIcon = "e-icons e-italic", TooltipText = "Italic", Disabled = true });
+                items.Add(new ToolbarItem { PrefixIcon = "e-icons e-underline", TooltipText = "Underline", Disabled = true });
+                items.Add(new ToolbarItem { Template = "#fontColors", Type = ItemType.Input, TooltipText = "Font Color" });
+
+            }
+            ViewBag.tbItems = items;
+
+            List<DropDownListFieldSettings> fontFamilyItems = new List<DropDownListFieldSettings>();
+            {
+                fontFamilyItems.Add(new DropDownListFieldSettings { Text = "Arial",Value = "Arial", });
+                fontFamilyItems.Add(new DropDownListFieldSettings { Text = "Aharoni", Value = "Aharoni" });
+                fontFamilyItems.Add(new DropDownListFieldSettings { Text = "Bell MT", Value = "Bell MT" });
+                fontFamilyItems.Add(new DropDownListFieldSettings { Text = "Fantasy", Value = "Fantasy" });
+                fontFamilyItems.Add(new DropDownListFieldSettings { Text = "Segoe UI", Value = "Segoe UI" });
+                fontFamilyItems.Add(new DropDownListFieldSettings { Text = "Times New Roman",Value = "Times New Roman" });
+                fontFamilyItems.Add(new DropDownListFieldSettings { Text = "Verdana", Value = "Verdana" });
+
+            }
+            ViewBag.fontFamilyItems = fontFamilyItems;
+
             return View();
         }
       

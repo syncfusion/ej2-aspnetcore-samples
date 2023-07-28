@@ -5,7 +5,22 @@
 @section ControlsSection {
     <div class="col-lg-12 control-section">
     <div class="control-section">
-        <div id="toolbar_default" style="width: 100%"></div>
+        <div style="width: 100%"></div>
+            <ejs-toolbar id="toolbar_default" clicked="onItemClick">
+                <e-toolbar-items>
+                    <e-toolbar-item prefixIcon="e-icons e-zoom-in" tooltipText="Zoom In"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-icons e-zoom-out" tooltipText="Zoom Out"></e-toolbar-item>
+                    <e-toolbar-item type="Separator"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-icons e-mouse-pointer" tooltipText="Select"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-icons e-pan" tooltipText="Pan Tool"></e-toolbar-item>
+                    <e-toolbar-item type="Separator"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-icons e-reset" tooltipText="Reset"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-icons e-zoom-to-fit" tooltipText="Fit To Page"></e-toolbar-item>
+                    <e-toolbar-item type="Separator"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-icons e-bring-to-view" tooltipText="Bring Into View" disabled="true"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-icons e-bring-to-center" tooltipText="Bring Into Center" disabled="true"></e-toolbar-item>
+                </e-toolbar-items>
+            </ejs-toolbar>
         <div>
         <ejs-diagram id="diagram" width="100%" height="550px" setNodeTemplate="@ViewBag.setNodeTemplate" getNodeDefaults="@ViewBag.getNodeDefaults" getConnectorDefaults="@ViewBag.getConnectorDefaults" created="diagramCreated" selectionChange="selectionChange">
                 <e-diagram-datasourcesettings id="Id" parentId="ReportingPerson" dataSource="new DataManager(){ Data = (List<EJ2CoreSampleBrowser.Controllers.Diagram.ZoomingAndPanning>)ViewBag.Nodes }"></e-diagram-datasourcesettings>
@@ -32,58 +47,6 @@
     </style>
     @*custom code end*@
     <script>
-       var toolbarObj = new ej.navigations.Toolbar({
-        clicked: onItemClick,
-        items: [
-            {
-                type: 'Button',
-                tooltipText: 'Zoom In',
-                prefixIcon: 'e-icons e-zoom-in',
-            },
-            {
-                type: 'Button',
-                tooltipText: 'Zoom Out',
-                prefixIcon: 'e-icons e-zoom-out',
-            },
-            { type: 'Separator' },
-            {
-                type: 'Button',
-                tooltipText: 'Select',
-                prefixIcon: 'e-icons e-mouse-pointer',
-            },
-            {
-                type: 'Button',
-                tooltipText: 'Pan Tool',
-                prefixIcon: 'e-icons e-pan',
-            },
-            { type: 'Separator' },
-            {
-                type: 'Button',
-                tooltipText: 'Reset',
-                prefixIcon: 'e-icons e-reset',
-            },
-            {
-                type: 'Button',
-                tooltipText: 'Fit To Page',
-                prefixIcon: 'e-icons e-zoom-to-fit',
-            },
-            { type: 'Separator' },
-            {
-                type: 'Button',
-                tooltipText: 'Bring Into View',
-                prefixIcon: 'e-icons e-bring-to-view',
-                disabled: true
-            },
-            {
-                type: 'Button',
-                tooltipText: 'Bring Into Center',
-                prefixIcon: 'e-icons e-bring-to-center',
-                disabled: true
-            },
-        ]
-    });
-
-    toolbarObj.appendTo('#toolbar_default');
 
     function onItemClick(args) {
         var diagram = document.getElementById("diagram").ej2_instances[0];
@@ -127,7 +90,7 @@
 
     function diagramCreated() {
         var diagram = document.getElementById("diagram").ej2_instances[0];
-        diagram.tool = ej.diagrams.DiagramTools.ZoomPan;
+        diagram.tool = ej.diagrams.DiagramTools.Select;
         diagram.dataBind();
     }
     function getLayoutInfo(node, tree) {
@@ -193,6 +156,7 @@
     }
     function selectionChange(args) {
         var diagram = document.getElementById("diagram").ej2_instances[0];
+            var toolbarObj = document.getElementById("toolbar_default").ej2_instances[0];
         if (args.state === 'Changed') {
             var selectedItems = diagram.selectedItems.nodes;
             if (selectedItems.length === 0) {

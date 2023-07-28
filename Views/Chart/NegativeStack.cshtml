@@ -2,7 +2,7 @@
 @section ControlsSection{
    <div class="control-section">
         <div id="container" align="center">
-            <ejs-chart id="lineContainer"  load="load" title="Height vs Weight"
+            <ejs-chart id="lineContainer"  load="load" axisLabelRender="axisLabelRender" title="Height vs Weight"
                       tooltipRender="tooltipRender" textRender="dataLabelRender">
                 <e-chart-tooltipsettings enable="true">
                 </e-chart-tooltipsettings>
@@ -10,8 +10,9 @@
                     <e-majorgridlines width="0"></e-majorgridlines>
                     <e-majorticklines width="0"></e-majorticklines>
                 </e-chart-primaryxaxis>
-                <e-chart-primaryyaxis labelFormat="{value}" title="Weight (kg)">
+                <e-chart-primaryyaxis labelFormat="{value}" title="Weight (kg)" minimum="-80" maximum="80">
                     <e-linestyle width="0"></e-linestyle>
+                    <e-majorticklines width="0"></e-majorticklines>
                 </e-chart-primaryyaxis>
                 <e-chart-chartarea>
                     <e-chartarea-border width="0"></e-chartarea-border>
@@ -53,7 +54,10 @@
         }
         function dataLabelRender(args) {
             args.text = args.text.indexOf('-') > -1 ? args.text.replace('-', '') : args.text;
-        };
+        }
+        function axisLabelRender(args) {
+            args.text = args.text.replace("-", "");
+        }
         
     </script>
 }

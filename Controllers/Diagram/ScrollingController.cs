@@ -9,8 +9,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EJ2CoreSampleBrowser_NET6.Models;
 using Microsoft.AspNetCore.Mvc;
 using Syncfusion.EJ2.Diagrams;
+using Syncfusion.EJ2.Navigations;
 
 namespace EJ2CoreSampleBrowser.Controllers.Diagram
 {
@@ -35,6 +37,33 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
             basicShapes.Add(new DiagramNode() { Id = "Cylinder", Shape = new { type = "Basic", shape = "Cylinder" }, Style = new  { StrokeWidth = 2 } });
             basicShapes.Add(new DiagramNode() { Id = "Diamond", Shape = new { type = "Basic", shape = "Diamond" }, Style = new  { StrokeWidth = 2 } });
             ViewBag.BasicShapes = basicShapes;
+
+            List<DiagramNode> SymbolPaletee = new List<DiagramNode>();
+            SymbolPaletee.Add(new DiagramNode() { Id = "Terminator", Shape = new { type = "Flow", shape = "Terminator" } });
+            SymbolPaletee.Add(new DiagramNode() { Id = "Process", Shape = new { type = "Flow", shape = "Process" } });
+            SymbolPaletee.Add(new DiagramNode() { Id = "Decision", Shape = new { type = "Flow", shape = "Decision" } });
+            SymbolPaletee.Add(new DiagramNode() { Id = "Document", Shape = new { type = "Flow", shape = "Document" } });
+            SymbolPaletee.Add(new DiagramNode() { Id = "PreDefinedProcess", Shape = new { type = "Flow", shape = "PreDefinedProcess" } });
+            SymbolPaletee.Add(new DiagramNode() { Id = "PaperTap", Shape = new { type = "Flow", shape = "PaperTap" } });
+            SymbolPaletee.Add(new DiagramNode() { Id = "DirectData", Shape = new { type = "Flow", shape = "DirectData" } });
+            SymbolPaletee.Add(new DiagramNode() { Id = "SequentialData", Shape = new { type = "Flow", shape = "SequentialData" } });
+            SymbolPaletee.Add(new DiagramNode() { Id = "Sort", Shape = new { type = "Flow", shape = "Sort" } });
+            SymbolPaletee.Add(new DiagramNode() { Id = "MultiDocument", Shape = new { type = "Flow", shape = "MultiDocument" } });
+            SymbolPaletee.Add(new DiagramNode() { Id = "Collate", Shape = new { type = "Flow", shape = "Collate" } });
+            SymbolPaletee.Add(new DiagramNode() { Id = "SummingJunction", Shape = new { type = "Flow", shape = "SummingJunction" } });
+            SymbolPaletee.Add(new DiagramNode() { Id = "Or", Shape = new { type = "Flow", shape = "Or" } });
+            SymbolPaletee.Add(new DiagramNode() { Id = "InternalStorage", Shape = new { type = "Flow", shape = "InternalStorage" } });
+            SymbolPaletee.Add(new DiagramNode() { Id = "Extract", Shape = new { type = "Flow", shape = "Extract" } });
+            SymbolPaletee.Add(new DiagramNode() { Id = "ManualOperation", Shape = new { type = "Flow", shape = "ManualOperation" } });
+            SymbolPaletee.Add(new DiagramNode() { Id = "Merge", Shape = new { type = "Flow", shape = "Merge" } });
+            SymbolPaletee.Add(new DiagramNode() { Id = "OffPageReference", Shape = new { type = "Flow", shape = "OffPageReference" } });
+            SymbolPaletee.Add(new DiagramNode() { Id = "SequentialAccessStorage", Shape = new { type = "Flow", shape = "SequentialAccessStorage" } });
+            SymbolPaletee.Add(new DiagramNode() { Id = "Annotation", Shape = new { type = "Flow", shape = "Annotation" } });
+            SymbolPaletee.Add(new DiagramNode() { Id = "Annotation2", Shape = new { type = "Flow", shape = "Annotation2" } });
+            SymbolPaletee.Add(new DiagramNode() { Id = "Data", Shape = new { type = "Flow", shape = "Data" } });
+            SymbolPaletee.Add(new DiagramNode() { Id = "Card", Shape = new { type = "Flow", shape = "Card" } });
+            SymbolPaletee.Add(new DiagramNode() { Id = "Delay", Shape = new { type = "Flow", shape = "Delay" } });
+            ViewBag.FlowShapes = SymbolPaletee;
 
             List<DiagramConnector> SymbolPaletteConnectors = new List<DiagramConnector>();
             SymbolPaletteConnectors.Add(new DiagramConnector()
@@ -84,9 +113,13 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
             });
 
             List<SymbolPalettePalette> Palette = new List<SymbolPalettePalette>();
-            Palette.Add(new SymbolPalettePalette() { Id = "basic", Expanded = true, Symbols = basicShapes, IconCss = "shapes", Title = "Basic Shapes" });
-            Palette.Add(new SymbolPalettePalette() { Id = "connectors", Expanded = true, Symbols = SymbolPaletteConnectors, IconCss = "e-ddb-icons e-connector", Title = "Connectors" });
+            Palette.Add(new SymbolPalettePalette() { Id = "basic", Expanded = true, Symbols = basicShapes, IconCss = "e-ddb-icons e-basic", Title = "Basic Shapes" });
+            Palette.Add(new SymbolPalettePalette() { Id = "flow", Expanded = false, Symbols = SymbolPaletee, IconCss = "e-ddb-icons e-flow", Title = "Flow Shapes" });
+            Palette.Add(new SymbolPalettePalette() { Id = "connectors", Expanded = false, Symbols = SymbolPaletteConnectors, IconCss = "e-ddb-icons e-connector", Title = "Connectors" });
+            ViewBag.Single = ExpandMode.Single;
             ViewBag.Palette = Palette;
+            DropDownModel dropDownModel = new DropDownModel();
+            ViewBag.DropDownModel = dropDownModel.scrollLimits();
             return View();
         }
       

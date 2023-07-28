@@ -1,7 +1,35 @@
 @using Syncfusion.EJ2.Diagrams;
 @section ControlsSection{
     <div class="control-section" >
-                  <div id="toolbar" style="width: 100%"></div>
+        <ejs-toolbar id="toolbarEditor" clicked="toolbarClick">
+            <e-toolbar-items>
+                <e-toolbar-item prefixIcon="e-icons e-group-1" disabled="true" tooltipText="Group"></e-toolbar-item>
+                <e-toolbar-item prefixIcon="e-icons e-ungroup-1" disabled="true" tooltipText="UnGroup"></e-toolbar-item>
+                <e-toolbar-item type="Separator"></e-toolbar-item>
+                <e-toolbar-item prefixIcon="e-icons e-bring-forward" disabled="true" tooltipText="Bring Forward"></e-toolbar-item>
+                <e-toolbar-item prefixIcon="e-icons e-bring-to-front" disabled="true" tooltipText="Bring To Front"></e-toolbar-item>
+                <e-toolbar-item prefixIcon="e-icons e-send-backward" disabled="true" tooltipText="Send Backward"></e-toolbar-item>
+                <e-toolbar-item prefixIcon="e-icons e-send-to-back" disabled="true" tooltipText="Send To Back"></e-toolbar-item>
+                <e-toolbar-item template="#fontfamily" type=Input tooltipText="Font Style"></e-toolbar-item>
+                <e-toolbar-item type="Separator"></e-toolbar-item>
+                <e-toolbar-item template="#fontSize" type=Input tooltipText="Font Size"></e-toolbar-item>
+                <e-toolbar-item prefixIcon="e-bold e-icons" disabled="true" tooltipText="Bold"></e-toolbar-item>
+                <e-toolbar-item prefixIcon="e-italic e-icons" disabled="true" tooltipText="Italic"></e-toolbar-item>
+                <e-toolbar-item prefixIcon="e-icons e-underline" disabled="true" tooltipText="Underline"></e-toolbar-item>
+                <e-toolbar-item type="Separator"></e-toolbar-item>
+                <e-toolbar-item template="#fontColors" type=Input cssClass="tb-item-middle" tooltipText="Font Color"></e-toolbar-item>
+
+            </e-toolbar-items>
+        </ejs-toolbar>
+        <div>
+            <ejs-dropdownlist id="fontfamily" dataSource="@ViewBag.fontFamilyItems" index="0" select="updateAnnotationValue"></ejs-dropdownlist>
+        </div>
+        <div>
+            <ejs-numerictextbox id="fontSize" format="##" value="12" min="1" max="20" step="1" Type="text" change="updateAnnotationValue"></ejs-numerictextbox>
+        </div>
+        <div>
+            <ejs-colorpicker id="fontColors" change="changeFontColor"></ejs-colorpicker>
+        </div>
             <div class="sb-mobile-palette-bar">
                 <div id="palette-icon" style="float: right;" role="button" class="e-ddb-icons1 e-toggle-palette"></div>
             </div>
@@ -104,83 +132,10 @@
 
     </style>
     <script>
-        var toolbarObj = new ej.navigations.Toolbar({
-        clicked: toolbarClick,
-        items: [
-               {
-            type: 'Button',
-            tooltipText: 'Group',
-            prefixIcon: 'e-icons e-group-1',
-            disabled:true
-        },
-        {
-            type: 'Button',
-            tooltipText: 'UnGroup',
-            prefixIcon: 'e-icons e-ungroup-1',
-            disabled:true
-        },
-        { type: 'Separator' },
-        {
-            type: 'Button',
-            tooltipText: 'Bring Forward',
-            prefixIcon: 'e-icons e-bring-forward',
-            disabled:true
-         },
-        {
-            type: 'Button',
-            tooltipText: 'Bring To Front',
-            prefixIcon: 'e-icons e-bring-to-front',
-            disabled:true
-        },
-        {
-            type: 'Button',
-            tooltipText: 'Send Backward',
-            prefixIcon: 'e-icons e-send-backward',
-            disabled:true
-        },
-        {
-            type: 'Button',
-            tooltipText: 'Send To Back',
-            prefixIcon: 'e-icons e-send-to-back',
-            disabled:true
-        },
-        { type: 'Separator' ,template:'<div style="margin-left:1px;"></div>'},
-        {
-            type: 'Input', tooltipText: 'Font Style', align: 'Left', template: '<div id="fontfamily"></div>', disabled:false
-        },
-        { type: 'Separator', template:'<div style="margin-left:5px;"></div>'},
-        {
-            type: 'Input', tooltipText: 'Font Size', align: 'Left', template: '<input id="fontSize" type="text"/>',  disabled:false, style :"margin-left:3px"
-        },
-        {
-            type: 'Button',
-            tooltipText: 'Bold',
-            prefixIcon: 'e-icons e-bold',
-            disabled:true,
-            cssClass: 'tb-item-start'
-        },
-        {
-            type: 'Button',
-            tooltipText: 'Italic',
-            prefixIcon: 'e-icons e-italic',
-            disabled:true,
-            cssClass: 'tb-item-middle'
-        },
-        {
-            type: 'Button',
-            tooltipText: 'Underline',
-            prefixIcon: 'e-icons e-underline',
-            disabled:true,
-            cssClass: 'tb-item-end'
-        },
-        {
-            type: 'Input',  tooltipText: 'Font Color', align: 'Left', template: '<div id="fontColors"></div>' ,disabled:false
-        },
-        ]
-    });
-    toolbarObj.appendTo('#toolbar');
+        var toolbarObj={};
     function create() {
         var diagram = document.getElementById("diagram").ej2_instances[0];
+        toolbarObj = document.getElementById("toolbarEditor").ej2_instances[0];
         diagram.drawingObject = { type : "Orthogonal"};
         diagram.dataBind();
     }
@@ -289,7 +244,6 @@ function disableMultiselectedItems(selectedItems){
                diagram.paste(diagram.selectedItems.selectedObjects);
                break;
             case 'Draw':
-                diagram.drawingObject.shape = {};
                 diagram.drawingObject.type = diagram.drawingObject.type?diagram.drawingObject.type:'Orthogonal';
                 diagram.drawingObject.sourceID = drawingNode.id;
                 diagram.dataBind();
@@ -322,105 +276,72 @@ function toolbarClick(args) {
             diagram.sendToBack();
             break;
         case 'Bold':
-            updateAnnotationValue('bold',args.value,null,11);
+            updateAnnotationValue('bold',args.value,null,10);
         break;
         case 'Italic':
-            updateAnnotationValue('italic',args.value,null,12);  
+            updateAnnotationValue('italic',args.value,null,11);  
         break;
         case 'Underline':
-            updateAnnotationValue('underline',args.value,null,13);
+            updateAnnotationValue('underline',args.value,null,12);
         break;
       }
       diagram.dataBind();
 }
-//Apply the appearence of the Annotation 
-function updateAnnotationValue(value, fontSize, fontFamily,index,isSelected) {
-    var diagram = document.getElementById("diagram").ej2_instances[0];
-    for (var i = 0; i < diagram.selectedItems.nodes.length; i++) {
-        var node = diagram.selectedItems.nodes[i];
-        for (var j = 0; j < node.annotations.length; j++) {
-            var annotationstyle = node.annotations[j].style;
-            if (value === 'fontsize') {
-                annotationstyle.fontSize = fontSize;
-            } else if (value === 'fontfamily') {
-                annotationstyle.fontFamily = fontFamily.toString();
+        //Apply the appearence of the Annotation
+        function updateAnnotationValue(value, fontSize, fontFamily, index, isSelected) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            for (var i = 0; i < diagram.selectedItems.nodes.length; i++) {
+                var node = diagram.selectedItems.nodes[i];
+                var option = value.itemData !== undefined ? 'fontfamily' : typeof value.value === 'number' ? 'fontsize' : value;
+                for (var j = 0; j < node.annotations.length; j++) {
+                    var annotationstyle = node.annotations[j].style;
+                    if (option === 'fontsize') {
+                        annotationstyle.fontSize = value.value;
+                    } else if (option === 'fontfamily') {
+                        annotationstyle.fontFamily = value.itemData.value;
+                    }
+                    else if (option === 'bold') {
+                        annotationstyle.bold = !annotationstyle.bold;
+                        isSelected = annotationstyle.bold;
+                    }
+                    else if (option === 'italic') {
+                        annotationstyle.italic = !annotationstyle.italic;
+                        isSelected = annotationstyle.italic;
+                    }
+                    else if (option === 'underline') {
+                        if (annotationstyle.textDecoration === "None") {
+                            annotationstyle.textDecoration = 'Underline';
+                            isSelected = true;
+                        }
+                        else {
+                            annotationstyle.textDecoration = 'None';
+                            isSelected = false;
+                        }
+                    }
+                    var toolbarTextStyle = document.getElementById("toolbarEditor");
+                    if (toolbarTextStyle) {
+                        toolbarTextStyle = toolbarTextStyle.ej2_instances[0];
+                    }
+                    if (toolbarTextStyle.items[index] !== undefined) {
+                        var cssClass = toolbarTextStyle.items[index].cssClass;
+                        toolbarTextStyle.items[index].cssClass = isSelected ? cssClass + ' tb-item-selected' : cssClass.replace(' tb-item-selected', '');
+                        toolbarTextStyle.dataBind();
+                    }
+                    diagram.dataBind();
+                }
             }
-            else if (value === 'bold') {
-              annotationstyle.bold = !annotationstyle.bold;
-              isSelected=annotationstyle.bold;
-           }
-           else if (value === 'italic') {
-            annotationstyle.italic = !annotationstyle.italic;
-            isSelected= annotationstyle.italic;
-          } 
-          else if (value === 'underline') {
-            if(annotationstyle.textDecoration ==="None"){
-              annotationstyle.textDecoration = 'Underline';
-              isSelected = true;
-            }
-            else{
-              annotationstyle.textDecoration = 'None';
-              isSelected =false;
-              }
-            }
-          var toolbarTextStyle = document.getElementById("toolbar");
-          if (toolbarTextStyle) {
-            toolbarTextStyle = toolbarTextStyle.ej2_instances[0];
-          }
-          if (toolbarTextStyle.items[index] !== undefined) {
-            var cssClass = toolbarTextStyle.items[index].cssClass;
-            toolbarTextStyle.items[index].cssClass = isSelected ? cssClass + ' tb-item-selected' : cssClass.replace(' tb-item-selected', '');
-            toolbarTextStyle.dataBind();
-          }
-          diagram.dataBind();
         }
-      }
-    }
 
-      var fontSize  =  new ej.inputs.NumericTextBox({
-          value: 12, min: 1, max: 30, width: '90px',
-          format: '##.##', step: 2,
-          change: function(args)  {
-            updateAnnotationValue('fontsize', args.value);
-          }
-      });
-      fontSize.appendTo('#fontSize');
-    
-      var fontTypeList = [
-        { type: 'Arial', text: 'Arial' },
-        { type: 'Aharoni', text: 'Aharoni' },
-        { type: 'Bell MT', text: 'Bell MT' },
-        { type: 'Fantasy', text: 'Fantasy' },
-        { type: 'Segoe UI', text: 'Segoe UI' },
-        { type: 'Times New Roman', text: 'Times New Roman' },
-        { type: 'Verdana', text: 'Verdana' }
-    ];
-      var fontFamily =new ej.dropdowns.DropDownList({
-        dataSource: fontTypeList,
-        fields: { value: 'type', text: 'text' }, popupWidth: 150,
-        width: '100%', placeholder: 'select a font type', index: 0,
-        change: function(args)  {
-            updateAnnotationValue('fontfamily', null, args.value.toString());
-        }
-    });
-    fontFamily.appendTo('#fontfamily');
-    
-    var fontColors = new ej.inputs.ColorPicker({
-    mode: 'Palette',
-      value: '#000',
-       change: function (arg) {
-        var diagram = document.getElementById("diagram").ej2_instances[0];
-          for (var i = 0; i < diagram.selectedItems.nodes.length; i++) {
-              var nodes = diagram.selectedItems.nodes[i];
-              for (var j = 0; j < nodes.annotations.length; j++) {
-                  nodes.annotations[j].style.color = arg.currentValue.rgba;
-                  diagram.dataBind();
+        function changeFontColor(arg) {
+                var diagram = document.getElementById("diagram").ej2_instances[0];
+                  for (var i = 0; i < diagram.selectedItems.nodes.length; i++) {
+                      var nodes = diagram.selectedItems.nodes[i];
+                      for (var j = 0; j < nodes.annotations.length; j++) {
+                          nodes.annotations[j].style.color = arg.currentValue.rgba;
+                          diagram.dataBind();
+                      }
+                  }
               }
-          }
-      }
-    });
-    fontColors.appendTo('#fontColors');
-
 
         @*custom code end*@
     </script>

@@ -52,7 +52,7 @@
 </script>
 
     <div class="col-lg-9 control-section">
-        <ejs-circulargauge id="container" load="gaugeLoad" title="Speedometer" centerY="75%">
+        <ejs-circulargauge id="container" load="gaugeLoad" title="Speedometer" centerY="75%" loaded="onCreated">
             <e-circulargauge-titlestyle size="18px"></e-circulargauge-titlestyle>
             <e-circulargauge-axes>
                 <e-circulargauge-axis startAngle="270" endAngle="90" minimum="0" maximum="120" radius="120%" pointers="pointer">
@@ -77,7 +77,7 @@
                 </td>
                 <td>
                     <div style="margin-left: 20px">
-                        <input type="checkbox" id="showText" checked />
+                         <ejs-checkbox id="showText" change="intervalChange" />
                     </div>
                 </td>
             </tr>
@@ -87,7 +87,7 @@
                 </td>
                 <td>
                     <div style="margin-left: 20px; margin-top: 5px">
-                        <input type="checkbox" id="combineRange" checked />
+                        <ejs-checkbox id="combineRange" change="combineRangeChange" />
                     </div>
                 </td>
             </tr>
@@ -97,7 +97,7 @@
                 </td>
                 <td>
                     <div style="margin-left: 20px">
-                        <input type="checkbox" id="range" checked />
+                        <ejs-checkbox id="range" change="rangeChange" />
                     </div>
                 </td>
             </tr>
@@ -115,6 +115,9 @@
 </svg>
 <script type="text/javascript">
     var circulargauge;
+    function onCreated() {
+        circulargauge = document.getElementById('container').ej2_instances[0];
+    }
     function gaugeLoad(sender) {
         @* custom code start *@
         var selectedTheme = themeName ? themeName : 'Material';
@@ -177,39 +180,28 @@
             ];
         }
     }
-        var gauge5Interval1 = setInterval(function () {
-            var newVal = circulargauge.axes[0].pointers[0].value + (Math.floor(Math.random() * (10 - (-10))) - 10);
-            if (newVal <= 0) {
-                newVal = 5;
+    var gauge5Interval1 = setInterval(function () {
+        var newVal = circulargauge.axes[0].pointers[0].value + (Math.floor(Math.random() * (10 - (-10))) - 10);
+        if (newVal <= 0) {
+            newVal = 5;
+        }
+        if (document.getElementById('container')) {
+            circulargauge.isProtectedOnChange = true;
+            circulargauge.axes[0].pointers[0].animation.enable = true;
+            circulargauge.setPointerValue(0, 0, newVal);
+            if (!ej.base.isNullOrUndefined(document.getElementById('pointerannotation'))) {
+                document.getElementById('pointerannotation').innerHTML = newVal.toString() + ' km/h';
             }
-            if (document.getElementById('container')) {
-                circulargauge.isProtectedOnChange = true;
-                circulargauge.axes[0].pointers[0].animation.enable = true;
-                circulargauge.setPointerValue(0, 0, newVal);
-                if (!ej.base.isNullOrUndefined(document.getElementById('pointerannotation'))) {
-                    document.getElementById('pointerannotation').innerHTML = newVal.toString() + ' km/h';
-                }
-            }
-            else {
-                clearInterval(this.gauge5Interval1);
-            }
-        }, 1000);
+        }
+        else {
+            clearInterval(this.gauge5Interval1);
+        }
+    }, 1000);
     
-    var showText;
-    var interval = new ej.buttons.CheckBox({
-        change: showText, checked: false
-    }, '#showText');
-    var combineRange;
-    var rangeSet = new ej.buttons.CheckBox({
-        change: combineRange, checked: false
-    }, '#combineRange');
-    var range;
-    var showCheckBox = new ej.buttons.CheckBox({
-        change: range, checked: false
-    }, '#range');
-    rangeSet.change = combineRange = function (e) {
-        if (e.checked === true) {
-            showCheckBox.disabled = true;
+    function combineRangeChange(args) {
+        var rangeCheckbox = document.getElementById("range").ej2_instances[0];
+        if (args.checked) {
+            rangeCheckbox.disabled = true;
             circulargauge.axes[0].ranges[0].start = 0;
             circulargauge.axes[0].ranges[0].end = 120;
             circulargauge.axes[0].ranges[0].startWidth = 5;
@@ -244,7 +236,7 @@
             circulargauge.refresh();
         }
         else {
-            showCheckBox.disabled = false;
+            rangeCheckbox.disabled = false;
             circulargauge.axes[0].ranges[0].start = 0;
             circulargauge.axes[0].ranges[0].end = 20;
             circulargauge.axes[0].ranges[0].startWidth = 5;
@@ -279,8 +271,8 @@
             circulargauge.refresh();
         }
     };
-    interval.change = range = function (e) {
-        if (e.checked === true) {
+    function intervalChange(args) {
+        if (args.checked) {
             circulargauge.axes[0].majorTicks.interval = 10;
             circulargauge.axisLabelRender = function (args) {
                 var text;
@@ -321,8 +313,8 @@
             circulargauge.refresh();
         }
     };
-    showCheckBox.change = range = function (e) {
-        if (e.checked) {
+    function rangeChange(args) {
+        if (args.checked) {
             circulargauge.axes[0].rangeGap = 5;
         }
         else {

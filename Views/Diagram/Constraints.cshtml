@@ -14,22 +14,22 @@
         </div>
         <div class="row property-panel-content" style="padding-top: 10px">
             <div class="row" style="padding-top: 8px">
-                <input type="checkbox" id='zooming' style="width: 15px;margin-left:30px;margin-right: 10px;">
+                <ejs-checkbox id="zooming" checked="true" label="Zooming" change="zooming" style="width: 15px;margin-left:30px;margin-right: 10px;"></ejs-checkbox>
             </div>
             <div class="row" style="padding-top: 8px">
-                <input type="checkbox" id='undoRedo' style="width: 15px;margin-left:30px;margin-right: 10px;">
+                <ejs-checkbox id="undoRedo" checked="true" label="Undo/Redo" change="undoRedo" style="width: 15px;margin-left:30px;margin-right: 10px;"></ejs-checkbox>
             </div>
             <div class="row" style="padding-top: 8px">
-                <input type="checkbox" id='editing' style="width: 15px;margin-left:30px;margin-right: 10px;">
+                <ejs-checkbox id="editing" checked="true" label="Editing" change="editing" style="width: 15px;margin-left:30px;margin-right: 10px;"></ejs-checkbox>
             </div>
             <div class="row" style="padding-top: 8px">
-                <input type="checkbox" id='contextmenu' style="width: 15px;margin-left:30px;margin-right: 10px;">
+                <ejs-checkbox id="contextmenu" checked="true" label="Context Menu" change="contextmenu" style="width: 15px;margin-left:30px;margin-right: 10px;"></ejs-checkbox>
             </div>
             <div class="row" style="padding-top: 8px">
-                <input type="checkbox" id='selectable' style="width: 15px;margin-left:30px;margin-right: 10px;">
+                <ejs-checkbox id="selectable" checked="true" label="Selectable" change="selectable" style="width: 15px;margin-left:30px;margin-right: 10px;"></ejs-checkbox>
             </div>
             <div class="row" style="padding-top: 8px">
-                <input type="checkbox" id='draggable' style="width: 15px;margin-left:30px;margin-right: 10px;">
+                <ejs-checkbox id="drag" checked="true" label="Draggable" change="draggableFn" style="width: 15px;margin-left:30px;margin-right: 10px;"></ejs-checkbox>
             </div>
         </div>
     </div>
@@ -80,115 +80,127 @@
     </style>
     <script>
 
-         var Zooming = new ej.buttons.CheckBox({
-            label: 'Zooming', checked: true,
-            change: function () {
-                var diagram = document.getElementById("diagram").ej2_instances[0];
-                diagram.constraints = diagram.constraints ^ ej.diagrams.DiagramConstraints.Zoom;
-            }
-        });
-        Zooming.appendTo('#zooming');
+        function zooming() {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            diagram.constraints = diagram.constraints ^ ej.diagrams.DiagramConstraints.Zoom;
+        };
 
-        var undoRedo = new ej.buttons.CheckBox({
-            label: 'Undo/Redo', checked: true,
-            change: function (args) {
-                var diagram = document.getElementById("diagram").ej2_instances[0];
-                diagram.constraints = diagram.constraints ^ ej.diagrams.DiagramConstraints.UndoRedo;
+        function undoRedo(args) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            diagram.constraints = diagram.constraints ^ ej.diagrams.DiagramConstraints.UndoRedo;
+            diagram.dataBind();
+        }
+
+        function editing(args) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            for (var i = 0; i < diagram.nodes.length; i++) {
+                var node = diagram.nodes[i];
+                for (var j = 0; j < node.annotations.length; j++) {
+                    if (node.annotations[j].content) {
+                        if (args.checked) {
+                            if (node.id !== 'Plus') {
+                                node.annotations[j].constraints =
+                                    node.annotations[j].constraints ^
+                                    ej.diagrams.AnnotationConstraints.ReadOnly;
+                            }
+                        } else {
+                            node.annotations[j].constraints =
+                                node.annotations[j].constraints | ej.diagrams.AnnotationConstraints.ReadOnly;
+                        }
+                    }
+                }
+            }
+            for (var x = 0; x < diagram.connectors.length; x++) {
+                var connector = diagram.connectors[x];
+                for (var y = 0; y < connector.annotations.length; y++) {
+                    if (connector.annotations[y].content) {
+                        if (args.checked) {
+                            if (connector.id === 'select') {
+                                connector.constraints =
+                                    connector.constraints & ~(ej.diagrams.ConnectorConstraints.Select);
+                            } else {
+                                connector.annotations[y].constraints =
+                                    connector.annotations[y].constraints ^
+                                    ej.diagrams.AnnotationConstraints.ReadOnly;
+                            }
+                        } else {
+                            connector.annotations[y].constraints =
+                                connector.annotations[y].constraints ^
+                                ej.diagrams.AnnotationConstraints.ReadOnly;
+                        }
+                    }
+                }
+            }
+            diagram.dataBind();
+        }
+
+        function selectable(args) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            for (var i = 0; i < diagram.nodes.length; i++) {
+                var node = diagram.nodes[i];
+                if (node.id != 'rectangle') {
+                    if (args.checked) {
+                        node.constraints = node.constraints | ej.diagrams.NodeConstraints.Select;
+                    } else {
+                        node.constraints = node.constraints & ~ej.diagrams.NodeConstraints.Select;
+                    }
+                }
                 diagram.dataBind();
             }
-        });
-        undoRedo.appendTo('#undoRedo');
-
-
-        var Editing = new ej.buttons.CheckBox({
-            label: 'Editing', checked: true,
-            change: function () {
-                var diagram = document.getElementById("diagram").ej2_instances[0];
-                diagram.constraints = diagram.constraints ^ ej.diagrams.DiagramConstraints.UserInteraction;
-            }
-        });
-        Editing.appendTo('#editing');
-
-        var Selectable = new ej.buttons.CheckBox({
-            label: 'Selectable', checked: true,
-            change: function (args) {
-                var diagram = document.getElementById("diagram").ej2_instances[0];
-                for (var i = 0; i < diagram.nodes.length; i++) {
-                    var node = diagram.nodes[i];
-                    if (node.id != 'rectangle') {
-                        if (args.checked) {
-                            node.constraints = node.constraints | ej.diagrams.NodeConstraints.Select;
-                        } else {
-                            node.constraints = node.constraints & ~ej.diagrams.NodeConstraints.Select;
-                        }
-                    }
-                    diagram.dataBind();
-                }
-                for (var j = 0; j < diagram.connectors.length; j++) {
-                    var connector = diagram.connectors[j];
-                    if (connector.id != 'select') {
-                        if (args.checked) {
-                            connector.constraints =
-                                connector.constraints | ej.diagrams.ConnectorConstraints.Select;
-                        } else {
-                            connector.constraints =
-                                connector.constraints & ~ej.diagrams.ConnectorConstraints.Select;
-                        }
-                    }
-                    diagram.dataBind();
-                }
-            }
-        });
-        Selectable.appendTo('#selectable');
-
-        var Draggable = new ej.buttons.CheckBox({
-            label: 'Draggable', checked: true,
-            change: function (args) {
-                var diagram = document.getElementById("diagram").ej2_instances[0];
-                for (var i = 0; i < diagram.nodes.length; i++) {
-                    var nodes = diagram.nodes[i];
+            for (var j = 0; j < diagram.connectors.length; j++) {
+                var connector = diagram.connectors[j];
+                if (connector.id != 'select') {
                     if (args.checked) {
-                        if (nodes.id === "ellipse") {
-                            nodes.constraints = ej.diagrams.NodeConstraints.Default & ~ej.diagrams.NodeConstraints.Drag;
-                        }
-                        else {
-                            nodes.constraints = nodes.constraints | ej.diagrams.NodeConstraints.Drag;
-                        }
+                        connector.constraints =
+                            connector.constraints | ej.diagrams.ConnectorConstraints.Select;
+                    } else {
+                        connector.constraints =
+                            connector.constraints & ~ej.diagrams.ConnectorConstraints.Select;
+                    }
+                }
+                diagram.dataBind();
+            }
+        }
+
+        function draggableFn(args) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            for (var i = 0; i < diagram.nodes.length; i++) {
+                var nodes = diagram.nodes[i];
+                if (args.checked) {
+                    if (nodes.id === "ellipse") {
+                        nodes.constraints = ej.diagrams.NodeConstraints.Default & ~ej.diagrams.NodeConstraints.Drag;
                     }
                     else {
-                        nodes.constraints = nodes.constraints & ~ej.diagrams.NodeConstraints.Drag;
+                        nodes.constraints = nodes.constraints | ej.diagrams.NodeConstraints.Drag;
                     }
-                    diagram.dataBind();
-                }
-                for (var j = 0; j < diagram.connectors.length; j++) {
-                    var connectors = diagram.connectors[j];
-                    if (args.checked) {
-                        connectors.constraints = connectors.constraints | ej.diagrams.ConnectorConstraints.Drag;
-                    } else {
-                        connectors.constraints = connectors.constraints & ~ej.diagrams.ConnectorConstraints.Drag;
-                    }
-                    diagram.dataBind();
-                }
-            }
-        });
-        Draggable.appendTo('#draggable');
-
-        var Contextmenu = new ej.buttons.CheckBox({
-            label: 'Context Menu', checked: true,
-            change: function (args) {
-                var diagram = document.getElementById("diagram").ej2_instances[0];
-                if (args.checked) {
-                    diagram.contextMenuSettings.show = true;
-                    diagram.refresh();
                 }
                 else {
-                    diagram.contextMenuSettings.show = false;
+                    nodes.constraints = nodes.constraints & ~ej.diagrams.NodeConstraints.Drag;
                 }
                 diagram.dataBind();
             }
-        });
-        Contextmenu.appendTo('#contextmenu');
+            for (var j = 0; j < diagram.connectors.length; j++) {
+                var connectors = diagram.connectors[j];
+                if (args.checked) {
+                    connectors.constraints = connectors.constraints | ej.diagrams.ConnectorConstraints.Drag;
+                } else {
+                    connectors.constraints = connectors.constraints & ~ej.diagrams.ConnectorConstraints.Drag;
+                }
+                diagram.dataBind();
+            }
+        }
 
+        function contextmenu(args) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            if (args.checked) {
+                diagram.contextMenuSettings.show = true;
+                diagram.refresh();
+            }
+            else {
+                diagram.contextMenuSettings.show = false;
+            }
+            diagram.dataBind();
+        }
         function create() {
        
             var diagram = document.getElementById("diagram").ej2_instances[0];

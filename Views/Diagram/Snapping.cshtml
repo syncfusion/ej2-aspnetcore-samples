@@ -17,26 +17,26 @@
         <div class="db-prop-text-style">
             <span class="db-prop-text-style text-content">Snapping Interval</span>
             <div class="db-text-input" style="float: right;margin-right: 10px;">
-                <input style="width: 150px;" id="snappingInterval" type="text">
+                <ejs-numerictextbox id="numeric" min="1" step="1" width="150" format="n0" value="20" Type="text" change="snappingInterval"></ejs-numerictextbox>
             </div>
         </div>
         <div class="db-prop-text-style">
             <span class="db-prop-text-style text-content">Snapping Angle</span>
             <div class="db-text-input" style="float: right;margin-right: 10px;">
-                <input style="width: 150px;" id="snappingAngle" type="text">
+                <ejs-numerictextbox id="snappingAngle" min="1" step="1" width="150" format="n0" value="5" Type="text" change="snappingAngle"></ejs-numerictextbox>
             </div>
         </div>
         <div class="db-prop-text-style">
             <span class="db-prop-text-style text-content">Snapping Line Color</span>
             <div class="db-text-input" style="float: right;margin-right: 10px;">
-                <input id="snappingLineColor" type="color">
+                <ejs-colorpicker id='snappingLineColor' mode='Palette' width='100%' height="25" showButtons="false" value='#07EDE1' change="snappingLineColor"></ejs-colorpicker>
             </div>
         </div>
         <div class="db-prop-text-style">
-            <input type="checkbox" style="margin-left: 10px;" id="showGridlines">
+             <ejs-checkbox id="showGridlines" checked="true" label="Show Gridline" change="showGridlines"></ejs-checkbox>
         </div>
         <div class="db-prop-text-style" style="margin-top: 7px!important;">
-            <input type="checkbox" style="margin-left: 10px;" id="snapToObject">
+             <ejs-checkbox id="snapToObject" checked="true" label="Snapping To Objects" change="snapToObject"></ejs-checkbox>
         </div>
 
            <div class="db-prop-text-style">
@@ -44,16 +44,16 @@
         </div>
 
         <div class="row radio-text-style" style="margin-left: 7px;">
-            <input id="radio1" type="radio">
+               <ejs-radiobutton id="radio1" label="Snap To Gridlines" name="snapToLines" value="Snap To Gridlines" checked="true" change="snapToLines"></ejs-radiobutton>
         </div>
         <div class="row radio-text-style" style="margin-left: 7px;">
-            <input id="radio2" type="radio">
+               <ejs-radiobutton id="radio2" label="Snap To Horizontal Gridlines" name="snapToLines" value="Snap To Horizontal Gridlines" change="snapToLines"></ejs-radiobutton>
         </div>
         <div class="row radio-text-style" style="margin-left: 7px;">
-            <input id="radio3" type="radio">
+              <ejs-radiobutton id="radio3" label="Snap To Vertical Gridlines" name="snapToLines" value="Snap To Vertical Gridlines" change="snapToLines"></ejs-radiobutton>
         </div>
         <div class="row radio-text-style" style="margin-left: 7px;">
-            <input id="radio4" type="radio">
+              <ejs-radiobutton id="radio4" label="None" name="snapToLines" value="None" change="snapToLines"></ejs-radiobutton>
         </div>
     </div>
 </div>
@@ -212,130 +212,88 @@
         }
     }
 
-    var snappingInterval = new ej.inputs.NumericTextBox({
-        min: 1,
-        step: 1,
-        width:150,
-        value:20,
-        format: 'n0',
-        change: function (args) {
-             var diagram = document.getElementById("diagram").ej2_instances[0];
+        function snappingInterval(args) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
             diagram.snapSettings.horizontalGridlines.snapIntervals[0] = args.value;
             diagram.snapSettings.verticalGridlines.snapIntervals[0] = args.value;
             diagram.snapSettings.horizontalGridlines.scaledIntervals[0] = args.value;
             diagram.snapSettings.verticalGridlines.scaledIntervals[0] = args.value;
             diagram.dataBind();
-       }
-    });
-    snappingInterval.appendTo('#snappingInterval');
-
-    var snappingAngle = new ej.inputs.NumericTextBox({
-        min: 1,
-        step: 1,
-        value:5,
-        format: 'n0',
-        change: function (args) {
-             var diagram = document.getElementById("diagram").ej2_instances[0];
-            diagram.snapSettings.snapAngle =args.value;
+        }
+        function snappingAngle(args) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            diagram.snapSettings.snapAngle = args.value;
             diagram.dataBind();
-       }
-    });
-    snappingAngle.appendTo('#snappingAngle');
+        }
 
-    var snappingLineColor = new ej.inputs.ColorPicker({
-        mode: 'Palette',
-        width: '100%',
-        height:25,
-        showButtons:false,
-        value:'#07EDE1',
-        change: function (args){
-             var diagram = document.getElementById("diagram").ej2_instances[0];
+        function snappingLineColor(args) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
             diagram.snapSettings.snapLineColor = args.value;
-            diagram.dataBind();                
-         }
-    });
-    snappingLineColor.appendTo('#snappingLineColor');
-
-    var showGridlines = new ej.buttons.CheckBox({ label: 'Show Gridline', checked: true,
-    change: function (args) {
-         var diagram = document.getElementById("diagram").ej2_instances[0]; 
-        diagram.snapSettings.constraints = diagram.snapSettings.constraints ^ ej.diagrams.SnapConstraints.ShowLines;
-        diagram.dataBind();
-        scale();
-     }});
-    showGridlines.appendTo('#showGridlines');
-
-     var snapToObject = new ej.buttons.CheckBox({ label: 'Snapping To Objects', checked: true,
-     change: function (args) { 
-         var diagram = document.getElementById("diagram").ej2_instances[0];
-         diagram.snapSettings.constraints = diagram.snapSettings.constraints ^ ej.diagrams.SnapConstraints.SnapToObject;
-         diagram.dataBind();
-         scale();
-      }});
-      snapToObject.appendTo('#snapToObject');
-
-    var radioButton = new ej.buttons.RadioButton({ label: 'Snap To Gridlines', name: 'snapToLines', value: 'Snap To Gridlines', checked: true,change:snapToLines });
-    radioButton.appendTo('#radio1');
-
-    var radioButton1 = new ej.buttons.RadioButton({ label: 'Snap To Horizontal Gridlines', name: 'snapToLines', value: 'Snap To Horizontal Gridlines',change:snapToLines });
-    radioButton1.appendTo('#radio2');
-
-    var radioButton2 = new ej.buttons.RadioButton({ label: 'Snap To Vertical Gridlines', name: 'snapToLines', value: 'Snap To Vertical Gridlines',change:snapToLines });
-    radioButton2.appendTo('#radio3');
-
-   var radioButton3 = new ej.buttons.RadioButton({ label: 'None', name: 'snapToLines', value: 'None',change:snapToLines });
-    radioButton3.appendTo('#radio4');
-
-    function snapToLines(args){
-         var diagram = document.getElementById("diagram").ej2_instances[0];
-        if(showGridlines.checked && snapToObject.checked){
-            diagram.snapSettings.constraints = ej.diagrams.SnapConstraints.All;
+            diagram.dataBind();
         }
-       else if(showGridlines.checked && !snapToObject.checked){
-        diagram.snapSettings.constraints = ej.diagrams.SnapConstraints.All &~ej.diagrams.SnapConstraints.SnapToObject;
-       }
-       else if(!showGridlines.checked && snapToObject.checked){
-        diagram.snapSettings.constraints = ej.diagrams.SnapConstraints.All &~ej.diagrams.SnapConstraints.ShowLines;
-       }
-       else if(!showGridlines.checked && !snapToObject.checked){
-        diagram.snapSettings.constraints = ej.diagrams.SnapConstraints.All &~(ej.diagrams.SnapConstraints.ShowLines|ej.diagrams.SnapConstraints.SnapToObject);
-       }
-        switch(args.value){
-            case 'Snap To Gridlines':
-                diagram.snapSettings.constraints =  ej.diagrams.SnapConstraints.All| ej.diagrams.SnapConstraints.SnapToLines;
-                if( !showGridlines.checked && !snapToObject.checked ) {
-                   diagram.snapSettings.constraints = ej.diagrams.SnapConstraints.All &~ (ej.diagrams.SnapConstraints.ShowLines|ej.diagrams.SnapConstraints.SnapToObject);
-                }
-                else if( !snapToObject.checked && showGridlines.checked ){
-                    diagram.snapSettings.constraints = ej.diagrams.SnapConstraints.All &~ (ej.diagrams.SnapConstraints.SnapToObject);
-                }
-                else if(snapToObject.checked && !showGridlines.checked) {
-                    diagram.snapSettings.constraints = ej.diagrams.SnapConstraints.All &~ (ej.diagrams.SnapConstraints.ShowLines);
-                }
-            break;
-            case 'Snap To Horizontal Gridlines':
-                diagram.snapSettings.constraints =  diagram.snapSettings.constraints ^ ej.diagrams.SnapConstraints.SnapToVerticalLines;
-            break;
-            case 'Snap To Vertical Gridlines':
-                diagram.snapSettings.constraints =  diagram.snapSettings.constraints ^ ej.diagrams.SnapConstraints.SnapToHorizontalLines;
-            break;
-            case 'None':
-                diagram.snapSettings.constraints = ej.diagrams.SnapConstraints.All &~ (ej.diagrams.SnapConstraints.SnapToHorizontalLines|ej.diagrams.SnapConstraints.SnapToVerticalLines|ej.diagrams.SnapConstraints.SnapToLines);
-                if(!showGridlines.checked && !snapToObject.checked){
-                    diagram.snapSettings.constraints = ej.diagrams.SnapConstraints.All &~ (ej.diagrams.SnapConstraints.ShowLines|ej.diagrams.SnapConstraints.SnapToObject|ej.diagrams.SnapConstraints.SnapToHorizontalLines|ej.diagrams.SnapConstraints.SnapToVerticalLines|ej.diagrams.SnapConstraints.SnapToLines);
-                 }
-                 else if(showGridlines.checked && !snapToObject.checked){
-                     diagram.snapSettings.constraints =  ej.diagrams.SnapConstraints.All &~ (ej.diagrams.SnapConstraints.SnapToObject|ej.diagrams.SnapConstraints.SnapToHorizontalLines|ej.diagrams.SnapConstraints.SnapToVerticalLines|ej.diagrams.SnapConstraints.SnapToLines);
-                 }
-                 else if(!showGridlines.checked && snapToObject.checked){
-                     diagram.snapSettings.constraints =  ej.diagrams.SnapConstraints.All &~ (ej.diagrams.SnapConstraints.ShowLines|ej.diagrams.SnapConstraints.SnapToHorizontalLines|ej.diagrams.SnapConstraints.SnapToVerticalLines|ej.diagrams.SnapConstraints.SnapToLines);
-                 }
-            break;
+        function showGridlines(args) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            diagram.snapSettings.constraints = diagram.snapSettings.constraints ^ ej.diagrams.SnapConstraints.ShowLines;
+            diagram.dataBind();
+            scale();
         }
-        diagram.dataBind();
-        scale();
-        
-    }
+        function snapToObject(args) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            diagram.snapSettings.constraints = diagram.snapSettings.constraints ^ ej.diagrams.SnapConstraints.SnapToObject;
+            diagram.dataBind();
+            scale();
+        }
+        function snapToLines(args) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            var showGridlines = document.getElementById("showGridlines").ej2_instances[0];
+            if (showGridlines.checked && snapToObject.checked) {
+                diagram.snapSettings.constraints = ej.diagrams.SnapConstraints.All;
+            }
+            else if (showGridlines.checked && !snapToObject.checked) {
+                diagram.snapSettings.constraints = ej.diagrams.SnapConstraints.All & ~ej.diagrams.SnapConstraints.SnapToObject;
+            }
+            else if (!showGridlines.checked && snapToObject.checked) {
+                diagram.snapSettings.constraints = ej.diagrams.SnapConstraints.All & ~ej.diagrams.SnapConstraints.ShowLines;
+            }
+            else if (!showGridlines.checked && !snapToObject.checked) {
+                diagram.snapSettings.constraints = ej.diagrams.SnapConstraints.All & ~(ej.diagrams.SnapConstraints.ShowLines | ej.diagrams.SnapConstraints.SnapToObject);
+            }
+            switch (args.value) {
+                case 'Snap To Gridlines':
+                    diagram.snapSettings.constraints = ej.diagrams.SnapConstraints.All | ej.diagrams.SnapConstraints.SnapToLines;
+                    if (!showGridlines.checked && !snapToObject.checked) {
+                        diagram.snapSettings.constraints = ej.diagrams.SnapConstraints.All & ~(ej.diagrams.SnapConstraints.ShowLines | ej.diagrams.SnapConstraints.SnapToObject);
+                    }
+                    else if (!snapToObject.checked && showGridlines.checked) {
+                        diagram.snapSettings.constraints = ej.diagrams.SnapConstraints.All & ~(ej.diagrams.SnapConstraints.SnapToObject);
+                    }
+                    else if (snapToObject.checked && !showGridlines.checked) {
+                        diagram.snapSettings.constraints = ej.diagrams.SnapConstraints.All & ~(ej.diagrams.SnapConstraints.ShowLines);
+                    }
+                    break;
+                case 'Snap To Horizontal Gridlines':
+                    diagram.snapSettings.constraints = diagram.snapSettings.constraints ^ ej.diagrams.SnapConstraints.SnapToVerticalLines;
+                    break;
+                case 'Snap To Vertical Gridlines':
+                    diagram.snapSettings.constraints = diagram.snapSettings.constraints ^ ej.diagrams.SnapConstraints.SnapToHorizontalLines;
+                    break;
+                case 'None':
+                    diagram.snapSettings.constraints = ej.diagrams.SnapConstraints.All & ~(ej.diagrams.SnapConstraints.SnapToHorizontalLines | ej.diagrams.SnapConstraints.SnapToVerticalLines | ej.diagrams.SnapConstraints.SnapToLines);
+                    if (!showGridlines.checked && !snapToObject.checked) {
+                        diagram.snapSettings.constraints = ej.diagrams.SnapConstraints.All & ~(ej.diagrams.SnapConstraints.ShowLines | ej.diagrams.SnapConstraints.SnapToObject | ej.diagrams.SnapConstraints.SnapToHorizontalLines | ej.diagrams.SnapConstraints.SnapToVerticalLines | ej.diagrams.SnapConstraints.SnapToLines);
+                    }
+                    else if (showGridlines.checked && !snapToObject.checked) {
+                        diagram.snapSettings.constraints = ej.diagrams.SnapConstraints.All & ~(ej.diagrams.SnapConstraints.SnapToObject | ej.diagrams.SnapConstraints.SnapToHorizontalLines | ej.diagrams.SnapConstraints.SnapToVerticalLines | ej.diagrams.SnapConstraints.SnapToLines);
+                    }
+                    else if (!showGridlines.checked && snapToObject.checked) {
+                        diagram.snapSettings.constraints = ej.diagrams.SnapConstraints.All & ~(ej.diagrams.SnapConstraints.ShowLines | ej.diagrams.SnapConstraints.SnapToHorizontalLines | ej.diagrams.SnapConstraints.SnapToVerticalLines | ej.diagrams.SnapConstraints.SnapToLines);
+                    }
+                    break;
+            }
+            diagram.dataBind();
+            scale();
+
+        }
     function scale(){
          var diagram = document.getElementById("diagram").ej2_instances[0];
         diagram.snapSettings.horizontalGridlines.scaledIntervals[0] = snappingInterval.value;

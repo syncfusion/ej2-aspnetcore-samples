@@ -84,7 +84,8 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
                 Height = 100,
                 OffsetX = 650,
                 OffsetY = 250,
-                Annotations = Node2
+                Annotations = Node2,
+                 Ports = ports2
             });
             nodes.Add(new Node()
             {

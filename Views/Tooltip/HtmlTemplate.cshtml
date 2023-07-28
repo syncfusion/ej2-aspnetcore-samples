@@ -11,7 +11,7 @@
     }
     <div id="htmlTemplate" class="col-lg-12 control-section">
         <div id="customization">
-            <ejs-tooltip id="tooltip" cssClass="e-tooltip-css" content="@template" opensOn="Click" created="onCreated">
+            <ejs-tooltip id="tooltip" cssClass="e-tooltip-css" content="@template" opensOn="Click" created="onCreated" windowCollision="true" position="BottomCenter">
                 <e-content-template>
                     <ejs-button class="text" id="content" cssClass="e-outline" isPrimary="true" content="HTML Template"></ejs-button>
                 </e-content-template>
@@ -73,6 +73,7 @@
     var tooltipObj;
     function onCreated() {
         tooltipObj = document.getElementById("tooltip").ej2_instances[0];
+        tooltipObj.height = ej.base.Browser.isDevice ? "60%" : "auto";
         //Attached scroll and click event listners in right pane
         if (document.getElementById('right-pane')) {
             document.getElementById('right-pane').addEventListener('click', onClick);

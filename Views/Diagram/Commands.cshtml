@@ -1,7 +1,38 @@
 @using Syncfusion.EJ2;
 @section ControlsSection{
     <div class="col-lg-9 control-section" style="width:100% ;">
-         <div id="toolbar" style="width: 100%"></div>
+        <div class="toolbar_default">
+            <ejs-toolbar id="toolbar" clicked="onItemClick">
+                <e-toolbar-items>
+                    <e-toolbar-item prefixIcon="e-cut e-icons" disabled="true" tooltipText="Cut"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-copy e-icons" disabled="true" tooltipText="Copy"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-icons e-paste" disabled="true" tooltipText="Paste"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-icons e-undo" disabled="true" tooltipText="Undo"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-icons e-redo" disabled="true" tooltipText="Redo"></e-toolbar-item>
+                    <e-toolbar-item type="Separator"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="sf-icon-align-left-1" disabled="true" tooltipText="Align Left"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="sf-icon-align-center-1" disabled="true" tooltipText="Align Center"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="sf-icon-align-right-1" disabled="true" tooltipText="Align Right"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="sf-icon-align-top-1" disabled="true" tooltipText="Align Top"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="sf-icon-align-middle-1" disabled="true" tooltipText="Align Middle"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="sf-icon-align-bottom-1" disabled="true" tooltipText="Align Bottom"></e-toolbar-item>
+                    <e-toolbar-item type="Separator"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-icons e-transform-right" disabled="true" tooltipText="Rotate Right"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-icons e-transform-left" disabled="true" tooltipText="Rotate Left"></e-toolbar-item>
+                    <e-toolbar-item type="Separator"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-icons e-flip-vertical" disabled="true" tooltipText="Flip Vertical"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-icons e-flip-horizontal" disabled="true" tooltipText="Flip Horizontal"></e-toolbar-item>
+                    <e-toolbar-item type="Separator"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="sf-icon-distribute-horizontal" disabled="true" tooltipText="Distribute Objects Horizontally"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="sf-icon-distribute-vertical" disabled="true" tooltipText="Distribute Objects Vertically"></e-toolbar-item>
+                    <e-toolbar-item type="Separator"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="sf-icon-same-width" disabled="true" tooltipText="Same Width"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="sf-icon-same-height" disabled="true" tooltipText="Same Height"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="sf-icon-same-size" disabled="true" tooltipText="Same Size"></e-toolbar-item>
+                </e-toolbar-items>
+            </ejs-toolbar>
+
+        </div>
         <div class="content-wrapper">
            <ejs-diagram id="diagram" width="100%" height="700px" getNodeDefaults="@ViewBag.getNodeDefaults" getConnectorDefaults="@ViewBag.getConnectorDefaults" nodes="ViewBag.nodes" connectors="ViewBag.connectors" selectionChange="selectionChange" historyChange="historyChange">
             </ejs-diagram>
@@ -221,89 +252,7 @@ function disableCommonItems(args, toolbar){
             toolbarObj.items[4].disabled = true;
         }
     }
-    var toolbarObj = new ej.navigations.Toolbar({
-        clicked: onItemClick,
-        items: [
-            {
-                prefixIcon: 'e-icons e-cut', tooltipText: 'Cut', disabled: true
-            },
-            {
-                prefixIcon: 'e-icons e-copy', tooltipText: 'Copy', disabled: true
-            },
-            {
-                prefixIcon: 'e-icons e-paste', tooltipText: 'Paste', disabled: true
-            },
-            {
-                prefixIcon: 'e-icons e-undo', tooltipText: 'Undo', disabled: true
-            },
-            {
-                prefixIcon: 'e-icons e-redo', tooltipText: 'Redo', disabled: true
-            },
-            {
-                type: 'Separator'
-            },
-            {
-                prefixIcon: 'sf-icon-align-left-1', tooltipText: 'Align Left', disabled: true
-            },
-            {
-                prefixIcon: 'sf-icon-align-center-1', tooltipText: 'Align Center', disabled: true
-            },
-            {
-                prefixIcon: 'sf-icon-align-right-1', tooltipText: 'Align Right', disabled: true
-            },
-            {
-                prefixIcon: 'sf-icon-align-top-1', tooltipText: 'Align Top', disabled: true
-            },
-            {
-                prefixIcon: 'sf-icon-align-middle-1', tooltipText: 'Align Middle', disabled: true
-            },
-            {
-                prefixIcon: 'sf-icon-align-bottom-1', tooltipText: 'Align Bottom', disabled: true
-            },
-            {
-                type: 'Separator'
-            },
-            {
-                prefixIcon: 'e-icons e-transform-right', tooltipText: 'Rotate Right', disabled: true
-            },
-            {
-                prefixIcon: 'e-icons e-transform-left', tooltipText: 'Rotate Left', disabled: true
-            },
-            {
-                type: 'Separator'
-            },
-            {
-                prefixIcon: 'e-icons e-flip-vertical', tooltipText: 'Flip Vertical', disabled: true
-            },
-            {
-                prefixIcon: 'e-icons e-flip-horizontal', tooltipText: 'Flip Horizontal', disabled: true
-            },
-            {
-                type: 'Separator'
-            },
-            {
-                prefixIcon: 'sf-icon-distribute-horizontal', tooltipText: 'Distribute Objects Horizontally', disabled: true
-            },
-            {
-                prefixIcon: 'sf-icon-distribute-vertical', tooltipText: 'Distribute Objects Vertically', disabled: true
-            },
-            {
-                type: 'Separator'
-            },
-            {
-                prefixIcon: 'sf-icon-same-width', tooltipText: 'Same Width', disabled: true
-            },
-            {
-                prefixIcon: 'sf-icon-same-height', tooltipText: 'Same Height', disabled: true
-            },
-            {
-                prefixIcon: 'sf-icon-same-size', tooltipText: 'Same Size', disabled: true
-            }
-        ]
-    });
-
-    toolbarObj.appendTo('#toolbar');
-
+   
     function onItemClick(args) {
         var item = args.item.tooltipText;
         let diagram = document.getElementById("diagram").ej2_instances[0];  
@@ -374,8 +323,6 @@ function disableCommonItems(args, toolbar){
         }
         diagram.dataBind();
     }
-
-
 
     </script>
 }

@@ -17,6 +17,138 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
     {
         public IActionResult DataBindingWithTreeView()
         {
+            List<object> treedata = new List<object>();
+            treedata.Add(new
+            {
+                id = 1,
+                name = "Plant Manager",
+                hasChild = true,
+                expanded = true
+            });
+            treedata.Add(new
+            {
+                id = 2,
+                pid = 1,
+                name = "Production Manager",
+                hasChild = true,
+                expanded = true
+            });
+            treedata.Add(new
+            {
+                id = 3,
+                pid = 2,
+                name = "Control Room",
+                hasChild = true,
+                expanded = true
+            });
+
+            treedata.Add(new
+            {
+                id = 4,
+                pid = 3,
+                name = "Foreman1",
+                hasChild = true,
+                expanded = true
+            });
+            treedata.Add(new
+            {
+                id = 5,
+                pid = 4,
+                name = "Craft Personnel5",
+
+            });
+            treedata.Add(new
+            {
+                id = 6,
+                pid = 4,
+                name = "Craft Personnel6",
+            });
+            treedata.Add(new
+            {
+                id = 7,
+                pid = 2,
+                name = "Plant Operator",
+                hasChild = true,
+                expanded = true
+            });
+            treedata.Add(new
+            {
+                id = 8,
+                pid = 7,
+                name = "Foreman2",
+                hasChild = true,
+                expanded = true
+            });
+            treedata.Add(new
+            {
+                id = 9,
+                pid = 8,
+                name = "Craft Personnel7"
+            });
+            treedata.Add(new
+            {
+                id = 10,
+                pid = 1,
+                name = "Administrative Officer",
+
+
+            });
+            treedata.Add(new
+            {
+                id = 11,
+                pid = 1,
+                name = "Maintenance Manager",
+                hasChild = true,
+                expanded = true
+            });
+            treedata.Add(new
+            {
+                id = 12,
+                pid = 11,
+                name = "Electrical Supervisor",
+                hasChild = true,
+                expanded = true
+
+            });
+            treedata.Add(new
+            {
+                id = 13,
+                pid = 12,
+                hasChild = true,
+                name = "Craft Personnel1"
+            });
+            treedata.Add(new
+            {
+                id = 14,
+                pid = 12,
+
+                name = "Craft Personnel2"
+
+            });
+            treedata.Add(new
+            {
+                id = 15,
+                name = "Mechanical Supervisor",
+                pid = 11,
+                hasChild = true,
+                expanded = true
+
+            });
+            treedata.Add(new
+            {
+                id = 16,
+                pid = 15,
+                name = "Craft Personnel3"
+
+            });
+            treedata.Add(new
+            {
+                id = 17,
+                pid = 15,
+                name = "Craft Personnel4"
+
+            });
+            ViewBag.data = treedata;
             ViewBag.Nodes = DataBindingDetails.GetAllRecords();
             ViewBag.getConnectorDefaults = "ConnectorDefaults";
             ViewBag.getNodeDefaults = "nodeDefaults";

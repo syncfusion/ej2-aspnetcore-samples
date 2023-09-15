@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EJ2CoreSampleBrowser_NET6.Models;
 using Microsoft.AspNetCore.Mvc;
 using Syncfusion.EJ2.Diagrams;
 
@@ -86,6 +87,24 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
             connectors.Add(new DiagramConnector() { Id = "connector4", SourceID = "node6", TargetID = "node3", SourcePortID = "port4", TargetPortID = "portOut" });
             connectors.Add(new DiagramConnector() { Id = "connector5", SourceID = "node6", TargetID = "node4", SourcePortID = "port5", TargetPortID = "portOut" });
             connectors.Add(new DiagramConnector() { Id = "connector6", SourceID = "node6", TargetID = "node5", SourcePortID = "port6", TargetPortID = "portOut" });
+
+            List<DecoratorShapeList> decoratorshape = new List<DecoratorShapeList>();
+            decoratorshape.Add(new DecoratorShapeList() { Name = "None" });
+            decoratorshape.Add(new DecoratorShapeList() { Name = "Circle" });
+            decoratorshape.Add(new DecoratorShapeList() { Name = "Square" });
+            decoratorshape.Add(new DecoratorShapeList() { Name = "Diamond" });
+            decoratorshape.Add(new DecoratorShapeList() { Name = "Arrow" });
+            decoratorshape.Add(new DecoratorShapeList() { Name = "OpenArrow" });
+            decoratorshape.Add(new DecoratorShapeList() { Name = "Fletch" });
+            decoratorshape.Add(new DecoratorShapeList() { Name = "OpenFetch" });
+            decoratorshape.Add(new DecoratorShapeList() { Name = "IndentedArrow" });
+            decoratorshape.Add(new DecoratorShapeList() { Name = "OutdentedArrow" });
+            decoratorshape.Add(new DecoratorShapeList() { Name = "DoubleArrow" });
+
+            //DropDownModel dropDownModel = new DropDownModel();
+            //ViewBag.decoratorshape = dropDownModel.scrollLimits();
+            DecoratorShape decoratorShape = new DecoratorShape();
+            ViewBag.decoratorshape = decoratorShape.decoratorShape();
             ViewBag.nodes = nodes;
             ViewBag.connectors = connectors;
             ViewBag.getNodeDefaults = "getNodeDefaults";
@@ -100,5 +119,9 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
             ViewBag.selectedItems = selectedItems;
             return View();
         }
+    }
+    public class DecoratorShapeList
+    {
+        public string Name;
     }
 }

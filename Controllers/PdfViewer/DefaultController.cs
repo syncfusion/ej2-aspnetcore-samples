@@ -16,6 +16,11 @@ using Microsoft.Extensions.Caching.Memory;
 using Syncfusion.EJ2.PdfViewer;
 using System.IO;
 using Newtonsoft.Json;
+using Syncfusion.Pdf.Parsing;
+using System.Security.Cryptography.X509Certificates;
+using Syncfusion.Pdf.Security;
+using Syncfusion.Pdf;
+using System.Net;
 #if REDIS
 using Microsoft.Extensions.Caching.Distributed;
 #endif
@@ -68,7 +73,15 @@ namespace EJ2CoreSampleBrowser.Controllers.PdfViewer
                     }
                     else
                     {
-                        return this.Content(jsonObject["document"] + " is not found");
+                        string fileName = jsonObject["document"].Split(new string[] { "://" }, StringSplitOptions.None)[0];
+                        if (fileName == "http" || fileName == "https")
+                        {
+                            WebClient WebClient = new WebClient();
+                            byte[] pdfDoc = WebClient.DownloadData(jsonObject["document"]);
+                            stream = new MemoryStream(pdfDoc);
+                        }
+                        else
+                            return this.Content(jsonObject["document"] + " is not found");
                     }
                 }
                 else
@@ -94,8 +107,109 @@ namespace EJ2CoreSampleBrowser.Controllers.PdfViewer
             object jsonResult = pdfviewer.GetPage(jsonObject);
             return Content(JsonConvert.SerializeObject(jsonResult));
         }
+		[HttpPost]
+		[Route("api/[controller]/AddSignature")]
+		public IActionResult AddSignature([FromBody] Dictionary<string, string> jsonObject)
+		{
+#if REDIS
+            PdfRenderer pdfviewer = new PdfRenderer(_cache,_distributedCache);
+#else
+			PdfRenderer pdfviewer = new PdfRenderer(_cache);
+#endif
+			string documentBase = pdfviewer.GetDocumentAsBase64(jsonObject);
+			byte[] documentBytes = Convert.FromBase64String(documentBase.Split(",")[1]);
+			PdfLoadedDocument loadedDocument = new PdfLoadedDocument(documentBytes);
+			//Get the first page of the document.
+			PdfPageBase loadedPage = loadedDocument.Pages[0];
+			//Create new X509Certificate2 with the root certificate.
+			X509Certificate2 certificate = new X509Certificate2(GetDocumentPath("localhost.pfx"), "Syncfusion@123");
+			PdfCertificate pdfCertificate = new PdfCertificate(certificate);
+			//Creates a digital signature.
+			PdfSignature signature = new PdfSignature(loadedDocument, loadedPage, pdfCertificate, "Signature");
+			signature.Certificated = true;
+			MemoryStream str = new MemoryStream();
+			//Saves the document.
+			loadedDocument.Save(str);
+			byte[] docBytes = str.ToArray();
+			string docBase64 = "data:application/pdf;base64," + Convert.ToBase64String(docBytes);
+			return Content(docBase64);
+		}
 
-        [AcceptVerbs("Post")]
+		[HttpPost]
+		[Route("api/[controller]/ValidateSignature")]
+		public IActionResult ValidateSignature([FromBody] Dictionary<string, string> jsonObject)
+		{
+			var hasDigitalSignature = false;
+			var errorVisible = false;
+			var successVisible = false;
+			var warningVisible = false;
+			var downloadVisibility = true;
+			var message = string.Empty;
+			if (jsonObject.ContainsKey("documentData"))
+			{
+				byte[] documentBytes = Convert.FromBase64String(jsonObject["documentData"].Split(",")[1]);
+				PdfLoadedDocument loadedDocument = new PdfLoadedDocument(documentBytes);
+
+				PdfLoadedForm form = loadedDocument.Form;
+				if (form != null)
+				{
+					foreach (PdfLoadedField field in form.Fields)
+					{
+						if (field is PdfLoadedSignatureField)
+						{
+							//Gets the first signature field of the PDF document.
+							PdfLoadedSignatureField signatureField = field as PdfLoadedSignatureField;
+							if (signatureField.IsSigned)
+							{
+								hasDigitalSignature = true;
+								//X509Certificate2Collection to check the signers identity using root certificates.
+								X509Certificate2Collection collection = new X509Certificate2Collection();
+								//Create new X509Certificate2 with the root certificate.
+								X509Certificate2 certificate = new X509Certificate2(GetDocumentPath("localhost.pfx"), "Syncfusion@123");
+								//Add the certificate to the collection.
+								collection.Add(certificate);
+								//Validate all signatures in loaded PDF document and get the list of validation result.
+								PdfSignatureValidationResult result = signatureField.ValidateSignature(collection);
+								//Checks whether the document is modified or not.
+								if (result.IsDocumentModified)
+								{
+									errorVisible = true;
+									successVisible = false;
+									warningVisible = false;
+									downloadVisibility = false;
+									message = "The document has been digitally signed, but it has been modified since it was signed and at least one signature is invalid .";
+								}
+								else
+								{
+									//Checks whether the signature is valid or not.
+									if (result.IsSignatureValid)
+									{
+										if (result.SignatureStatus.ToString() == "Unknown")
+										{
+											errorVisible = false;
+											successVisible = false;
+											warningVisible = true;
+											message = "The document has been digitally signed and at least one signature has problem";
+										}
+										else
+										{
+											errorVisible = false;
+											successVisible = true;
+											warningVisible = false;
+											downloadVisibility = false;
+											message = "The document has been digitally signed and all the signatures are valid.";
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			return Content(JsonConvert.SerializeObject(new { hasDigitalSignature = hasDigitalSignature, errorVisible = errorVisible, successVisible = successVisible, warningVisible = warningVisible, downloadVisibility = downloadVisibility, message = message }));
+
+		}
+		[AcceptVerbs("Post")]
         [HttpPost]
         [Route("api/[controller]/RenderAnnotationComments")]
         public IActionResult RenderAnnotationComments([FromBody] Dictionary<string, string> jsonObject)

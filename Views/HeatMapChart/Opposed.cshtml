@@ -2,11 +2,12 @@
 @using Syncfusion.EJ2.Buttons;
 @section ControlsSection{
     @{
-        var textStyle = new { size = "15px", fontWeight = "500", fontStyle = "Normal" };
+        var textStyle = new { size = "15px", fontWeight = "500", fontStyle = "Normal", fontFamily = "inherit"  };
         var xAxisLabel = new string[] { "2007", "2008", "2009", "2010", "2011",
         "2012", "2013", "2014", "2015", "2016", "2017" };
         var yAxisLabel = new string[] { "Jan", "Feb", "Mar", "Apr", "May",
         "Jun", "July", "Aug", "Sept", "Oct", "Nov", "Dec" };
+        var labelTextStyle = new { fontFamily = "inherit" };
         var cellBorder = new
         {
             width = "0",
@@ -17,17 +18,20 @@
             <ejs-heatmap id='container' load="window.onHeatmapLoad" dataSource="ViewBag.dataSource">
                 <e-heatmap-titlesettings text="Monthly Flight Traffic at JFK Airport" textStyle="textStyle">
                 </e-heatmap-titlesettings>
-                <e-heatmap-xaxis labels="xAxisLabel" labelRotation="45" labelIntersectAction="None" opposedPosition="true">
+                <e-heatmap-xaxis labels="xAxisLabel" textStyle="labelTextStyle" labelRotation="45" labelIntersectAction="None" opposedPosition="true">
                 </e-heatmap-xaxis>
-                <e-heatmap-yaxis labels="yAxisLabel" opposedPosition="true">
+                <e-heatmap-yaxis labels="yAxisLabel" textStyle="labelTextStyle" opposedPosition="true">
                 </e-heatmap-yaxis>
                 <e-heatmap-cellsettings border="cellBorder" showLabel="false" format="{value} flights"></e-heatmap-cellsettings>
                 <e-heatmap-legendsettings visible="false"></e-heatmap-legendsettings>
+                <e-heatmap-tooltipsettings>
+                    <e-tooltipsettings-textstyle fontFamily="inherit"></e-tooltipsettings-textstyle>
+                </e-heatmap-tooltipsettings>
             </ejs-heatmap>
         </div>
     </div>
     <div class="col-lg-3 property-section">
-        <table id="property" title="Properties" style="width: 100%">
+        <table id="property" title="Properties" style="width: 100%;margin-left: -20px;">
             <tbody>
                 <tr style="height: 50px">
                     <td style="width: 40%;">
@@ -64,7 +68,9 @@
 @section ActionDescription{
     <div id="action-description">
         <p>
-            This sample illustrates the monthly flight arrivals at JFK international airport, New York. The data label is disabled in this sample, the tooltip displays the data point values.  In property panel, the options are available to change the position of the axes by means of checkbox for each axis.
+            This sample illustrates the monthly flight arrivals at JFK international airport, New York. The data label is disabled in
+            this sample, the tooltip displays the data point values. In property panel, the options are available to change the
+            position of the axes by means of checkbox for each axis.
         </p>
     </div>
 }
@@ -72,12 +78,11 @@
 
     <div id="description">
         <p>
-            In this example, you can see how to change the display position of the axis. You can change the display position of axes by enabling the <code>opposedPosition </code> property for each axis.
+            In this example, you can see how to change the display position of the axis. You can change the display position of axes by enabling the 
+            <a href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.HeatMap.HeatMapAxis.html#Syncfusion_EJ2_HeatMap_HeatMapAxis_OpposedPosition" target="_blank">opposedPosition</a> property for each axis.
         </p>
-        <p>
-            Tooltip is enabled in this example, to see the tooltip in action, hover a point or tap on a point in touch enabled devices.
-        </p>
-        <br />
+        <p>The tooltip is enabled in this example. To see the tooltip in action, hover the mouse over an item or tap an item on touch-enabled devices.</p>
+        <br>
     </div>
 }
 @section Meta{

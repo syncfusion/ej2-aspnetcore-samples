@@ -10,7 +10,7 @@
                     <e-majorgridlines width="0"></e-majorgridlines>
                     <e-majorticklines width="0"></e-majorticklines>
                 </e-chart-primaryxaxis>
-                <e-chart-primaryyaxis labelFormat="{value}" title="Weight (kg)" minimum="-80" maximum="80">
+                <e-chart-primaryyaxis labelFormat="{value}" title="Weight (kg)" rangePadding="@Syncfusion.EJ2.Charts.ChartRangePadding.Round">
                     <e-linestyle width="0"></e-linestyle>
                     <e-majorticklines width="0"></e-majorticklines>
                 </e-chart-primaryyaxis>
@@ -56,7 +56,9 @@
             args.text = args.text.indexOf('-') > -1 ? args.text.replace('-', '') : args.text;
         }
         function axisLabelRender(args) {
-            args.text = args.text.replace("-", "");
+            if (args.value < 0) {
+                args.text = (-args.value).toString();
+            }
         }
         
     </script>

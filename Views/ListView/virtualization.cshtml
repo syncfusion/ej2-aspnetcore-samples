@@ -1,15 +1,10 @@
 @using Syncfusion.EJ2
 @section ControlsSection{
-    @{ var template = "<div class='e-list-wrapper e-list-avatar'>" +
-                 "<span id=\"${$imgUrl ? \'hideUI\' : \'showUI\' }\" class='e-avatar e-avatar-circle' icon='${icon}'> " +
-            "${icon}</span> <img id=\"${$imgUrl ? \'showUI\' : \'hideUI\' }\" class='e-avatar e-avatar-circle' src=\"${$imgUrl ?  $imgUrl : \' \' }\" />" +
-            "<span class='e-list-content'>${name}</span></div>";
-
-    }
+   
     <div class="col-lg-8  control-section">
         <!-- ListView element -->
         <ejs-listview id="ui-list" dataSource="ViewBag.data1" enableVirtualization="true" cssClass="e-list-template" headerTitle="Contacts"
-                      height=500 template=@template actionComplete='onActionComplete' actionBegin='onActionBegin' showHeader="true">
+                      height=500 template="#listTemplate" actionComplete='onActionComplete' actionBegin='onActionBegin' showHeader="true">
             <e-listview-fieldsettings text="name"></e-listview-fieldsettings>
         </ejs-listview>
     </div>
@@ -105,7 +100,18 @@
            ej.popups.hideSpinner(liElement);
        }
 </script>
-
+<script id="listTemplate" type="text/x-template">
+    <div class="e-list-wrapper e-list-avatar">
+        ${if(imgUrl)}
+        <span id="hideUI" class="e-avatar e-avatar-circle" icon="${icon}">${icon}</span>
+        <img id="showUI" class="e-avatar e-avatar-circle" src="${imgUrl }" />
+        ${else}
+        <span id="showUI" class="e-avatar e-avatar-circle" icon="${icon}">${icon}</span>
+        <img id="hideUI" class="e-avatar e-avatar-circle" src=" " />
+        ${/if}
+        <span class="e-list-content">${name}</span>
+    </div>
+</script>
 <style>
 
 

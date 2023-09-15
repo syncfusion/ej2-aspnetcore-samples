@@ -245,6 +245,11 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
                 SourcePoint = new DiagramPoint() { X = 360, Y = 350 },
                 TargetPoint = new DiagramPoint() { X = 440, Y = 430 },
                 Type = Segments.Orthogonal,
+                Constraints =
+                    (ConnectorConstraints.Default | ConnectorConstraints.DragSegmentThumb) &
+                    ~(
+                      ConnectorConstraints.DragSourceEnd | ConnectorConstraints.DragTargetEnd
+                    ),
                 TargetDecorator = new DiagramDecorator()
                 {
                     Style = new DiagramShapeStyle()

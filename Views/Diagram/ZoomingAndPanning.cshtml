@@ -5,22 +5,23 @@
 @section ControlsSection {
     <div class="col-lg-12 control-section">
     <div class="control-section">
-        <div style="width: 100%"></div>
-            <ejs-toolbar id="toolbar_default" clicked="onItemClick">
-                <e-toolbar-items>
-                    <e-toolbar-item prefixIcon="e-icons e-zoom-in" tooltipText="Zoom In"></e-toolbar-item>
-                    <e-toolbar-item prefixIcon="e-icons e-zoom-out" tooltipText="Zoom Out"></e-toolbar-item>
-                    <e-toolbar-item type="Separator"></e-toolbar-item>
-                    <e-toolbar-item prefixIcon="e-icons e-mouse-pointer" tooltipText="Select"></e-toolbar-item>
-                    <e-toolbar-item prefixIcon="e-icons e-pan" tooltipText="Pan Tool"></e-toolbar-item>
-                    <e-toolbar-item type="Separator"></e-toolbar-item>
-                    <e-toolbar-item prefixIcon="e-icons e-reset" tooltipText="Reset"></e-toolbar-item>
-                    <e-toolbar-item prefixIcon="e-icons e-zoom-to-fit" tooltipText="Fit To Page"></e-toolbar-item>
-                    <e-toolbar-item type="Separator"></e-toolbar-item>
-                    <e-toolbar-item prefixIcon="e-icons e-bring-to-view" tooltipText="Bring Into View" disabled="true"></e-toolbar-item>
-                    <e-toolbar-item prefixIcon="e-icons e-bring-to-center" tooltipText="Bring Into Center" disabled="true"></e-toolbar-item>
-                </e-toolbar-items>
-            </ejs-toolbar>
+        <div style="width: 100%">
+                <ejs-toolbar id="toolbar_default" clicked="onItemClick">
+                    <e-toolbar-items>
+                        <e-toolbar-item prefixIcon="e-icons e-zoom-in" tooltipText="Zoom In"></e-toolbar-item>
+                        <e-toolbar-item prefixIcon="e-icons e-zoom-out" tooltipText="Zoom Out"></e-toolbar-item>
+                        <e-toolbar-item type="Separator"></e-toolbar-item>
+                        <e-toolbar-item prefixIcon="e-icons e-mouse-pointer" tooltipText="Select"></e-toolbar-item>
+                        <e-toolbar-item prefixIcon="e-icons e-pan" tooltipText="Pan Tool"></e-toolbar-item>
+                        <e-toolbar-item type="Separator"></e-toolbar-item>
+                        <e-toolbar-item prefixIcon="e-icons e-reset" tooltipText="Reset"></e-toolbar-item>
+                        <e-toolbar-item prefixIcon="e-icons e-zoom-to-fit" tooltipText="Fit To Page"></e-toolbar-item>
+                        <e-toolbar-item type="Separator"></e-toolbar-item>
+                        <e-toolbar-item prefixIcon="e-icons e-bring-to-view" tooltipText="Bring Into View" disabled="true"></e-toolbar-item>
+                        <e-toolbar-item prefixIcon="e-icons e-bring-to-center" tooltipText="Bring Into Center" disabled="true"></e-toolbar-item>
+                    </e-toolbar-items>
+                </ejs-toolbar>
+            </div>
         <div>
         <ejs-diagram id="diagram" width="100%" height="550px" setNodeTemplate="@ViewBag.setNodeTemplate" getNodeDefaults="@ViewBag.getNodeDefaults" getConnectorDefaults="@ViewBag.getConnectorDefaults" created="diagramCreated" selectionChange="selectionChange">
                 <e-diagram-datasourcesettings id="Id" parentId="ReportingPerson" dataSource="new DataManager(){ Data = (List<EJ2CoreSampleBrowser.Controllers.Diagram.ZoomingAndPanning>)ViewBag.Nodes }"></e-diagram-datasourcesettings>
@@ -156,9 +157,9 @@
     }
     function selectionChange(args) {
         var diagram = document.getElementById("diagram").ej2_instances[0];
-            var toolbarObj = document.getElementById("toolbar_default").ej2_instances[0];
         if (args.state === 'Changed') {
             var selectedItems = diagram.selectedItems.nodes;
+            var toolbarObj = document.getElementById("toolbar_default").ej2_instances[0];
             if (selectedItems.length === 0) {
                 toolbarObj.items[9].disabled = true;
                 toolbarObj.items[10].disabled = true;

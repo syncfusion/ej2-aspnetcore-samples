@@ -3,15 +3,15 @@
     @{
         var xAxisLabel = new string[] { "Cereals", "Meat", "Spices", "Tea", "Edible Oil", "Dairy Products", "Wheat" };
         var yAxisLabel = new string[] { "2014", "2015", "2016", "2017", "2018" };
-
+        var labelTextStyle = new { fontFamily = "inherit"};
     }
 <div class="col-md-9 control-section">
-    <div id="container" style="height:300px" align="center">
+    <div id="container" style="height:300px">
         <ejs-heatmap id="container" allowSelection="true" showTooltip="true" cellSelected="window.oncellSelected" load="window.onHeatmapLoad" dataSource="ViewBag.dataSource">
-            <e-heatmap-titlesettings text="Top export products 2014-2018, Value in USD million">
+            <e-heatmap-titlesettings text="Top export products 2014-2018, Value in USD million" textStyle="labelTextStyle">
             </e-heatmap-titlesettings>
-            <e-heatmap-xaxis labels="xAxisLabel"></e-heatmap-xaxis>
-            <e-heatmap-yaxis labels="yAxisLabel"></e-heatmap-yaxis>
+            <e-heatmap-xaxis labels="xAxisLabel" textStyle="labelTextStyle"></e-heatmap-xaxis>
+            <e-heatmap-yaxis labels="yAxisLabel" textStyle="labelTextStyle"></e-heatmap-yaxis>
             <e-heatmap-palettesettings>
                 <e-palettes>
                     <e-palette color="#3C5E62"></e-palette>
@@ -19,9 +19,13 @@
                 </e-palettes>
             </e-heatmap-palettesettings>
             <e-heatmap-legendsettings visible="false"></e-heatmap-legendsettings>
+            <e-heatmap-cellsettings textStyle="labelTextStyle"></e-heatmap-cellsettings>
+            <e-heatmap-tooltipsettings>
+                <e-tooltipsettings-textstyle fontFamily="inherit"></e-tooltipsettings-textstyle>
+            </e-heatmap-tooltipsettings>
         </ejs-heatmap>
     </div>
-    <div id="container1" style="height:300px" align="center">
+    <div id="container1" style="height:300px">
         <ejs-chart id="container1" load="window.onChartLoad">
             <e-chart-tooltipsettings enable="true"></e-chart-tooltipsettings>
             <e-chart-primaryxaxis valueType="Category" interval="1">
@@ -74,7 +78,7 @@
     </div>
 </div>
     <div class="col-md-3 property-section">
-        <table id="property" title="Properties" style="width: 100%">
+        <table id="property" title="Properties" style="width: 100%;margin-left: -10px">
             <tbody>
                 <tr style="height: 50px">
                     <td style="width: 40%;">
@@ -196,10 +200,8 @@
         <p>
             In this example, you can see how to selected the cell in heat map and render the column chart based on selected data.
         </p>
-        <p>
-            Tooltip is enabled in this example, to see the tooltip in action, hover a point or tap on a point in touch enabled devices.
-        </p>
-        <br />
+        <p>The tooltip is enabled in this example. To see the tooltip in action, hover the mouse over an item or tap an item on touch-enabled devices.</p>
+        <br>
     </div>
 }
 @section Meta{

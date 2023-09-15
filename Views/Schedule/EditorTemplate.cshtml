@@ -3,7 +3,7 @@
 @section ControlsSection{
     <div class="control-section">
         <div class="schedule-wrapper">
-            <ejs-schedule id="schedule" width="100%" height="650px" selectedDate="new DateTime(DateTime.Today.Year, 2, 15)" showQuickInfo="false" actionBegin="onActionBegin" eventRendered="onEventRendered" popupOpen="onPopupOpen" editorTemplate="#EventEditorTemplate">
+            <ejs-schedule id="schedule" width="100%" height="650px" selectedDate="new DateTime(DateTime.Today.Year, 2, 15)" showQuickInfo="false" actionBegin="onActionBegin" eventRendered="onEventRendered" popupOpen="onPopupOpen" editorHeaderTemplate="#EventEditorHeaderTemplate" editorTemplate="#EventEditorTemplate">
                 <e-schedule-views>
                     <e-schedule-view option="Day"></e-schedule-view>
                     <e-schedule-view option="Week"></e-schedule-view>
@@ -27,6 +27,10 @@
             padding-right: 16px;
         }
     </style>
+
+    <script id="EventEditorHeaderTemplate" type="text/x-template">
+            ${if(!Subject)}<div>Create New Event</div>${else}<div>${Subject}</div>${/if}
+    </script>
 
     <script id="EventEditorTemplate" type="text/x-template">
         <table class="custom-event-editor" width="100%" cellpadding="5">
@@ -149,6 +153,9 @@
             In this demo, the event window is customized based on the doctor's required appointment related fields which can be achieved
             by making use of the <code>editorTemplate</code> API. Here, the custom design is built with the required fields through the script template and its type should be
             <code>text/x-template</code>.
+        </p>
+        <p> 
+            In this demo, the editor window header is customized based on the appointment subject field which can be achieved by the <code>editorHeaderTemplate</code>. 
         </p>
         <p>
             Each field defined through it should contain the <code>e-field</code> class, so as to allow the processing of those fields in the default event object from internal source. The ID of

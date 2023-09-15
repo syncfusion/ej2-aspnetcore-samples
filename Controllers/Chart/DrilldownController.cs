@@ -18,7 +18,6 @@ namespace EJ2CoreSampleBrowser.Controllers
 {
     public partial class ChartController : Controller
     {
-
         public IActionResult Drilldown()
         {
             List<CategoryData> chartData = new List<CategoryData>
@@ -26,8 +25,7 @@ namespace EJ2CoreSampleBrowser.Controllers
                 new CategoryData { x = "SUV", y = 25 },
                 new CategoryData { x = "Car", y = 37 },
                 new CategoryData { x = "Pickup", y = 15 },
-                new CategoryData { x = "Minivan", y = 23 },
-
+                new CategoryData { x = "Minivan", y = 23 }
              };
             ViewBag.datalabel = new
             {
@@ -40,13 +38,9 @@ namespace EJ2CoreSampleBrowser.Controllers
                 }
             };
             ViewBag.dataSource = chartData;
-
             return View();
         }
-
-
     }
-
     public class CategoryData
     {
         public string x;

@@ -35,7 +35,7 @@ namespace EJ2CoreSampleBrowser_NET6.Models
                 new FormatData { FormatName= "Numbered list", Command= "OL", FormatType= "Basic blocks", Icon= "e-icons e-list-ordered icon", Description= "Create an ordered list" },
                 new FormatData { FormatName= "Bulleted list", Command= "UL", FormatType= "Basic blocks", Icon= "e-icons e-list-unordered icon", Description= "Create an unordered list" },
                 new FormatData { FormatName= "Table", Command= "CreateTable", FormatType= "Basic blocks", Icon= "e-icons e-table icon", Description= "Insert a table" },
-                new FormatData { FormatName= "Emoji", Command= "Emoji", FormatType= "Inline", Icon= "e-icons emoji", Description= "Use emojis to express ideas and emoticons" },
+                new FormatData { FormatName= "Emoji picker", Command= "EmojiPicker", FormatType= "Inline", Icon= "e-icons e-emoji", Description= "Use emojis to express ideas and emoticons" },
                 new FormatData { FormatName= "Image", Command= "Image", FormatType= "Media", Icon= "e-icons e-image icon", Description= "Add image to your page" },
                 new FormatData { FormatName= "Audio", Command= "Audio", FormatType= "Media", Icon= "e-icons e-audio icon", Description= "Add audio to your page" },
                 new FormatData { FormatName= "Video", Command= "Video", FormatType= "Media", Icon= "e-icons e-video icon", Description= "Add video to your page"}

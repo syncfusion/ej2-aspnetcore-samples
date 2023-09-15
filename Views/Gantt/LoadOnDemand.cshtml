@@ -1,0 +1,61 @@
+﻿@using Syncfusion.EJ2.Gantt;
+@section ControlsSection{
+
+    <div class="control-section">
+        <div class="row">
+            <div class="col-md-12">
+                <ejs-gantt id='LoadOnDemand' treeColumnIndex="1" height="460px" allowSelection="true" highlightWeekends="true"
+                       includeWeekend="true" projectStartDate="01/02/2000" enableVirtualization="true" loadChildOnDemand="false"
+                       projectEndDate="12/01/2002">
+                    <e-data-manager url="https://services.syncfusion.com/aspnet/production/api/GanttLoadOnDemand" adaptor="WebApiAdaptor" crossDomain="true"></e-data-manager>
+                    <e-gantt-taskfields id="taskId" name="taskName" startDate="startDate"
+                                    duration="duration" progress="progress" hasChildMapping="isParent" parentID="parentID">
+                    </e-gantt-taskfields>
+                    <e-gantt-columns>
+                        <e-gantt-column field="taskId" headerText="Task ID"></e-gantt-column>
+                        <e-gantt-column field="taskName" headerText="Task Name" ></e-gantt-column>
+                        <e-gantt-column field="startDate" headerText="Start Date"></e-gantt-column>
+                        <e-gantt-column field="duration" headerText="Duration"></e-gantt-column>
+                        <e-gantt-column field="progress" headerText="Progress"></e-gantt-column>
+                    </e-gantt-columns>
+                </ejs-gantt>
+            </div>
+        </div>
+    </div>
+    <script>
+
+    </script>
+
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the load on-demand data binding support in Gantt Chart. It allows users to load parent records alone on load time.
+            Child records render on demand during expansion action.
+        </p>
+    </div>
+}
+@section Description{
+
+    <div id="description">
+        <p>
+            Load on demand and virtualization support is used to render a large number of tasks in the Gantt Chart with an effective performance. And so, in this demo, row virtualization is enabled with remote data binding which has 50,000 records.
+        </p>
+        <p>
+            With the virtualization feature enabled in remote data binding, only the root level records are fetched from the remote server at the initial load time. So, need to set the <code>hasChildMapping</code> property of <code>taskFields</code> that denotes whichever records have child records and set <code>loadChildOnDemand</code> property as false.
+        </p>
+        <p>
+            When expanding the root parent node or scrolling vertically, the corresponding tasks are dynamically fetched from the remote server and then updated in the DOM based on the current viewport position.
+        </p>
+    </div>
+}
+@section Meta{
+    <meta name="description" content="This example demonstrates the Load On Demand Data in ASP.NET Core Gantt control. Explore here for more details." />
+                }
+@section Title{
+    <title>ASP.NET Core Gantt Load On Demand Data Example - Syncfusion Demos </title>
+                }
+@section Header{
+    <h1 class='sb-sample-text'>Example of Load On Demand Data in ASP.NET Core Gantt Control</h1>
+                }

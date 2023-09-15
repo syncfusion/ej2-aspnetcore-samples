@@ -1,10 +1,11 @@
 @using Syncfusion.EJ2.HeatMap;
 @section ControlsSection{
     @{
-        var textStyle = new { size = "15px", fontWeight = "500", fontStyle = "Normal" };
+        var textStyle = new { size = "15px", fontWeight = "500", fontStyle = "Normal", fontFamily = "inherit" };
         var xAxisLabel = new string[] {"Nancy", "Andrew", "Janet", "Margaret", "Steven", "Michael", "Robert",
 "Laura", "Anne", "Paul", "Karin", "Mario" };
         var yAxisLabel = new string[] { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
+        var labelTextStyle = new { fontFamily = "inherit" };
     }
     <div class="control-section">
         <div class="row">
@@ -12,8 +13,14 @@
                 <ejs-heatmap id='container' load="window.onHeatmapLoad" dataSource="ViewBag.dataSource">
                     <e-heatmap-titlesettings text="Sales Revenue per Employee (in 1000 US$)" textStyle="textStyle">
                     </e-heatmap-titlesettings>
-                    <e-heatmap-xaxis labels="xAxisLabel"></e-heatmap-xaxis>
-                    <e-heatmap-yaxis labels="yAxisLabel"></e-heatmap-yaxis>
+                    <e-heatmap-xaxis labels="xAxisLabel" textStyle="labelTextStyle">
+                    </e-heatmap-xaxis>
+                    <e-heatmap-yaxis labels="yAxisLabel" textStyle="labelTextStyle"></e-heatmap-yaxis>
+                    <e-heatmap-legendsettings visible="true" textStyle="labelTextStyle"></e-heatmap-legendsettings>
+                    <e-heatmap-cellsettings textStyle="labelTextStyle"></e-heatmap-cellsettings>
+                    <e-heatmap-tooltipsettings>
+                        <e-tooltipsettings-textstyle fontFamily="inherit"></e-tooltipsettings-textstyle>
+                    </e-heatmap-tooltipsettings>
                 </ejs-heatmap>
             </div>
         </div>
@@ -35,17 +42,12 @@
     </div>
 }
 @section Description{
-
     <div id="description">
         <p>
             In this example, you can see how to render a heat map with the provided data source. The palette color is applied to the
             items in heat map. The default legend is enabled in this example to represent the items.
         </p>
-        <p>
-            Tooltip is enabled in this example. To see the tooltip in action, hover the mouse over an item or tap an item in touch enabled
-            devices.
-        </p>
-        <br />
+        <p>The tooltip is enabled in this example. To see the tooltip in action, hover the mouse over an item or tap an item on touch-enabled devices.</p>
     </div>
 }
 @section Meta{

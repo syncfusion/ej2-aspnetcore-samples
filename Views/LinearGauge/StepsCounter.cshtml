@@ -1,0 +1,86 @@
+﻿@section ControlsSection{
+    @{
+        var labelFont = new Syncfusion.EJ2.LinearGauge.LinearGaugeLabel { Font = new Syncfusion.EJ2.LinearGauge.LinearGaugeFont { FontFamily = "inherit" } };
+    }
+    <div class="control-section">
+        <ejs-lineargauge load="gaugeLoad" id='defaultContainer' Background='Transparent' style='display:block;'
+                     Orientation='Horizontal'>
+            <e-lineargauge-axes>
+                <e-lineargauge-axis Minimum="0" Maximum="12000" OpposedPosition=true labelStyle="labelFont">
+                    <e-axis-majorticks Interval="12000" Height="10" Width=1></e-axis-majorticks>
+                    <e-axis-minorticks Height="0"></e-axis-minorticks>
+                    <e-axis-line Width="30"></e-axis-line>
+                    <e-lineargauge-pointers>
+                        <e-lineargauge-pointer Type="Marker" MarkerType=Image ImageUrl="../styles/images/lineargauge/step-count.png" Value="8446" ImageUrl="" Height=40 Width=40 Placement=Near Offset="-40"></e-lineargauge-pointer>
+                    </e-lineargauge-pointers>
+                    <e-lineargauge-ranges>
+                        <e-lineargauge-range Start="0" End="8456" Color="#0DC9AB" StartWidth="30" EndWidth="30" Offset="0"></e-lineargauge-range>
+                    </e-lineargauge-ranges>
+                </e-lineargauge-axis>
+            </e-lineargauge-axes>
+        </ejs-lineargauge>
+    </div>
+    <!-- custom code start -->
+    <style>
+        .control-section {
+            min-height: 450px;
+        }
+    </style>
+    <!-- custom code end -->
+}
+
+<script>
+    var textColor = '#000000';
+    window.gaugeLoad = function (args) {
+    @* custom code start *@
+        var theme = themeName ? themeName : 'Material';
+        args.gauge.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+        textColor = args.gauge.theme.indexOf('Dark') > -1 || args.gauge.theme.indexOf('HighContrast') > -1 ? '#FFFFFF' : '#000000';
+    @* custom code end *@
+            args.gauge.annotations =[
+            {
+                content: '<div style="width: 70px;"> <p align="center" style="font-size:10px;margin-left:56px;margin-top:18px;font-weight: 400;color:${textColor};">STEPS</p> <p align="center" style="font-size: 23px;margin-top:-15px;margin-left:46px;color: #0DC9AB;font-weight: 600;">8456</p></div>',
+                x: 10, zIndex: '1',
+                axisIndex: 0,
+                axisValue: 12000,
+                y: 0
+            },
+            {
+                content: '<div style="width: 145px;font-size: 19px;margin-left:142px;color:${textColor};"> Sun, 7 February </div>',
+                axisIndex: 0,
+                axisValue: 0,x: 0,
+                y: -100,
+                zIndex: '1'
+            }];
+        }
+
+</script>
+
+@section Meta{
+    <meta name="description" content="This example demonstrates the Steps Counter in ASP.NET Core LinearGauge control. Explore here for more details." />
+                }
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample shows a linear gauge displaying the number of steps taken by a person in a day.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this example, you can see how to render and configure a linear gauge to look like a steps counter. This can be accomplished by combining axis, range, pointer and annotations.
+        </p>
+        <p>
+            More information on the linear gauge can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/linear-gauge/getting-started">documentation section</a>.
+        </p>
+    </div>
+}
+@section Title{
+    <title>ASP.NET Core Steps Counter Example - Syncfusion Demos </title>
+                }
+@section Header{
+    <h1 class='sb-sample-text'>Example of Steps Counter in ASP.NET Core LinearGauge Control</h1>
+                }

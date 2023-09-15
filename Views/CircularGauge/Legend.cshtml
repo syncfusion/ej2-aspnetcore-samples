@@ -1,40 +1,83 @@
 @using Syncfusion.EJ2;
 @section Meta{
-                    <meta name="description" content="This example demonstrates the Legend in ASP.NET Core CircularGauge control. Explore here for more details."/>
+    <meta name="description" content="This example demonstrates the Legend in ASP.NET Core CircularGauge control. Explore here for more details." />
                 }
 @section ActionDescription{
     <div id="action-description">
         <p>
-            This sample visualizes moving air types in the legend based on their speed. The visibility, shape, alignment, and position of the legend can be changed by using the properties panel options.
+            This sample directs the visualization of moving wind types based on their speed via the legend of the circular gauge component. The visibility, shape, alignment, and position of the legend can all be customized.
         </p>
     </div>
 }
 @section Description{
     <div id="description">
         <p>
-            In this example, you can see how to render a legend in circular gauge. A legend item denotes the axis ranges. Any number of legend items can be added to a legend. You can bind the desired colors and legend text to the corresponding ranges.
+            The legend provides useful information for interpreting what the circular gauge's axis range displays, and it can be represented in a variety of colors, shapes, and other identifiers depending on the data. To do so, use the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.CircularGauge.CircularGaugeLegendSettings.html">e-circulargauge-legendsettings</a> and its properties.
         </p>
         <p>
-            More information on the ranges can be found in this
-            <a target="_blank" href="http://ej2.syncfusion.com/documentation">documentation section</a>.
+            More information on the legend can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/circular-gauge/gauge-legend">documentation section</a>.
         </p>
     </div>
 }
 @section ControlsSection{
     @{
-        var labelFont = new Syncfusion.EJ2.CircularGauge.CircularGaugeFont { FontFamily = "Segoe UI", Opacity = 1 };
+        var labelFont = new Syncfusion.EJ2.CircularGauge.CircularGaugeFont { FontFamily = "inherit" };
+        var legendFont = new Syncfusion.EJ2.CircularGauge.CircularGaugeFont { FontFamily = "inherit" , Size = "12px"};
+        var legendPositionList = new List<CircularGaugeList>
+        {
+            new CircularGaugeList { Id = "Bottom", Name = "Bottom" },
+            new CircularGaugeList { Id = "Top", Name = "Top" },
+            new CircularGaugeList { Id = "Left", Name = "Left" },
+            new CircularGaugeList { Id = "Right", Name = "Right" },
+            new CircularGaugeList { Id = "Auto", Name = "Auto" },
+        };
+        var animationList = new List<CircularGaugeList>
+        {
+            new CircularGaugeList { Id = "Center", Name = "Center" },
+            new CircularGaugeList { Id = "Far", Name = "Far" },
+            new CircularGaugeList { Id = "Near", Name = "Near" },
+        };
+        var shapeList = new List<CircularGaugeList>
+        {
+            new CircularGaugeList { Id = "Circle", Name = "Circle" },
+            new CircularGaugeList { Id = "Rectangle", Name = "Rectangle" },
+            new CircularGaugeList { Id = "Triangle", Name = "Triangle" },
+            new CircularGaugeList { Id = "Diamond", Name = "Diamond" },
+            new CircularGaugeList { Id = "InvertedTriangle", Name = "Inverted Triangle" },
+        };
      }
     <div class="col-md-8 control-section">
         <div class="content-wrapper">
-            <ejs-circulargauge id="circular" load="gaugeload" title="Measure of wind speed in Km/h">
-                <e-circulargauge-titlestyle size="17px" fontFamily="Segoe UI"></e-circulargauge-titlestyle>
+            <ejs-circulargauge id="circular" load="gaugeLoad" title="Measure of wind speed in km/h" background="transparent">
+                <e-circulargauge-titlestyle fontFamily="inherit"></e-circulargauge-titlestyle>
+                <e-circulargauge-legendsettings visible="true" position=Bottom textStyle=legendFont></e-circulargauge-legendsettings>
                 <e-circulargauge-axes>
                     <e-circulargauge-axis startAngle="210" endAngle="150" minimum="0" maximum="120" radius="80%">
                         <e-axis-linestyle width="2"></e-axis-linestyle>
                         <e-axis-labelstyle position="@Syncfusion.EJ2.CircularGauge.Position.Inside" useRangeColor="false" font="labelFont">
                         </e-axis-labelstyle>
-                        <e-axis-majorticks height="16" offset="5" interval="20" color="#9E9E9E"></e-axis-majorticks>
+                        <e-axis-majorticks height="16" interval="20" color="#9E9E9E"></e-axis-majorticks>
                         <e-axis-minorticks height="8" interval="10"></e-axis-minorticks>
+                        <e-circulargauge-ranges>
+                        <e-circulargauge-range start=0 end=5 color='#ccffff' radius='110%' legendText='Light Air'></e-circulargauge-range>
+                            <e-circulargauge-range start=5 end=11 color='#99ffff' radius='110%' legendText='Light Breeze'></e-circulargauge-range>
+                            <e-circulargauge-range start=11 end=19 color='#99ff99' radius='110%' legendText='Gentle Breeze'></e-circulargauge-range>
+                            <e-circulargauge-range start=19 end=28 color='#79ff4d' radius='110%' legendText='Moderate Breeze'></e-circulargauge-range>
+                            <e-circulargauge-range start=28 end=49 color='#c6ff1a' radius='110%' legendText='Strong Breeze'></e-circulargauge-range>
+                            <e-circulargauge-range start=49 end=74 color='#e6ac00' radius='110%' legendText='Gale'></e-circulargauge-range>
+                            <e-circulargauge-range start=74 end=102 color='#ff6600' radius='110%' legendText='Storm'></e-circulargauge-range>
+                            <e-circulargauge-range start=102 end=120 color='#ff0000' radius='110%' legendText='Hurricane Force'></e-circulargauge-range>
+                        </e-circulargauge-ranges>
+                        <e-circulargauge-pointers>
+                            <e-circulargauge-pointer value="70" radius="60%" pointerWidth=8>
+                                <e-pointer-animation enable="true"></e-pointer-animation>
+                                <e-pointer-cap radius="7">
+                                    <e-pointers-cap-border width="0" />
+                                </e-pointer-cap>
+                                <e-pointer-needletail length="18%" />
+                            </e-circulargauge-pointer>
+                        </e-circulargauge-pointers>
                     </e-circulargauge-axis>
                 </e-circulargauge-axes>
             </ejs-circulargauge>
@@ -44,64 +87,53 @@
         <table id="property" title="Properties" style="width: 100%; margin-left: -10px">
             <tr style="height: 50px">
                 <td>
-                    <div class="textAlign"> Enable Legend </div>
+                    <div class="textAlign" style="font-size: 14px;"> Show Legend </div>
                 </td>
                 <td>
-                    <input type="checkbox" id="legend" checked style="margin-top: 20px; margin-left: 15px "/>
-                </td>
-            </tr>
-            <tr style="height: 50px">
-                <td>
-                    <div class="textAlign"> Show range when the legend item is toggled </div>
-                </td>
-                <td>
-                    <input type="checkbox" id="togglelegend"  style="margin-left: 15px; margin-top: 20px;" checked/>
+                    <ejs-checkbox id="legend" checked="true" change="onChange" style="margin-top: 20px; margin-left: 15px"></ejs-checkbox>
                 </td>
             </tr>
             <tr style="height: 50px">
                 <td>
-                    <div> Position </div>
+                    <div class="textAlign" style="font-size: 14px;"> Show range when the legend item is toggled </div>
                 </td>
                 <td>
-                    <div style="width: 100%">
-                        <select id="position" class="form-control">
-                            <option value="Auto">Auto</option>
-                            <option value="Top">Top</option>
-                            <option value="Bottom" selected='true'>Bottom</option>
-                            <option value="Left">Left</option>
-                            <option value="Right">Right</option>
-                        </select>
+                    <ejs-checkbox id="togglelegend" checked="true" change="onToggleLegendChange" style="margin-top: 20px; margin-left: 15px"></ejs-checkbox>
+                </td>
+            </tr>
+            <tr style="height: 60px">
+                <td>
+                    <div style="font-size: 14px;"> Position </div>
+                </td>
+                <td>
+                    <div style="margin-top: -5px;height : 40px; width:100%">
+                        <ejs-dropdownlist id="position" index=0 width="100%" dataSource="@legendPositionList" change="valueChange">
+                            <e-dropdownlist-fields text="Name" value="Id"></e-dropdownlist-fields>
+                        </ejs-dropdownlist>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <div> Alignment </div>
+                    <div style="font-size: 14px;"> Alignment </div>
                 </td>
                 <td>
-                    <div style="width: 100%">
-                        <select id="alignment" class="form-control">
-                            <option value="Far">Far</option>
-                            <option value="Center" selected="true">Center</option>
-                            <option value="Near">Near</option>
-                        </select>
+                    <div style="margin-top: -5px;height : 40px;width: 100%">
+                        <ejs-dropdownlist id="alignment" index=0 width="100%" dataSource="@animationList" change="legendAlignmentValueChange">
+                            <e-dropdownlist-fields text="Name" value="Id"></e-dropdownlist-fields>
+                        </ejs-dropdownlist>
                     </div>
                 </td>
             </tr>
-            <tr style="height: 50px">
+            <tr style="height: 60px">
                 <td>
-                    <div> Shape </div>
+                    <div style="font-size: 14px;"> Shape </div>
                 </td>
                 <td>
-                    <div style="width: 100%">
-                        <select id="shape" class="form-control">
-                            <option value="Circle" selected="true">Circle</option>
-                            <option value="Rectangle">Rectangle</option>
-                            <option value="Triangle">Triangle</option>
-                            <option value="Diamond">Diamond</option>
-                            <option value="InvertedTriangle">Inverted triangle</option>
-                            <!-- <option value="Image">Image</option> -->
-                        </select>
+                    <div style="margin-top: -5px;height : 40px;width: 100%">
+                        <ejs-dropdownlist id="shape" index=0 width="100%" dataSource="@shapeList" change="legendShapeValueChange">
+                            <e-dropdownlist-fields text="Name" value="Id"></e-dropdownlist-fields>
+                        </ejs-dropdownlist>
                     </div>
                 </td>
             </tr>
@@ -109,71 +141,42 @@
     </div>
 }
 <style>
-    .e-view.tailwind div.textAlign, .e-view.tailwind-dark div.textAlign, .e-view.fabric div.textAlign, .e-view.fabric-dark div.textAlign {
-        padding-top: 10px;
-    }
-
-    .e-view div.textAlign {
-        padding-top: 15px;
+    input.e-input.e-bigger, textarea.e-input.e-bigger, .e-bigger input.e-input, .e-bigger textarea.e-input, .e-input-group.e-bigger, .e-bigger .e-input-group, .e-input-group.e-control-wrapper.e-bigger, .e-bigger .e-input-group.e-control-wrapper {
+        height: 100%;
+        font-size: 14px;
+        align-items: center;
     }
 </style>
 <script>
     var circulargauge;
-    window.gaugeload = function (args) {
+    window.gaugeLoad = function (args) {
         @* custom code start *@
         var theme = themeName ? themeName : 'Material';
         args.gauge.theme = (theme.charAt(0).toUpperCase() +
             theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
         @* custom code end *@
-        if (window.gaugeLoaded)
-            return;
-        window.gaugeLoaded = true;
-        args.gauge.legendSettings = {
-            visible: true,
-            position: 'Bottom'
-        };
-        var axis = args.gauge.axes[0];
-        axis.pointers = [{
-            animation: { enable: true },
-            value: 70, radius: '60%', pointerWidth: 8,
-            cap: { radius: 7 }, needleTail: { length: '18%' }
-        }];
         circulargauge = args.gauge;
-        axis.ranges = [{ start: 0, end: 5, color: '#ccffff', radius: '110%', legendText: 'Light air' },
-                     { start: 5, end: 11, color: '#99ffff', radius: '110%', legendText: 'Light breeze' },
-                { start: 11, end: 19, color: '#99ff99', radius: '110%', legendText: 'Gentle breeze' },
-                { start: 19, end: 28, color: '#79ff4d', radius: '110%', legendText: 'Moderate breeze' },
-                { start: 28, end: 49, color: '#c6ff1a', radius: '110%', legendText: 'Strong breeze' },
-                { start: 49, end: 74, color: '#e6ac00', radius: '110%', legendText: 'Gale' },
-                { start: 74, end: 102, color: '#ff6600', radius: '110%', legendText: 'Storm' },
-                { start: 102, end: 120, color: '#ff0000', radius: '110%', legendText: 'Hurricane force' }];
     }
-    window.addEventListener('load', function () {
-        document.getElementById('legend').onchange = function () {
-            var legend = document.getElementById('legend').checked;
-            circulargauge.legendSettings.visible = legend;        
-            circulargauge.refresh();
-        };
-         document.getElementById('togglelegend').onchange = function () {
-            var toggle = document.getElementById('togglelegend').checked;
-            circulargauge.legendSettings.toggleVisibility = toggle;
-         };
-  
-        document.getElementById('alignment').onchange = function (e) {
-            var alignment = e.target.value;
-            circulargauge.legendSettings.alignment = alignment;
-        };
-        document.getElementById('shape').onchange = function (e) {
-            var shape = e.target.value;
-            circulargauge.legendSettings.shape = shape;
-        };
-        document.getElementById('position').onchange = function (e) {
-            var position = e.target.value;
-            circulargauge.legendSettings.position = position;
-        };
-       
-       
-   });
+    function onChange(args) {
+        circulargauge.legendSettings.visible = args.checked;
+        circulargauge.refresh();
+    }
+    function onToggleLegendChange(args) {
+        circulargauge.legendSettings.toggleVisibility = args.checked;
+    }
+
+    function valueChange() {
+        var position = document.getElementById('position').ej2_instances[0];
+        circulargauge.legendSettings.position = position.value;
+    }
+    function legendAlignmentValueChange() {
+        var alignment = document.getElementById('alignment').ej2_instances[0];
+        circulargauge.legendSettings.alignment = alignment.value;
+    }
+    function legendShapeValueChange() {
+        var shape = document.getElementById('shape').ej2_instances[0];
+        circulargauge.legendSettings.shape = shape.value;
+    }
 </script>
 @section Title{
                     <title>ASP.NET Core CircularGauge Legend Example - Syncfusion Demos </title> 

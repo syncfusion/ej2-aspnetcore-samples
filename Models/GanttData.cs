@@ -215,7 +215,7 @@ namespace EJ2CoreSampleBrowser.Models
 
             GanttIndicators indicator2 = new GanttIndicators()
             {
-                date = new DateTime(2019, 04, 20),
+                date = new DateTime(2019, 04, 28),
                 name = "Research completed",
                 tooltip = "Research completed",
                 iconClass = "researchPhase e-icons"

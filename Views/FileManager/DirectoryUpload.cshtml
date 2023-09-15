@@ -1,53 +1,78 @@
 @using Syncfusion.EJ2
 
+@{
+    string dropButton = "#drop-Button";
+	List<object> items = new List<object>();
+    items.Add(new
+    {
+        text = "Folder",
+    });
+	items.Add(new
+    {
+        text = "Files",
+    });
+}
+
 @section ControlsSection{
     <div class=" control-section">
         <div class="sample-container">
             <!-- File Manager Directory upload feature sample -->
             <ejs-filemanager id="filemanager" success="onSuccess">
-                <e-filemanager-ajaxsettings url="https://ej2services.syncfusion.com/production/web-services/api/FileManager/FileOperations"
-                                            downloadUrl="https://ej2services.syncfusion.com/production/web-services/api/FileManager/Download"
-                                            uploadUrl="https://ej2services.syncfusion.com/production/web-services/api/FileManager/Upload"
-                                            getImageUrl="https://ej2services.syncfusion.com/production/web-services/api/FileManager/GetImage">
+                <e-filemanager-ajaxsettings url="https://ej2-aspcore-service.azurewebsites.net/api/FileManager/FileOperations"
+                                            downloadUrl="https://ej2-aspcore-service.azurewebsites.net/api/FileManager/Download"
+                                            uploadUrl="https://ej2-aspcore-service.azurewebsites.net/api/FileManager/Upload"
+                                            getImageUrl="https://ej2-aspcore-service.azurewebsites.net/api/FileManager/GetImage">
                 </e-filemanager-ajaxsettings>
+                <e-filemanager-toolbaritems>
+                    <e-filemanager-toolbaritem Name="NewFolder"></e-filemanager-toolbaritem>
+                    <e-filemanager-toolbaritem Template="@dropButton" Name="Upload"></e-filemanager-toolbaritem>
+                    <e-filemanager-toolbaritem Name="SortBy"></e-filemanager-toolbaritem>
+                    <e-filemanager-toolbaritem Name="Refresh"></e-filemanager-toolbaritem>
+                    <e-filemanager-toolbaritem Name="Cut"></e-filemanager-toolbaritem>
+                    <e-filemanager-toolbaritem Name="Copy"></e-filemanager-toolbaritem>
+                    <e-filemanager-toolbaritem Name="Paste"></e-filemanager-toolbaritem>
+                    <e-filemanager-toolbaritem Name="Delete"></e-filemanager-toolbaritem>
+                    <e-filemanager-toolbaritem Name="Download"></e-filemanager-toolbaritem>
+                    <e-filemanager-toolbaritem Name="Rename"></e-filemanager-toolbaritem>
+                    <e-filemanager-toolbaritem Name="Selection"></e-filemanager-toolbaritem>
+                    <e-filemanager-toolbaritem Name="View"></e-filemanager-toolbaritem>
+                    <e-filemanager-toolbaritem Name="Details"></e-filemanager-toolbaritem>
+                </e-filemanager-toolbaritems>
             </ejs-filemanager>
         </div>
     </div>
 
+<ejs-dropdownbutton id="drop-Button" items="items" iconCss="e-icons e-fe-upload" content="Upload" select="onSelect" CssClass="e-tbar-btn e-tbtn-txt"></ejs-dropdownbutton>
 }
 
 @section PreScripts{
     <script>
-        
         function onSuccess(args) {
-            if (!document.getElementById("filemanager_tb_upload").classList.contains("e-dropdown-btn")) {
-            var fileObject = document.getElementById("filemanager").ej2_instances[0];
-            document.getElementById('filemanager_tb_upload').onclick = function (args) {
-                args.stopPropagation();
-            };
-            var items = [{ text: 'Folder' }, { text: 'Files' }];
-             var drpDownBtn = new ej.splitbuttons.DropDownButton(
-               {
-                 items: items,
-                 select: (args) => {
-                   if (args.item.text === 'Folder') {
-                     fileObject.uploadSettings.directoryUpload = true;
-                   } else {
-                     fileObject.uploadSettings.directoryUpload = false;
-                   }
-                   setTimeout(function () {
-                     let uploadBtn = document.querySelector('.e-file-select-wrap button');
-                     uploadBtn.click();
-                   }, 100);
-                 }
-               },
-               '#filemanager_tb_upload'
-             );
+            if (document.getElementById("drop-Button").classList.contains("e-dropdown-btn")) {
+				document.getElementById('drop-Button').onclick = function (args) {
+					args.stopPropagation();
+				};
             }
+        }
+        function onSelect(args) {
+            var fileObject = document.getElementById("filemanager").ej2_instances[0];
+            if (args.item.text === 'Folder') {
+                fileObject.uploadSettings.directoryUpload = true;
+            } else {
+                fileObject.uploadSettings.directoryUpload = false;
+            }
+            setTimeout(function () {
+                let uploadBtn = document.querySelector('.e-file-select-wrap button');
+                uploadBtn.click();
+            }, 100);
         }
     </script>
 }
-
+<style>
+    #drop-Button {
+        font-size: 14px;
+    }
+</style>
 @section ActionDescription{
     <div id="action-description">
         <p>This sample demonstrates the folder (directory) upload feature of File Manager component. Select <b>Folder</b> from toolbar item to select and upload a folder.</p>

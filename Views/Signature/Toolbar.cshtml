@@ -15,21 +15,21 @@
                     <e-toolbar-item text="Undo" prefixIcon="e-icons e-undo" tooltipText="Undo (Ctrl + Z)"></e-toolbar-item>
                     <e-toolbar-item text="Redo" prefixIcon="e-icons e-redo" tooltipText="Redo (Ctrl + Y)"></e-toolbar-item>
                     <e-toolbar-item type="Separator"></e-toolbar-item>
-                    <e-toolbar-item template="saveContent" tooltipText="Save (Ctrl + S)" type="Button"></e-toolbar-item>
+                    <e-toolbar-item template="@saveContent" tooltipText="Save (Ctrl + S)" type="Button"></e-toolbar-item>
                     <e-toolbar-item type="Separator"></e-toolbar-item>
-                    <e-toolbar-item tooltipText="Stroke Color" template="strokeContent">
+                    <e-toolbar-item tooltipText="Stroke Color" template="@strokeContent">
                     </e-toolbar-item>
 					<e-toolbar-item type="Separator"></e-toolbar-item>
-                    <e-toolbar-item tooltipText="Background Color" type="Input" template="bgContent"></e-toolbar-item>
+                    <e-toolbar-item tooltipText="Background Color" type="Input" template="@bgContent"></e-toolbar-item>
 					<e-toolbar-item type="Separator"></e-toolbar-item>
-                    <e-toolbar-item tooltipText="Stroke Width" type="Input" template="strokeWidthContent"></e-toolbar-item>
+                    <e-toolbar-item tooltipText="Stroke Width" type="Input" template="@strokeWidthContent"></e-toolbar-item>
                     <e-toolbar-item type="Separator"></e-toolbar-item>
                     <e-toolbar-item text="Clear" prefixIcon="e-sign-icons e-clear" tooltipText="Clear"></e-toolbar-item>
-                    <e-toolbar-item tooltipText="Disabled" type="Input" template="disabledContent" Align="Right"></e-toolbar-item>
+                    <e-toolbar-item tooltipText="Disabled" type="Input" template="@disabledContent" Align="Right"></e-toolbar-item>
                 </e-toolbar-items>
             </ejs-toolbar>
             <div id="signature-control">
-                <ejs-signature id="signature" maxStrokeWidth=2 style="height: 100%; width: 100%;" change="signChange"></ejs-signature>
+                <ejs-signature id="signature" created="created" maxStrokeWidth=2 style="height: 100%; width: 100%;" change="signChange"></ejs-signature>
             </div>
     </div>
 </div>
@@ -70,10 +70,13 @@
 
 @section Scripts {
     <script>
-        var signature = ej.base.getComponent(document.getElementById('signature'), 'signature');
-        document.getElementById('save-option').onclick = function (e) {
-            signature.save();
-        };
+	var signature;
+        function created() {
+	   signature = ej.base.getComponent(document.getElementById('signature'), 'signature');
+	   document.getElementById('save-option').onclick = function (e) {
+		signature.save();
+	   };
+	}
 
         var items = [
             {

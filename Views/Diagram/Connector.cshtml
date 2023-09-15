@@ -14,7 +14,7 @@
         </div>
         <div class="row property-panel-content" id="appearance">
             <div class="row row-header">
-                Appearance
+                <b>Connector types</b>
             </div>
             <div class="row" style="padding-top: 8px">
                 <div class="image-pattern-style" id="straightConnector" style="background-image: url('@Url.Content("~/images/Diagram/connector/Connectors_1.png")'); margin-right: 3px">
@@ -49,9 +49,39 @@
                 </div>
             </div>
         </div>
-        <div class="row property-panel-content" style="padding-top: 10px">
-            <div class="row" style="padding-top: 8px">
-                <ejs-checkbox id="checked" checked="false" change="checkBoxChanged" label="Lock"></ejs-checkbox>
+        <div class="row property-panel-content" id="decorators" style="padding-top: 10px">
+            <div class="row row-header" style="padding-top: 8px">
+                <b>Decorators</b>
+            </div>
+            <div class="row" style="padding-top: 8px; display: flex;">
+                <label>Source Decorators</label>
+                <div>
+                    <ejs-dropdownlist id="sourceDecorator2" dataSource="ViewBag.decoratorshape" index="0" change="srcDecShapeChange"></ejs-dropdownlist>
+                      <e-dropdownlist-fields value="text" text="value"></e-dropdownlist-fields>
+                </div>
+            </div>
+            <div class="row" style="padding-top: 8px; display: flex;">
+                <label>Target Decorators</label>
+                <div>
+                    <ejs-dropdownlist id="targetDecorator" dataSource="ViewBag.decoratorshape" index="4" change="tarDecShapeChange"></ejs-dropdownlist>
+                    <e-dropdownlist-fields value="text" text="value"></e-dropdownlist-fields>
+                </div>
+            </div>
+            <div class="row" style="padding-top: 8px; display: flex;">
+                <label>Segment Decorators</label>
+                <div>
+                    <ejs-dropdownlist id="segmentDecorator" dataSource="ViewBag.decoratorshape" index="2" change="segDecShapeChange"></ejs-dropdownlist>
+                    <e-dropdownlist-fields value="text" text="value"></e-dropdownlist-fields>
+                </div>
+            </div>
+        </div>
+        <div class="row property-panel-content" id="color-tab" style="padding-top: 10px">
+            <div class="row row-header">
+                <b>Appearance</b>
+            </div>
+            <div class="row" style="padding-top: 8px;display: flex;">
+                <label>Line Color</label>
+                <ejs-colorpicker id="color" value='#6f409f' mode="Palette" modeSwitcher="false" showButtons="false" type='color' change='colorChange'/>
             </div>
         </div>
     </div>
@@ -99,6 +129,23 @@
         .row {
             display: block;
         }
+
+        .e-colorpicker-wrapper .e-split-btn-wrapper .e-split-colorpicker.e-split-btn .e-selected-color .e-split-preview {
+            width: 100px !important;
+            margin-left: -40px !important;
+        }
+
+        .e-colorpicker-wrapper .e-split-btn-wrapper .e-split-colorpicker.e-split-btn {
+            width: 110px !important;
+        }
+
+        label {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 400;
+            width: 100%;
+            margin-top: auto;
+        }
     </style>
     <script>
 
@@ -127,7 +174,13 @@
                     strokeColor: '#6f409f',
                     fill: '#6f409f',
                 }
-            }
+            };
+            obj.segments = [
+                {
+                    type: 'Bezier',
+                }
+            ];
+            obj.constraints = ej.diagrams.ConnectorConstraints.Default | ej.diagrams.ConnectorConstraints.DragSegmentThumb;
         }           
 
         function setNodeTemplate(obj, diagram) {
@@ -184,32 +237,6 @@
                     { id: 'portOut', offset: { x: 1, y: 0.5 }, visibility: ej.diagrams.PortVisibility.Hidden },
                 ];
                 return ports;
-            }
-        }
-
-        function checkBoxChanged(args) {
-            var diagram = document.getElementById("container").ej2_instances[0];
-            for (var i = 0; i < diagram.nodes.length; i++) {
-                var node = diagram.nodes[i];
-                if (args.checked) {
-                    node.constraints &= ~(ej.diagrams.NodeConstraints.Resize | ej.diagrams.NodeConstraints.Rotate | ej.diagrams.NodeConstraints.Drag);
-                    node.constraints |= ej.diagrams.NodeConstraints.ReadOnly;
-                }
-                else {
-                    node.constraints |= ej.diagrams.NodeConstraints.Default & ~(ej.diagrams.NodeConstraints.ReadOnly);
-                }
-                diagram.dataBind();
-            }
-            for (var i = 0; i < diagram.connectors.length; i++) {
-                var connector = diagram.connectors[i];
-                if (args.checked) {
-                    connector.constraints &= ~(ej.diagrams.ConnectorConstraints.DragSourceEnd
-                        | ej.diagrams.ConnectorConstraints.DragTargetEnd | ej.diagrams.ConnectorConstraints.DragSegmentThumb);
-                    connector.constraints |= ej.diagrams.ConnectorConstraints.ReadOnly;
-                } else {
-                    connector.constraints |= ej.diagrams.ConnectorConstraints.Default & ~(ej.diagrams.ConnectorConstraints.ReadOnly);
-                }
-                diagram.dataBind();
             }
         }
 
@@ -277,22 +304,74 @@
                 if (sourceDec) {
                     connector.sourceDecorator = {
                         style: {
-                            strokeColor: '#6f409f',
-                            fill: '#6f409f', strokeWidth: 2
+                            strokeColor: connector.style.strokeColor,
+                            fill: connector.style.strokeColor, strokeWidth: 2
                         }, shape: 'Circle'
                     };
+                    document.getElementById("sourceDecorator2").value='Circle';
                 } else {
                     connector.sourceDecorator = { shape: 'None' };
+                    document.getElementById("sourceDecorator2").value='None'
                 }
                 connector.targetDecorator = {
                     style: {
-                        strokeColor: '#6f409f',
-                        fill: '#6f409f', strokeWidth: 2
+                        strokeColor: connector.style.strokeColor,
+                        fill: connector.style.strokeColor, strokeWidth: 2
                     }, shape: 'Arrow'
                 };
+                document.getElementById("targetDecorator").value='Arrow'
                 diagram.dataBind();
             }
-        }
+        };
+        function colorChange(args) {
+            var diagram = document.getElementById("container").ej2_instances[0];
+            for(var i=0;i<diagram.connectors.length;i++)
+            {
+                diagram.connectors[i].style.strokeColor=args.currentValue.hex;
+                diagram.connectors[i].targetDecorator.style.strokeColor= args.currentValue.hex;
+                diagram.connectors[i].targetDecorator.style.fill= args.currentValue.hex;
+                diagram.connectors[i].sourceDecorator.style.strokeColor= args.currentValue.hex;
+                diagram.connectors[i].sourceDecorator.style.fill= args.currentValue.hex;
+            }
+            diagram.dataBind();
+        };
+        function srcDecShapeChange(args)
+        {
+            var diagram = document.getElementById("container").ej2_instances[0];
+            for (var i = 0; i < diagram.connectors.length; i++) {
+                diagram.connectors[i].sourceDecorator = {
+                 shape: args.itemData.value,
+                 style:{
+                        strokeColor:  diagram.connectors[i].style.strokeColor,
+                        fill:  diagram.connectors[i].style.strokeColor,
+                 }
+                };
+            }
+            diagram.dataBind();
+   
+        };
+        function tarDecShapeChange(args)
+        {
+            var diagram = document.getElementById("container").ej2_instances[0];
+            for (var i = 0; i < diagram.connectors.length; i++) {
+                diagram.connectors[i].targetDecorator = {
+                    shape: args.itemData.value,
+                    style: {
+                        strokeColor: diagram.connectors[i].style.strokeColor,
+                        fill:  diagram.connectors[i].style.strokeColor,
+                    }
+                };
+                diagram.dataBind();
+            }   
+        };
+        function segDecShapeChange(args)
+        {
+            var diagram = document.getElementById("container").ej2_instances[0];
+            for (var i = 0; i < diagram.connectors.length; i++) {
+                diagram.segmentThumbShape = args.itemData.value;
+            } 
+            diagram.dataBind();  
+        };
 
     </script>
 }
@@ -312,8 +391,6 @@
 </p>
 
     <p>
-        Additionally, you can see how to lock the connectors to disable editing. The
-        <code>constraints</code> property of connector enables/disables editing.
         In this example, the shapes are automatically arranged using hierarchical tree layout.
 
     </p>

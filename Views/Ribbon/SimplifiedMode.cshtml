@@ -3,7 +3,7 @@
 @using Syncfusion.EJ2.Ribbon
 
 @{
-    List<MenuItem> pasteOptions = new List<MenuItem>() { new MenuItem { Text = "Keep Source Format" }, new MenuItem { Text = "Merge format" }, new MenuItem { Text = "Keep text only" } };
+    List<MenuItem> pasteOptions = new List<MenuItem>() { new MenuItem { Text = "Keep Source Format" }, new MenuItem { Text = "Merge Format" }, new MenuItem { Text = "Keep Text Only" } };
     List<MenuItem> findOptions = new List<MenuItem>() { new MenuItem { Text = "Find", IconCss = "e-icons e-search" }, new MenuItem { Text = "Advanced find", IconCss = "e-icons e-search" }, new MenuItem { Text = "Go to", IconCss = "e-icons e-arrow-right" } };
     List<MenuItem> selectOptions = new List<MenuItem>() { new MenuItem { Text = "Select All" }, new MenuItem { Text = "Select Objects" } };
     List<MenuItem> dictateOptions = new List<MenuItem>() { new MenuItem { Text = "Chinese" }, new MenuItem { Text = "English" }, new MenuItem { Text = "German" }, new MenuItem { Text = "French" } };
@@ -30,6 +30,23 @@
                 }
             }
         };
+            
+    List<RibbonGroupButtonItem> groupButtonMultiple = new List<RibbonGroupButtonItem>() {
+
+      new RibbonGroupButtonItem { IconCss = "e-icons e-bold", Content = "Bold", Selected = true, Click="function(){updateContent('Bold')}" },
+      new RibbonGroupButtonItem {IconCss = "e-icons e-italic", Content = "Italic", Click="function(){updateContent('Italic')}" },
+      new RibbonGroupButtonItem {IconCss = "e-icons e-underline", Content = "Underline", Click="function(){updateContent('Underline')}" },
+      new RibbonGroupButtonItem { IconCss = "e-icons e-strikethrough", Content = "Strikethrough", Click="function(){updateContent('Strikethrough')}" },
+      new RibbonGroupButtonItem { IconCss = "e-icons e-change-case", Content = "Change Case", Click="function(){updateContent('Change Case')}" }
+    };
+
+    List<RibbonGroupButtonItem> groupButtonSingle = new List<RibbonGroupButtonItem>() {
+
+      new RibbonGroupButtonItem { IconCss = "e-icons e-align-left", Selected = true, Click="function(){updateContent('Align Left')}" },
+      new RibbonGroupButtonItem {IconCss = "e-icons e-align-center", Click="function(){updateContent('Align Center')}" },
+      new RibbonGroupButtonItem {IconCss = "e-icons e-align-right", Click="function(){updateContent('Align Right')}" },
+      new RibbonGroupButtonItem { IconCss = "e-icons e-justify", Click="function(){updateContent('Justify')}" }
+    };
 }
 
 @section ControlsSection{
@@ -70,32 +87,44 @@
                                         <e-ribbon-collection>
                                             <e-ribbon-items>
                                                 <e-ribbon-item type="ComboBox">
-                                                    <e-ribbon-comboboxsettings dataSource=fontStyle index=2 allowFiltering=true width="150px" change="function(args){updateContent('Font Style -> ' + args.itemData.text)}"></e-ribbon-comboboxsettings>
+                                                    <e-ribbon-comboboxsettings dataSource=fontStyle index=2 allowFiltering=true width="150px" change="function(args){ if (args.itemData) { updateContent('Font Style -> ' + args.itemData.text)}}"></e-ribbon-comboboxsettings>
                                                 </e-ribbon-item>
                                                 <e-ribbon-item type="ComboBox">
-                                                    <e-ribbon-comboboxsettings dataSource=fontSize index=4 allowFiltering=true width="65px" popupWidth= "85px" change="function(args){updateContent('Font Size -> ' + args.itemData.text)}"></e-ribbon-comboboxsettings>
+                                                    <e-ribbon-comboboxsettings dataSource=fontSize index=4 allowFiltering=true width="65px" popupWidth= "85px" change="function(args){ if (args.itemData) { updateContent('Font Size -> ' + args.itemData.text)}}"></e-ribbon-comboboxsettings>
                                                 </e-ribbon-item>
                                             </e-ribbon-items>
                                         </e-ribbon-collection>
                                         <e-ribbon-collection>
                                             <e-ribbon-items>
+                                                <e-ribbon-item type=GroupButton allowedSizes=Small>
+                                                    <e-ribbon-groupbuttonsettings selection=Multiple items=groupButtonMultiple></e-ribbon-groupbuttonsettings>
+                                                </e-ribbon-item>
                                                 <e-ribbon-item type=ColorPicker displayOptions=@(Syncfusion.EJ2.Ribbon.DisplayMode.Classic | Syncfusion.EJ2.Ribbon.DisplayMode.Simplified) allowedSizes=Small>
                                                     <e-ribbon-colorpickersettings value="#123456" change="function(args){updateContent(args.currentValue.hex + ' color')}"></e-ribbon-colorpickersettings>
                                                 </e-ribbon-item>
+                                            </e-ribbon-items>
+                                        </e-ribbon-collection>
+                                    </e-ribbon-collections>
+                                </e-ribbon-group>
+                                <e-ribbon-group header="Paragraph" groupIconCss="e-icons e-align-center" orientation=Row>
+                                    <e-ribbon-collections>
+                                        <e-ribbon-collection>
+                                            <e-ribbon-items>
                                                 <e-ribbon-item type="Button" allowedSizes=Small>
-                                                    <e-ribbon-buttonsettings content="Bold" iconCss="e-icons e-bold" isToggle=true clicked="function(){updateContent('Bold')}"></e-ribbon-buttonsettings>
+                                                    <e-ribbon-buttonsettings iconCss="e-icons e-decrease-indent" clicked="function(){updateContent('Decrease Indent')}"></e-ribbon-buttonsettings>
                                                 </e-ribbon-item>
                                                 <e-ribbon-item type="Button" allowedSizes=Small>
-                                                    <e-ribbon-buttonsettings content="Italic" iconCss="e-icons e-italic" isToggle=true clicked="function(){updateContent('Italic')}"></e-ribbon-buttonsettings>
+                                                    <e-ribbon-buttonsettings iconCss="e-icons e-increase-indent" clicked="function(){updateContent('Increase Indent')}"></e-ribbon-buttonsettings>
                                                 </e-ribbon-item>
                                                 <e-ribbon-item type="Button" allowedSizes=Small>
-                                                    <e-ribbon-buttonsettings content="Underline" iconCss="e-icons e-underline" isToggle=true clicked="function(){updateContent('Underline')}"></e-ribbon-buttonsettings>
+                                                    <e-ribbon-buttonsettings iconCss="e-icons e-paragraph" clicked="function(){updateContent('Paragraph Mark')}"></e-ribbon-buttonsettings>
                                                 </e-ribbon-item>
-                                                <e-ribbon-item type="Button" allowedSizes=Small>
-                                                    <e-ribbon-buttonsettings content="Strikethrough" iconCss="e-icons e-strikethrough" isToggle=true clicked="function(){updateContent('Strikethrough')}"></e-ribbon-buttonsettings>
-                                                </e-ribbon-item>
-                                                <e-ribbon-item type="Button" allowedSizes=Small>
-                                                    <e-ribbon-buttonsettings content="Change Case" iconCss="e-icons e-change-case" isToggle=true clicked="function(){updateContent('Change Case')}"></e-ribbon-buttonsettings>
+                                            </e-ribbon-items>
+                                        </e-ribbon-collection>
+                                         <e-ribbon-collection>
+                                            <e-ribbon-items>
+                                                <e-ribbon-item type=GroupButton allowedSizes=Small>
+                                                    <e-ribbon-groupbuttonsettings selection=Single items=groupButtonSingle></e-ribbon-groupbuttonsettings>
                                                 </e-ribbon-item>
                                             </e-ribbon-items>
                                         </e-ribbon-collection>
@@ -171,7 +200,7 @@
                                         <e-ribbon-collection>
                                             <e-ribbon-items>
                                                 <e-ribbon-item id="pictureddl" type="DropDown">
-                                                    <e-ribbon-dropdownsettings iconCss="e-icons e-image" content="Pictures" target="#pictureList"></e-ribbon-dropdownsettings>
+                                                    <e-ribbon-dropdownsettings iconCss="e-icons e-image" content="Pictures" target="#listView"></e-ribbon-dropdownsettings>
                                                 </e-ribbon-item>
                                                 <e-ribbon-item type="DropDown">
                                                     <e-ribbon-dropdownsettings iconCss="sf-icon-shapes" content="Shapes" items="shapeOptions" select="function(args){updateContent('Shapes -> ' + args.item.text)}"></e-ribbon-dropdownsettings>

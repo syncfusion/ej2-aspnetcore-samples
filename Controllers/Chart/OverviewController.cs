@@ -14,11 +14,6 @@ using Syncfusion.EJ2.Charts;
 
 namespace EJ2CoreSampleBrowser.Controllers.Chart
 {
-    public class CellSpace
-    {
-        public double[]? cellSpacing { get; set; }
-
-    }
     public class LayoutData
     {
         public string? Period;
@@ -36,8 +31,6 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
        
         public IActionResult Overview()
         {
-            Space modelValue = new Space();
-            modelValue.cellSpacing = new double[] { 15, 15 };
             List<LayoutData> ColumnChartData = new List<LayoutData>
             {
                 new LayoutData {Period = "2017", OnlinePercentage = 60, RetailPercentage = 40 },

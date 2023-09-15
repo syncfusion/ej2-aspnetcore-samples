@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Syncfusion.EJ2.Diagrams;
+using Syncfusion.EJ2.Navigations;
 
 namespace EJ2CoreSampleBrowser.Controllers.Diagram
 {
@@ -214,6 +215,22 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
             DiagramGridlines grIdLines = new DiagramGridlines()
             { LineColor = "#e0e0e0", LineIntervals = intervals };
             ViewBag.gridLines = grIdLines;
+            List<ToolbarItem> items = new List<ToolbarItem>();
+            {
+                items.Add(new ToolbarItem { Template = "#exportBtn", Type = ItemType.Input, TooltipText = "Export Diagram" });
+                items.Add(new ToolbarItem { Type = ItemType.Separator });
+                items.Add(new ToolbarItem { PrefixIcon = "e-print e-icons", TooltipText = "Print Diagram", Text = "Print" });
+                items.Add(new ToolbarItem { Type = ItemType.Separator });
+                items.Add(new ToolbarItem { Template = "#checkBoxObj", Type = ItemType.Input });
+            }
+            ViewBag.tbItems = items;
+            List<MenuItems> exportItems = new List<MenuItems>();
+            {
+                exportItems.Add(new MenuItems { Text = "JPG" });
+                exportItems.Add(new MenuItems { Text = "PNG" });
+                exportItems.Add(new MenuItems { Text = "SVG" });
+            }
+            ViewBag.exportItems = exportItems;
             return View();
         }
     }

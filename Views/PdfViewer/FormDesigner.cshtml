@@ -1,17 +1,25 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 @using Syncfusion.EJ2
 @section ControlsSection{
     <div class="control-section">
-        <ejs-pdfviewer id="pdfviewer" documentLoad="documentLoaded" validateFormFields="validateFormFields"  enableFormFieldsValidation="true"  showNotificationDialog="false" style="height:641px;"></ejs-pdfviewer>
+        @Html.Partial("_SwitchPartial")
+        <ejs-pdfviewer id="pdfviewer" documentPath="https://cdn.syncfusion.com/content/pdf/form-designer.pdf" documentLoad="documentLoaded" validateFormFields="validateFormFields"
+            enableFormFieldsValidation="true" showNotificationDialog="false" style="height:641px;"></ejs-pdfviewer>
     </div>
 }
 
 @section Meta{
-                    <meta name="description" content="This example demonstrates the Form Designer in ASP.NET Core PDF Viewer control. Explore here for more details."/>
-                }
+    <meta name="description"
+        content="This example demonstrates the Form Designer in ASP.NET Core PDF Viewer control. Explore here for more details." />
+}
 
 @section ActionDescription{
     <div id="action-description">
-        <p>This sample demonstrates the creation of the supported Form fields in the PDF Viewer such as Textbox, Password, Checkbox, Radio Button, Drop Down, List box, Signature, and Initial. We can also customize these fields and can include new fields through the user interaction by switching to the designer mode.</p>
+        <p>This sample demonstrates the creation of the supported Form fields in the PDF Viewer such as Textbox, Password,
+            Checkbox, Radio Button, Drop Down, List box, Signature, and Initial. We can also customize these fields and can
+            include new fields through the user interaction by switching to the designer mode.</p>
     </div>
 }
 
@@ -19,36 +27,26 @@
     <div id="description">
         <p>
             More information on the PDF Viewer instantiation can be found in this
-            <a target="_blank"
-               href="https://ej2.syncfusion.com/aspnetcore/documentation/pdfviewer/getting-started/">
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/pdfviewer/getting-started/">
                 documentation section
             </a>.
         </p>
 
     </div>
 }
-@*custom code start*@
-<style>
-    .control-section {
-        height: 716px;
-        width: 100%;
-    }
-</style>
-@*custom code end*@
+
 <script type="text/javascript">
     window.onload = function () {
-        var viewer = document.getElementById('pdfviewer').ej2_instances[0];
-        viewer.serviceUrl = window.baseurl + 'api/PdfViewer';
-        viewer.load("FormDesigner.pdf", null);
     }
+
     function documentLoaded(arg) {
         var viewer = document.getElementById('pdfviewer').ej2_instances[0];
-        if (arg.documentName === "FormDesigner.pdf") {
+        if (arg.documentName === 'form-designer.pdf') {
             viewer.formDesignerModule.addFormField("Textbox", { name: "First Name", bounds: { X: 146, Y: 229, Width: 150, Height: 24 } });
             viewer.formDesignerModule.addFormField("Textbox", { name: "Middle Name", bounds: { X: 338, Y: 229, Width: 150, Height: 24 } });
             viewer.formDesignerModule.addFormField("Textbox", { name: "Last Name", bounds: { X: 530, Y: 229, Width: 150, Height: 24 } });
-            viewer.formDesignerModule.addFormField("RadioButton", {bounds: { X: 148, Y: 289, Width: 18, Height: 18 }, name: "Gender", isSelected: false });
-            viewer.formDesignerModule.addFormField("RadioButton", {bounds: { X: 292, Y: 289, Width: 18, Height: 18 }, name: "Gender", isSelected: false });
+            viewer.formDesignerModule.addFormField("RadioButton", { bounds: { X: 148, Y: 289, Width: 18, Height: 18 }, name: "Gender", isSelected: false });
+            viewer.formDesignerModule.addFormField("RadioButton", { bounds: { X: 292, Y: 289, Width: 18, Height: 18 }, name: "Gender", isSelected: false });
             viewer.formDesignerModule.addFormField("Textbox", { name: "DOB Month", bounds: { X: 146, Y: 320, Width: 35, Height: 24 } });
             viewer.formDesignerModule.addFormField("Textbox", { name: "DOB Date", bounds: { X: 193, Y: 320, Width: 35, Height: 24 } });
             viewer.formDesignerModule.addFormField("Textbox", { name: "DOB Year", bounds: { X: 242, Y: 320, Width: 35, Height: 24 } });
@@ -108,11 +106,11 @@
             viewer.showNotificationPopup(errorMessage);
         }
     }
-
 </script>
+
 @section Title{
-                    <title>ASP.NET Core PDF Viewer Form Designer Example - Syncfusion Demos </title> 
-                }
+    <title>ASP.NET Core PDF Viewer Form Designer Example - Syncfusion Demos </title>
+}
 @section Header{
-                    <h1 class='sb-sample-text'>Example of Form Designer in ASP.NET Core PDF Viewer Control</h1>
-                }
+    <h1 class='sb-sample-text'>Example of Form Designer in ASP.NET Core PDF Viewer Control</h1>
+}

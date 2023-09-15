@@ -1,48 +1,32 @@
 @using Syncfusion.EJ2;
 @section Meta{
-                    <meta name="description" content="This example demonstrates the Arc Gauge in ASP.NET Core CircularGauge control. Explore here for more details."/>
+    <meta name="description" content="This example demonstrates the Arc Gauge in ASP.NET Core CircularGauge control. Explore here for more details." />
                 }
 @section ActionDescription{
     <div id="action-description">
-    <p>
-        This sample visualizes the progress of a work in the circular gauge using the range bar pointer with rounded corners.
-    </p>
-</div>
+        <p>
+            This sample shows the work progress using a circular gauge and a range bar pointer with rounded corners.
+        </p>
+    </div>
 
 }
 @section Description{
     <div id="description">
-    <p>
-        In this example, you can see how to render the ranges and range bar pointer with rounded corners. The EJ2 Slider control is placed at the bottom of the gauge using annotation to change the range bar pointer value. Based on the value, color of the pointer can also be changed.
-    </p>
-    <p>
-        For more information on ranges, refer to this
-        <a target="_blank" href="http://ej2.syncfusion.com/documentation">documentation</a> section.
-    </p>
-</div>
+        <p>
+            In this example, you can see how to render the range and range bar pointer with rounded corners. A slider is placed at the bottom of the circular gauge using annotation to change the range bar pointer value. Based on the value, the color of the pointer can also be changed.
+        </p>
+        <p>
+            More information on the ranges can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/circular-gauge/gauge-ranges">documentation section</a>.
+        </p>
+    </div>
 }
 @section ControlsSection{
     @{
-
-        var minor = new Syncfusion.EJ2.CircularGauge.CircularGaugeTick
-        {
-
-            Height = 0,
-            Width = 0,
-            Color = "transparent"
-        };
-
-        var major = new Syncfusion.EJ2.CircularGauge.CircularGaugeTick
-        {
-
-            Height = 0,
-            Width = 0,
-            Color = "transparent"
-        };
-
-        var border = new Syncfusion.EJ2.CircularGauge.CircularGaugeBorder { Color = "grey", Width = 2 };
-        var labelFont = new Syncfusion.EJ2.CircularGauge.CircularGaugeFont { FontFamily = "Segoe UI", Opacity = 1, Size = "0px", FontWeight = "Normal" };
-        var titleFont = new Syncfusion.EJ2.CircularGauge.CircularGaugeFont { FontFamily = "Segoe UI", Opacity = 1, Size = "18px" };
+        var minor = new Syncfusion.EJ2.CircularGauge.CircularGaugeTick {  Height = 0, Width = 0, Color = "transparent" };
+        var major = new Syncfusion.EJ2.CircularGauge.CircularGaugeTick {  Height = 0, Width = 0, Color = "transparent" };
+        var labelFont = new Syncfusion.EJ2.CircularGauge.CircularGaugeFont { FontFamily = "inherit", Size = "0px" };
+        var titleFont = new Syncfusion.EJ2.CircularGauge.CircularGaugeFont { FontFamily = "inherit" };
     }
 
     <script id='pointerValue' type="text/x-template">
@@ -54,13 +38,17 @@
     </script>
     <style>
         .sliderwrap {
-            margin-top: 0px;
+            margin-top: 4px;
             width: 300px;
             align-self: center;
         }
 
         #slider.e-control.e-slider .e-handle {
-            background-color: #4B4B4B;
+            margin-top: 0px;
+            background-color: #fff;
+            border: 2px solid #666;
+            width: 15px;
+            height: 15px;
         }
 
         .e-control-wrapper.e-slider-container.e-horizontal .e-slider-track {
@@ -75,6 +63,7 @@
 
         .e-control-wrapper.e-slider-container.e-horizontal .e-range {
             height: 0px !important;
+            background-color: transparent;
         }
 
         #slider.e-control.e-slider .e-slider-track {
@@ -82,15 +71,39 @@
             top: calc(50% - 4px);
             border-radius: 5px;
         }
+        .material3 #slider.e-control.e-slider .e-handle, .material3-dark #slider.e-control.e-slider .e-handle {
+            margin-top: 6px;
+        }
+        .tailwind #slider.e-control.e-slider .e-handle, .tailwind-dark #slider.e-control.e-slider .e-handle {
+            margin-top: 1px;
+        }
+        .material #slider.e-control.e-slider .e-handle {
+            margin-top: -2px;
+        }
+        .highcontrast #slider.e-control.e-slider .e-handle {
+            margin-top: 1px;
+        }
+        .bootstrap #slider.e-control.e-slider .e-handle, .bootstrap-dark #slider.e-control.e-slider .e-handle {
+            margin-top: 2px;
+        }
     </style>
-    <div class="control-section" style="border-right:0px;">
+    <div class="control-section" >
         <div id="range-container">
-            <ejs-circulargauge id="range-container" loaded="gaugeLoaded" load="gaugeload" title="Progress Tracker" titleStyle="titleFont">
+            <ejs-circulargauge id="range-container" loaded="gaugeLoaded" load="gaugeLoad" title="Progress Tracker" titleStyle="titleFont" background="transparent">
                 <e-circulargauge-axes>
                     <e-circulargauge-axis startAngle="200" endAngle="160" minimum="0" maximum="100" radius="80%" majorTicks="major" minorTicks="minor">
                         <e-axis-linestyle width="0"></e-axis-linestyle>
                         <e-axis-labelstyle position="Inside" useRangeColor="true" font="labelFont">
                         </e-axis-labelstyle>
+                        <e-circulargauge-pointers>
+                            <e-circulargauge-pointer type=RangeBar value=60 radius="90%" color="#e5ce20" pointerWidth=30 roundedCornerRadius=20>
+                                <e-pointer-border width=0></e-pointer-border>
+                                <e-pointer-animation enable=false></e-pointer-animation>
+                            </e-circulargauge-pointer>
+                        </e-circulargauge-pointers>
+                        <e-circulargauge-ranges>
+                            <e-circulargauge-range start=0 end=100 radius="90%" startWidth="30" endWidth="30" color="#E0E0E0" roundedCornerRadius=20></e-circulargauge-range>
+                        </e-circulargauge-ranges>
                         <e-circulargauge-annotations>
                             <e-circulargauge-annotation content="<div id=pointervalue style=font-size:35px;width:120px;text-align:center>60/100</div>" angle="0" zIndex="1.0" radius="0%"></e-circulargauge-annotation>
                             <e-circulargauge-annotation content="<div id=slider style=height:70px;width:250px;></div>" angle="0" zIndex="1.0" radius="-100%"></e-circulargauge-annotation>
@@ -113,6 +126,9 @@
         var annotation = document.getElementById(args.gauge.element.id + '_Annotations_0');
         if (annotation) {
             annotationRender('slider', gauge.axes[0].pointers[0].value);
+            if (document.getElementById('pointervalue')) {
+                document.getElementById('pointervalue').innerHTML = gauge.axes[0].pointers[0].value.toString() + '/100';
+            }
         }
     }
 
@@ -148,44 +164,18 @@
         first.appendTo('#' + id);
     }
 
-    window.gaugeload = function (args) {
+    window.gaugeLoad = function (args) {
         @* custom code start *@
         var theme = themeName ? themeName : 'Material';
         gauge = args.gauge;
         args.gauge.theme = (theme.charAt(0).toUpperCase() +
             theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
         @* custom code end *@
-        var axis = args.gauge.axes[0];        
-        axis.pointers = [{
-            roundedCornerRadius: 20,
-            value: 60,
-            type: 'RangeBar',
-            radius: '90%',
-            color: '#e5ce20',
-            border: {
-                color: 'grey',
-                width: 0
-            },
-            animation: {
-                enable: false
-            },
-            pointerWidth: 30
-
-        }];
-        axis.ranges = [
-            {
-                start: 0, end: 100,
-                radius: '90%',
-                startWidth: 30, endWidth: 30,
-                color: '#E0E0E0',
-                roundedCornerRadius: 20
-            }
-        ];
     }
 </script>
 @section Title{
-                    <title>ASP.NET Core CircularGauge Arc Gauge Example - Syncfusion Demos </title> 
+    <title>ASP.NET Core CircularGauge Arc Gauge Example - Syncfusion Demos </title>
                 }
 @section Header{
-                    <h1 class='sb-sample-text'>Example of Arc Gauge in ASP.NET Core CircularGauge Control</h1>
+    <h1 class='sb-sample-text'>Example of Arc Gauge in ASP.NET Core CircularGauge Control</h1>
                 }

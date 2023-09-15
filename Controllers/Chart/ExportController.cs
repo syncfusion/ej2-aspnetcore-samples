@@ -33,7 +33,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Chart
                 new ExportData {Country="United Kingdom", GigaWatts = 2.9, DataLabelMappingName="2.9"},
             };
             ViewBag.ChartPoints = ChartPoints;
-            ViewBag.mode = new String[] { "JPEG", "PNG", "SVG", "PDF" };
+            ViewBag.mode = new String[] { "JPEG", "PNG", "SVG", "PDF", "XLSX", "CSV" };
             return View();
         }
         public class ExportData

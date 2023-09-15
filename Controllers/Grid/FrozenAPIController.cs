@@ -35,6 +35,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Grid
             direction.Add(new { name = "Left", id = "Left" });
             direction.Add(new { name = "Right", id = "Right" });
             direction.Add(new { name = "Center", id = "Center" });
+            direction.Add(new { name = "Fixed", id = "Fixed" });
             ViewBag.direction = direction;
             ViewBag.DefaultButtons = new
             {

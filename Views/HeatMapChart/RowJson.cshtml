@@ -1,10 +1,11 @@
 @using Syncfusion.EJ2.HeatMap;
 @section ControlsSection{
     @{
-        var textStyle = new { size = "15px", fontWeight = "500", fontStyle = "Normal" };
+        var textStyle = new { size = "15px", fontWeight = "500", fontStyle = "Normal", fontFamily = "inherit" };
         var yAxistextStyle = new { text = "Olympic Year" };
         var xAxisLabel = new string[] { "China", "France", "GBR", "Germany", "Italy", "Japan", "KOR", "Russia", "USA" };
         var yAxisLabel = new string[] { "Year_2000", "Year_2004", "Year_2008", "Year_2012", "Year_2016" };
+        var labelTextStyle = new { fontFamily = "inherit" };
         var cellBorder = new
         {
             width = "1",
@@ -19,15 +20,18 @@
                     <e-heatmap-datasourcesettings isJsonData="true" adaptorType="Table" xDataMapping="Region"></e-heatmap-datasourcesettings>
                     <e-heatmap-titlesettings text="Olympic Medal Achievements of most Successful Countries" textStyle="textStyle">
                     </e-heatmap-titlesettings>
-                    <e-heatmap-xaxis labels="xAxisLabel" labelRotation="45" labelIntersectAction="None"></e-heatmap-xaxis>
-                    <e-heatmap-yaxis labels="yAxisLabel" title="yAxistextStyle"></e-heatmap-yaxis>
+                    <e-heatmap-xaxis labels="xAxisLabel" textStyle="labelTextStyle" labelRotation="45" labelIntersectAction="None"></e-heatmap-xaxis>
+                    <e-heatmap-yaxis labels="yAxisLabel" textStyle="labelTextStyle" title="yAxistextStyle"></e-heatmap-yaxis>
                     <e-heatmap-palettesettings>
                         <e-palettes>
                             <e-palette color="#F0C27B"></e-palette>
                             <e-palette color="#4B1248"></e-palette>
                         </e-palettes>
                     </e-heatmap-palettesettings>
-                    <e-heatmap-cellsettings border="cellBorder"></e-heatmap-cellsettings>
+                    <e-heatmap-cellsettings border="cellBorder" textStyle="labelTextStyle"></e-heatmap-cellsettings>
+                    <e-heatmap-tooltipsettings>
+                        <e-tooltipsettings-textstyle fontFamily="inherit"></e-tooltipsettings-textstyle>
+                    </e-heatmap-tooltipsettings>
                 </ejs-heatmap>
                 <div style="float: right; margin-right: 10px;">
                     Source:
@@ -42,7 +46,7 @@
             args.heatmap.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
         }
         window.ontooltipRender = function (args) {
-            args.content = [args.yLabel + " | " + args.xLabel + " : " + args.value + " medals"];
+            args.content = [args.yLabel + " | " + args.xLabel + " : " + args.value + " Medals"];
         }
     </script>
 }
@@ -60,13 +64,13 @@
     <div id="description">
         <p>
             In this example, you can see how to bind JSON data and configure the Heatmap using the data adaptor support. You can bind
-            the JSON data with information for each row to the Heatmap using <code>isJsonData</code> and by defining
-            the <code>adaptorType</code> properties. In row JSON data, the row header is mapped using the <code>xDataMapping</code>.
+            the JSON data with information for each row to the Heatmap using
+            <a href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.HeatMap.HeatMapData.html#Syncfusion_EJ2_HeatMap_HeatMapData_IsJsonData" target="_blank">isJsonData</a> and by defining the
+            <a href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.HeatMap.HeatMapData.html#Syncfusion_EJ2_HeatMap_HeatMapData_AdaptorType" target="_blank">adaptorType</a> properties. In row JSON data, the row header is mapped using the
+            <a href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.HeatMap.HeatMapData.html#Syncfusion_EJ2_HeatMap_HeatMapData_XDataMapping" target="_blank">xDataMapping</a>.
         </p>
-        <p>
-            Tooltip is enabled in this example, to see the tooltip in action, hover a point or tap on a point in touch enabled devices.
-        </p>
-        <br />
+        <p>The tooltip is enabled in this example. To see the tooltip in action, hover the mouse over an item or tap an item on touch-enabled devices.</p>
+        <br>
     </div>
 }
 @section Meta{

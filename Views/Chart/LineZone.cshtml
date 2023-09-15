@@ -1,16 +1,16 @@
 @using Syncfusion.EJ2
 @section ControlsSection{
-    @{
-        string valueX = "69%";
-        string valueX1 = "91.75%";
+    @{       
+        string valueX = "95%";
     }
     <div class="control-section" align="center">
-
         <ejs-chart id="lineContainer" load="load" title="Annual Mean Rainfall in Australia">
-            <e-chart-tooltipsettings enable="true" shared="true" header="<b>Rainfall</b>" format="${point.x} : <b>${point.y}</b>" enableMarker="false">
+            <e-chart-tooltipsettings enable="true" shared="true" header="<b>Rainfall</b>" format="${point.x} : <b>${point.y}</b>" enableMarker="true">
             </e-chart-tooltipsettings>
             <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.DateTime"
                                   labelFormat="yyyy"
+                                  minimum="new DateTime(1910, 1, 1)" 
+                                  maximum="new DateTime(2010, 1, 1)"
                                   intervalType="@Syncfusion.EJ2.Charts.IntervalType.Years"
                                   edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift">
                 <e-majorgridlines width="0"></e-majorgridlines>
@@ -28,8 +28,8 @@
             </e-chart-chartarea>
             <e-chart-annotations>
                 <e-chart-annotation content="<div style='color:green;font-weight:bold;font-size:14px'>Medium</div>" region="@Syncfusion.EJ2.Charts.Regions.Series"></e-chart-annotation>
-                <e-chart-annotation content="<div style='color:blue;font-weight:bold;font-size:14px'>High</div>" region="@Syncfusion.EJ2.Charts.Regions.Series" x="valueX" y="10%"></e-chart-annotation>
-                <e-chart-annotation content="<div style='color:red;font-weight:bold;font-size:14px'>Low</div>" region="@Syncfusion.EJ2.Charts.Regions.Series" x="valueX1" y="85%"></e-chart-annotation>
+                <e-chart-annotation content="<div style='color:blue;font-weight:bold;font-size:14px'>High</div>" region="@Syncfusion.EJ2.Charts.Regions.Series" y="10%"></e-chart-annotation>
+                <e-chart-annotation content="<div style='color:red;font-weight:bold;font-size:14px'>Low</div>" region="@Syncfusion.EJ2.Charts.Regions.Series" x="valueX" y="84%"></e-chart-annotation>
             </e-chart-annotations>
             <e-series-collection>
                 <e-series segmentAxis="@Syncfusion.EJ2.Charts.Segment.Y" xName="XValue" width="2" yName="YValue" type="@Syncfusion.EJ2.Charts.ChartSeriesType.MultiColoredLine" segments="ViewBag.segment">
@@ -56,8 +56,9 @@
                 selectedTheme = selectedTheme ? selectedTheme : "Material";
                 args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
                 args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
-                args.chart.annotations[0].x = ej.base.Browser.isDevice ? "25%" : "25%";
-                args.chart.annotations[0].y = ej.base.Browser.isDevice ? "40%" : "47%";
+                args.chart.annotations[0].x = ej.base.Browser.isDevice ? "21%" : "19%";
+                args.chart.annotations[0].y = ej.base.Browser.isDevice ? "42%" : "47%";
+                args.chart.annotations[1].x = ej.base.Browser.isDevice ? "68%" : "69%";
             }
     </script>
 }

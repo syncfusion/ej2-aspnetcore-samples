@@ -2,6 +2,14 @@
 @section ControlsSection{
     <div class="control-section">
         <div id="toolbar_default">
+            <ejs-toolbar id="toolbar" clicked="onItemClick" items="@ViewBag.tbItems">
+            </ejs-toolbar>
+            <div>
+                <ejs-splitbutton id="exportBtn" items="@ViewBag.exportItems" content="Export" select="onselect" iconCss="e-ddb-icons e-export"></ejs-splitbutton>
+            </div>
+            <div>
+                <ejs-checkbox id="checkBoxObj" checked="false" label="Multiple Page"></ejs-checkbox>
+            </div>
         </div>
         <div class="content-wrapper">
             <div style="text-align:center">
@@ -76,52 +84,6 @@
             return connector;
         }
 
-        var checkBoxObj = new ej.buttons.CheckBox({
-            checked: false, label: 'Multiple Page',
-        });
-
-        var items = [
-            {
-                text: 'JPG',
-            },
-            {
-                text: 'PNG',
-            },
-            {
-                text: 'SVG',
-            }
-        ];
-
-        var btnObj = new ej.splitbuttons.DropDownButton({
-            items: items,
-            iconCss: 'e-ddb-icons e-export',
-            content: 'Export',
-            select: onselect,
-
-        });
-
-        var toolbarObj = new ej.navigations.Toolbar({
-            clicked: onItemClick,
-            items: [
-                {
-                    type: 'Input', text: 'Export', template: '<button id="custombtn" style="width:100%;"></button>'
-                },
-                {
-                    type: 'Button', text: 'Print', prefixIcon: 'e-ddb-icons  e-print',
-                },
-                {
-                    type: 'Input', template: checkBoxObj
-                },
-            ]
-        });
-
-        toolbarObj.appendTo('#toolbar_default');
-        btnObj.appendTo('#custombtn');
-
-        var regionTypes = [
-            { regionType: 'PageSettings', text: 'PageSettings' },
-            { regionType: 'Content', text: 'Content' },
-        ];
         function onselect(args) {
             var diagram = document.getElementById("container").ej2_instances[0];
             var exportOptions = {};

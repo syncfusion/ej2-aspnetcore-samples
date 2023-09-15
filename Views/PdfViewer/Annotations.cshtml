@@ -1,49 +1,46 @@
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
 @using Syncfusion.EJ2
 @section ControlsSection{
-    <div class="control-section">
-        <ejs-pdfviewer id="pdfviewer" documentLoad="documentLoaded" style="height:641px;"></ejs-pdfviewer>
-    </div>
+	<div class="control-section">
+		@Html.Partial("_SwitchPartial")
+		<ejs-pdfviewer id="pdfviewer" documentPath = "https://cdn.syncfusion.com/content/pdf/annotations.pdf" documentLoad="documentLoaded" style="height:641px;"></ejs-pdfviewer>
+	</div>
 }
 
 @section Meta{
-                    <meta name="description" content="This example demonstrates the Annotations in ASP.NET Core PDF Viewer control. Explore here for more details."/>
-                }
+	<meta name="description"
+		content="This example demonstrates the Annotations in ASP.NET Core PDF Viewer control. Explore here for more details." />
+}
 
 @section ActionDescription{
-    <div id="action-description">
-        <p>This sample demonstrates the creation of all the types of annotations in the PDF Viewer such as Text Markup, Shapes, Measurements, Free text, Stamps, Handwritten signature, ink, and sticky notes. Also, we can customize the added annotation or we can include new annotations through user interaction from the PDF Viewer.</p>
-    </div>
+	<div id="action-description">
+		<p>This sample demonstrates the creation of all the types of annotations in the PDF Viewer such as Text Markup,
+			Shapes, Measurements, Free text, Stamps, Handwritten signature, ink, and sticky notes. Also, we can customize
+			the added annotation or we can include new annotations through user interaction from the PDF Viewer.</p>
+	</div>
 }
 
-@section Description{    
-    <div id="description">
-        <p>
-            More information on adding annotation programmatically can be found in this
-            <a target="_blank"
-               href="https://ej2.syncfusion.com/aspnetcore/documentation/pdfviewer/getting-started/">
-                documentation section
-            </a>.
-        </p>
+@section Description{
+	<div id="description">
+		<p>
+			More information on adding annotation programmatically can be found in this
+			<a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/pdfviewer/getting-started/">
+				documentation section
+			</a>.
+		</p>
 
-    </div>
+	</div>
 }
-@*custom code start*@
-<style>
-    .control-section {
-        height: 716px;
-        width: 100%;
-    }
-</style>
-@*custom code end*@
+
 <script type="text/javascript">
-    window.onload = function () {
-        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
-        pdfViewer.serviceUrl = window.baseurl + 'api/PdfViewer';
-        pdfViewer.load("Annotations.pdf", null);
+	window.onload = function () {
 	}
+
 	function documentLoaded(arg) {
 		var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
-		if (arg.documentName === "Annotations.pdf") {
+		if (arg.documentName === 'annotations.pdf') {
 			pdfViewer.annotation.addAnnotation("Highlight", {
 				bounds: [{ x: 97, y: 610, width: 350, height: 14 }],
 				pageNumber: 1
@@ -160,9 +157,10 @@
 		}
 	};
 </script>
+
 @section Title{
-                    <title>ASP.NET Core PDF Viewer Annotations Example - Syncfusion Demos </title> 
-                }
+	<title>ASP.NET Core PDF Viewer Annotations Example - Syncfusion Demos </title>
+}
 @section Header{
-                    <h1 class='sb-sample-text'>Example of Annotations in ASP.NET Core PDF Viewer Control</h1>
-                }
+	<h1 class='sb-sample-text'>Example of Annotations in ASP.NET Core PDF Viewer Control</h1>
+}

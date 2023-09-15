@@ -1,11 +1,12 @@
 @using Syncfusion.EJ2.HeatMap;
 @section ControlsSection{
     @{
-        var textStyle = new { size = "15px", fontWeight = "500", fontStyle = "Normal" };
+        var textStyle = new { size = "15px", fontWeight = "500", fontStyle = "Normal", fontFamily = "inherit" };
         var xAxisLabel = new string[] { "2007", "2008", "2009", "2010", "2011",
         "2012", "2013", "2014", "2015", "2016", "2017" };
         var yAxisLabel = new string[] { "Jan", "Feb", "Mar", "Apr", "May",
         "Jun", "July", "Aug", "Sept", "Oct", "Nov", "Dec" };
+        var labelTextStyle = new { fontFamily = "inherit"};
         var cellBorder = new
         {
             width = "0",
@@ -17,10 +18,10 @@
         <div class="row">
             <div class="col-md-12">
                 <ejs-heatmap id='container' tooltipRender="window.ontooltipRender" load="window.onHeatmapLoad" dataSource="ViewBag.dataSource">
-                    <e-heatmap-titlesettings text="Deffective Count per 1000 Products from a Manufacturing Unit" textStyle="textStyle">
+                    <e-heatmap-titlesettings text="Defective Count per 1000 Products from a Manufacturing Unit" textStyle="textStyle">
                     </e-heatmap-titlesettings>
-                    <e-heatmap-xaxis labels="xAxisLabel"></e-heatmap-xaxis>
-                    <e-heatmap-yaxis labels="yAxisLabel"></e-heatmap-yaxis>
+                    <e-heatmap-xaxis labels="xAxisLabel" textStyle="labelTextStyle"></e-heatmap-xaxis>
+                    <e-heatmap-yaxis labels="yAxisLabel" textStyle="labelTextStyle"></e-heatmap-yaxis>
                     <e-heatmap-palettesettings type="Gradient">
                         <e-palettes>
                             <e-palette color="rgb(172, 213, 242)"></e-palette>
@@ -29,8 +30,11 @@
                             <e-palette color="rgb(37, 78, 119)"></e-palette>
                         </e-palettes>
                     </e-heatmap-palettesettings>
-                    <e-heatmap-cellsettings border="cellBorder" showLabel="true"></e-heatmap-cellsettings>
-                    <e-heatmap-legendsettings position="Bottom" width="250px" showLabel="true"></e-heatmap-legendsettings>
+                    <e-heatmap-tooltipsettings>
+                        <e-tooltipsettings-textstyle fontFamily="inherit"></e-tooltipsettings-textstyle>
+                    </e-heatmap-tooltipsettings>
+                    <e-heatmap-cellsettings border="cellBorder" showLabel="true" textStyle="labelTextStyle"></e-heatmap-cellsettings>
+                    <e-heatmap-legendsettings position="Bottom" width="250px" showLabel="true" textStyle="labelTextStyle"></e-heatmap-legendsettings>
                 </ejs-heatmap>
             </div>
         </div>
@@ -50,8 +54,9 @@
 @section ActionDescription{
     <div id="action-description">
         <p>
-            This sample visualizes the number of deffective product count per 1000 units coming out from a manufacturing unit
-            Data points are enhanced with labels and tooltip. Some data points were not marked with any values which indicates there are no deffective products and these data points are termed as empty points.
+            This sample visualizes the number of defective product count per 1000 units coming out from a manufacturing unit
+            Data points are enhanced with labels and tooltip. Some data points were not marked with any values which indicates
+            there are no defective products and these data points are termed as empty points.
         </p>
     </div>
 }
@@ -59,13 +64,12 @@
 
     <div id="description">
         <p>
-            In this example, you can see how to render empty points in the Heatmap. The empty points or the points with no data can be marked using <code>null</code> in the data source.
-            You can also customize the background color of the empty points by using the <code>emptyPointColor</code> property in <code>paletteSettings</code>
+            In this example, you can see how to render empty points in the Heatmap. The empty points or the points with no data
+            can be marked using <code>null</code> in the data source. You can also customize the background color of the
+            empty points by using the <a href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.HeatMap.HeatMapPaletteSettings.html#Syncfusion_EJ2_HeatMap_HeatMapPaletteSettings_EmptyPointColor" target='_blank'>emptyPointColor</a> property in <a href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.HeatMap.HeatMapPaletteSettings.html" target='_blank'>paletteSettings</a>.
         </p>
-        <p>
-            Tooltip is enabled in this example, to see the tooltip in action, hover a point or tap on a point in touch enabled devices.
-        </p>
-        <br />
+        <p>The tooltip is enabled in this example. To see the tooltip in action, hover the mouse over an item or tap an item on touch-enabled devices.</p>
+        <br>
     </div>
 }
 @section Meta{

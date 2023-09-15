@@ -1,0 +1,172 @@
+﻿@using Syncfusion.EJ2;
+@section Meta{
+    <meta name="description" content="This example demonstrates the Clock in ASP.NET Core CircularGauge control. Explore here for more details." />
+                }
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates how to create an analog clock that displays the time.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this example, a clock has been created by adding axis, minor ticks, major ticks, and needles in a circular gauge and customizing it accordingly. In addition, the clock ticks, displaying the time in a lively manner.
+        </p>
+        <p>
+            More information on the circular gauge can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/circular-gauge/getting-started">documentation section</a>.
+        </p>
+    </div>
+}
+@section ControlsSection{
+    @{
+        var labelFont = new Syncfusion.EJ2.CircularGauge.CircularGaugeFont { FontFamily = "inherit" };
+    }
+    <div class="control-section">
+        <ejs-circulargauge id="clockgauge" centerY="45%" load="gaugeLoad" loaded="loadCompleted" style='display:block;' background='transparent' resized='gaugeResize'>
+            <e-circulargauge-axes>
+                <e-circulargauge-axis radius="90%" startAngle="0" endAngle="0" minimum="0" maximum="12">
+                    <e-axis-linestyle width="2"></e-axis-linestyle>
+                    <e-axis-labelstyle hiddenLabel="@Syncfusion.EJ2.CircularGauge.HiddenLabel.First" offset=10 font="labelFont"></e-axis-labelstyle>
+                    <e-axis-majorticks width="2" height="15" interval="1" offset=5></e-axis-majorticks>
+                    <e-axis-minorticks height="10" width="1" interval="0.2" offset=5></e-axis-minorticks>
+                    <e-circulargauge-pointers>
+                        <e-circulargauge-pointer value=10.2 radius="70%" pointerWidth=3 needleStartWidth=2>
+                            <e-pointer-cap radius=5 color="white">
+                                <e-pointers-cap-border width=1 color="#00A8B5"></e-pointers-cap-border>
+                            </e-pointer-cap>
+                            <e-pointer-animation enable=false></e-pointer-animation>
+                            <e-pointer-needletail length="0%"></e-pointer-needletail>
+                        </e-circulargauge-pointer>
+                        <e-circulargauge-pointer value=2 radius="100%" pointerWidth=3 needleStartWidth=1>
+                            <e-pointer-cap radius=5 color="white">
+                                <e-pointers-cap-border width=1 color="#00A8B5"></e-pointers-cap-border>
+                            </e-pointer-cap>
+                            <e-pointer-animation enable=false></e-pointer-animation>
+                            <e-pointer-needletail length="0%"></e-pointer-needletail>
+                        </e-circulargauge-pointer>
+                        <e-circulargauge-pointer value=12 radius="90%" color="#00A8B5" pointerWidth=3 needleStartWidth=1>
+                            <e-pointer-cap radius=5 color="white">
+                                <e-pointers-cap-border width=1 color="#00A8B5"></e-pointers-cap-border>
+                            </e-pointer-cap>
+                            <e-pointer-animation enable=false></e-pointer-animation>
+                            <e-pointer-needletail length="25%" color="#00A8B5"></e-pointer-needletail>
+                        </e-circulargauge-pointer>
+                    </e-circulargauge-pointers>
+                    <e-circulargauge-annotations>
+                        <e-circulargauge-annotation content="<div id='subGaugeOne' style='margin-left: -50%'></div>" angle="290" zIndex="1" radius="0%"></e-circulargauge-annotation>
+                        <e-circulargauge-annotation content="<div id='subGaugeTwo' style='margin-left: -110%;margin-top: -50%;'></div>" angle="0" zIndex="1" radius="0%"></e-circulargauge-annotation>
+                    </e-circulargauge-annotations>
+                </e-circulargauge-axis>
+            </e-circulargauge-axes>
+        </ejs-circulargauge>
+    </div>
+    <!-- custom code start -->
+    <style>
+        .control-section {
+            min-height: 450px;
+            padding-top: 50px;
+        }
+    </style>
+    <!-- custom code end -->
+    }
+<script>
+    var circulargauge;
+    var needlePointer = 0.2;
+
+    function loadCompleted(args) {
+        updateSubGauge1(args);
+        updateSubGauge2(args);
+        updatePointerIntervel();
+    }
+
+    function updateSubGauge1(args) {
+        var subGauge1 = new ej.circulargauge.CircularGauge({
+            width: '150px',
+            height: '150px',
+            background: 'transparent',
+            axes: [{
+                labelStyle: { hiddenLabel: 'First', font: { fontFamily: 'inherit', size: '7px' }, offset: -5 },
+                majorTicks: { interval: 2, offset: 2 },
+                minorTicks: { interval: 0.4, offset: 2 }, minimum: 0, maximum: 12,
+                startAngle: 0, endAngle: 0, radius: '70%', lineStyle: { width: 2 },
+                pointers: [{
+                    value: 5,
+                    radius: '50%', pointerWidth: 2, color: '#00A8B5',
+                    animation: { enable: false }, cap: { radius: 0 }, needleTail: { length: '0%' }
+                }],
+            }],
+            load: function (args) {
+            @* custom code start *@
+                var theme = themeName ? themeName : 'Material';
+                args.gauge.theme = (theme.charAt(0).toUpperCase() +
+                    theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+            @* custom code end *@
+                }
+        });
+        subGauge1.appendTo('#subGaugeOne');
+    }
+
+    function updatePointerIntervel(args) {
+        let pointerInterval = setInterval( function(){
+                if (document.getElementById('clockgauge')) {
+                    if (this.needlePointer <= 12) {
+                        circulargauge.setPointerValue(0, 2, this.needlePointer);
+                        this.needlePointer += 0.2;
+                    } else {
+                        this.needlePointer = 0.2;
+                    }
+                } else {
+                    clearInterval(+pointerInterval);
+                }
+            }, 1000);
+    }
+
+    function updateSubGauge2() {
+        var _this = this;
+        var subGauge2 = new ej.circulargauge.CircularGauge({
+            width: '150px',
+            height: '150px',
+            background: 'transparent',
+            axes: [{
+                labelStyle: { hiddenLabel: 'First', font: { fontFamily: 'inherit', size: '7px' }, offset: -5 },
+                majorTicks: { offset: 2, interval: 2 },
+                minorTicks: { offset: 2, interval: 0.4 }, minimum: 0, maximum: 12,
+                pointers: [{
+                    value: 8,
+                    radius: '50%', pointerWidth: 2, color: '#00A8B5',
+                    animation: { enable: false }, cap: { radius: 0 }, needleTail: { length: '0%' }
+                }], startAngle: 0, endAngle: 0, radius: '70%', lineStyle: { width: 2 }
+            }],
+            load: function (args) {
+            @* custom code start *@
+                    var theme = themeName ? themeName : 'Material';
+                args.gauge.theme = (theme.charAt(0).toUpperCase() +
+                    theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+            @* custom code end *@
+                    }
+        });
+        subGauge2.appendTo('#subGaugeTwo');
+    }
+
+    function gaugeResize(args) {
+        window.location.reload();
+    }
+
+    function gaugeLoad(args) {
+    @* custom code start *@
+        var theme = themeName ? themeName : 'Material';
+        args.gauge.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+    @* custom code end *@
+        circulargauge = args.gauge;
+    }
+    </script>
+@section Title{
+    <title>ASP.NET Core CircularGauge Clock Example - Syncfusion Demos </title>
+                }
+@section Header{
+    <h1 class='sb-sample-text'>Example of Clock in ASP.NET Core CircularGauge Control</h1>
+                }

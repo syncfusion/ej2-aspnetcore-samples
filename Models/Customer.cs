@@ -15,7 +15,7 @@ namespace EJ2CoreSampleBrowser.Models
     public class Customer
     {
         public  Customer(){}
-        public Customer(string CustomerID, string ContactName, string CompanyName, string Adrress, string Country) {
+        public Customer(string CustomerID, string ContactName, string CompanyName, string Address, string Country) {
             this.CustomerID = CustomerID;
             this.CompanyName = CompanyName;
             this.ContactName = ContactName;

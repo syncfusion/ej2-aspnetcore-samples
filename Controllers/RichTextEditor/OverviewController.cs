@@ -25,12 +25,12 @@ namespace EJ2CoreSampleBrowser.Controllers
                 uploadUrl = hostUrl + "api/FileManager/Upload",
                 downloadUrl = hostUrl + "api/FileManager/Download"
             };
-            ViewBag.tools = new[] { "Bold", "Italic", "Underline", "StrikeThrough",
+            ViewBag.tools = new[] {"FormatPainter", "Bold", "Italic", "Underline", "StrikeThrough",
                 "FontName", "FontSize", "FontColor", "BackgroundColor",
                 "LowerCase", "UpperCase","SuperScript", "SubScript", "|",
                 "Formats", "Alignments", "NumberFormatList", "BulletFormatList",
                 "Outdent", "Indent", "|",
-                "CreateTable", "CreateLink", "Image", "EmojiPicker", "FileManager", "|", "ClearFormat", "Print",
+                "CreateTable", "CreateLink", "Image", "Video", "Audio", "EmojiPicker", "FileManager", "|", "ClearFormat", "Print",
                 "SourceCode", "FullScreen", "|", "Undo", "Redo" };
             ViewBag.table = new[] {
                 "TableHeader", "TableRows", "TableColumns", "TableCell", "-", "BackgroundColor", "TableRemove", "TableCellVerticalAlign", "Styles"

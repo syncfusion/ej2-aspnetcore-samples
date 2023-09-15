@@ -5,7 +5,7 @@
     }
     <div class="col-lg-8 control-section">
         <ejs-chart id="container" load="load" title="Top 10 Mobile Markets by Number of Subscriptions">
-            <e-chart-primaryxaxis interval="1" coefficient="100" labelPlacement="@Syncfusion.EJ2.Charts.LabelPlacement.OnTicks" valueType="@Syncfusion.EJ2.Charts.ValueType.Category"></e-chart-primaryxaxis>
+            <e-chart-primaryxaxis interval="1" labelPlacement="@Syncfusion.EJ2.Charts.LabelPlacement.OnTicks" valueType="@Syncfusion.EJ2.Charts.ValueType.Category"></e-chart-primaryxaxis>
             <e-chart-primaryyaxis labelFormat="{value}M"></e-chart-primaryyaxis>
             <e-chart-tooltipsettings enable="true" header="" format="<b>${point.text}</b> <br> ${series.name}: <b>${point.y}</b>">
             </e-chart-tooltipsettings>
@@ -57,6 +57,8 @@
             var selectedTheme = location.hash.split('/')[1];
             selectedTheme = selectedTheme ? selectedTheme : 'Material';
             args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+            args.chart.primaryXAxis.coefficient = ej.base.Browser.isDevice ? 80 : 100;
+            args.chart.primaryXAxis.labelStyle.size = ej.base.Browser.isDevice ? "9px" : "12px";
         }
    @*custom code end*@     
         function seriesChange() {

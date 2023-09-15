@@ -1,17 +1,19 @@
 @using Syncfusion.EJ2.HeatMap;
 @section ControlsSection{
     @{
-                var textStyle = new { size = "15px", fontWeight = "500", fontStyle = "Normal" };
+                var textStyle = new { size = "15px", fontWeight = "500", fontStyle = "Normal", fontFamily = "inherit" };
                 var xAxisLabel = new string[] { "China", "Australia", "Mexico", "Canada", "Brazil", "USA",
             "UK", "Germany", "Russia", "France", "Japan" };
                 var yAxisLabel = new string[] { "2000", "2005", "2010", "2011", "2012", "2013", "2014" };
+                var labelTextStyle = new { fontFamily = "inherit"};
                 var cellBorder = new
                 {
-                    width = "0",
+                    color = "white",
                 };
                 var celltextStyle = new
                 {
-                    color= "white"
+                    color= "white",
+                    fontFamily = "inherit"
         };
     }
     <div class="control-section">
@@ -21,8 +23,8 @@
                     <e-heatmap-datasourcesettings isJsonData="false" adaptorType="Cell"></e-heatmap-datasourcesettings>
                     <e-heatmap-titlesettings text="Percentage of Individuals Using Internet by Country" textStyle="textStyle">
                     </e-heatmap-titlesettings>
-                    <e-heatmap-xaxis labels="xAxisLabel"></e-heatmap-xaxis>
-                    <e-heatmap-yaxis labels="yAxisLabel"></e-heatmap-yaxis>
+                    <e-heatmap-xaxis labels="xAxisLabel" textStyle="labelTextStyle" ></e-heatmap-xaxis>
+                    <e-heatmap-yaxis labels="yAxisLabel" textStyle="labelTextStyle" ></e-heatmap-yaxis>
                     <e-heatmap-palettesettings>
                         <e-palettes>
                             <e-palette color="#3498DB"></e-palette>
@@ -31,6 +33,9 @@
                     </e-heatmap-palettesettings>
                     <e-heatmap-cellsettings border="cellBorder" textStyle="celltextStyle" format="{value} %"></e-heatmap-cellsettings>
                     <e-heatmap-legendsettings visible="false"></e-heatmap-legendsettings>
+                    <e-heatmap-tooltipsettings>
+                        <e-tooltipsettings-textstyle fontFamily="inherit"></e-tooltipsettings-textstyle>
+                    </e-heatmap-tooltipsettings>
                 </ejs-heatmap>
             </div>
         </div>
@@ -50,7 +55,7 @@
     <div id="action-description">
         <p>
             This sample visualizes the percentage growth rate of individuals using the internet in a country compared to the overall
-            population to the country.
+            population of the country.
         </p>
     </div>
 }
@@ -61,10 +66,8 @@
             In this example, you can see how to bind two-dimensional array object as datasource for heatmap and configure the Heatmap
             using the data adaptor support.
         </p>
-        <p>
-            Tooltip is enabled in this example, to see the tooltip in action, hover a point or tap on a point in touch enabled devices.
-        </p>
-        <br />
+        <p>The tooltip is enabled in this example. To see the tooltip in action, hover the mouse over an item or tap an item on touch-enabled devices.</p>
+        <br>
     </div>
 }
 @section Meta{

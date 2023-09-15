@@ -17,9 +17,9 @@
                             Visibility
                         </div>
                         <div>
-                            <ejs-multiselect id="portsVisiblity" enabled="true" showDropDownIcon="true" dataSource="ViewBag.PortVisibility" showSelectAll="true" popupHeight="280px" popupWidth="180px" mode="CheckBox" change="portVisibilityDropOnChange">
-                                <e-multiselect-fields value="Value" text="Name"></e-multiselect-fields>
-                            </ejs-multiselect>
+                            <ejs-dropdownlist id="portsVisiblity" enabled="true" dataSource="ViewBag.PortVisibility" index="2" change="portVisibilityDropOnChange">
+                                <e-dropdownlist-fields value="Value" text="Name"></e-dropdownlist-fields>
+                            </ejs-dropdownlist>
                         </div>
                     </div>
                     <div class="col-xs-6">
@@ -105,6 +105,7 @@
         }
     </style>
     <script>
+        var portVisibilityDrop;
         function getNodeDefaults(obj, diagram) {
             if (obj.id === 'node1' || obj.id === 'node2' || obj.id === 'node4' || obj.id === 'node6') {
                 obj.shape = { type: 'Basic', shape: 'Rectangle' };
@@ -159,7 +160,7 @@
         }
 
         function selectChange(args) {
-            var portVisibilityDrop = document.getElementById("portsVisiblity").ej2_instances[0];
+            portVisibilityDrop = document.getElementById("portsVisiblity").ej2_instances[0];
             var portFillDrop = document.getElementById("fill").ej2_instances[0];
             var portBorderDrop = document.getElementById("border").ej2_instances[0];
             var portShapeDrop = document.getElementById("shape").ej2_instances[0];
@@ -177,23 +178,7 @@
                     if (args.newValue[0] instanceof ej.diagrams.Node && selectedElement.length) {
                         selectedElement[0].classList.remove('e-remove-selection');
                         var port = getPort()[0];
-                        portVisibilityDrop.value = [];
-                        if (ej.diagrams.PortVisibility.Visible & port.visibility) {
-                            portVisibilityDrop.value.push(ej.diagrams.PortVisibility.Visible);
-                        }
-                        if (ej.diagrams.PortVisibility.Hidden & port.visibility) {
-                            portVisibilityDrop.value.push(ej.diagrams.PortVisibility.Hidden);
-                        }
-                        if (ej.diagrams.PortVisibility.Hover & port.visibility) {
-                            portVisibilityDrop.value.push(ej.diagrams.PortVisibility.Hover);
-                        }
-                        if (ej.diagrams.PortVisibility.Connect & port.visibility) {
-                            portVisibilityDrop.value.push(ej.diagrams.PortVisibility.Connect);
-                        }
-                        if (portVisibilityDrop.value.length === 0) {
-                            portVisibilityDrop.placeholder = 'Select Visibility';
-                        }
-
+                        portVisibilityDrop.value = port.visibility;
                         portVisibilityDrop.dataBind();
                         portFillDrop.value = port.style.fill;
                         portFillDrop.dataBind();
@@ -240,10 +225,7 @@
             var port = getPort();
             if (port) {
                 for (var j = 0; j < port.length; j++) {
-                    port[j].visibility = 0;
-                    for (var i = 0; i < args.value.length; i++) {
-                        port[j].visibility += args.value[i];
-                    }
+                        port[j].visibility = portVisibilityDrop.value;
                 }
             }
             diagram.dataBind();

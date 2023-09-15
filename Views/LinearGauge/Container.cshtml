@@ -1,54 +1,68 @@
 @using Syncfusion.EJ2;
 @section ControlsSection{
     @{
-        var labelFont = new Syncfusion.EJ2.LinearGauge.LinearGaugeFont { FontFamily = "Segoe UI", Opacity = 1 };
+        var labelFont = new Syncfusion.EJ2.LinearGauge.LinearGaugeFont { FontFamily = "inherit" };
+        var orientationModeList = new List<LinearGuageList>
+        {
+            new LinearGuageList { Id = "Vertical", Name = "Vertical" },
+            new LinearGuageList { Id = "Horizontal", Name = "Horizontal" },
+        };
+        var containerModeList = new List<LinearGuageList>
+        {
+            new LinearGuageList { Id = "Thermometer", Name = "Thermometer" },
+            new LinearGuageList { Id = "Normal", Name = "Normal" },
+            new LinearGuageList { Id = "RoundedRectangle", Name = "Rounded Rectangle" },
+        };
     }
     <div class="col-md-8 control-section">
-        <div class="content-wrapper">
-            <ejs-lineargauge id="linear" load="gaugeLoad" title='Temperature Measure'>
-                <e-lineargauge-axes>
-                    <e-lineargauge-axis minimum="0" maximum="180">
-                        <e-axis-line width="0"></e-axis-line>
-                        <e-axis-labelstyle font="labelFont"></e-axis-labelstyle>
-                        <e-axis-majorticks interval="20" color="#9e9e9e" height="20"></e-axis-majorticks>
-                        <e-axis-minorticks height="10" color="#9e9e9e"></e-axis-minorticks>
-                    </e-lineargauge-axis>
-                    <e-lineargauge-axis minimum="0" maximum="180" opposedPosition="true">
-                        <e-axis-line width="0"></e-axis-line>
-                        <e-axis-labelstyle font="labelFont"></e-axis-labelstyle>
-                        <e-axis-majorticks interval="20" height="20"></e-axis-majorticks>
-                    </e-lineargauge-axis>
-                </e-lineargauge-axes>
-            </ejs-lineargauge>
-        </div>
+        <ejs-lineargauge id="linear" load="gaugeLoad" title='Temperature Measure' Background='Transparent' orientation="Vertical" titleStyle="labelFont">
+            <e-lineargauge-container Width=13 RoundedCornerRadius=5 Type=Thermometer></e-lineargauge-container>
+            <e-lineargauge-axes>
+                <e-lineargauge-axis minimum="0" maximum="180">
+                    <e-axis-line width="0"></e-axis-line>
+                    <e-axis-labelstyle font="labelFont"></e-axis-labelstyle>
+                    <e-axis-majorticks interval="20" color="#9e9e9e" height="20"></e-axis-majorticks>
+                    <e-axis-minorticks height="10" interval=10 color="#9e9e9e"></e-axis-minorticks>
+                    <e-lineargauge-pointers>
+                        <e-lineargauge-pointer Type="Bar" Value="90" Height=13 Width=13 RoundedCornerRadius=5 Color="#f02828"></e-lineargauge-pointer>
+                    </e-lineargauge-pointers>
+                </e-lineargauge-axis>
+                <e-lineargauge-axis minimum="0" maximum="180" opposedPosition="true">
+                    <e-axis-line width="0"></e-axis-line>
+                    <e-axis-labelstyle font="labelFont"></e-axis-labelstyle>
+                    <e-axis-majorticks interval="20" color="#9e9e9e" height="20"></e-axis-majorticks>
+                    <e-axis-minorticks height="10" interval=10 color="#9e9e9e"></e-axis-minorticks>
+                    <e-lineargauge-pointers>
+                        <e-lineargauge-pointer Width=0></e-lineargauge-pointer>
+                    </e-lineargauge-pointers>
+                </e-lineargauge-axis>
+            </e-lineargauge-axes>
+        </ejs-lineargauge>
     </div>
     <div class="col-md-4 property-section">
         <table id="property" title="Properties" style="width: 100%">
             <tbody>
                 <tr>
                     <td>
-                        <div style="margin-left:-10px">Orientation</div>
+                        <div style="margin-left:-10px;font-size: 14px;">Orientation</div>
                     </td>
                     <td>
-                        <div style="margin-left:-10px">
-                            <select name="selectIndex" autocomplete="off" id="orientationMode">
-                                <option value="Vertical" selected="">Vertical</option>
-                                <option value="Horizontal">Horizontal</option>
-                            </select>
+                        <div style="margin-left:-10px;margin-top: -5px;height : 45px">
+                            <ejs-dropdownlist id="orientationMode" index=0 width="100%" dataSource="@orientationModeList" change="valueChange">
+                                <e-dropdownlist-fields text="Name" value="Id"></e-dropdownlist-fields>
+                            </ejs-dropdownlist>
                         </div>
                     </td>
                 </tr>
-                <tr style="height:55px;">
+                <tr style="height:90px;">
                     <td>
-                        <div style="margin-left:-10px;">Container Type</div>
+                        <div style="margin-left:-10px;font-size: 14px;">Container Type</div>
                     </td>
                     <td>
-                        <div style="margin-left:-10px">
-                            <select name="selectIndex" autocomplete="off" id="containerMode">
-                                <option value="Thermometer">Thermometer</option>
-                                <option value="Normal" selected="">Normal</option>
-                                <option value="RoundedRectangle">RoundedRectangle</option>
-                            </select>
+                        <div style="margin-left:-10px;margin-top: -5px;height : 45px">
+                            <ejs-dropdownlist id="containerMode" index=0 width="100%" dataSource="@containerModeList" change="valueContainerChange">
+                                <e-dropdownlist-fields text="Name" value="Id"></e-dropdownlist-fields>
+                            </ejs-dropdownlist>
                         </div>
                     </td>
                 </tr>
@@ -56,93 +70,67 @@
             </tbody>
         </table>
     </div>
+    <!-- custom code start -->
+    <style>
+        .control-section {
+            min-height: 450px;
+        }
+        input.e-input.e-bigger, textarea.e-input.e-bigger, .e-bigger input.e-input, .e-bigger textarea.e-input, .e-input-group.e-bigger, .e-bigger .e-input-group, .e-input-group.e-control-wrapper.e-bigger, .e-bigger .e-input-group.e-control-wrapper {
+            height: 100%;
+            font-size: 14px;
+            align-items: center;
+        }
+    </style>
+    <!-- custom code end -->
 }
 <script>
-    var random, usage;
-    window.addEventListener("load", function (event) {
-        var containerMode = new ej.dropdowns.DropDownList({
-            index: 0,
-            placeholder: 'Select Range Bar Color',
-            width: '100%',
-            change: function () {
-                gauge.container.type = containerMode.value;
-                gauge.refresh();
-            }
-        });
-        containerMode.appendTo('#containerMode');
-        var orientationMode = new ej.dropdowns.DropDownList({
-            index: 0,
-            placeholder: 'Select Range Bar Color',
-            width: '100%',
-            change: function () {
-                gauge.orientation = orientationMode.value;
-                gauge.refresh();
-            }
-        });
-        orientationMode.appendTo('#orientationMode');
-    });
+    function valueChange() {
+        var orientationMode = document.getElementById('orientationMode').ej2_instances[0];
+        gauge.orientation = orientationMode.value;
+        gauge.refresh();
+    }
+
+    function valueContainerChange() {
+        var containerMode = document.getElementById('containerMode').ej2_instances[0];
+        gauge.container.type = containerMode.value;
+        gauge.refresh();
+    }
 
     var gauge;
     window.gaugeLoad = function (args) {
-        @* custom code start *@
-        var theme = themeName ? themeName : 'Material';
+    @* custom code start *@
+            var theme = themeName ? themeName : 'Material';
         args.gauge.theme = (theme.charAt(0).toUpperCase() +
             theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
-        @* custom code end *@
-        if (window.gaugeLoaded)
-            return;
-        window.gaugeLoaded = true;
+    @* custom code end *@
         gauge = args.gauge;
-        gauge.container = {
-            width: 13,
-                roundedCornerRadius: 5,
-                    type: 'Thermometer'
-        },
-        args.gauge.orientation = "Horizontal";
-        var axis = args.gauge.axes[0];
-
-        axis.pointers = [
-            {
-                value: 90,
-                height: 13,
-                width: 13,
-                roundedCornerRadius: 5,
-                type: 'Bar',
-                color: '#f02828'
-            }
-        ];
-
-        gauge.axes[1].pointers = [{ width: 0 }];
-        gauge.orientation = 'Vertical';
     }
 </script>
 @section Meta{
-                    <meta name="description" content="This example demonstrates the Container in ASP.NET Core LinearGauge control. Explore here for more details."/>
+    <meta name="description" content="This example demonstrates the Container in ASP.NET Core LinearGauge control. Explore here for more details." />
                 }
 @section ActionDescription{
     <div id="action-description">
         <p>
-            This sample demonstrates the type of containers used in linear gauge. Orientation and container type of linear gauge can be changed by using <code>Orientation</code> and <code>Container Type</code> options
+            This sample shows the different types of containers, such as normal, thermometer, and rounded rectangle. The linear gauge's orientation can also be changed from vertical to horizontal.
         </p>
     </div>
 }
 @section Description{
     <div id="description">
         <p>
-            This sample demonstrates the orientation and container customization in linear gauge. The gauge can be rendered either in
-            vertical or horizontal orientation. And you can use <code>type</code> property in container to change the
-            type of the container.
+            The linear gauge can be rendered vertically or horizontally depending on the option selected in the <b>Orientation</b> drop-down list. You can also select the container type from the <b>Container Type</b> drop-down list.
         </p>
-        <br>
         <p>
-            More information about container can be found in this
-            <a target="_blank" href="http://ej2.syncfusion.com/documentation">documentation section</a>.
+            More information on the container can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/linear-gauge/linear-gauge-appearance#customizing-the-linear-gauge-container">documentation section</a>.
+            Likewise, information about orientation can be found in this <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/linear-gauge/axis#orientation">documentation section</a>.
         </p>
     </div>
 }
 @section Title{
-                    <title>ASP.NET Core LinearGauge Container Example - Syncfusion Demos </title> 
+    <title>ASP.NET Core LinearGauge Container Example - Syncfusion Demos </title>
                 }
 @section Header{
-                    <h1 class='sb-sample-text'>Example of Container in ASP.NET Core LinearGauge Control</h1>
+    <h1 class='sb-sample-text'>Example of Container in ASP.NET Core LinearGauge Control</h1>
                 }

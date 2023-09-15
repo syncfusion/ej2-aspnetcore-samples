@@ -23,6 +23,7 @@ namespace EJ2CoreSampleBrowser.Controllers
             List<Data> datasource = new List<Data>();
             datasource.Add(new Data() { text = "Expand", value = 1 });
             datasource.Add(new Data() { text = "MultiRow", value = 2 });
+            datasource.Add(new Data() { text = "Scrollable", value = 3 });
             ViewBag.data = datasource;
             ViewBag.items = new[] {"Bold", "Italic", "Underline", "StrikeThrough",
                 "FontName", "FontSize", "FontColor", "BackgroundColor",

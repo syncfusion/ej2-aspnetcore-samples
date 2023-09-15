@@ -18,13 +18,9 @@ namespace EJ2CoreSampleBrowser.Controllers
     {
         public IActionResult PreviewMode()
         {
-            ViewBag.items = new object[] {"Bold", "Italic", "StrikeThrough", "|", "Formats", "OrderedList", "UnorderedList", "|", "CreateTable", "CreateLink", "Image", "|",
-                new {
-                tooltipText =  "Preview", template = @"<button id='preview-code' class='e-tbar-btn e-control e-btn e-icon-btn'>
-                      <span class='e-btn-icon e-md-preview e-icons'></span></button>" },
-                new {
-                tooltipText = "Split Editor", template = @"<button id='MD_Preview' class='e-tbar-btn e-control e-btn e-icon-btn'>
-                      <span class='e-btn-icon e-view-side e-icons'></span></button>" }, "FullScreen", "|", "Undo", "Redo" };
+            ViewBag.items = new object[] {"Bold", "Italic", "StrikeThrough", "|",
+                "Formats", "OrderedList", "UnorderedList", "Superscript", "Subscript", "|", "CreateTable",
+                "CreateLink", "Image", "|", "Undo", "Redo"};
             return View();
         }
     }

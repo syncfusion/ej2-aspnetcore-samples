@@ -1,7 +1,11 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 @using Syncfusion.EJ2
 @section ControlsSection{
     <div class="control-section">
-        <ejs-pdfviewer id="pdfviewer" enableRtl=true locale='ar-AE' style="height:641px;"></ejs-pdfviewer>
+        @Html.Partial("_SwitchPartial")
+        <ejs-pdfviewer id="pdfviewer" documentPath="https://cdn.syncfusion.com/content/pdf/rtl-text.pdf" enableRtl=true locale='ar-AE' style="height:641px;"></ejs-pdfviewer>
     </div>
     <script>
         ej.base.L10n.load({
@@ -241,12 +245,15 @@
 }
 
 @section Meta{
-                    <meta name="description" content="This example demonstrates the Right To Left in ASP.NET Core PDF Viewer control. Explore here for more details."/>
-                }
+    <meta name="description"
+        content="This example demonstrates the Right To Left in ASP.NET Core PDF Viewer control. Explore here for more details." />
+}
 
 @section ActionDescription{
     <div id="action-description">
-        <p>RTL provides an option to switch the text direction and layout of the PDF Viewer from right to left. It improves the user experiences and accessibility for users who use right-to-left languages (Arabic, Farsi, Urdu, etc.). To enable RTL PDF Viewer, set the enableRtl to true.</p>
+        <p>RTL provides an option to switch the text direction and layout of the PDF Viewer from right to left. It improves
+            the user experiences and accessibility for users who use right-to-left languages (Arabic, Farsi, Urdu, etc.). To
+            enable RTL PDF Viewer, set the enableRtl to true.</p>
     </div>
 }
 
@@ -256,39 +263,31 @@
             In this example, you can see PDF Viewer right-to-left and the locale set in arabic[locale value is ar-AE]
         </p>
         <p>
-            By default, locale value is en-US. If you want to change the en-US culture to a different culture, you have to change the locale accordingly.
+            By default, locale value is en-US. If you want to change the en-US culture to a different culture, you have to
+            change the locale accordingly.
         </p>
     </div>
     <div id="description">
         <p>
             More information on the PDF Viewer features can be found in this
             <a target="_blank"
-               href="https://ej2.syncfusion.com/aspnetcore/documentation/pdfviewer/getting-started/?no-cache=1">
+                href="https://ej2.syncfusion.com/aspnetcore/documentation/pdfviewer/getting-started/?no-cache=1">
                 documentation section
             </a>.
         </p>
 
     </div>
 }
-@*custom code start*@
-<style>
-    .control-section {
-        height: 716px;
-        width: 100%;
-    }
-</style>
-@*custom code end*@
+
 <script type="text/javascript">
     window.onload = function () {
         var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
-        pdfViewer.serviceUrl = window.baseurl + 'api/PdfViewer';
-        pdfViewer.load("RTLText.pdf", null);
         pdfViewer.annotationSettings.author = 'مقبول';
     }
 </script>
 @section Title{
-                    <title>ASP.NET Core PDF Viewer Right To Left Example - Syncfusion Demos </title> 
-                }
+    <title>ASP.NET Core PDF Viewer Right To Left Example - Syncfusion Demos </title>
+}
 @section Header{
-                    <h1 class='sb-sample-text'>Example of Right To Left in ASP.NET Core PDF Viewer Control</h1>
-                }
+    <h1 class='sb-sample-text'>Example of Right To Left in ASP.NET Core PDF Viewer Control</h1>
+}

@@ -16,15 +16,15 @@
     <div class="control-section">
         <div class="row">
             <div class="col-md-12">
-                <ejs-gantt id='OverView' dataSource="ViewBag.dataSource" height="500px" highlightWeekends="true"  allowSelection="true" treeColumnIndex="1" viewType= 'ProjectView' allowSorting= "true" allowFiltering= "true" gridLines= "Vertical" allowReordering= "true" allowResizing="true"
+                <ejs-gantt id='OverView' dataSource="ViewBag.dataSource" height="500px" highlightWeekends="true" showColumnMenu="true" allowSelection="true" treeColumnIndex="1" viewType= 'ProjectView' allowSorting= "true" allowFiltering= "true" gridLines= "Vertical" allowResizing="true"
                            projectStartDate="12/24/2021" projectEndDate="10/26/2022" load="load" resources="ViewBag.projectResources" toolbar="toolbarItems" taskbarHeight= "24" rowHeight= "36">
                     <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate" parentID = "ParentID"
                                         endDate="EndDate" duration="TimeLog" progress="Progress" dependency="Predecessor" resourceInfo="Assignee">
                     </e-gantt-taskfields>
                     <e-gantt-columns>
                         <e-gantt-column field="TaskId" headerText="ID" width="80" visible ="false"></e-gantt-column>
-                        <e-gantt-column field="TaskName" headerText="Product Release" width="285" clipMode="EllipsisWithTooltip"></e-gantt-column>
-                        <e-gantt-column field="Assignee" width= "170" headerText="Assignee" template= "#columnTemplate"></e-gantt-column>
+                        <e-gantt-column field="TaskName" headerText="Product Release" width="250" clipMode="EllipsisWithTooltip"></e-gantt-column>
+                        <e-gantt-column field="Assignee" width= "140" allowSorting= "false" headerText="Assignee" template= "#columnTemplate"></e-gantt-column>
                         <e-gantt-column field='Status', minWidth= "100", width= "120", headerText= 'Status', template= '#columnTemplate1'></e-gantt-column>
                         <e-gantt-column field='Priority', minWidth= '80', width= '100', headerText= 'Priority', template= '#columnTemplate2'></e-gantt-column>
                         <e-gantt-column field='Work', width= '120', headerText= 'Planned Hours'></e-gantt-column>
@@ -32,8 +32,7 @@
                     </e-gantt-columns>
                     <e-gantt-resourcefields id="ResourceId" name="ResourceName" unit="ResourceUnit">
                     </e-gantt-resourcefields>
-                    <e-gantt-labelSettings leftLabel="TaskName"></e-gantt-labelSettings>
-                    <e-gantt-splittersettings columnIndex="4"></e-gantt-splittersettings>
+                    <e-gantt-splittersettings position="57%"></e-gantt-splittersettings>
                     <e-gantt-eventmarkers>
                             <e-gantt-eventmarker day="04/04/2022" label="Q-1 Release" cssClass= 'e-custom-event-marker' ></e-gantt-eventmarker>
                             <e-gantt-eventmarker day="06/30/2022" label="Q-2 Release" cssClass= 'e-custom-event-marker'></e-gantt-eventmarker>
@@ -49,7 +48,6 @@
                             <e-timelinesettings-toptier unit="Month" format="MMM yyyy"></e-timelinesettings-toptier>
                             <e-timelinesettings-bottomtier unit="Day" count= '4' format= "dd"></e-timelinesettings-bottomtier>
                         </e-gantt-timelinesettings>
-                        <e-gantt-editsettings allowEditing="true" allowTaskbarEditing="true"></e-gantt-editsettings>
                         <e-gantt-tooltipsettings showTooltip="true">
                         </e-gantt-tooltipsettings>
                         <e-gantt-filtersettings type="Menu"></e-gantt-filtersettings>
@@ -224,7 +222,7 @@ function change(e) {
         ganttObj.splitterSettings.position = '0%';
     }
     else {
-        ganttObj.splitterSettings.position = '';
+        ganttObj.splitterSettings.position = '57%';
     }
     
     ganttObj.refresh();

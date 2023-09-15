@@ -2,11 +2,12 @@
 @using Syncfusion.EJ2.Buttons;
 @section ControlsSection{
     @{
-        var textStyle = new { size = "15px", fontWeight = "500", fontStyle = "Normal" };
+        var textStyle = new { size = "15px", fontWeight = "500", fontStyle = "Normal", fontFamily = "inherit" };
         var xAxisLabel = new string[] { "China", "India", "USA", "Indonesia", "Brazil", "Pakistan",
 "Nigeria", "Bangladesh", "Russia", "Mexico" };
         var yAxisLabel = new string[] { "1965-1970", "1970-1975", "1975-1980", "1980-1985", "1985-1990",
 "1990-1995", "1995-2000", "2000-2005", "2005-2010", "2010-2015" };
+        var labelTextStyle = new { fontFamily = "inherit" };
         var cellBorder = new
         {
             width = "0",
@@ -17,8 +18,8 @@
             <ejs-heatmap id='container' load="window.onHeatmapLoad" dataSource="ViewBag.dataSource">
                 <e-heatmap-titlesettings text="Population Growth Rate of the most Populous Countries" textStyle="textStyle">
                 </e-heatmap-titlesettings>
-                <e-heatmap-xaxis labels="xAxisLabel" labelRotation="45" labelIntersectAction="None" isInversed="true"></e-heatmap-xaxis>
-                <e-heatmap-yaxis labels="yAxisLabel" isInversed="true"></e-heatmap-yaxis>
+                <e-heatmap-xaxis labels="xAxisLabel" textStyle="labelTextStyle" labelRotation="45" labelIntersectAction="None" isInversed="true"></e-heatmap-xaxis>
+                <e-heatmap-yaxis labels="yAxisLabel" textStyle="labelTextStyle" isInversed="true"></e-heatmap-yaxis>
                 <e-heatmap-palettesettings>
                     <e-palettes>
                         <e-palette value="0" color="#4b7287"></e-palette>
@@ -30,6 +31,9 @@
                         <e-palette value="3" color="#6e888f"></e-palette>
                     </e-palettes>
                 </e-heatmap-palettesettings>
+                <e-heatmap-tooltipsettings>
+                    <e-tooltipsettings-textstyle fontFamily="inherit"></e-tooltipsettings-textstyle>
+                </e-heatmap-tooltipsettings>
                 <e-heatmap-cellsettings border="cellBorder" showLabel="false" format="{value} %"></e-heatmap-cellsettings>
                 <e-heatmap-legendsettings visible="false"></e-heatmap-legendsettings>
             </ejs-heatmap>
@@ -40,7 +44,7 @@
         </div>
     </div>
     <div class="col-lg-3 property-section">
-        <table id="property" title="Properties" style="width: 100%">
+        <table id="property" title="Properties" style="width: 100%;margin-left: -20px;">
             <tbody>
                 <tr style="height: 50px">
                     <td style="width: 40%;">
@@ -78,7 +82,9 @@
 @section ActionDescription{
     <div id="action-description">
         <p>
-            This sample illustrates the population growth rate of the most populous countries over the years. The data label is disabled in this sample, the tooltip displays the data point values.  In property panel, the options are available to reverse the origin of the axes by means of checkbox for each axis.
+            This sample illustrates the population growth rate of the most populous countries over the years. The data label is disabled
+            in this sample, the tooltip displays the data point values. In property panel, the options are available to reverse
+            the origin of the axes by means of checkbox for each axis.
         </p>
     </div>
 }
@@ -86,12 +92,12 @@
 
     <div id="description">
         <p>
-            In this example, you can see how to reverse the axis origin for both axes, once the axis origin has been reversed the axis data will be displayed inverted. You can reverse the axis origin by enabling the <code>isInversed </code> property for each axis.
+            In this example, you can see how to reverse the axis origin for both axes, once the axis origin has been reversed the axis
+            data will be displayed inverted. You can reverse the axis origin by enabling the
+            <a href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.HeatMap.HeatMapAxis.html#Syncfusion_EJ2_HeatMap_HeatMapAxis_IsInversed" target="_blank">isInversed</a> property for each axis.
         </p>
-        <p>
-            Tooltip is enabled in this example, to see the tooltip in action, hover a point or tap on a point in touch enabled devices.
-        </p>
-        <br />
+        <p>The tooltip is enabled in this example. To see the tooltip in action, hover the mouse over an item or tap an item on touch-enabled devices.</p>
+        <br>
     </div>
 }
 @section Meta{

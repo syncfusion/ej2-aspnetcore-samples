@@ -2,11 +2,12 @@
 @using Syncfusion.EJ2.Buttons;
 @section ControlsSection{
     @{
-        var textStyle = new { size = "15px", fontWeight = "500", fontStyle = "Normal" };
+        var textStyle = new { size = "15px", fontWeight = "500", fontStyle = "Normal", fontFamily = "inherit" };
         var xAxisLabel = new string[] { "Channel Isl", "Denmark", "Estonia", "Finland",
 "Iceland", "Ireland", "Latvia", "Lithuania", "Norway", "Sweden", "UK" };
         var yAxisLabel = new string[] { "1965-1970", "1970-1975", "1975-1980", "1980-1985", "1985-1990",
 "1990-1995", "1995-2000", "2000-2005", "2005-2010", "2010-2015" };
+        var labelTextStyle = new { fontFamily = "inherit" };
         var cellBorder = new
         {
             width = "0",
@@ -17,21 +18,24 @@
             <ejs-heatmap id='container' load="window.onHeatmapLoad" renderingMode="SVG" dataSource="ViewBag.dataSource">
                 <e-heatmap-titlesettings text="Net Migration Rate of Northern Europe From 1965 to 2015" textStyle="textStyle">
                 </e-heatmap-titlesettings>
-                <e-heatmap-xaxis labels="xAxisLabel" labelRotation="-90" labelIntersectAction="None"></e-heatmap-xaxis>
-                <e-heatmap-yaxis labels="yAxisLabel"></e-heatmap-yaxis>
+                <e-heatmap-xaxis labels="xAxisLabel" textStyle="labelTextStyle" labelRotation="-90" labelIntersectAction="None"></e-heatmap-xaxis>
+                <e-heatmap-yaxis labels="yAxisLabel" textStyle="labelTextStyle" ></e-heatmap-yaxis>
                 <e-heatmap-palettesettings>
                     <e-palettes>
                         <e-palette color="#C06C84"></e-palette>
                         <e-palette color="#355C7D"></e-palette>
                     </e-palettes>
                 </e-heatmap-palettesettings>
+                <e-heatmap-tooltipsettings>
+                    <e-tooltipsettings-textstyle fontFamily="inherit"></e-tooltipsettings-textstyle>
+                </e-heatmap-tooltipsettings>
                 <e-heatmap-cellsettings border="cellBorder" showLabel="false" format="{value} %"></e-heatmap-cellsettings>
-                <e-heatmap-legendsettings position="Bottom" width="200px"></e-heatmap-legendsettings>
+                <e-heatmap-legendsettings position="Bottom" textStyle="labelTextStyle" width="200px"></e-heatmap-legendsettings>
             </ejs-heatmap>
         </div>
     </div>
     <div class="col-lg-3 property-section">
-        <table id="property" title="Properties" style="width: 100%">
+        <table id="property" title="Properties" style="width: 100%;margin-left: -10px;">
             <tbody>
                 <tr style="height: 50px">
                     <td style="width: 60%">
@@ -64,7 +68,9 @@
 @section ActionDescription{
     <div id="action-description">
         <p>
-            This sample visualizes the net migration rate for the northern European countries over the years. The data label is disabled in this sample, the tooltip displays the data point values.  In property panel, the options are available to change the rendering mode between Canvas and SVG means of radio button.
+            This sample visualizes the net migration rate for the northern European countries over the years. The data label is disabled
+            in this sample, the tooltip displays the data point values. In property panel, the options are available to change
+            the rendering mode between Canvas and SVG means of radio button.
         </p>
     </div>
 }
@@ -72,12 +78,11 @@
 
     <div id="description">
         <p>
-            In this example, you can see how to change the rendering mode between <code>Canvas </code> and <code>SVG </code> types in Heatmap. You can change the rendering mode using the <code>renderingMode </code> property.
+            In this example, you can see how to change the rendering mode between <code>Canvas</code> and <code>SVG</code> types in Heatmap. You can change the 
+            rendering mode using the <a href="https://ej2.syncfusion.com/aspnetcore/documentation/heatmap-chart/rendering-mode" target="_blank">renderingMode</a> property.
         </p>
-        <p>
-            Tooltip is enabled in this example, to see the tooltip in action, hover a point or tap on a point in touch enabled devices.
-        </p>
-        <br />
+        <p>The tooltip is enabled in this example. To see the tooltip in action, hover the mouse over an item or tap an item on touch-enabled devices.</p>
+        <br>
     </div>
 }
 @section Meta{

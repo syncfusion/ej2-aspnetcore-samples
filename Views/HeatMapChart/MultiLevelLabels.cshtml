@@ -1,10 +1,11 @@
 @using Syncfusion.EJ2.HeatMap;
 @section ControlsSection{
     @{
-        var textStyle = new { size = "15px", fontWeight = "500", fontStyle = "Normal" };
+        var textStyle = new { size = "15px", fontWeight = "500", fontStyle = "Normal", fontFamily = "inherit" };
         var xAxisLabel = new string[] {"Laptop", "Mobile", "Gaming", "Cosmetics", "Fragrance", "Watches", "Handbags", "Apparel",
                 "Kitchenware", "Furniture", "Home Decor" };
         var yAxisLabel = new string[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+        var labelTextStyle = new { fontFamily = "inherit" };
         var cellBorder = new
         {
             width = "0",
@@ -23,7 +24,8 @@
         var xAxisTextStyle = new
         {
             color = "black",
-            fontWeight = "Bold"
+            fontWeight = "Bold",
+            fontFamily = "inherit"
         };
     }
     <div class="control-section">
@@ -32,13 +34,13 @@
                 <ejs-heatmap id='container' load="window.onHeatmapLoad" tooltipRender="window.onHeatmapTooltipRender" cellRender="window.onHeatmapCellRender" dataSource="ViewBag.dataSource">
                     <e-heatmap-titlesettings text="Product wise Monthly sales revenue for a e-commerce website" textStyle="textStyle">
                     </e-heatmap-titlesettings>
-                    <e-heatmap-xaxis labels="xAxisLabel" border="ViewBag.AxisBorder">
+                    <e-heatmap-xaxis labels="xAxisLabel" textStyle="labelTextStyle" border="ViewBag.AxisBorder">
                         <e-xaxis-multilevellabels>
                             <e-xaxis-multilevellabel border="xAxisBorder" textStyle="xAxisTextStyle" >
                             </e-xaxis-multilevellabel>
                         </e-xaxis-multilevellabels>
                     </e-heatmap-xaxis>
-                    <e-heatmap-yaxis labels="yAxisLabel">
+                    <e-heatmap-yaxis labels="yAxisLabel" textStyle="labelTextStyle" isInversed="true">
                         <e-yaxis-multilevellabels>
                             <e-yaxis-multilevellabel border="yBorder" textStyle="xAxisTextStyle"></e-yaxis-multilevellabel>
                         </e-yaxis-multilevellabels>
@@ -51,7 +53,10 @@
                         </e-palettes>
                     </e-heatmap-palettesettings>
                     <e-heatmap-legendsettings visible="false"></e-heatmap-legendsettings>
-                    <e-heatmap-cellsettings border="cellBorder"></e-heatmap-cellsettings>
+                    <e-heatmap-tooltipsettings>
+                        <e-tooltipsettings-textstyle fontFamily="inherit"></e-tooltipsettings-textstyle>
+                    </e-heatmap-tooltipsettings>
+                    <e-heatmap-cellsettings border="cellBorder" textStyle="labelTextStyle"></e-heatmap-cellsettings>
                 </ejs-heatmap>
             </div>
         </div>
@@ -94,9 +99,9 @@
 
 @section ActionDescription{
     <div id="action-description">
-        <p>
-            This sample visualizes the product wise monthly sales revenue of the items sold by an online retailer in a year.  The products are grouped based on the purchase domains and revenue is displayed as cell data.
-        </p>
+         <p>
+             This sample visualizes the product wise monthly sales revenue of the items sold by an online retailer in a year.  The products are grouped based on the purchase domains and revenue is displayed as cell data.
+         </p>
     </div>
 }
 @section Description{
@@ -104,10 +109,9 @@
     <div id="description">
         <p>
             In this example, you can see how to group axis labels.
-            You can customize text in each level by using <code>alignment</code>, <code>textSytle</code> and <code>border</code> properties.
+            You can customize text in each level by using <a href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.HeatMap.HeatMapMultiLevelLabel.html#Syncfusion_EJ2_HeatMap_HeatMapMultiLevelLabel_Alignment" target="_blank">alignment</a>, <a href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.HeatMap.HeatMapMultiLevelLabel.html#Syncfusion_EJ2_HeatMap_HeatMapMultiLevelLabel_TextStyle" target="_blank">textStyle</a> and <a href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.HeatMap.HeatMapMultiLevelLabel.html#Syncfusion_EJ2_HeatMap_HeatMapMultiLevelLabel_Border" target="_blank">border</a> properties.
         </p>
-        <p>
-            Border of the axis labels can be customized by using <code>type</code> property.
+        <p>Border of the axis labels can be customized by using <a href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.HeatMap.HeatMapAxisLabelBorder.html#Syncfusion_EJ2_HeatMap_HeatMapAxisLabelBorder_Type" target="_blank">type</a> property.
         </p>
         <ul>
             <li><code>Rectangle</code></li>
@@ -115,7 +119,7 @@
             <li><code>WithoutTopBorder</code></li>
             <li><code>WithoutBottomBorder</code></li>
             <li><code>WithoutTopandBottomBorder</code></li>
-            <li><code>withoutBorder</code>.</li>
+            <li><code>WithoutBorder</code>.</li>
         </ul>
         <br>
     </div>

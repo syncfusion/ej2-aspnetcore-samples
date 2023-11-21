@@ -910,6 +910,13 @@ function getSamplePath() {
     return location.pathname.split('/').slice(-2).join('/');
 }
 
+function searchNavigation(arg) {
+    var eventType = arg.event ? arg.event.pointerType : null; 
+    if (eventType){
+        controlSelect(arg);
+    }
+}
+
 function controlSelect(arg) {
     var path = (arg.node || arg.item).getAttribute('data-path');
     if (path === null && arg.data) {
@@ -920,21 +927,46 @@ function controlSelect(arg) {
     if (!arg.item || path.split('/')[1] === curHashCollection.split('/').slice(-2)[1]) {
         controlListRefresh(arg.node || arg.item);
     }
-    if (path) {
-        if (curHashCollection.indexOf(path) === -1) {
-            sampleOverlay();
-            if (arg.item && ((isMobile && !ej.base.select('.sb-mobile-left-pane').classList.contains('sb-hide')) ||
-                ((isTablet || (ej.base.Browser.isDevice && isPc)) && isLeftPaneOpen()))) {
-                toggleLeftPane();
+    if (location.pathname.slice(- 1) !== '/' && location.hash !== '#/' + theme) {
+        var count;
+        if ((location.origin.indexOf('ej2npmci.azurewebsites') !== -1) && location.pathname.split('/').length >= 5) {
+            count = 5;
+        }
+        else if ((location.origin.indexOf('ej2.syncfusion') !== -1) && location.pathname.split('/').length >= 4) {
+            count = 4;
+        }
+        else if ((location.origin.indexOf('localhost') !== -1) && location.pathname.split('/').length >= 3) {
+            count = 3;
+        }
+        location.href = location.origin + location.pathname.split('/').slice(0, count).join('/') + '#/' + theme;
+    }
+    else {
+        if (location.pathname.slice(- 1) === '/') {
+            location.href = location.origin + curHashCollection.slice(0, -1);
+        }
+        else if (path) {
+            if (curHashCollection.indexOf(path) === -1) {
+                sampleOverlay();
+                if (arg.item && ((isMobile && !ej.base.select('.sb-mobile-left-pane').classList.contains('sb-hide')) ||
+                    ((isTablet || (ej.base.Browser.isDevice && isPc)) && isLeftPaneOpen()))) {
+                    toggleLeftPane();
+                }
+    
+                if (arg.data) {
+                    var pathName = location.pathname.replace(getSamplePath(), '');
+                    if (curHashCollection.split('/')[curHashCollection.split('/').length - 3] != arg.data.dir) {
+                        var SampleObject = window.samplesList.filter(obj => obj.directory === arg.data.dir);
+                        var defaultSample = SampleObject.map(obj => obj.samples[0]);
+                        location.href = location.origin + pathName + arg.data.dir + '/' + defaultSample[0].url + '#/' + theme;
+                    }
+                    else {
+                        location.href = location.origin + pathName + arg.data.dir + '/' + arg.data.url + '#/' + theme;
+                    }
+                }
+            } else {
+                var hashName = location.hash.length ? '' : '#/' + theme
+                location.href = location.href + hashName;
             }
-
-            if (arg.data) {
-                var pathName = location.pathname.replace(getSamplePath(), '');
-                location.href = location.origin + pathName + arg.data.dir + '/' + arg.data.url + '#/' + theme;
-            }
-        } else {
-            var hashName = location.hash.length ? '' : '#/' + theme
-            location.href = location.href + hashName;
         }
     }
 }

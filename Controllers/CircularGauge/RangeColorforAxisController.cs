@@ -7,7 +7,7 @@
 #endregion
 using Microsoft.AspNetCore.Mvc;
 
-namespace EJ2CoreSampleBrowser_NET7.Controllers.CircularGauge
+namespace EJ2CoreSampleBrowser_NET8.Controllers.CircularGauge
 {
     public partial class CircularGaugeController : Controller
     {

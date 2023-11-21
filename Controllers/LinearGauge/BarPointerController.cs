@@ -7,7 +7,7 @@
 #endregion
 using Microsoft.AspNetCore.Mvc;
 
-namespace EJ2CoreSampleBrowser_NET7.Controllers.LinearGauge
+namespace EJ2CoreSampleBrowser_NET8.Controllers.LinearGauge
 {
     public partial class LinearGaugeController : Controller
     {

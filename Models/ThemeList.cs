@@ -13,7 +13,7 @@ namespace CoreDemos
         public string Id { get; set; }
         public string Theme { get; set; }
         public int Index { get; set; }
-
+        bool isDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
         public List<ThemeList> ThemeLists()
         {
             List<ThemeList> theme = new List<ThemeList>();
@@ -26,9 +26,12 @@ namespace CoreDemos
             theme.Add(new ThemeList { Id = "tailwind", Theme = "Tailwind CSS", Index = 6 });
             theme.Add(new ThemeList { Id = "tailwind-dark", Theme = "Tailwind CSS Dark", Index = 7});
             theme.Add(new ThemeList { Id = "material", Theme = "Material", Index = 8 });
-            theme.Add(new ThemeList { Id = "bootstrap4", Theme = "Bootstrap v4", Index = 9});
-            theme.Add(new ThemeList { Id = "bootstrap", Theme = "Bootstrap", Index = 10 });
-            theme.Add(new ThemeList { Id = "bootstrap-dark", Theme = "Bootstrap Dark", Index = 11 });
+            theme.Add(new ThemeList { Id = "bootstrap4", Theme = "Bootstrap v4", Index = 9 });
+            if (isDevelopment)
+            {
+                theme.Add(new ThemeList { Id = "bootstrap", Theme = "Bootstrap", Index = 10 });
+                theme.Add(new ThemeList { Id = "bootstrap-dark", Theme = "Bootstrap Dark", Index = 11 });
+            }
             theme.Add(new ThemeList { Id = "highcontrast", Theme = "High Contrast", Index = 12 });
             return theme;
         }

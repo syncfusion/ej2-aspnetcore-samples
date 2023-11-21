@@ -1057,7 +1057,6 @@ window.samplesList = [
     {
         "name": "Tree Grid",
         "directory": "TreeGrid",
-        "type": "update",
         "category": "Grids",
         "samples": [
             {
@@ -1079,7 +1078,6 @@ window.samplesList = [
                 "component": "TreeGrid",
                 "dir": "TreeGrid",
                 "parentId": "02",
-                "type": "new"
             },
             {
                 "url": "DefaultFunctionalities",
@@ -5779,6 +5777,7 @@ window.samplesList = [
                 "category": "DocumentEditor",
                 "order": 0,
                 "component": "DocumentEditor",
+                "type": "update",
                 "dir": "DocumentEditor",
                 "parentId": "035",
                 "uid": "0036342"
@@ -5837,7 +5836,6 @@ window.samplesList = [
                 "url": "TableFormat",
                 "name": "Table Formatting",
                 "category": "Editing Features",
-                "type":"update",
                 "order": 1,
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
@@ -7835,7 +7833,6 @@ window.samplesList = [
         "name": "AutoComplete",
         "directory": "AutoComplete",
         "category": "Dropdowns",
-        "type": "update",
         "samples": [
             {
                 "url": "DefaultFunctionalities",
@@ -7926,7 +7923,6 @@ window.samplesList = [
                 "component": "AutoComplete",
                 "dir": "AutoComplete",
                 "parentId": "014",
-                "type": "new"
 
             },
         ],
@@ -7937,7 +7933,6 @@ window.samplesList = [
         "name": "ComboBox",
         "directory": "ComboBox",
         "category": "Dropdowns",
-        "type": "update",
         "samples": [
             {
                 "url": "DefaultFunctionalities",
@@ -8048,8 +8043,6 @@ window.samplesList = [
                 "component": "ComboBox",
                 "dir": "ComboBox",
                 "parentId": "016",
-                "type": "new"
-
             }
         ],
         "order": 3,
@@ -8158,7 +8151,6 @@ window.samplesList = [
         "name": "Dropdown List",
         "directory": "DropDownList",
         "category": "Dropdowns",
-        "type": "update",
         "samples": [
             {
                 "url": "DefaultFunctionalities",
@@ -8259,7 +8251,6 @@ window.samplesList = [
                 "component": "DropDownList",
                 "dir": "DropDownList",
                 "parentId": "020",
-                "type": "new"
             }
         ],
         "order": 3,
@@ -12105,6 +12096,16 @@ window.samplesList = [
                 "uid": "0045467"
             },
             {
+                "url": "ImportData",
+                "name": "Import Data",
+                "category": "Slide Elements",
+                "order": 5,
+                "component": "PowerPoint",
+                "dir": "PowerPoint",
+                "parentId": "045",
+                "uid": "0045468"
+            },
+            {
                 "url": "CreateAnimation",
                 "name": "Create Animation",
                 "category": "Animation",
@@ -12112,7 +12113,7 @@ window.samplesList = [
                 "component": "PowerPoint",
                 "dir": "PowerPoint",
                 "parentId": "045",
-                "uid": "0045468"
+                "uid": "0045469"
             },
             {
                 "url": "ModifyAnimation",
@@ -12122,7 +12123,7 @@ window.samplesList = [
                 "component": "PowerPoint",
                 "dir": "PowerPoint",
                 "parentId": "045",
-                "uid": "0045469"
+                "uid": "0045470"
             },
             {
                 "url": "AnimationConverter",
@@ -12132,7 +12133,7 @@ window.samplesList = [
                 "component": "PowerPoint",
                 "dir": "PowerPoint",
                 "parentId": "045",
-                "uid": "0045470",
+                "uid": "0045471",
                 "type": "new"
             },
             {
@@ -12143,7 +12144,7 @@ window.samplesList = [
                 "component": "PowerPoint",
                 "dir": "PowerPoint",
                 "parentId": "045",
-                "uid": "0045471"
+                "uid": "0045472"
             }
         ],
         "order": 7,

@@ -69,7 +69,6 @@ namespace EJ2CoreSampleBrowser
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
             }
             else
             {

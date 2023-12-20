@@ -1,4 +1,4 @@
-﻿window.chartData = [
+window.chartData = [
     {
         date: new Date('2012-04-02'),
         open: 85.9757,

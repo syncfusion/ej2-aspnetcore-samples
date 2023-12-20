@@ -25,13 +25,13 @@ namespace EJ2CoreSampleBrowser.Controllers
                 uploadUrl = hostUrl + "api/FileManager/Upload",
                 downloadUrl = hostUrl + "api/FileManager/Download"
             };
-            ViewBag.tools = new[] {"FormatPainter", "Bold", "Italic", "Underline", "StrikeThrough",
-                "FontName", "FontSize", "FontColor", "BackgroundColor",
-                "LowerCase", "UpperCase","SuperScript", "SubScript", "|",
-                "Formats", "Alignments", "NumberFormatList", "BulletFormatList",
+            ViewBag.tools = new[] {"Bold", "Italic", "Underline", "StrikeThrough", "SuperScript", "SubScript", "|",
+                "FontName", "FontSize", "FontColor", "BackgroundColor",  "|",
+                "LowerCase", "UpperCase",
+                "Formats", "Alignments", "|", "NumberFormatList", "BulletFormatList", "|",
                 "Outdent", "Indent", "|",
-                "CreateTable", "CreateLink", "Image", "Video", "Audio", "EmojiPicker", "FileManager", "|", "ClearFormat", "Print",
-                "SourceCode", "FullScreen", "|", "Undo", "Redo" };
+                "CreateLink", "Image", "FileManager", "Video", "Audio", "CreateTable", "|", "FormatPainter", "ClearFormat", "|", "EmojiPicker", "Print", "|",
+                "SourceCode", "FullScreen", "|", "Undo", "Redo"};
             ViewBag.table = new[] {
                 "TableHeader", "TableRows", "TableColumns", "TableCell", "-", "BackgroundColor", "TableRemove", "TableCellVerticalAlign", "Styles"
             };

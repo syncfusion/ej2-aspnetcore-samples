@@ -1,4 +1,4 @@
-var aman = [{
+window.aman = [{
     "x": new Date('2012-04-02T00:00:00.000Z'),
     "close": 198.05
 }, {

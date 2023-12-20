@@ -1,4 +1,4 @@
-﻿var datetime = [
+window.datetime = [
     {
         "date": "2012-04-02",
         "open": 85.9757,
@@ -1399,4 +1399,4 @@
         "close": 110.38,
         "volume": 313017610
     }
-]
+];

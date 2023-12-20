@@ -1,0 +1,69 @@
+@using Syncfusion.EJ2
+@{
+    var DropDownList = new Syncfusion.EJ2.DropDowns.DropDownList() { DataSource = ViewBag.datasource, Fields = new Syncfusion.EJ2.DropDowns.DropDownListFieldSettings() { Value = "ShipCountry", Text = "ShipCountry" } };
+}
+
+@section ControlsSection{
+    <div class="control-section">
+        <ejs-grid id="Grid" toolbar="@(new List<string>() {  "Add", "Edit", "Delete", "Update", "Cancel" })" allowPaging="true" emptyRecordTemplate="#emptytemplate">
+            <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true"></e-grid-editSettings>
+            <e-grid-pagesettings pageCount="5"></e-grid-pagesettings>
+            <e-grid-columns>
+                <e-grid-column field="OrderID" headerText="Order ID" isPrimaryKey="true" validationRules="@(new { required=true, number=true})" width="140"></e-grid-column>
+                <e-grid-column field="CustomerID" headerText="Customer Name" validationRules="@(new { required=true})" width="150"></e-grid-column>
+                <e-grid-column field="Freight" headerText="Freight" validationRules="@(new { required=true})" textAlign="Right" editType="numericedit" format="C2" width="140"></e-grid-column>
+                <e-grid-column field="OrderDate" headerText="Order Date" editType="datetimepickeredit" customFormat="@(new {type = "datetime", format = "M/d/y hh:mm a" })" width="160"></e-grid-column>
+                <e-grid-column field="ShipCountry" headerText="Ship Country" editType="dropdownedit" edit="new {@params = DropDownList }" width="150"></e-grid-column>
+                <e-grid-column field="Verified" headerText="Verified" editType="booleanedit" displayAsCheckBox="true" type="boolean" width="100"></e-grid-column>
+            </e-grid-columns>
+
+        </ejs-grid>
+    </div>
+
+    <style>
+        .emptyRecordTemplate {
+            text-align: center;
+        }
+        .e-emptyRecord {
+            display: block;
+            margin: 10px auto;
+        }
+    </style>
+
+    <script id="emptytemplate" type="text/x-template">
+        <div class='emptyRecordTemplate'>
+            <img src="@Url.Content("~/scripts/Images/Grid/emptyRecordTemplate.svg")" class="e-emptyRecord" alt="No record" />
+            <span>There is no data available to display at the moment.</span>
+        </div>
+    </script>
+}
+
+@section ActionDescription{
+	<div id="action-description">
+        <p>
+            This sample demonstrates the usage of the empty record template in the DataGrid. In this sample, we show a custom image in the place of the default no-record message typically shown by the DataGrid.
+		</p>
+	</div>
+}
+
+@section Meta{
+    <meta name="description" content="This example demonstrates the usage of the empty record template in ASP.NET Core Data Grid control. Explore here for more details." />
+                }
+
+@section Description{
+    <div id="description">
+        <p>
+            The DataGrid provides a way to use a custom content when it has no data to present. 
+            The <code>emptyRecordTemplate</code> property accepts either a string or an HTML element ID value, which will be used as the template when there’s no data.
+        </p>
+        <p>More information on the data binding can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/grid/data-binding/data-binding">documentation section</a>.
+        </p>
+    </div>
+}
+@section Title{
+    <title>ASP.NET Core Data Grid Empty Record Template Example - Syncfusion Demos </title>
+                }
+@section Header{
+    <h1 class='sb-sample-text'>Example of Empty Record Template in ASP.NET Core Data Grid Control</h1>
+                }

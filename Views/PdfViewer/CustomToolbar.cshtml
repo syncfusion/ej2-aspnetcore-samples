@@ -1,37 +1,200 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@using Syncfusion.EJ2
+@using Syncfusion.EJ2;
+@using Syncfusion.EJ2.Navigations;
 @{
     var template = "<div class=''><span class='e-pv-total-page-number' id='totalPage'>of 0</span></div>";
     var inputtemplate = "<div class=''><input type='text' class='e-input-group e-pv-current-page-number' id='currentPage' /></div>";
+    string menu = "#stamp-menu";
+}
+@{
+    List<MenuItem> menuItems = new List<MenuItem>(){
+       new MenuItem
+       {
+        IconCss = "e-icons e-stamp",
+        Items = new List<MenuItem>()
+        {
+            new MenuItem
+            {
+                Text = "Dynamic",
+                Items = new List<MenuItem>
+                {
+                    new MenuItem { Text = "Revised", Id = "Dynamic" },
+                    new MenuItem { Text = "Reviewed", Id = "Dynamic" },
+                    new MenuItem { Text = "Received", Id = "Dynamic" },
+                    new MenuItem { Text = "Confidential", Id = "Dynamic" },
+                    new MenuItem { Text = "Approved", Id = "Dynamic" },
+                    new MenuItem { Text = "Not Approved", Id = "Dynamic" }
+                }
+            },
+            new MenuItem
+            {
+                Text = "Sign Here",
+                Items = new List<MenuItem>
+                {
+                    new MenuItem { Text = "Witness", Id = "Sign Here" },
+                    new MenuItem { Text = "Initial Here", Id = "Sign Here" },
+                    new MenuItem { Text = "Sign Here", Id = "Sign Here" },
+                    new MenuItem { Text = "Accepted", Id = "Sign Here" },
+                    new MenuItem { Text = "Rejected", Id = "Sign Here" }
+                }
+            },
+            new MenuItem
+            {
+                Text = "Standard Business",
+                Items = new List<MenuItem>
+                {
+                    new MenuItem { Text = "Approved", Id = "Standard Business" },
+                    new MenuItem { Text = "Not Approved", Id = "Standard Business" },
+                    new MenuItem { Text = "Draft", Id = "Standard Business" },
+                    new MenuItem { Text = "Final", Id = "Standard Business" },
+                    new MenuItem { Text = "Completed", Id = "Standard Business" },
+                    new MenuItem { Text = "Confidential", Id = "Standard Business" },
+                    new MenuItem { Text = "For Public Release", Id = "Standard Business" },
+                    new MenuItem { Text = "Not For Public Release", Id = "Standard Business" },
+                    new MenuItem { Text = "For Comment", Id = "Standard Business" },
+                    new MenuItem { Text = "Void", Id = "Standard Business" },
+                    new MenuItem { Text = "Preliminary Results", Id = "Standard Business" },
+                    new MenuItem { Text = "Information Only", Id = "Standard Business" }
+                }
+            }
+        }
+       }
+    };
 }
 @section ControlsSection{
+    <link href="~/styles/pdf-viewer/custom-toolbar.css" rel="stylesheet" />
+    <script src="~/scripts/pdf-viewer/custom-toolbar.js"></script>
     <div class="control-section">
-		@Html.Partial("_SwitchPartial")
+        @Html.Partial("_SwitchPartial")
         <ejs-toolbar id="topToolbar" height="56px">
             <e-toolbar-items>
-                <e-toolbar-item prefixIcon="e-pv-open-document-icon" tooltipText="Open" align="Left" click="openPage" id="Openpage"></e-toolbar-item>
-                <e-toolbar-item prefixIcon="e-pv-previous-page-navigation-icon" tooltipText="Previous Page" align="Center" click="previousClicked" id="previousPage"></e-toolbar-item>
-                <e-toolbar-item prefixIcon="e-pv-next-page-navigation-icon" tooltipText="Next Page" align="Center" click="nextClicked" id="nextPage"></e-toolbar-item>
+                <e-toolbar-item prefixIcon="e-icons e-folder" tooltipText="Open" align="Left" click="openPage" id="Openpage"></e-toolbar-item>
+                <e-toolbar-item prefixIcon="e-icons e-save" tooltipText="Save" click="downloadClicked"></e-toolbar-item>
+                <e-toolbar-item prefixIcon="e-icons e-chevron-left" tooltipText="Previous Page" align="Center" click="previousClicked" id="previousPage"></e-toolbar-item>
+                <e-toolbar-item prefixIcon="e-icons e-chevron-right" tooltipText="Next Page" align="Center" click="nextClicked" id="nextPage"></e-toolbar-item>
                 <e-toolbar-item template="@inputtemplate" tooltipText="Page Number" type="Input" align="Center"></e-toolbar-item>
                 <e-toolbar-item template="@template" align="Center" tooltipText="Page Number"></e-toolbar-item>
-                <e-toolbar-item prefixIcon="e-pv-print-document-icon" tooltipText="Print" align="Right" click="printClicked"></e-toolbar-item>
-                <e-toolbar-item prefixIcon="e-pv-download-document-icon" tooltipText="Download" align="Right" click="downloadClicked"></e-toolbar-item>
+                <e-toolbar-item type="Separator" tooltipText="separator" align="Center"></e-toolbar-item>
+                <e-toolbar-item prefixIcon="e-icons e-mouse-pointer" tooltipText="Text Selection Tool" showTextOn="Overflow" align="Center" click="textSelection"></e-toolbar-item>
+                <e-toolbar-item prefixIcon="e-icons e-pan" tooltipText="Pan Mode" showTextOn="Overflow" align="Center" click="panMode"></e-toolbar-item>
+                <e-toolbar-item type="Separator" tooltipText="separator" align="Center"></e-toolbar-item>
+                <e-toolbar-item prefixIcon="e-icons e-annotation-edit" tooltipText="Edit Annotations" align="Center" showTextOn="Overflow" click="openEditAnnotation"></e-toolbar-item>
+                <e-toolbar-item type="Separator" align="Center" tooltipText="separator"></e-toolbar-item>
+                <e-toolbar-item prefixIcon="e-icons e-split-vertical" tooltipText="Add and Edit Form Fields" align="Center" showTextOn="Overflow" click="addEditFormFields"></e-toolbar-item>
+                <e-toolbar-item prefixIcon="e-icons e-search" tooltipText="Search" align="Right" click="findText"></e-toolbar-item>
+                <e-toolbar-item prefixIcon="e-icons e-print" tooltipText="Print" align="Right" click="printClicked"></e-toolbar-item>
             </e-toolbar-items>
         </ejs-toolbar>
-        <ejs-pdfviewer id="pdfviewer" style="height:641px" enableToolbar="false" enableNavigationToolbar="false" documentPath="https://cdn.syncfusion.com/content/pdf/hive-succinctly.pdf" documentLoad="documentLoaded" pageChange="pageChanged"></ejs-pdfviewer>
-        <input type ="file" id="fileUpload" accept=".pdf" style="display:block;visibility:hidden;width:0;height:0;">
-        <div id="magnificationToolbarItems">
-                <ejs-toolbar id="magnificationToolbar">
-                    <e-toolbar-items id="magnificationToolbarItems">
-                        <e-toolbar-item prefixIcon="e-pv-fit-page" tooltipText="Fit to page" click="pageFitClicked"></e-toolbar-item>
-                        <e-toolbar-item prefixIcon="e-pv-zoom-in-icon" tooltipText="Zoom in" click="zoomInClicked"></e-toolbar-item>
-                        <e-toolbar-item prefixIcon="e-pv-zoom-out-icon" tooltipText="Zoom out" click="zoomOutClicked"></e-toolbar-item>
-                    </e-toolbar-items>
-                </ejs-toolbar>
+        <div id="editAnnotationToolbar" style="display:none">
+            <ejs-toolbar id="edittoolbar" height="56px">
+                <e-toolbar-items>
+                    <e-toolbar-item prefixIcon="e-icons e-highlight-color" click='highlight' tooltipText="Highlight" id="highlight" align="Center"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-icons e-underline" click='underLine' tooltipText="Underline" id="underline" align="Center"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-icons e-strikethrough" click='strikeThrough' tooltipText="Strikethrough" id="strikethrough" align="Center"></e-toolbar-item>
+                    <e-toolbar-item type="Separator" tooltipText="separator" align="Center"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-icons e-line" click='addLine' tooltipText="Add Line" id="line" align="Center"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-icons e-arrow-right-up" click='addArrow' tooltipText="Add Arrow" id="arrow" align="Center"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-icons e-rectangle" click='addRectangle' tooltipText="Add Rectangle" id="rectangle" align="Center"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-icons e-circle" click='addCircle' tooltipText="Add Circle" id="circle" align="Center"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-icons e-pentagon" click='addPoligon' tooltipText="Add Polygon" id="polygon" align="Center"></e-toolbar-item>
+                    <e-toolbar-item type="Separator" tooltipText="separator" align="Center"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-icons e-length" click='distance' tooltipText="Calibrate Distance" id="calibrate_distance" align="Center"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-icons e-perimeter" click='perimeter' tooltipText="Calibrate Perimeter" id="calibrate_perimeter" align="Center"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-icons e-area" click='area' tooltipText="Calibrate Area" id="calibrate_area" align="Center"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-icons e-radius" click='radius' tooltipText="Calibrate Radius" id="calibrate_radius" align="Center"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-icons e-volume" click='volume' tooltipText="Calibrate Volume" id="calibrate_volume" align="Center"></e-toolbar-item>
+                    <e-toolbar-item type="Separator" tooltipText="separator" align="Center"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-icons e-text-annotation" click='freeText' tooltipText="Free Text" id="freeText" align="Center"></e-toolbar-item>
+                    <e-toolbar-item type="Separator" tooltipText="separator" align="Center"></e-toolbar-item>
+                    <e-toolbar-item template="@menu" tooltipText="Add Stamp" id="stamp" align="Center"></e-toolbar-item>
+                    <e-toolbar-item type="Separator" tooltipText="separator" align="Center"></e-toolbar-item>
+                    <e-toolbar-item id="signature" prefixIcon="e-icons e-signature" style="border:none;background:transparent;" click='addSign1' tooltipText="Add Signature" align="Center"></e-toolbar-item>
+                    <e-toolbar-item type="Separator" tooltipText="separator" align="Center"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-icons e-style" click='ink' id="ink" align="Center"></e-toolbar-item>
+                </e-toolbar-items>
+            </ejs-toolbar>
+        </div>
+        <div>
+            <div id="SignatureToolbar" style="display:none">
+                <div class="e-dropdown-popup" id="container_annotation_signature-popup" style="z-index:111" data-ripple="true">
+                    <ul role="menu" tabindex="0">
+                        <li id="e-dropdown-btn-item_63" role="menuitem" tabindex="-1" aria-label="ADD SIGNATURE" style="width: 206px; display: flex; flex-direction: column; height: auto; align-items: center; background: transparent; cursor: pointer;" onclick="onSignatureClick(this)">
+                            <button class="e-control e-btn e-lib e-outline e-primary" style="width: auto; height: 36px;">Add Signature</button>
+                        </li>
+                        <li class="e-separator" id="e-dropdown-btn-item_64" role="menuitem" tabindex="-1" aria-label="separator" style="margin: 8px 0;"></li>
+                        <li id="e-dropdown-btn-item_65" role="menuitem" tabindex="-1" aria-label="ADD INITIAL" style="width: 206px; display: flex; flex-direction: column; height: auto; align-items: center; background: transparent; cursor: pointer;" onclick="onSignatureClick(this)">
+                            <button class="e-control e-btn e-lib e-outline e-primary" style="width: auto; height: 36px;">Add Initial</button>
+                        </li>
+                    </ul>
+                </div>
             </div>
- </div>
+        </div>
+        <div id="formFieldToolbar" style="display:none">
+            <ejs-toolbar id="formtoolbar" height="56px">
+                <e-toolbar-items>
+                    <e-toolbar-item id="textbox" prefixIcon="e-icons e-text-form" click='textBox' tooltipText="Textbox" align="Center"></e-toolbar-item>
+                    <e-toolbar-item id="password" prefixIcon="e-icons e-password" click='passWord' tooltipText="Password" align="Center"></e-toolbar-item>
+                    <e-toolbar-item id="checkbox" prefixIcon="e-icons e-check-box" click='checkBox' tooltipText="Checkbok" align="Center"></e-toolbar-item>
+                    <e-toolbar-item id="radio_button" prefixIcon="e-icons e-radio-button" click='radioButton' tooltipText="Radio Button" align="Center"></e-toolbar-item>
+                    <e-toolbar-item id="drop_down" prefixIcon="e-icons e-drop-down" click='dropDown' tooltipText="Drop Down" align="Center"></e-toolbar-item>
+                    <e-toolbar-item id="list_box" prefixIcon="e-pv-listbox-icon" click='listBox' tooltipText="List Box" align="Center"></e-toolbar-item>
+                    <e-toolbar-item id="formField_signature" prefixIcon="e-icons e-signature" style="border:none;background:transparent;" click='addSign' tooltipText="Add Signature" align="Center"></e-toolbar-item>
+                    <e-toolbar-item id="separator" type="Separator" tooltipText="separator" align="Center"></e-toolbar-item>
+                </e-toolbar-items>
+            </ejs-toolbar>
+        </div>
+        <div id="textSearchToolbar" style="display:none">
+            <div class="e-pv-search-bar" id="container_search_box" style="top:113px;right:0px;z-index:1111">
+                <div class="e-pv-search-bar-elements" id="container_search_box_elements" style="width:330px">
+                    <div class="e-input-group e-pv-search-input" id="container_search_input_container">
+                        <input class="e-input" id="container_search_input" type="text" placeholder="Find in document" onkeypress="searchInputKeypressed(event)" />
+                        <span class="e-input-group-icon e-input-search-group-icon e-icons e-search" id="container_search_box-icon" onclick="initiateTextSearch()"></span>
+                        <span class="e-input-group-icon e-input-search-group-icon e-icons e-close" id="container_close_search_box-icon" style="display: none;" onclick="clearTextSearch()"></span>
+                    </div>
+                    <button class=" e-icon-btn e-pv-search-btn e-icons e-chevron-left" id="container_prev_occurrence" type="button" onclick="previousTextSearch()" style="border: none; width: 28px; height: 17px; background: white;" aria-label="Previous Search text">
+                    </button>
+                    <button class="e-icon-btn e-pv-search-btn e-icons e-chevron-right" id="container_next_occurrence" type="button" onclick="nextTextSearch()" style="border: none; width: 28px; height: 17px; background: white;" aria-label="Next Search text">
+                    </button>
+                </div>
+                <div class="e-pv-match-case-container" id="container_match_case_container">
+                    <div class="e-checkbox-wrapper e-wrapper e-pv-match-case">
+                        <label for="container_match_case">
+                            <input id="container_match_case" type="checkbox" class="e-control e-checkbox e-lib" onclick="checkBoxChanged(event)" />
+                            <span class="e-ripple-container" data-ripple="true"></span>
+                            <span id="checkboxSpan" class="e-icons e-frame"></span>
+                            <span class="e-label">Match case</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="stamp-menu">
+            <ejs-menu id='menu' showItemOnClick='true' items='menuItems' select='select'></ejs-menu>
+        </div>
+        <ejs-pdfviewer id="pdfviewer"
+                   style="height:641px"
+                   enableToolbar="false"
+                   enableAnnotationToolbar ="false"
+                   enableNavigationToolbar="false"
+                   documentPath="https://cdn.syncfusion.com/content/pdf/hive-succinctly.pdf"
+                   resourceUrl="https://cdn.syncfusion.com/ej2/23.2.6/dist/ej2-pdfviewer-lib"
+                   documentLoad="documentLoaded"
+                   enableCommentPanel="false"
+                   pageChange="pageChanged">
+        </ejs-pdfviewer>
+        <input type="file" id="fileUpload" accept=".pdf" style="display:block;visibility:hidden;width:0;height:0;">
+        <div id="magnificationToolbarItems">
+            <ejs-toolbar id="magnificationToolbar">
+                <e-toolbar-items id="magnificationToolbarItems">
+                    <e-toolbar-item prefixIcon="e-pv-fit-page" tooltipText="Fit to page" click="pageFitClicked"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-icons e-circle-add" tooltipText="Zoom in" click="zoomInClicked"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-icons e-circle-remove" tooltipText="Zoom out" click="zoomOutClicked"></e-toolbar-item>
+                </e-toolbar-items>
+            </ejs-toolbar>
+        </div>
+    </div>
 }
 
 @section Meta{
@@ -39,73 +202,119 @@
                 }
 
 @section ActionDescription{
-<div id="action-description">
-    <p>This sample demonstrate how to perform the PDF Viewer core functionalities using a custom toolbar.</p>
-</div>
+    <div id="action-description">
+        <p>This example illustrates the process of crafting a customized toolbar within the PDF Viewer, allowing you to incorporate specific tools tailored to your needs.</p>
+    </div>
 }
 
 @section Description{
-<div id="description">
-    <p>
-        This sample demonstrate how to perform the PDF Viewer core functionalities using a custom toolbar.
-    </p>
-    <p>
-        In this example, you can see PDF Viewer control API in action to perform the functionalities.
-    </p>
-    <ul>
-        <li>Go to Previous Page - <code>viewer.navigation.goToPreviousPage()</code></li>
-        <li>Go to Next Page - <code>viewer.navigation.goToNextPage()</code></li>
-        <li>Go to Page - <code>viewer.navigation.goToPage(pageindex)</code></li>
-        <li>Print - <code>viewer.print.print()</code></li>
-        <li>Download - <code>viewer.download()</code></li>
-        <li>Fit To Page - <code>viewer.magnification.fitToPage()</code></li>
-        <li>Zoom In - <code>viewer.magnification.zoomIn()</code></li>
-        <li>Zoom Out - <code>viewer.magnification.zoomOut()</code></li>
-        <li>Load document - <code>viewer.load(fileName, password)</code></li>
-        <li>Show or hide default toolbar - <code>viewer.toolbar.showToolbar(isEnable)</code></li>
-    </ul>
-    <p>
-        More information on the PDF Viewer instantiation can be found in this
-        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/pdfviewer/getting-started/">
-            documentation section
-        </a>.
-    </p>
-</div>
+    <div id="description">
+        <p>
+            This sample demonstrate how to perform the PDF Viewer core functionalities using a custom toolbar. In this example, you can see PDF Viewer control API in action to perform the functionalities.
+        </p>
+        <ul>
+           <li>Load document - <code>viewer.load(fileName, password)</code></li>
+            <li>Save - <code>viewer.download()</code></li>
+            <li>Go to Previous Page - <code>viewer.navigation.goToPreviousPage()</code></li>
+            <li>Go to Next Page - <code>viewer.navigation.goToNextPage()</code></li>
+            <li>Go to Page - <code>viewer.navigation.goToPage(pageindex)</code></li>
+            <li>TextSelection  - <code>textSelection()</code></li>
+            <li>Pan  - <code>panMode()</code></li>
+            <li>Annotation Edit - <code>openEditAnntation()</code></li>
+            <li>FormFields Edit - <code>addEditFormFields()</code></li>
+            <li>Search Text - <code>viewer.textSearch.searchText(searchText,isMatchCase)</code></li>
+            <li>Search Next - <code>viewer.textSearch.searchNext()</code></li>
+            <li>Search Previous - <code>viewer.textSearch.searchPrevious()</code></li>
+            <li>Cancel Search Text - <code>viewer.textSearch.cancelTextSearch()</code></li>
+            <li>Print - <code>viewer.print.print()</code></li>
+            <li>Fit To Page - <code>viewer.magnification.fitToPage()</code></li>
+            <li>Zoom In - <code>viewer.magnification.zoomIn()</code></li>
+            <li>Zoom Out - <code>viewer.magnification.zoomOut()</code></li>
+        </ul>
+        <p>
+            More information on the PDF Viewer instantiation can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/pdfviewer/getting-started/">
+                documentation section
+            </a>.
+        </p>
+    </div>
 }
-@*custom code start*@
 <style>
+    /* custom code start*/
+    #pdfviewer {
+        height: 640px;
+    }
+
     #magnificationToolbar {
         background: transparent;
         height: auto;
-        width: 200px;
+        min-height: 56px;
+        width: auto;
+        border: none;
         position: absolute;
-        z-index: 1001;
-        left: calc(100% - 120px);
-        top: calc(100% - 110px);
+        z-index: 900;
+        top: calc(100% - 140px);
+        left: calc(100% - 150px);
         transform: rotate(90deg);
-        border-width: 0px;
-    }
-
-    .e-pv-zoom-out-icon {
-        transform: rotate(-90deg);
     }
 
     div#magnificationToolbar.e-toolbar .e-toolbar-items {
         background: transparent;
+        padding: 2px 3px 2px 2px;
     }
 
     #magnificationToolbar.e-toolbar .e-tbar-btn {
         border-radius: 50%;
         min-height: 30px;
         min-width: 30px;
+        border: 1px solid #c8c8c8;
     }
 
-    #topToolbar {
-        top: 0px;
-        z-index: 1001;
+    #customToolbar {
+        top: 20px;
+        z-index: 900;
     }
-    .material .e-pv-current-page-number {
-        border-width: 1px;
+
+    .e-bookmark-popup {
+        height: 300px;
+        max-width: 300px;
+    }
+
+    .e-text-search-popup {
+        height: 104px;
+        max-width: 348px;
+    }
+
+    .e-custom-search-input {
+        width: 234px;
+    }
+
+    .e-pv-fit-page-icon::before {
+        content: '\e91b';
+        font-family: "e-icons";
+    }
+
+    .e-text-search-popup .e-footer-content,
+    .e-bookmark-popup .e-footer-content {
+        padding: 0;
+        height: 0;
+    }
+
+    .search-button,
+    .search-button:disabled,
+    .search-button:focus,
+    .search-button:hover {
+        background: transparent;
+        box-shadow: none;
+    }
+
+    #popup .e-dlg-content {
+        padding-left: 0;
+        padding-bottom: 0;
+    }
+
+    .e-pv-bookmarks {
+        min-width: 234px;
     }
 
     .e-pv-current-page-number {
@@ -114,70 +323,53 @@
         text-align: center;
     }
 
-    .e-icons {
-        font-family: "e-icons";
-        font-style: normal;
-        font-variant: normal;
-        font-weight: normal;
-        line-height: 1;
-        text-transform: none;
+    .material .e-pv-current-page-number {
+        border-width: 1px;
     }
 
-    .e-pv-icon::before {
-        font-family: 'e-icons';
+    .e-btn-icon.e-pv-zoom-out-icon.e-icons {
+        transform: rotate(90deg);
     }
 
-    .e-pv-icon-search::before {
-        font-family: 'e-icons';
-        font-size: 12px;
+    .flex-container {
+        display: flex;
+        justify-content: flex-end;
     }
 
-    #topToolbar .e-pv-download-document-icon::before {
-        padding-left: 4px;
-        content: '\e914';
+    .render-mode-info {
+        background: none;
+        border: none;
+        padding-left: 0px;
     }
 
-    #topToolbar .e-pv-print-document-icon::before {
-        padding-left: 1px;
-        content: '\e917';
+        .render-mode-info .render-mode-info-icon {
+            height: 16px;
+            width: 16px;
+        }
+
+    .switchLabel {
+        font-family: "Segoe UI", "GeezaPro", "DejaVu Serif", sans-serif;
+        font-weight: 400;
+        line-height: 20px;
+        letter-spacing: 0.24px;
+        text-align: right;
+        font-size: 14px;
     }
 
-    .e-pv-previous-page-navigation-icon::before {
-        content: '\e910';
+    .render-mode-info .render-mode-info-icon::before {
+        line-height: 0.5rem;
     }
 
-    .e-pv-next-page-navigation-icon::before {
-        content: '\e911';
-    }
-
-    .e-pv-zoom-out-icon::before {
-        content: '\e912';
-    }
-
-    .e-pv-zoom-in-icon::before {
-        content: '\e91d';
-    }
-
-    .e-pv-fit-page::before {
-        content: '\e91b';
-    }
-    .e-pv-open-document-icon::before {
-        content: '\e91c';
-    } 
-
-    @@font-face {
-        font-family: "e-icons";
-        font-style: normal;
-        font-weight: normal;
-        src: url(data:application/x-font-ttf;charset=utf-8;base64,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ZWd1bGFyY3VzdG9tLXRvb2xiYXJbMTkwOF1jdXN0b20tdG9vbGJhclsxOTA4XVZlcnNpb24gMS4wY3VzdG9tLXRvb2xiYXJbMTkwOF1Gb250IGdlbmVyYXRlZCB1c2luZyBTeW5jZnVzaW9uIE1ldHJvIFN0dWRpb3d3dy5zeW5jZnVzaW9uLmNvbQAgAGMAdQBzAHQAbwBtAC0AdABvAG8AbABiAGEAcgBbADEAOQAwADgAXQBSAGUAZwB1AGwAYQByAGMAdQBzAHQAbwBtAC0AdABvAG8AbABiAGEAcgBbADEAOQAwADgAXQBjAHUAcwB0AG8AbQAtAHQAbwBvAGwAYgBhAHIAWwAxADkAMAA4AF0AVgBlAHIAcwBpAG8AbgAgADEALgAwAGMAdQBzAHQAbwBtAC0AdABvAG8AbABiAGEAcgBbADEAOQAwADgAXQBGAG8AbgB0ACAAZwBlAG4AZQByAGEAdABlAGQAIAB1AHMAaQBuAGcAIABTAHkAbgBjAGYAdQBzAGkAbwBuACAATQBlAHQAcgBvACAAUwB0AHUAZABpAG8AdwB3AHcALgBzAHkAbgBjAGYAdQBzAGkAbwBuAC4AYwBvAG0AAAAAAgAAAAAAAAAKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOAQIBAwEEAQUBBgEHAQgBCQEKAQsBDAENAQ4BDwAIVG9wLWljb24LZG93bi1hcnJvdzIKUFZfWm9vbW91dAlQVl9ab29taW4LUFZfRG93bmxvYWQLUFZfQm9va21hcmsJUFZfU2VhcmNoCFBWX1ByaW50C1BWX1ByZXZpb3VzB1BWX05leHQIUFZfQ2xvc2UMUFZfRml0VG9QYWdlB1BWX09wZW4AAA==) format('truetype');
+    .buttonSwitch {
+        Width: 40px;
+        Height: 24px;
     }
 </style>
-@*custom code end*@
-
 <script type="text/javascript">
     var currentPageBox
     var matchCase = false;
-	var filename;
+    var filename;
+    var isInkEnabled = false;
     window.onload = function () {
         currentPageBox = document.getElementById('currentPage');
         currentPageBox.value = '1';
@@ -202,21 +394,121 @@
         });
     }
 
+    function contentTemplate() {
+        return `<ejs-menu id="menu" select="select(event)" items='menuItems'></ejs-menu> `;
+    }
+    function select(args) {
+        disableInkAnnotation();
+        var viewer = document.getElementById('pdfviewer').ej2_instances[0];
+        var stampId = args.element.id;
+        var stampText = args.element.innerText;
+        const textSearchToolbarElement = document.getElementById('textSearchToolbar');
+        if (textSearchToolbarElement !== null && textSearchToolbarElement.style.display === 'block') {
+            textSearchToolbarElement.style.display = 'none';
+        }
 
+        const signatureToolbarElement = document.getElementById('SignatureToolbar');
+        if (signatureToolbarElement !== null && signatureToolbarElement.style.display === 'block') {
+            signatureToolbarElement.style.display = 'none';
+        }
+
+        const formFieldToolbarElement = document.getElementById('formFieldToolbar');
+        if (formFieldToolbarElement !== null && formFieldToolbarElement.style.display === 'block') {
+            formFieldToolbarElement.style.display = 'none';
+            viewer.designerMode = false;
+        }
+        if (stampId === 'Dynamic' && stampText != null) {
+            if (stampText === 'Revised') {
+                viewer.annotation.setAnnotationMode("Stamp", "Revised");
+            }
+            else if (stampText == "Reviewed") {
+                viewer.annotation.setAnnotationMode("Stamp", "Reviewed");
+            }
+            else if (stampText == "Received") {
+                viewer.annotation.setAnnotationMode("Stamp", "Received");
+            }
+            else if (stampText == "Confidential") {
+                viewer.annotation.setAnnotationMode("Stamp", "Confidential");
+            }
+            else if (stampText == "Approved") {
+                viewer.annotation.setAnnotationMode("Stamp", "Approved");
+            }
+            else if (stampText == "Not Approved") {
+                viewer.annotation.setAnnotationMode("Stamp", "NotApproved");
+            }
+        }
+        if (stampId === 'Sign Here' && stampText != null) {
+            if (stampText === 'Witness') {
+                viewer.annotation.setAnnotationMode("Stamp", undefined, "Witness");
+            }
+            else if (stampText == "Initial Here") {
+                viewer.annotation.setAnnotationMode("Stamp", undefined, "InitialHere");
+            }
+            else if (stampText == "Sign Here") {
+                viewer.annotation.setAnnotationMode("Stamp", undefined, "SignHere");
+            }
+            else if (stampText == "Accepted") {
+                viewer.annotation.setAnnotationMode("Stamp", undefined, "Accepted");
+            }
+            else if (stampText == "Rejected") {
+                viewer.annotation.setAnnotationMode("Stamp", undefined, "Rejected");
+            }
+        }
+        if (stampId === 'Standard Business' && stampText != null) {
+            if (stampText === 'Approved') {
+                viewer.annotation.setAnnotationMode("Stamp", undefined, undefined, "Approved");
+            }
+            else if (stampText == "Not Approved") {
+                viewer.annotation.setAnnotationMode("Stamp", undefined, undefined, "NotApproved");
+            }
+            else if (stampText == "Draft") {
+                viewer.annotation.setAnnotationMode("Stamp", undefined, undefined, "Draft");
+            }
+            else if (stampText == "Final") {
+                viewer.annotation.setAnnotationMode("Stamp", undefined, undefined, "Final");
+            }
+            else if (stampText == "Completed") {
+                viewer.annotation.setAnnotationMode("Stamp", undefined, undefined, "Completed");
+            }
+            else if (stampText == "Confidential") {
+                viewer.annotation.setAnnotationMode("Stamp", undefined, undefined, "Confidential");
+            }
+            else if (stampText == "For Public Release") {
+                viewer.annotation.setAnnotationMode("Stamp", undefined, undefined, "ForPublicRelease");
+            }
+            else if (stampText == "Not For Public Release") {
+                viewer.annotation.setAnnotationMode("Stamp", undefined, undefined, "NotForPublicRelease");
+            }
+            else if (stampText == "For Comment") {
+                viewer.annotation.setAnnotationMode("Stamp", undefined, undefined, "ForComment");
+            }
+            else if (stampText == "Void") {
+                viewer.annotation.setAnnotationMode("Stamp", undefined, undefined, "Void");
+            }
+            else if (stampText == "Preliminary Results") {
+                viewer.annotation.setAnnotationMode("Stamp", undefined, undefined, "PreliminaryResults");
+            }
+            else if (stampText == "Information Only") {
+                viewer.annotation.setAnnotationMode("Stamp", undefined, undefined, "InformationOnly");
+            }
+        }
+
+    }
     function openPage() {
+        disableInkAnnotation();
         document.getElementById('fileUpload').click();
     }
     function readFile(evt) {
         var upoadedFiles = evt.target.files;
         var uploadedFile = upoadedFiles[0];
-		filename = upoadedFiles[0].name;
+        filename = upoadedFiles[0].name;
         var reader = new FileReader();
         reader.readAsDataURL(uploadedFile);
         reader.onload = function () {
             var obj = document.getElementById('pdfviewer').ej2_instances[0];
-            var uploadedFileUrl = this.result;
+            var uploadedFileUrl = pdfViewerresult;
             obj.load(uploadedFileUrl, null);
-			obj.fileName = filename;
+            obj.fileName = filename;
             currentPageBox = document.getElementById('currentPage');
             currentPageBox.value = '1';
             var pageCount = document.getElementById('totalPage');
@@ -225,7 +517,7 @@
     }
     function pageChanged() {
         var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
-       document.getElementById('currentPage').value = pdfViewer.currentPageNumber;
+        document.getElementById('currentPage').value = pdfViewer.currentPageNumber;
         updatePageNavigation();
     }
     function onCurrentPageBoxKeypress(event) {
@@ -274,18 +566,83 @@
         }
     }
     function previousClicked() {
+        disableInkAnnotation();
         var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
         pdfViewer.navigation.goToPreviousPage();
     }
     function nextClicked() {
+        disableInkAnnotation();
         var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
         pdfViewer.navigation.goToNextPage();
     }
+    function textSelection() {
+        disableInkAnnotation();
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if (pdfViewer.tool == 'Ink') {
+            pdfViewer.annotation.setAnnotationMode('Ink');
+        }
+        pdfViewer.interactionMode = 'TextSelection';
+        pdfViewer.enableTextSelection = true;
+
+        const editAnnotationToolbarElement = document.getElementById('editAnnotationToolbar');
+        if (editAnnotationToolbarElement?.style.display === 'block') {
+            editAnnotationToolbarElement.style.display = 'none';
+        }
+
+        const textSearchToolbarElement = document.getElementById('textSearchToolbar');
+        if (textSearchToolbarElement?.style.display === 'block') {
+            textSearchToolbarElement.style.display = 'none';
+        }
+
+        const signatureToolbarElement = document.getElementById('SignatureToolbar');
+        if (signatureToolbarElement?.style.display === 'block') {
+            signatureToolbarElement.style.display = 'none';
+        }
+
+        const formFieldToolbarElement = document.getElementById('formFieldToolbar');
+        if (formFieldToolbarElement?.style.display === 'block') {
+            formFieldToolbarElement.style.display = 'none';
+            pdfViewer.designerMode = false;
+        }
+    }
+
+    function panMode() {
+        disableInkAnnotation();
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if (pdfViewer.tool == 'Ink') {
+            pdfViewer.annotation.setAnnotationMode('Ink');
+        }
+        pdfViewer.interactionMode = 'Pan';
+        pdfViewer.enablePanMode = true;
+
+        const editAnnotationToolbarElement = document.getElementById('editAnnotationToolbar');
+        if (editAnnotationToolbarElement?.style.display === 'block') {
+            editAnnotationToolbarElement.style.display = 'none';
+        }
+
+        const textSearchToolbarElement = document.getElementById('textSearchToolbar');
+        if (textSearchToolbarElement?.style.display === 'block') {
+            textSearchToolbarElement.style.display = 'none';
+        }
+
+        const signatureToolbarElement = document.getElementById('SignatureToolbar');
+        if (signatureToolbarElement?.style.display === 'block') {
+            signatureToolbarElement.style.display = 'none';
+        }
+
+        const formFieldToolbarElement = document.getElementById('formFieldToolbar');
+        if (formFieldToolbarElement?.style.display === 'block') {
+            formFieldToolbarElement.style.display = 'none';
+            pdfViewer.designerMode = false;
+        }
+    }
     function printClicked() {
+        disableInkAnnotation();
         var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
         pdfViewer.print.print();
     }
     function downloadClicked() {
+        disableInkAnnotation();
         var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
         pdfViewer.download();
     }
@@ -301,11 +658,462 @@
         var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
         pdfViewer.magnification.zoomOut();
     }
-</script>
 
+    function openEditAnnotation() {
+        disableInkAnnotation();
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        const textSearchToolbarElement = document.getElementById('textSearchToolbar');
+        if (textSearchToolbarElement !== null && textSearchToolbarElement.style.display === 'block') {
+            textSearchToolbarElement.style.display = 'none';
+        }
+
+        const signatureToolbarElement = document.getElementById('SignatureToolbar');
+        if (signatureToolbarElement !== null && signatureToolbarElement.style.display === 'block') {
+            signatureToolbarElement.style.display = 'none';
+        }
+
+        const formFieldToolbarElement = document.getElementById('formFieldToolbar');
+        if (formFieldToolbarElement !== null && formFieldToolbarElement.style.display === 'block') {
+            formFieldToolbarElement.style.display = 'none';
+            pdfViewer.designerMode = false;
+        }
+        const editAnnotationToolbarElement = document.getElementById('editAnnotationToolbar');
+        if (editAnnotationToolbarElement !== null) {
+            if (editAnnotationToolbarElement.style.display === 'block') {
+                editAnnotationToolbarElement.style.display = 'none';
+            } else {
+                editAnnotationToolbarElement.style.display = 'block';
+            }
+        }
+
+    }
+    function addEditFormFields() {
+        disableInkAnnotation();
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if (pdfViewer.tool == 'Ink') {
+            pdfViewer.annotation.setAnnotationMode('Ink');
+        }
+        const formFieldToolbarElement = document.getElementById('formFieldToolbar');
+        if (formFieldToolbarElement !== null) {
+            if (formFieldToolbarElement.style.display === 'block') {
+                formFieldToolbarElement.style.display = 'none';
+                pdfViewer.designerMode = false;
+            } else {
+                formFieldToolbarElement.style.display = 'block';
+                pdfViewer.designerMode = true;
+            }
+        }
+
+        const editAnnotationToolbarElement = document.getElementById('editAnnotationToolbar');
+        if (editAnnotationToolbarElement !== null && editAnnotationToolbarElement.style.display === 'block') {
+            editAnnotationToolbarElement.style.display = 'none';
+        }
+
+        const textSearchToolbarElement = document.getElementById('textSearchToolbar');
+        if (textSearchToolbarElement !== null && textSearchToolbarElement.style.display === 'block') {
+            textSearchToolbarElement.style.display = 'none';
+        }
+
+        const signatureToolbarElement = document.getElementById('SignatureToolbar');
+        if (signatureToolbarElement !== null && signatureToolbarElement.style.display === 'block') {
+            signatureToolbarElement.style.display = 'none';
+        }
+    }
+
+    function highlight() {
+        disableInkAnnotation();
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if (pdfViewer.tool == 'Ink') {
+            pdfViewer.annotation.setAnnotationMode('Ink');
+        }
+        pdfViewer.annotation.setAnnotationMode('Highlight');
+    }
+    function underLine() {
+        disableInkAnnotation();
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if (pdfViewer.tool == 'Ink') {
+            pdfViewer.annotation.setAnnotationMode('Ink');
+        }
+        pdfViewer.annotation.setAnnotationMode('Underline');
+    }
+
+    function strikeThrough() {
+        disableInkAnnotation();
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if (pdfViewer.tool == 'Ink') {
+            pdfViewer.annotation.setAnnotationMode('Ink');
+        }
+        pdfViewer.annotation.setAnnotationMode('Strikethrough');
+    }
+
+    function addLine() {
+        disableInkAnnotation();
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if (pdfViewer.tool == 'Ink') {
+            pdfViewer.annotation.setAnnotationMode('Ink');
+        }
+        pdfViewer.annotation.setAnnotationMode('Line');
+    }
+
+    function addArrow() {
+        disableInkAnnotation();
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if (pdfViewer.tool == 'Ink') {
+            pdfViewer.annotation.setAnnotationMode('Ink');
+        }
+        pdfViewer.annotation.setAnnotationMode('Arrow')
+    }
+
+    function addRectangle() {
+        disableInkAnnotation();
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if (pdfViewer.tool == 'Ink') {
+            pdfViewer.annotation.setAnnotationMode('Ink');
+        }
+        pdfViewer.annotation.setAnnotationMode('Rectangle');
+    }
+
+    function addCircle() {
+        disableInkAnnotation();
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if (pdfViewer.tool == 'Ink') {
+            pdfViewer.annotation.setAnnotationMode('Ink');
+        }
+        pdfViewer.annotation.setAnnotationMode('Circle');
+    }
+
+    function addPoligon() {
+        disableInkAnnotation();
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if (pdfViewer.tool == 'Ink') {
+            pdfViewer.annotation.setAnnotationMode('Ink');
+        }
+        pdfViewer.annotation.setAnnotationMode('Polygon');
+    }
+
+    function distance() {
+        disableInkAnnotation();
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if (pdfViewer.tool == 'Ink') {
+            pdfViewer.annotation.setAnnotationMode('Ink');
+        }
+        pdfViewer.annotation.setAnnotationMode('Distance');
+    }
+
+    function perimeter() {
+        disableInkAnnotation();
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if (pdfViewer.tool == 'Ink') {
+            pdfViewer.annotation.setAnnotationMode('Ink');
+        }
+        pdfViewer.annotation.setAnnotationMode('Perimeter');
+    }
+
+    function area() {
+        disableInkAnnotation();
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if (pdfViewer.tool == 'Ink') {
+            pdfViewer.annotation.setAnnotationMode('Ink');
+        }
+        pdfViewer.annotation.setAnnotationMode('Area');
+    }
+
+    function radius() {
+        disableInkAnnotation();
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if (pdfViewer.tool == 'Ink') {
+            pdfViewer.annotation.setAnnotationMode('Ink');
+        }
+        pdfViewer.annotation.setAnnotationMode('Radius');
+    }
+
+    function volume() {
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if (pdfViewer.tool == 'Ink') {
+            pdfViewer.annotation.setAnnotationMode('Ink');
+        }
+        pdfViewer.annotation.setAnnotationMode('Volume');
+    }
+
+    function freeText() {
+        disableInkAnnotation();
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if (pdfViewer.tool == 'Ink') {
+            pdfViewer.annotation.setAnnotationMode('Ink');
+        }
+        pdfViewer.annotation.setAnnotationMode('FreeText');
+    }
+    function addSign() {
+        disableInkAnnotation();
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if (pdfViewer.tool == 'Ink') {
+            pdfViewer.annotation.setAnnotationMode('Ink');
+        }
+        const element = document.querySelector('.e-dropdown-popup');
+        if (element !== null) {
+            if ('formField_signature') {
+                const editAnnotationToolbarElement = document.getElementById('editAnnotationToolbar');
+                if (editAnnotationToolbarElement !== null && editAnnotationToolbarElement.style.display === 'block') {
+                    editAnnotationToolbarElement.style.display = 'none';
+                }
+
+                element.style.left = '50%';
+                element.style.top = '174px';
+            } else {
+                element.style.left = '790px';
+                element.style.top = '137px';
+            }
+        }
+
+        const signatureToolbarElement = document.getElementById('SignatureToolbar');
+        if (signatureToolbarElement !== null) {
+            if (signatureToolbarElement.style.display === 'block') {
+                signatureToolbarElement.style.display = 'none';
+            } else {
+                signatureToolbarElement.style.display = 'block';
+            }
+        }
+
+        const textSearchToolbarElement = document.getElementById('textSearchToolbar');
+        if (textSearchToolbarElement !== null && textSearchToolbarElement.style.display === 'block') {
+            textSearchToolbarElement.style.display = 'none';
+        }
+
+    }
+    function addSign1() {
+        disableInkAnnotation();
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if (pdfViewer.tool == 'Ink') {
+            pdfViewer.annotation.setAnnotationMode('Ink');
+        }
+        const element = document.querySelector('.e-dropdown-popup');
+        if (element !== null) {
+            if ('signature') {
+                const editAnnotationToolbarElement = document.getElementById('editAnnotationToolbar');
+                if (editAnnotationToolbarElement !== null && editAnnotationToolbarElement.style.display === 'block') {
+                    editAnnotationToolbarElement.style.display = 'block';
+                }
+
+                element.style.left = '73%';
+                element.style.top = '174px';
+            } else {
+                element.style.left = '790px';
+                element.style.top = '137px';
+            }
+        }
+
+        const signatureToolbarElement = document.getElementById('SignatureToolbar');
+        if (signatureToolbarElement !== null) {
+            if (signatureToolbarElement.style.display === 'block') {
+                signatureToolbarElement.style.display = 'none';
+            } else {
+                signatureToolbarElement.style.display = 'block';
+            }
+        }
+
+        const textSearchToolbarElement = document.getElementById('textSearchToolbar');
+        if (textSearchToolbarElement !== null && textSearchToolbarElement.style.display === 'block') {
+            textSearchToolbarElement.style.display = 'none';
+        }
+
+    }
+    function findText() {
+        disableInkAnnotation();
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if (pdfViewer.tool == 'Ink') {
+            pdfViewer.annotation.setAnnotationMode('Ink');
+        }
+        const editAnnotationToolbarElement = document.getElementById('editAnnotationToolbar');
+        if (editAnnotationToolbarElement !== null && editAnnotationToolbarElement.style.display === 'block') {
+            editAnnotationToolbarElement.style.display = 'none';
+        }
+
+        const textSearchToolbarElement = document.getElementById('textSearchToolbar');
+        if (textSearchToolbarElement !== null) {
+            if (textSearchToolbarElement.style.display === 'block') {
+                textSearchToolbarElement.style.display = 'none';
+            } else {
+                textSearchToolbarElement.style.display = 'block';
+            }
+        }
+
+        const formFieldToolbarElement = document.getElementById('formFieldToolbar');
+        if (formFieldToolbarElement !== null && formFieldToolbarElement.style.display === 'block') {
+            formFieldToolbarElement.style.display = 'none';
+            pdfViewer.designerMode = false;
+        }
+
+        const signatureToolbarElement = document.getElementById('SignatureToolbar');
+        if (signatureToolbarElement !== null) {
+            if (signatureToolbarElement.style.display === 'block') {
+                signatureToolbarElement.style.display = 'none';
+            } else {
+                signatureToolbarElement.style.display = 'none';
+            }
+        }
+    }
+    function searchInputKeypressed(event) {
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if (event.key === 'Enter') {
+            initiateTextSearch();
+        }
+    }
+
+    var searchText = '';
+    var prevMatchCase = false;
+    var matchCase = false;
+
+    function initiateTextSearch() {
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        var textsearchPrevElement = document.getElementById('container_prev_occurrence');
+        var textsearchNextElement = document.getElementById('container_next_occurrence');
+        var textsearchcloseElement = document.getElementById('container_close_search_box-icon');
+        var textsearchElement = document.getElementById('container_search_box-icon');
+
+        if (textsearchPrevElement && textsearchNextElement && textsearchcloseElement && textsearchElement) {
+            textsearchPrevElement.disabled = false;
+            textsearchNextElement.disabled = false;
+            textsearchcloseElement.style.display = 'block';
+            textsearchElement.style.display = 'none';
+
+            var currentSearchText = document.getElementById('container_search_input').value;
+
+            if (searchText !== (document.getElementById('container_search_input')).value || prevMatchCase !== matchCase) {
+                pdfViewer.textSearchModule.cancelTextSearch();
+                searchText = (document.getElementById('container_search_input')).value;
+                pdfViewer.textSearchModule.searchText(searchText, matchCase);
+                prevMatchCase = matchCase;
+            } else {
+                nextTextSearch();
+            }
+        }
+    }
+
+    function clearTextSearch() {
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        const textsearchcloseElement = document.getElementById('container_close_search_box-icon');
+        const textsearchElement = document.getElementById('container_search_box-icon');
+        textsearchcloseElement.style.display = 'none';
+        textsearchElement.style.display = 'block';
+        pdfViewer.textSearchModule.cancelTextSearch();
+        const searchTextElement = document.getElementById('container_search_input');
+        searchTextElement.value = '';
+    }
+
+    function previousTextSearch() {
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        pdfViewer.textSearchModule.searchPrevious();
+    }
+
+    function nextTextSearch() {
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        pdfViewer.textSearchModule.searchNext();
+    }
+    function checkBoxChanged(event) {
+        const target = event.target;
+        if (target.checked) {
+            const matchcaseElement = document.getElementById('container_match_case');
+            if (matchcaseElement) {
+                matchcaseElement.checked = true;
+            }
+            matchCase = true;
+            const checkboxSpanElement = document.getElementById('checkboxSpan');
+            if (checkboxSpanElement) {
+                checkboxSpanElement.classList.add('e-check');
+            }
+        } else {
+            matchCase = false;
+            const checkboxSpanElement = document.getElementById('checkboxSpan');
+            if (checkboxSpanElement) {
+                checkboxSpanElement.classList.remove('e-check');
+            }
+        }
+    }
+    function ink() {
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if(!isInkEnabled)
+          {
+            pdfViewer.annotation.setAnnotationMode("Ink");
+            isInkEnabled=true;
+          }
+          else
+          {
+            pdfViewer.annotation.setAnnotationMode("None");
+            isInkEnabled =false;
+          }
+    }
+
+    function disableInkAnnotation() {
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if (isInkEnabled) {
+            pdfViewer.annotation.setAnnotationMode("None");
+            isInkEnabled = false;
+        }
+    }
+
+    function textBox() {
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        pdfViewer.formDesignerModule.setFormFieldMode('Textbox');
+    }
+
+    function passWord() {
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        pdfViewer.formDesignerModule.setFormFieldMode('Password');
+    }
+
+    function checkBox() {
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        pdfViewer.formDesignerModule.setFormFieldMode('CheckBox');
+    }
+
+    function radioButton() {
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        pdfViewer.formDesignerModule.setFormFieldMode('RadioButton');
+    }
+
+    function dropDown() {
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        pdfViewer.formDesignerModule.setFormFieldMode('DropDown');
+    }
+
+    function listBox() {
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        pdfViewer.formDesignerModule.setFormFieldMode('ListBox');
+    }
+
+    function onSignatureClick(event) {
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        const editAnnotationToolbarElement = document.getElementById('editAnnotationToolbar');
+        if (editAnnotationToolbarElement?.style.display === 'block') {
+            if (event) {
+                if (event.innerText === 'ADD SIGNATURE') {
+                    pdfViewer.annotationModule.setAnnotationMode('HandWrittenSignature');
+                } else if (event.innerText === 'ADD INITIAL') {
+                    pdfViewer.annotationModule.setAnnotationMode('Initial');
+                }
+            }
+        }
+
+        const formFieldToolbarElement = document.getElementById('formFieldToolbar');
+        if (formFieldToolbarElement?.style.display === 'block') {
+            if (event) {
+                if (event.innerText === 'ADD SIGNATURE') {
+                    pdfViewer.formDesignerModule.setFormFieldMode('SignatureField');
+                } else if (event.innerText === 'ADD INITIAL') {
+                    pdfViewer.formDesignerModule.setFormFieldMode('InitialField');
+                }
+            }
+        }
+
+        const signatureToolbarElement = document.getElementById('SignatureToolbar');
+        if (signatureToolbarElement?.style.display === 'block') {
+            signatureToolbarElement.style.display = 'none';
+        }
+    }
+</script>
 @section Title{
-                    <title>ASP.NET Core PDF Viewer Custom Toolbar Example - Syncfusion Demos </title> 
+    <title>ASP.NET Core PDF Viewer Custom Toolbar Example - Syncfusion Demos </title>
                 }
 @section Header{
-                    <h1 class='sb-sample-text'>Example of Custom Toolbar in ASP.NET Core PDF Viewer Control</h1>
+    <h1 class='sb-sample-text'>Example of Custom Toolbar in ASP.NET Core PDF Viewer Control</h1>
                 }

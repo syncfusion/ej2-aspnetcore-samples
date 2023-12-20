@@ -64,7 +64,7 @@ namespace EJ2CoreSampleBrowser.Models
             public int ResourceId { get; set; }
             public string ResourceName { get; set; }
             public string ResourceGroup { get; set; }
-            public bool isExpand { get; set; }
+            public string IsExpand { get; set; }
         }
         public class GanttIndicators
         {
@@ -4331,35 +4331,35 @@ namespace EJ2CoreSampleBrowser.Models
                 ResourceId = 1,
                 ResourceName = "Martin Tamer",
                 ResourceGroup = "Planning Team",
-                isExpand = false
+                IsExpand = "false"
             };
             ResourceGroupCollection Record2 = new ResourceGroupCollection()
             {
                 ResourceId = 2,
                 ResourceName = "Rose Fuller",
                 ResourceGroup = "Testing Team",
-                isExpand = true
+                IsExpand = "true"
             };
             ResourceGroupCollection Record3 = new ResourceGroupCollection()
             {
                 ResourceId = 3,
                 ResourceName = "Margaret Buchanan",
                 ResourceGroup = "Approval Team",
-                isExpand = false
+                IsExpand = "false"
             };
             ResourceGroupCollection Record4 = new ResourceGroupCollection()
             {
                 ResourceId = 4,
                 ResourceName = "Fuller King",
                 ResourceGroup = "Development Team",
-                isExpand = true
+                IsExpand = "true"
             };
             ResourceGroupCollection Record5 = new ResourceGroupCollection()
             {
                 ResourceId = 5,
                 ResourceName = "Davolio Fuller",
                 ResourceGroup = "Approval Team",
-                isExpand = false
+                IsExpand = "false"
             };
             ResourceGroupCollection Record6 = new ResourceGroupCollection()
             {
@@ -5187,35 +5187,35 @@ namespace EJ2CoreSampleBrowser.Models
                 ResourceId = 1,
                 ResourceName = "Martin Tamer",
                 ResourceGroup = "Planning Team",
-                isExpand = false
+                IsExpand = "false"
             };
             ResourceGroupCollection Record2 = new ResourceGroupCollection()
             {
                 ResourceId = 2,
                 ResourceName = "Rose Fuller",
                 ResourceGroup = "Testing Team",
-                isExpand = true
+                IsExpand = "true"
             };
             ResourceGroupCollection Record3 = new ResourceGroupCollection()
             {
                 ResourceId = 3,
                 ResourceName = "Margaret Buchanan",
                 ResourceGroup = "Approval Team",
-                isExpand = false
+                IsExpand = "false"
             };
             ResourceGroupCollection Record4 = new ResourceGroupCollection()
             {
                 ResourceId = 4,
                 ResourceName = "Fuller King",
                 ResourceGroup = "Development Team",
-                isExpand = false
+                IsExpand = "false"
             };
             ResourceGroupCollection Record5 = new ResourceGroupCollection()
             {
                 ResourceId = 5,
                 ResourceName = "Davolio Fuller",
                 ResourceGroup = "Approval Team",
-                isExpand = true
+                IsExpand = "true"
             };
             GanttResourcesCollection.Add(Record1);
             GanttResourcesCollection.Add(Record2);

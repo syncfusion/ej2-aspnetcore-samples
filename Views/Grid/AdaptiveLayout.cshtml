@@ -9,10 +9,11 @@
         <div class="control-wrapper e-bigger e-adaptive-demo">
             <div class="e-mobile-layout">
                 <div class="e-mobile-content">
-                    <ejs-grid id="adaptivebrowser" dataSource="ViewBag.dataSource" enableAdaptiveUI="true" rowRenderingMode="Vertical" height="100%" allowPaging="true" allowFiltering="true" allowSorting="true" toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel", "Search" })" load="onLoad">
+                    <ejs-grid id="adaptivebrowser" dataSource="ViewBag.dataSource" allowGrouping="false" allowExcelExport="true" allowPdfExport="true" toolbarClick="toolbarClick" enableAdaptiveUI="true" rowRenderingMode="Vertical" height="100%" allowPaging="true" allowFiltering="true" allowSorting="true" toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel", "Search", "ColumnChooser", "ExcelExport", "PdfExport" })" load="onLoad" showColumnMenu="true" showColumnChooser="true">
+                        <e-grid-groupSettings showGroupedColumn="true"></e-grid-groupSettings>
                         <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Dialog"></e-grid-editSettings>
                         <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
-                        <e-grid-pagesettings pageCount="3"></e-grid-pagesettings>
+                        <e-grid-pagesettings pageCount="3" pageSizes=true></e-grid-pagesettings>
                         <e-grid-aggregates>
                             <e-grid-aggregate>
                                 <e-aggregate-columns>
@@ -30,10 +31,11 @@
                 </div>
             </div>
             <div class="e-desktop-layout">
-                <ejs-grid id="adaptivedevice" dataSource="ViewBag.dataSource" enableAdaptiveUI="true" rowRenderingMode="Vertical" height="100%" allowPaging="true" allowFiltering="true" allowSorting="true" toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel", "Search" })" load="onLoad">
-                    <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Dialog"></e-grid-editSettings>
+                <ejs-grid id="adaptivedevice" dataSource="ViewBag.dataSource" allowGrouping="false" allowExcelExport="true" allowPdfExport="true" toolbarClick="toolbarClick" enableAdaptiveUI="true" rowRenderingMode="Vertical" height="100%" allowPaging="true" allowFiltering="true" allowSorting="true" toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel", "Search", "ColumnChooser", "ExcelExport", "PdfExport" })" load="onLoad" showColumnMenu="true" showColumnChooser="true">
+                <e-grid-groupSettings showGroupedColumn="true"></e-grid-groupSettings>    
+                <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Dialog"></e-grid-editSettings>
                     <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
-                    <e-grid-pagesettings pageCount="3"></e-grid-pagesettings>
+                    <e-grid-pagesettings pageCount="3" pageSizes=true></e-grid-pagesettings>
                     <e-grid-aggregates>
                         <e-grid-aggregate>
                             <e-aggregate-columns>
@@ -82,11 +84,8 @@
             } else {
                 grid = document.getElementById("adaptivebrowser").ej2_instances[0];
             }
-            if (e.checked) {
-                grid.rowRenderingMode = 'Horizontal';
-            } else {
-                grid.rowRenderingMode = 'Vertical';
-            }
+            grid.rowRenderingMode = e.checked ? 'Horizontal' : 'Vertical';
+            grid.allowGrouping = e.checked;
         }
 
         function onLoad() {
@@ -98,6 +97,25 @@
             }
             if (!ej.base.Browser.isDevice) {
                 grid.adaptiveDlgTarget = document.getElementsByClassName('e-mobile-content')[0];
+            }
+            if (grid.pageSettings.pageSizes) {
+                document.querySelector('.e-adaptive-demo').classList.add('e-pager-pagesizes');
+            }else {
+                document.querySelector('.e-adaptive-demo').classList.remove('e-pager-pagesizes');
+            }
+        }
+
+        function toolbarClick(args) {
+            var gridObj;
+            if (ej.base.Browser.isDevice && document.getElementById("adaptivedevice") && document.getElementById("adaptivedevice").classList.contains('e-grid')) {
+                gridObj = document.getElementById("adaptivedevice").ej2_instances[0];
+            } else {
+                gridObj = document.getElementById("adaptivebrowser").ej2_instances[0];
+            }
+            if (args.item.id === gridObj.element.id + '_pdfexport') {
+                gridObj.pdfExport();
+            } else if (args.item.id === gridObj.element.id + '_excelexport') {
+                gridObj.excelExport();
             }
         }
     </script>
@@ -188,7 +206,7 @@
 @section ActionDescription{
     <div id="action-description">
         <p>
-            This sample demonstrates the rendering order of the grid row elements and adaptive dialogs.
+            This sample demonstrates optimal viewing experience and improve usability on small screens.
         </p>
     </div>
 }
@@ -200,7 +218,7 @@
 @section Description{
     <div id="description">
         <p>
-            The <code>enableAdaptiveUI</code> property is used to render the grid filter, sort and edit dialogs adaptively and
+            The <code>enableAdaptiveUI</code> property is used to render the grid filter, sort, edit, pager and toolbars like column chooser, pdf export, excel export, etc... dialogs adaptively and
             <code>
                 rowRenderingMode
             </code>
@@ -212,6 +230,9 @@
         </ul>
         <p>
             In this sample, you can change the row elements rendering direction by using the properties panel checkbox
+        </p>
+        <p> In this demo, the column menu feature is only supported for the Grid <code>rowRenderingMode</code> mode as <code>Vertical</code>.
+            This feature includes grouping, sorting, autofit, filter, and column chooser feature.
         </p>
     </div>
 }

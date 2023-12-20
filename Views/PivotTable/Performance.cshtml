@@ -1,0 +1,175 @@
+@using Syncfusion.EJ2.PivotView
+@section Meta{
+            <meta name="description" content="This example demonstrates the Performance in ASP.NET Core Pivot Table control. Explore here for more details."/>
+                }
+@section ControlsSection{
+    <div class="control-section" style="overflow:auto">
+        <div id="ddl-control">
+            <ejs-dropdownlist id='performance' dataSource='@ViewBag.performanceOptions' width="240" index='0' change='onChange' placeholder="Select a Data Range" popupHeight="240px">
+                <e-dropdownlist-fields text="text" value="value"></e-dropdownlist-fields>
+            </ejs-dropdownlist>
+            <span id="performanceTime">Time Taken: 0 sec</span>
+        </div>
+        <div class="content-wrapper">
+            <ejs-pivotview id="PivotView" width='100%' height="300" enablevirtualization="true" dataBound="onDataBound" load="onLoad">
+                <e-datasourcesettings expandall="true" enablesorting="false">
+                    <e-formatsettings>
+                        <e-field name="Price" format="C0"></e-field>
+                    </e-formatsettings>
+                    <e-rows>
+                        <e-field name="ProductID"></e-field>
+                    </e-rows>
+                    <e-columns>
+                        <e-field name="Year"></e-field>
+                    </e-columns>
+                    <e-values>
+                        <e-field name="Price" caption="Unit Price"></e-field>
+                        <e-field name="Sold" caption="Unit Sold"></e-field>
+                    </e-values>
+                </e-datasourcesettings>
+                <e-gridsettings columnwidth="120"></e-gridsettings>
+            </ejs-pivotview>
+        </div>
+    </div>
+
+    <style>
+    #ddl-control {
+        margin-bottom: 5px;
+        display: flex;
+    }
+
+    #performanceTime {
+        float: right;
+        margin-top: 10px;
+        margin-right: 27px;
+        margin-left: auto;
+    }
+
+    .e-bigger #performanceTime {
+        margin-top: 8px;
+    }
+
+    @@media(max-width: 440px) {
+        .control-section #ddl-control {
+            margin-bottom: 40px !important;
+            display: block;
+
+            #performanceTime {
+                float: left;
+            }
+        }
+    }
+    </style>
+    <script>
+    var customername = ['TOM', 'Hawk', 'Jon', 'Chandler', 'Monica', 'Rachel', 'Phoebe', 'Gunther',
+        'Ross', 'Geller', 'Joey', 'Bing', 'Tribbiani', 'Janice', 'Bong', 'Perk', 'Green', 'Ken', 'Adams'];
+    var city = ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Philadelphia', 'Phoenix', 'San Antonio', 'Austin',
+        'San Francisco', 'Columbus', 'Washington', 'Portland', 'Oklahoma', 'Las Vegas', 'Virginia', 'St. Louis', 'Birmingham'];
+    var date1;
+    var date2;
+    var isInit = true;
+    var dt = 0;
+    var data = function (count) {
+        var result = [];
+        for (var i = 1; i < (count + 1); i++) {
+            dt++;
+            var round = void 0;
+            var toString_1 = i.toString();
+            if (toString_1.length === 1) {
+                round = '0000' + (i);
+            }
+            else if (toString_1.length === 2) {
+                round = '000' + i;
+            }
+            else if (toString_1.length === 3) {
+                round = '00' + i;
+            }
+            else if (toString_1.length === 4) {
+                round = '0' + i;
+            }
+            else {
+                round = toString_1;
+            }
+            result.push({
+                ProductID: 'PRO-' + round,
+                City: city[Math.round(Math.random() * city.length)] || city[0],
+                Year: "FY " + (dt + 2013),
+                CustomerName: customername[Math.round(Math.random() * customername.length)] || customername[0],
+                Price: Math.round(Math.random() * 5000) + 5000,
+                Sold: Math.round(Math.random() * 80) + 10,
+            });
+            if (dt / 4 == 1)
+                dt = 0;
+
+        }
+        return result;
+    };
+
+    function onChange(args) {
+        var pivotObj = document.getElementById('PivotView').ej2_instances[0];
+        isInit = true;
+        pivotObj.dataSourceSettings.dataSource = data(args.value);
+        date1 = new Date().getTime();
+    }
+
+    function onDataBound(args) {
+        var pivotObj = document.getElementById('PivotView').ej2_instances[0];
+        if (ej.base.Browser.isDevice && pivotObj && pivotObj.enableRtl) {
+            document.querySelector('.control-section').classList.add('e-rtl');
+        }
+        if (pivotObj.dataSourceSettings.dataSource && (pivotObj.dataSourceSettings.dataSource).length > 0) {
+            if (date1 && isInit) {
+                date2 = new Date().getTime();
+                document.getElementById('performanceTime').innerHTML = 'Time Taken: ' + (date2 - date1) / 1000 + ' sec';
+            }
+            isInit = false;
+        }
+    }
+
+    function onLoad() {
+        var pivotObj = document.getElementById('PivotView').ej2_instances[0];
+        pivotObj.dataSourceSettings.dataSource = data(10000);
+        if (isInit) {
+            date1 = new Date().getTime();
+        }
+    }
+    </script>
+}
+
+@section PreScripts {
+    <script>
+        ej.base.enableRipple(false);
+    </script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates how the pivot table loads a large amount of data with ease using virtual scrolling.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            This sample demonstrates how the pivot table performs when bound with a million rows in a highly optimized manner
+            by only displaying rows and columns to the current view port using the <a target="_blank"
+            href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.PivotView.PivotView.html#Syncfusion_EJ2_PivotView_PivotView_EnableVirtualization">
+            enableVirtualization</a> property. By choosing from the dropdown list options, a different number of rows
+            can be loaded into the pivot table.
+        </p>
+        <br />
+        <p>
+            More information on the virtual scrolling can be found in this <a target="_blank"
+                href="https://ej2.syncfusion.com/aspnetcore/documentation/pivot-table/virtual-scrolling">
+                documentation section</a>.
+        </p> 
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Pivot Table Performance Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Performance in ASP.NET Core Pivot Table Control</h1>
+                }

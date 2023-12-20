@@ -2,29 +2,39 @@
 @*@model directive allows you to access the model values*@
 @model EJ2CoreSampleBrowser.Controllers.ComboBoxRecord
 @section ControlsSection{
-    <div class="col-lg-8 control-section">
-        <div class="control-wrapper">
-            <div style='padding-top:70px;'>
-                <ejs-combobox id="datas" dataSource="@Model.RecordList" placeholder="e.g. Item 1" allowFiltering="true" enableVirtualization="true" popupHeight="200px">
+    <div class="control-section col-lg-12">
+        <div id='local-data' class='col-lg-6' style='padding-top:15px'>
+            <div class='content'>
+                <h4>Local Data</h4>
+                <ejs-combobox id="local" dataSource="@Model.RecordList" placeholder="e.g. Item 1" allowFiltering="true" enableVirtualization="true" popupHeight="200px">
                     <e-combobox-fields text="Text" value="ID"></e-combobox-fields>
                 </ejs-combobox>
             </div>
         </div>
+        <div id='remote-data' class='col-lg-6' style='padding-top:15px'>
+            <div class='content'>
+                <h4>Remote Data</h4>
+                <ejs-combobox id="remote" placeholder="OrderId" popupHeight="200px" allowFiltering="true" enableVirtualization="true">
+                    <e-data-manager adaptor="WebApiAdaptor" url="https://services.syncfusion.com/js/production/api/orders" crossDomain="true"></e-data-manager>
+                    <e-combobox-fields text="OrderID" value="OrderID"></e-combobox-fields>
+                </ejs-combobox>
+            </div>
+        </div>
+        <div id='local-data' class='col-lg-6' style='padding-top:15px'>
+            <div class='content'>
+                <h4>Grouping</h4>
+                <ejs-combobox id="group" dataSource="@Model.RecordList" placeholder="e.g. Item 1" allowFiltering="true" enableVirtualization="true" popupHeight="200px">
+                    <e-combobox-fields groupBy="Group" text="Text" value="ID"></e-combobox-fields>
+                </ejs-combobox>
+            </div>
+        </div>
     </div>
+
     @*custom code start*@
     <style>
-        .control-wrapper {
+         .content {
             margin: 0 auto;
-            width: 300px;
-        }
-
-        .property-section .right-side {
-            padding-left: 10px;
-        }
-
-        .property-section .left-side {
-            padding: 5px;
-            width: 25%
+            width: 250px;
         }
     </style>
     @*custom code end*@

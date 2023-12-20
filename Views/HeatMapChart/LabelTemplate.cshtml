@@ -1,0 +1,71 @@
+@using Syncfusion.EJ2.HeatMap;
+@section ControlsSection{
+    @{
+        var textStyle = new { size = "15px", fontWeight = "500", fontStyle = "Normal", fontFamily = "inherit" };
+        var xAxisLabel = new string[] { "Improbable", "Remote", "Occasional", "Probable", "Frequent" };
+        var yAxisLabel = new string[] { "Negligible", "Low", "Moderate", "Significant", "Catastrophic"};
+        var labelTextStyle = new { fontFamily = "inherit"};
+        var xAxisTitle = new { text = "LIKELIHOOD" };
+        var yAxisTitle = new { text = "IMPACT" };
+    }
+    <div class="control-section">
+        <div class="row">
+            <div class="col-md-12">
+                <ejs-heatmap id='container' load="window.onHeatmapLoad"  dataSource="ViewBag.labelTemplateData">
+                    <e-heatmap-datasourcesettings isJsonData="true" adaptorType="Cell" xDataMapping="RowId" yDataMapping="ColumnId" valueMapping="Value"></e-heatmap-datasourcesettings>
+                    <e-heatmap-titlesettings text="Most Visited Destinations by International Tourist Arrivals" textStyle="textStyle">
+                    </e-heatmap-titlesettings>
+                    <e-heatmap-xaxis labels="xAxisLabel" title="xAxisTitle" textStyle="labelTextStyle"></e-heatmap-xaxis>
+                    <e-heatmap-yaxis labels="yAxisLabel" title="yAxisTitle" textStyle="labelTextStyle"></e-heatmap-yaxis>
+                    <e-heatmap-palettesettings type="Fixed">
+                        <e-palettes>
+                            <e-palette value="2", color="#61c961"></e-palette>
+                            <e-palette value="24", color="#fcc81c" ></e-palette>
+                            <e-palette value="48", color= "#ff6354"></e-palette>
+                        </e-palettes>
+                    </e-heatmap-palettesettings>
+                    <e-heatmap-cellsettings showLabel="true" labelTemplate='<div><img src="${Image}" style="width: 35px; height: 35px;"/></div>' textStyle="labelTextStyle">
+                    </e-heatmap-cellsettings>
+                    <e-heatmap-legendsettings visible="false"></e-heatmap-legendsettings>
+                    <e-heatmap-tooltipsettings>
+                        <e-tooltipsettings-textstyle fontFamily="inherit"></e-tooltipsettings-textstyle>
+                    </e-heatmap-tooltipsettings>
+                </ejs-heatmap>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        window.onHeatmapLoad = function (args) {
+             <!-- custom code start -->
+            var selectedTheme = themeName ? themeName : 'Material';
+            args.heatmap.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+             <!-- custom code end -->
+        }
+    </script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+           <p>
+             This sample illustrates a comprehensive view of the likelihood and impact of an organization’s risks. Risks that fall into the HeatMap's green zones require no action. Action is required in the yellow areas. Risks that fall into the red zone require immediate action.
+           </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+    <p>In this example, you can see how to use the <a target='_blank' href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.HeatMap.HeatMapCellSettings.html#Syncfusion_EJ2_HeatMap_HeatMapCellSettings_LabelTemplate">labelTemplate</a> to display images in the HeatMap cells. The <code>labelTemplate</code> can be used to add any HTML elements into the HeatMap cells, such as images, text, and so on.</p>
+    <p>The tooltip is enabled in this example. To see the tooltip in action, hover the mouse over an item or tap an item on touch-enabled devices.</p>
+    <br>
+    <p>More information about label template can be found in this <a target='_blank' href="https://ej2.syncfusion.com/aspnetcore/documentation/heatmap-chart/appearance#template">documentation section</a>.</p>
+    <br>
+</div>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the JSON Cell in ASP.NET Core HeatMap Chart control. Explore here for more details."/>
+                }
+@section Title{
+                    <title>ASP.NET Core HeatMap Chart JSON Cell Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of JSON Cell in ASP.NET Core HeatMap Chart Control</h1>
+                }

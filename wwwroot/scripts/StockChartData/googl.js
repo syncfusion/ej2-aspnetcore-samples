@@ -1,4 +1,4 @@
-var googl = [{
+window.googl = [{
     "x": new Date('2012-04-02T00:00:00.000Z'),
     "open": 320.705719,
     "high": 324.074066,

@@ -18,7 +18,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Grid
     {
         public IActionResult KeyboardNavigation()
         {
-            var order = OrdersDetails.GetAllRecords();
+            var order = Orders.GetAllRecords();
             ViewBag.datasource = order;
             return View();
         }

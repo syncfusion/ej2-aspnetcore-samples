@@ -5,7 +5,7 @@
             <ejs-bulletchart id="bulletgraph" height="400" minimum="5" maximum="45" interval="5"
                              titlePosition="@Syncfusion.EJ2.Charts.TextPosition.Top"
                              title="Sprint Planning" categoryField="name" valueField="completedStories"
-                             subtitle="Estimated in story points"
+                             subtitle="Estimated in story points" valueFill="color"
                              targetField="requiredStories" load="onLoad">
                 <e-bulletchart-animation enable="false"></e-bulletchart-animation>
                 <e-bulletchart-tooltipsettings enable="true"></e-bulletchart-tooltipsettings>
@@ -20,53 +20,125 @@
     </div>
     @*custom code start*@
     <script type="text/javascript">
-      var onLoad = function (args) {
+        var onLoad = function (args) {
             var selectedTheme = location.hash.split('/')[1];
             selectedTheme = selectedTheme ? selectedTheme : 'Material';
             args.bulletChart.dataSource = bulletData;
             args.bulletChart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/contrast/i, 'Contrast'));
             args.bulletChart.width = ej.base.Browser.isDevice ? "100%" : "80%";
+            var fabricColors = ["#e269ae", "#6f6fe2", "#c1c1c1", "#5b9bd5", "#70ad47", "#ffc000", "#ed7d31", "#4472c4"];
+            var bootstrapColors = ["#407c92", "#b99b4f", "#7953ac", "#ff6ea6", "#7ddf1e", "#55a5c2", "#f7ce69", "#a16ee5"];
+            var highContrastColors = ["#43ACEF", "#00C27A", "#FA83C3", "#BA98FF", "#C6E773", "#DFE6B6", "#E98272", "#79ECE4"];
+            var materialColors = ["#63C7FF", "#8A77FF", "#F45C5C", "#EBBB3E", "#61EAA9", "#C57AFF", "#56AEFF", "#9ECB08"];
+            var bootstrapDarkColors = ["#407c92", "#8A77FF", "#7953ac", "#ff6ea6", "#7ddf1e", "#55a5c2", "#f7ce69", "#a16ee5"];
+            var tailwindColors = ["#9333EA", "#F97316", "#0369A1", "#8B5CF6", "#14B8A6", "#334155", "#65A30D", "#5A61F6"];
+            var tailwindDarkColors = ["#2DD4BF", "#F97316", "#FCD34D", "#E879F9", "#4ADE80", "#F87171", "#22D3EE", "#8B5CF6"];
+            var bootstarp5Colors = ["#C9E422", "#FD7400", "#4BE0BC", "#963C70", "#F7523F", "#2196F5", "#FFB400", "#6355C7"];
+            var bootstarp5DarkColors = ["#ECFF77", "#FCAA65", "#63F5D2", "#FF6DB3", "#FF7F71", "#6CBDFF", "#FFD46D", "#8F80F4"];
+            var fluentColors = ["#5887FF", "#EE993D", "#1BD565", "#FF7266", "#AF4BCF", "#EDBB40", "#DA4CB2", "#1AC9E6"];
+            var material3Colors = ["#2196F5", "#4BE0BC", "#FD7400", "#963C70", "#F7523F", "#FFB400", "#00AEE0", "#6355C7"];
+            var material3DarkColors = ["#B93CE4", "#B3F32F", "#FF9E45", "#38FFE7", "#17EA58", "#FFF500", "#FA4EAB", "#4EAAFF"];
+            var defaultColors = ["#7f84e8", "#dd8abd", "#70ad47", "#f8b883", "#e56590", "#357cd2", "#404041", "#00bdae"];
+            var color = [];
+            switch (args.bulletChart.theme) {
+                case 'Fabric':
+                    color = fabricColors;
+                    break;
+                case 'Bootstrap4':
+                case 'Bootstrap':
+                    color = bootstrapColors;
+                    break;
+                case 'HighContrastLight':
+                case 'HighContrast':
+                    color = highContrastColors;
+                    break;
+                case 'MaterialDark':
+                    color = materialColors;
+                    break;
+                case 'FabricDark':
+                    color = fabricColors;
+                    break;
+                case 'BootstrapDark':
+                    color = bootstrapDarkColors;
+                    break;
+                case 'Tailwind':
+                    color = tailwindColors;
+                    break;
+                case 'TailwindDark':
+                    color = tailwindDarkColors;
+                    break;
+                case 'Bootstrap5':
+                    color = bootstarp5Colors;
+                    break;
+                case 'Bootstrap5Dark':
+                    color = bootstarp5DarkColors;
+                    break;
+                case 'Fluent':
+                case 'FluentDark':
+                    color = fluentColors;
+                    break;
+                case 'Material3':
+                    color = material3Colors;
+                    break;
+                case 'Material3Dark':
+                    color = material3DarkColors;
+                    break;
+                default:
+                    color = defaultColors;
+                    break;
+            }
+            for (var i = 0; i < (args.bulletChart.dataSource).length; i++) {
+                args.bulletChart.dataSource[i].color = color[i];
+            }
         }
         var bulletData = [
             {
                 requiredStories: 20,
                 completedStories: 25,
-                name: 'David'
+                name: 'David',
+                color: "#7f84e8"
             },
             {
                 requiredStories: 25,
                 completedStories: 20,
-                name: 'Asif'
+                name: 'Asif',
+                color: "#dd8abd"
             },
             {
                 requiredStories: 15,
                 completedStories: 10,
-                name: 'Thomas'
+                name: 'Thomas',
+                color: "#70ad47"
             },
             {
                 requiredStories: 40,
                 completedStories: 39,
-                name: 'Rohit'
+                name: 'Rohit',
+                color: "#f8b883"
             },
             {
                 requiredStories: 35,
                 completedStories: 40,
-                name: 'Virat'
+                name: 'Virat',
+                color: "#e56590"
             },
             {
                 requiredStories: 28,
                 completedStories: 25,
-                name: 'Jude'
+                name: 'Jude',
+                color: "#357cd2"
             },
             {
                 requiredStories: 10,
                 completedStories: 18,
-                name: 'Warner'
+                name: 'Warner',
+                color: "#404041"
             },
             {
                 requiredStories: 30,
                 completedStories: 28,
-                name: 'Malik'
+                name: 'Malik',
+                color: "#00bdae"
             }
         ];
     </script>
@@ -79,13 +151,19 @@
 @*custom code end*@
 @section ActionDescription{
     <div id="action-description">
-        This sample illustrates a bullet chart with multiple data to compare different values.
+        This sample illustrates a bullet chart with multiple datasets, allowing for the comparison of different values.
     </div>
 }
 @section Description{
     <div id="description">
         <p>
-            Tooltip is enabled in this example. To see the tooltip in action, hover a feature bar or comparative bar on the bullet chart.
+            In this example, you can observe how multiple datasets are compared in a bullet chart. Here, each value bar is assigned a different color from the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.charts.bulletchart.html#Syncfusion_EJ2_Charts_BulletChart_DataSource">DataSource</a>.
+        </p>
+        <p>
+            <code>Tooltips</code> are enabled in this example, to see them in action, hover over a feature bar or comparative bar on the bullet chart.
+        </p>
+        <p>
+            More information on the data binding for the bullet chart can be found in this <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/bullet-chart/data-binding">documentation section</a>.
         </p>
     </div>
 }

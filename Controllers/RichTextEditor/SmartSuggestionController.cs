@@ -17,10 +17,13 @@ namespace EJ2CoreSampleBrowser.Controllers
     {
         public IActionResult SmartSuggestion()
         {
-            ViewBag.items = new object[] { "Bold", "Italic", "Underline","StrikeThrough","FontName","FontSize", "BackgroundColor",
-                "LowerCase", "UpperCase", "SuperScript",  "SubScript",  "|", "Formats",  "Alignments", "NumberFormatList", "BulletFormatList",
-                "Outdent",  "Indent", "EmojiPicker" , "|",  "CreateTable",  "CreateLink",  "Image","|" , "SourceCode", "FullScreen", "|", "Undo" ,"Redo"  
-
+            ViewBag.items = new object[] {"Bold", "Italic", "Underline", "StrikeThrough", "SuperScript", "SubScript", "|",
+                "FontName", "FontSize", "FontColor", "BackgroundColor",  "|",
+                "LowerCase", "UpperCase",
+                "Formats", "Alignments", "|", "NumberFormatList", "BulletFormatList", "|",
+                "Outdent", "Indent", "|",
+                "CreateLink", "Image", "Video", "Audio", "CreateTable", "|", "FormatPainter", "ClearFormat", "|", "EmojiPicker", "|",
+                "SourceCode", "FullScreen", "|", "Undo", "Redo"  
             };
             return View();
 

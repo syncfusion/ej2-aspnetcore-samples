@@ -22,7 +22,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Excel
         //
         // GET: /PivotTable/
 
-        public ActionResult PivotTable(string button, string Filter, string RowFilter, string ColumnFilter, string MultiplePageFilter, string PageFilter)
+        public ActionResult PivotTable(string button, string Filter, string RowFilter, string ColumnFilter, string ApplyGrouping, string MultiplePageFilter, string PageFilter)
         {
             if (button == null)
                 return View();
@@ -61,10 +61,16 @@ namespace EJ2CoreSampleBrowser.Controllers.Excel
                 //Add the field to page axis
                 field.Axis = PivotAxisTypes.Page;
                 fields[1].Axis = PivotAxisTypes.None;
-                fields[0].Axis = PivotAxisTypes.None;
                 fields[3].Axis = PivotAxisTypes.Row;
                 fields[4].Axis = PivotAxisTypes.Column;
                 IPivotField dataField = fields[5];
+
+                //Apply grouping to the years, quarters and months fields
+                if (ApplyGrouping == "ApplyGrouping")
+                {
+                    IPivotFieldGroup group = pivotTable.Fields[0].FieldGroup;
+                    group.GroupBy = PivotFieldGroupType.Years | PivotFieldGroupType.Quarters | PivotFieldGroupType.Months;
+                }
                 //Accessing the Calculated fields from the pivot table .
                 IPivotCalculatedFields calculatedfields = pivotTable.CalculatedFields;
 
@@ -108,9 +114,6 @@ namespace EJ2CoreSampleBrowser.Controllers.Excel
                     IPivotFilter filterValue = pivotTable.Fields[2].PivotFilters.Add();
                     //Page Field would be filtered with value 'Binder'
                     filterValue.Value1 = "East";
-                    //XlsIO layout the Pivot table like Microsoft Excel
-                    if (Filter != "ValueFilter")
-                        pivotTable.Layout();
                 }
                 else if (MultiplePageFilter == "MultiplePageFilter")
                 {
@@ -149,6 +152,8 @@ namespace EJ2CoreSampleBrowser.Controllers.Excel
 
                 //Insert the pivot table. 
                 IPivotTable pivotTable = pivotSheet.PivotTables.Add("PivotTable1", pivotSheet["A1"], cache);
+                if (ApplyGrouping == "ApplyGrouping")
+                    pivotTable.Fields[0].Axis = PivotAxisTypes.Row;
                 pivotTable.Fields[4].Axis = PivotAxisTypes.Page;
 
                 pivotTable.Fields[2].Axis = PivotAxisTypes.Row;
@@ -157,6 +162,13 @@ namespace EJ2CoreSampleBrowser.Controllers.Excel
 
                 IPivotField field = pivotSheet.PivotTables[0].Fields[5];
                 pivotTable.DataFields.Add(field, "Sum of Units", PivotSubtotalTypes.Sum);
+
+                //Apply grouping to the years, quarters and months fields
+                if(ApplyGrouping == "ApplyGrouping")
+                {
+                    IPivotFieldGroup group = pivotTable.Fields[0].FieldGroup;
+                    group.GroupBy = PivotFieldGroupType.Years | PivotFieldGroupType.Quarters | PivotFieldGroupType.Months;
+                }
                 #region Apply RowField Filter
                 if (RowFilter == "RowFilter")
                 {
@@ -200,9 +212,6 @@ namespace EJ2CoreSampleBrowser.Controllers.Excel
                     IPivotFilter filterValue = pivotTable.Fields[4].PivotFilters.Add();
                     //Page Field would be filtered with value 'Binder'
                     filterValue.Value1 = "Binder";
-                    //XlsIO layout the Pivot table like Microsoft Excel
-                    if (Filter != "ValueFilter")
-                        pivotTable.Layout();
                 }
                 else
                 {

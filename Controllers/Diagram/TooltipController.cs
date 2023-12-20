@@ -26,18 +26,18 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
             modeValue.Add(new TooltipProperty() { Text = "Mouse", Type = "Mouse" });
 
             List<TooltipProperty> positionValue = new List<TooltipProperty>();
-            positionValue.Add(new TooltipProperty() { Text = "TopLeft", Type = "TopLeft" });
-            positionValue.Add(new TooltipProperty() { Text = "TopCenter", Type = "TopCenter" });
-            positionValue.Add(new TooltipProperty() { Text = "TopRight", Type = "TopRight" });
-            positionValue.Add(new TooltipProperty() { Text = "BottomLeft", Type = "BottomLeft" });
-            positionValue.Add(new TooltipProperty() { Text = "BottomCenter", Type = "BottomCenter" });
-            positionValue.Add(new TooltipProperty() { Text = "BottomRight", Type = "BottomRight" });
-            positionValue.Add(new TooltipProperty() { Text = "LeftTop", Type = "LeftTop" });
-            positionValue.Add(new TooltipProperty() { Text = "LeftCenter", Type = "LeftCenter" });
-            positionValue.Add(new TooltipProperty() { Text = "LeftBottom", Type = "LeftBottom" });
-            positionValue.Add(new TooltipProperty() { Text = "RightTop", Type = "RightTop" });
-            positionValue.Add(new TooltipProperty() { Text = "RightCenter", Type = "RightCenter" });
-            positionValue.Add(new TooltipProperty() { Text = "RightBottom", Type = "RightBottom" });
+            positionValue.Add(new TooltipProperty() { Text = "Top Left", Type = "TopLeft" });
+            positionValue.Add(new TooltipProperty() { Text = "Top Center", Type = "TopCenter" });
+            positionValue.Add(new TooltipProperty() { Text = "Top Right", Type = "TopRight" });
+            positionValue.Add(new TooltipProperty() { Text = "Bottom Left", Type = "BottomLeft" });
+            positionValue.Add(new TooltipProperty() { Text = "Bottom Center", Type = "BottomCenter" });
+            positionValue.Add(new TooltipProperty() { Text = "Bottom Right", Type = "BottomRight" });
+            positionValue.Add(new TooltipProperty() { Text = "Left Top", Type = "LeftTop" });
+            positionValue.Add(new TooltipProperty() { Text = "Left Center", Type = "LeftCenter" });
+            positionValue.Add(new TooltipProperty() { Text = "Left Bottom", Type = "LeftBottom" });
+            positionValue.Add(new TooltipProperty() { Text = "Right Top", Type = "RightTop" });
+            positionValue.Add(new TooltipProperty() { Text = "Right Center", Type = "RightCenter" });
+            positionValue.Add(new TooltipProperty() { Text = "Right Bottom", Type = "RightBottom" });
 
 
             List<TooltipProperty> contentValue = new List<TooltipProperty>();
@@ -45,20 +45,20 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
             contentValue.Add(new TooltipProperty() { Text = "Text", Type = "Text" });
 
             List<TooltipProperty> effectValue = new List<TooltipProperty>();
-            effectValue.Add(new TooltipProperty() { Text = "FadeIn", Type = "FadeIn" });
-            effectValue.Add(new TooltipProperty() { Text = "FadeOut", Type = "FadeOut" });
-            effectValue.Add(new TooltipProperty() { Text = "FadeZoomIn", Type = "FadeZoomIn" });
-            effectValue.Add(new TooltipProperty() { Text = "FadeZoomOut", Type = "FadeZoomOut" });
-            effectValue.Add(new TooltipProperty() { Text = "FlipXDownIn", Type = "FlipXDownIn" });
-            effectValue.Add(new TooltipProperty() { Text = "FlipXDownOut", Type = "FlipXDownOut" });
-            effectValue.Add(new TooltipProperty() { Text = "FlipXUpIn", Type = "FlipXUpIn" });
-            effectValue.Add(new TooltipProperty() { Text = "FlipXUpOut", Type = "FlipXUpOut" });
-            effectValue.Add(new TooltipProperty() { Text = "FlipYLeftIn", Type = "FlipYLeftIn" });
-            effectValue.Add(new TooltipProperty() { Text = "FlipYLeftOut", Type = "FlipYLeftOut" });
-            effectValue.Add(new TooltipProperty() { Text = "FlipYRightIn", Type = "FlipYRightIn" });
-            effectValue.Add(new TooltipProperty() { Text = "FlipYRightOut", Type = "FlipYRightOut" });
-            effectValue.Add(new TooltipProperty() { Text = "ZoomIn", Type = "ZoomIn" });
-            effectValue.Add(new TooltipProperty() { Text = "ZoomOut", Type = "ZoomOut" });
+            effectValue.Add(new TooltipProperty() { Text = "Fade In", Type = "FadeIn" });
+            effectValue.Add(new TooltipProperty() { Text = "Fade Out", Type = "FadeOut" });
+            effectValue.Add(new TooltipProperty() { Text = "Fade Zoom In", Type = "FadeZoomIn" });
+            effectValue.Add(new TooltipProperty() { Text = "Fade Zoom Out", Type = "FadeZoomOut" });
+            effectValue.Add(new TooltipProperty() { Text = "FlipX Down In", Type = "FlipXDownIn" });
+            effectValue.Add(new TooltipProperty() { Text = "FlipX Down Out", Type = "FlipXDownOut" });
+            effectValue.Add(new TooltipProperty() { Text = "FlipX Up In", Type = "FlipXUpIn" });
+            effectValue.Add(new TooltipProperty() { Text = "FlipX Up Out", Type = "FlipXUpOut" });
+            effectValue.Add(new TooltipProperty() { Text = "FlipY Left In", Type = "FlipYLeftIn" });
+            effectValue.Add(new TooltipProperty() { Text = "FlipY Left Out", Type = "FlipYLeftOut" });
+            effectValue.Add(new TooltipProperty() { Text = "FlipY Right In", Type = "FlipYRightIn" });
+            effectValue.Add(new TooltipProperty() { Text = "FlipY Right Out", Type = "FlipYRightOut" });
+            effectValue.Add(new TooltipProperty() { Text = "Zoom In", Type = "ZoomIn" });
+            effectValue.Add(new TooltipProperty() { Text = "Zoom Out", Type = "ZoomOut" });
             effectValue.Add(new TooltipProperty() { Text = "None", Type = "None" });
 
 
@@ -92,7 +92,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
                     OffsetY = 120,
                     Width = 60,
                     Height = 60,
-                    Constraints= NodeConstraints.Default | NodeConstraints.Tooltip,
+                    Constraints = NodeConstraints.Default | NodeConstraints.Tooltip,
                     Annotations = new List<DiagramNodeAnnotation>() { new DiagramNodeAnnotation()
                     { Id = "label1", Content = "Customer query",Offset=new PointsShape(){X=0.5,Y=1 },
                         Margin= new DiagramMargin(){ Top=15} } },

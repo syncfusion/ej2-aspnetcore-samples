@@ -1,58 +1,190 @@
 @using Syncfusion.EJ2.Diagrams;
 @using EJ2CoreSampleBrowser.Controllers.Diagram;
 
-@section ControlsSection{
-<div class="control-section">
-    <ejs-diagram id="diagram" width="100%" height="700" getNodeDefaults="@ViewBag.getNodeDefaults"
-        getConnectorDefaults="@ViewBag.getConnectorDefaults" setNodeTemplate='@ViewBag.setNodeTemplate' nodes="ViewBag.Nodes" connectors="ViewBag.Connectors">
-    </ejs-diagram>
-</div>
+@section ControlsSection {
 
-<script>
-    //Set node default properties.
-    function getNodeDefaults(obj, diagram) {
-        obj.style = { fill: '#26A0DA', strokeColor: 'white' };
-        return obj;
-    }
+    <div class="control-section">
+        <div id="umlActivityDiagram" style="width: 100%; height: 521px">
+            <div class="sb-mobile-palette-bar">
+                <div id="palette-icon" style="float: right;" role="button" class="e-ddb-icons1 e-toggle-palette"></div>
+            </div>
+            <div id="palette-space" class="sb-mobile-palette">
+                <ejs-symbolpalette id="symbolPalette" getNodeDefaults="@ViewBag.getSymbolDefaults"
+                                   symbolHeight="90" symbolWidth="90" expandMode="@ViewBag.Multiple"
+                                   width="100%" height="100%" palettes="ViewBag.Palette"
+                                   symbolMargin="new SymbolPaletteMargin() { Left=10,Right=10,Top=10,Bottom=10}"
+                                   getSymbolInfo="@ViewBag.getSymbolInfo">
+                </ejs-symbolpalette>
+            </div>
+            <div id="diagram-space" class="sb-mobile-diagram">
+                <ejs-diagram id="diagram" width="100%" height="100%" getNodeDefaults="@ViewBag.getNodeDefaults"
+                             getConnectorDefaults="@ViewBag.getConnectorDefaults" setNodeTemplate='@ViewBag.setNodeTemplate' nodes="ViewBag.Nodes" created="created" dragEnter="dragEnter" connectors="ViewBag.Connectors">
+                </ejs-diagram>
+            </div>
+        </div>
+    </div>
 
-    //Set connector default properties.
-    function getConnectorDefaults(connector, diagram) {
-        return connector;
-    }
+    <style>
 
-    //Set an annotation style at runtime.
-    function setNodeTemplate(node) {
-        if (node.annotations.length > 0) {
-            for (var i = 0; i < node.annotations.length; i++) {
-                node.annotations[i].style.color = 'white';
+        #diagram {
+            display: block;
+        }
+
+        #symbolPalette {
+            display: block;
+        }
+
+        .container-fluid {
+            padding-bottom: 15px;
+        }
+
+        .sb-mobile-palette {
+            width: 240px;
+            height: 100%;
+            float: left;
+        }
+
+        .sb-mobile-palette-bar {
+            display: none;
+        }
+
+        .sb-mobile-diagram {
+            width: calc(100% - 242px);
+            height: 100%;
+            float: left;
+            border: 1px solid rgba(0, 0, 0, 0.12);
+            border-left: none;
+        }
+
+        .container-fluid {
+            padding-bottom: 15px;
+        }
+
+        @@media (max-width: 550px) {
+
+            .sb-mobile-palette {
+                z-index: 19;
+                position: absolute;
+                display: none;
+                transition: transform 300ms linear, visibility 0s linear 300ms;
+                width: 39%;
+                height: 100%;
+            }
+
+            .sb-mobile-palette-bar {
+                display: block;
+                width: 100%;
+                background: #fafafa;
+                padding: 10px 10px;
+                border: 0.5px solid #e0e0e0;
+                min-height: 40px;
+            }
+
+            .sb-mobile-diagram {
+                width: 100%;
+                height: 100%;
+                float: left;
+                left: 0px;
+            }
+
+            #palette-icon {
+                font-size: 20px;
             }
         }
-    }
-</script>
-}
-@section ActionDescription{
-<div id="action-description">
-    <p>
-        This sample represents the hospital management system using diagram's built-in UML class diagram shapes.
-    </p>
-</div>
-}
-@section Meta{
-                    <meta name="description" content="This example demonstrates the UML Class Diagram in ASP.NET Core Diagram control. Explore here for more details."/>
+
+        .sb-mobile-palette-open {
+            position: absolute;
+            display: block;
+            right: 15px;
+        }
+
+        .e-toggle-palette::before {
+            content: "\e700"
+        }
+
+        .material #umlActivityDiagram #palette-space .e-accordion {
+            border: none;
+        }
+
+        .material #umlActivityDiagram #palette-space {
+            border: 1px solid rgba(0, 0, 0, 0.12);
+        }
+
+        .bootstrap #umlActivityDiagram .sb-mobile-diagram {
+            height: calc(100% - 17px);
+            margin-top: 5px;
+            border-radius: 4px;
+            border-left: 1px solid rgba(0, 0, 0, 0.12);
+        }
+
+        .fabric #umlActivityDiagram .sb-mobile-diagram {
+            border-left: 1px solid rgba(0, 0, 0, 0.12);
+        }
+    </style>
+
+    <script>
+        //Set node default properties.
+        function getNodeDefaults(obj, diagram) {
+            obj.style = { fill: '#26A0DA', strokeColor: 'white' };
+            return obj;
+        }
+
+        //Set connector default properties.
+        function getConnectorDefaults(connector, diagram) {
+            return connector;
+        }
+
+        //Set an annotation style at runtime.
+        function setNodeTemplate(node) {
+            if (node.annotations.length > 0) {
+                for (var i = 0; i < node.annotations.length; i++) {
+                    node.annotations[i].style.color = 'white';
                 }
-@section Description{
-<div id="description">
-    <p>
-        This example shows how to create class shapes using diagram <code>UMLClass</code> shapes. The <code>type</code> property of the
-        <code>shape</code> can be used to create <code>UMLClass</code> nodes. The <code>shape</code> property of the shape allows you to create UML
-        Class shapes.
-    </p>
-    <br />
-</div>
+            }
+        }
+        function dragEnter(args) {
+            if (args.element instanceof ej.diagrams.Connector) {
+                args.element.targetPoint.x += 100;
+                args.element.targetPoint.y += 20;
+            }
+        }
+        function created() {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            diagram.fitToPage();
+        }
+
+        function getSymbolDefaults(symbol, diagram) {
+            symbol.width = 100; symbol.height = 100;
+        }
+
+        function getSymbolInfo(symbol) {
+            return { fit: true, description: { text: symbol.id, }, tooltip: symbol.addInfo ? symbol.addInfo.tooltip : symbol.id };
+        }
+    </script>
 }
-@section Title{
-                    <title>ASP.NET Core Diagram UML Class Diagram Example - Syncfusion Demos </title> 
-                }
-@section Header{
-                    <h1 class='sb-sample-text'>Example of UML Class Diagram in ASP.NET Core Diagram Control</h1>
-                }
+@section ActionDescription {
+    <div id="action-description">
+        <p>
+            This sample represents the hospital management system using diagram's built-in UML class diagram shapes.
+        </p>
+    </div>
+}
+@section Meta {
+    <meta name="description" content="This example demonstrates the UML Class Diagram in ASP.NET Core Diagram control. Explore here for more details." />
+}
+@section Description {
+    <div id="description">
+        <p>
+            This example shows how to create class shapes using diagram <code>UMLClass</code> shapes. The <code>type</code> property of the
+            <code>shape</code> can be used to create <code>UMLClass</code> nodes. The <code>shape</code> property of the shape allows you to create UML
+            Class shapes.
+        </p>
+        <br />
+    </div>
+}
+@section Title {
+    <title>ASP.NET Core Diagram UML Class Diagram Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of UML Class Diagram in ASP.NET Core Diagram Control</h1>
+}

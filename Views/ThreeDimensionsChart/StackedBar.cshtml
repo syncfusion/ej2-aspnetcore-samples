@@ -1,0 +1,69 @@
+﻿@using Syncfusion.EJ2
+@section ControlsSection{
+        <div class="control-section" align="center">
+            <ejs-chart3d id="columnContainer" load="load" title="Olympic Gold Medal Comparison" enableRotation="true" rotation="22" depth="100" height="400">
+                <e-chart3d-tooltipsettings enable="true">
+                </e-chart3d-tooltipsettings>
+                <e-chart3d-legendsettings enableHighlight="true">
+                </e-chart3d-legendsettings>
+                <e-chart3d-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category" labelPlacement="@Syncfusion.EJ2.Charts.LabelPlacement.BetweenTicks">
+                </e-chart3d-primaryxaxis>
+                <e-chart3d-primaryyaxis edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift">
+                </e-chart3d-primaryyaxis>
+                <e-chart3d-series-collection>
+                    <e-chart3d-series dataSource="ViewBag.ChartPoints" xName="X" yName="Y" name="America" columnWidth="0.6" type="@Syncfusion.EJ2.Charts.Chart3DSeriesType.StackingBar">
+                    </e-chart3d-series>
+                    <e-chart3d-series dataSource="ViewBag.ChartPoints" xName="X" yName="Y1" name="Canada" columnWidth="0.6" type="@Syncfusion.EJ2.Charts.Chart3DSeriesType.StackingBar">
+                    </e-chart3d-series>
+                    <e-chart3d-series dataSource="ViewBag.ChartPoints" xName="X" yName="Y2" name="France" columnWidth="0.6" type="@Syncfusion.EJ2.Charts.Chart3DSeriesType.StackingBar">
+                    </e-chart3d-series>
+                    <e-chart3d-series dataSource="ViewBag.ChartPoints" xName="X" yName="Y3" name="Germany" columnWidth="0.6" type="@Syncfusion.EJ2.Charts.Chart3DSeriesType.StackingBar">
+                    </e-chart3d-series>
+                </e-chart3d-series-collection>
+            </ejs-chart3d>
+        </div>
+
+    @*custom code start*@
+        <script>
+            function load(args) {
+                var selectedTheme = location.hash.split('/')[1];
+                selectedTheme = selectedTheme ? selectedTheme : 'Material';
+                args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+                args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+                args.chart.primaryYAxis.interval = ej.base.Browser.isDevice ? 20 : 10;
+            }
+        </script>
+    @*custom code end*@
+}
+@*custom code start*@
+@section Scripts {
+}
+<style>
+
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@section Meta{
+        <meta name="description" content="This example demonstrates the 3D Stacked Bar in ASP.NET Core 3D Chart control. Explore here for more details." />
+                }
+@*custom code end*@
+@section ActionDescription{
+    <p>
+        This 3D stacked bar chart example visualizes a comparison of several Olympic medal-winning countries using the stacked bar series. The legend in the sample provides additional information about the series.
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can see how to render and configure a 3D stacked bar chart. The 3D stacked bar chart stacks points in the series horizontally. Additionally, the <code>StackingGroup</code> property can be used to group stacked collections based on category.
+    </p>
+    <p>
+        <code>Tooltips</code> are enabled in this example, to see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+    </p>
+}
+@section Title{
+        <title>ASP.NET Core 3D Stacked Bar Chart Example - Syncfusion Demos </title>
+                }
+@section Header{
+        <h1 class='sb-sample-text'>Example of 3D Stacked Bar in ASP.NET Core 3D Chart Control</h1>
+                }

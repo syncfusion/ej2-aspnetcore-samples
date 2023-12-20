@@ -1,0 +1,237 @@
+@using Syncfusion.EJ2.PivotView
+@section Meta{
+            <meta name="description" content="This example demonstrates the HeatMap in ASP.NET Core Pivot Table control. Explore here for more details."/>
+                }
+@section ControlsSection{
+
+    <div class="control-section">
+        <div class="content-wrapper">
+            <ejs-pivotview id="PivotView-Heatmap" width="100%" height="500" aggregateCellInfo="aggregateCellInfo"
+                enginePopulated="enginePopulated" cellTemplate=${getCellContent(data)}>
+                <e-datasourcesettings dataSource="@ViewBag.data" expandAll="true" enableSorting="false"
+                    showColumnSubTotals="false">
+                    <e-rows>
+                        <e-field name="Year"></e-field>
+                    </e-rows>
+                    <e-columns>
+                        <e-field name="ProductType"></e-field>
+                        <e-field name="Product"></e-field>
+                    </e-columns>
+                    <e-values>
+                        <e-field name="SoldAmount" caption="Sold Amount"></e-field>
+                    </e-values>
+                    <e-formatsettings>
+                        <e-field name="SoldAmount" format="C0"></e-field>
+                    </e-formatsettings>
+                    <e-groupsettings>
+                        <e-field name="Year" type="Number" rangeInterval="2"></e-field>
+                    </e-groupsettings>
+                    <e-valuesortsettings headerDelimiter=' - '></e-valuesortsettings>
+                </e-datasourcesettings>
+                <e-gridSettings columnWidth="120" rowHeight="36"></e-gridSettings>
+            </ejs-pivotview>
+        </div>
+    </div>
+
+    <style>
+
+    #PivotView-Heatmap .e-collapse {
+        display: none;
+    }
+
+    #PivotView-Heatmap {
+        width: 100%;
+        height: 100%;
+    }
+
+    .sb-sample-content-area {
+        min-height: 255px !important;
+    }
+
+    .control-section {
+        min-height: 255px !important;
+    }
+
+    .range1 {
+        background-color: #fb6262 !important;
+        border-color: #f26666 !important;
+        font-weight: 500;
+        color: black !important;
+        text-shadow: 0px 0px black;
+    }
+
+    .range2 {
+        background-color: #ff6c6c !important;
+        border-color: #ff6c6c !important;
+        font-weight: 500;
+        color: black !important;
+        text-shadow: 0px 0px black;
+    }
+
+    .range3 {
+        background-color: #ff8474 !important;
+        border-color: #ff8474 !important;
+        font-weight: 500;
+        color: black !important;
+        text-shadow: 0px 0px black;
+    }
+
+    .range4 {
+        background-color: #ffa474 !important;
+        border-color: #ffa474 !important;
+        font-weight: 500;
+        color: black !important;
+        text-shadow: 0px 0px black;
+    }
+
+    .range5 {
+        background-color: #ffac7c !important;
+        border-color: #ffac7c !important;
+        font-weight: 500;
+        color: black !important;
+        text-shadow: 0px 0px black;
+    }
+
+    .range6 {
+        background-color: #ffcc7c !important;
+        border-color: #ffcc7c !important;
+        font-weight: 500;
+        color: black !important;
+        text-shadow: 0px 0px black;
+    }
+
+    .range7 {
+        background-color: #ffe484 !important;
+        border-color: #ffe484 !important;
+        font-weight: 500;
+        color: black !important;
+        text-shadow: 0px 0px black;
+    }
+
+    .range8 {
+        background-color: #f8e484 !important;
+        border-color: #f8e484 !important;
+        font-weight: 500;
+        color: black !important;
+        text-shadow: 0px 0px black;
+    }
+
+    .range9 {
+        background-color: #e0dc84 !important;
+        border-color: #e0dc84 !important;
+        font-weight: 500;
+        color: black !important;
+        text-shadow: 0px 0px black;
+    }
+
+    .range10 {
+        background-color: #b8d47c !important;
+        border-color: #b8d47c !important;
+        font-weight: 500;
+        color: black !important;
+        text-shadow: 0px 0px black;
+    }
+
+    .range11 {
+        background-color: #a8d47c !important;
+        border-color: #a8d47c !important;
+        font-weight: 500;
+        color: black !important;
+        text-shadow: 0px 0px black;
+    }
+
+    .range12 {
+        background-color: #8bc97d !important;
+        border-color: #8bc97d !important;
+        font-weight: 500;
+        color: black !important;
+        text-shadow: 0px 0px black;
+    }
+
+    .range13 {
+        background-color: #68bc7c !important;
+        border-color: #68bc7c !important;
+        font-weight: 500;
+        color: black !important;
+        text-shadow: 0px 0px black;
+    }
+
+    .range14 {
+        background-color: #66bb71 !important;
+        color: black !important;
+        font-weight: 500;
+        border-color: #66bb71 !important;
+        text-shadow: 0px 0px black;
+    }
+    </style>
+    <script>
+        var colourScheme = ['range1', 'range2', 'range3', 'range4', 'range5', 'range6', 'range7', 'range8', 'range9',
+        'range10', 'range11', 'range12', 'range13', 'range14'];
+        var minValue = 0;
+        var maxValue = 0;
+        function getCellContent(args) {
+            if (args != null && args.cellInfo) {
+                if (args.cellInfo.axis === 'value') {
+                    if (args.cellInfo.axis === 'value' && !args.cellInfo.isGrandSum) {
+                        args.targetCell.classList.add(cellColour(args.cellInfo.value));
+                    }
+                    args.targetCell.querySelector('.e-cellvalue').innerText = '$' + (args.cellInfo.value / 1000).toFixed(1) + 'K';
+                }
+            }
+            return "";
+        }
+        function aggregateCellInfo(args) {
+            if (args.rowCellType !== "grandTotal" && args.columnCellType !== "grandTotal") {
+                minValue = (minValue < args.value && minValue !== 0) ? minValue : args.value;
+                maxValue = maxValue > args.value ? maxValue : args.value;
+            }
+        }
+        function cellColour(value) {
+            var percentage = (maxValue - minValue) / colourScheme.length;
+            var colourIndex = Math.round((value - minValue) / percentage);
+            return colourScheme[colourIndex];
+        }
+        function enginePopulated() {
+            minValue = minValue - 1000;
+            maxValue = maxValue + 1000;
+        }
+    </script>
+}
+
+@section PreScripts {
+    <script>
+        ej.base.enableRipple(false);
+    </script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            In this sample, we show you how to visualize the bound data by making the pivot table cells look like a HeatMap.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>The Pivot Table provides custom styles for each cell's display using the cell template. Using the
+            <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.PivotView.PivotView.html#Syncfusion_EJ2_PivotView_PivotView_CellTemplate"> cellTemplate</a> property in this sample,
+            we are representing the product-specific monthly sales revenue of the goods sold
+            by an online retailer in a year in the form of a heatmap-like appearance. Each pivot table cell was customized
+            by calculating the lowest and highest values via the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.PivotView.PivotView.html#Syncfusion_EJ2_PivotView_PivotView_EnginePopulated">
+                enginePopulated</a> event and applying a color scheme based on their range.
+        </p>
+        <br />
+        <p>
+            More information on the cell template can be found in this <a target="_blank"
+                href="https://ej2.syncfusion.com/aspnetcore/documentation/pivot-table/row-and-column#cell-template">
+                documentation section</a>.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Pivot Table HeatMap Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of HeatMap in ASP.NET Core Pivot Table Control</h1>
+                }

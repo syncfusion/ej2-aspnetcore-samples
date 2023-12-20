@@ -1,0 +1,136 @@
+@using Syncfusion.EJ2;
+@using Syncfusion.EJ2.Navigations;
+@section ControlsSection{
+    <div class="control-section">
+        <h4 style="text-align: center; padding-bottom: 10px">Food Items</h4>
+        <ejs-listview enable="true" id="list-scrolling-down" dataSource="ViewBag.foodData" height="500" template="#loadTemplate" cssClass="e-list-template" scroll="onListScroll" actionComplete="ActionComplete">
+        </ejs-listview>
+    </div>
+    <script id='loadTemplate' type="text/x-template">
+        <div class="e-list-wrapper" style="border-bottom: inset;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; white-space: normal; padding: 10px;">
+                <div style="display: flex; align-items: center;">
+                    <img class="e-avatar e-avatar-circle" src="${src}" style="background:#BCBCBC; width: 100px; height: 100px; border-radius: 4px;" />
+                    <div style="margin-left: 20px; text-align: left; max-width: 600px; display: flex; flex-direction: column;">
+                        <div style="display: flex; align-items: center;">
+                            <span style="font-size: 18px; font-weight: 600; padding-bottom: 3px;" class="e-headertext">${text}</span>
+                            <svg width="12" height="12" style="margin-left: 15px; margin-top: -2px;" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M2 1H10C10.5523 1 11 1.44771 11 2V10C11 10.5523 10.5523 11 10 11H2C1.44771 11 1 10.5523 1 10V2C1 1.44771 1.44771 1 2 1ZM0 2C0 0.895432 0.895432 0 2 0H10C11.1046 0 12 0.895432 12 2V10C12 11.1046 11.1046 12 10 12H2C0.895432 12 0 11.1046 0 10V2ZM4 3C3.44771 3 3 3.44771 3 4V8C3 8.55229 3.44771 9 4 9H8C8.55229 9 9 8.55229 9 8V4C9 3.44771 8.55229 3 8 3H4Z" fill="${if(type=='veg')}#006400${else}#FF0000${/if}" />
+                            </svg>
+                        </div>
+                        <span style="font-size: 16px; padding-bottom: 3px;">${price}</span>
+                        <div id="id-description" class="e-text-content" style="font-size: 15px;">${description}</div>
+                        <div class="rating-content">
+                            <input id="${id}" class="ratings">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script id='MobileTemplate' type="text/x-template">
+        <div class="e-list-wrapper e-list-multi-line e-list-avatar" style="padding-left: 122px; padding-right: 1.0666em; border-bottom: inset;">
+            <img class="e-avatar" src="${src}" />
+            <span class="e-list-item-header e-headertext" style="font-size: 14px;">${text}</span>
+            <svg width="12" height="12" :style="{ backgroundColor: data.type === 'veg' ? '#98E16E' : '#FF4B4B', right: '10px', marginTop: '-15px', position: 'absolute' }" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M2 1H10C10.5523 1 11 1.44771 11 2V10C11 10.5523 10.5523 11 10 11H2C1.44771 11 1 10.5523 1 10V2C1 1.44771 1.44771 1 2 1ZM0 2C0 0.895432 0.895432 0 2 0H10C11.1046 0 12 0.895432 12 2V10C12 11.1046 11.1046 12 10 12H2C0.895432 12 0 11.1046 0 10V2ZM4 3C3.44771 3 3 3.44771 3 4V8C3 8.55229 3.44771 9 4 9H8C8.55229 9 9 8.55229 9 8V4C9 3.44771 8.55229 3 8 3H4Z" :fill="${if(type=='veg')}#006400${else}#FF0000${/if}" />
+            </svg>
+            <div style="font-size: 12px;">${price}</div>
+            <span class="e-list-content e-text-overflow" style="font-size: 11px;">${description}</span>
+        </div>
+    </script>
+}
+
+@section Meta{
+    <meta name="description" content="This example demonstrates the Scrolling in ASP.NET Core ListView control. Explore here for more details." />
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This sample demonstrates the functionalities of infinite scrolling. When user scrolls to the bottom, new data is fetched and added to the existing list through scroll event. This creates an infinite scrolling effect, enhancing the user experience by loading new data dynamically as needed.</p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>The Listview control scroll event allows users to load data using a load on demand concept, where buffered data is fetched only when the scrollbar reaches the end of the scroller. Scroll event provides the necessary details to dynamically add the new data to the ListView.</p>
+    </div>
+}
+
+<script>
+    var isDevice = ej.base.Browser.isDevice;
+    var isPrevented = false;
+    function ActionComplete(args) {
+        var listObj_1 = document.getElementById("list-scrolling-down").ej2_instances[0];
+        if (!isDevice) {
+            var foodData = @Html.Raw(Json.Serialize(ViewBag.foodData));
+            for (var i = 0; i < foodData.length; i++) {
+                let ratingObj = new ejs.inputs.Rating({
+                    value: foodData[i].rating,
+                    showTooltip: false,
+                    readOnly: true
+                });
+                ratingObj.appendTo('#' + foodData[i].id)
+            }
+        }
+        else if (isDevice && !isPrevented){
+            listObj_1.template = "#MobileTemplate";
+            isPrevented = true;
+        }
+    }
+var foodItems = [
+    { text: 'Taco', price: '$15', src: '@Url.Content("~/css/listview/images/taco.jpg")', type: 'veg', description: 'A crispy or soft corn or wheat tortilla that is folded or rolled and stuffed with a mixture of cheese, lettuce, and tomato', rating: 5 },
+    { text: 'Hot dog', price: '$50', src: '@Url.Content("~/css/listview/images/hotdog.jpg")', type: 'non-veg', description: 'A dish consisting of a grilled or steamed sausage served in the slit of a partially sliced bun also used as a wiener', rating: 3 },
+    { text: 'Fried chicken', price: '$19', src: '@Url.Content("~/css/listview/images/friedchicken.jpg")', type: 'non-veg', description: 'Chicken pieces coated with seasoned flour or batter and pan-fried, deep fried, pressure fried, or air fried', rating: 4 },
+    { text: 'Donuts', price: '$5', src: '@Url.Content("~/css/listview/images/donuts.jpg")', type: 'veg', description: 'A kind of ring-shaped snack food popular in many countries, which are usually deep fried from flour doughs', rating: 3 },
+    { text: 'Baguette', price: '$7', src: '@Url.Content("~/css/listview/images/baguette.jpg")', type: 'veg', description: 'French bread shaped like a long, thin loaf with a crisp and crunchy crust made using flour, yeast and water', rating: 4 },
+    { text: 'Soft drink', price: '$3', src: '@Url.Content("~/css/listview/images/softdrink.jpg")', type: 'veg', description: 'Flavored drinks usually with nutritive and/or intense sweeteners with other permitted food additives', rating: 5 },
+    { text: 'Bacon', price: '$12', src: '@Url.Content("~/css/listview/images/bacon.jpg")', type: 'non-veg', description: 'Salt-cured pork made from various cuts, typically the belly or less fatty parts of the back eaten as a side dish', rating: 3 },
+    { text: 'Chips', price: '$13', src: '@Url.Content("~/css/listview/images/chips.jpg")', type: 'veg', description: 'A small usually thin and flat piece (as of wood or stone) cut, struck, or flaked off also served as an appetizer', rating: 4 },
+    { text: 'Noodles', price: '$11', src: '@Url.Content("~/css/listview/images/noodles.jpg")', type: 'veg', description: 'A cooked egg-and-flour paste, generally distinguished from pasta by its elongated ribbonlike form', rating: 3 },
+];
+
+    function onListScroll(args) {
+        var listObj_1 = document.getElementById("list-scrolling-down").ej2_instances[0];
+        var newData = [];
+        if (args.scrollDirection === "Bottom") {
+            if (args.distanceY < 100) {
+                for (var i = 0; i <= foodItems.length - 1; i++) {
+                    var newId = ej.base.getUniqueID('list-10');
+                    newData.push({ text: foodItems[i].text, id: newId, price: foodItems[i].price, src: foodItems[i].src, description: foodItems[i].description, type: foodItems[i].type, rating: foodItems[i].rating });
+                }
+                listObj_1.addItem(newData);
+                if (!isDevice) {
+                    for (var i = 0; i < newData.length; i++) {
+                        let ratingObj = new ejs.inputs.Rating({
+                            value: newData[i].rating,
+                            showTooltip: false,
+                            readOnly: true
+                        });
+                        ratingObj.appendTo('#' + newData[i].id)
+                    }
+                }
+            }
+        }
+    }
+</script>
+<style>
+    #list-scrolling-down {
+        margin: auto;
+        max-width: 800px;
+    }
+
+        #list-scrolling-down.e-listview.e-list-template .e-list-wrapper.e-list-multi-line.e-list-avatar .e-avatar {
+            background: transparent;
+            width: 85px;
+            height: 85px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+</style>
+@section Title{
+    <title>ASP.NET Core ListView Scrolling Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Scrolling in ASP.NET Core ListView Control</h1>
+}

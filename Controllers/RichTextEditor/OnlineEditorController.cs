@@ -14,12 +14,12 @@ namespace EJ2CoreSampleBrowser.Controllers
         // GET: /<controller>/
         public IActionResult OnlineEditor()
         {
-            ViewBag.Tools = new[] { "Bold", "Italic", "Underline", "StrikeThrough",
+            ViewBag.Tools = new[] {"Bold", "Italic", "Underline", "StrikeThrough",
                 "FontName", "FontSize", "FontColor", "BackgroundColor",
-                "Formats", "Alignments", "NumberFormatList", "BulletFormatList",
-                "Outdent", "Indent",
-                "CreateTable", "CreateLink", "Image", "FileManager", "|", "ClearFormat", "Print",
-                "SourceCode", "FullScreen", "|", "Undo", "Redo" };
+                "Formats", "Alignments", "|", "OrderedList", "UnorderedList", "|",
+                "Outdent", "Indent", "|",
+                "CreateLink", "Image", "Video", "Audio", "CreateTable", "|", "FormatPainter", "ClearFormat", "|", "EmojiPicker",
+                "SourceCode", "|", "Undo", "Redo"};
             return View();
         }
     }

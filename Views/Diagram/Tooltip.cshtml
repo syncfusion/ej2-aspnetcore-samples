@@ -19,7 +19,7 @@
                 </td>
                 <td>
                     <div>
-                        <ejs-dropdownlist id="mode" index="0" dataSource="@ViewBag.modeValue" popupWidth="150" width="100%" placeholder="select a relative mode" change="relativeModeChange">
+                        <ejs-dropdownlist id="mode" index="0" dataSource="@ViewBag.modeValue" popupWidth="150" width="75%" placeholder="select a relative mode" change="relativeModeChange">
                             <e-dropdownlist-fields text="Text" value="Type"></e-dropdownlist-fields>
                         </ejs-dropdownlist>
                     </div>
@@ -33,7 +33,7 @@
                 </td>
                 <td>
                     <div>
-                        <ejs-dropdownlist id="position" index="0" dataSource="@ViewBag.positionValue" popupWidth='150' width='150px' placeholder='select a position' change="positionChange">
+                        <ejs-dropdownlist id="position" index="0" dataSource="@ViewBag.positionValue" popupWidth='150' width='75%' placeholder='select a position' change="positionChange">
                             <e-dropdownlist-fields text="Text" value="Type"></e-dropdownlist-fields>
                         </ejs-dropdownlist>
                     </div>
@@ -47,7 +47,7 @@
                 </td>
                 <td>
                     <div>
-                        <ejs-numerictextbox id="duration" value="1000" min="100" max="2000" step="100" change="animationChange"></ejs-numerictextbox>
+                        <ejs-numerictextbox id="duration" value="1000" min="100" max="2000" step="100" width='75%' change="animationChange"></ejs-numerictextbox>
                     </div>
                 </td>
             </tr>
@@ -59,9 +59,21 @@
                 </td>
                 <td>
                     <div>
-                        <ejs-dropdownlist id="effect" index="0" dataSource="@ViewBag.effectValue" popupWidth='150' width='100%' placeholder='select a effect type' change="effectChange">
+                        <ejs-dropdownlist id="effect" index="0" dataSource="@ViewBag.effectValue" popupWidth='150' width='75%' placeholder='select a effect type' change="effectChange">
                             <e-dropdownlist-fields text="Text" value="Type"></e-dropdownlist-fields>
                         </ejs-dropdownlist>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>
+                        Sticky Mode
+                    </div>
+                </td>
+                <td>
+                    <div style="padding-left: 0px;padding-top: 0px;">
+                        <ejs-checkbox id="isStickyBox" checked="false" change="isStickyChange"></ejs-checkbox>
                     </div>
                 </td>
             </tr>
@@ -108,6 +120,16 @@
 
         #tooltipPropertySection .property-panel-header {
             margin-left: 10px;
+        }
+
+        .e-checkbox-wrapper .e-label {
+            font-size: 15px;
+            font-weight: 400;
+        }
+
+        .e-checkbox-wrapper .e-wrapper {
+            padding-left: 0px;
+            padding-top: 0px;
         }
     </style>
 
@@ -191,6 +213,20 @@
             var diagram = document.getElementById("diagram").ej2_instances[0];
             diagram.fitToPage({ mode: 'Width' });
         }
+        function isStickyChange(args) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            for (var j = 0; j < diagram.nodes.length; j++) {
+                if (args.checked) {
+                    diagram.tooltipObject.isSticky = true;
+                    diagram.nodes[j].tooltip.isSticky = true;
+                }
+                else {
+                    diagram.tooltipObject.isSticky = false;
+                    diagram.nodes[j].tooltip.isSticky = false;
+                }
+                diagram.dataBind();
+            }
+        }
     </script>
 
 }
@@ -201,7 +237,7 @@
     </p>
 }
 @section Meta{
-                    <meta name="description" content="This example demonstrates the Tooltip in ASP.NET Core Diagram control. Explore here for more details."/>
+    <meta name="description" content="This example demonstrates the Tooltip in ASP.NET Core Diagram control. Explore here for more details." />
                 }
 
 @section Description{
@@ -213,8 +249,8 @@
     </p>
 }
 @section Title{
-                    <title>ASP.NET Core Diagram Tooltip Example - Syncfusion Demos </title> 
+    <title>ASP.NET Core Diagram Tooltip Example - Syncfusion Demos </title>
                 }
 @section Header{
-                    <h1 class='sb-sample-text'>Example of Tooltip in ASP.NET Core Diagram Control</h1>
+    <h1 class='sb-sample-text'>Example of Tooltip in ASP.NET Core Diagram Control</h1>
                 }

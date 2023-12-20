@@ -22,6 +22,11 @@ namespace EJ2CoreSampleBrowser.Controllers
         {
             var order = OrdersDetails.GetAllRecords();
             ViewBag.datasource = order;
+            ViewBag.alertbutton = new
+            {
+                content = "OK",
+                isPrimary = true
+            };
             return View();
         }
       

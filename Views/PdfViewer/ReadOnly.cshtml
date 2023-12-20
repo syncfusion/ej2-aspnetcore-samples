@@ -1,0 +1,77 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Syncfusion.EJ2
+@using Syncfusion.EJ2.PdfViewer
+
+@{
+    PdfViewerAnnotationSettings annotationSettings = new PdfViewerAnnotationSettings()
+    {
+                IsLock = true
+
+    };   
+
+   
+
+}
+
+@section ControlsSection{
+    <div class="control-section">
+        @Html.Partial("_SwitchPartial")
+        <ejs-pdfviewer id="pdfviewer" documentPath="https://cdn.syncfusion.com/content/pdf/restricted-formfield.pdf" resourceUrl="https://cdn.syncfusion.com/ej2/23.2.6/dist/ej2-pdfviewer-lib"
+                   annotationSettings="annotationSettings" enableStickyNotesAnnotation=false toolbarSettings="@(new Syncfusion.EJ2.PdfViewer.PdfViewerToolbarSettings  { ShowTooltip = true, ToolbarItems = ( "OpenOption PageNavigationTool MagnificationTool PanTool PrintOption" )  })"
+                       style="height:641px;" documentLoad="documentLoad" contextMenuOption="None"></ejs-pdfviewer>
+    </div>
+}
+
+@section Meta{
+    <meta name="description"
+          content="This example demonstrates the Default Functionalities in ASP.NET Core PDF Viewer control in read only mode. Explore here for more details." />
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            The sample showcases the PDF viewer operating in a read-only mode, which restricts the ability to make changes to annotations, form fields, and also disables text selection.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            More information on the PDF Viewer instantiation can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/pdfviewer/getting-started/">
+                documentation section
+            </a>.
+        </p>
+
+    </div>
+}
+
+<script type="text/javascript">
+
+    window.onload = function () {
+    }
+
+    function documentLoad() {       
+        
+        var viewer = document.getElementById('pdfviewer').ej2_instances[0];
+
+        var formField = viewer.retrieveFormFields();
+        for (var x = 0; x < formField.length; x++) {
+            viewer.formDesignerModule.updateFormField(viewer.formFieldCollections[x], {
+                isReadOnly: true,
+            });
+        }
+
+    }
+   
+</script>
+
+@section Title{
+    <title>ASP.NET Core PDF Viewer default Functionalities of PDF viewer in Read Only mode Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Default Functionalities of Pdf viewer in read only mode in ASP.NET Core PDF Viewer Control</h1>
+}

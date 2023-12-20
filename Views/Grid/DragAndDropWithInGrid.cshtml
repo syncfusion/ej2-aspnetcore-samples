@@ -1,10 +1,13 @@
 @using Syncfusion.EJ2
-
+@{
+    ViewData["Title"] = "Drag and Drop within grid";
+    var alertanimation = new Syncfusion.EJ2.Popups.DialogAnimationSettings { Effect = Syncfusion.EJ2.Popups.DialogEffect.None };
+}
 
 @section ControlsSection{
     <div class="control-section">
 
-     <ejs-grid id="Grid"  dataSource="ViewBag.dataSource" allowRowDragAndDrop="true" allowSorting="true" allowGrouping="true" height="400">
+        <ejs-grid id="Grid" created="created" dataSource="ViewBag.dataSource" allowRowDragAndDrop="true" allowSorting="true" allowGrouping="true" height="400">
         <e-grid-selectionsettings type="Multiple"></e-grid-selectionsettings>
             <e-grid-columns>
                 <e-grid-column field="OrderID" headerText="Order ID" textAlign="Right" width="120"></e-grid-column>
@@ -12,11 +15,33 @@
                 <e-grid-column field="OrderDate" headerText=" Order Date" format="yMd" width="130"></e-grid-column>
                 <e-grid-column field="Freight" headerText="Freight" format="C2" width="120"></e-grid-column>
                 <e-grid-column field="ShippedDate" headerText="Shipped Date"  format="yMd" width="140"></e-grid-column>
-                <e-grid-column field="ShipCountry"  headerText="Ship Country" width="150"></e-grid-column>
+                <e-grid-column field="ShipCountry" allowGrouping="false" headerText="Ship Country" width="150"></e-grid-column>
             </e-grid-columns>
       </ejs-grid>
        
-    </div>    
+    </div>
+    <ejs-dialog id="alert_dialog" animationSettings="alertanimation" visible="false" target=".control-section" width="300px" header="Grouping" content="Grouping is disabled for this column">
+        <e-dialog-buttons>
+            <e-dialog-dialogbutton buttonModel="ViewBag.alertbutton" click="alertBtnClick"></e-dialog-dialogbutton>
+        </e-dialog-buttons>
+    </ejs-dialog>
+    <script>
+
+        function created(args) {
+            var grid = document.getElementById('Grid').ej2_instances[0];
+            grid.on("columnDragStart", columnDragStart, this);
+        }
+        function columnDragStart(args) {
+            if (args.column.field === "ShipCountry") {
+                var dialogObj = document.getElementById('alert_dialog').ej2_instances[0];
+                dialogObj.show();
+            }
+        }
+        function alertBtnClick() {
+            var dialogObj = document.getElementById('alert_dialog').ej2_instances[0];
+            dialogObj.hide();
+        }
+    </script>
  }
 
 @section ActionDescription{

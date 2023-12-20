@@ -1,0 +1,69 @@
+﻿@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="control-section" align="center">
+        <ejs-chart3d id="columnContainer" load="load" title="Motor Vehicle Production by Manufacturer" enableRotation="true" rotation="7" tilt="10" depth="100" wallColor="transparent" height="400">
+            <e-chart3d-tooltipsettings enable="true" format="${point.x} : <b>${point.y} (${point.percentage}%)</b>">
+            </e-chart3d-tooltipsettings>
+            <e-chart3d-legendsettings enableHighlight="true">
+            </e-chart3d-legendsettings>
+            <e-chart3d-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category" labelPlacement="@Syncfusion.EJ2.Charts.LabelPlacement.BetweenTicks">
+            </e-chart3d-primaryxaxis>
+            <e-chart3d-primaryyaxis rangePadding="@Syncfusion.EJ2.Charts.ChartRangePadding.None">
+            </e-chart3d-primaryyaxis>
+            <e-chart3d-series-collection>
+                <e-chart3d-series dataSource="ViewBag.ChartPoints" xName="X" yName="Y" name="General Motors" columnWidth="0.5" type="@Syncfusion.EJ2.Charts.Chart3DSeriesType.StackingColumn100">
+                </e-chart3d-series>
+                <e-chart3d-series dataSource="ViewBag.ChartPoints" xName="X" yName="Y1" name="Honda" columnWidth="0.5" type="@Syncfusion.EJ2.Charts.Chart3DSeriesType.StackingColumn100">
+                </e-chart3d-series>
+                <e-chart3d-series dataSource="ViewBag.ChartPoints" xName="X" yName="Y2" name="Suzuki" columnWidth="0.5" type="@Syncfusion.EJ2.Charts.Chart3DSeriesType.StackingColumn100">
+                </e-chart3d-series>
+                <e-chart3d-series dataSource="ViewBag.ChartPoints" xName="X" yName="Y3" name="BMW" columnWidth="0.5" type="@Syncfusion.EJ2.Charts.Chart3DSeriesType.StackingColumn100">
+                </e-chart3d-series>
+            </e-chart3d-series-collection>
+        </ejs-chart3d>
+    </div>
+
+    @*custom code start*@
+    <script>
+        function load(args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+            args.chart.primaryYAxis.interval = ej.base.Browser.isDevice ? 25 : 20;
+        }
+    </script>
+    @*custom code end*@
+}
+@*custom code start*@
+@section Scripts {
+}
+<style>
+
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@section Meta{
+    <meta name="description" content="This example demonstrates the 100% 3D Column in ASP.NET Core 3D Chart control. Explore here for more details." />
+                }
+@*custom code end*@
+@section ActionDescription{
+    <p>
+        This example of a 100% 3D stacked column chart visualizes motor vehicle production by manufacturer using a stacked column series. The legend in the sample provides information about these series.
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can see how to render and configure the 100% 3D stacked column chart. The 100% 3D stacked column chart displays multiple series of data as stacked columns, ensuring that the cumulative proportion of each stacked element always totals 100%.
+    </p>
+    <p>
+        <code>Tooltips</code> are enabled in this example, to see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+    </p>
+}
+@section Title{
+    <title>ASP.NET Core 100% 3D Column Chart Example - Syncfusion Demos </title>
+                }
+@section Header{
+    <h1 class='sb-sample-text'>Example of 100% 3D Column in ASP.NET Core 3D Chart Control</h1>
+                }

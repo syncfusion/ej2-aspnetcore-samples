@@ -2,18 +2,37 @@
 @*@model directive allows you to access the model values*@
 @model EJ2CoreSampleBrowser.Controllers.AutoCompleteRecord
 @section ControlsSection{
-<div class="col-lg-12 control-section">
-    <div class="control-wrapper">
-        <div style='padding-top:70px;'>
-            <ejs-autocomplete id="datas" dataSource="@Model.RecordList" placeholder="e.g. Item 1" enableVirtualization="true" popupHeight="200px">
-                 <e-autocomplete-fields value="Text" ></e-autocomplete-fields>
-            </ejs-autocomplete>
+    <div class="control-section col-lg-12">
+        <div id='local-data' class='col-lg-6' style='padding-top:15px'>
+            <div class='content'>
+                <h4>Local Data</h4>
+                <ejs-autocomplete id="local" dataSource="@Model.RecordList" placeholder="e.g. Item 1" allowFiltering="true" enableVirtualization="true" popupHeight="200px">
+                    <e-autocomplete-fields value="Text"></e-autocomplete-fields>
+                </ejs-autocomplete>
+            </div>
+        </div>
+        <div id='remote-data' class='col-lg-6' style='padding-top:15px'>
+            <div class='content'>
+                <h4>Remote Data</h4>
+                <ejs-autocomplete id="remote" placeholder="OrderId" popupHeight="200px" allowFiltering="true" enableVirtualization="true">
+                    <e-data-manager adaptor="WebApiAdaptor" url="https://services.syncfusion.com/js/production/api/orders" crossDomain="true"></e-data-manager>
+                    <e-autocomplete-fields value="OrderID"></e-autocomplete-fields>
+                </ejs-autocomplete>
+            </div>
+        </div>
+        <div id='local-data' class='col-lg-6' style='padding-top:15px'>
+            <div class='content'>
+                <h4>Grouping</h4>
+                <ejs-autocomplete id="group" dataSource="@Model.RecordList" placeholder="e.g. Item 1" allowFiltering="true" enableVirtualization="true" popupHeight="200px">
+                    <e-autocomplete-fields groupBy="Group" value="Text"></e-autocomplete-fields>
+                </ejs-autocomplete>
+            </div>
         </div>
     </div>
-</div>
+
     @*custom code start*@
     <style>
-        .control-wrapper {
+         .content {
             margin: 0 auto;
             width: 250px;
         }

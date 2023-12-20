@@ -33,7 +33,7 @@ namespace EJ2CoreSampleBrowser.Controllers
             int id = 1;
             for (DateTime start = startDate; start < endDate;)
             {
-                int count = random.Next(1, 3);
+                int count = random.Next(1, 5);
                 for (int b = 0; b < count; b++)
                 {
                     int hour = random.Next(1, 23);

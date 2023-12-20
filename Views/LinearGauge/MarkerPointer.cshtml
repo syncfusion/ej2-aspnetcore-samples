@@ -64,29 +64,11 @@
                 </e-lineargauge-axes>
             </ejs-lineargauge>
         </div>
-        <div id='containerDiamond' class="col-xs-4 col-sm-4 col-lg-2 col-md-2" style="display: flex;justify-content: center; align-items: center;">
-            <ejs-lineargauge load='gaugeLoad' dragStart='dragStartDiamond' dragEnd='dragEndDiamond'
-                         dragMove='dragMoveDiamond' id='linearDiamond' title='Diamond'
-                         titleStyle='titleStyle' width='150px' height='350px' style='display:block;' background='Transparent'
-                         orientation='Vertical'>
-                <e-lineargauge-axes>
-                    <e-lineargauge-axis Minimum="0" Maximum="100" OpposedPosition="true" labelStyle="labelFont">
-                        <e-axis-majorticks Interval="20" Height="7" Width="1"></e-axis-majorticks>
-                        <e-axis-minorticks Interval="10" Height="3"></e-axis-minorticks>
-                        <e-axis-line Width="5"></e-axis-line>
-                        <e-lineargauge-pointers>
-                            <e-lineargauge-pointer Type="Bar" Value="50" Color="#0074E3" Height=5 Width=5 AnimationDuration=1500 Offset="12" Placement=Near></e-lineargauge-pointer>
-                            <e-lineargauge-pointer Type="Marker" MarkerType=Diamond Value="50" Height=15 Width=15 AnimationDuration=1500 EnableDrag=true Placement=Near></e-lineargauge-pointer>
-                        </e-lineargauge-pointers>
-                    </e-lineargauge-axis>
-                </e-lineargauge-axes>
-            </ejs-lineargauge>
-        </div>
         <div id='containerRectangle' class="col-xs-4 col-sm-4 col-lg-2 col-md-2" style="display: flex;justify-content: center; align-items: center;">
             <ejs-lineargauge load='gaugeLoad' dragStart='dragStartRectangle'
-                         dragMove='dragMoveRectangle' dragEnd='dragEndRectangle' id='linearRectangle'
-                         title='Rectangle' titleStyle='titleStyle' width='150px' height='350px'
-                         style='display:block;' background='Transparent' orientation='Vertical'>
+                             dragMove='dragMoveRectangle' dragEnd='dragEndRectangle' id='linearRectangle'
+                             title='Rectangle' titleStyle='titleStyle' width='150px' height='350px'
+                             style='display:block;' background='Transparent' orientation='Vertical'>
                 <e-lineargauge-axes>
                     <e-lineargauge-axis Minimum="0" Maximum="100" OpposedPosition="true" labelStyle="labelFont">
                         <e-axis-majorticks Interval="20" Height="7" Width="1"></e-axis-majorticks>
@@ -95,6 +77,24 @@
                         <e-lineargauge-pointers>
                             <e-lineargauge-pointer Type="Bar" Value="30" Color="#0074E3" Height=5 Width=5 AnimationDuration=1500 Offset="12" Placement=Near></e-lineargauge-pointer>
                             <e-lineargauge-pointer Type="Marker" MarkerType=Rectangle Value="30" Height=5 Width=15 AnimationDuration=1500 EnableDrag=true Placement=Near></e-lineargauge-pointer>
+                        </e-lineargauge-pointers>
+                    </e-lineargauge-axis>
+                </e-lineargauge-axes>
+            </ejs-lineargauge>
+        </div>
+        <div id='containerText' class="col-xs-4 col-sm-4 col-lg-2 col-md-2" style="display: flex;justify-content: center; align-items: center;">
+            <ejs-lineargauge load='gaugeLoad' dragStart='dragStartText' dragEnd='dragEndText'
+                         dragMove='dragMoveText' id='linearText' title='Text'
+                         titleStyle='titleStyle' width='168px' height='350px' style='display:block;' background='Transparent'
+                         orientation='Vertical'>
+                <e-lineargauge-axes>
+                    <e-lineargauge-axis Minimum="0" Maximum="100" OpposedPosition="true" labelStyle="labelFont">
+                        <e-axis-majorticks Interval="20" Height="7" Width="1"></e-axis-majorticks>
+                        <e-axis-minorticks Interval="10" Height="3"></e-axis-minorticks>
+                        <e-axis-line Width="5"></e-axis-line>
+                        <e-lineargauge-pointers>
+                            <e-lineargauge-pointer Type="Bar" Value="50" Color="#0074E3" Height=5 Width=5 AnimationDuration=1500 Offset="12" Placement=Near></e-lineargauge-pointer>
+                            <e-lineargauge-pointer Type="Marker" Offset="-10" Value="50" Height=15 Width=15 AnimationDuration=1500 EnableDrag=true Placement=Near></e-lineargauge-pointer>
                         </e-lineargauge-pointers>
                     </e-lineargauge-axis>
                 </e-lineargauge-axes>
@@ -130,21 +130,24 @@
 }
 
 <script>
-    var linearTriangleGauge, linearCircleGauge, linearDiamondGauge, linearRectangleGauge, linearMultiGauge;
+    var linearTriangleGauge, linearCircleGauge, linearTextGauge, linearRectangleGauge, linearMultiGauge;
     window.gaugeLoad = function (args) {
     @* custom code start *@
         var theme = themeName ? themeName : 'Material';
         args.gauge.theme = (theme.charAt(0).toUpperCase() +
             theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
     @* custom code end *@
+        args.gauge.animationDuration = 3000;
         if (args.gauge.element.id === 'linearTriangle') {
             linearTriangleGauge = args.gauge;
         }
         if (args.gauge.element.id === 'linearCircle') {
             linearCircleGauge = args.gauge;
         }
-        if (args.gauge.element.id === 'linearDiamond') {
-            linearDiamondGauge = args.gauge;
+        if (args.gauge.element.id === 'linearText') {
+            linearTextGauge = args.gauge;
+            linearTextGauge.axes[0].pointers[1].markerType = "Text"; 
+            linearTextGauge.axes[0].pointers[1].text ="50 Points";
         }
         if (args.gauge.element.id === 'linearRectangle') {
             linearRectangleGauge = args.gauge;
@@ -180,17 +183,18 @@
             linearCircleGauge.setPointerValue(0, 0, args.currentValue);
         }
     }
-    function dragEndDiamond(args) {
-        linearDiamondGauge.axes[0].pointers[0].animationDuration = 1500;
-        linearDiamondGauge.axes[0].pointers[1].animationDuration = 1500;
+    function dragEndText(args) {
+        linearTextGauge.axes[0].pointers[0].animationDuration = 1500;
+        linearTextGauge.axes[0].pointers[1].animationDuration = 1500;
     }
-    function dragStartDiamond(args) {
-        linearDiamondGauge.axes[0].pointers[0].animationDuration = 0;
-        linearDiamondGauge.axes[0].pointers[1].animationDuration = 0;
+    function dragStartText(args) {
+        linearTextGauge.axes[0].pointers[0].animationDuration = 0;
+        linearTextGauge.axes[0].pointers[1].animationDuration = 0;
     }
-    function dragMoveDiamond(args) {
+    function dragMoveText(args) {
         if (args.pointerIndex == 1) {
-            linearDiamondGauge.setPointerValue(0, 0, args.currentValue);
+            linearTextGauge.axes[0].pointers[1].text = (Math.round(args.currentValue) + " Points");
+            linearTextGauge.setPointerValue(0, 0, args.currentValue);
         }
     }
     function dragEndRectangle(args) {
@@ -225,28 +229,29 @@
     }
     document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('horizontal').addEventListener('click', function () {
-             linearTriangleGauge.width = linearCircleGauge.width = linearDiamondGauge.width = linearRectangleGauge.width = linearMultiGauge.width = '450px';
-        linearTriangleGauge.height = linearCircleGauge.height = linearDiamondGauge.height = linearRectangleGauge.height = linearMultiGauge.height = '150px';
-        linearTriangleGauge.orientation = linearCircleGauge.orientation = linearDiamondGauge.orientation = linearRectangleGauge.orientation = linearMultiGauge.orientation = "Horizontal";
+             linearTriangleGauge.width = linearCircleGauge.width = linearTextGauge.width = linearRectangleGauge.width = linearMultiGauge.width = '450px';
+        linearTriangleGauge.height = linearCircleGauge.height = linearTextGauge.height = linearRectangleGauge.height = linearMultiGauge.height = '150px';
+        linearTriangleGauge.orientation = linearCircleGauge.orientation = linearTextGauge.orientation = linearRectangleGauge.orientation = linearMultiGauge.orientation = "Horizontal";
           document.getElementById('horizontal').style.color = "white";
             document.getElementById('horizontal').style.backgroundColor = "#0074E3";
             document.getElementById('vertical').style.color = "black";
             document.getElementById('vertical').style.backgroundColor = "white";
             document.getElementById('containerTriangle').className = document.getElementById('containerCircle').className =
-                document.getElementById('containerDiamond').className = document.getElementById('containerRectangle').className =
+                document.getElementById('containerText').className = document.getElementById('containerRectangle').className =
                 document.getElementById('containerMultiple').className = "col-xs-12 col-sm-12 col-lg-12 col-md-12";
                 document.getElementById('containerBox').style.padding = "0%";
         });
         document.getElementById('vertical').addEventListener('click', function () {
-            linearTriangleGauge.width = linearCircleGauge.width = linearDiamondGauge.width = linearRectangleGauge.width = linearMultiGauge.width = '150px';
-        linearTriangleGauge.height = linearCircleGauge.height = linearDiamondGauge.height = linearRectangleGauge.height = linearMultiGauge.height = '350px';
-        linearTriangleGauge.orientation = linearCircleGauge.orientation = linearDiamondGauge.orientation = linearRectangleGauge.orientation = linearMultiGauge.orientation = "Vertical";
-         document.getElementById('vertical').style.color = "white";
-                document.getElementById('vertical').style.backgroundColor = "#0074E3";
+            linearTriangleGauge.width = linearCircleGauge.width = linearRectangleGauge.width = linearMultiGauge.width = '150px';
+            linearTextGauge.width = '168px';
+            linearTriangleGauge.height = linearCircleGauge.height = linearTextGauge.height = linearRectangleGauge.height = linearMultiGauge.height = '350px';
+            linearTriangleGauge.orientation = linearCircleGauge.orientation = linearTextGauge.orientation = linearRectangleGauge.orientation = linearMultiGauge.orientation = "Vertical";
+            document.getElementById('vertical').style.color = "white";
+            document.getElementById('vertical').style.backgroundColor = "#0074E3";
             document.getElementById('horizontal')['style']['color'] = "black";
             document.getElementById('horizontal')['style']['backgroundColor'] = "white";
             document.getElementById('containerTriangle').className = document.getElementById('containerCircle').className =
-                document.getElementById('containerDiamond').className = document.getElementById('containerRectangle').className =
+                document.getElementById('containerText').className = document.getElementById('containerRectangle').className =
                 document.getElementById('containerMultiple').className = "col-xs-4 col-sm-4 col-lg-2 col-md-2";
                 document.getElementById('containerBox').style.padding = "4%";
         });

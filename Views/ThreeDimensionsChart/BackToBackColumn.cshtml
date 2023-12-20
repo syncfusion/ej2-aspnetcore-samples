@@ -1,0 +1,69 @@
+﻿@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="control-section" align="center">
+        <ejs-chart3d id="columnContainer" load="load" title="Fruit Consumption by Individuals" enableSideBySidePlacement="false" depth="500" height="400">
+            <e-chart3d-tooltipsettings enable="true">
+            </e-chart3d-tooltipsettings>
+            <e-chart3d-legendsettings visible="true" enableHighlight="true">
+            </e-chart3d-legendsettings>
+            <e-chart3d-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category" interval="1" labelPlacement="@Syncfusion.EJ2.Charts.LabelPlacement.BetweenTicks" labelRotation="-45">
+            </e-chart3d-primaryxaxis>
+            <e-chart3d-series-collection>
+                <e-chart3d-series dataSource="ViewBag.ChartPoints" xName="X" yName="Y" name="Grapes" columnWidth="0.2" type="@Syncfusion.EJ2.Charts.Chart3DSeriesType.Column">
+                </e-chart3d-series>
+                <e-chart3d-series dataSource="ViewBag.ChartPoints" xName="X" yName="Y1" name="Orange" columnWidth="0.2" type="@Syncfusion.EJ2.Charts.Chart3DSeriesType.Column">
+                </e-chart3d-series>
+                <e-chart3d-series dataSource="ViewBag.ChartPoints" xName="X" yName="Y2" name="Apple" columnWidth="0.2" type="@Syncfusion.EJ2.Charts.Chart3DSeriesType.Column">
+                </e-chart3d-series>
+                <e-chart3d-series dataSource="ViewBag.ChartPoints" xName="X" yName="Y3" tooltipMappingName="Text" name="Total" columnWidth="0.2" type="@Syncfusion.EJ2.Charts.Chart3DSeriesType.Column">
+                </e-chart3d-series>
+            </e-chart3d-series-collection>
+        </ejs-chart3d>
+    </div>
+
+    @*custom code start*@
+    <script>
+        function load(args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+            args.chart.primaryYAxis.interval = ej.base.Browser.isDevice ? 4 : 2;
+            args.chart.rotation = ej.base.Browser.isDevice ? 5 : 25;
+        }
+    </script>
+    @*custom code end*@
+}
+@*custom code start*@
+@section Scripts {
+}
+<style>
+
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@section Meta{
+    <meta name="description" content="This example demonstrates the 3D Column in ASP.NET Core 3D Chart control. Explore here for more details." />
+                }
+@*custom code end*@
+@section ActionDescription{
+    <p>
+        This sample displays four series of 3D column chart, with each column positioned behind the preceding one.
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can see observe how to render and configure a 3D column chart with each column positioned behind the preceding one. The 3D column chart serves the purpose of comparing the frequency, count, total, or average of data across different categories. The
+        <code>EnableSideBySidePlacement</code> property is used to position the column behind another.
+    </p>
+    <p>
+        <code>Tooltips</code> are enabled in this example, to see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+    </p>
+}
+@section Title{
+    <title>ASP.NET Core 3D Column Chart Example - Syncfusion Demos </title>
+                }
+@section Header{
+    <h1 class='sb-sample-text'>Example of 3D Column in ASP.NET Core 3D Chart Control</h1>
+                }

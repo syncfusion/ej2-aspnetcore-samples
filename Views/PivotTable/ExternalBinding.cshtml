@@ -22,6 +22,9 @@
                     <e-filters>
                         <e-field name="Product_Categories" caption="Product Categories"></e-field>
                     </e-filters>
+                    <e-formatsettings>
+                        <e-field name="Sold" format="N0"></e-field>
+                    </e-formatsettings>
                 </e-datasourcesettings>
                 <e-gridSettings columnWidth="120" allowSelection= "true">                    
                 </e-gridSettings>
@@ -109,12 +112,13 @@
                     text: 'Sales Analysis'
                 },
                 legendSettings: {
+                    visible: false,
                     position: 'Top'
                 },
                 xAxis: {
                     title: { text: pivotObj.dataSourceSettings.rows.map(function (args) { return args.caption || args.name; }).join(' ~ ') },
                     labels: xLabels,
-                    labelRotation: 315
+                    labelIntersectAction: "Trim"
                 },
                 yAxis: {
                     title: { text: pivotObj.dataSourceSettings.values.map(function (args) { return args.caption || args.name; }).join(' ~ ') },
@@ -137,7 +141,7 @@
             heatmap.xAxis = {
                 title: { text: pivotObj.dataSourceSettings.rows.map(function (args) { return args.caption || args.name; }).join(' ~ ') },
                 labels: xLabels,
-                labelRotation: 315
+                labelIntersectAction: "Trim" 
             };
             heatmap.yAxis = {
                 title: { text: pivotObj.dataSourceSettings.values.map(function (args) { return args.caption || args.name; }).join(' ~ ') },
@@ -157,7 +161,7 @@
 
 @section ActionDescription{
     <div id="action-description">
-        <p>This sample demonstrates rendering Heatmap control by providing desired data from a pivot table on selection. Not only Heatmap, but any other control (including third party) can be used for this purpose.</p>
+        <p>This sample demonstrates rendering HeatMap control by providing desired data from a pivot table on selection. Not only HeatMap, but any other control (including third party) can be used for this purpose.</p>
     </div>
 }
 
@@ -169,7 +173,7 @@
             <code>selectionSettings</code> property.
             The <code>cellSelected</code> event gets fired on every selection operation performed in the pivot table.
             This event returns the selected cell information, like row header name, column header name, measure name, and value.
-            Based on this information, the heatmap will be plotted.
+            Based on this information, the HeatMap will be plotted.
         </p>
     </div>
 }

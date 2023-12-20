@@ -5818,6 +5818,6013 @@ namespace EJ2CoreSampleBrowser.Models
             return data;
         }
 
+        public List<PivotProductData> GetProductData()
+        {
+            List<PivotProductData> productData = new List<PivotProductData>
+            {
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2001,
+                    SoldAmount = 737
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2001,
+                    SoldAmount = 862
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2001,
+                    SoldAmount = 1160
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2001,
+                    SoldAmount = 715
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2001,
+                    SoldAmount = 1284
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2001,
+                    SoldAmount = 221
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2001,
+                    SoldAmount = 179
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2001,
+                    SoldAmount = 1872
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2001,
+                    SoldAmount = 1447
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2001,
+                    SoldAmount = 771
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2001,
+                    SoldAmount = 1510
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2001,
+                    SoldAmount = 1083
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2002,
+                    SoldAmount = 1654
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2002,
+                    SoldAmount = 1750
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2002,
+                    SoldAmount = 1622
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2002,
+                    SoldAmount = 1048
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2002,
+                    SoldAmount = 1714
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2002,
+                    SoldAmount = 15
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2002,
+                    SoldAmount = 779
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2002,
+                    SoldAmount = 1081
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2002,
+                    SoldAmount = 1741
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2002,
+                    SoldAmount = 1491
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2002,
+                    SoldAmount = 1740
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2002,
+                    SoldAmount = 1476
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2003,
+                    SoldAmount = 886
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2003,
+                    SoldAmount = 1323
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2003,
+                    SoldAmount = 1882
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2003,
+                    SoldAmount = 1557
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2003,
+                    SoldAmount = 1014
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2003,
+                    SoldAmount = 1381
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2003,
+                    SoldAmount = 1450
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2003,
+                    SoldAmount = 1684
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2003,
+                    SoldAmount = 1717
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2003,
+                    SoldAmount = 1918
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2003,
+                    SoldAmount = 648
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2003,
+                    SoldAmount = 439
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2004,
+                    SoldAmount = 950
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2004,
+                    SoldAmount = 843
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2004,
+                    SoldAmount = 1364
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2004,
+                    SoldAmount = 1453
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2004,
+                    SoldAmount = 461
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2004,
+                    SoldAmount = 1398
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2004,
+                    SoldAmount = 1178
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2004,
+                    SoldAmount = 879
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2004,
+                    SoldAmount = 1675
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2004,
+                    SoldAmount = 1785
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2004,
+                    SoldAmount = 1924
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2004,
+                    SoldAmount = 1370
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2005,
+                    SoldAmount = 671
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2005,
+                    SoldAmount = 377
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2005,
+                    SoldAmount = 794
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2005,
+                    SoldAmount = 1838
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2005,
+                    SoldAmount = 568
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2005,
+                    SoldAmount = 1619
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2005,
+                    SoldAmount = 590
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2005,
+                    SoldAmount = 163
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2005,
+                    SoldAmount = 104
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2005,
+                    SoldAmount = 1905
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2005,
+                    SoldAmount = 703
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2005,
+                    SoldAmount = 1935
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2006,
+                    SoldAmount = 1394
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2006,
+                    SoldAmount = 1111
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2006,
+                    SoldAmount = 153
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2006,
+                    SoldAmount = 1074
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2006,
+                    SoldAmount = 739
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2006,
+                    SoldAmount = 1394
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2006,
+                    SoldAmount = 1847
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2006,
+                    SoldAmount = 219
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2006,
+                    SoldAmount = 1748
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2006,
+                    SoldAmount = 1211
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2006,
+                    SoldAmount = 1510
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2006,
+                    SoldAmount = 1482
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2007,
+                    SoldAmount = 1191
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2007,
+                    SoldAmount = 1527
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2007,
+                    SoldAmount = 1896
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2007,
+                    SoldAmount = 1691
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2007,
+                    SoldAmount = 1265
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2007,
+                    SoldAmount = 1272
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2007,
+                    SoldAmount = 182
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2007,
+                    SoldAmount = 652
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2007,
+                    SoldAmount = 1021
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2007,
+                    SoldAmount = 949
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2007,
+                    SoldAmount = 1640
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2007,
+                    SoldAmount = 127
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2008,
+                    SoldAmount = 655
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2008,
+                    SoldAmount = 641
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2008,
+                    SoldAmount = 1568
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2008,
+                    SoldAmount = 1309
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2008,
+                    SoldAmount = 394
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2008,
+                    SoldAmount = 12
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2008,
+                    SoldAmount = 663
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2008,
+                    SoldAmount = 1099
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2008,
+                    SoldAmount = 1657
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2008,
+                    SoldAmount = 1806
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2008,
+                    SoldAmount = 918
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2008,
+                    SoldAmount = 1858
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2009,
+                    SoldAmount = 729
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2009,
+                    SoldAmount = 1459
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2009,
+                    SoldAmount = 1718
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2009,
+                    SoldAmount = 1773
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2009,
+                    SoldAmount = 433
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2009,
+                    SoldAmount = 1046
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2009,
+                    SoldAmount = 25
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2009,
+                    SoldAmount = 1410
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2009,
+                    SoldAmount = 256
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2009,
+                    SoldAmount = 1821
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2009,
+                    SoldAmount = 287
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2009,
+                    SoldAmount = 329
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2010,
+                    SoldAmount = 316
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2010,
+                    SoldAmount = 650
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2010,
+                    SoldAmount = 822
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2010,
+                    SoldAmount = 771
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2010,
+                    SoldAmount = 1306
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2010,
+                    SoldAmount = 1219
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2010,
+                    SoldAmount = 1989
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2010,
+                    SoldAmount = 926
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2010,
+                    SoldAmount = 1619
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2010,
+                    SoldAmount = 768
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2010,
+                    SoldAmount = 1062
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2010,
+                    SoldAmount = 1519
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2011,
+                    SoldAmount = 1656
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2011,
+                    SoldAmount = 153
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2011,
+                    SoldAmount = 1962
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2011,
+                    SoldAmount = 250
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2011,
+                    SoldAmount = 1433
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2011,
+                    SoldAmount = 1476
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2011,
+                    SoldAmount = 1242
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2011,
+                    SoldAmount = 1606
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2011,
+                    SoldAmount = 1082
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2011,
+                    SoldAmount = 1243
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2011,
+                    SoldAmount = 1914
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2011,
+                    SoldAmount = 1994
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2012,
+                    SoldAmount = 1359
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2012,
+                    SoldAmount = 426
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2012,
+                    SoldAmount = 1337
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2012,
+                    SoldAmount = 401
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2012,
+                    SoldAmount = 876
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2012,
+                    SoldAmount = 1340
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2012,
+                    SoldAmount = 1252
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2012,
+                    SoldAmount = 364
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2012,
+                    SoldAmount = 1133
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2012,
+                    SoldAmount = 485
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2012,
+                    SoldAmount = 1190
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2012,
+                    SoldAmount = 1845
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2013,
+                    SoldAmount = 1861
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2013,
+                    SoldAmount = 1825
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2013,
+                    SoldAmount = 1589
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2013,
+                    SoldAmount = 26
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2013,
+                    SoldAmount = 23
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2013,
+                    SoldAmount = 767
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2013,
+                    SoldAmount = 1294
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2013,
+                    SoldAmount = 1013
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2013,
+                    SoldAmount = 1386
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2013,
+                    SoldAmount = 1681
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2013,
+                    SoldAmount = 185
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2013,
+                    SoldAmount = 1749
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2014,
+                    SoldAmount = 1664
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2014,
+                    SoldAmount = 363
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2014,
+                    SoldAmount = 849
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2014,
+                    SoldAmount = 407
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2014,
+                    SoldAmount = 1865
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2014,
+                    SoldAmount = 1224
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2014,
+                    SoldAmount = 1805
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2014,
+                    SoldAmount = 1855
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2014,
+                    SoldAmount = 1387
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2014,
+                    SoldAmount = 872
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2014,
+                    SoldAmount = 46
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2014,
+                    SoldAmount = 1457
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2015,
+                    SoldAmount = 1244
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2015,
+                    SoldAmount = 478
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2015,
+                    SoldAmount = 1591
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2015,
+                    SoldAmount = 636
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2015,
+                    SoldAmount = 65
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2015,
+                    SoldAmount = 44
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2015,
+                    SoldAmount = 1673
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2015,
+                    SoldAmount = 355
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2015,
+                    SoldAmount = 634
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2015,
+                    SoldAmount = 289
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2015,
+                    SoldAmount = 1567
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2015,
+                    SoldAmount = 337
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2016,
+                    SoldAmount = 1389
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2016,
+                    SoldAmount = 1239
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2016,
+                    SoldAmount = 1760
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2016,
+                    SoldAmount = 838
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2016,
+                    SoldAmount = 191
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2016,
+                    SoldAmount = 1058
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2016,
+                    SoldAmount = 1785
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2016,
+                    SoldAmount = 1863
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2016,
+                    SoldAmount = 750
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2016,
+                    SoldAmount = 1515
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2016,
+                    SoldAmount = 778
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2016,
+                    SoldAmount = 1264
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2017,
+                    SoldAmount = 965
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2017,
+                    SoldAmount = 1920
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2017,
+                    SoldAmount = 721
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2017,
+                    SoldAmount = 588
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2017,
+                    SoldAmount = 841
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2017,
+                    SoldAmount = 1303
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2017,
+                    SoldAmount = 563
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2017,
+                    SoldAmount = 701
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2017,
+                    SoldAmount = 109
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2017,
+                    SoldAmount = 932
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2017,
+                    SoldAmount = 1620
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2017,
+                    SoldAmount = 685
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2018,
+                    SoldAmount = 675
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2018,
+                    SoldAmount = 568
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2018,
+                    SoldAmount = 528
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2018,
+                    SoldAmount = 1341
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2018,
+                    SoldAmount = 1487
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2018,
+                    SoldAmount = 1981
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2018,
+                    SoldAmount = 1323
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2018,
+                    SoldAmount = 438
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2018,
+                    SoldAmount = 442
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2018,
+                    SoldAmount = 830
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2018,
+                    SoldAmount = 625
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2018,
+                    SoldAmount = 883
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2019,
+                    SoldAmount = 183
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2019,
+                    SoldAmount = 377
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2019,
+                    SoldAmount = 1744
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2019,
+                    SoldAmount = 1964
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2019,
+                    SoldAmount = 1691
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2019,
+                    SoldAmount = 1340
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2019,
+                    SoldAmount = 445
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2019,
+                    SoldAmount = 1570
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2019,
+                    SoldAmount = 461
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2019,
+                    SoldAmount = 1022
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2019,
+                    SoldAmount = 530
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2019,
+                    SoldAmount = 237
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2020,
+                    SoldAmount = 1062
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2020,
+                    SoldAmount = 739
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2020,
+                    SoldAmount = 828
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2020,
+                    SoldAmount = 1642
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2020,
+                    SoldAmount = 227
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2020,
+                    SoldAmount = 923
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2020,
+                    SoldAmount = 684
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2020,
+                    SoldAmount = 377
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2020,
+                    SoldAmount = 162
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2020,
+                    SoldAmount = 554
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2020,
+                    SoldAmount = 126
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2020,
+                    SoldAmount = 652
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2001,
+                    SoldAmount = 410
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2001,
+                    SoldAmount = 897
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2001,
+                    SoldAmount = 317
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2001,
+                    SoldAmount = 1803
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2001,
+                    SoldAmount = 1077
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2001,
+                    SoldAmount = 1229
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2001,
+                    SoldAmount = 1655
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2001,
+                    SoldAmount = 684
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2001,
+                    SoldAmount = 335
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2001,
+                    SoldAmount = 1664
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2001,
+                    SoldAmount = 114
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2001,
+                    SoldAmount = 1579
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2002,
+                    SoldAmount = 1512
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2002,
+                    SoldAmount = 1023
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2002,
+                    SoldAmount = 905
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2002,
+                    SoldAmount = 618
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2002,
+                    SoldAmount = 1437
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2002,
+                    SoldAmount = 54
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2002,
+                    SoldAmount = 1151
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2002,
+                    SoldAmount = 1313
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2002,
+                    SoldAmount = 721
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2002,
+                    SoldAmount = 91
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2002,
+                    SoldAmount = 817
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2002,
+                    SoldAmount = 1400
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2003,
+                    SoldAmount = 1354
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2003,
+                    SoldAmount = 937
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2003,
+                    SoldAmount = 1387
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2003,
+                    SoldAmount = 1472
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2003,
+                    SoldAmount = 229
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2003,
+                    SoldAmount = 1087
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2003,
+                    SoldAmount = 450
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2003,
+                    SoldAmount = 635
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2003,
+                    SoldAmount = 733
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2003,
+                    SoldAmount = 1729
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2003,
+                    SoldAmount = 1900
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2003,
+                    SoldAmount = 1952
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2004,
+                    SoldAmount = 982
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2004,
+                    SoldAmount = 1612
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2004,
+                    SoldAmount = 564
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2004,
+                    SoldAmount = 1997
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2004,
+                    SoldAmount = 1488
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2004,
+                    SoldAmount = 1345
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2004,
+                    SoldAmount = 1816
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2004,
+                    SoldAmount = 325
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2004,
+                    SoldAmount = 1776
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2004,
+                    SoldAmount = 1182
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2004,
+                    SoldAmount = 77
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2004,
+                    SoldAmount = 1124
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2005,
+                    SoldAmount = 1762
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2005,
+                    SoldAmount = 1016
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2005,
+                    SoldAmount = 295
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2005,
+                    SoldAmount = 954
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2005,
+                    SoldAmount = 253
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2005,
+                    SoldAmount = 499
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2005,
+                    SoldAmount = 640
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2005,
+                    SoldAmount = 51
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2005,
+                    SoldAmount = 1082
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2005,
+                    SoldAmount = 1174
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2005,
+                    SoldAmount = 1730
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2005,
+                    SoldAmount = 391
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2006,
+                    SoldAmount = 1681
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2006,
+                    SoldAmount = 975
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2006,
+                    SoldAmount = 414
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2006,
+                    SoldAmount = 67
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2006,
+                    SoldAmount = 1146
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2006,
+                    SoldAmount = 1134
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2006,
+                    SoldAmount = 1286
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2006,
+                    SoldAmount = 1943
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2006,
+                    SoldAmount = 394
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2006,
+                    SoldAmount = 1293
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2006,
+                    SoldAmount = 477
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2006,
+                    SoldAmount = 1053
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2007,
+                    SoldAmount = 326
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2007,
+                    SoldAmount = 644
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2007,
+                    SoldAmount = 63
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2007,
+                    SoldAmount = 869
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2007,
+                    SoldAmount = 703
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2007,
+                    SoldAmount = 1559
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2007,
+                    SoldAmount = 1498
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2007,
+                    SoldAmount = 1230
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2007,
+                    SoldAmount = 530
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2007,
+                    SoldAmount = 549
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2007,
+                    SoldAmount = 130
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2007,
+                    SoldAmount = 1850
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2008,
+                    SoldAmount = 912
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2008,
+                    SoldAmount = 574
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2008,
+                    SoldAmount = 548
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2008,
+                    SoldAmount = 1743
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2008,
+                    SoldAmount = 1012
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2008,
+                    SoldAmount = 1951
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2008,
+                    SoldAmount = 728
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2008,
+                    SoldAmount = 1101
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2008,
+                    SoldAmount = 1445
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2008,
+                    SoldAmount = 806
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2008,
+                    SoldAmount = 921
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2008,
+                    SoldAmount = 82
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2009,
+                    SoldAmount = 561
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2009,
+                    SoldAmount = 631
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2009,
+                    SoldAmount = 1856
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2009,
+                    SoldAmount = 1936
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2009,
+                    SoldAmount = 416
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2009,
+                    SoldAmount = 544
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2009,
+                    SoldAmount = 1122
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2009,
+                    SoldAmount = 47
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2009,
+                    SoldAmount = 1962
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2009,
+                    SoldAmount = 1391
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2009,
+                    SoldAmount = 1421
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2009,
+                    SoldAmount = 333
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2010,
+                    SoldAmount = 32
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2010,
+                    SoldAmount = 485
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2010,
+                    SoldAmount = 1336
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2010,
+                    SoldAmount = 207
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2010,
+                    SoldAmount = 700
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2010,
+                    SoldAmount = 357
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2010,
+                    SoldAmount = 1295
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2010,
+                    SoldAmount = 1007
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2010,
+                    SoldAmount = 1843
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2010,
+                    SoldAmount = 1409
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2010,
+                    SoldAmount = 101
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2010,
+                    SoldAmount = 702
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2011,
+                    SoldAmount = 1833
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2011,
+                    SoldAmount = 1326
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2011,
+                    SoldAmount = 417
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2011,
+                    SoldAmount = 1693
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2011,
+                    SoldAmount = 660
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2011,
+                    SoldAmount = 1830
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2011,
+                    SoldAmount = 1632
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2011,
+                    SoldAmount = 1565
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2011,
+                    SoldAmount = 1500
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2011,
+                    SoldAmount = 684
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2011,
+                    SoldAmount = 1579
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2011,
+                    SoldAmount = 1294
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2012,
+                    SoldAmount = 1802
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2012,
+                    SoldAmount = 720
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2012,
+                    SoldAmount = 387
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2012,
+                    SoldAmount = 1549
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2012,
+                    SoldAmount = 286
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2012,
+                    SoldAmount = 1750
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2012,
+                    SoldAmount = 1436
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2012,
+                    SoldAmount = 1097
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2012,
+                    SoldAmount = 1733
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2012,
+                    SoldAmount = 1135
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2012,
+                    SoldAmount = 20
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2012,
+                    SoldAmount = 738
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2013,
+                    SoldAmount = 567
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2013,
+                    SoldAmount = 1546
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2013,
+                    SoldAmount = 1092
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2013,
+                    SoldAmount = 326
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2013,
+                    SoldAmount = 1794
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2013,
+                    SoldAmount = 1445
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2013,
+                    SoldAmount = 1837
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2013,
+                    SoldAmount = 1960
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2013,
+                    SoldAmount = 356
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2013,
+                    SoldAmount = 17
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2013,
+                    SoldAmount = 138
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2013,
+                    SoldAmount = 787
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2014,
+                    SoldAmount = 844
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2014,
+                    SoldAmount = 1346
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2014,
+                    SoldAmount = 278
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2014,
+                    SoldAmount = 1098
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2014,
+                    SoldAmount = 1392
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2014,
+                    SoldAmount = 178
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2014,
+                    SoldAmount = 1735
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2014,
+                    SoldAmount = 503
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2014,
+                    SoldAmount = 1038
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2014,
+                    SoldAmount = 1821
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2014,
+                    SoldAmount = 1203
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2014,
+                    SoldAmount = 827
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2015,
+                    SoldAmount = 687
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2015,
+                    SoldAmount = 1277
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2015,
+                    SoldAmount = 1922
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2015,
+                    SoldAmount = 987
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2015,
+                    SoldAmount = 1393
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2015,
+                    SoldAmount = 1360
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2015,
+                    SoldAmount = 591
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2015,
+                    SoldAmount = 1518
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2015,
+                    SoldAmount = 1443
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2015,
+                    SoldAmount = 1944
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2015,
+                    SoldAmount = 804
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2015,
+                    SoldAmount = 1510
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2016,
+                    SoldAmount = 1173
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2016,
+                    SoldAmount = 1432
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2016,
+                    SoldAmount = 745
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2016,
+                    SoldAmount = 975
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2016,
+                    SoldAmount = 190
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2016,
+                    SoldAmount = 40
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2016,
+                    SoldAmount = 1191
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2016,
+                    SoldAmount = 718
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2016,
+                    SoldAmount = 569
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2016,
+                    SoldAmount = 931
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2016,
+                    SoldAmount = 608
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2016,
+                    SoldAmount = 1963
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2017,
+                    SoldAmount = 686
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2017,
+                    SoldAmount = 1484
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2017,
+                    SoldAmount = 1746
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2017,
+                    SoldAmount = 887
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2017,
+                    SoldAmount = 1457
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2017,
+                    SoldAmount = 1500
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2017,
+                    SoldAmount = 1894
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2017,
+                    SoldAmount = 1364
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2017,
+                    SoldAmount = 1280
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2017,
+                    SoldAmount = 188
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2017,
+                    SoldAmount = 698
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2017,
+                    SoldAmount = 85
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2018,
+                    SoldAmount = 995
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2018,
+                    SoldAmount = 1572
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2018,
+                    SoldAmount = 1244
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2018,
+                    SoldAmount = 1577
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2018,
+                    SoldAmount = 1536
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2018,
+                    SoldAmount = 1600
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2018,
+                    SoldAmount = 208
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2018,
+                    SoldAmount = 471
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2018,
+                    SoldAmount = 876
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2018,
+                    SoldAmount = 1211
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2018,
+                    SoldAmount = 1093
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2018,
+                    SoldAmount = 1435
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2019,
+                    SoldAmount = 140
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2019,
+                    SoldAmount = 1690
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2019,
+                    SoldAmount = 906
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2019,
+                    SoldAmount = 1159
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2019,
+                    SoldAmount = 1243
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2019,
+                    SoldAmount = 1325
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2019,
+                    SoldAmount = 512
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2019,
+                    SoldAmount = 1365
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2019,
+                    SoldAmount = 1852
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2019,
+                    SoldAmount = 1903
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2019,
+                    SoldAmount = 1770
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2019,
+                    SoldAmount = 960
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2020,
+                    SoldAmount = 1660
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2020,
+                    SoldAmount = 1100
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2020,
+                    SoldAmount = 1578
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2020,
+                    SoldAmount = 197
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2020,
+                    SoldAmount = 941
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2020,
+                    SoldAmount = 1348
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2020,
+                    SoldAmount = 1229
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2020,
+                    SoldAmount = 503
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2020,
+                    SoldAmount = 554
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2020,
+                    SoldAmount = 1964
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2020,
+                    SoldAmount = 1300
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2020,
+                    SoldAmount = 1119
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2001,
+                    SoldAmount = 1890
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2001,
+                    SoldAmount = 946
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2001,
+                    SoldAmount = 144
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2001,
+                    SoldAmount = 840
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2001,
+                    SoldAmount = 1601
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2001,
+                    SoldAmount = 821
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2001,
+                    SoldAmount = 698
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2001,
+                    SoldAmount = 123
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2001,
+                    SoldAmount = 397
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2001,
+                    SoldAmount = 1276
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2001,
+                    SoldAmount = 974
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2001,
+                    SoldAmount = 1091
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2002,
+                    SoldAmount = 815
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2002,
+                    SoldAmount = 428
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2002,
+                    SoldAmount = 1572
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2002,
+                    SoldAmount = 91
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2002,
+                    SoldAmount = 604
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2002,
+                    SoldAmount = 1322
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2002,
+                    SoldAmount = 1189
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2002,
+                    SoldAmount = 1014
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2002,
+                    SoldAmount = 179
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2002,
+                    SoldAmount = 162
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2002,
+                    SoldAmount = 873
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2002,
+                    SoldAmount = 1882
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2003,
+                    SoldAmount = 1607
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2003,
+                    SoldAmount = 357
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2003,
+                    SoldAmount = 127
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2003,
+                    SoldAmount = 1458
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2003,
+                    SoldAmount = 750
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2003,
+                    SoldAmount = 5
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2003,
+                    SoldAmount = 1140
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2003,
+                    SoldAmount = 1008
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2003,
+                    SoldAmount = 1176
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2003,
+                    SoldAmount = 1261
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2003,
+                    SoldAmount = 533
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2003,
+                    SoldAmount = 559
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2004,
+                    SoldAmount = 1783
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2004,
+                    SoldAmount = 911
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2004,
+                    SoldAmount = 863
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2004,
+                    SoldAmount = 455
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2004,
+                    SoldAmount = 972
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2004,
+                    SoldAmount = 1844
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2004,
+                    SoldAmount = 114
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2004,
+                    SoldAmount = 1363
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2004,
+                    SoldAmount = 534
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2004,
+                    SoldAmount = 710
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2004,
+                    SoldAmount = 1559
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2004,
+                    SoldAmount = 1981
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2005,
+                    SoldAmount = 554
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2005,
+                    SoldAmount = 1037
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2005,
+                    SoldAmount = 1393
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2005,
+                    SoldAmount = 904
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2005,
+                    SoldAmount = 1880
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2005,
+                    SoldAmount = 1078
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2005,
+                    SoldAmount = 1059
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2005,
+                    SoldAmount = 1125
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2005,
+                    SoldAmount = 397
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2005,
+                    SoldAmount = 205
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2005,
+                    SoldAmount = 1225
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2005,
+                    SoldAmount = 1599
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2006,
+                    SoldAmount = 1072
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2006,
+                    SoldAmount = 1201
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2006,
+                    SoldAmount = 286
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2006,
+                    SoldAmount = 483
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2006,
+                    SoldAmount = 1716
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2006,
+                    SoldAmount = 1348
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2006,
+                    SoldAmount = 1241
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2006,
+                    SoldAmount = 945
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2006,
+                    SoldAmount = 1404
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2006,
+                    SoldAmount = 1106
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2006,
+                    SoldAmount = 1173
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2006,
+                    SoldAmount = 1602
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2007,
+                    SoldAmount = 1586
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2007,
+                    SoldAmount = 401
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2007,
+                    SoldAmount = 963
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2007,
+                    SoldAmount = 221
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2007,
+                    SoldAmount = 1732
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2007,
+                    SoldAmount = 193
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2007,
+                    SoldAmount = 1722
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2007,
+                    SoldAmount = 925
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2007,
+                    SoldAmount = 282
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2007,
+                    SoldAmount = 281
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2007,
+                    SoldAmount = 881
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2007,
+                    SoldAmount = 1616
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2008,
+                    SoldAmount = 538
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2008,
+                    SoldAmount = 1015
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2008,
+                    SoldAmount = 1998
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2008,
+                    SoldAmount = 540
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2008,
+                    SoldAmount = 1643
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2008,
+                    SoldAmount = 949
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2008,
+                    SoldAmount = 1440
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2008,
+                    SoldAmount = 553
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2008,
+                    SoldAmount = 1827
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2008,
+                    SoldAmount = 1946
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2008,
+                    SoldAmount = 298
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2008,
+                    SoldAmount = 1063
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2009,
+                    SoldAmount = 374
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2009,
+                    SoldAmount = 1691
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2009,
+                    SoldAmount = 1357
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2009,
+                    SoldAmount = 935
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2009,
+                    SoldAmount = 856
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2009,
+                    SoldAmount = 103
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2009,
+                    SoldAmount = 1771
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2009,
+                    SoldAmount = 911
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2009,
+                    SoldAmount = 106
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2009,
+                    SoldAmount = 434
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2009,
+                    SoldAmount = 1118
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2009,
+                    SoldAmount = 443
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2010,
+                    SoldAmount = 559
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2010,
+                    SoldAmount = 422
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2010,
+                    SoldAmount = 18
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2010,
+                    SoldAmount = 1280
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2010,
+                    SoldAmount = 1889
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2010,
+                    SoldAmount = 1246
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2010,
+                    SoldAmount = 147
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2010,
+                    SoldAmount = 1454
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2010,
+                    SoldAmount = 720
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2010,
+                    SoldAmount = 162
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2010,
+                    SoldAmount = 1132
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2010,
+                    SoldAmount = 1475
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2011,
+                    SoldAmount = 1666
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2011,
+                    SoldAmount = 505
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2011,
+                    SoldAmount = 1728
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2011,
+                    SoldAmount = 336
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2011,
+                    SoldAmount = 1031
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2011,
+                    SoldAmount = 579
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2011,
+                    SoldAmount = 229
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2011,
+                    SoldAmount = 483
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2011,
+                    SoldAmount = 502
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2011,
+                    SoldAmount = 114
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2011,
+                    SoldAmount = 1875
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2011,
+                    SoldAmount = 1438
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2012,
+                    SoldAmount = 702
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2012,
+                    SoldAmount = 517
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2012,
+                    SoldAmount = 589
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2012,
+                    SoldAmount = 655
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2012,
+                    SoldAmount = 1218
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2012,
+                    SoldAmount = 1292
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2012,
+                    SoldAmount = 988
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2012,
+                    SoldAmount = 101
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2012,
+                    SoldAmount = 147
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2012,
+                    SoldAmount = 1965
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2012,
+                    SoldAmount = 1836
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2012,
+                    SoldAmount = 503
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2013,
+                    SoldAmount = 304
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2013,
+                    SoldAmount = 62
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2013,
+                    SoldAmount = 1296
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2013,
+                    SoldAmount = 1173
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2013,
+                    SoldAmount = 792
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2013,
+                    SoldAmount = 202
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2013,
+                    SoldAmount = 80
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2013,
+                    SoldAmount = 372
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2013,
+                    SoldAmount = 16
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2013,
+                    SoldAmount = 1101
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2013,
+                    SoldAmount = 559
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2013,
+                    SoldAmount = 1672
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2014,
+                    SoldAmount = 1221
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2014,
+                    SoldAmount = 238
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2014,
+                    SoldAmount = 314
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2014,
+                    SoldAmount = 1272
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2014,
+                    SoldAmount = 1492
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2014,
+                    SoldAmount = 1485
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2014,
+                    SoldAmount = 182
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2014,
+                    SoldAmount = 1468
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2014,
+                    SoldAmount = 1719
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2014,
+                    SoldAmount = 1383
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2014,
+                    SoldAmount = 754
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2014,
+                    SoldAmount = 1000
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2015,
+                    SoldAmount = 1787
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2015,
+                    SoldAmount = 1619
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2015,
+                    SoldAmount = 1142
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2015,
+                    SoldAmount = 191
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2015,
+                    SoldAmount = 987
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2015,
+                    SoldAmount = 772
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2015,
+                    SoldAmount = 875
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2015,
+                    SoldAmount = 758
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2015,
+                    SoldAmount = 113
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2015,
+                    SoldAmount = 585
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2015,
+                    SoldAmount = 362
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2015,
+                    SoldAmount = 788
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2016,
+                    SoldAmount = 1193
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2016,
+                    SoldAmount = 1195
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2016,
+                    SoldAmount = 564
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2016,
+                    SoldAmount = 1314
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2016,
+                    SoldAmount = 345
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2016,
+                    SoldAmount = 1453
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2016,
+                    SoldAmount = 1958
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2016,
+                    SoldAmount = 75
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2016,
+                    SoldAmount = 1692
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2016,
+                    SoldAmount = 1134
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2016,
+                    SoldAmount = 50
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2016,
+                    SoldAmount = 1376
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2017,
+                    SoldAmount = 1330
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2017,
+                    SoldAmount = 1055
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2017,
+                    SoldAmount = 13
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2017,
+                    SoldAmount = 1521
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2017,
+                    SoldAmount = 1466
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2017,
+                    SoldAmount = 1010
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2017,
+                    SoldAmount = 1835
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2017,
+                    SoldAmount = 385
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2017,
+                    SoldAmount = 954
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2017,
+                    SoldAmount = 1649
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2017,
+                    SoldAmount = 525
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2017,
+                    SoldAmount = 1215
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2018,
+                    SoldAmount = 339
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2018,
+                    SoldAmount = 1078
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2018,
+                    SoldAmount = 1610
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2018,
+                    SoldAmount = 135
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2018,
+                    SoldAmount = 1580
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2018,
+                    SoldAmount = 1766
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2018,
+                    SoldAmount = 792
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2018,
+                    SoldAmount = 435
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2018,
+                    SoldAmount = 1204
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2018,
+                    SoldAmount = 1624
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2018,
+                    SoldAmount = 759
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2018,
+                    SoldAmount = 983
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2019,
+                    SoldAmount = 871
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2019,
+                    SoldAmount = 1361
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2019,
+                    SoldAmount = 1973
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2019,
+                    SoldAmount = 1588
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2019,
+                    SoldAmount = 1911
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2019,
+                    SoldAmount = 483
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2019,
+                    SoldAmount = 965
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2019,
+                    SoldAmount = 997
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2019,
+                    SoldAmount = 51
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2019,
+                    SoldAmount = 688
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2019,
+                    SoldAmount = 5
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2019,
+                    SoldAmount = 489
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2020,
+                    SoldAmount = 1508
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2020,
+                    SoldAmount = 881
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2020,
+                    SoldAmount = 902
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2020,
+                    SoldAmount = 980
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2020,
+                    SoldAmount = 645
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2020,
+                    SoldAmount = 875
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2020,
+                    SoldAmount = 1676
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2020,
+                    SoldAmount = 846
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2020,
+                    SoldAmount = 1271
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2020,
+                    SoldAmount = 294
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2020,
+                    SoldAmount = 300
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2020,
+                    SoldAmount = 283
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2001,
+                    SoldAmount = 728
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2001,
+                    SoldAmount = 1930
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2001,
+                    SoldAmount = 1026
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2001,
+                    SoldAmount = 371
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2001,
+                    SoldAmount = 722
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2001,
+                    SoldAmount = 84
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2001,
+                    SoldAmount = 1827
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2001,
+                    SoldAmount = 1470
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2001,
+                    SoldAmount = 672
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2001,
+                    SoldAmount = 1390
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2001,
+                    SoldAmount = 272
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2001,
+                    SoldAmount = 1490
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2002,
+                    SoldAmount = 214
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2002,
+                    SoldAmount = 1012
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2002,
+                    SoldAmount = 694
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2002,
+                    SoldAmount = 443
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2002,
+                    SoldAmount = 958
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2002,
+                    SoldAmount = 1939
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2002,
+                    SoldAmount = 312
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2002,
+                    SoldAmount = 1866
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2002,
+                    SoldAmount = 460
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2002,
+                    SoldAmount = 1650
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2002,
+                    SoldAmount = 1480
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2002,
+                    SoldAmount = 9
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2003,
+                    SoldAmount = 1080
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2003,
+                    SoldAmount = 111
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2003,
+                    SoldAmount = 1082
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2003,
+                    SoldAmount = 948
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2003,
+                    SoldAmount = 54
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2003,
+                    SoldAmount = 1299
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2003,
+                    SoldAmount = 1212
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2003,
+                    SoldAmount = 493
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2003,
+                    SoldAmount = 943
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2003,
+                    SoldAmount = 1336
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2003,
+                    SoldAmount = 1872
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2003,
+                    SoldAmount = 1281
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2004,
+                    SoldAmount = 1457
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2004,
+                    SoldAmount = 469
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2004,
+                    SoldAmount = 119
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2004,
+                    SoldAmount = 139
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2004,
+                    SoldAmount = 1738
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2004,
+                    SoldAmount = 143
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2004,
+                    SoldAmount = 946
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2004,
+                    SoldAmount = 1305
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2004,
+                    SoldAmount = 1608
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2004,
+                    SoldAmount = 1868
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2004,
+                    SoldAmount = 603
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2004,
+                    SoldAmount = 737
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2005,
+                    SoldAmount = 701
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2005,
+                    SoldAmount = 1032
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2005,
+                    SoldAmount = 980
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2005,
+                    SoldAmount = 595
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2005,
+                    SoldAmount = 838
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2005,
+                    SoldAmount = 1468
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2005,
+                    SoldAmount = 311
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2005,
+                    SoldAmount = 827
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2005,
+                    SoldAmount = 776
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2005,
+                    SoldAmount = 435
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2005,
+                    SoldAmount = 882
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2005,
+                    SoldAmount = 1141
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2006,
+                    SoldAmount = 1316
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2006,
+                    SoldAmount = 441
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2006,
+                    SoldAmount = 862
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2006,
+                    SoldAmount = 64
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2006,
+                    SoldAmount = 450
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2006,
+                    SoldAmount = 53
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2006,
+                    SoldAmount = 412
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2006,
+                    SoldAmount = 1136
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2006,
+                    SoldAmount = 398
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2006,
+                    SoldAmount = 965
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2006,
+                    SoldAmount = 339
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2006,
+                    SoldAmount = 525
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2007,
+                    SoldAmount = 1582
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2007,
+                    SoldAmount = 1400
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2007,
+                    SoldAmount = 937
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2007,
+                    SoldAmount = 304
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2007,
+                    SoldAmount = 1211
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2007,
+                    SoldAmount = 680
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2007,
+                    SoldAmount = 1379
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2007,
+                    SoldAmount = 331
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2007,
+                    SoldAmount = 1354
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2007,
+                    SoldAmount = 806
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2007,
+                    SoldAmount = 1281
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2007,
+                    SoldAmount = 1016
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2008,
+                    SoldAmount = 538
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2008,
+                    SoldAmount = 396
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2008,
+                    SoldAmount = 1644
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2008,
+                    SoldAmount = 1861
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2008,
+                    SoldAmount = 859
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2008,
+                    SoldAmount = 964
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2008,
+                    SoldAmount = 1257
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2008,
+                    SoldAmount = 112
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2008,
+                    SoldAmount = 174
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2008,
+                    SoldAmount = 1500
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2008,
+                    SoldAmount = 1626
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2008,
+                    SoldAmount = 1141
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2009,
+                    SoldAmount = 1325
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2009,
+                    SoldAmount = 128
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2009,
+                    SoldAmount = 612
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2009,
+                    SoldAmount = 456
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2009,
+                    SoldAmount = 1083
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2009,
+                    SoldAmount = 293
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2009,
+                    SoldAmount = 636
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2009,
+                    SoldAmount = 1227
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2009,
+                    SoldAmount = 1894
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2009,
+                    SoldAmount = 1455
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2009,
+                    SoldAmount = 1308
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2009,
+                    SoldAmount = 423
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2010,
+                    SoldAmount = 613
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2010,
+                    SoldAmount = 119
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2010,
+                    SoldAmount = 1435
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2010,
+                    SoldAmount = 1885
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2010,
+                    SoldAmount = 1156
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2010,
+                    SoldAmount = 368
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2010,
+                    SoldAmount = 1759
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2010,
+                    SoldAmount = 734
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2010,
+                    SoldAmount = 226
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2010,
+                    SoldAmount = 1761
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2010,
+                    SoldAmount = 97
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2010,
+                    SoldAmount = 529
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2011,
+                    SoldAmount = 1044
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2011,
+                    SoldAmount = 1159
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2011,
+                    SoldAmount = 970
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2011,
+                    SoldAmount = 1389
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2011,
+                    SoldAmount = 1625
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2011,
+                    SoldAmount = 1907
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2011,
+                    SoldAmount = 158
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2011,
+                    SoldAmount = 965
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2011,
+                    SoldAmount = 949
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2011,
+                    SoldAmount = 1942
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2011,
+                    SoldAmount = 1455
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2011,
+                    SoldAmount = 811
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2012,
+                    SoldAmount = 140
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2012,
+                    SoldAmount = 1181
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2012,
+                    SoldAmount = 1501
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2012,
+                    SoldAmount = 1139
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2012,
+                    SoldAmount = 260
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2012,
+                    SoldAmount = 1132
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2012,
+                    SoldAmount = 937
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2012,
+                    SoldAmount = 1764
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2012,
+                    SoldAmount = 987
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2012,
+                    SoldAmount = 1447
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2012,
+                    SoldAmount = 560
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2012,
+                    SoldAmount = 1521
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2013,
+                    SoldAmount = 245
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2013,
+                    SoldAmount = 1977
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2013,
+                    SoldAmount = 1909
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2013,
+                    SoldAmount = 676
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2013,
+                    SoldAmount = 829
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2013,
+                    SoldAmount = 535
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2013,
+                    SoldAmount = 577
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2013,
+                    SoldAmount = 321
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2013,
+                    SoldAmount = 705
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2013,
+                    SoldAmount = 1440
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2013,
+                    SoldAmount = 1578
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2013,
+                    SoldAmount = 1416
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2014,
+                    SoldAmount = 1812
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2014,
+                    SoldAmount = 1289
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2014,
+                    SoldAmount = 1398
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2014,
+                    SoldAmount = 899
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2014,
+                    SoldAmount = 1724
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2014,
+                    SoldAmount = 1596
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2014,
+                    SoldAmount = 685
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2014,
+                    SoldAmount = 598
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2014,
+                    SoldAmount = 1212
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2014,
+                    SoldAmount = 1657
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2014,
+                    SoldAmount = 147
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2014,
+                    SoldAmount = 1257
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2015,
+                    SoldAmount = 602
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2015,
+                    SoldAmount = 1595
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2015,
+                    SoldAmount = 835
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2015,
+                    SoldAmount = 242
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2015,
+                    SoldAmount = 1063
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2015,
+                    SoldAmount = 1830
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2015,
+                    SoldAmount = 1722
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2015,
+                    SoldAmount = 1342
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2015,
+                    SoldAmount = 665
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2015,
+                    SoldAmount = 1302
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2015,
+                    SoldAmount = 187
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2015,
+                    SoldAmount = 1037
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2016,
+                    SoldAmount = 1911
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2016,
+                    SoldAmount = 1626
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2016,
+                    SoldAmount = 82
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2016,
+                    SoldAmount = 781
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2016,
+                    SoldAmount = 917
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2016,
+                    SoldAmount = 1756
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2016,
+                    SoldAmount = 1667
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2016,
+                    SoldAmount = 1454
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2016,
+                    SoldAmount = 1230
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2016,
+                    SoldAmount = 1063
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2016,
+                    SoldAmount = 1792
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2016,
+                    SoldAmount = 1287
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2017,
+                    SoldAmount = 476
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2017,
+                    SoldAmount = 1027
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2017,
+                    SoldAmount = 1379
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2017,
+                    SoldAmount = 1217
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2017,
+                    SoldAmount = 1870
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2017,
+                    SoldAmount = 1161
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2017,
+                    SoldAmount = 1909
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2017,
+                    SoldAmount = 148
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2017,
+                    SoldAmount = 723
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2017,
+                    SoldAmount = 139
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2017,
+                    SoldAmount = 764
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2017,
+                    SoldAmount = 614
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2018,
+                    SoldAmount = 1146
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2018,
+                    SoldAmount = 529
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2018,
+                    SoldAmount = 1917
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2018,
+                    SoldAmount = 1042
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2018,
+                    SoldAmount = 1516
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2018,
+                    SoldAmount = 1695
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2018,
+                    SoldAmount = 1273
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2018,
+                    SoldAmount = 525
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2018,
+                    SoldAmount = 137
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2018,
+                    SoldAmount = 828
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2018,
+                    SoldAmount = 745
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2018,
+                    SoldAmount = 158
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2019,
+                    SoldAmount = 1524
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2019,
+                    SoldAmount = 1316
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2019,
+                    SoldAmount = 329
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2019,
+                    SoldAmount = 1466
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2019,
+                    SoldAmount = 1520
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2019,
+                    SoldAmount = 1625
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2019,
+                    SoldAmount = 1431
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2019,
+                    SoldAmount = 1614
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2019,
+                    SoldAmount = 477
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2019,
+                    SoldAmount = 1624
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2019,
+                    SoldAmount = 1328
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2019,
+                    SoldAmount = 1483
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2020,
+                    SoldAmount = 1101
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2020,
+                    SoldAmount = 1508
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2020,
+                    SoldAmount = 1912
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2020,
+                    SoldAmount = 572
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2020,
+                    SoldAmount = 1580
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2020,
+                    SoldAmount = 959
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2020,
+                    SoldAmount = 1006
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2020,
+                    SoldAmount = 1965
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2020,
+                    SoldAmount = 1231
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2020,
+                    SoldAmount = 501
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2020,
+                    SoldAmount = 1557
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2020,
+                    SoldAmount = 588
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2001,
+                    SoldAmount = 1450
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2001,
+                    SoldAmount = 1571
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2001,
+                    SoldAmount = 1758
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2001,
+                    SoldAmount = 390
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2001,
+                    SoldAmount = 1389
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2001,
+                    SoldAmount = 1295
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2001,
+                    SoldAmount = 1810
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2001,
+                    SoldAmount = 1678
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2001,
+                    SoldAmount = 1023
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2001,
+                    SoldAmount = 1079
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2001,
+                    SoldAmount = 1176
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2001,
+                    SoldAmount = 1932
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2002,
+                    SoldAmount = 1265
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2002,
+                    SoldAmount = 764
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2002,
+                    SoldAmount = 261
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2002,
+                    SoldAmount = 1969
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2002,
+                    SoldAmount = 1503
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2002,
+                    SoldAmount = 1191
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2002,
+                    SoldAmount = 478
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2002,
+                    SoldAmount = 640
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2002,
+                    SoldAmount = 87
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2002,
+                    SoldAmount = 956
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2002,
+                    SoldAmount = 673
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2002,
+                    SoldAmount = 458
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2003,
+                    SoldAmount = 1131
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Gaming Console",
+                    Year = 2003,
+                    SoldAmount = 1151
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2003,
+                    SoldAmount = 159
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2003,
+                    SoldAmount = 1886
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Handbag",
+                    Year = 2003,
+                    SoldAmount = 1707
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Mobile",
+                    Year = 2003,
+                    SoldAmount = 502
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2003,
+                    SoldAmount = 30
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Furniture",
+                    Year = 2003,
+                    SoldAmount = 1915
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Apparel",
+                    Year = 2003,
+                    SoldAmount = 458
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "PC",
+                    Year = 2003,
+                    SoldAmount = 1350
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Cosmetics",
+                    Year = 2003,
+                    SoldAmount = 197
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Home Decor",
+                    Year = 2003,
+                    SoldAmount = 912
+                },
+                new PivotProductData {
+                    ProductType = "Fashion",
+                    Product = "Watch",
+                    Year = 2004,
+                    SoldAmount = 1184
+                },
+                new PivotProductData {
+                    ProductType = "Electronics",
+                    Product = "Laptop",
+                    Year = 2004,
+                    SoldAmount = 1805
+                },
+                new PivotProductData {
+                    ProductType = "Beauty and Personal Care",
+                    Product = "Fragrance",
+                    Year = 2004,
+                    SoldAmount = 1940
+                },
+                new PivotProductData {
+                    ProductType = "Household",
+                    Product = "Kitchenware",
+                    Year = 2004,
+                    SoldAmount = 1188
+                }
+            };
+            return productData;
+        }
         public class RData
         {
             public string Date { get; set; }
@@ -5880,6 +11887,14 @@ namespace EJ2CoreSampleBrowser.Models
             public double Amount { get; set; }
             public string Products { get; set; }
             public string Month { get; set; }
+        }
+
+        public class PivotProductData
+        {
+            public string ProductType { get; set; }
+            public string Product { get; set; }
+            public int Year { get; set; }
+            public int SoldAmount { get; set; }
         }
     }
 }

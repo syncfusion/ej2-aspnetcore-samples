@@ -11,7 +11,7 @@
                         <div>
                             <p>
                               An image can be edited within a Rich Text Editor using an Image Editor.
-                              <img id="img1" style="height: 350px;" src="https://ej2.syncfusion.com/demos/src/image-editor/images/bridge.png">
+                              <img id="img1" style="height: 350px;" src="@Url.Content("~/images/RichTextEditor/bridge.png")" >
                             </p>
                             <p>
                               It allows users to quickly and easily add an Image Editor to their Rich Text Editor. It provides a variety of features, including image cropping, resizing, rotation, and more. Additionally, it supports a wide range of image formats, including JPEG, PNG, and GIF.
@@ -20,7 +20,7 @@
                     </e-content-template>
                 </ejs-richtexteditor>
                 <div id="imageeditorContainer" style="height:400px;">
-                    <ejs-dialog id="default_dialog" visible="false" width="800px" height='550px' open="OnOpen" created="onDialogCreate" target="#imageeditorContainer" showCloseIcon="true" header="@ViewBag.header">
+                    <ejs-dialog id="default_dialog" visible="false" width="800px" height='550px' open="OnOpen" created="onDialogCreate" target="body" showCloseIcon="true" header="@ViewBag.header">
                         <e-content-template>
                             <div class="e-img-editor-sample">
                                 <div id="imageeditor"></div>
@@ -105,6 +105,7 @@
 
         function onCancel() {
             dialogObj.hide();
+            imageEditorObj.reset();
         }
         function OnOpen() {
             if(imageEditorObj == null){

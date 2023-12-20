@@ -1,4 +1,4 @@
-var aapl = [
+window.aapl = [
     {
         "x": new Date('2012-04-02T00:00:00.000Z'),
         "open": 85.975716,

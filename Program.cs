@@ -50,6 +50,7 @@ builder.Services.AddMvc()
     });
 builder.Services.AddSignalR();
 builder.Services.AddDirectoryBrowser();
+builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 #if REDIS
 builder.Services.AddMemoryCache();
 builder.Services.AddDistributedRedisCache(option => { option.Configuration = builder.Configuration["ConnectionStrings:Redis"]; });

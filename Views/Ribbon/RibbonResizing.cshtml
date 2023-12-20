@@ -7,13 +7,13 @@
     List<MenuItem> findOptions = new List<MenuItem>() { new MenuItem { Text = "Find", IconCss = "e-icons e-search" }, new MenuItem { Text = "Advanced find", IconCss = "e-icons e-search" }, new MenuItem { Text = "Go to", IconCss = "e-icons e-arrow-right" } };
     List<MenuItem> selectOptions = new List<MenuItem>() { new MenuItem { Text = "Select All" }, new MenuItem { Text = "Select Objects" } };
     List<MenuItem> dictateOptions = new List<MenuItem>() { new MenuItem { Text = "Chinese" }, new MenuItem { Text = "English" }, new MenuItem { Text = "German" }, new MenuItem { Text = "French" } };
-    List<MenuItem> tableOptions = new List<MenuItem>() { new MenuItem { Text = "Insert Table" }, new MenuItem { Text = "This device" }, new MenuItem { Text = "Convert Table" }, new MenuItem { Text = "Excel SpreadSheet" } };
+    List<MenuItem> tableOptions = new List<MenuItem>() { new MenuItem { Text = "Insert Table" }, new MenuItem { Text = "Draw Table" }, new MenuItem { Text = "Convert Table" }, new MenuItem { Text = "Excel SpreadSheet" } };
     List<MenuItem> shapeOptions = new List<MenuItem>() { new MenuItem { Text = "Lines" }, new MenuItem { Text = "Rectangles" }, new MenuItem { Text = "Basic Arrows" }, new MenuItem { Text = "Basic Shapes" }, new MenuItem { Text = "FlowChart" } };
     List<MenuItem> headerOptions = new List<MenuItem>() { new MenuItem { Text = "Insert Header" }, new MenuItem { Text = "Edit Header" }, new MenuItem { Text = "Remove Header" } };
     List<MenuItem> footerOptions = new List<MenuItem>() { new MenuItem { Text = "Insert Footer" }, new MenuItem { Text = "Edit Footer" }, new MenuItem { Text = "Remove Footer" } };
     List<MenuItem> pageOptions = new List<MenuItem>() { new MenuItem { Text = "Insert Top of page" }, new MenuItem { Text = "Format Page Number" }, new MenuItem { Text = "Format Page Number" } };
     List<MenuItem> linkOptions = new List<MenuItem>() { new MenuItem { Text = "Insert Link", IconCss = "e-icons e-link" }, new MenuItem { Text = "Recent Links", IconCss = "e-icons e-clock" }, new MenuItem { Text = "Bookmarks", IconCss = "e-icons e-bookmark" } };
-    string[] pictureOptions = new string[] { "This device", "Stock Images", "Online Images" };
+    string[] pictureOptions = new string[] { "This Device", "Stock Images", "Online Images" };
 
     List<string> fontSize = new List<string>() { "8", "9", "10", "11", "12", "14", "16", "18", "20", "22", "24", "26", "28", "36", "48", "72", "96" };
     List<string> fontStyle = new List<string>() { "Algerian", "Arial", "Calibri", "Cambria", "Cambria Math", "Courier New", "Candara", "Georgia", "Impact", "Segoe Print", "Segoe Script", "Segoe UI", "Symbol", "Times New Roman", "Verdana", "Windings" };
@@ -82,22 +82,22 @@
                                         </e-ribbon-collection>
                                     </e-ribbon-collections>
                                 </e-ribbon-group>
-                                <e-ribbon-group header="Font" orientation=Row enableGroupOverflow=true isCollapsible=false groupIconCss="e-icons e-bold" cssClass="font-group">
+                                <e-ribbon-group header="Font" orientation=Row enableGroupOverflow=true overflowHeader="More Font Options" isCollapsible=false groupIconCss="e-icons e-bold" cssClass="font-group">
                                     <e-ribbon-collections>
                                         <e-ribbon-collection>
                                             <e-ribbon-items>
                                                 <e-ribbon-item type="ComboBox">
-                                                    <e-ribbon-comboboxsettings dataSource=fontStyle index=2 allowFiltering=true width="150px" change="function(args){ if (args.itemData) { updateContent('Font Style -> ' + args.itemData.text)}}"></e-ribbon-comboboxsettings>
+                                                    <e-ribbon-comboboxsettings dataSource=fontStyle label="Font Style" index=2 allowFiltering=true width="115px" popupWidth="150px" change="function(args){ if (args.itemData) { updateContent('Font Style -> ' + args.itemData.text)}}"></e-ribbon-comboboxsettings>
                                                 </e-ribbon-item>
                                                 <e-ribbon-item type="ComboBox">
-                                                    <e-ribbon-comboboxsettings dataSource=fontSize index=4 allowFiltering=true width="65px" popupWidth= "85px" change="function(args){ if (args.itemData) { updateContent('Font Size -> ' + args.itemData.text)}}"></e-ribbon-comboboxsettings>
+                                                    <e-ribbon-comboboxsettings dataSource=fontSize label="Font Size" index=4 allowFiltering=true width="65px" popupWidth= "85px" change="function(args){ if (args.itemData) { updateContent('Font Size -> ' + args.itemData.text)}}"></e-ribbon-comboboxsettings>
                                                 </e-ribbon-item>
                                             </e-ribbon-items>
                                         </e-ribbon-collection>
                                         <e-ribbon-collection>
                                             <e-ribbon-items>
                                                 <e-ribbon-item type=GroupButton allowedSizes=Small>
-                                                    <e-ribbon-groupbuttonsettings selection=Multiple items=groupButtonMultiple></e-ribbon-groupbuttonsettings>
+                                                    <e-ribbon-groupbuttonsettings selection=Multiple header="Format Styles" items=groupButtonMultiple></e-ribbon-groupbuttonsettings>
                                                 </e-ribbon-item>
                                                 <e-ribbon-item type="ColorPicker" displayOptions=@(Syncfusion.EJ2.Ribbon.DisplayMode.Classic | Syncfusion.EJ2.Ribbon.DisplayMode.Simplified) allowedSizes=Small>
                                                     <e-ribbon-colorpickersettings value="#123456" change="function(args){updateContent(args.currentValue.hex + ' color')}"></e-ribbon-colorpickersettings>
@@ -111,20 +111,20 @@
                                         <e-ribbon-collection>
                                             <e-ribbon-items>
                                                 <e-ribbon-item type="Button" allowedSizes=Small>
-                                                    <e-ribbon-buttonsettings iconCss="e-icons e-decrease-indent" clicked="function(){updateContent('Decrease Indent')}"></e-ribbon-buttonsettings>
+                                                    <e-ribbon-buttonsettings iconCss="e-icons e-decrease-indent" content="Decrease Indent" clicked="function(){updateContent('Decrease Indent')}"></e-ribbon-buttonsettings>
                                                 </e-ribbon-item>
                                                 <e-ribbon-item type="Button" allowedSizes=Small>
-                                                    <e-ribbon-buttonsettings iconCss="e-icons e-increase-indent" clicked="function(){updateContent('Increase Indent')}"></e-ribbon-buttonsettings>
+                                                    <e-ribbon-buttonsettings iconCss="e-icons e-increase-indent" content="Increase Indent" clicked="function(){updateContent('Increase Indent')}"></e-ribbon-buttonsettings>
                                                 </e-ribbon-item>
                                                 <e-ribbon-item type="Button" allowedSizes=Small>
-                                                    <e-ribbon-buttonsettings iconCss="e-icons e-paragraph" clicked="function(){updateContent('Paragraph Mark')}"></e-ribbon-buttonsettings>
+                                                    <e-ribbon-buttonsettings iconCss="e-icons e-paragraph" content="Paragraph" clicked="function(){updateContent('Paragraph Mark')}"></e-ribbon-buttonsettings>
                                                 </e-ribbon-item>
                                             </e-ribbon-items>
                                         </e-ribbon-collection>
                                          <e-ribbon-collection>
                                             <e-ribbon-items>
                                                 <e-ribbon-item type=GroupButton allowedSizes=Small>
-                                                    <e-ribbon-groupbuttonsettings selection=Single items=groupButtonSingle></e-ribbon-groupbuttonsettings>
+                                                    <e-ribbon-groupbuttonsettings selection=Single header="Alignment" items=groupButtonSingle></e-ribbon-groupbuttonsettings>
                                                 </e-ribbon-item>
                                             </e-ribbon-items>
                                         </e-ribbon-collection>
@@ -173,7 +173,7 @@
                                         </e-ribbon-collection>
                                     </e-ribbon-collections>
                                 </e-ribbon-group>
-                                <e-ribbon-group header="Illustrations" id="illustration" showLauncherIcon=true orientation=Row enableGroupOverflow=true groupIconCss="e-icons e-image">
+                                <e-ribbon-group header="Illustrations" id="illustration" showLauncherIcon=true orientation=Row enableGroupOverflow=true overflowHeader="Illustrations" groupIconCss="e-icons e-image">
                                     <e-ribbon-collections>
                                         <e-ribbon-collection>
                                             <e-ribbon-items>
@@ -227,7 +227,7 @@
                                         </e-ribbon-collection>
                                     </e-ribbon-collections>
                                 </e-ribbon-group>
-                                <e-ribbon-group header="Link" groupIconCss="e-icons e-link" isCollapsible="false">
+                                <e-ribbon-group header="Links" groupIconCss="e-icons e-link" isCollapsible="false">
                                     <e-ribbon-collections>
                                         <e-ribbon-collection>
                                             <e-ribbon-items>

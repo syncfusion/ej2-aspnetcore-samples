@@ -6,9 +6,12 @@
 // applicable laws. 
 #endregion
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
 using Syncfusion.Presentation;
+using Microsoft.AspNetCore.Hosting;
 using EJ2CoreSampleBrowser.Models;
 using Syncfusion.EJ2.Base;
+using System.Collections.Generic;
 using System.Collections;
 using Syncfusion.OfficeChart;
 using System.Globalization;

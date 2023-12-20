@@ -1,75 +1,79 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <DefineConstants>NET6_0</DefineConstants>
-  </PropertyGroup>
-  
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DefineConstants>TRACE;RELEASE;$(SyncfusionLicensing)</DefineConstants>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<DefineConstants>NET6_0</DefineConstants>
+		<RazorCompileOnBuild>false</RazorCompileOnBuild>
+		<RazorCompileOnPublish>true</RazorCompileOnPublish>
+		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(REDIS)' != ''">
-    <DefineConstants>$(DefineConstants);REDIS</DefineConstants>
-  </PropertyGroup>
-  
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.2.0" Condition="$(DefineConstants.Contains('REDIS'))" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.11" />
-    <PackageReference Include="Syncfusion.EJ2.AspNet.Core" Version="23.2.4" />
-    <PackageReference Include="Syncfusion.EJ2.GridExport.Core" Version="23.2.4" />
-    <PackageReference Include="Syncfusion.Compression.Net.Core" Version="23.2.4" />
-    <PackageReference Include="Syncfusion.OfficeChart.Net.Core" Version="23.2.4" />
-    <PackageReference Include="Syncfusion.DocIO.Net.Core" Version="23.2.4" />
-    <PackageReference Include="Syncfusion.DocIORenderer.Net.Core" Version="23.2.4" />
-    <PackageReference Include="Syncfusion.EJ2.WordEditor.AspNet.Core" Version="23.2.4" />
-    <PackageReference Include="Syncfusion.EJ2.PdfViewer.AspNet.Core.Windows" Version="23.2.4" />
-    <PackageReference Include="Syncfusion.XlsIO.Net.Core" Version="23.2.4" />
-    <PackageReference Include="Syncfusion.Pdf.Net.Core" Version="23.2.4" />
-    <PackageReference Include="Syncfusion.Pdf.Imaging.Net.Core" Version="23.2.4" />
-    <PackageReference Include="Syncfusion.XpsToPdfConverter.Net.Core" Version="23.2.4" />
-    <PackageReference Include="Syncfusion.Presentation.Net.Core" Version="23.2.4" />
-    <PackageReference Include="Syncfusion.PresentationRenderer.Net.Core" Version="23.2.4" />
-    <PackageReference Include="Syncfusion.Licensing" Version="23.2.4" />
-    <PackageReference Include="Syncfusion.XlsIORenderer.Net.Core" Version="23.2.4" />
-    <PackageReference Include="Syncfusion.SkiaSharpHelper.Net.Core" Version="23.2.4" />
-    <PackageReference Include="Syncfusion.EJ2.Spreadsheet.AspNet.Core" Version="23.2.4" />
-	<PackageReference Include="Syncfusion.PdfToImageConverter.Net" Version="23.2.4" />
-  </ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<DefineConstants>TRACE;RELEASE;$(SyncfusionLicensing)</DefineConstants>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Startup.cs" />
-    <Compile Remove="wwwroot\**\*;node_modules;runtimeconfig.template.json;" />
-    <None Update="wwwroot\**\*">
-      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-    </None>
-    <None Include="Controllers\**" CopyToOutputDirectory="Always" Condition="'$(Configuration)'=='Release'" />
-    <None Include="Views\**" CopyToOutputDirectory="Always" Condition="'$(Configuration)'=='Release'" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Content Remove="wwwroot\XlsIO\bahnschrift.ttf" />
-  </ItemGroup>
+	<PropertyGroup Condition="'$(REDIS)' != ''">
+		<DefineConstants>$(DefineConstants);REDIS</DefineConstants>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Include="wwwroot\XlsIO\bahnschrift.ttf" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Compile Remove="Controllers\Grid\ServerSideExportingController.cs" />
-    <Content Remove="Views\Grid\ServerSideExporting.cshtml" />
-    <None Remove="Controllers\Grid\ServerSideExportingController.cs" />
-    <None Remove="Views\Grid\ServerSideExporting.cshtml" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.25" />
+		<PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.2.0" Condition="$(DefineConstants.Contains('REDIS'))" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.11" />
+		<PackageReference Include="Syncfusion.EJ2.AspNet.Core" Version="24.1.41" />
+		<PackageReference Include="Syncfusion.EJ2.GridExport.Core" Version="24.1.41" />
+		<PackageReference Include="Syncfusion.Compression.Net.Core" Version="24.1.41" />
+		<PackageReference Include="Syncfusion.OfficeChart.Net.Core" Version="24.1.41" />
+		<PackageReference Include="Syncfusion.DocIO.Net.Core" Version="24.1.41" />
+		<PackageReference Include="Syncfusion.DocIORenderer.Net.Core" Version="24.1.41" />
+		<PackageReference Include="Syncfusion.EJ2.WordEditor.AspNet.Core" Version="24.1.41" />
+		<PackageReference Include="Syncfusion.EJ2.PdfViewer.AspNet.Core.Windows" Version="24.1.41" />
+		<PackageReference Include="Syncfusion.XlsIO.Net.Core" Version="24.1.41" />
+		<PackageReference Include="Syncfusion.Pdf.Net.Core" Version="24.1.41" />
+		<PackageReference Include="Syncfusion.Pdf.Imaging.Net.Core" Version="24.1.41" />
+		<PackageReference Include="Syncfusion.XpsToPdfConverter.Net.Core" Version="24.1.41" />
+		<PackageReference Include="Syncfusion.Presentation.Net.Core" Version="24.1.41" />
+		<PackageReference Include="Syncfusion.PresentationRenderer.Net.Core" Version="24.1.41" />
+		<PackageReference Include="Syncfusion.Licensing" Version="24.1.41" />
+		<PackageReference Include="Syncfusion.XlsIORenderer.Net.Core" Version="24.1.41" />
+		<PackageReference Include="Syncfusion.SkiaSharpHelper.Net.Core" Version="24.1.41" />
+		<PackageReference Include="Syncfusion.EJ2.Spreadsheet.AspNet.Core" Version="24.1.41" />
+		<PackageReference Include="Syncfusion.PdfToImageConverter.Net" Version="24.1.41" />
+	</ItemGroup>
 
-  <!--Exclude the web-services when SB launches from Build-->
-  <ItemGroup>
-	<Compile Remove="ej2-web-services\**" />
-	<Content Remove="ej2-web-services\**" />
-	<EmbeddedResource Remove="ej2-web-services\**" />
-	<None Remove="ej2-web-services\**" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Remove="Startup.cs" />
+		<Compile Remove="wwwroot\**\*;node_modules;runtimeconfig.template.json;" />
+		<None Update="wwwroot\**\*">
+			<CopyToPublishDirectory>Always</CopyToPublishDirectory>
+		</None>
+		<None Include="Controllers\**" CopyToOutputDirectory="Always" Condition="'$(Configuration)'=='Release'" />
+		<None Include="Views\**" CopyToOutputDirectory="Always" Condition="'$(Configuration)'=='Release'" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Remove="wwwroot\XlsIO\bahnschrift.ttf" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="wwwroot\XlsIO\bahnschrift.ttf" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Remove="Controllers\Grid\ServerSideExportingController.cs" />
+		<Content Remove="Views\Grid\ServerSideExporting.cshtml" />
+		<None Remove="Controllers\Grid\ServerSideExportingController.cs" />
+		<None Remove="Views\Grid\ServerSideExporting.cshtml" />
+	</ItemGroup>
+
+	<!--Exclude the web-services when SB launches from Build-->
+	<ItemGroup>
+		<Compile Remove="ej2-web-services\**" />
+		<Content Remove="ej2-web-services\**" />
+		<EmbeddedResource Remove="ej2-web-services\**" />
+		<None Remove="ej2-web-services\**" />
+	</ItemGroup>
 
 </Project>

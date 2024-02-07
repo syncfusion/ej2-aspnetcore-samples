@@ -93,21 +93,17 @@
             chart.series[0].type = !args.checked ? 'Line' : 'Candle';
             chart.annotations[0].content = '';
             chart.refresh();
-
         }
-           @*custom code start*@
+        
         var selectedTheme = location.hash.split('/')[1];
         selectedTheme = selectedTheme ? selectedTheme : 'Material';
-        var theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));        
-           @*custom code end*@
+        var theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
         switchChange = function (args) {
             console.log(("123"))
         }
         rangeTopLoad = function (args) {
-               @*custom code start*@
             args.rangeNavigator.theme = theme;
             args.rangeNavigator.width = ej.base.Browser.isDevice ? "100%" : "80%";
-               @*custom code end*@
             args.rangeNavigator.dataSource = data;
         }
 
@@ -131,15 +127,12 @@
                 chart.primaryXAxis.zoomFactor = args.zoomFactor;
                 chart.dataBind();               
             }
-
         }
 
         chartLoad = function (args) {
-               @*custom code start*@
             args.chart.theme = theme;
             args.chart.series[0].dataSource = data;
             args.chart.width = ej.base.Browser.isDevice ? "100%" : "80%";
-               @*custom code end*@
             args.chart.tooltip.format = args.chart.series[0].type === 'Candle' ?
                 '${point.x}<br/>High : <b>${point.high}</b><br/>Low : <b>${point.low}</b><br/>' +
                 'Open : <b>${point.open}</b><br/>Close : <b>${point.close}</b>' :
@@ -154,10 +147,8 @@
         }
 
         rangeBottomLoad = function (args) {
-               @*custom code start*@
             args.rangeNavigator.theme = theme;
             args.rangeNavigator.width = ej.base.Browser.isDevice ? "100%" : "80%";
-               @*custom code end*@
             args.rangeNavigator.series[0].dataSource = data;
             args.value = [new Date('2016-05-15'), new Date('2018-05-15')];
         }

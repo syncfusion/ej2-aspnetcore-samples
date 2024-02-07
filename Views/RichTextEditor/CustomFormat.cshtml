@@ -19,9 +19,14 @@
         overflow: hidden;
     }
 
-    .e-md-preview::before {
-        content: '\e406';
+    .e-icon-btn.e-active .e-md-preview::before {
+        content: '\e350';
     }
+
+    .e-icon-btn .e-md-preview::before {
+        content: '\e345';
+    }
+
     .bootstrap4 .e-icon-btn.e-active .e-md-preview::before {
         content: '\e790';
     }
@@ -29,20 +34,26 @@
     .bootstrap4 .e-icon-btn .e-md-preview::before {
         content: '\e787';
     }
-    
-    .tailwind .e-icon-btn .e-md-preview::before {
-        content: '\e7d0';
-    }
 
-    .tailwind .e-icon-btn.e-active .e-md-preview::before {
-        content: '\e748';
-    }
-
-    .bootstrap5 .e-icon-btn.e-active .e-md-preview::before {
+    .tailwind .e-icon-btn.e-active .e-md-preview::before,
+    .tailwind-dark .e-icon-btn.e-active .e-md-preview::before,
+    .fluent .e-icon-btn.e-active .e-md-preview::before,
+    .fluent-dark .e-icon-btn.e-active .e-md-preview::before,
+    .bootstrap5 .e-icon-btn.e-active .e-md-preview::before,
+    .bootstrap5-dark .e-icon-btn.e-active .e-md-preview::before,
+    .material3 .e-icon-btn.e-active .e-md-preview::before,
+    .material3-dark .e-icon-btn.e-active .e-md-preview::before {
         content: '\e80e';
     }
 
-    .bootstrap5 .e-icon-btn .e-md-preview::before {
+    .tailwind .e-icon-btn .e-md-preview::before,
+    .tailwind-dark .e-icon-btn .e-md-preview::before,
+    .bootstrap5 .e-icon-btn .e-md-preview::before,
+    .bootstrap5-dark .e-icon-btn .e-md-preview::before,
+    .fluent .e-icon-btn .e-md-preview::before,
+    .fluent-dark .e-icon-btn .e-md-preview::before,
+    .material3 .e-icon-btn .e-md-preview::before,
+    .material3-dark .e-icon-btn .e-md-preview::before {
         content: '\e7de';
     }
 
@@ -54,9 +65,9 @@
         padding: 8px;
     }
 
-        .e-rte-content .e-content.e-pre-source {
-            width: 100%;
-        }
+    .e-rte-content .e-content.e-pre-source {
+        width: 100%;
+    }
 </style>
 }
 
@@ -109,7 +120,7 @@
         document.getElementsByTagName('head')[0].appendChild(script);
     }
     function markdownConversion() {
-        if (mdPreview.classList.contains('e-active')) {
+        if (mdsource.classList.contains('e-active')) {
             var id = defaultRTE.getID() + 'html-view';
             var htmlPreview = defaultRTE.element.querySelector('#' + id);
             htmlPreview.innerHTML = marked(defaultRTE.contentModule.getEditPanel().value);

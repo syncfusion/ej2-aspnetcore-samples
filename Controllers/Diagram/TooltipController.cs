@@ -1,5 +1,5 @@
-#region Copyright Syncfusion Inc. 2001-2023.
-// Copyright Syncfusion Inc. 2001-2023. All rights reserved.
+#region Copyright Syncfusion Inc. 2001-2024.
+// Copyright Syncfusion Inc. 2001-2024. All rights reserved.
 // Use of this code is subject to the terms of our license.
 // A copy of the current license can be obtained at any time by e-mailing
 // licensing@syncfusion.com. Any infringement will be prosecuted under
@@ -39,11 +39,6 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
             positionValue.Add(new TooltipProperty() { Text = "Right Center", Type = "RightCenter" });
             positionValue.Add(new TooltipProperty() { Text = "Right Bottom", Type = "RightBottom" });
 
-
-            List<TooltipProperty> contentValue = new List<TooltipProperty>();
-            contentValue.Add(new TooltipProperty() { Text = "HTML Element", Type = "HTML Element" });
-            contentValue.Add(new TooltipProperty() { Text = "Text", Type = "Text" });
-
             List<TooltipProperty> effectValue = new List<TooltipProperty>();
             effectValue.Add(new TooltipProperty() { Text = "Fade In", Type = "FadeIn" });
             effectValue.Add(new TooltipProperty() { Text = "Fade Out", Type = "FadeOut" });
@@ -73,7 +68,6 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
             ViewBag.animation = tooltipAnimation;
             ViewBag.modeValue = modeValue;
             ViewBag.positionValue = positionValue;
-            ViewBag.contentValue = contentValue;
             ViewBag.effectValue = effectValue;
             ViewBag.nodes = GetToolTipNodes();
             ViewBag.connectors = GetToolConnectors();

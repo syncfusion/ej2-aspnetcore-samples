@@ -484,10 +484,14 @@ function highlight(searchString, listElement) {
 function setMouseOrTouch(e) {
     var ele = ej.base.closest(e.target, '.sb-responsive-items');
     var switchType = ele.id;
+    var modeType = document.body.classList.contains("e-bigger")?"touch":"mouse";
     changeMouseOrTouch(switchType);
     sbHeaderClick('closePopup');
     localStorage.setItem('ej2-switch', switchType);
-    location.reload();
+    if(!(switchType == modeType))
+    {
+        location.reload();
+    }
 }
 
 function onNextPrevButtonClick(arg) {

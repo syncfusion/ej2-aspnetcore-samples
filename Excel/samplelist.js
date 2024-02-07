@@ -222,7 +222,7 @@ window.samplesList = [
             {
                 "url": "ExcelToPDF",
                 "name": "Excel To PDF",
-                "category": "Export",
+                "category": "Conversions",
                 "order": 7,
 				"type": "update",
                 "component": "Excel",
@@ -233,7 +233,7 @@ window.samplesList = [
             {
                 "url": "WorksheetToImage",
                 "name": "Worksheet To Image",
-                "category": "Export",
+                "category": "Conversions",
                 "order": 7,
 				"type": "update",
                 "component": "Excel",
@@ -244,7 +244,7 @@ window.samplesList = [
             {
                 "url": "WorksheetToHTML",
                 "name": "Worksheet To HTML",
-                "category": "Export",
+                "category": "Conversions",
                 "order": 7,
                 "component": "Excel",
                 "dir": "Excel",
@@ -254,7 +254,7 @@ window.samplesList = [
             {
                 "url": "ExcelToJSON",
                 "name": "Excel To JSON",
-                "category": "Export",
+                "category": "Conversions",
                 "order": 7,
                 "component": "Excel",
                 "dir": "Excel",

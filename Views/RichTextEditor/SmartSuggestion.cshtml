@@ -97,27 +97,17 @@
             mentionObj = this;
         }
 
-        function beforeApplyFormat(isBlockFormat) {
-            var range1 = rteObj.getRange();
-            var node = rteObj.formatter.editorManager.nodeSelection.getNodeCollection(range1)[0];
-            var blockNewLine = !(node.textContent.trim() == '/' && node.parentElement.innerHTML.replace(/&nbsp;|<br>/g, '').trim() == '/');
-            var blockNode;
-            var startNode = node;
-            if (blockNewLine && isBlockFormat) {
-                while (startNode != rteObj.inputElement) {
-                    blockNode = startNode;
-                    startNode = startNode.parentElement;
-                }
+        function beforeApplyFormat() {
+            var currentRange = rteObj.getRange();
+            var node = rteObj.formatter.editorManager.nodeSelection.getNodeCollection(currentRange)[0];
+            rteObj.formatter.editorManager.nodeSelection.setSelectionText(document, node, node, currentRange.startOffset - 1, currentRange.endOffset);
+            var slashRange = rteObj.getRange();
+            var slashNode = rteObj.formatter.editorManager.nodeCutter.GetSpliceNode(slashRange, node);
+            var previouNode = slashNode.previousSibling;
+            if ( slashNode.parentElement && slashNode.parentElement.innerHTML.length === 1) {
+                slashNode.parentElement.appendChild(document.createElement('br'));
             }
-            rteObj.formatter.editorManager.nodeSelection.setSelectionText(document, node, node, range1.startOffset - 1, range1.endOffset);
-            var range2 = rteObj.getRange();
-            var node2 = rteObj.formatter.editorManager.nodeCutter.GetSpliceNode(range2, node);
-            var previouNode = node2.previousSibling;
-            var brTag = document.createElement('br');
-            if ( node2.parentElement && node2.parentElement.innerHTML.length === 1) {
-                node2.parentElement.appendChild(brTag);
-            }
-            node2.parentNode.removeChild(node2);
+            slashNode.parentNode.removeChild(slashNode);
             if (previouNode) {
                 selection.setCursorPoint(document, previouNode, previouNode.textContent.length);
             }
@@ -135,35 +125,39 @@
             args.cancel = true;
             rteObj.focusIn();
             saveSelection.restore();
-            if (args.itemData.FormatType !== 'Inline') {
-                beforeApplyFormat(true);
+            if (args.itemData.FormatType != "Inline") {
+                beforeApplyFormat();
             }
-            if (args.itemData.Command == 'OL') {
-                mentionObj.hidePopup();
-                rteObj.executeCommand('insertOrderedList');
-            } else if (args.itemData.Command == 'UL') {
-                mentionObj.hidePopup();
-                rteObj.executeCommand('insertUnorderedList');
-            } else if (args.itemData.Command == 'CreateTable') {
-                mentionObj.hidePopup();
-                rteObj.showDialog('InsertTable');
-            } else if (args.itemData.Command == 'Image') {
-                mentionObj.hidePopup();
-                rteObj.showDialog('InsertImage');
-            } else if (args.itemData.Command == 'Audio') {
-                mentionObj.hidePopup();
-                rteObj.showDialog('InsertAudio');
-            } else if (args.itemData.Command == 'Video') {
-                mentionObj.hidePopup();
-                rteObj.showDialog('InsertVideo');
-            } else if (args.itemData.Command == 'EmojiPicker') {
-                beforeApplyFormat(false);
-                mentionObj.hidePopup();
-                rteObj.showEmojiPicker();
-            }
-            else {
-                mentionObj.hidePopup();
-                rteObj.executeCommand('formatBlock', args.itemData.Command);
+
+            switch (args.itemData.Command) {
+                case "OL":
+                    mentionObj.hidePopup();
+                    rteObj.executeCommand("insertOrderedList");
+                    break;
+                case "UL":
+                    mentionObj.hidePopup();
+                    rteObj.executeCommand("insertUnorderedList");
+                    break;
+                case "CreateTable":
+                case "Image":
+                case "Audio":
+                case "Video":
+                    mentionObj.hidePopup();
+                    rteObj.showDialog(
+                        args.itemData.Command === "CreateTable" ? "InsertTable" :
+                        args.itemData.Command === "Image" ? "InsertImage" :
+                        args.itemData.Command === "Audio" ? "InsertAudio" : "InsertVideo"
+                    );
+                    break;
+                case "EmojiPicker":
+                    beforeApplyFormat();
+                    mentionObj.hidePopup();
+                    rteObj.showEmojiPicker();
+                    break;
+                default:
+                    mentionObj.hidePopup();
+                    rteObj.executeCommand("formatBlock", args.itemData.Command);
+                    break;
             }
         }
     </script>

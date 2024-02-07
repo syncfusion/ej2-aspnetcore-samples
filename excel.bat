@@ -7,6 +7,7 @@ xcopy /q /y  "wwwroot\css\sidebar\icons\fonts" "Excel\wwwroot\css\sidebar\icons\
 xcopy /q /y  "wwwroot\css\uploader" "Excel\wwwroot\css\uploader\"
 xcopy /q /y  "wwwroot\grid\adaptive-layout.css" "Excel\wwwroot\grid\"
 xcopy /q /y  "wwwroot\images\XlsIO" "Excel\wwwroot\images\XlSIO\"
+xcopy /q /y  "wwwroot\images\XlsIO\IconFilter" "Excel\wwwroot\images\XlSIO\IconFilter\"
 xcopy /q /y  "wwwroot\lib\signalr" "Excel\wwwroot\lib\signalr\"
 xcopy /q /y  "wwwroot\scripts\documenteditor" "Excel\wwwroot\scripts\documenteditor\"
 xcopy /q /y  "wwwroot\scripts\cldr-data" "Excel\wwwroot\scripts\cldr-data\"

@@ -89,22 +89,18 @@
     <script>
         var dateTimeData = exportData;
         var zoomFactor, zoomPosition;
-        @*custom code start*@
         var selectedTheme = location.hash.split('/')[1];
         selectedTheme = selectedTheme ? selectedTheme : 'Material';
         var theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
-              @*custom code end*@
         var exportthemes = ['Material', 'Fabric', 'Bootstrap', 'HighContrast', 'Bootstrap5', 'Tailwind', 'MaterialDark', 'FabricDark', 'BootstrapDark', 'TailwindDark', 'Bootstrap5Dark', 'Bootstrap4', 'Fluent', 'FluentDark', 'Material3', 'Material3Dark'];
         var borderColor1 = ['#FF4081', '#007897', '#428BCA', '#FFD939', '#6355C7', '#4F46E5', '#FF4081', '#007897', '#428BCA', '#22D3EE', '#8F80F4', '#FFD939', '#1AC9E6', '#1AC9E6', '#6355C7', '#4EAAFF'];
         var regionColor1 = ['rgba(255, 64, 129, 0.3)', 'rgba(0, 120, 151, 0.3)', 'rgba(66, 139, 202, 0.3)', 'rgba(255, 217, 57, 0.3)', 'rgba(99, 85, 199, 0.3)',
             'rgba(79, 70, 229, 0.3)', 'rgba(255, 64, 129, 0.3)', 'rgba(0, 120, 151, 0.3)', 'rgba(66, 139, 202, 0.3)', 'rgba(34, 211, 238, 0.3)',
             'rgba(143, 128, 244, 0.3)', 'rgba(255, 217, 57, 0.3)', 'rgba(26, 201, 230, 0.3)', 'rgba(26, 201, 230, 0.3)', 'rgba(99, 85, 199, 0.3)', 'rgba(78, 170, 255, 0.3)'];
         window.onChartLoad = function (args) {
-                   @*custom code start*@
             args.rangeNavigator.theme = theme;
             args.rangeNavigator.dataSource = dateTimeData;
             args.rangeNavigator.width = ej.base.Browser.isDevice ? "100%" : "80%";
-               @*custom code end*@
             args.rangeNavigator.value = [new Date('2013-05-01'), new Date('2013-08-01')];
 
         }
@@ -119,7 +115,6 @@
             }
         }
         window.load = function (args) {
-
             args.chart.theme = theme;
             args.chart.series[0].border = { width: 2, color: borderColor1[exportthemes.indexOf(theme)] };
             args.chart.series[0].fill = regionColor1[exportthemes.indexOf(theme)];

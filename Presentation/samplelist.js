@@ -32,7 +32,7 @@ window.samplesList = [
             {
                 "url": "PPTXToImage",
                 "name": "PPTX To Image",
-                "category": "Conversion",
+                "category": "Conversions",
                 "type": "update",
                 "order": 2,
                 "component": "PowerPoint",
@@ -43,7 +43,7 @@ window.samplesList = [
 			 {
                 "url": "PPTXToPDF",
                 "name": "PPTX To PDF",
-                "category": "Conversion",
+                "category": "Conversions",
                 "type": "update",
                 "order": 2,
                 "component": "PowerPoint",
@@ -54,7 +54,7 @@ window.samplesList = [
 			{
                 "url": "PPTXToPDFA",
                 "name": "PPTX To PDF/A",
-                "category": "Conversion",
+                "category": "Conversions",
                 "order": 2,
                 "component": "PowerPoint",
                 "dir": "PowerPoint",
@@ -64,7 +64,7 @@ window.samplesList = [
 			 {
                 "url": "PPTXToPDFUA",
                 "name": "PPTX To PDF/UA",
-                "category": "Conversion",
+                "category": "Conversions",
                 "order": 2,
                 "component": "PowerPoint",
                 "dir": "PowerPoint",

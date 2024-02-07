@@ -43,10 +43,8 @@
         </div>
     </div>
     <style>
-        #container {
-            display: block;
-        }
-
+       
+        /* Css for images in property panel  */
         .image-pattern-style {
             background-color: white;
             background-size: contain;
@@ -68,19 +66,12 @@
             font-size: 13px;
             font-weight: 500;
         }
-
+        /* Selection indicator */
         .e-selected-style {
             border-color: #6c6c6c;
             border-width: 2px;
         }
 
-        .e-checkbox-wrapper .e-label {
-            font-size: 12px;
-        }
-
-        .row {
-            display: block;
-        }
     </style>
     <script>
         function getNodeDefaults(node, diagram) {
@@ -92,42 +83,7 @@
             connector.targetDecorator.style = { fill: '#024249', strokeColor: '#024249' };
             return { style: { strokeColor: '#024249', strokeWidth: 2 } };
         }
-        function getTextElement(text, color) {
-            var textElement = new TextElement();
-            textElement.width = 80;
-            textElement.height = 35;
-            textElement.content = text;
-            textElement.style.fill = '#6f409f';
-            textElement.style.color = 'white';
-            textElement.style.strokeColor = '#6f409f';
-            textElement.cornerRadius = 5;
-            textElement.margin = { top: 10, bottom: 10, left: 10, right: 10 };
-            textElement.relativeMode = 'Object';
-            return textElement;
-        }
-        function getPorts(obj) {
-            if (obj.id === 'node2') {
-                var node2Ports = [
-                    { id: 'port1', offset: { x: 1, y: 0.25 }, visibility: ej.diagrams.PortVisibility.Hidden },
-                    { id: 'port2', offset: { x: 1, y: 0.5 }, visibility: ej.diagrams.PortVisibility.Hidden },
-                    { id: 'port3', offset: { x: 1, y: 0.75 }, visibility: ej.diagrams.PortVisibility.Hidden }
-                ];
-                return node2Ports;
-            } else if (obj.id === 'node6') {
-                var node6Ports = [
-                    { id: 'port4', offset: { x: 0, y: 0.46 }, visibility: ej.diagrams.PortVisibility.Hidden },
-                    { id: 'port5', offset: { x: 0, y: 0.5 }, visibility: ej.diagrams.PortVisibility.Hidden },
-                    { id: 'port6', offset: { x: 0, y: 0.54 }, visibility: ej.diagrams.PortVisibility.Hidden }
-                ];
-                return node6Ports;
-            } else {
-                var ports = [
-                    { id: 'portIn', offset: { x: 0, y: 0.5 }, visibility: ej.diagrams.PortVisibility.Hidden },
-                    { id: 'portOut', offset: { x: 1, y: 0.5 }, visibility: ej.diagrams.PortVisibility.Hidden },
-                ];
-                return ports;
-            }
-        }
+        
         var style = document.getElementById('style');
         var node;
         document.getElementById('appearance').onclick = function (args) {

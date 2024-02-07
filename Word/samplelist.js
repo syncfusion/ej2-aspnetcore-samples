@@ -273,7 +273,7 @@ window.samplesList = [
             {
                 "url": "WordToPDF",
                 "name": "Word to PDF",
-                "category": "Import and Export",
+                "category": "Conversions",
                 "type": "update",
                 "order": 8,
                 "component": "Word",
@@ -284,7 +284,7 @@ window.samplesList = [
 			{
                 "url": "WordToPDFA",
                 "name": "Word to PDF/A",
-                "category": "Import and Export",
+                "category": "Conversions",
                 "order": 8,
                 "component": "Word",
                 "dir": "Word",
@@ -294,7 +294,7 @@ window.samplesList = [
 			{
                 "url": "WordToPDFUA",
                 "name": "Word to PDF/UA",
-                "category": "Import and Export",
+                "category": "Conversions",
                 "order": 8,
                 "component": "Word",
                 "dir": "Word",
@@ -304,7 +304,7 @@ window.samplesList = [
             {
                 "url": "WordToImage",
                 "name": "Word to Image",
-                "category": "Import and Export",
+                "category": "Conversions",
                 "type": "update",
                 "order": 8,
                 "component": "Word",
@@ -315,7 +315,7 @@ window.samplesList = [
             {
                 "url": "WordToMarkdown",   
                 "name": "Word to Markdown",
-                "category": "Import and Export",
+                "category": "Conversions",
                 "order": 8,
                 "component": "Word",
                 "dir": "Word",
@@ -325,7 +325,7 @@ window.samplesList = [
             {
                 "url": "MarkdownToWord",   
                 "name": "Markdown to Word",
-                "category": "Import and Export",
+                "category": "Conversions",
                 "order": 8,
                 "component": "Word",
                 "dir": "Word",
@@ -335,7 +335,7 @@ window.samplesList = [
             {
                 "url": "RTFToDoc",
                 "name": "RTF to Word",
-                "category": "Import and Export",
+                "category": "Conversions",
                 "order": 8,
                 "component": "Word",
                 "dir": "Word",
@@ -345,7 +345,7 @@ window.samplesList = [
             {
                 "url": "WordToWordML",
                 "name": "Word to WordML",
-                "category": "Import and Export",
+                "category": "Conversions",
                 "order": 8,
                 "component": "Word",
                 "dir": "Word",
@@ -355,7 +355,7 @@ window.samplesList = [
             {
                 "url": "WordMLToWord",
                 "name": "WordML to Word",
-                "category": "Import and Export",
+                "category": "Conversions",
                 "order": 8,
                 "component": "Word",
                 "dir": "Word",
@@ -365,7 +365,7 @@ window.samplesList = [
             {
                 "url": "DOCtoODT",
                 "name": "Word to ODT",
-                "category": "Import and Export",
+                "category": "Conversions",
                 "order": 8,
                 "component": "Word",
                 "dir": "Word",

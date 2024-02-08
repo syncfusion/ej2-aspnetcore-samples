@@ -82,3 +82,4 @@ setlocal enabledelayedexpansion
 move /y "%destinationFile%.tmp" "%destinationFile%"
 
 echo Word '%searchWord%' replaced with '%replaceWord%' in %destinationFile%
+

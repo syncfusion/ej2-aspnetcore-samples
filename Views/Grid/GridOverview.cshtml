@@ -48,7 +48,7 @@
     </script>
 
     <script type="text/x-jsrender" id="trustTemplate">
-        <img style="width: 31px; height: 24px" src="@Url.Content("~/styles/images/grid/${Trustworthiness}.png")" />
+        <img style="width: 31px; height: 24px" src="@Url.Content("~/styles/images/grid/${Trustworthiness}.png")" alt="Flag Icon"/>
         <span id="Trusttext">${Trustworthiness}</span>
     </script>
 
@@ -203,17 +203,24 @@
             }, 100);
         }
 
-        document.getElementById('GridOverview').addEventListener('DOMSubtreeModified', function () {
-            if (dReady && stTime && isDataChanged) {
-                var msgEle = document.getElementById('msg');
-                var val = (performance.now() - stTime).toFixed(0);
-                stTime = null;
-                dtTime = false;
-                dReady = false;
-                isDataChanged = false;
-                msgEle.innerHTML = 'Load Time: ' + "<b>" + val + "</b>" + '<b>ms</b>';
-                msgEle.classList.remove('e-hide');
-            }
+        var observer = new MutationObserver(function (mutations) {
+            mutations.forEach(function () {
+                if (dReady && stTime && isDataChanged) {
+                    var msgEle = document.getElementById('msg');
+                    var val = (performance.now() - stTime).toFixed(0);
+                    stTime = null;
+                    dtTime = false;
+                    dReady = false;
+                    isDataChanged = false;
+                    msgEle.innerHTML = 'Load Time: ' + "<b>" + val + "</b>" + '<b>ms</b>';
+                    msgEle.classList.remove('e-hide');
+                }
+            });
+        });
+        observer.observe(document.getElementById('GridOverview'), {
+            attributes: true,
+            childList: true,
+            subtree: true,
         });
 
     </script>

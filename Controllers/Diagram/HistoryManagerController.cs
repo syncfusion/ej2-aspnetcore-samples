@@ -108,7 +108,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
                         Style = new DiagramShapeStyle() { Fill = "#DCDCDC", StrokeColor = "#DCDCDC" },
                         Annotations = new List<DiagramNodeAnnotation>() { new DiagramNodeAnnotation() { Id = "label1", Content = "Design" } },
                         Shape = new { type = "Flow", shape = "Process" },
-                        Ports = new List<DiagramPort>() { new DiagramPort() { Id = "designPort", Offset = new PointsShape() { X = 0, Y = 0.5 } } }
+                        Ports = new List<DiagramPort>() { new DiagramPort() { Id = "designPort", Offset = new DiagramPoint() { X = 0, Y = 0.5 } } }
                     });
                     nodes.Add(new DiagramNode()
                     {
@@ -118,7 +118,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
                         Style = new DiagramShapeStyle() { Fill = "#DCDCDC", StrokeColor = "#DCDCDC" },
                         Annotations = new List<DiagramNodeAnnotation>() { new DiagramNodeAnnotation() { Id = "label1", Content = "Coding" } },
                         Shape = new { type = "Flow", shape = "Process" },
-                        Ports = new List<DiagramPort>() { new DiagramPort() { Id = "codingPort", Offset = new PointsShape() { X = 0, Y = 0.5 } } }
+                        Ports = new List<DiagramPort>() { new DiagramPort() { Id = "codingPort", Offset = new DiagramPoint() { X = 0, Y = 0.5 } } }
                     });
                     List<DiagramPort> port = new List<DiagramPort>();
                     nodes.Add(new DiagramNode()
@@ -152,9 +152,9 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
                         Annotations = new List<DiagramNodeAnnotation>() { new DiagramNodeAnnotation() { Id = "label1", Content = "End" } },
                         Shape = new { type = "Flow", shape = "Terminator" }
                     });
-                    port.Add(new DiagramPort() { Id = "porterror", Offset = new PointsShape() { X = 0.5, Y = 0 } });
-                    port.Add(new DiagramPort() { Id = "portcoding", Offset = new PointsShape() { X = 1, Y = 0.5 } });
-                    port.Add(new DiagramPort() { Id = "portdesign", Offset = new PointsShape() { X = 0.5, Y = 1 } });
+                    port.Add(new DiagramPort() { Id = "porterror", Offset = new DiagramPoint() { X = 0.5, Y = 0 } });
+                    port.Add(new DiagramPort() { Id = "portcoding", Offset = new DiagramPoint() { X = 1, Y = 0.5 } });
+                    port.Add(new DiagramPort() { Id = "portdesign", Offset = new DiagramPoint() { X = 0.5, Y = 1 } });
                     nodes.Add(new DiagramNode()
                     {
                         Id = "node7",

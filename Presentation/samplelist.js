@@ -33,7 +33,6 @@ window.samplesList = [
                 "url": "PPTXToImage",
                 "name": "PPTX To Image",
                 "category": "Conversions",
-                "type": "update",
                 "order": 2,
                 "component": "PowerPoint",
                 "dir": "PowerPoint",
@@ -44,7 +43,6 @@ window.samplesList = [
                 "url": "PPTXToPDF",
                 "name": "PPTX To PDF",
                 "category": "Conversions",
-                "type": "update",
                 "order": 2,
                 "component": "PowerPoint",
                 "dir": "PowerPoint",
@@ -113,6 +111,17 @@ window.samplesList = [
 
             },
             {
+                "url": "Image",
+                "name": "Image",
+                "category": "Slide Elements",
+                "order": 5,
+                "type": "update",
+                "component": "PowerPoint",
+                "dir": "PowerPoint",
+                "parentId": "045",
+                "uid": "0045460"
+            },
+            {
                 "url": "Chart",
                 "name": "Chart",
                 "category": "Slide Elements",
@@ -120,7 +129,7 @@ window.samplesList = [
                 "component": "PowerPoint",
                 "dir": "PowerPoint",
                 "parentId": "045",
-                "uid": "0045460"
+                "uid": "0045461"
             },
             {
                 "url": "Slide",
@@ -130,7 +139,7 @@ window.samplesList = [
                 "component": "PowerPoint",
                 "dir": "PowerPoint",
                 "parentId": "045",
-                "uid": "0045461"
+                "uid": "0045462"
             },
             {
                 "url": "SmartArt",
@@ -140,7 +149,7 @@ window.samplesList = [
                 "component": "PowerPoint",
                 "dir": "PowerPoint",
                 "parentId": "045",
-                "uid": "0045462"
+                "uid": "0045463"
             },
             {
                 "url": "Table",
@@ -150,7 +159,7 @@ window.samplesList = [
                 "component": "PowerPoint",
                 "dir": "PowerPoint",
                 "parentId": "045",
-                "uid": "0045463"
+                "uid": "0045464"
             },
             {
                 "url": "Comment",
@@ -160,7 +169,7 @@ window.samplesList = [
                 "component": "PowerPoint",
                 "dir": "PowerPoint",
                 "parentId": "045",
-                "uid": "0045464"
+                "uid": "0045465"
             },
             {
                 "url": "Connector",
@@ -170,7 +179,7 @@ window.samplesList = [
                 "component": "PowerPoint",
                 "dir": "PowerPoint",
                 "parentId": "045",
-                "uid": "0045465"
+                "uid": "0045466"
             },
             {
                 "url": "OLEObject",
@@ -180,7 +189,7 @@ window.samplesList = [
                 "component": "PowerPoint",
                 "dir": "PowerPoint",
                 "parentId": "045",
-                "uid": "0045466"
+                "uid": "0045467"
             },
             {
                 "url": "HeaderAndFooter",
@@ -190,7 +199,7 @@ window.samplesList = [
                 "component": "PowerPoint",
                 "dir": "PowerPoint",
                 "parentId": "045",
-                "uid": "0045467"
+                "uid": "0045468"
             },
             {
                 "url": "ImportData",
@@ -200,7 +209,7 @@ window.samplesList = [
                 "component": "PowerPoint",
                 "dir": "PowerPoint",
                 "parentId": "045",
-                "uid": "0045468"
+                "uid": "0045469"
             },
             {
                 "url": "CreateAnimation",
@@ -210,7 +219,7 @@ window.samplesList = [
                 "component": "PowerPoint",
                 "dir": "PowerPoint",
                 "parentId": "045",
-                "uid": "0045469"
+                "uid": "0045470"
             },
             {
                 "url": "ModifyAnimation",
@@ -220,7 +229,7 @@ window.samplesList = [
                 "component": "PowerPoint",
                 "dir": "PowerPoint",
                 "parentId": "045",
-                "uid": "0045470"
+                "uid": "0045471"
             },
             {
                 "url": "AnimationConverter",
@@ -230,7 +239,7 @@ window.samplesList = [
                 "component": "PowerPoint",
                 "dir": "PowerPoint",
                 "parentId": "045",
-                "uid": "0045471",
+                "uid": "0045472",
             },
             {
                 "url": "SlideTransition",
@@ -240,7 +249,7 @@ window.samplesList = [
                 "component": "PowerPoint",
                 "dir": "PowerPoint",
                 "parentId": "045",
-                "uid": "0045472"
+                "uid": "0045473"
             }
         ],
         "order": 7,

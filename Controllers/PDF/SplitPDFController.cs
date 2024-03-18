@@ -13,14 +13,14 @@ using Microsoft.AspNetCore.Mvc;
 using Syncfusion.Drawing;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-
+ 
 namespace EJ2CoreSampleBrowser.Controllers.PDF
 {
     public partial class PdfController : Controller
     {
         //
         // GET: /SplitPDF/
-
+ 
         public ActionResult SplitPDF()
         {
             return View();

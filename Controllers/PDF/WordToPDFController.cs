@@ -72,9 +72,8 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
             }
             else
             {
-                //Opens an existing document from stream through constructor of `WordDocument` class
-                FileStream fileStreamPath = new FileStream(_hostingEnvironment.WebRootPath + @"/DocIO/WordtoPDF.docx", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                return fileStreamPath;
+                ViewBag.Message = string.Format("Choose a Word format document file.");               
+                return null;
             }
         }
     }

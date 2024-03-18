@@ -18,6 +18,8 @@ namespace EJ2CoreSampleBrowser.Controllers.TextBoxes
     {
         public IActionResult Multiline()
         {
+            ViewBag.data = new floatValues().TextBoxModel();
+            ViewBag.floatValue = "Auto";
             return View();
         }
     }

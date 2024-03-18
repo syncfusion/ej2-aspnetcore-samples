@@ -82,5 +82,38 @@ namespace EJ2CoreSampleBrowser.Models
             return floatText;
         }
     }
+
+    public class floatLabelValues
+    {
+        public string floatLabelValue { get; set; }
+
+        public string text { get; set; }
+
+        public List<floatLabelValues> TextAreaModel()
+        {
+            List<floatLabelValues> floatLabelText = new List<floatLabelValues>();
+            floatLabelText.Add(new floatLabelValues { floatLabelValue = "Auto", text = "Auto" });
+            floatLabelText.Add(new floatLabelValues { floatLabelValue = "Never", text = "Never" });
+            floatLabelText.Add(new floatLabelValues { floatLabelValue = "Always", text = "Always" });
+            return floatLabelText;
+        }
+    }
+
+    public class resizeValues
+    {
+        public string resizeValue { get; set; }
+
+        public string text { get; set; }
+
+        public List<resizeValues> TextAreaModel()
+        {
+            List<resizeValues> resizeValueText = new List<resizeValues>();
+            resizeValueText.Add(new resizeValues { resizeValue = "Vertical", text = "Vertical" });
+            resizeValueText.Add(new resizeValues { resizeValue = "Horizontal", text = "Horizontal" });
+            resizeValueText.Add(new resizeValues { resizeValue = "Both", text = "Both" });
+            resizeValueText.Add(new resizeValues { resizeValue = "None", text = "None" });
+            return resizeValueText;
+        }
+    }
 }
 

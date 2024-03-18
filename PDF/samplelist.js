@@ -5,8 +5,7 @@ if (!window) {
 window.samplesList = [
    {
         "name": "PDF",
-        "directory": "PDF",
-	"type": "update",
+        "directory": "Pdf",
         "category": "Document Processing Library",
         "samples": [
             {
@@ -15,7 +14,7 @@ window.samplesList = [
                 "category": "PDF",
                 "order": 0,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464600"
             },
@@ -25,7 +24,7 @@ window.samplesList = [
                 "category": "Product Showcase",
                 "order": 1,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464601"
             },
@@ -35,7 +34,7 @@ window.samplesList = [
                 "category": "Product Showcase",
                 "order": 1,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464602"
             },
@@ -45,7 +44,7 @@ window.samplesList = [
                 "category": "Getting Started",
                 "order": 2,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464603"
             },
@@ -55,7 +54,7 @@ window.samplesList = [
                 "category": "Compression",
                 "order": 3,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464646"
             },
@@ -65,7 +64,7 @@ window.samplesList = [
                 "category": "Drawing Text",
                 "order": 4,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464604"
             },
@@ -75,7 +74,7 @@ window.samplesList = [
                 "category": "Drawing Text",
                 "order": 4,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464605"
             },
@@ -85,7 +84,7 @@ window.samplesList = [
                 "category": "Drawing Text",
                 "order": 4,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464606"
             },
@@ -95,7 +94,7 @@ window.samplesList = [
                 "category": "Drawing Text",
                 "order": 4,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464607"
             },
@@ -105,7 +104,7 @@ window.samplesList = [
                 "category": "Graphics",
                 "order": 5,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464608"
             },
@@ -115,7 +114,7 @@ window.samplesList = [
                 "category": "Graphics",
                 "order": 5,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464609"
             },
@@ -125,7 +124,7 @@ window.samplesList = [
                 "category": "Graphics",
                 "order": 5,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464610"
             },
@@ -135,17 +134,17 @@ window.samplesList = [
                 "category": "Graphics",
                 "order": 5,
                 "component": "PDF",
-                "dir": "PDF",              
+                "dir": "Pdf",              
                 "parentId": "046",
                 "uid": "00464611"
             },
             {
-                "url": "MultiColumnHTMLText",
+                "url": "MultiColumnHtmlText",
                 "name": "Multi Column HTML Text",
                 "category": "Graphics",
                 "order": 5,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464649"
             },
@@ -155,7 +154,7 @@ window.samplesList = [
                 "category": "Tables",
                 "order": 6,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464612"
             },
@@ -165,7 +164,7 @@ window.samplesList = [
                 "category": "Tables",
                 "order": 6,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464613"
             },
@@ -175,7 +174,7 @@ window.samplesList = [
                 "category": "Import and Export",
                 "order": 7,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464614"
             },
@@ -185,7 +184,7 @@ window.samplesList = [
                 "category": "Import and Export",
                 "order": 7,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464615"
             },
@@ -195,7 +194,7 @@ window.samplesList = [
                 "category": "Import and Export",
                 "order": 7,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464645"
             },	
@@ -205,7 +204,7 @@ window.samplesList = [
                 "category": "Conversions",
                 "order": 8,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464616"
             },
@@ -215,7 +214,7 @@ window.samplesList = [
                 "category": "Conversions",
                 "order": 8,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464641"
             },
@@ -225,7 +224,7 @@ window.samplesList = [
                 "category": "Conversions",
                 "order": 8,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464651"
             },
@@ -235,7 +234,7 @@ window.samplesList = [
                 "category": "Conversions",
                 "order": 8,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464652"
             },
@@ -245,7 +244,7 @@ window.samplesList = [
                 "category": "Conversions",
                 "order": 8,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464642"
             },           
@@ -255,7 +254,7 @@ window.samplesList = [
                 "category": "Conversions",
                 "order": 8,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464659",
                 "parentId": "038",
@@ -270,7 +269,7 @@ window.samplesList = [
                 "category": "Security",
                 "order": 9,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464617"
             },
@@ -280,7 +279,7 @@ window.samplesList = [
                 "category": "Security",
                 "order": 9,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464618"
             },
@@ -290,7 +289,7 @@ window.samplesList = [
                 "category": "Security",
                 "order": 9,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464644"
             },
@@ -300,7 +299,7 @@ window.samplesList = [
                 "category": "Security",
                 "order": 9,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464647"
             },
@@ -310,7 +309,7 @@ window.samplesList = [
                 "category": "Settings",
                 "order": 10,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464619"
             },
@@ -320,7 +319,7 @@ window.samplesList = [
                 "category": "Settings",
                 "order": 10,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464620"
             },
@@ -330,7 +329,7 @@ window.samplesList = [
                 "category": "Settings",
                 "order": 10,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464621"
             },
@@ -340,7 +339,7 @@ window.samplesList = [
                 "category": "Settings",
                 "order": 10,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464622"
             },
@@ -350,7 +349,7 @@ window.samplesList = [
                 "category": "Analyze Document",
                 "order": 11,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464643"
             },
@@ -360,7 +359,7 @@ window.samplesList = [
                 "category": "User Interaction",
                 "order": 12,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464623"
             },
@@ -370,7 +369,7 @@ window.samplesList = [
                 "category": "User Interaction",
                 "order": 12,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464624"
             },
@@ -380,7 +379,7 @@ window.samplesList = [
                 "category": "User Interaction",
                 "order": 12,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464625"
             },
@@ -390,7 +389,7 @@ window.samplesList = [
                 "category": "User Interaction",
                 "order": 12,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464626"
             },
@@ -400,7 +399,7 @@ window.samplesList = [
                 "category": "User Interaction",
                 "order": 12,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464627"
             },
@@ -410,7 +409,7 @@ window.samplesList = [
                 "category": "User Interaction",
                 "order": 12,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464628"
             },
@@ -420,7 +419,7 @@ window.samplesList = [
                 "category": "User Interaction",
                 "order": 12,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464629"
             },
@@ -430,7 +429,7 @@ window.samplesList = [
                 "category": "User Interaction",
                 "order": 12,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464630"
             },
@@ -440,7 +439,7 @@ window.samplesList = [
                 "category": "User Interaction",
                 "order": 12,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464631"
             },
@@ -450,7 +449,7 @@ window.samplesList = [
                 "category": "Conformance",
                 "order": 13,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464632"
             },
@@ -460,7 +459,7 @@ window.samplesList = [
                 "category": "Conformance",
                 "order": 13,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464648"
             },
@@ -470,7 +469,7 @@ window.samplesList = [
                 "category": "Modify Documents",
                 "order": 14,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464633"
             },
@@ -480,8 +479,7 @@ window.samplesList = [
                 "category": "Modify Documents",
                 "order": 14,
                 "component": "PDF",
-                "dir": "PDF",
-		"type": "update",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464634"
             },
@@ -491,7 +489,7 @@ window.samplesList = [
                 "category": "Modify Documents",
                 "order": 14,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464635"
             },
@@ -501,17 +499,17 @@ window.samplesList = [
                 "category": "Modify Documents",
                 "order": 14,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464636"
             },
             {
-                "url": "ImportandStamp",
+                "url": "ImportAndStamp",
                 "name": "Import and Stamp",
                 "category": "Modify Documents",
                 "order": 14,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464637"
             },
@@ -521,7 +519,7 @@ window.samplesList = [
                 "category": "Modify Documents",
                 "order": 14,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464638"
             },
@@ -531,27 +529,27 @@ window.samplesList = [
                 "category": "Modify Documents",
                 "order": 14,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464650"
             },
             {
-                "url": "AutoTag",
+                "url": "Autotag",
                 "name": "Autotag",
                 "category": "Accessibility",
                 "order": 15,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464639"
             },
             {
-                "url": "CustomTag",
+                "url": "Customtag",
                 "name": "Customtag",
                 "category": "Accessibility",
                 "order": 15,
                 "component": "PDF",
-                "dir": "PDF",
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464640"
             }
@@ -559,118 +557,155 @@ window.samplesList = [
         "order": 7,
         "uid": "046"
     },
-  {
-        "name": "PDF Viewer",
-        "directory": "PdfViewer",
-        "category": "Viewer",
-        "type": "update",
-        "samples": [
-            {
-                "url": "Default",
-                "name": "Default Functionalities",
-                "category": "PDF Viewer",
-                "order": 0,
-                "component": "PdfViewer",
-                "dir": "PdfViewer",
-                "parentId": "048",
-                "uid": "0048480"
-            },
-            {
-                "url": "ReadOnly",
-                "name": "Read-Only",
-                "category": "Document Security",
-                "order": 1,
-                "component": "PdfViewer",
-                "dir": "PdfViewer",
-                "parentId": "048",
-                "uid": "0048481",
-                "type": "new",
-            },
-            {
-                "url": "DocumentList",
-                "name": "Document List",
-                "category": "File Management",
-                "order": 2,
-                "component": "PdfViewer",
-                "dir": "PdfViewer",
-                "parentId": "048",
-                "uid": "0048482",
-                "type": "new"
-            },
-            {
-                "url": "CustomToolbar",
-                "name": "Custom Toolbar",
-                "category": "Toolbar",
-                "order": 3,
-                "type": "update",
-                "component": "PdfViewer",
-                "dir": "PdfViewer",
-                "parentId": "048",
-                "uid": "0048483",
-                "type": "update"
-            },
-            {
-                "url": "RightToLeft",
-                "name": "Right To Left",
-                "category": "Localization",
-                "order": 4,
-                "component": "PdfViewer",
-                "dir": "PdfViewer",
-                "parentId": "048",
-                "uid": "0048484"
-            },
-            {
-                "url": "FormFilling",
-                "name": "Form Filling",
-                "category": "PDF Form",
-                "order": 5,
-                "component": "PdfViewer",
-                "dir": "PdfViewer",
-                "parentId": "048",
-                "uid": "0048485"
-            },
-            {
-                "url": "FormDesigner",
-                "name": "Form Designer",
-                "category": "PDF Form",
-                "order": 5,
-                "component": "PdfViewer",
-                "dir": "PdfViewer",
-                "parentId": "048",
-                "uid": "0048486"
-            },
-            {
-                "url": "Annotations",
-                "name": "Annotations",
-                "category": "Annotation",
-                "order": 6,
-                "component": "PdfViewer",
-                "dir": "PdfViewer",
-                "parentId": "048",
-                "uid": "0048487",
-            },
-            {
-                "url": "HandwrittenSignature",
-                "name": "Handwritten Signature",
-                "category": "Signature",
-                "order": 7,
-                "component": "PdfViewer",
-                "dir": "PdfViewer",
-                "parentId": "048",
-                "uid": "0048488",
-            },
-            {
-                "url": "InvisibleSignature",
-                "name": "Invisible Signature",
-                "category": "Signature",
-                "order": 7,
-                "component": "PdfViewer",
-                "dir": "PdfViewer",
-                "parentId": "048",
-                "uid": "0048489",
-            }
-        ],
-        "order": 8,
-        "uid": "048"
-    }
+    {
+      "name": "PDF Viewer",
+      "directory": "PdfViewer",
+      "category": "Viewer",
+      "type": "update",
+      "samples": [
+          {
+              "url": "Default",
+              "name": "Default Functionalities",
+              "category": "PDF Viewer",
+              "order": 0,
+              "component": "PdfViewer",
+              "dir": "PdfViewer",
+              "parentId": "048",
+              "uid": "0048480"
+          },
+          {
+              "url": "ReadOnly",
+              "name": "Read-Only",
+              "category": "Document Security",
+              "order": 1,
+              "component": "PdfViewer",
+              "dir": "PdfViewer",
+              "parentId": "048",
+              "uid": "0048481",
+          },
+          {
+              "url": "DocumentList",
+              "name": "Document List",
+              "category": "File Management",
+              "order": 2,
+              "component": "PdfViewer",
+              "dir": "PdfViewer",
+              "parentId": "048",
+              "uid": "0048482",
+          },
+          {
+              "url": "MultiFormatViewer",
+              "name": "Multi-Format Viewer",
+              "category": "File Management",
+              "type": "new",
+              "order": 2,
+              "component": "PdfViewer",
+              "dir": "PdfViewer",
+              "parentId": "048",
+              "uid": "0048492",
+          },
+          {
+              "url": "OrganizePages",
+              "name": "Organize Pages",
+              "category": "Editor",
+              "order": 3,
+              "component": "PdfViewer",
+              "dir": "PdfViewer",
+              "parentId": "048",
+              "uid": "0048483",
+              "type": "new"
+          },
+          {
+              "url": "CustomToolbar",
+              "name": "Toolbar",
+              "category": "Customization",
+              "order": 4,
+              "component": "PdfViewer",
+              "dir": "PdfViewer",
+              "parentId": "048",
+              "uid": "0048484",
+          },
+          {
+              "url": "CustomContextMenu",
+              "name": "Context Menu",
+              "category": "Customization",
+              "order": 4,
+              "component": "PdfViewer",
+              "dir": "PdfViewer",
+              "parentId": "048",
+              "uid": "0048485",
+              "type": "new"
+          },
+          {
+              "url": "RightToLeft",
+              "name": "Right To Left",
+              "category": "Localization",
+
+              "order": 5,
+              "component": "PdfViewer",
+              "dir": "PdfViewer",
+              "parentId": "048",
+
+              "uid": "0048486"
+          },
+          {
+              "url": "FormFilling",
+              "name": "Form Filling",
+              "category": "PDF Form",
+
+              "order": 6,
+              "component": "PdfViewer",
+              "dir": "PdfViewer",
+              "parentId": "048",
+
+              "uid": "0048487"
+          },
+          {
+              "url": "FormDesigner",
+              "name": "Form Designer",
+              "category": "PDF Form",
+
+              "order": 6,
+              "component": "PdfViewer",
+              "dir": "PdfViewer",
+              "parentId": "048",
+
+              "uid": "0048488"
+          },
+          {
+              "url": "Annotations",
+              "name": "Annotations",
+              "category": "Annotation",
+              "order": 7,
+              "component": "PdfViewer",
+              "dir": "PdfViewer",
+              "parentId": "048",
+              "uid": "0048489",
+          },
+          {
+              "url": "HandwrittenSignature",
+              "name": "Handwritten Signature",
+              "category": "Signature",
+
+              "order": 8,
+              "component": "PdfViewer",
+              "dir": "PdfViewer",
+              "parentId": "048",
+
+              "uid": "0048490",
+          },
+          {
+              "url": "InvisibleSignature",
+              "name": "Invisible Signature",
+              "category": "Signature",
+              "order": 8,
+              "component": "PdfViewer",
+              "dir": "PdfViewer",
+              "parentId": "048",
+              "uid": "0048491",
+          }
+      ],
+      "order": 8,
+      "uid": "048"
+  }
 ]

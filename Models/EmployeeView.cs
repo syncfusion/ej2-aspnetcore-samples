@@ -32,7 +32,7 @@ namespace EJ2CoreSampleBrowser.Models
             this.Phone = Phone;
             this.City = City;
             this.Country = Country;
-
+            
         }
         public int EmployeeID { get; set; }
         public string FirstName { get; set; }

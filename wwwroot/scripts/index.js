@@ -10,8 +10,10 @@ var searchInstance;
 var headerThemeSwitch = document.getElementById('header-theme-switcher');
 var settingElement = ej.base.select('.sb-setting-btn');
 var themeList = document.getElementById('themelist');
-var themes = ['material3','material3-dark','fluent', 'fluent-dark', 'bootstrap5', 'bootstrap5-dark', 'tailwind', 'tailwind-dark', 'material', 'bootstrap4', 'bootstrap', 'bootstrap-dark', 'highcontrast'];
-var themeIndex = { 'material3': 0,'material3-dark': 1, 'fluent': 2, 'fluent-dark': 3, 'bootstrap5': 4, 'bootstrap5-dark': 5, 'tailwind': 6, 'tailwind-dark': 7, 'material': 8, 'bootstrap4': 9, 'bootstrap': 10, 'bootstrap-dark': 11, 'highcontrast': 12};
+var themes = ['material3', 'fluent', 'bootstrap5', 'tailwind', 'highcontrast'];
+//var themeIndex = { 'material3': 0, 'material3-dark': 1, 'fluent': 2, 'fluent-dark': 3, 'bootstrap5': 4, 'bootstrap5-dark': 5, 'tailwind': 6, 'tailwind-dark': 7, 'material': 8, 'bootstrap4': 9, 'bootstrap': 10, 'bootstrap-dark': 11, 'highcontrast': 12 };
+var themeIndex = { 'material3': 0, 'fluent': 1, 'bootstrap5': 2, 'tailwind': 3, 'highcontrast': 4 };
+var themeMode_Index = { 'material3': 'Material3', 'fluent': 'Fluent', 'bootstrap5': 'Bootstrap v5', 'tailwind': 'Tailwind CSS', 'highcontrast': 'High Contrast' };
 var cultureData = { "English": "en", "German - Germany*": "de", "French - Switzerland*": "fr-CH", "Arabic*": "ar", "Chinese - China*":"zh" };
 var defaultTheme = 'material3';
 var themeDropDown;
@@ -97,6 +99,9 @@ function sourceTabSelected(e) {
     sourceEle.innerHTML = items[e.selectedIndex].data;
     sourceEle.innerHTML = sourceEle.innerHTML.replace(reg, '');
     sourceEle.classList.add('sb-src-code');
+    sourceEle.style.height = "500px";
+    sourceEle.style.overflowY = "auto";
+    sourceEle.setAttribute("tabindex", "0");
     hljs.highlightBlock(sourceEle);
 }
 
@@ -146,8 +151,27 @@ function sbCurrency(e) {
 
 function setIndex() {
     themeDropDown = document.getElementById('sb-setting-theme');
-    document.getElementById('sb-setting-theme').ej2_instances[0].index = localStorage.getItem('theme-index') || 0;
-    localStorage.removeItem('theme-index');
+    var currentURL_index = window.location.href;
+    var updatedTheme = "";
+
+    if (currentURL_index.includes("#/")) {
+        var hashValue = currentURL_index.split("#/")[1];
+        if (!hashValue.includes("-dark")) {
+            updatedTheme = hashValue;
+            document.getElementById('sb-setting-theme').ej2_instances[0].index = themeIndex[updatedTheme] || 0;
+            console.log("Updated URL: " + updatedTheme);
+        } else {
+            updatedTheme = hashValue.replace("-dark", "");
+
+            var dropdownTheme = document.getElementById('sb-setting-theme');
+            dropdownTheme.ej2_instances[0].index = 0;
+            dropdownTheme.value = themeMode_Index[updatedTheme];
+             //document.getElementById('sb-setting-mode').ej2_instances[0].index = 1
+            console.log("Updated URL (removed -dark): " + updatedTheme);
+        }
+    }
+    //document.getElementById('sb-setting-theme').ej2_instances[0].index = localStorage.getItem('theme-index') || 0;
+    // localStorage.removeItem('theme-index');
 }
 
 function getPreferences() {
@@ -268,6 +292,9 @@ function dynamicTabCreation(obj){
     blockEle.innerHTML = tabObj.items[tabObj.selectedItem].data;
     blockEle.innerHTML = blockEle.innerHTML.replace(reg, '');
     blockEle.classList.add('sb-src-code');
+    blockEle.style.height = "500px";
+    blockEle.style.overflowY = "auto";
+    blockEle.setAttribute("tabindex", "0");
     if (blockEle) {
         hljs.highlightBlock(blockEle);
     }
@@ -394,15 +421,22 @@ function changeTheme(e) {
 }
 
 function switchTheme(str) {
-    if (str.value) {
-        localStorage.setItem('theme-index', str.itemData.Index);
-        str = str.value;
+    if (typeof str === 'string') {
+        var themeName = str;
+    } else {
+        if (str.value) {
+            var dropdownMode = document.getElementById("sb-setting-mode").ej2_instances[0];
+            // Set the value of the second dropdown to "light"
+            dropdownMode.value = "light";
+            // localStorage.setItem('dropdownlistsb-setting-mode', str.itemData.Index);
+            themeName = str.value;
+        }
     }
     var hash = location.hash.split('/');
-    if (hash[1] !== str) {
-        hash[1] = str;
+    if (hash[1] !== themeName) {
+        hash[1] = themeName;
         localStorage.setItem('ej2-switch', ej.base.select('.sb-responsive-section .active').id);
-        localStorage.setItem('theme-index', themeIndex[str]);
+        // localStorage.setItem('dropdownlistsb-setting-mode', themeIndex[str]);
         location.hash = hash.join('/');
     }
 }
@@ -639,12 +673,6 @@ function bindEvents() {
     ej.base.select('.sb-header-settings').addEventListener('click', viewMobilePrefPane);
     ej.base.select('.sb-mobile-setting').addEventListener('click', viewMobilePropPane);
     resetSearch.addEventListener('click', resetInput);
-    document.getElementById('open-plnkr').addEventListener('click', function () {
-        var plnkrForm = ej.base.select('#plnkr-form');
-        if (plnkrForm) {
-            plnkrForm.submit();
-        }
-    });
     ej.base.select('#next-sample').addEventListener('click', onNextPrevButtonClick);
     ej.base.select('#mobile-next-sample').addEventListener('click', onNextPrevButtonClick);
     ej.base.select('#prev-sample').addEventListener('click', onNextPrevButtonClick);
@@ -720,7 +748,8 @@ function loadTheme(theme) {
     }
     body.classList.add(theme);
     themeList.querySelector('.active').classList.remove('active');
-    themeList.querySelector('#' + theme).classList.add('active');
+    var currentUpdatedTheme = theme.replace("-dark", "");
+    themeList.querySelector('#' + currentUpdatedTheme).classList.add('active');
 
     selectedTheme = theme;
     renderLeftPaneComponents();
@@ -1132,7 +1161,6 @@ function addRoutes(samplesList) {
 function onDataSourceLoad(node, subNode, control, sample, sampleName) {
     var controlID = node.uid;
     var sampleID = subNode.uid;
-    document.getElementById('open-plnkr').disabled = true;
     setSbLink();
     var ajaxCS = new ej.base.Ajax(baseurl + 'Controllers/' + subNode.dir + '/' + subNode.url + 'Controller.cs', 'GET', false);
     var ajaxCSHTML = new ej.base.Ajax(baseurl + 'Views/' + subNode.dir + '/' + subNode.url + '.cshtml', 'GET', false);
@@ -1342,3 +1370,84 @@ function loadJSON() {
     loadCulture();
 }
 loadJSON();
+
+function ScrollToSelected() {
+    const selectedDiv = document.querySelector('.e-list-item.e-active');
+    if (selectedDiv) {
+        selectedDiv.scrollIntoView({ block: 'nearest' });
+    }
+}
+
+//window.onload = function () {
+//    setTimeout(function () {
+//        ScrollToSelected();
+//    }, 500);
+//}
+
+// Get the button element
+var button = document.getElementById('buttoncolor');
+
+// Attach click event listener to the button
+button.addEventListener('click', function () {
+    // Call the navigateToPage function when the button is clicked
+    navigateToPage();
+});
+
+// Mode switcher handler for devices
+function onModeChanges(event) {
+    var currentURL = window.location.href;
+    var updatedURL1 = "";
+    if (!currentURL.includes("highcontrast")) {
+        // Check if the URL already contains "-dark"
+        if (!currentURL.includes("-dark")) {
+            // Append "-dark" to the current URL
+            updatedURL1 = currentURL;
+            window.location.href = updatedURL1;
+            console.log("Updated URL: " + updatedURL1);
+        } else if (currentURL.includes("-dark")) {
+            // Remove "-dark" from the current URL
+            updatedURL1 = currentURL.replace("-dark", "");
+            window.location.href = updatedURL1;
+            console.log("Updated URL (removed -dark): " + updatedURL1);
+        }
+        if (event.itemData.ThemeId === "dark") {
+            //console.log("Updated URL: " + updatedURL);
+            updatedURL1 += "-dark";
+            window.location.href = updatedURL1;
+            location.reload();
+        }
+        console.log("Updated URL: " + updatedURL1);
+    }
+}
+function updateThemeURL() {
+    var current_URL = window.location.href;
+    var updatedURL = current_URL;
+
+    if (current_URL.includes("#/")) {
+        var urlParts = current_URL.split("#/");
+        var baseUrl = urlParts[0];
+        var hashValue = urlParts[1]; // Rename 'hash' to 'hashValue'
+        if (hashValue.includes("-dark")) {
+            // Remove "-dark" from the hash 
+            hashValue = hashValue.replace("-dark", "");
+            console.log("hashValue URL (removed -dark):", hashValue);
+        } else {
+            // Append "-dark" to the hash
+            hashValue = hashValue + "-dark";
+            console.log("hashValue URL:", hashValue);
+        }
+        updatedURL = baseUrl + "#/" + hashValue;
+    } else {
+        console.log("No hash found in the URL");
+    }
+    // Return the updated URL
+    return updatedURL;
+}
+
+function navigateToPage() {
+    var updatedURL = updateThemeURL();
+    console.log("Updated URL is: " + updatedURL);
+    window.location.href = updatedURL;
+    location.reload();
+    //// Navigate to the updated URL
+}

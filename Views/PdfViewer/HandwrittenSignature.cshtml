@@ -58,11 +58,15 @@
 </style>
 @*custom code end*@
 <script type="text/javascript">
+    var isInitialLoading = true;
     window.onload = function () {
     }
     function documentloaded(args) {
         var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
-        pdfViewer.annotation.setAnnotationMode('HandWrittenSignature');
+        if (isInitialLoading) { 
+            pdfViewer.annotation.setAnnotationMode('HandWrittenSignature'); 
+            isInitialLoading = false;
+        }
     }
 </script>
 

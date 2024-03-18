@@ -1,9 +1,23 @@
 @using Syncfusion.EJ2;
 
 @section ControlsSection{
-    <div class="control-section">
-        <div id='documenteditor_titlebar' class="e-de-ctn-title"></div>
-        <ejs-documenteditorcontainer id="container" enableToolbar=true height="590px"></ejs-documenteditorcontainer>
+    <div>
+        <div class="col-lg-9 control-section">
+            <div id='documenteditor_titlebar' class="e-de-ctn-title"></div>
+            <ejs-documenteditorcontainer id="container" enableToolbar=true height="590px"></ejs-documenteditorcontainer>
+        </div>
+        <div class="col-lg-3 property-section">
+            <div style="padding-top: 20px">
+                <b>Document Editor settings</b>
+            </div>
+            <table style="margin-top: 20px; margin-bottom: 30px;">
+                <tr>
+                    <td style="width: 100%;">                
+                        <ejs-checkbox id="checked" checked="true" label="Show Ruler"></ejs-checkbox>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
     <style>
         #documenteditor_titlebar {
@@ -113,18 +127,24 @@
         titleBarDiv = document.getElementById('documenteditor_titlebar');
         initComponentAndWireEvent();
     });
+        document.getElementById("checked").addEventListener('change', function (args) {
+            var container = document.getElementById("container").ej2_instances[0];
+            var element = document.getElementById('checked').ej2_instances[0];
+            container.documentEditorSettings.showRuler = element.checked;
+        });
+   
     </script>
 }
 
 
 @section Meta{
-                    <meta name="description" content="This example demonstrates the Default Functionalities in ASP.NET Core DocumentEditor control. Explore here for more details."/>
+                    <meta name="description" content="This example demonstrates the Ruler in ASP.NET Core DocumentEditor control. Explore here for more details."/>
                 }
 
 
 @section Title{
-                    <title>ASP.NET Core DocumentEditor Default Functionalities Example - Syncfusion Demos </title> 
+                    <title>ASP.NET Core DocumentEditor Ruler Example - Syncfusion Demos </title> 
                 }
 @section Header{
-                    <h1 class='sb-sample-text'>Example of Default Functionalities in ASP.NET Core DocumentEditor Control</h1>
+                    <h1 class='sb-sample-text'>Example of Ruler in ASP.NET Core DocumentEditor Control</h1>
                 }

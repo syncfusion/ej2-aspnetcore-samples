@@ -109,7 +109,6 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
             ViewBag.getConnectorDefaults = "getConnectorDefaults";
             ViewBag.setNodeTemplate = "setNodeTemplate";
 
-
             var selectedItems =new DiagramSelector ();
             selectedItems.Constraints = (SelectorConstraints.ConnectorSourceThumb
                 | SelectorConstraints.ConnectorTargetThumb);

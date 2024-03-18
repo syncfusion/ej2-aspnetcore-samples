@@ -107,16 +107,26 @@
     }
 
     function deniedTagsChange(args) {
-        rteObj.pasteCleanupSettings.deniedTags = (eval)('[' + deniedTags.value + ']');// jshint ignore:line
+        onPasteCleanupSettingsChange(deniedTags.value, 'deniedTags');
       }
 
     function deniedAttrsChange(args) {
-        rteObj.pasteCleanupSettings.deniedAttrs = (eval)('[' + deniedAttributes.value + ']');// jshint ignore:line
+        onPasteCleanupSettingsChange(deniedAttributes.value, 'deniedAttrs');
       }
 
     function allowedStyleChange(args) {
-        rteObj.pasteCleanupSettings.allowedStyleProps = (eval)('[' + allowedStyleProperties.value + ']');// jshint ignore:line
+        onPasteCleanupSettingsChange(allowedStyleProperties.value, 'allowedStyleProps');
       }
+    function onPasteCleanupSettingsChange(value, settingsProperty) {
+        if (value) {
+            var arrayValue = value.split(',').map(function (item) {
+                return item.trim().replace(/^['"]|['"]$/g, '');
+            });
+            rteObj.pasteCleanupSettings[settingsProperty] = arrayValue.filter(function (prop) {
+                return prop !== '';
+            });
+        }
+    }
     </script>
 }
 

@@ -284,3 +284,8 @@ gulp.task('code-leaks-analysis', function (done) {
     }
     done();
 });
+
+gulp.task('file-format-build', function (done) {
+    shelljs.exec('Word.bat && PDF.bat && Presentation.bat && Excel.bat')
+    done();
+});

@@ -40,13 +40,13 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
         {
             List<DiagramNode> nodes = new List<DiagramNode>();
             nodes.Add(CreateNodes("node1", 100, 125, "Terminator", "Begin", 100, 35, new List<DiagramPort>() { new DiagramPort() { } }));
-            nodes.Add(CreateNodes("node2", 300, 125, "Process", "Specify collection", 120, 25, new List<DiagramPort>() { new DiagramPort() { Id = "port1", Offset = new PointsShape() { X = 1, Y = 0.5 } } }));
-            nodes.Add(CreateNodes("node3", 500, 125, "Decision", "Particulars \n required?", 100, 50, new List<DiagramPort>() { new DiagramPort() { Id = "port1", Offset = new PointsShape() { X = 0.5, Y = 1 } } }));
+            nodes.Add(CreateNodes("node2", 300, 125, "Process", "Specify collection", 120, 25, new List<DiagramPort>() { new DiagramPort() { Id = "port1", Offset = new DiagramPoint() { X = 1, Y = 0.5 } } }));
+            nodes.Add(CreateNodes("node3", 500, 125, "Decision", "Particulars \n required?", 100, 50, new List<DiagramPort>() { new DiagramPort() { Id = "port1", Offset = new DiagramPoint() { X = 0.5, Y = 1 } } }));
             nodes.Add(CreateNodes("node4", 730, 125, "Process", "Specify particulars", 90, 25,new List<DiagramPort>() { new DiagramPort() { } }));
-            nodes.Add(CreateNodes("node5", 500, 225, "Process", "Design collection", 100, 25, new List<DiagramPort>() { new DiagramPort() { Id = "port", Offset = new PointsShape() { X = 1, Y = 0.5 } } }));
+            nodes.Add(CreateNodes("node5", 500, 225, "Process", "Design collection", 100, 25, new List<DiagramPort>() { new DiagramPort() { Id = "port", Offset = new DiagramPoint() { X = 1, Y = 0.5 } } }));
             nodes.Add(CreateNodes("node6", 500, 320, "Process", "Cluster of events", 100, 25, new List<DiagramPort>() { new DiagramPort() { } }));
             nodes.Add(CreateNodes("node7", 500, 420, "Process", "Start the process", 100, 25, new List<DiagramPort>() { new DiagramPort() { } }));
-            nodes.Add(CreateNodes("node8", 730, 320, "Process", "Record and analyze \n results", 170, 25, new List<DiagramPort>() { new DiagramPort() { Id = "port1", Offset = new PointsShape() { X = 1, Y = 0.5 } } }));
+            nodes.Add(CreateNodes("node8", 730, 320, "Process", "Record and analyze \n results", 170, 25, new List<DiagramPort>() { new DiagramPort() { Id = "port1", Offset = new DiagramPoint() { X = 1, Y = 0.5 } } }));
             nodes.Add(CreateNodes("node9", 730, 420, "Terminator", "End ", 100, 35, new List<DiagramPort>() { new DiagramPort() { } }));
             return nodes;
         }

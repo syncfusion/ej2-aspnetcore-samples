@@ -33,6 +33,7 @@ xcopy /q /y  "Controllers\PDF" "PDF\Controllers\PDF\"
 xcopy /q /y  "Controllers\Dialog\ComponentsDialogController.cs" "PDF\Controllers\Dialog\"
 xcopy /q /y  "Controllers\PDF\Zugferd" "PDF\Controllers\PDF\Zugferd\"
 xcopy /q /y  "Controllers\PdfViewer" "PDF\Controllers\PdfViewer\"
+xcopy /q /y  "Controllers\Uploader" "PDF\Controllers\Uploader\"
 xcopy /q /y  "Controllers" "PDF\Controllers\"
 xcopy /q /y  "Helpers" "PDF\Helpers\"
 xcopy /q /y  "Helpers\BrowserClasses" "PDF\Helpers\BrowserClasses\"
@@ -46,7 +47,7 @@ xcopy  /q /y  "Models\ScheduleEvents.cs" "PDF\Models\"
 xcopy  /q /y  "Models\PdfDocumentList.cs" "PDF\Models\"
 xcopy /q /y  "Views" "PDF\Views\"
 xcopy /q /y  "Views\Shared\_Layout.cshtml" "PDF\Views\Shared\"
-xcopy /q /y  "Views\PDF" "PDF\Views\PDF\"
+xcopy /q /y  "Views\Pdf" "PDF\Views\Pdf\"
 xcopy /q /y  "Views\Dialog\ComponentsDialog.cshtml" "PDF\Views\Dialog\"
 xcopy /q /y  "Views\PdfViewer" "PDF\Views\PdfViewer\"
 xcopy  /q /y  "Properties" "PDF\Properties\"
@@ -82,4 +83,3 @@ setlocal enabledelayedexpansion
 move /y "%destinationFile%.tmp" "%destinationFile%"
 
 echo Word '%searchWord%' replaced with '%replaceWord%' in %destinationFile%
-

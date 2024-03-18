@@ -147,7 +147,6 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "type": "new",
                 "uid": "00474713"
             },
             {
@@ -274,7 +273,6 @@ window.samplesList = [
                 "url": "WordToPDF",
                 "name": "Word to PDF",
                 "category": "Conversions",
-                "type": "update",
                 "order": 8,
                 "component": "Word",
                 "dir": "Word",
@@ -305,7 +303,6 @@ window.samplesList = [
                 "url": "WordToImage",
                 "name": "Word to Image",
                 "category": "Conversions",
-                "type": "update",
                 "order": 8,
                 "component": "Word",
                 "dir": "Word",
@@ -403,6 +400,17 @@ window.samplesList = [
                 "uid": "00474738"
             },
             {
+                "url": "TableOfFigures",
+                "name": "Table of Figures",
+                "category": "References",
+                "order": 10,
+                "component": "Word",
+                "dir": "Word",
+                "parentId": "047",
+                "type": "new",
+                "uid": "00474739"
+            },
+            {
                 "url": "FootnotesandEndnotes",
                 "name": "Footnotes and Endnotes",
                 "category": "References",
@@ -410,7 +418,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474739"
+                "uid": "00474740"
             },
             {
                 "url": "AutoShapes",
@@ -420,7 +428,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474740"
+                "uid": "00474741"
             },
             {
                 "url": "GroupShapes",
@@ -430,7 +438,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474741"
+                "uid": "00474742"
             },
             {
                 "url": "PieChart",
@@ -440,7 +448,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474742"
+                "uid": "00474743"
             },
             {
                 "url": "BarChart",
@@ -450,7 +458,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474743"
+                "uid": "00474744"
             },
             {
                 "url": "DocumentSettings",
@@ -460,7 +468,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474744"
+                "uid": "00474745"
             },
             {
                 "url": "MacroPreservation",
@@ -470,7 +478,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474745"
+                "uid": "00474746"
             },
             {
                 "url": "DocumentProtection",
@@ -480,7 +488,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474746"
+                "uid": "00474747"
             },
             {
                 "url": "EncryptAndDecrypt",
@@ -490,7 +498,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474747"
+                "uid": "00474748"
             },
             {
                 "url": "TrackChanges",
@@ -500,7 +508,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474748"
+                "uid": "00474749"
             },
             {
                 "url": "CompareDocuments",
@@ -510,17 +518,17 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474749"
+                "uid": "00474750"
             }
 
         ],
         "order": 7,
         "uid": "047"
     },
- {
+     {
         "name": "DocumentEditor",
         "directory": "DocumentEditor",
-        "category": "Editor",
+        "category": "Editors",
         "ftName": "document-editor",
         "hideOnDevice": true,
         "type": "update",
@@ -529,6 +537,7 @@ window.samplesList = [
                 "url": "Default",
                 "name": "Default Functionalities",
                 "category": "DocumentEditor",
+                "type": "update",
                 "order": 0,
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
@@ -540,127 +549,57 @@ window.samplesList = [
                 "name": "Document List",
                 "category": "File Management",
                 "order": 1,
-                "type": "new",
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
                 "uid": "0036343"
             },
             {
-                "url": "CharacterFormat",
-                "name": "Character Formatting",
-                "category": "Editing Features",
+                "url": "MailMerge",
+                "name": "Mail Merge",
+                "category": "Mail Merge",
                 "order": 2,
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
-                "uid": "0036344"
+                "uid": "0036365",
             },
             {
-                "url": "ParagraphFormat",
-                "name": "Paragraph Formatting",
-                "category": "Editing Features",
-                "order": 2,
-                "component": "DocumentEditor",
-                "dir": "DocumentEditor",
-                "parentId": "035",
-                "uid": "0036345"
-            },
-            {
-                "url": "Styles",
-                "name": "Styles",
-                "category": "Editing Features",
-                "order": 2,
-                "component": "DocumentEditor",
-                "dir": "DocumentEditor",
-                "parentId": "035",
-                "uid": "0036346"
-            },
-            {
-                "url": "BulletsAndNumbering",
-                "name": "Bullets and Numbering",
-                "category": "Editing Features",
-                "order": 2,
-                "component": "DocumentEditor",
-                "dir": "DocumentEditor",
-                "parentId": "035",
-                "uid": "0036347"
-            },
-            {
-                "url": "HyperlinksAndBookmarks",
-                "name": "Hyperlinks and Bookmarks",
-                "category": "Editing Features",
-                "order": 2,
-                "component": "DocumentEditor",
-                "dir": "DocumentEditor",
-                "parentId": "035",
-                "uid": "0036348"
-            },
-            {
-                "url": "TableFormat",
-                "name": "Table Formatting",
-                "category": "Editing Features",
-                "order": 2,
-                "component": "DocumentEditor",
-                "dir": "DocumentEditor",
-                "parentId": "035",
-                "uid": "0036349"
-            },
-            {
-                "url": "SectionFormat",
-                "name": "Section Formatting",
-                "category": "Editing Features",
-                "order": 2,
-                "component": "DocumentEditor",
-                "dir": "DocumentEditor",
-                "parentId": "035",
-                "uid": "00363450"
-            },
-            {
-                "url": "HeadersAndFooters",
-                "name": "Headers and Footers",
-                "category": "Editing Features",
-                "order": 2,
-                "component": "DocumentEditor",
-                "dir": "DocumentEditor",
-                "parentId": "035",
-                "uid": "0036351"
-            },
-            {
-                "url": "TableOfContents",
-                "name": "Table of Content",
-                "category": "References",
+                "url": "Comments",
+                "name": "Comments",
+                "category": "Review",
+                "type": "update",
                 "order": 3,
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
-                "uid": "0036352"
+                "uid": "0036362"
             },
             {
-                "url": "Print",
-                "name": "Print",
-                "category": "Print",
+                "url": "TrackChanges",
+                "name": "Track Changes",
+                "category": "Review",
+                "order": 3,
+                "component": "DocumentEditor",
+                "dir": "DocumentEditor",
+                "parentId": "035",
+                "uid": "0036363"
+            },
+            {
+                "url": "DocumentProtection",
+                "name": "Document Protection",
+                "category": "Security",
                 "order": 4,
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
-                "uid": "0036353",
-            },
-            {
-                "url": "RightToLeft",
-                "name": "Right To Left",
-                "category": "RTL",
-                "order": 5,
-                "component": "DocumentEditor",
-                "dir": "DocumentEditor",
-                "parentId": "035",
-                "uid": "0036354"
+                "uid": "0036358"
             },
             {
                 "url": "CustomContextMenu",
                 "name": "Custom Context Menu",
                 "category": "Customization",
-                "order": 6,
+                "order": 5,
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
@@ -670,7 +609,7 @@ window.samplesList = [
                 "url": "AutoSave",
                 "name": "Auto Save",
                 "category": "Customization",
-                "order": 6,
+                "order": 5,
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
@@ -680,32 +619,73 @@ window.samplesList = [
                 "url": "ToolbarCustomization",
                 "name": "Toolbar Customization",
                 "category": "Customization",
-                "order": 6,
+                "order": 5,
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
                 "uid": "0036361",
             },
-
             {
-                "url": "Chart",
-                "name": "Chart Preservation",
-                "category": "Charts",
+                "url": "ColorpickerCustomization",
+                "name": "Colorpicker Customization",
+                "category": "Customization",
+                "type": "new",
+                "order": 5,
+                "component": "DocumentEditor",
+                "dir": "DocumentEditor",
+                "parentId": "035",
+                "uid": "0036369",
+            },
+            {
+                "url": "RightToLeft",
+                "name": "Right To Left",
+                "category": "RTL",
+                "order": 6,
+                "component": "DocumentEditor",
+                "dir": "DocumentEditor",
+                "parentId": "035",
+                "uid": "0036354"
+            },
+            {
+                "url": "Print",
+                "name": "Print",
+                "category": "Exporting",
                 "order": 7,
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
-                "uid": "0036357"
+                "uid": "0036353",
             },
             {
-                "url": "DocumentProtection",
-                "name": "Document Protection",
-                "category": "Security",
+                "url": "Export",
+                "name": "Advanced Exporting",
+                "category": "Exporting",
+                "type": "new",
+                "order": 7,
+                "component": "DocumentEditor",
+                "dir": "DocumentEditor",
+                "parentId": "035",
+                "uid": "0036368",
+            },
+            {
+                "url": "TableOfContents",
+                "name": "Table of Contents",
+                "category": "References",
                 "order": 8,
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
-                "uid": "0036358"
+                "uid": "0036352"
+            },
+            {
+                "url": "Notes",
+                "name": "Footnotes and Endnotes",
+                "category": "References",
+                "order": 8,
+                "component": "DocumentEditor",
+                "dir": "DocumentEditor",
+                "parentId": "035",
+                "uid": "0036366"
             },
             {
                 "url": "WebLayout",
@@ -722,73 +702,133 @@ window.samplesList = [
                 "name": "Ruler",
                 "category": "View",
                 "order": 9,
+                "component": "DocumentEditor",
+                "dir": "DocumentEditor",
+                "parentId": "035",
+                "uid": "0036371",
+            },
+            {
+                "url": "HeadingNavigation",
+                "name": "Heading Navigation",
+                "category": "View",
+                "type": "new",
+                "order": 9,
                 "type": "new",
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
-                "uid": "0036360",
+                "uid": "0036370",
             },
             {
-                "url": "Comments",
-                "name": "Comments",
-                "category": "Review",
+                "url": "CharacterFormat",
+                "name": "Character Formatting",
+                "category": "Editing Features",
                 "order": 10,
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
-                "uid": "0036362"
+                "uid": "0036344"
             },
             {
-                "url": "TrackChanges",
-                "name": "Track Changes",
-                "category": "Review",
+                "url": "ParagraphFormat",
+                "name": "Paragraph Formatting",
+                "category": "Editing Features",
                 "order": 10,
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
-                "uid": "0036363"
+                "uid": "0036345"
+            },
+            {
+                "url": "Styles",
+                "name": "Styles",
+                "category": "Editing Features",
+                "order": 10,
+                "component": "DocumentEditor",
+                "dir": "DocumentEditor",
+                "parentId": "035",
+                "uid": "0036346"
+            },
+            {
+                "url": "BulletsAndNumbering",
+                "name": "Bullets and Numbering",
+                "category": "Editing Features",
+                "order": 10,
+                "component": "DocumentEditor",
+                "dir": "DocumentEditor",
+                "parentId": "035",
+                "uid": "0036347"
+            },
+            {
+                "url": "HyperlinksAndBookmarks",
+                "name": "Hyperlinks and Bookmarks",
+                "category": "Editing Features",
+                "order": 10,
+                "component": "DocumentEditor",
+                "dir": "DocumentEditor",
+                "parentId": "035",
+                "uid": "0036348"
+            },
+            {
+                "url": "TableFormat",
+                "name": "Table Formatting",
+                "category": "Editing Features",
+                "order": 10,
+                "component": "DocumentEditor",
+                "dir": "DocumentEditor",
+                "parentId": "035",
+                "uid": "0036349"
+            },
+            {
+                "url": "SectionFormat",
+                "name": "Section Formatting",
+                "category": "Editing Features",
+                "order": 10,
+                "component": "DocumentEditor",
+                "dir": "DocumentEditor",
+                "parentId": "035",
+                "uid": "00363450"
+            },
+            {
+                "url": "HeadersAndFooters",
+                "name": "Headers and Footers",
+                "category": "Editing Features",
+                "order": 10,
+                "component": "DocumentEditor",
+                "dir": "DocumentEditor",
+                "parentId": "035",
+                "uid": "0036351"
             },
             {
                 "url": "FormFields",
                 "name": "Form Fields",
                 "category": "Editing Features",
-                "order": 2,
+                "order": 10,
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
                 "uid": "0036364",
             },
             {
-                "url": "MailMerge",
-                "name": "Mail Merge",
-                "category": "Mail Merge",
-                "order": 11,
-                "component": "DocumentEditor",
-                "dir": "DocumentEditor",
-                "parentId": "035",
-                "uid": "0036365",
-            },
-            {
-                "url": "Notes",
-                "name": "Footnotes and Endnotes",
-                "category": "References",
-                "order": 3,
-                "component": "DocumentEditor",
-                "dir": "DocumentEditor",
-                "parentId": "035",
-                "uid": "0036366"
-            },
-            {
                 "url": "MultipleColumns",
                 "name": "Multiple Columns",
                 "category": "Editing Features",
-                "order": 2,
+                "order": 10,
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
                 "uid": "0036367"
-            }
-
+            },
+            {
+                "url": "Chart",
+                "name": "Chart Preservation",
+                "category": "Charts",
+                "order": 11,
+                "component": "DocumentEditor",
+                "dir": "DocumentEditor",
+                "parentId": "035",
+                "uid": "0036357"
+            },
         ],
         "order": 4,
         "uid": "035"

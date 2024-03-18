@@ -32,7 +32,7 @@ namespace EJ2CoreSampleBrowser.Controllers
                 tooltipText = "Image Editor",
                 template = "<button class=\"e-tbar-btn e-btn\" id=\"imageEditor\"><span class=\"e-btn-icon e-icons e-rte-image-editor\"></span></button>"
             };
-            ViewBag.image = new object[] { "Replace", "Align", "Caption", "Remove", "-", "InsertLink", "Display", "AltText", imageEdit };
+            ViewBag.image = new object[] { "Replace", "Align", "Caption", "Remove", "-", "InsertLink","OpenImageLink","EditImageLink","RemoveImageLink", "Display", "AltText", imageEdit };
 
             return View();
         }

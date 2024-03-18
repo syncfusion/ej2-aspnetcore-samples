@@ -13,7 +13,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using Syncfusion.EJ2.DocumentEditor;
+using Syncfusion.DocIORenderer;
 using Microsoft.AspNetCore.Cors;
+using Syncfusion.Pdf;
 using WDocument = Syncfusion.DocIO.DLS.WordDocument;
 using WFormatType = Syncfusion.DocIO.FormatType;
 
@@ -151,6 +153,136 @@ namespace EJ2CoreSampleBrowser.Controllers.DocumentEditor
         {
             public string fileName { get; set; }
             public string documentData { get; set; }
+        }
+
+        private string RetrieveFileType(string name)
+        {
+            int index = name.LastIndexOf('.');
+            string format = index > -1 && index < name.Length - 1 ?
+                name.Substring(index) : ".doc";
+            return format;
+        }
+
+        internal static WFormatType GetWFormatType(string format)
+        {
+            if (string.IsNullOrEmpty(format))
+                throw new NotSupportedException("EJ2 DocumentEditor does not support this file format.");
+            switch (format.ToLower())
+            {
+                case ".dotx":
+                    return WFormatType.Dotx;
+                case ".docx":
+                    return WFormatType.Docx;
+                case ".docm":
+                    return WFormatType.Docm;
+                case ".dotm":
+                    return WFormatType.Dotm;
+                case ".dot":
+                    return WFormatType.Dot;
+                case ".doc":
+                    return WFormatType.Doc;
+                case ".rtf":
+                    return WFormatType.Rtf;
+                case ".html":
+                    return WFormatType.Html;
+                case ".txt":
+                    return WFormatType.Txt;
+                case ".xml":
+                    return WFormatType.WordML;
+                case ".odt":
+                    return WFormatType.Odt;
+                case ".md":
+                    return WFormatType.Markdown;
+                default:
+                    throw new NotSupportedException("EJ2 DocumentEditor does not support this file format.");
+            }
+        }
+
+        public class SaveParameter
+        {
+            public string Content { get; set; }
+            public string FileName { get; set; }
+            public string Format { get; set; }
+        }
+
+        [AcceptVerbs("Post")]
+        [HttpPost]
+        [Route("Export")]
+        public FileStreamResult Export([FromBody] SaveParameter data)
+        {
+            string fileName = data.FileName;
+            string format = RetrieveFileType(string.IsNullOrEmpty(data.Format) ? fileName : data.Format);
+            if (string.IsNullOrEmpty(fileName))
+            {
+                fileName = "Document1.docx";
+            }
+            WDocument document;
+            if (format.ToLower() == ".pdf")
+            {
+                Stream stream = WordDocument.Save(data.Content, FormatType.Docx);
+                document = new Syncfusion.DocIO.DLS.WordDocument(stream, Syncfusion.DocIO.FormatType.Docx);
+            }
+            else
+            {
+                document = WordDocument.Save(data.Content);
+            }
+            return SaveDocument(document, format, fileName);
+        }
+
+        private FileStreamResult SaveDocument(WDocument document, string format, string fileName)
+        {
+            Stream stream = new MemoryStream();
+            string contentType = "";
+            if (format.ToLower() == ".pdf")
+            {
+                contentType = "application/pdf";
+                DocIORenderer render = new DocIORenderer();
+                PdfDocument pdfDocument = render.ConvertToPDF(document);
+                stream = new MemoryStream();
+                pdfDocument.Save(stream);
+                pdfDocument.Close();
+            }
+            else
+            {
+                WFormatType type = GetWFormatType(format);
+                switch (type)
+                {
+                    case WFormatType.Rtf:
+                        contentType = "application/rtf";
+                        break;
+                    case WFormatType.WordML:
+                        contentType = "application/xml";
+                        break;
+                    case WFormatType.Html:
+                        contentType = "application/html";
+                        break;
+                    case WFormatType.Dotx:
+                        contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.template";
+                        break;
+                    case WFormatType.Docx:
+                        contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+                        break;
+                    case WFormatType.Doc:
+                        contentType = "application/msword";
+                        break;
+                    case WFormatType.Dot:
+                        contentType = "application/msword";
+                        break;
+                    case WFormatType.Odt:
+                        contentType = "application/vnd.oasis.opendocument.text";
+                        break;
+                    case WFormatType.Markdown:
+                        contentType = "text/markdown";
+                        break;
+                }
+                document.Save(stream, type);
+            }
+            document.Close();
+            stream.Position = 0;
+            return new FileStreamResult(stream, contentType)
+            {
+                FileDownloadName = fileName
+            };
         }
 
 

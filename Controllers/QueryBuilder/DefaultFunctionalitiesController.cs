@@ -19,7 +19,16 @@ namespace EJ2CoreSampleBrowser.Controllers.QueryBuilder
     {
         public IActionResult DefaultFunctionalities()
         {
+            ViewBag.ImportBtn = new ButtonModel() { isPrimary = true, cssClass = "e-flat", content = "Import" };
+            ViewBag.CancelBtn = new ButtonModel() { content = "Cancel", cssClass = "e-flat" };
             return View();
         }
+    }
+    public class ButtonModel
+    {
+        public string content { get; set; }
+        public bool isPrimary { get; set; }
+        public string cssClass { get; set; }
+
     }
 }

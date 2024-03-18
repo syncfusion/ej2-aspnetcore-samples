@@ -21,7 +21,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Word
     public partial class WordController : Controller
     {
         #region TableofContents
-        public ActionResult TableofContents(string Group1, string UpdateTOC)
+        public ActionResult TableOfContents(string Group1, string UpdateTOC)
         {
             if (Group1 == null)
                 return View();

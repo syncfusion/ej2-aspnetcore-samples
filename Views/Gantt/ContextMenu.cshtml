@@ -57,7 +57,7 @@
     <script>
         function contextMenuOpen(args) {
             var record = args.rowData;
-            if (args.type !== 'Header') {
+            if (args.type !== 'Header' && record) {
                 if (!record.hasChildRecords) {
                     args.hideItems.push('Collapse the Row');
                     args.hideItems.push('Expand the Row');
@@ -73,10 +73,10 @@
             function contextMenuClick(args) {
                 var ganttObj = document.getElementById("ContextMenu").ej2_instances[0];
                 var record = args.rowData;
-                if (args.item.id === 'collapserow') {
+                if (args.item.id === 'collapserow' && record) {
                     ganttObj.collapseByID(record.ganttProperties.taskId);
                 }
-                if (args.item.id === 'expandrow') {
+                if (args.item.id === 'expandrow' && record) {
                     ganttObj.expandByID(record.ganttProperties.taskId);
                 }
         }
@@ -130,14 +130,16 @@
         <p>
             In this demo, custom menu items have been enabled in the context menu to perform expanding and collapsing the
             parent rows,
-            <li>
-                <code>Expand the Row</code> - Used to expand the parent row, and it will render where the row is in a
-                collapsed state.
-            </li>
-            <li>
-                <code>Collapse the Row</code> - Used to collapse the parent row, and it will render where the row is in a
-                expanded state.
-            </li>
+            <ul>
+                <li>
+                    <code>Expand the Row</code> - Used to expand the parent row, and it will render where the row is in a
+                    collapsed state.
+                </li>
+                <li>
+                    <code>Collapse the Row</code> - Used to collapse the parent row, and it will render where the row is in a
+                    expanded state.
+                </li>
+            </ul>
         </p>
     </div>
 }

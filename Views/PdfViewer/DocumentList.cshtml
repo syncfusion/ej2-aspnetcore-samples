@@ -17,7 +17,7 @@
     var viewerData = PdfDocumentList.GetAllRecords();
 }
 @section ControlsSection {
-     @{
+    @{
 
         List<object> commands = new List<object>();
         commands.Add(new { buttonOption = new { cssClass = "e-icons e-eye e-flat" }, title = "View" });
@@ -107,6 +107,7 @@
         Width: 40px;
         Height: 24px;
     }
+
     .control-section {
         padding-left: 10px;
     }
@@ -209,8 +210,6 @@
         margin-bottom: 5px;
     }
 
-    
-
 </style>
 
 <script type="text/x-template" id="fileNameTemplate">
@@ -254,11 +253,10 @@
         function openViewer(args) {
             var pdfviewer = document.getElementById('pdfviewer').ej2_instances[0];
             dialogObj.header = args.rowData['FileName'];
-            pdfviewer.documentPath = args.rowData['File'];
             if (args.target.title == "View") {
                 pdfviewer.enableStickyNotesAnnotation = false;
                 pdfviewer.enableAnnotationToolbar = false;
-                pdfviewer.enableFormDesignerToolbar = false;
+                pdfviewer.isFormDesignerToolbarVisible = false;
                 pdfviewer.toolbarSettings = { showTooltip: true, toolbarItems: ['OpenOption', 'PageNavigationTool', 'MagnificationTool', 'PanTool', 'SearchOption', 'PrintOption'] };
                 pdfviewer.annotationSettings = {
                     isLock: true,
@@ -291,7 +289,6 @@
             } else {
                 pdfviewer.enableStickyNotesAnnotation = true;
                 pdfviewer.enableAnnotationToolbar = true;
-                pdfviewer.enableFormDesignerToolbar = true;
                 pdfviewer.toolbarSettings = { showTooltip: true, toolbarItems: ['OpenOption', 'UndoRedoTool', 'PageNavigationTool', 'MagnificationTool', 'PanTool', 'SelectionTool', 'CommentTool', 'SubmitForm', 'SearchOption', 'AnnotationEditTool', 'FormDesignerEditTool', 'PrintOption', 'DownloadOption'] };
                 pdfviewer.annotationSettings = {
                     isLock: false,
@@ -323,7 +320,7 @@
                 pdfviewer.contextMenuOption = 'RightClick';
             }
             pdfviewer.dataBind();
-            pdfviewer.load(pdfviewer.documentPath);
+            pdfviewer.load(args.rowData['File'], null);
             dialogObj.show();
         }
     </script>

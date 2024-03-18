@@ -52,7 +52,7 @@ namespace EJ2CoreSampleBrowser.Controllers
                 heading.TextBody.Paragraphs[0].Font.FontSize = 18;
 
                 string mswordPath = basePath + @"/PowerPoint/OleTemplate.docx";
-                //Get the excel file as stream
+                //Get the word document as stream
                 Stream wordStream = new FileStream(mswordPath, FileMode.Open);
                 string imagePath = basePath + @"/PowerPoint/OlePicture.png";
                 //Image to be displayed, This can be any image
@@ -71,6 +71,9 @@ namespace EJ2CoreSampleBrowser.Controllers
                 presentation.Save(ms);
                 //Set the position of the stream to beginning.
                 ms.Position = 0;
+                //Dispose the streams.
+                wordStream.Dispose();
+                imageStream.Dispose();
                 return File(ms, "application/vnd.openxmlformats-officedocument.presentationml.presentation", "InsertOLEObject.pptx");
             }
             else

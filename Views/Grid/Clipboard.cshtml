@@ -18,7 +18,7 @@
         toolbar.Add(new { text = "Copy With Header", tooltipText = "Copy With Header", prefixIcon = "e-copy", id = "copyHeader" });
     }
     <div class="control-section">
-        <ejs-grid id="Clipboard" dataSource="ViewBag.datasource" allowSelection="true" toolbarClick="toolbarClick" toolbar="toolbar" allowPaging="true">
+        <ejs-grid id="Clipboard" dataSource="ViewBag.datasource" allowSelection="true" allowSorting="true" toolbarClick="toolbarClick" toolbar="toolbar" allowPaging="true">
             <e-grid-pagesettings pageCount="5"></e-grid-pagesettings>
             <e-grid-selectionsettings type="Multiple"></e-grid-selectionsettings>
             <e-grid-columns>
@@ -39,10 +39,7 @@
 
         function toolbarClick(args) {
             if (this.getSelectedRecords().length > 0) {
-                var withHeader = false;
-                if (args.item.id === 'copyHeader') {
-                    withHeader = true;
-                }
+                var withHeader = args.item.id === 'copyHeader' ? true : false;
                 this.copy(withHeader);
             } else {
                 var dialogObj = document.getElementById('alert_dialog').ej2_instances[0];

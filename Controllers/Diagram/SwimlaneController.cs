@@ -74,7 +74,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Diagram
 
             List<Phase> phases1 = new List<Phase>();
             Phase phase1 = new Phase();
-            phase1.Header = new Header() { Style = new DiagramTextStyle() { StrokeColor = "#757575" } };
+            phase1.Header = new Header() { Style = new DiagramTextStyle() { StrokeColor = "#757575"} };
             phases1.Add(phase1);
 
             List<Phase> phases2 = new List<Phase>();

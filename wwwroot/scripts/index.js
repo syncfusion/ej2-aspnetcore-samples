@@ -14,7 +14,7 @@ var themes = ['material3', 'fluent', 'bootstrap5', 'tailwind', 'highcontrast'];
 //var themeIndex = { 'material3': 0, 'material3-dark': 1, 'fluent': 2, 'fluent-dark': 3, 'bootstrap5': 4, 'bootstrap5-dark': 5, 'tailwind': 6, 'tailwind-dark': 7, 'material': 8, 'bootstrap4': 9, 'bootstrap': 10, 'bootstrap-dark': 11, 'highcontrast': 12 };
 var themeIndex = { 'material3': 0, 'fluent': 1, 'bootstrap5': 2, 'tailwind': 3, 'highcontrast': 4 };
 var themeMode_Index = { 'material3': 'Material3', 'fluent': 'Fluent', 'bootstrap5': 'Bootstrap v5', 'tailwind': 'Tailwind CSS', 'highcontrast': 'High Contrast' };
-var cultureData = { "English": "en", "German - Germany*": "de", "French - Switzerland*": "fr-CH", "Arabic*": "ar", "Chinese - China*":"zh" };
+var cultureData = { "English": "en", "German - Germany*": "de", "French - Switzerland*": "fr-CH", "Arabic*": "ar", "Chinese - China*": "zh" };
 var defaultTheme = 'material3';
 var themeDropDown;
 var contentTab;
@@ -82,8 +82,8 @@ var matchedCurrency = {
 var newYear = new Date().getFullYear();
 var copyRight = document.querySelector('.sb-footer-copyright');
 copyRight.innerHTML = "Copyright &copy 2001 - " + newYear + " Syncfusion Inc.";
-if(ej.base.registerLicense != undefined){
-	ej.base.registerLicense('');
+if (ej.base.registerLicense != undefined) {
+    ej.base.registerLicense('');
 }
 function preventTabSwipe(e) {
     if (e.isSwiped) {
@@ -108,25 +108,25 @@ function sourceTabSelected(e) {
 function changeCulture(cul) {
     if (cul === 'ar') {
         changeRtl();
-    }  
+    }
     ej.base.setCurrencyCode(sessionStorage.getItem("ej2-currency") || matchedCurrency[cul]);
     ej.base.setCulture(cul);
 }
 
 function loadCulture() {
     var cul = sessionStorage.getItem('ej2-culture') || 'en';
-	if (cul !== 'en') {
-		var locale = new ej.base.Ajax('../scripts/locale/' + cul + '.json', 'GET', false);
-		locale.send().then(function (value) {
-			ej.base.L10n.load(JSON.parse(value));
-		});
+    if (cul !== 'en') {
+        var locale = new ej.base.Ajax('../scripts/locale/' + cul + '.json', 'GET', false);
+        locale.send().then(function (value) {
+            ej.base.L10n.load(JSON.parse(value));
+        });
 
-		var ajax = new ej.base.Ajax('../scripts/cldr-data/main/' + cul + '/all.json', 'GET', false);
-		ajax.send().then(function (result) {
-			ej.base.loadCldr(JSON.parse(result));
-			changeCulture(cul);
-		});
-	}
+        var ajax = new ej.base.Ajax('../scripts/cldr-data/main/' + cul + '/all.json', 'GET', false);
+        ajax.send().then(function (result) {
+            ej.base.loadCldr(JSON.parse(result));
+            changeCulture(cul);
+        });
+    }
 }
 function settingPopupHide(hideElementID) {
     if (document.querySelector(hideElementID).ej2_instances[0].element.classList.contains("e-popup-open")) {
@@ -159,15 +159,13 @@ function setIndex() {
         if (!hashValue.includes("-dark")) {
             updatedTheme = hashValue;
             document.getElementById('sb-setting-theme').ej2_instances[0].index = themeIndex[updatedTheme] || 0;
-            console.log("Updated URL: " + updatedTheme);
         } else {
             updatedTheme = hashValue.replace("-dark", "");
 
             var dropdownTheme = document.getElementById('sb-setting-theme');
             dropdownTheme.ej2_instances[0].index = 0;
             dropdownTheme.value = themeMode_Index[updatedTheme];
-             //document.getElementById('sb-setting-mode').ej2_instances[0].index = 1
-            console.log("Updated URL (removed -dark): " + updatedTheme);
+            //document.getElementById('sb-setting-mode').ej2_instances[0].index = 1
         }
     }
     //document.getElementById('sb-setting-theme').ej2_instances[0].index = localStorage.getItem('theme-index') || 0;
@@ -196,7 +194,7 @@ function getToastObj() {
                         });
                     }, 200);
                     setTimeout(function () {
-                        location.href = location.origin + getPathName() + `Grid/GridOverview#/` + getThemeName();
+                        location.href = location.origin + getPathName() + `grid/gridoverview#/` + getThemeName();
                     }, 2000)
                 }
                 continue;
@@ -233,7 +231,7 @@ function initSearchData() {
 
 function setSamplelist() {
     var listViewData = ej.base.select('#controlList').ej2_instances[0];
-    listViewData.dataSource = listViewData.dataSource.length != 0 ? controlSampleData[listViewData.dataSource[0].dir] : (controlSampleData[location.pathname.split('/').slice(-2)[0]] || controlSampleData.Button);
+    listViewData.dataSource = listViewData.dataSource.length != 0 ? controlSampleData[listViewData.dataSource[0].dir.toLowerCase()] : (controlSampleData[location.pathname.split('/').slice(-2)[0]] || controlSampleData.Button);
 }
 
 function setTreeData() {
@@ -242,29 +240,29 @@ function setTreeData() {
 }
 
 function changeRtl() {
-	setTimeout(function() {
-		var elementlist = ej.base.selectAll('.e-control', document.getElementById('control-content'));
-		var propertylist =[].concat(ej.base.selectAll('.property-section .e-control', document.getElementById('control-content')));
-		for (var i = 0; i < elementlist.length; i++) {
-			var control = elementlist[i];
-			if (propertylist.indexOf(control) === -1) {
-				if (control.ej2_instances) {
-					for (var a = 0; a < control.ej2_instances.length; a++) {
-						var instance = control.ej2_instances[a];
-						instance.enableRtl = true;
-					}
-				}
-			}
-		}
-	}, 400);
-} 
+    setTimeout(function () {
+        var elementlist = ej.base.selectAll('.e-control', document.getElementById('control-content'));
+        var propertylist = [].concat(ej.base.selectAll('.property-section .e-control', document.getElementById('control-content')));
+        for (var i = 0; i < elementlist.length; i++) {
+            var control = elementlist[i];
+            if (propertylist.indexOf(control) === -1) {
+                if (control.ej2_instances) {
+                    for (var a = 0; a < control.ej2_instances.length; a++) {
+                        var instance = control.ej2_instances[a];
+                        instance.enableRtl = true;
+                    }
+                }
+            }
+        }
+    }, 400);
+}
 
 function renderSbPopups() {
-    
+
     if (isMobile) {
         ej.base.select('.sb-mobile-preference').appendChild(ej.base.select('.sb-setting-container'));
     }
-    
+
     cultureDropDown = document.getElementById("sb-setting-culture");
     cultureDropDown.value = sessionStorage.getItem('ej2-culture-name') || 'English';
     currencyDropDown = document.getElementById("sb-setting-currency");
@@ -273,13 +271,13 @@ function renderSbPopups() {
     sourceTab = document.getElementById('sb-source-tab');
 }
 
-function setCopyCode(){
+function setCopyCode() {
     var ele = ej.base.createElement('div', { className: 'copy-tooltip', innerHTML: '<div class="e-icons copycode"></div>' });
     document.getElementById('copy-tootip-element').appendChild(ele);
     ele.addEventListener('click', copyCode);
 }
 
-function dynamicTabCreation(obj){
+function dynamicTabCreation(obj) {
     var tabObj
     if (obj) {
         tabObj = obj;
@@ -354,7 +352,7 @@ function sbHeaderClick(action, preventSearch) {
     if (preventSearch !== true && !searchOverlay.classList.contains('sb-hide')) {
         searchOverlay.classList.add('sb-hide');
         searchButton.classList.remove('active');
-	searchEle.classList.remove('e-popup-open');
+        searchEle.classList.remove('e-popup-open');
         searchEle.classList.add('e-popup-close');
         setPressedAttribute(searchButton);
     }
@@ -412,6 +410,12 @@ function changeTheme(e) {
     var target = e.target;
     target = ej.base.closest(target, 'li');
     var themeName = target.id;
+    var storedURL = localStorage.getItem('PreviousURL');
+    if (storedURL != null && storedURL.includes("-dark") && themeName != "highcontrast") {
+        themeName = themeName + "-dark";
+    } else {
+        themeName = themeName;
+    }
     switchTheme(themeName);
     var imageEditorElem = document.querySelector(".e-image-editor");
     if (imageEditorElem != null) {
@@ -438,6 +442,7 @@ function switchTheme(str) {
         localStorage.setItem('ej2-switch', ej.base.select('.sb-responsive-section .active').id);
         // localStorage.setItem('dropdownlistsb-setting-mode', themeIndex[str]);
         location.hash = hash.join('/');
+        location.reload();
     }
 }
 
@@ -518,12 +523,12 @@ function highlight(searchString, listElement) {
 function setMouseOrTouch(e) {
     var ele = ej.base.closest(e.target, '.sb-responsive-items');
     var switchType = ele.id;
-    var modeType = document.body.classList.contains("e-bigger")?"touch":"mouse";
+    var modeType = document.body.classList.contains("e-bigger") ? "touch" : "mouse";
     changeMouseOrTouch(switchType);
     sbHeaderClick('closePopup');
     localStorage.setItem('ej2-switch', switchType);
-    if(!(switchType == modeType))
-    {
+    if (!(switchType == modeType)) 
+	{
         location.reload();
     }
 }
@@ -721,7 +726,7 @@ function setSbLink() {
         } else {
             ele.href = ((link) ? ('http://' + link[1] + '/' + (link[3] ? (link[3] + '/') : '')) :
                 ('http://ej2.syncfusion.com/')) + (sbObj[sb] ? (sb + '/') : '') + ((sb === 'blazor') ? 'demos/' :
-                'demos/#/') + (sample ? (sample[1] + (sb !== 'typescript' ? '' : '.html')) : '');
+                    'demos/#/') + (sample ? (sample[1] + (sb !== 'typescript' ? '' : '.html')) : '');
         }
     }
 }
@@ -920,11 +925,11 @@ function getTreeviewList(list) {
             name: list[i].name,
             type: list[i].type,
             url: {
-                'data-path': list[i].samples[0] ? list[i].directory + '/' + list[i].samples[0].url : "",
-                'control-name': list[i].directory,
+                'data-path': list[i].samples[0] ? list[i].directory.toLowerCase() + '/' + list[i].samples[0].url.toLowerCase() : "",
+                'control-name': list[i].directory.toLowerCase(),
             }
         });
-        controlSampleData[list[i].directory] = getSamples(list[i].samples);
+        controlSampleData[list[i].directory.toLowerCase()] = getSamples(list[i].samples);
     }
     return tempList;
 }
@@ -933,7 +938,7 @@ function getSamples(samples) {
     var tempSamples = [];
     for (var i = 0; i < samples.length; i++) {
         tempSamples[i] = samples[i];
-        tempSamples[i].data = { 'sample-name': samples[i].url, 'data-path': samples[i].dir + '/' + samples[i].url };
+        tempSamples[i].data = { 'sample-name': samples[i].url.toLowerCase(), 'data-path': samples[i].dir.toLowerCase() + '/' + samples[i].url.toLowerCase() };
     }
     return tempSamples;
 }
@@ -951,8 +956,8 @@ function getSamplePath() {
     return location.pathname.split('/').slice(-2).join('/');
 }
 function searchNavigation(arg) {
-    var eventType = arg.event ? arg.event.pointerType : null; 
-    if (eventType){
+    var eventType = arg.event ? arg.event.pointerType : null;
+    if (eventType) {
         controlSelect(arg);
     }
 }
@@ -960,7 +965,7 @@ function searchNavigation(arg) {
 function controlSelect(arg) {
     var path = (arg.node || arg.item).getAttribute('data-path');
     if (path === null && arg.data) {
-        path = arg.data.dir + '/' + arg.data.url;
+        path = arg.data.dir.toLowerCase() + '/' + arg.data.url.toLowerCase();
     }
     var curHashCollection = '/' + location.href.split('/').slice(3).join('/');
     var theme = getThemeName();
@@ -991,16 +996,16 @@ function controlSelect(arg) {
                     ((isTablet || (ej.base.Browser.isDevice && isPc)) && isLeftPaneOpen()))) {
                     toggleLeftPane();
                 }
-    
+
                 if (arg.data) {
                     var pathName = location.pathname.replace(getSamplePath(), '');
-                    if (curHashCollection.split('/')[curHashCollection.split('/').length - 3] != arg.data.dir) {
-                        var SampleObject = window.samplesList.filter(obj => obj.directory === arg.data.dir);
+                    if (curHashCollection.split('/')[curHashCollection.split('/').length - 3] != arg.data.dir.toLowerCase()) {
+                        var SampleObject = window.samplesList.filter(obj => obj.directory.toLowerCase() === arg.data.dir.toLowerCase());
                         var defaultSample = SampleObject.map(obj => obj.samples[0]);
-                        location.href = location.origin + pathName + arg.data.dir + '/' + defaultSample[0].url + '#/' + theme;
+                        location.href = location.origin + pathName + arg.data.dir.toLowerCase() + '/' + defaultSample[0].url.toLowerCase() + '#/' + theme;
                     }
                     else {
-                        location.href = location.origin + pathName + arg.data.dir + '/' + arg.data.url + '#/' + theme;
+                        location.href = location.origin + pathName + arg.data.dir.toLowerCase() + '/' + arg.data.url.toLowerCase() + '#/' + theme;
                     }
                 }
             } else {
@@ -1060,7 +1065,7 @@ function setSelectList() {
     var hash = hString.split('/');
     var list = ej.base.select('#controlList').ej2_instances[0];
     var sampleName = hash.slice(-2)[1];
-    var selectSample = ej.base.select('[sample-name="' + sampleName.replace('#', '') + '"]') || ej.base.select('[sample-name="' + list.localData[0].url + '"]');
+    var selectSample = ej.base.select('[sample-name="' + sampleName.replace('#', '') + '"]') || ej.base.select('[sample-name="' + list.localData[0].url.toLowerCase() + '"]');
     if (selectSample) {
         if (ej.base.select('#controlTree').style.display !== 'none') {
             showHideControlTree();
@@ -1113,8 +1118,8 @@ function sampleArray() {
         var samples = dataManager.executeLocal(new ej.data.Query().sortBy('order', 'ascending'));
         for (var sample in samples) {
             var selectedTheme = location.hash.split('/')[1] ? location.hash.split('/')[1] : defaultTheme;
-            var control = samplesList[node].directory;
-            var sampleUrl = samples[sample].url;
+            var control = samplesList[node].directory.toLowerCase();
+            var sampleUrl = samples[sample].url.toLowerCase();
             var loc = control + '/' + sampleUrl;
             samplesAr.push(loc);
         }
@@ -1126,11 +1131,11 @@ function addRoutes(samplesList) {
         var dataManager = new ej.data.DataManager(node.samples);
         var samples = dataManager.executeLocal(new ej.data.Query().sortBy('order', 'ascending'));
         var loop2 = function (subNode) {
-            var control = node.directory;
-            var sample = subNode.url;
+            var control = node.directory.toLowerCase();
+            var sample = subNode.url.toLowerCase();
             samplePath = samplePath.concat(control + '/' + sample);
             var sampleName = node.name + ' / ' + ((node.name !== subNode.category) ?
-                (subNode.category + ' / ') : '') + subNode.url;
+                (subNode.category + ' / ') : '') + subNode.url.toLowerCase();
             var selectedTheme = location.hash.split('/')[1] ? location.hash.split('/')[1] : defaultTheme;
             var urlString = control + '/' + sample;
             if (getSamplePath() == urlString) {
@@ -1162,11 +1167,11 @@ function onDataSourceLoad(node, subNode, control, sample, sampleName) {
     var controlID = node.uid;
     var sampleID = subNode.uid;
     setSbLink();
-    var ajaxCS = new ej.base.Ajax(baseurl + 'Controllers/' + subNode.dir + '/' + subNode.url + 'Controller.cs', 'GET', false);
-    var ajaxCSHTML = new ej.base.Ajax(baseurl + 'Views/' + subNode.dir + '/' + subNode.url + '.cshtml', 'GET', false);
+    var ajaxCS = new ej.base.Ajax(baseurl + 'Controllers/' + subNode.dir.toLowerCase() + '/' + subNode.url.toLowerCase() + 'Controller.cs', 'GET', false);
+    var ajaxCSHTML = new ej.base.Ajax(baseurl + 'Views/' + subNode.dir.toLowerCase() + '/' + subNode.url.toLowerCase() + '.cshtml', 'GET', false);
     var add = [ajaxCSHTML, ajaxCS];
-    var cs = subNode.url + 'controller.cs';
-    var cshtml = subNode.url + '.cshtml';
+    var cs = subNode.url.toLowerCase() + 'controller.cs';
+    var cshtml = subNode.url.toLowerCase() + '.cshtml';
     var name = [cshtml, cs];
     //var p2 = loadScriptfile('src/' + control + '/' + sample + '.js');
     //var ajaxJs = new ej.base.Ajax('src/' + control + '/' + sample + '.js', 'GET', true);
@@ -1180,12 +1185,12 @@ function onDataSourceLoad(node, subNode, control, sample, sampleName) {
         breadCrumbSubCategory.style.display = 'none';
         breadCrumSeperator.style.display = 'none';
     }
-    if (location.pathname.indexOf('/' + subNode.dir + '/' + subNode.url) !== -1) {
+    if (location.pathname.indexOf('/' + subNode.dir.toLowerCase() + '/' + subNode.url.toLowerCase()) !== -1) {
         breadCrumbSample.innerHTML = subNode.name;
     }
     if (subNode.sourceFiles) {
-        add=[];
-        name=[];
+        add = [];
+        name = [];
         for (var i = 0; i < subNode.sourceFiles.length; i++) {
             var ajaxAdd = new ej.base.Ajax(subNode.sourceFiles[i].path, 'GET', false);
             add.push(ajaxAdd);
@@ -1215,42 +1220,42 @@ function onDataSourceLoad(node, subNode, control, sample, sampleName) {
         });
     }
     ArrayItem = items;
-        currentControlID = controlID;
-        currentSampleID = sampleID;
-        currentControl = node.directory;
-        var curIndex = samplesAr.indexOf(getSamplePath());
-        var samLength = samplesAr.length - 1;
-        if (curIndex === samLength) {
-            toggleButtonState('next-sample', true);
+    currentControlID = controlID;
+    currentSampleID = sampleID;
+    currentControl = node.directory.toLowerCase();
+    var curIndex = samplesAr.indexOf(getSamplePath());
+    var samLength = samplesAr.length - 1;
+    if (curIndex === samLength) {
+        toggleButtonState('next-sample', true);
+    } else {
+        toggleButtonState('next-sample', false);
+    }
+    if (curIndex === 0) {
+        toggleButtonState('prev-sample', true);
+    } else {
+        toggleButtonState('prev-sample', false);
+    }
+    ej.base.select('#control-content').classList.remove('error-content');
+    renderPropertyPane('#property');
+    window.navigateSample();
+    isExternalNavigation = defaultTree = false;
+    setPropertySectionHeight();
+    removeOverlay();
+    var mobilePropPane = ej.base.select('.sb-mobile-prop-pane .property-section');
+    if (mobilePropPane) {
+        ej.base.detach(mobilePropPane);
+    }
+    var propPanel = ej.base.select('#control-content .property-section');
+    if (isMobile) {
+        if (propPanel) {
+            ej.base.select('.sb-mobile-setting').classList.remove('sb-hide');
+            document.querySelector('.sb-content-tab-header').style.display = 'block';
+            ej.base.select('.sb-mobile-prop-pane').appendChild(propPanel);
         } else {
-            toggleButtonState('next-sample', false);
+            ej.base.select('.sb-mobile-setting').classList.add('sb-hide');
+            document.querySelector('.sb-content-tab-header').style.display = 'none';
         }
-        if (curIndex === 0) {
-            toggleButtonState('prev-sample', true);
-        } else {
-            toggleButtonState('prev-sample', false);
-        }
-        ej.base.select('#control-content').classList.remove('error-content');
-        renderPropertyPane('#property');
-        window.navigateSample();
-        isExternalNavigation = defaultTree = false;
-        setPropertySectionHeight();
-        removeOverlay();
-        var mobilePropPane = ej.base.select('.sb-mobile-prop-pane .property-section');
-        if (mobilePropPane) {
-            ej.base.detach(mobilePropPane);
-        }
-        var propPanel = ej.base.select('#control-content .property-section');
-        if (isMobile) {
-            if (propPanel) {
-                ej.base.select('.sb-mobile-setting').classList.remove('sb-hide');
-                document.querySelector('.sb-content-tab-header').style.display = 'block';
-                ej.base.select('.sb-mobile-prop-pane').appendChild(propPanel);
-            } else {
-                ej.base.select('.sb-mobile-setting').classList.add('sb-hide');
-                document.querySelector('.sb-content-tab-header').style.display = 'none';
-            }
-        }
+    }
 }
 
 function removeOverlay() {
@@ -1403,20 +1408,16 @@ function onModeChanges(event) {
             // Append "-dark" to the current URL
             updatedURL1 = currentURL;
             window.location.href = updatedURL1;
-            console.log("Updated URL: " + updatedURL1);
         } else if (currentURL.includes("-dark")) {
             // Remove "-dark" from the current URL
             updatedURL1 = currentURL.replace("-dark", "");
             window.location.href = updatedURL1;
-            console.log("Updated URL (removed -dark): " + updatedURL1);
         }
         if (event.itemData.ThemeId === "dark") {
-            //console.log("Updated URL: " + updatedURL);
             updatedURL1 += "-dark";
             window.location.href = updatedURL1;
             location.reload();
         }
-        console.log("Updated URL: " + updatedURL1);
     }
 }
 function updateThemeURL() {
@@ -1430,15 +1431,13 @@ function updateThemeURL() {
         if (hashValue.includes("-dark")) {
             // Remove "-dark" from the hash 
             hashValue = hashValue.replace("-dark", "");
-            console.log("hashValue URL (removed -dark):", hashValue);
         } else {
             // Append "-dark" to the hash
             hashValue = hashValue + "-dark";
-            console.log("hashValue URL:", hashValue);
         }
         updatedURL = baseUrl + "#/" + hashValue;
     } else {
-        console.log("No hash found in the URL");
+        // console.log("");
     }
     // Return the updated URL
     return updatedURL;
@@ -1446,8 +1445,7 @@ function updateThemeURL() {
 
 function navigateToPage() {
     var updatedURL = updateThemeURL();
-    console.log("Updated URL is: " + updatedURL);
+    localStorage.setItem('PreviousURL', updatedURL);
     window.location.href = updatedURL;
     location.reload();
-    //// Navigate to the updated URL
 }

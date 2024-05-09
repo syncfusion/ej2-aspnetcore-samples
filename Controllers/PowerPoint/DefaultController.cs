@@ -10,7 +10,9 @@ using System.IO;
 using Syncfusion.Presentation;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Caching.Memory;
-
+#if REDIS
+using Microsoft.Extensions.Caching.Distributed;
+#endif
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace EJ2CoreSampleBrowser.Controllers
@@ -24,9 +26,17 @@ namespace EJ2CoreSampleBrowser.Controllers
         private IMemoryCache _cache;
 
         private readonly IWebHostEnvironment _hostingEnvironment;
+#if REDIS
+        private IDistributedCache _distributedCache;
+        public PowerPointController(IWebHostEnvironment hostingEnvironment, IMemoryCache memoryCache, IDistributedCache distributedCache)
+#else
         public PowerPointController(IWebHostEnvironment hostingEnvironment, IMemoryCache memoryCache)
+#endif
         {
             _cache = memoryCache;
+#if REDIS
+            _distributedCache = distributedCache;
+#endif
             _hostingEnvironment = hostingEnvironment;
         }
 

@@ -1333,7 +1333,7 @@ window.samplesList = [
             },
             {
                 "url": "DragAndDrop",
-                "name": "Drag and Drop",
+                "name": "Drag and Drop within Tree Grid",
                 "category": "Rows",
                 "uid": "00712",
                 "order": 3,

@@ -51,196 +51,100 @@
       new RibbonGroupButtonItem { IconCss = "e-icons e-justify", Click="function(){updateContent('Justify')}" }
     };
 
-    List<RibbonContextualTab> contextTabs = new List<RibbonContextualTab>()
-    {
-        new RibbonContextualTab
-        {
-            Visible = true,
-            Tabs = new List<RibbonTab>()
-            {
-                 new RibbonTab()
-                 {
-                     Id="TableDesign", Header = "TableDesign" ,
-                     Groups = new List<RibbonGroup>()
-                     {
-                         new RibbonGroup()
-                         {
-                             Header="Table Style",
-                             GroupIconCss="e-icons e-field-settings",
-                             Collections = new List<RibbonCollection>()
-                             {
-                                 new RibbonCollection()
-                                 {
-                                     Items = new List<RibbonItem>()
-                                     {
-                                         new RibbonItem()
-                                         {
-                                             Type = RibbonItemType.DropDown,
-                                             AllowedSizes = RibbonItemSize.Large,
-                                             DropDownSettings = new RibbonDropDownSettings
-                                             {
-                                                 Content = "Table Style",
-                                                 IconCss = "e-icons e-field-settings",
-                                                 Items = tableItems,
-                                                Select = "function(args){updateContent('Table -> ' + args.item.text)}"
-                                             }
-                                         }
-                                     }
-                                 }
-                             }
-                         },
-                         new RibbonGroup()
-                         {
-                             Header="Borders style",
-                             GroupIconCss="e-icons e-field-settings",
-                             Collections = new List<RibbonCollection>()
-                             {
-                                 new RibbonCollection()
-                                 {
-                                     Items = new List<RibbonItem>()
-                                     {
-                                         new RibbonItem()
-                                         {
-                                             Type = RibbonItemType.DropDown,
-                                             AllowedSizes = RibbonItemSize.Large,
-                                             DropDownSettings = new RibbonDropDownSettings
-                                             {
-                                                 Content = "Borders",
-                                                 IconCss = "e-icons e-border-all",
-                                                 Items = borderItems,
-                                                 Select = "function(args){updateContent('Borders -> ' + args.item.text)}"
-                                             }
-                                         }
-                                     }
-                                 }
-                             }
-                         }
-                     }
-                 },
-                 new RibbonTab
-                 {
-                       Header = "Table Layout",
-                       Id = "TableLayout",
-                       Groups = new List<RibbonGroup>()
-                       {
-                           new RibbonGroup
-                           {
-                               Header = "Data",
-                               GroupIconCss="e-icons e-sort-ascending",
-                               Collections = new List<RibbonCollection>()
-                               {
-                                    new RibbonCollection
-                                    {
-                                        Items = new List<RibbonItem>()
-                                        {
-                                            new RibbonItem
-                                            {
-                                                Type = RibbonItemType.Button,
-                                                AllowedSizes = RibbonItemSize.Large,
-                                                ButtonSettings = new RibbonButtonSettings
-                                                {
-                                                    Content = "Sort Table Ascending",
-                                                    IconCss = "e-icons e-sort-ascending",
-                                                    Clicked = "function(args){updateContent('Sort Table Ascending')}"
-                                                }
-                                            },
-                                            new RibbonItem
-                                            {
-                                                Type = RibbonItemType.Button,
-                                                AllowedSizes = RibbonItemSize.Large,
-                                                ButtonSettings = new RibbonButtonSettings
-                                                {
-                                                    Content = "Sort Table Descending",
-                                                    IconCss = "e-icons e-sort-descending",
-                                                    Clicked = "function(args){updateContent('Sort Table Descending')}"
-                                                }
-                                            }
-                                        }
-                                    }
-                               }
-                           },
-                           new RibbonGroup
-                           {
-                               Header = "Merge",
-                               GroupIconCss="e-icons e-merge-cells",
-                               Collections = new List<RibbonCollection>()
-                               {
-                                    new RibbonCollection
-                                    {
-                                        Items = new List<RibbonItem>()
-                                        {
-                                            new RibbonItem
-                                            {
-                                                Type = RibbonItemType.DropDown,
-                                                AllowedSizes = RibbonItemSize.Large,
-                                                DropDownSettings = new RibbonDropDownSettings
-                                                {
-                                                     Content = "Merge",
-                                                     IconCss = "e-icons e-merge-cells",
-                                                     Items = borderItems,
-                                                     Select = "function(args){updateContent('Merge -> ' + args.item.text)}"
-                                                }
-                                            }
-                                        }
-                                    }
-                               }
-                           }
-                       }
-
-                 }
-            },
-        },
-        new RibbonContextualTab
-        {
-            Visible = false,
-            Tabs = new List<RibbonTab>()
-            {
-                new RibbonTab
-                {
-                    Id = "Format",
-                    Header = "Picture Format",
-                    Groups = new List<RibbonGroup>()
-                    {
-                        new RibbonGroup
-                        {
-                            Header = "Background",
-                            GroupIconCss = "e-icons e-image",
-                            Collections = new List<RibbonCollection>()
-                            {
-                                new RibbonCollection
-                                {
-                                    Items = new List<RibbonItem>()
-                                    {
-                                        new RibbonItem
-                                        {
-                                            Type = RibbonItemType.Button,
-                                            AllowedSizes = RibbonItemSize.Large,
-                                            ButtonSettings = new RibbonButtonSettings
-                                            {
-                                                IconCss = "e-icons e-image",
-                                                Content = "Remove Background",
-                                                Clicked = "function(args){updateContent('Remove Background')}"
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    };
-    
-
 }
 
 @section ControlsSection{
     <div class="col-lg-12 control-section contextual-tab">
         <div id="ribbonContainer">
             <div id="ribbon">
-                <ejs-ribbon id="ribbonContextualTab" created="ribbonCreated" contextualTabs="contextTabs" launcherIconClick="function(args){launcherIconClick(args)}">
+                <ejs-ribbon id="ribbonContextualTab" created="ribbonCreated" launcherIconClick="function(args){launcherIconClick(args)}">
                     <e-ribbon-filemenusettings text="File" visible="true" menuItems=fileOptions select="function(args){selectMenuItem(args)}"></e-ribbon-filemenusettings>
+                    <e-ribbon-contextual-tabs>
+                        <!-- Contextual Tab 1 -->
+                        <e-ribbon-contextual-tab visible=true>
+                            <e-ribbon-tabs>
+                                <e-ribbon-tab id="TableDesign" header="Table Design">
+                                    <e-ribbon-groups>
+                                        <e-ribbon-group header="Table Style" groupIconCss="e-icons e-field-settings">
+                                            <e-ribbon-collections>
+                                                <e-ribbon-collection>
+                                                    <e-ribbon-items>
+                                                        <e-ribbon-item type="DropDown" allowedSizes="Large">
+                                                            <e-ribbon-dropdownsettings iconCss="e-icons e-field-settings" content="Table Style" items=tableOptions select="function(args){updateContent('Table -> ' + args.item.text)}"></e-ribbon-dropdownsettings>
+                                                        </e-ribbon-item>
+                                                    </e-ribbon-items>
+                                                </e-ribbon-collection>
+                                            </e-ribbon-collections>
+                                        </e-ribbon-group>
+                                        <e-ribbon-group header="Borders Style" groupIconCss="e-icons e-field-settings">
+                                            <e-ribbon-collections>
+                                                <e-ribbon-collection>
+                                                    <e-ribbon-items>
+                                                        <e-ribbon-item type="DropDown" allowedSizes="Large">
+                                                            <e-ribbon-dropdownsettings iconCss="e-icons e-border-all" content="Borders" items=borderItems select="function(args){updateContent('Borders -> ' + args.item.text)}"></e-ribbon-dropdownsettings>
+                                                        </e-ribbon-item>
+                                                    </e-ribbon-items>
+                                                </e-ribbon-collection>
+                                            </e-ribbon-collections>
+                                        </e-ribbon-group>
+                                    </e-ribbon-groups>
+                                </e-ribbon-tab>
+                                <e-ribbon-tab id="TableLayout" header="Table Layout">
+                                    <e-ribbon-groups>
+                                        <e-ribbon-group header="Data" groupIconCss="e-icons e-custom-sort">
+                                            <e-ribbon-collections>
+                                                <e-ribbon-collection>
+                                                    <e-ribbon-items>
+                                                        <e-ribbon-item type="Button" allowedSizes="Large">
+                                                            <e-ribbon-buttonsettings iconCss="e-icons e-sort-ascending" content="Sort Table Ascending" clicked="function(args){updateContent('Sort Table Ascending')}"></e-ribbon-buttonsettings>
+                                                        </e-ribbon-item>
+                                                    </e-ribbon-items>
+                                                </e-ribbon-collection>
+                                                <e-ribbon-collection>
+                                                    <e-ribbon-items>
+                                                        <e-ribbon-item type="Button" allowedSizes="Large">
+                                                            <e-ribbon-buttonsettings iconCss="e-icons e-sort-descending" content="Sort Table Descending" clicked="function(args){updateContent('Sort Table Descending')}"></e-ribbon-buttonsettings>
+                                                        </e-ribbon-item>
+                                                    </e-ribbon-items>
+                                                </e-ribbon-collection>
+                                            </e-ribbon-collections>
+                                        </e-ribbon-group>
+                                        <e-ribbon-group header="Merge" groupIconCss="e-icons e-merge-cells">
+                                            <e-ribbon-collections>
+                                                <e-ribbon-collection>
+                                                    <e-ribbon-items>
+                                                        <e-ribbon-item type="DropDown" allowedSizes="Large">
+                                                            <e-ribbon-dropdownsettings iconCss="e-icons e-merge-cells" content="Merge" items=mergeItems select="function(args){updateContent('Merge -> ' + args.item.text)}"></e-ribbon-dropdownsettings>
+                                                        </e-ribbon-item>
+                                                    </e-ribbon-items>
+                                                </e-ribbon-collection>
+                                            </e-ribbon-collections>
+                                        </e-ribbon-group>
+                                    </e-ribbon-groups>
+                                </e-ribbon-tab>
+                            </e-ribbon-tabs>
+                        </e-ribbon-contextual-tab>
+                        <!-- Contextual Tab 2 -->
+                        <e-ribbon-contextual-tab visible=false>
+                            <e-ribbon-tabs>
+                                <e-ribbon-tab id="Format" header="Picture Format">
+                                    <e-ribbon-groups>
+                                        <e-ribbon-group header="Background" groupIconCss="e-icons e-image">
+                                            <e-ribbon-collections>
+                                                <e-ribbon-collection>
+                                                    <e-ribbon-items>
+                                                        <e-ribbon-item type="Button" allowedSizes="Large">
+                                                            <e-ribbon-buttonsettings iconCss="e-icons e-image" content="Remove Background" clicked="function(args){updateContent('Remove Background')}"></e-ribbon-buttonsettings>
+                                                        </e-ribbon-item>
+                                                    </e-ribbon-items>
+                                                </e-ribbon-collection>
+                                            </e-ribbon-collections>
+                                        </e-ribbon-group>
+                                    </e-ribbon-groups>
+                                </e-ribbon-tab>
+                            </e-ribbon-tabs>
+                        </e-ribbon-contextual-tab>
+                    </e-ribbon-contextual-tabs>
                     <e-ribbon-tabs>
                         <e-ribbon-tab header="Home">
                             <e-ribbon-groups>
@@ -375,7 +279,7 @@
                                         <e-ribbon-collection>
                                             <e-ribbon-items>
                                                 <e-ribbon-item type="DropDown" allowedSizes=Large>
-                                                    <e-ribbon-dropdownsettings iconCss="e-icons e-table" content="Table" items="tableOptions" select="function(args){updateContent('Table -> ' + args.item.text)}"></e-ribbon-dropdownsettings>
+                                                    <e-ribbon-dropdownsettings iconCss="e-icons e-table" content="Table" items="tableItems" select="function(args){updateContent('Table -> ' + args.item.text)}"></e-ribbon-dropdownsettings>
                                                 </e-ribbon-item>
                                             </e-ribbon-items>
                                         </e-ribbon-collection>

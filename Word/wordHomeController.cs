@@ -17,7 +17,7 @@ namespace EJ2CoreSampleBrowser.Controllers
     {
         public IActionResult Index()
         {
-            return RedirectToAction("SalesInvoice", "Word");
+            return RedirectToAction("salesinvoice", "word");
         }
     }
 }

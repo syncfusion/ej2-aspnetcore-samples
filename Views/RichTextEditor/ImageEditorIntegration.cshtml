@@ -1,5 +1,6 @@
 ﻿@using Syncfusion.EJ2
 @using Syncfusion.EJ2.DropDowns;
+@using Syncfusion.EJ2.Base;
 @using EJ2CoreSampleBrowser_NET6.Models
 @section ControlsSection{
     <div class="control-section">
@@ -20,7 +21,7 @@
                     </e-content-template>
                 </ejs-richtexteditor>
                 <div id="imageeditorContainer" style="height:400px;">
-                    <ejs-dialog id="default_dialog" visible="false" width="800px" height='550px' open="OnOpen" created="onDialogCreate" target="body" showCloseIcon="true" header="@ViewBag.header">
+                    <ejs-dialog id="default_dialog" visible="false" width="800px" height='550px' open="OnOpen" close="onclose" created="onDialogCreate" target="body" showCloseIcon="true" header="@ViewBag.header">
                         <e-content-template>
                             <div class="e-img-editor-sample">
                                 <div id="imageeditor"></div>
@@ -99,26 +100,33 @@
             });
             rteObj.formatter.saveData();
             rteObj.formatter.enableUndo(rteObj);
+            dispose();
             dialogObj.hide();
-            isLoaded = false;
+            imageELement.crossOrigin = null;
         }
 
         function onCancel() {
+            dispose();
             dialogObj.hide();
-            imageEditorObj.reset();
+            isLoaded = true;
+            imageELement.crossOrigin = null;
+        }
+        function onclose() {
+            dispose();
+            dialogObj.hide();
+            isLoaded = true;
+            imageELement.crossOrigin = null;
+        }
+        function dispose() {
+            if (imageEditorObj !== null && imageEditorObj !== undefined) {
+                const imageEditorInstance = ej.base.getComponent(document.getElementById('imageeditor'), 'image-editor');
+                if (imageEditorInstance !== null && imageEditorInstance !== undefined) {
+                    imageEditorInstance.destroy();
+                }
+            }
         }
         function OnOpen() {
-            if(imageEditorObj == null){
-                imageEditorObj = new ej.imageeditor.ImageEditor({
-                height: '400px',
-                toolbar: ['Undo', 'Redo', 'Crop', 'Annotate', 'ZoomIn', 'ZoomOut',
-                            'Reset', 'Pan', 'Finetune', 'Filter', 'Pen', 'Line', 'Rectangle', 'Ellipse', 'Arrow',
-                            'Path', 'Text', 'CustomSelection', 'CircleSelection', 'SquareSelection', 'RatioSelection',
-                            'Default', 'Chrome', 'Cold', 'Warm', 'Grayscale', 'Sepia', 'Invert', 'Brightness', 'Contrast',
-                            'Hue', 'Saturation', 'Exposure', 'Opacity', 'Blur' ]
-                });
-                imageEditorObj.appendTo('#imageeditor');
-            }
+            isLoaded = false;
             rteEle = document.getElementById("defaultRTE");
             rteObj = rteEle.ej2_instances[0];
             var selectNodes = rteObj.formatter.editorManager.nodeSelection.getNodeCollection(range);
@@ -133,7 +141,13 @@
                     ctx.drawImage(imageELement, 0, 0, canvas.width, canvas.height);
                     dataURL = canvas.toDataURL();
                     if (!isLoaded) {
-                        imageEditorObj.open(dataURL);
+                        imageEditorObj = new ej.imageeditor.ImageEditor({
+                            height: '450px',
+                            created: function () {
+                                imageEditorObj.open(dataURL);
+                            }
+                        });
+                        imageEditorObj.appendTo('#imageeditor')
                     }
                 };
             }
@@ -159,8 +173,8 @@
     <div id="description">
         <p>The Image Editor control is integrated into the Rich Text Editor and opens the Image Editor within a Dialog when the Image Editor custom quick toolbar is clicked and allows to edit the image. To achieve this, the sample is customized for the Image Editor and Rich Text Editor</p>
         <ul>
-            <li>Include the Image Editor custom toolbar item in the <a href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.RichTextEditor.RichTextEditorQuickToolbarSettings.html#Syncfusion_EJ2_RichTextEditor_RichTextEditorQuickToolbarSettings_Image"> quickToolbarSettings.image </a> property of the Rich Text Editor</li>
-            <li>Configure Image Editor within a Dialog using the <a href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Popups.Dialog.html#Syncfusion_EJ2_Popups_Dialog_BeforeOpen"> beforeOpen </a> event of the Dialog</li>
+            <li>Include the Image Editor custom toolbar item in the <a href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.RichTextEditor.RichTextEditorQuickToolbarSettings.html#Syncfusion_EJ2_RichTextEditor_RichTextEditorQuickToolbarSettings_Image" aria-label="quickToolbarSettings"> quickToolbarSettings.image </a> property of the Rich Text Editor</li>
+            <li>Configure Image Editor within a Dialog using the <a href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Popups.Dialog.html#Syncfusion_EJ2_Popups_Dialog_BeforeOpen" aria-label="beforeOpen"> beforeOpen </a> event of the Dialog</li>
             <li>Open the Dialog on clicking the Image Editor custom toolbar item</li>
             <li>Insert the edited image into the Rich Text Editor by clicking the Insert button</li>
         </ul>

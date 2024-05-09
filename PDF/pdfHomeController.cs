@@ -17,7 +17,7 @@ namespace EJ2CoreSampleBrowser.Controllers
     {
         public IActionResult Index()
         {
-            return RedirectToAction("Default", "Pdf");
+            return RedirectToAction("default", "pdf");
         }
     }
 }

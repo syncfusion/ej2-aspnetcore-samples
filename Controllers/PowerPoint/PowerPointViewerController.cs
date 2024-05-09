@@ -30,7 +30,11 @@ namespace EJ2CoreSampleBrowser.Controllers
         [Route("api/[controller]/Load")]
         public IActionResult Load([FromBody] Dictionary<string, string> jsonObject)
         {
+#if REDIS
+            PdfRenderer pdfviewer = new PdfRenderer(_cache, _distributedCache);
+#else
             PdfRenderer pdfviewer = new PdfRenderer(_cache);
+#endif
             MemoryStream stream = new MemoryStream();
             object jsonResult = new object();
             if (jsonObject != null && jsonObject.ContainsKey("document"))
@@ -85,7 +89,11 @@ namespace EJ2CoreSampleBrowser.Controllers
         [Route("api/[controller]/Unload")]
         public IActionResult Unload([FromBody] Dictionary<string, string> jsonObject)
         {
+#if REDIS
+            PdfRenderer pdfviewer = new PdfRenderer(_cache, _distributedCache);
+#else
             PdfRenderer pdfviewer = new PdfRenderer(_cache);
+#endif
             pdfviewer.ClearCache(jsonObject);
             return this.Content("Document cache is cleared");
         }
@@ -95,7 +103,11 @@ namespace EJ2CoreSampleBrowser.Controllers
         [Route("api/[controller]/RenderPdfPages")]
         public IActionResult RenderPdfPages([FromBody] Dictionary<string, string> jsonObject)
         {
+#if REDIS
+            PdfRenderer pdfviewer = new PdfRenderer(_cache, _distributedCache);
+#else
             PdfRenderer pdfviewer = new PdfRenderer(_cache);
+#endif
             object jsonResult = pdfviewer.GetPage(jsonObject);
             return Content(JsonConvert.SerializeObject(jsonResult));
         }
@@ -105,7 +117,11 @@ namespace EJ2CoreSampleBrowser.Controllers
         [Route("api/[controller]/RenderThumbnailImages")]
         public IActionResult RenderThumbnailImages([FromBody] Dictionary<string, string> jsonObject)
         {
+#if REDIS
+            PdfRenderer pdfviewer = new PdfRenderer(_cache, _distributedCache);
+#else
             PdfRenderer pdfviewer = new PdfRenderer(_cache);
+#endif
             object result = pdfviewer.GetThumbnailImages(jsonObject);
             return Content(JsonConvert.SerializeObject(result));
         }
@@ -114,7 +130,11 @@ namespace EJ2CoreSampleBrowser.Controllers
         [Route("api/[controller]/Download")]
         public IActionResult Download([FromBody] Dictionary<string, string> jsonObject)
         {
+#if REDIS
+            PdfRenderer pdfviewer = new PdfRenderer(_cache, _distributedCache);
+#else
             PdfRenderer pdfviewer = new PdfRenderer(_cache);
+#endif
             string documentBase = pdfviewer.GetDocumentAsBase64(jsonObject);
             return Content(documentBase);
         }
@@ -123,7 +143,11 @@ namespace EJ2CoreSampleBrowser.Controllers
         [Route("api/[controller]/PrintImages")]
         public IActionResult PrintImages([FromBody] Dictionary<string, string> jsonObject)
         {
+#if REDIS
+            PdfRenderer pdfviewer = new PdfRenderer(_cache, _distributedCache);
+#else
             PdfRenderer pdfviewer = new PdfRenderer(_cache);
+#endif
             object pageImage = pdfviewer.GetPrintImage(jsonObject);
             return Content(JsonConvert.SerializeObject(pageImage));
         }

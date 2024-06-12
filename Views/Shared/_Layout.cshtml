@@ -60,7 +60,7 @@
             var baseurl = window.baseurl = getAbsoluteURL();
 
         var themeName = location.hash.split('#/')[1];
-        themeName = themeName ? themeName : 'material3';
+        themeName = themeName ? themeName : 'fluent2';
             document.write('<link href="' + baseurl + 'styles/' + themeName + '.css" rel="stylesheet" />');
 
         if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
@@ -204,6 +204,7 @@
                         <button id='download-now' class='sb-download-btn'>
                             <span class='sb-download-text'>FREE TRIAL</span>
                         </button>
+                        <span class="sr-only">opens in a new tab</span>
                     </a>                    
                 </div>
             </div>
@@ -252,6 +253,10 @@
                         <li class='e-list' id="fluent" role="listitem">
                             <span class='sb-icons sb-theme-select sb-icon-icon-selection'></span>
                             <span class="switch-text">Fluent</span>
+                        </li>
+                        <li class='e-list' id="fluent2" role="listitem">
+                            <span class='sb-icons sb-theme-select sb-icon-icon-selection'></span>
+                            <span class="switch-text">Fluent2</span>
                         </li>
                        @*  <li class="e-list" id="fluent-dark">
                             <span class='sb-icons sb-theme-select sb-icon-icon-selection'></span>
@@ -387,12 +392,14 @@
                 <ejs-dialog id="search-popup" cssClass="sb-search-result" created="getSBSearch" visible=false aria-label="Please find the search result for the demo">
                     <e-dialog-position X="left"></e-dialog-position>
                     <e-content-template>
-                        <ejs-listview enable="true" id="search-result-list" select="searchNavigation" template=@searchResultTemplate groupTemplate=@searchGroupTemplate actionComplete="getSearchValue" ActionBegin="initSearchData">
+                        <ejs-listview style="display: none;" enable="true" id="search-result-list" select="searchNavigation" template=@searchResultTemplate groupTemplate=@searchGroupTemplate actionComplete="getSearchValue" ActionBegin="initSearchData">
                             <e-listview-fieldsettings id="uid" text="name" groupBy="sortId">
                             </e-listview-fieldsettings>
                         </ejs-listview>
+                        <div class="search-no-record" id="search-no-records" style="display: none;">We are sorry. We cannot find any matches for your search term.</div>
                     </e-content-template>
                 </ejs-dialog>
+                
             </div>
             <div class='sb-left-pane e-view' role="navigation">
                 <div class="sb-left-pane-header">
@@ -452,7 +459,7 @@
                         </svg>
                     </div>
                 </div>
-                <div class='sb-desktop-wrapper' aria-label="contentinfo" role='Main' >
+                <div class='sb-desktop-wrapper' aria-label="contentinfo" role='main' >
                     <div id='component-name' role='heading' aria-label="contentinfo" aria-level="1" class='sb-component-name sb-rightpane-padding'>
                         @if (IsSectionDefined("Header"))
                         {
@@ -570,22 +577,26 @@
                             <div class="sb-ad-try-area">
                                 TRY IT FOR FREE
                             </div>
+                            <span class="sr-only">opens in a new tab</span>
                         </a>
                     </div>
                     <div class="sb-footer" aria-label="contentinfo" role="main">
                         <div class="sb-footer-left">
                             <div class="sb-footer-links">
-                                <a href="https://ej2.syncfusion.com/aspnetcore/documentation/" target="_blank" aria-label="Documentation">
-                                    <div class="sb-footer-link" >Documentation</div>
+                                <a href="https://ej2.syncfusion.com/aspnetcore/documentation/" target="_blank" aria-label="Documentation" >
+                                    <div class="sb-footer-link">Documentation</div>
+                                    <span class="sr-only">opens in a new tab</span>
                                 </a>
                                 <a href="https://www.syncfusion.com/forums/aspnetcore-js2" target="_blank" aria-label="Forum">
-                                    <div class="sb-footer-link" >Forum</div>
+                                    <div class="sb-footer-link">Forum</div>
+                                    <span class="sr-only">opens in a new tab</span>
                                 </a>
                                 <a href="https://blog.syncfusion.com/" target="_blank" aria-label="Blog">
-                                    <div class="sb-footer-link" >Blog</div>
+                                    <div class="sb-footer-link">Blog</div>
+                                    <span class="sr-only">opens in a new tab</span>
                                 </a>
                                 <a href="https://www.syncfusion.com/kb" target="_blank" aria-label="Knowledge Base">
-                                    <div class="sb-footer-link" >Knowledge Base</div>
+                                    <div class="sb-footer-link" ></div>
                                 </a>
                             </div>
                             <div class="sb-footer-copyright">Copyright © 2001-2019 Syncfusion Inc.</div>

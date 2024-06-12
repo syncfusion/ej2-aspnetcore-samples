@@ -1,36 +1,51 @@
 @using Syncfusion.EJ2
+@model UserRegisterationModel
+@{
+    ViewBag.Title = "    Essential PDF : Form Filling : Syncfusion";
+}
 
-@{ViewBag.Title = "    Essential PDF : Form Filling : Syncfusion";}
-
-@section ControlsSection{
+@section ControlsSection {
     <div class="control-section">
-        @{Html.BeginForm("FormFilling", "Pdf", FormMethod.Post);
+        @{
+            Html.BeginForm("formfilling", "pdf", FormMethod.Post);
             {
                 <div style="font-size:14px">
                     <div class="Outer" style="font-size:14px">
-                        Click the Create PDF button to view a PDF document generated using pdf template
-                        form, loaded in memory, it&#8217;s fields filled with appropriate data by using
-                        Essential PDF. Please note that Adobe Reader or its equivalent is required to view
+                        This sample shows how to fill the existing form fields in a PDF document. It also supports flattening the form fields. Please note that Adobe Reader or its equivalent is required to view
                         the resultant document
                     </div>
                     <br />
-                    <div>
-                        <ejs-checkbox id="flatten" name="flatten" value="From Flatten" />
-                        <label style="font-weight:normal; font-size:14px" for="Form Flatten">Form Flatten</label>
+                    <div class="form-group">
+                        <label for="Name">Name</label>
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @id = "Name" })
+
+                        <label for="Gender">Gender</label>
+                        @Html.DropDownListFor(m => m.Gender, new SelectList(new[] { "Male", "Female", "Unspecified" }), "Select Gender", new { @class = "form-control", @id = "Gender" })
+
+                        <label for="DateOfBirth">Date of Birth</label>
+                        @Html.TextBoxFor(m => m.DateOfBirth, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date", @id = "DateOfBirth" })
+
+                        <label for="EmailID">Email ID</label>
+                        @Html.TextBoxFor(m => m.EmailID, new { @class = "form-control", @type = "email", @id = "EmailID" })
+
+                        <label for="StateDropdown">Coming from</label>
+                        @Html.DropDownListFor(m => m.StateDropdown, Model.States, "Select State", new { @class = "form-control", @id = "StateDropdown" })
+
+                        <div class="form-check">
+                            @Html.CheckBoxFor(m => m.Newsletter, new { @class = "form-check-input", @id = "Newsletter" })
+                            <label class="form-check-label" for="Newsletter">Would you like to receive our Newsletter?</label>
+                        </div>
                     </div>
-                    <br />
-                    <div>
-                        <input id="viewtemplate" class="e-btn" type="submit" name="submit1" value="View Template" style="width: 150px; text-transform:capitalize" />
-                    </div>
-                    <br />
-                    <div>
-                        <input id="createpdf" class="e-btn" type="submit" name="submit" style="width:150px; text-transform:capitalize" value="Fill Form" />
-                    </div>
+                    <input id="viewTemplate" class="e-btn" type="submit" name="viewTemplate" value="View Template" style="width: 150px; text-transform:capitalize" />
+                    <input id="fillForm" class="e-btn" type="submit" name="fillForm" style="width:150px; text-transform:capitalize" value="Fill Form" />
+                    <input id="fillAndFlatten" class="e-btn" type="submit" name="fillAndFlatten" style="width:150px; text-transform:capitalize" value="Fill and Flatten" />
                 </div>
                 Html.EndForm();
-            }}
+            }
+        }
     </div>
 }
+
 @section ActionDescription{
     <p>
         This sample demonstrates how to fill and flatten the form fields to personalize your PDF document.It is also possible to create, edit, and delete the form fields using the Essential PDF library.

@@ -10,6 +10,8 @@ using System.IO;
 using Syncfusion.Presentation;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Caching.Memory;
+using Syncfusion.PresentationRenderer;
+using Syncfusion.Pdf;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,7 +25,7 @@ namespace EJ2CoreSampleBrowser.Controllers
         }
 
         [HttpPost]
-        public ActionResult FindAndHighlight(string button, string Group, string matchCase, string matchWholeWord, string highlightFirst)
+        public ActionResult FindAndHighlight(string button, string Group, string Group1, string matchCase, string matchWholeWord, string highlightFirst)
         {
             if (button == null)
                 return View();
@@ -73,19 +75,34 @@ namespace EJ2CoreSampleBrowser.Controllers
                         }
                     }
                 }
-
+                string filename = "";
                 MemoryStream ms = new MemoryStream();
-
-                //Saves the presentation to the memory stream.
-                presentation.Save(ms);
+                if (Group1 == "PPTX")
+                {
+                    filename = "FindandHighlight.pptx";
+                    contenttype = "application/vnd.openxmlformats-officedocument.presentationml.presentation";
+                    //Saves the presentation to the memory stream.
+                    presentation.Save(ms);
+                }               
+                else
+                {
+                    filename = "FindandHighlight.pdf";
+                    contenttype = "application/pdf";
+                    // Create new instance for PresentationToPdfConverterSettings
+                    PresentationToPdfConverterSettings settings = new PresentationToPdfConverterSettings();
+                    //Convert the PowerPoint document to PDF document.
+                    using (PdfDocument pdfDocument = PresentationToPdfConverter.Convert(presentation, settings))
+                        //Save the converted PDF document to Memory stream.
+                        pdfDocument.Save(ms);
+                }
                 //Set the position of the stream to beginning.
                 ms.Position = 0;
-
-                //Initialize the file stream to download the presentation.
-                FileStreamResult fileStreamResult = new FileStreamResult(ms, "application/vnd.openxmlformats-officedocument.presentationml.presentation");
+                //Close the PowerPoint Presentation.
+                presentation.Close();
+                //Initialize the file stream to download the presentation or PDF.
+                FileStreamResult fileStreamResult = new FileStreamResult(ms, contenttype);
                 //Set the file name.
-                fileStreamResult.FileDownloadName = "FindandHighlight.pptx";
-
+                fileStreamResult.FileDownloadName = filename;
                 return fileStreamResult;
             }
             catch (Exception)

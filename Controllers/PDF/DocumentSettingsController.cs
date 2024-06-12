@@ -67,7 +67,7 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
 
             g.DrawString("Press Ctrl+D to see Document Properties", boldFont, brush, 10, 10);
             g.DrawString("Basic Schema Xml:", boldFont, brush, 10, 50);
-            g.DrawString(basic.XmlData.ToString(), font, brush, new RectangleF(10, 70, 500, 500), format);
+            g.DrawString(basic.XmlData.ToString(), font, brush, new RectangleF(10, 70, 500, 600), format);
 
             //Defines and set values for Custom metadata and add them to the Pdf document
             CustomSchema custom = new CustomSchema(xmp, "custom", "http://www.syncfusion.com/");

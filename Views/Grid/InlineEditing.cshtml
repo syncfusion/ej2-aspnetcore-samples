@@ -1,8 +1,9 @@
 @section ControlsSection{
     <div class="col-lg-9 control-section">
-        <ejs-grid id="Grid" dataSource="ViewBag.dataSource" allowSorting="true" toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })" allowPaging="true" actionBegin="actionBegin" cssClass="e-css">
+        <ejs-grid id="Grid" dataSource="ViewBag.dataSource" allowSorting="true" allowFiltering="true" toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })" allowPaging="true" actionBegin="actionBegin" cssClass="e-css">
             <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" newRowPosition="Top" showAddNewRow="true" ></e-grid-editSettings>
             <e-grid-pagesettings pageCount="5"></e-grid-pagesettings>
+            <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
             <e-grid-columns>
                 <e-grid-column field="OrderID" headerText="Order ID" isPrimaryKey="true" validationRules="@(new { required=true, number=true})" width="140"></e-grid-column>
                 <e-grid-column field="CustomerID" headerText="Customer Name" validationRules="@(new { required=true, minLength=5})" width="150"></e-grid-column>
@@ -31,8 +32,8 @@
 
    <script>
 
-       function rowPositionChange(args) { 
-           var grid = document.getElementById("Grid").ej2_instances[0];           
+       function rowPositionChange(args) {
+           var grid = document.getElementById("Grid").ej2_instances[0];
            grid.editSettings.newRowPosition = this.value;
            grid.refresh();
        }
@@ -74,7 +75,7 @@
                 }
 
 @section Description{
-    <div id="description">		   
+    <div id="description">
         <p> Grid supports CRUD operations. This CRUD operations can be configured using
             <code>editSettings</code>. It also has the following modes to manipulate the datasource.
         </p>
@@ -92,15 +93,15 @@
             You can enable this feature by setting the <code>showAddNewRow</code> property of <code>editSettings</code> to true.
         </p>
         <p>
-            More information on the inline editing can be found in this 
+            More information on the inline editing can be found in this
             <a target="_blank"
-              href="https://ej2.syncfusion.com/aspnetcore/documentation/grid/editing/in-line-editing" aria-label="documentation section">
+              href="https://ej2.syncfusion.com/aspnetcore/documentation/grid/editing/in-line-editing" aria-label="Navigate to the documentation for Inline Editing in ASP.NET Core Grid control">
               documentation section</a>.
           </p>
 	</div>
 }
 @section Title{
-                    <title>ASP.NET Core Data Grid Inline Editing Example - Syncfusion Demos </title> 
+                    <title>ASP.NET Core Data Grid Inline Editing Example - Syncfusion Demos </title>
                 }
 @section Header{
                     <h1 class='sb-sample-text'>Example of Inline Editing in ASP.NET Core Data Grid Control</h1>

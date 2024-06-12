@@ -6,13 +6,15 @@
 
 @section ControlsSection{
     <div class="control-section">
-        <ejs-grid id="Grid" dataSource="ViewBag.datasource" enableStickyHeader="true" allowSorting="true">
+        <ejs-grid id="Grid" dataSource="ViewBag.datasource" enableStickyHeader="true" allowSorting="true" allowFiltering="true" toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })">
+            <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
+            <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true"></e-grid-editSettings>
             <e-grid-columns>
-                <e-grid-column field="OrderID" headerText="Order ID" textAlign="Right" width="120"></e-grid-column>
-                <e-grid-column field="CustomerID" headerText="Customer Name" width="150"></e-grid-column>
-                <e-grid-column field="OrderDate" headerText=" Order Date" textAlign="Right" format="yMd" width="130" ></e-grid-column>
-                <e-grid-column field="Freight" headerText="Freight" textAlign="Right" format="C2" width="120"></e-grid-column>
-                <e-grid-column field="ShippedDate" headerText="Shipped Date" textAlign="Right" format="yMd" width="140"></e-grid-column>
+                <e-grid-column field="OrderID" headerText="Order ID" textAlign="Right" width="120" isPrimaryKey="true" validationRules="@(new { required=true, number=true})"></e-grid-column>
+                <e-grid-column field="CustomerID" headerText="Customer Name" width="150" validationRules="@(new { required=true, minLength=5})"></e-grid-column>
+                <e-grid-column field="OrderDate" headerText=" Order Date" textAlign="Right" format="yMd" width="130" editType="datepickeredit" ></e-grid-column>
+                <e-grid-column field="Freight" headerText="Freight" textAlign="Right" format="C2" width="120" editType="numericedit" validationRules="@(new { required=true, min=0})"></e-grid-column>
+                <e-grid-column field="ShippedDate" headerText="Shipped Date" textAlign="Right" format="yMd" width="140" editType="datepickeredit"></e-grid-column>
                 <e-grid-column field="ShipName" headerText="Ship Name" width="170"></e-grid-column>
             </e-grid-columns>
         </ejs-grid>
@@ -33,25 +35,25 @@
 
 @section Description{
     <div id="description">
-        <p>The Grid headers can be fixed while scrolling its parent element. 
+        <p>The Grid headers can be fixed while scrolling its parent element.
         It can be done by setting the <code><a target="_blank" class="code"
-        href="http://ej2.syncfusion.com/documentation/api/grid/#enablestickyheader" aria-label="enableStickyHeader">
+        href="http://ej2.syncfusion.com/documentation/api/grid/#enablestickyheader" aria-label="Navigate to the enableStickyHeader property reference for ASP.NET Core Grid control">
         enableStickyHeader
         </a></code> property.
     </p>
     <p>
-        In this demo, while scrolling the demo page, the Grid header will be stick to the top of its parent element. 
+        In this demo, while scrolling the demo page, the Grid header will be stick to the top of its parent element.
     </p>
     <p>
         More information on the stacked header configuration can be found in this
-        <a target="_blank" 
-        href="https://ej2.syncfusion.com/aspnetcore/documentation/grid/scrolling/" aria-label="Documentation section">
+        <a target="_blank"
+        href="https://ej2.syncfusion.com/aspnetcore/documentation/grid/scrolling" aria-label="Navigate to the documentation for Scrolling in ASP.NET Core Grid control">
         documentation section</a>.
     </p>
     </div>
 }
 @section Title{
-                    <title>ASP.NET Core Data Grid Sticky Header Example - Syncfusion Demos </title> 
+                    <title>ASP.NET Core Data Grid Sticky Header Example - Syncfusion Demos </title>
                 }
 @section Header{
                     <h1 class='sb-sample-text'>Example of Sticky Header in ASP.NET Core Data Grid Control</h1>

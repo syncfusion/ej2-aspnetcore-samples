@@ -18,7 +18,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Excel
     public partial class ExcelController : Controller
     {
         string basePath = string.Empty;
-        public ActionResult ExcelToPDF(string button, string checkboxStream, string Group1, IFormFile file)
+        public ActionResult ExcelToPDF(string button, string checkboxStream, string layoutOptions, IFormFile file)
         {
             if (button == null)
                 return View();
@@ -37,7 +37,10 @@ namespace EJ2CoreSampleBrowser.Controllers.Excel
             Stream fileStream = null;
             if (file == null)
             {
-                fileStream = new FileStream(basePath + @"/XlsIO/ExcelToPDF.xlsx", FileMode.Open, FileAccess.Read);
+                if (checkboxStream != null)
+                    fileStream = new FileStream(basePath + @"/XlsIO/InvoiceTemplate.xlsx", FileMode.Open, FileAccess.Read);
+                else
+                    fileStream = new FileStream(basePath + @"/XlsIO/ExcelToPDF.xlsx", FileMode.Open, FileAccess.Read);
             }
             else
             {
@@ -56,11 +59,11 @@ namespace EJ2CoreSampleBrowser.Controllers.Excel
             settings.IsConvertBlankPage = false;
 			
             //Set the Layout Options for the output Pdf page.
-            if (Group1 == "NoScaling")
+            if (layoutOptions == "No scaling")
                 settings.LayoutOptions = LayoutOptions.NoScaling;
-            else if (Group1 == "FitAllRowsOnOnePage")
+            else if (layoutOptions == "Fit all rows on one page")
                 settings.LayoutOptions = LayoutOptions.FitAllRowsOnOnePage;
-            else if (Group1 == "FitAllColumnsOnOnePage")
+            else if (layoutOptions == "Fit all columns on one page")
                 settings.LayoutOptions = LayoutOptions.FitAllColumnsOnOnePage;
             else
                 settings.LayoutOptions = LayoutOptions.FitSheetOnOnePage;

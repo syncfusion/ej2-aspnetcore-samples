@@ -49,18 +49,18 @@
                 </div>
                 <div class="row sb-child-row">
                     <div>
-                        <div class="col-xs-2 top" style="padding-left: 0px;padding-right: 20px;">
+                        <div class="col-xs-2 top" style="padding-left: 0px;padding-right: 20px;padding-top: 12px;">
                             Width
                         </div>
-                        <div class="col-xs-3" style="width: 33%;padding-left: 0px">
+                        <div class="col-xs-3" style="width: 33%;padding-left: 0px;padding-top: 12px;">
                             <ejs-numerictextbox id="barcodewidth" format="###.##" value="200" enabled="true" step="2" min="150" max="250" change="barcodewidthChange"></ejs-numerictextbox>
                         </div>
                     </div>
                     <div>
-                        <div class="rightProperty">
+                        <div class="rightProperty" style="padding-top: 12px;">
                             Height
                         </div>
-                        <div class="col-xs-3" style="width: 33%;padding-left: 0px;">
+                        <div class="col-xs-3" style="width: 33%;padding-left: 0px;padding-top: 12px;">
                             <ejs-numerictextbox id="barcodeheight" format="###.##" value="150" enabled="true" step="2" min="100" max="200" change="barcodeheightChange"></ejs-numerictextbox>
                         </div>
                     </div>
@@ -302,12 +302,14 @@
 
         #password-info {
             position: absolute;
-            margin-top: 30px;
         }
     </style>
     <script type="text/javascript">
         function barcodeValueChange(args) {
             var barcode = document.getElementById("container").ej2_instances[0];
+            var formObject = new ej.inputs.FormValidator('#form-element', {});
+            canShowError = false;
+            formObject.validate();
             barcode.value = args.value;
             var displayText = document.getElementById("displayText").ej2_instances[0];
             displayText.value = args.value;
@@ -355,8 +357,7 @@
             };
             var formObject = new ej.inputs.FormValidator('#form-element', options);
             canShowError = true;
-            if (!barcode.displayText.text)
-                formObject.validate();
+            formObject.validate();
         }
         function svgModeChange(args) {
             var barcode = document.getElementById("container").ej2_instances[0];

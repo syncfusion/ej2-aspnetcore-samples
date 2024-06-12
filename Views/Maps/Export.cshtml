@@ -74,8 +74,8 @@
 						<div>File Name</div>
 					</td>
 					<td>
-						<div class="e-float-input" style='margin-top: 0px;'>
-							<input type="text" value="Maps" id="fileName" style="width: 100%;">
+						<div style='margin-top: 0px;'>
+                            <ejs-textbox id="fileName" value="Maps" width="100%"></ejs-textbox>
 						</div>
 					</td>
 				</tr>
@@ -129,12 +129,16 @@
     </style>
 }
 <script>
+    var shapeData;
     @* custom code start *@
     function onMapLoad(args) {
         window.maps = args.maps;
         var theme = themeName ? themeName : "Material";
         args.maps.theme = (theme.charAt(0).toUpperCase() +
             theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+        if (!shapeData) {
+            shapeData = window.maps.layers[0].shapeData;
+        }
     }
     @* custom code end *@
     window.onload = function () {
@@ -150,14 +154,17 @@
             width: '100%',
 			change: () => {
                 if (layerType.value === 'OSM') {
+                        window.maps.layers[0].urlTemplate = "https://tile.openstreetmap.org/level/tileX/tileY.png";
+                    window.maps.layers[0].shapeData = null;
                     if (window.exportType.value === 'SVG') {
                         window.exportType.value = modeData[0];
                     }
                     window.exportType.dataSource = modeData.slice(0, 3);
 				} else {
+                    window.maps.layers[0].urlTemplate = '';
+                    window.maps.layers[0].shapeData = shapeData;
 					window.exportType.dataSource = modeData;
 				}
-				window.maps.layers[window.maps.layersCollection.length - 1].layerType = layerType.value;
 				window.maps.refresh();
 			}
 	

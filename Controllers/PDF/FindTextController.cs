@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using Syncfusion.Pdf.Parsing;
 using EJ2CoreSampleBrowser.Models;
+using Syncfusion.Pdf;
+using Syncfusion.EJ2.Navigations;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -30,33 +32,75 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
         }
 
         [HttpPost]
-        public IActionResult FindText(string ViewTemplate, string Find)
+        public IActionResult FindText(string findText, string find)
         {
-            string basePath = _hostingEnvironment.WebRootPath;
-            FileStream fileStreamInput = new FileStream(basePath + @"/PDF/Manual.pdf", FileMode.Open, FileAccess.Read);
-            if (!string.IsNullOrEmpty(ViewTemplate))
+            if (!string.IsNullOrEmpty(findText))
             {
-                FileStreamResult fileStreamResult = new FileStreamResult(fileStreamInput, "application/pdf");
-                fileStreamResult.FileDownloadName = "Manual.pdf";
-                return fileStreamResult;
-            }
-            else if (!string.IsNullOrEmpty(Find))
-            {
-                PdfLoadedDocument loadedDocument = new PdfLoadedDocument(fileStreamInput);
+                Stream fileStream = GetSplitPDFDocument();
+                PdfLoadedDocument loadedDocument = new PdfLoadedDocument(fileStream);
                 Dictionary<int, List<Syncfusion.Drawing.RectangleF>> matchRects = new Dictionary<int, List<Syncfusion.Drawing.RectangleF>>();
-                loadedDocument.FindText("document", out matchRects);
+                bool matchFound = loadedDocument.FindText(findText, out matchRects);
                 FindTextMessage message = new FindTextMessage();
-                for (int i = 0; i < loadedDocument.Pages.Count;)
+                List<Syncfusion.Drawing.RectangleF> rectCoords = null;
+                string findTextResults = null;
+                int textCounts = 0;
+
+                if (matchFound)
                 {
-                    List<Syncfusion.Drawing.RectangleF> rectCoords = matchRects[i];
-                    message.Message = "First Occurrence: X:" + rectCoords[0].X + "; Y:" + rectCoords[0].Y + "; Width:" + rectCoords[0].Width+"; Height:" + rectCoords[0].Height + Environment.NewLine +
-                        "Second Occurrence: X:" + rectCoords[1].X + "; Y:" + rectCoords[1].Y + "; Width:" + rectCoords[1].Width + "; Height:" + rectCoords[1].Height + Environment.NewLine +
-                        "Third Occurrence: X:" + rectCoords[2].X + "; Y:" + rectCoords[2].Y + "; Width:" + rectCoords[2].Width + "; Height:" + rectCoords[2].Height + Environment.NewLine +
-                        "Fourth Occurrence: X:" + rectCoords[3].X + "; Y:" + rectCoords[3].Y + "; Width:" + rectCoords[3].Width + "; Height:" + rectCoords[3].Height + Environment.NewLine;
-                    return View("FindText", message);
+                    // Iterate through the matchedText bounds dictionary.
+                    foreach (KeyValuePair<int, List<Syncfusion.Drawing.RectangleF>> matchedText in matchRects)
+                    {
+                        int pageIndex = matchedText.Key;
+                        rectCoords = matchedText.Value;
+                        for (int j = 0; j < rectCoords.Count; j++)
+                        {
+                            textCounts++;
+                            findTextResults += "Occurrence " + textCounts + " is on page " + (pageIndex + 1) + " with the following coordinates: X:" + rectCoords[j].X + "; Y:" + rectCoords[j].Y + "; Width:" + rectCoords[j].Width + "; Height:" + rectCoords[j].Height + Environment.NewLine;
+
+                        }
+
+                    }
+                    var text = "The text \"" + findText + "\" appears " + textCounts + " times in this document " + "\n";
+                    message.Message = text + findTextResults;
+
                 }
+                else
+                {
+                    ViewBag.Message = "No such word found in in the PDF document";
+                }
+                ViewBag.SearchText = findText;
+                return View("FindText", message);
+
             }
             return View("FindText");
+        }
+
+        private Stream GetSplitPDFDocument()
+        {
+            if (Request.Form.Files != null && Request.Form.Files.Count != 0)
+            {
+                // Gets the extension from file.
+                string extension = Path.GetExtension(Request.Form.Files[0].FileName).ToLower();
+
+                // Compares extension with supported extensions.
+                if (extension == ".pdf")
+                {
+                    MemoryStream stream = new MemoryStream();
+                    Request.Form.Files[0].CopyTo(stream);
+                    return stream;
+                }
+                else
+                {
+                    ViewBag.Message =  string.Format("Please choose a valid PDF document to find the text");
+                    return null;
+                }
+            }
+            else
+            {
+                //Opens an existing document from stream through constructor of `WordDocument` class
+                FileStream fileStreamPath = new FileStream(_hostingEnvironment.WebRootPath + @"/PDF/PDF_Succinctly.pdf", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                return fileStreamPath;
+            }
         }
     }
 }

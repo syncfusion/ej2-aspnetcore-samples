@@ -44,8 +44,8 @@
             args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
             args.chart.primaryXAxis.labelIntersectAction = ej.base.Browser.isDevice?'None':'Rotate45';
             args.chart.primaryXAxis.labelRotation = ej.base.Browser.isDevice?'-45':'0';
-        }  
-        
+        }
+
         function pointRender(args) {
             var selectedTheme = location.hash.split('/')[1];
             selectedTheme = selectedTheme ? selectedTheme : 'Material';
@@ -61,30 +61,40 @@
                 '#7D39C0'];
             var fluentDarkColors = ['#1AC9E6', '#DA4CB2', '#EDBB40', '#AF4BCF', '#FF7266', '#1BD565', '#EE993D', '#5887FF', '#EC548D',
                 '#7D39C0'];
+            var fluent2Colors = ["#6200EE", "#09AF74", "#0076E5", "#CB3587", "#E7910F", "#0364DE", "#66CD15", "#F3A93C", "#107C10",
+                "#C19C00"];
+            var fluent2DarkColors = ["#9BB449", "#2A72D5", "#43B786", "#3F579A", "#584EC6", "#E85F9C", "#6E7A89", "#EA6266",
+                "#0B6A0B", "#C19C00"];
             if (selectedTheme && selectedTheme.indexOf('fabric') > -1) {
-                args.fill = fabricColors[args.point.index % 10];
+                 args.fill = fabricColors[args.point.index % 10];
             }
             else if (selectedTheme === 'material') {
-                args.fill = materialColors[args.point.index % 10];
+                 args.fill = materialColors[args.point.index % 10];
             }
-                else if (selectedTheme === 'highcontrast') {
-                    args.fill = highContrastColors[args.point.index % 10];
+            else if (selectedTheme === 'highcontrast') {
+                 args.fill = highContrastColors[args.point.index % 10];
             }
             else if (selectedTheme === 'fluent') {
                  args.fill = fluentColors[args.point.index % 10];
-            } 
+            }
             else if (selectedTheme === 'fluent-dark') {
                  args.fill = fluentDarkColors[args.point.index % 10];
+            }
+            else if (selectedTheme === 'fluent2') {
+                 args.fill = fluent2Colors[args.point.index % 10];
+            }
+            else if (selectedTheme === 'fluent2-dark') {
+                 args.fill = fluent2DarkColors[args.point.index % 10];
             }
             else {
                  args.fill = bootstrapColors[args.point.index % 10];
             }
         };
-        
+
         var tooltipRender = function (args) {
             args.text = args.data.pointX + ': ' + '<b>' + '$' + args.data.pointY * 1000 + '</b>';
         }
-        
+
         var axisLabelRender = function (args) {
             if (args.axis.name === 'primaryYAxis') {
                    args.text =  '' + args.value * 1000;
@@ -98,6 +108,7 @@
 }
 
 <style>
+
     #control-container {
         padding: 0px !important;
     }
@@ -136,17 +147,17 @@
         <li><code>WebApiAdaptor</code> - Use this to interact with Web API created under OData standards.</li>
     </ul>
     <p>
-        In this demo, remote data is bound by assigning service data as an instance of 
-        <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.DataManager.html" aria-label="DataManager">DataManager
+        In this demo, remote data is bound by assigning service data as an instance of
+        <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.DataManager.html" aria-label="Navigate to the class reference for DataManager">DataManager
         </a> component and a query.
     </p>
     <p>
         More information about the remote data binding can be found in this
-        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/working-with-data#remote-data" aria-label="documentation section">documentation section</a>.
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/working-with-data#remote-data" aria-label="Navigate to the documentation for remote data binding in ASP.NET Core Chart control">documentation section</a>.
     </p>
 }
 @section Title{
-                    <title>ASP.NET Core Chart Remote Data Example - Syncfusion Demos </title> 
+                    <title>ASP.NET Core Chart Remote Data Example - Syncfusion Demos </title>
                 }
 @section Header{
                     <h1 class='sb-sample-text'>Example of Remote Data in ASP.NET Core Chart Control</h1>

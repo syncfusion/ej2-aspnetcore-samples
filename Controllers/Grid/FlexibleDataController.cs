@@ -16,7 +16,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Grid
         public IActionResult FlexibleData()
         {
             List<object> urlDataList = new List<object>();
-            urlDataList.Add(new { text = "https://services.syncfusion.com/aspnet/production/api/Orders", value = "ODataV4Adaptor" });
+            urlDataList.Add(new { text = "https://services.odata.org/V4/Northwind/Northwind.svc/Orders/", value = "ODataV4Adaptor" });
             urlDataList.Add(new { text = "https://services.syncfusion.com/aspnet/production/api/Orders", value = "WebApiAdaptor" });
             urlDataList.Add(new { text = "https://services.syncfusion.com/aspnet/production/api/UrlDataSource", value = "UrlAdaptor" });
             urlDataList.Add(new { text = "https://services.odata.org/V4/Northwind/Northwind.svc/Orders", value = "Custom Binding" });

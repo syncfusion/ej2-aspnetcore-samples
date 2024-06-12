@@ -10,12 +10,12 @@ var searchInstance;
 var headerThemeSwitch = document.getElementById('header-theme-switcher');
 var settingElement = ej.base.select('.sb-setting-btn');
 var themeList = document.getElementById('themelist');
-var themes = ['material3', 'fluent', 'bootstrap5', 'tailwind', 'highcontrast'];
+var themes = ['material3', 'fluent', 'fluent2', 'bootstrap5', 'tailwind', 'highcontrast'];
 //var themeIndex = { 'material3': 0, 'material3-dark': 1, 'fluent': 2, 'fluent-dark': 3, 'bootstrap5': 4, 'bootstrap5-dark': 5, 'tailwind': 6, 'tailwind-dark': 7, 'material': 8, 'bootstrap4': 9, 'bootstrap': 10, 'bootstrap-dark': 11, 'highcontrast': 12 };
-var themeIndex = { 'material3': 0, 'fluent': 1, 'bootstrap5': 2, 'tailwind': 3, 'highcontrast': 4 };
-var themeMode_Index = { 'material3': 'Material3', 'fluent': 'Fluent', 'bootstrap5': 'Bootstrap v5', 'tailwind': 'Tailwind CSS', 'highcontrast': 'High Contrast' };
-var cultureData = { "English": "en", "German - Germany*": "de", "French - Switzerland*": "fr-CH", "Arabic*": "ar", "Chinese - China*": "zh" };
-var defaultTheme = 'material3';
+var themeIndex = { 'material3': 0, 'fluent': 1, 'fluent2': 2, 'bootstrap5': 3, 'tailwind': 4, 'highcontrast': 5  };
+var themeMode_Index = { 'material3': 'Material3', 'fluent': 'Fluent', 'fluent2': 'Fluent2' , 'bootstrap5': 'Bootstrap v5', 'tailwind': 'Tailwind CSS', 'highcontrast': 'High Contrast'  };
+var cultureData = { "English": "en", "German - Germany*": "de", "French - Switzerland*": "fr-CH", "Arabic*": "ar", "Chinese - China*":"zh" };
+var defaultTheme = 'fluent2';
 var themeDropDown;
 var contentTab;
 var sourceTab;
@@ -82,8 +82,8 @@ var matchedCurrency = {
 var newYear = new Date().getFullYear();
 var copyRight = document.querySelector('.sb-footer-copyright');
 copyRight.innerHTML = "Copyright &copy 2001 - " + newYear + " Syncfusion Inc.";
-if (ej.base.registerLicense != undefined) {
-    ej.base.registerLicense('');
+if(ej.base.registerLicense != undefined){
+	ej.base.registerLicense('');
 }
 function preventTabSwipe(e) {
     if (e.isSwiped) {
@@ -108,25 +108,25 @@ function sourceTabSelected(e) {
 function changeCulture(cul) {
     if (cul === 'ar') {
         changeRtl();
-    }
+    }  
     ej.base.setCurrencyCode(sessionStorage.getItem("ej2-currency") || matchedCurrency[cul]);
     ej.base.setCulture(cul);
 }
 
 function loadCulture() {
     var cul = sessionStorage.getItem('ej2-culture') || 'en';
-    if (cul !== 'en') {
-        var locale = new ej.base.Ajax('../scripts/locale/' + cul + '.json', 'GET', false);
-        locale.send().then(function (value) {
-            ej.base.L10n.load(JSON.parse(value));
-        });
+	if (cul !== 'en') {
+		var locale = new ej.base.Ajax('../scripts/locale/' + cul + '.json', 'GET', false);
+		locale.send().then(function (value) {
+			ej.base.L10n.load(JSON.parse(value));
+		});
 
-        var ajax = new ej.base.Ajax('../scripts/cldr-data/main/' + cul + '/all.json', 'GET', false);
-        ajax.send().then(function (result) {
-            ej.base.loadCldr(JSON.parse(result));
-            changeCulture(cul);
-        });
-    }
+		var ajax = new ej.base.Ajax('../scripts/cldr-data/main/' + cul + '/all.json', 'GET', false);
+		ajax.send().then(function (result) {
+			ej.base.loadCldr(JSON.parse(result));
+			changeCulture(cul);
+		});
+	}
 }
 function settingPopupHide(hideElementID) {
     if (document.querySelector(hideElementID).ej2_instances[0].element.classList.contains("e-popup-open")) {
@@ -165,7 +165,7 @@ function setIndex() {
             var dropdownTheme = document.getElementById('sb-setting-theme');
             dropdownTheme.ej2_instances[0].index = 0;
             dropdownTheme.value = themeMode_Index[updatedTheme];
-            //document.getElementById('sb-setting-mode').ej2_instances[0].index = 1
+             //document.getElementById('sb-setting-mode').ej2_instances[0].index = 1
         }
     }
     //document.getElementById('sb-setting-theme').ej2_instances[0].index = localStorage.getItem('theme-index') || 0;
@@ -240,29 +240,29 @@ function setTreeData() {
 }
 
 function changeRtl() {
-    setTimeout(function () {
-        var elementlist = ej.base.selectAll('.e-control', document.getElementById('control-content'));
-        var propertylist = [].concat(ej.base.selectAll('.property-section .e-control', document.getElementById('control-content')));
-        for (var i = 0; i < elementlist.length; i++) {
-            var control = elementlist[i];
-            if (propertylist.indexOf(control) === -1) {
-                if (control.ej2_instances) {
-                    for (var a = 0; a < control.ej2_instances.length; a++) {
-                        var instance = control.ej2_instances[a];
-                        instance.enableRtl = true;
-                    }
-                }
-            }
-        }
-    }, 400);
-}
+	setTimeout(function() {
+		var elementlist = ej.base.selectAll('.e-control', document.getElementById('control-content'));
+		var propertylist =[].concat(ej.base.selectAll('.property-section .e-control', document.getElementById('control-content')));
+		for (var i = 0; i < elementlist.length; i++) {
+			var control = elementlist[i];
+			if (propertylist.indexOf(control) === -1) {
+				if (control.ej2_instances) {
+					for (var a = 0; a < control.ej2_instances.length; a++) {
+						var instance = control.ej2_instances[a];
+						instance.enableRtl = true;
+					}
+				}
+			}
+		}
+	}, 400);
+} 
 
 function renderSbPopups() {
-
+    
     if (isMobile) {
         ej.base.select('.sb-mobile-preference').appendChild(ej.base.select('.sb-setting-container'));
     }
-
+    
     cultureDropDown = document.getElementById("sb-setting-culture");
     cultureDropDown.value = sessionStorage.getItem('ej2-culture-name') || 'English';
     currencyDropDown = document.getElementById("sb-setting-currency");
@@ -271,13 +271,13 @@ function renderSbPopups() {
     sourceTab = document.getElementById('sb-source-tab');
 }
 
-function setCopyCode() {
+function setCopyCode(){
     var ele = ej.base.createElement('div', { className: 'copy-tooltip', innerHTML: '<div class="e-icons copycode"></div>' });
     document.getElementById('copy-tootip-element').appendChild(ele);
     ele.addEventListener('click', copyCode);
 }
 
-function dynamicTabCreation(obj) {
+function dynamicTabCreation(obj){
     var tabObj
     if (obj) {
         tabObj = obj;
@@ -352,7 +352,7 @@ function sbHeaderClick(action, preventSearch) {
     if (preventSearch !== true && !searchOverlay.classList.contains('sb-hide')) {
         searchOverlay.classList.add('sb-hide');
         searchButton.classList.remove('active');
-        searchEle.classList.remove('e-popup-open');
+	searchEle.classList.remove('e-popup-open');
         searchEle.classList.add('e-popup-close');
         setPressedAttribute(searchButton);
     }
@@ -473,6 +473,7 @@ function onsearchInputChange(e) {
         }
     }
     var searchVal = ej.base.Browser.isDevice ? value : val;
+   
     if (searchVal.length) {
         var data = new ej.data.DataManager(searchVal);
 
@@ -499,10 +500,14 @@ function onsearchInputChange(e) {
             }
         }
         searchListView.dataSource = controls;
+        document.getElementById('search-no-records').style.display = 'none';
+        document.getElementById('search-result-list').style.display = 'block';
         searchPopup.show();
     } else {
-        searchPopup.element.innerHTML = '<div class="search-no-record">We are sorry. We cannot find any matches for your search term.</div>';
+        document.getElementById('search-result-list').style.display = 'none';
+        searchPopup.element.classList.add('search-no-record');
         searchPopup.show();
+        document.getElementById('search-no-records').style.display = 'block';
     }
 }
 
@@ -523,12 +528,12 @@ function highlight(searchString, listElement) {
 function setMouseOrTouch(e) {
     var ele = ej.base.closest(e.target, '.sb-responsive-items');
     var switchType = ele.id;
-    var modeType = document.body.classList.contains("e-bigger") ? "touch" : "mouse";
+    var modeType = document.body.classList.contains("e-bigger")?"touch":"mouse";
     changeMouseOrTouch(switchType);
     sbHeaderClick('closePopup');
     localStorage.setItem('ej2-switch', switchType);
-    if (!(switchType == modeType)) 
-	{
+    if(!(switchType == modeType))
+    {
         location.reload();
     }
 }
@@ -726,7 +731,7 @@ function setSbLink() {
         } else {
             ele.href = ((link) ? ('http://' + link[1] + '/' + (link[3] ? (link[3] + '/') : '')) :
                 ('http://ej2.syncfusion.com/')) + (sbObj[sb] ? (sb + '/') : '') + ((sb === 'blazor') ? 'demos/' :
-                    'demos/#/') + (sample ? (sample[1] + (sb !== 'typescript' ? '' : '.html')) : '');
+                'demos/#/') + (sample ? (sample[1] + (sb !== 'typescript' ? '' : '.html')) : '');
         }
     }
 }
@@ -753,6 +758,7 @@ function loadTheme(theme) {
     }
     body.classList.add(theme);
     themeList.querySelector('.active').classList.remove('active');
+   
     var currentUpdatedTheme = theme.replace("-dark", "");
     themeList.querySelector('#' + currentUpdatedTheme).classList.add('active');
 
@@ -956,8 +962,8 @@ function getSamplePath() {
     return location.pathname.split('/').slice(-2).join('/');
 }
 function searchNavigation(arg) {
-    var eventType = arg.event ? arg.event.pointerType : null;
-    if (eventType) {
+    var eventType = arg.event ? arg.event.pointerType : null; 
+    if (eventType){
         controlSelect(arg);
     }
 }
@@ -996,13 +1002,19 @@ function controlSelect(arg) {
                     ((isTablet || (ej.base.Browser.isDevice && isPc)) && isLeftPaneOpen()))) {
                     toggleLeftPane();
                 }
-
+    
                 if (arg.data) {
                     var pathName = location.pathname.replace(getSamplePath(), '');
                     if (curHashCollection.split('/')[curHashCollection.split('/').length - 3] != arg.data.dir.toLowerCase()) {
                         var SampleObject = window.samplesList.filter(obj => obj.directory.toLowerCase() === arg.data.dir.toLowerCase());
                         var defaultSample = SampleObject.map(obj => obj.samples[0]);
-                        location.href = location.origin + pathName + arg.data.dir.toLowerCase() + '/' + defaultSample[0].url.toLowerCase() + '#/' + theme;
+                        //URL update while we navigate through search 
+                        if (arg.item.id.includes("search-result-list")) {
+                            location.href = location.origin + pathName + arg.data.dir.toLowerCase() + '/' + arg.data.url.toLowerCase() + '#/' + theme;
+                        }
+                        else {
+                            location.href = location.origin + pathName + arg.data.dir.toLowerCase() + '/' + defaultSample[0].url.toLowerCase() + '#/' + theme;
+                        }
                     }
                     else {
                         location.href = location.origin + pathName + arg.data.dir.toLowerCase() + '/' + arg.data.url.toLowerCase() + '#/' + theme;
@@ -1189,8 +1201,8 @@ function onDataSourceLoad(node, subNode, control, sample, sampleName) {
         breadCrumbSample.innerHTML = subNode.name;
     }
     if (subNode.sourceFiles) {
-        add = [];
-        name = [];
+        add=[];
+        name=[];
         for (var i = 0; i < subNode.sourceFiles.length; i++) {
             var ajaxAdd = new ej.base.Ajax(subNode.sourceFiles[i].path, 'GET', false);
             add.push(ajaxAdd);
@@ -1220,42 +1232,42 @@ function onDataSourceLoad(node, subNode, control, sample, sampleName) {
         });
     }
     ArrayItem = items;
-    currentControlID = controlID;
-    currentSampleID = sampleID;
-    currentControl = node.directory.toLowerCase();
-    var curIndex = samplesAr.indexOf(getSamplePath());
-    var samLength = samplesAr.length - 1;
-    if (curIndex === samLength) {
-        toggleButtonState('next-sample', true);
-    } else {
-        toggleButtonState('next-sample', false);
-    }
-    if (curIndex === 0) {
-        toggleButtonState('prev-sample', true);
-    } else {
-        toggleButtonState('prev-sample', false);
-    }
-    ej.base.select('#control-content').classList.remove('error-content');
-    renderPropertyPane('#property');
-    window.navigateSample();
-    isExternalNavigation = defaultTree = false;
-    setPropertySectionHeight();
-    removeOverlay();
-    var mobilePropPane = ej.base.select('.sb-mobile-prop-pane .property-section');
-    if (mobilePropPane) {
-        ej.base.detach(mobilePropPane);
-    }
-    var propPanel = ej.base.select('#control-content .property-section');
-    if (isMobile) {
-        if (propPanel) {
-            ej.base.select('.sb-mobile-setting').classList.remove('sb-hide');
-            document.querySelector('.sb-content-tab-header').style.display = 'block';
-            ej.base.select('.sb-mobile-prop-pane').appendChild(propPanel);
+        currentControlID = controlID;
+        currentSampleID = sampleID;
+        currentControl = node.directory.toLowerCase();
+        var curIndex = samplesAr.indexOf(getSamplePath());
+        var samLength = samplesAr.length - 1;
+        if (curIndex === samLength) {
+            toggleButtonState('next-sample', true);
         } else {
-            ej.base.select('.sb-mobile-setting').classList.add('sb-hide');
-            document.querySelector('.sb-content-tab-header').style.display = 'none';
+            toggleButtonState('next-sample', false);
         }
-    }
+        if (curIndex === 0) {
+            toggleButtonState('prev-sample', true);
+        } else {
+            toggleButtonState('prev-sample', false);
+        }
+        ej.base.select('#control-content').classList.remove('error-content');
+        renderPropertyPane('#property');
+        window.navigateSample();
+        isExternalNavigation = defaultTree = false;
+        setPropertySectionHeight();
+        removeOverlay();
+        var mobilePropPane = ej.base.select('.sb-mobile-prop-pane .property-section');
+        if (mobilePropPane) {
+            ej.base.detach(mobilePropPane);
+        }
+        var propPanel = ej.base.select('#control-content .property-section');
+        if (isMobile) {
+            if (propPanel) {
+                ej.base.select('.sb-mobile-setting').classList.remove('sb-hide');
+                document.querySelector('.sb-content-tab-header').style.display = 'block';
+                ej.base.select('.sb-mobile-prop-pane').appendChild(propPanel);
+            } else {
+                ej.base.select('.sb-mobile-setting').classList.add('sb-hide');
+                document.querySelector('.sb-content-tab-header').style.display = 'none';
+            }
+        }
 }
 
 function removeOverlay() {
@@ -1437,7 +1449,7 @@ function updateThemeURL() {
         }
         updatedURL = baseUrl + "#/" + hashValue;
     } else {
-        // console.log("");
+       // console.log("");
     }
     // Return the updated URL
     return updatedURL;

@@ -31,29 +31,60 @@
 }
 @section ControlsSection{
     <div class="control-section">
-        @{Html.BeginForm("EncryptAndDecrypt", "Excel", FormMethod.Post);
-        { 
+        @{
+            Html.BeginForm("encryptanddecrypt", "excel", FormMethod.Post, new { enctype = "multipart/form-data" });
+        {
             <p style="font-weight:normal">
                 Click the "Encrypt Document" button to view the encrypted Excel document and click the "Decrypt Document" button to view the decrypted Excel document. Please note that the Microsoft Excel viewer or Microsoft Excel is required to view the Excel document.
             </p>
             <br />
+            <div style="display:flex">
+                <label style="font-weight:normal;margin-right: 1rem;">Select document to Encrypt or Decrypt</label>
+                <input type="button" value="Browse" onclick="openPage()">
+                <input type="text" id="fileNameBox" value="EncryptedDocument.xlsx" readonly="readonly" style="border:none;margin-left:1rem;" />
+                <input type="file" name="file" id="fileUpload" accept=".xlsx,.xls,.xlsm,.xltm,.xltx,.csv,.tsv,.xml" style="display:block;visibility:hidden;width:0;height:0;">
+            </div>
+            <br />
+            <div style="display:flex">
+                <label style="font-weight:normal;margin-right: 19.1rem;">Password</label>
+                <input placeholder="Enter password" type="text" id="password" value="PASSWORD" name="password" />
+            </div>
+            <br />
             <div>
-				Save As :
-				<input type="radio" id="XLS" name="SaveOption" value="Xls" />
-				<label for="XLS" style="font-weight:normal">XLS</label>
-				&nbsp;
-				<input type="radio" id="XLSX" name="SaveOption" value="xlsx" checked="checked" />
-				<label for="XLSX" style="font-weight:normal">XLSX</label>
-			</div>
+                Save As
+                <input type="radio" id="XLS" name="saveOption" value="Xls" style="margin-left: 19.8rem" />
+                <label for="XLS" style="font-weight:normal">XLS</label>
+                &nbsp;
+                <input type="radio" id="XLSX" name="saveOption" value="xlsx" checked="checked" />
+                <label for="XLSX" style="font-weight:normal">XLSX</label>
+            </div>
             <br />
             <div class="celldiv">
                 <input id="encryptbtn" class="e-btn" type="submit" name="button" value="Encrypt Document" style="width:160px; text-transform:capitalize" />
                 <input id="decryptbtn" class="e-btn" type="submit" name="button" value="Decrypt Document" style="width:160px; text-transform:capitalize" />
             </div>
+            <br />
+            <div>
+                <p>
+                    <b>Note:</b>  Before clicking the "Encrypt Document" button, select the Excel document to be encrypted and enter a password. Before clicking the "Decrypt Document" button, select an encrypted Excel document and enter the document password.
+                </p>
+            </div>
         Html.EndForm();
         }
             }
-     </div>    
+     </div>
+    <script>
+        function openPage() {
+            document.getElementById('fileUpload').click();
+            document.getElementById('fileUpload').addEventListener('change', readFile, false);
+        }
+        function readFile(evt) {
+            var upoadedFiles = evt.target.files;
+
+            filename = upoadedFiles[0].name;
+            document.getElementById('fileNameBox').value = filename;
+        }
+    </script>
 }
 @section Title{
                     <title>ASP.NET Core Excel (XlsIO) library - Encrypt and Decrypt Example - Syncfusion Demos </title> 

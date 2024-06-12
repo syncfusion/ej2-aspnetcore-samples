@@ -1,13 +1,15 @@
 @section ControlsSection{
     <div class="control-section">
-        <ejs-grid id="Grid" dataSource="ViewBag.datasource" allowExcelExport="true" allowSorting="true" allowPdfExport="true" toolbarClick="toolbarClick" toolbar="@(new List<string>() {"ExcelExport", "PdfExport" })" allowPaging="true">
+        <ejs-grid id="Grid" dataSource="ViewBag.datasource" allowExcelExport="true" allowSorting="true" allowFiltering="true" allowPdfExport="true" toolbarClick="toolbarClick" toolbar="@(new List<string>() {"Add", "Edit", "Delete", "Update", "Cancel", "ExcelExport", "PdfExport" })" allowPaging="true">
             <e-grid-pagesettings pageCount="2" pageSize="10"></e-grid-pagesettings>
+            <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
+            <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true"></e-grid-editSettings>
             <e-grid-columns>
-                <e-grid-column field="ProductID" headerText="Product ID" textAlign="Right" width="120"></e-grid-column>
-                <e-grid-column field="ProductName" headerText="Product Name" width="200"></e-grid-column>
+                <e-grid-column field="ProductID" headerText="Product ID" textAlign="Right" width="120" isPrimaryKey="true" validationRules="@(new { required=true, number=true})"></e-grid-column>
+                <e-grid-column field="ProductName" headerText="Product Name" width="200" validationRules="@(new { required=true, minLength=5})"></e-grid-column>
                 <e-grid-column field="QuantityPerUnit" headerText="Quantity Per Unit"  width="140"></e-grid-column>
                 <e-grid-column field="UnitsInStock" headerText="Units In Stock" textAlign="Right" width="140"></e-grid-column>
-                <e-grid-column field="UnitPrice" headerText="Unit Price" width="140" format="C2"></e-grid-column>
+                <e-grid-column field="UnitPrice" headerText="Unit Price" width="140" format="C2" editType="numericedit"></e-grid-column>
             </e-grid-columns>
 
         </ejs-grid>
@@ -59,7 +61,7 @@
                         index: 5,
                         cells: [
                             { index: 1, colSpan: 2, value: 'Tel +1 888.936.8638 Fax +1 919.573.0306' },
-                            { index: 4, value: 'CUSOTMER ID', style: { fontColor: '#C67878', bold: true } },
+                            { index: 4, value: 'CUSTOMER ID', style: { fontColor: '#C67878', bold: true } },
                             { index: 5, value: 'TERMS', width: 150, style: { fontColor: '#C67878', bold: true } }
                         ]
                     },

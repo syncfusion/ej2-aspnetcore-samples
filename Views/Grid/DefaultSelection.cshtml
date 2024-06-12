@@ -7,14 +7,16 @@
 @section ControlsSection{
     <div class="col-lg-8 control-section">
         <div class="control-wrapper">
-            <ejs-grid id="Grid" dataSource="ViewBag.datasource" allowSelection="true" allowSorting="true" rowSelecting="selectingEvent" cellSelecting="selectingEvent">
+            <ejs-grid id="Grid" dataSource="ViewBag.datasource" allowSelection="true" allowSorting="true" rowSelecting="selectingEvent" cellSelecting="selectingEvent" allowFiltering="true" toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })">
                 <e-grid-selectionsettings type="Multiple"></e-grid-selectionsettings>
+                <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
+                <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true"></e-grid-editSettings>
                 <e-grid-columns>
 
-                    <e-grid-column field="EmployeeID" headerText="Employee ID" textAlign="Right" width="150"></e-grid-column>
-                    <e-grid-column field="FirstName" headerText="First Name" width="120" ></e-grid-column>
+                    <e-grid-column field="EmployeeID" headerText="Employee ID" textAlign="Right" width="150" isPrimaryKey="true" validationRules="@(new { required=true, number=true})"></e-grid-column>
+                    <e-grid-column field="FirstName" headerText="First Name" width="120" validationRules="@(new { required=true, minLength=5})" ></e-grid-column>
                     <e-grid-column field="Title" headerText="Title" width="170"></e-grid-column>
-                    <e-grid-column field="HireDate" headerText="Hire Date" format='yMd' textAlign="Right" width="135"></e-grid-column>
+                    <e-grid-column field="HireDate" headerText="Hire Date" format='yMd' textAlign="Right" width="135" editType="datepickeredit"></e-grid-column>
                 </e-grid-columns>
             </ejs-grid>
         </div>
@@ -54,17 +56,17 @@
 </div>
 
    <script>
-       function modeChange(args) { 
+       function modeChange(args) {
 
            var grid = document.getElementById("Grid").ej2_instances[0];
            grid.selectionSettings.mode = this.value;
        }
 
-       function selectionChange(args) { 
-           var grid = document.getElementById("Grid").ej2_instances[0];           
+       function selectionChange(args) {
+           var grid = document.getElementById("Grid").ej2_instances[0];
            grid.selectionSettings.type = this.value;
        }
-	   
+
 	   function selectingEvent(e) {
 	   var grid = document.getElementById("Grid").ej2_instances[0];
 		if (grid.selectionSettings.allowColumnSelection) {
@@ -101,18 +103,18 @@
 @section Description{
     <div id="description">
 		<p>
-			Selection provides an interactive support to highlight the row or cell that you select. 
+			Selection provides an interactive support to highlight the row or cell that you select.
 			Selection can be done through a simple
 			Mouse down or Keyboard interaction. To enable selection, set <code>
 			allowSelection</code> as true.
 		</p>
-		<p>Grid supports two types of selection which can be set using 
+		<p>Grid supports two types of selection which can be set using
 			<code>selectionSettings->type</code> property. They are,</p>
 		<ul>
 			<li><code>Single</code> - Enabled by default. Allows the user to select single row/cell at a time.</li>
 			<li><code>Multiple</code> - Allows the user to select more than one row/cell/column at a time.</li>
 		</ul>
-		<p>Also, supports three modes of selection which can be set using 
+		<p>Also, supports three modes of selection which can be set using
 			<code>selectionSettings->mode</code> property. They are,
 		</p>
         <ul>
@@ -124,13 +126,13 @@
             </li>
         </ul>
 		<p>To perform the column selection, enable the <code><a target="_blank" class="code"
-			href="https://ej2.syncfusion.com/javascript/documentation/api/grid/selectionSettings/#allowcolumnselection" aria-label="allowColumnSelection">
-			selectionSettings->allowColumnSelection 
+			href="https://ej2.syncfusion.com/javascript/documentation/api/grid/selectionSettings/#allowcolumnselection" aria-label="Navigate to the allowColumnSelection property reference for ASP.NET Core Grid selectionSettings">
+			selectionSettings->allowColumnSelection
         </a></code> property.</p>
-		<p>To perform the multi-selection, hold <strong>CTRL</strong> key and click the desired rows/cells/columns. 
+		<p>To perform the multi-selection, hold <strong>CTRL</strong> key and click the desired rows/cells/columns.
 		To select range of rows/cells/columns, hold <strong>SHIFT</strong> key and click the rows/cells/columns.</p>
-		<p>While using the Grid in a touch device environment, there is an option for multi-selection 
-			through a single tap on the row and it will show a popup with the multi-selection symbol. 
+		<p>While using the Grid in a touch device environment, there is an option for multi-selection
+			through a single tap on the row and it will show a popup with the multi-selection symbol.
 			Tap the icon to enable multi-selection in a single tap.
 		</p>
 		<p>In this demo, select the selection type and selection mode from the properties panel to do the selection.
@@ -138,7 +140,7 @@
 	</div>
 }
 @section Title{
-                    <title>ASP.NET Core Data Grid Default Selection Example - Syncfusion Demos </title> 
+                    <title>ASP.NET Core Data Grid Default Selection Example - Syncfusion Demos </title>
                 }
 @section Header{
                     <h1 class='sb-sample-text'>Example of Default Selection in ASP.NET Core Data Grid Control</h1>

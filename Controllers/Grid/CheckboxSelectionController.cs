@@ -18,8 +18,8 @@ namespace EJ2CoreSampleBrowser.Controllers.Grid
     {
         public IActionResult CheckboxSelection()
         {
-            var inventor = InventorDetails.GetAllRecords();
-            ViewBag.datasource = inventor;
+            var order = OrdersDetails.GetAllRecords();
+            ViewBag.datasource = order;
             return View();
         }
     }

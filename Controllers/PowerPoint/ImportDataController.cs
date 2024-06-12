@@ -35,6 +35,15 @@ namespace EJ2CoreSampleBrowser.Controllers
                 order1.Add(new DataPosition() { text = "Bottom" });
                 ViewBag.ddData = order1;
             }
+            else if(ViewBag.ddData == null)
+            {
+                if (order1.Count == 0)
+                {
+                    order1.Add(new DataPosition() { text = "Top" });
+                    order1.Add(new DataPosition() { text = "Bottom" });
+                }
+                ViewBag.ddData = order1;
+            }
             return View();
         }
         /// <summary>

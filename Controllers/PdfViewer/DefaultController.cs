@@ -285,6 +285,39 @@ namespace EJ2CoreSampleBrowser.Controllers.PdfViewer
             string documentBase = pdfviewer.GetDocumentAsBase64(jsonObject);
             return Content(documentBase);
         }
+
+        [AcceptVerbs("Post")]
+        [HttpPost]
+        [Route("api/[controller]/FlattenDownload")]
+        public IActionResult FlattenDownload([FromBody] Dictionary<string, string> jsonObject)
+        {
+            //Initialize the PDF Viewer object with memory cache object
+#if REDIS
+            PdfRenderer pdfviewer = new PdfRenderer(_cache,_distributedCache);
+#else
+            PdfRenderer pdfviewer = new PdfRenderer(_cache);
+#endif
+            string documentBase = pdfviewer.GetDocumentAsBase64(jsonObject);
+
+            string base64String = documentBase.Split(new string[] { "data:application/pdf;base64," }, StringSplitOptions.None)[1];
+            byte[] byteArray = Convert.FromBase64String(base64String);
+            PdfLoadedDocument loadedDocument = new PdfLoadedDocument(byteArray);
+            if (loadedDocument.Form != null)
+            {
+                loadedDocument.FlattenAnnotations();
+                loadedDocument.Form.Flatten = true;
+            }
+            //Save the PDF document.
+            MemoryStream stream = new MemoryStream();
+            //Save the PDF document
+            loadedDocument.Save(stream);
+            stream.Position = 0;
+            //Close the document
+            loadedDocument.Close(true);
+            string updatedDocumentBase = Convert.ToBase64String(stream.ToArray());
+            documentBase = "data:application/pdf;base64," + updatedDocumentBase;
+            return Content(documentBase);
+        }
         [AcceptVerbs("Post")]
         [HttpPost]
         [Route("api/[controller]/PrintImages")]

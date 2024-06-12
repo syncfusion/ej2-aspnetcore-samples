@@ -19,7 +19,7 @@ namespace EJ2CoreSampleBrowser.Controllers
         public IActionResult PreviewMode()
         {
             ViewBag.items = new object[] {"Bold", "Italic", "StrikeThrough", "|",
-                "Formats", "OrderedList", "UnorderedList", "Superscript", "Subscript", "|", "CreateTable",
+                "Formats", "Blockquote", "OrderedList", "UnorderedList", "Superscript", "Subscript", "|", "CreateTable",
                 "CreateLink", "Image", "|", "Undo", "Redo"};
             return View();
         }

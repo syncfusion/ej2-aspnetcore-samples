@@ -1,11 +1,13 @@
 <link href="~/styles/Grid/gridfont.css" rel="stylesheet" />
 @section ControlsSection{
     <div class="control-section">
-        <ejs-grid id="Grid" dataSource="ViewBag.datasource" allowSorting="true">
+        <ejs-grid id="Grid" dataSource="ViewBag.datasource" allowSorting="true" allowFiltering="true" toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })">
+            <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
+            <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true"></e-grid-editSettings>
             <e-grid-columns>
-                <e-grid-column field="EmployeeID" headerText="Employee ID" headerTemplate="#employeetemplate" textAlign="Right" width="120"></e-grid-column>
-                <e-grid-column field="FirstName" headerText="First Name" width="140"></e-grid-column>
-                <e-grid-column field="BirthDate" headerText="Birth Date" headerTemplate="#datetemplate" format='yMd' textAlign="Right" width="130"></e-grid-column>
+                <e-grid-column field="EmployeeID" headerText="Employee ID" headerTemplate="#employeetemplate" textAlign="Right" width="120" isPrimaryKey="true" validationRules="@(new { required=true, number=true})"></e-grid-column>
+                <e-grid-column field="FirstName" headerText="First Name" width="140" validationRules="@(new { required=true, minLength=5})"></e-grid-column>
+                <e-grid-column field="BirthDate" headerText="Birth Date" headerTemplate="#datetemplate" format='yMd' textAlign="Right" width="130" editType="datepickeredit"></e-grid-column>
                 <e-grid-column field="City" headerText="City" width="120"></e-grid-column>
                 <e-grid-column field="Country" width="140"></e-grid-column>
             </e-grid-columns>

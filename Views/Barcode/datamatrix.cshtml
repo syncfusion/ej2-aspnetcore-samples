@@ -78,18 +78,18 @@
                 </div>
                 <div class="row sb-child-row">
                     <div>
-                        <div class="col-xs-2 top" style="padding-left: 0px;padding-right: 20px;">
+                        <div class="col-xs-2 top" style="padding-left: 0px;padding-right: 20px;padding-top: 12px;">
                             Width
                         </div>
-                        <div class="col-xs-3" style="width: 33%;padding-left: 0px">
+                        <div class="col-xs-3" style="width: 33%;padding-left: 0px;padding-top: 12px;">
                             <ejs-numerictextbox id="barcodewidth" format="###.##" value="200" enabled="true" step="2" min="150" max="250" change="barcodewidthChange"></ejs-numerictextbox>
                         </div>
                     </div>
                     <div>
-                        <div class="rightProperty">
+                        <div class="rightProperty" style="padding-top: 12px;">
                             Height
                         </div>
-                        <div class="col-xs-3" style="width: 33%;padding-left: 0px;">
+                        <div class="col-xs-3" style="width: 33%;padding-left: 0px;padding-top: 12px;">
                             <ejs-numerictextbox id="barcodeheight" format="###.##" value="150" enabled="true" step="2" min="100" max="200" change="barcodeheightChange"></ejs-numerictextbox>
                         </div>
                     </div>
@@ -320,15 +320,39 @@
 
         #password-info {
             position: absolute;
-            margin-top: 30px;
         }
     </style>
     <script type="text/javascript">
         function barcodeValueChange(args) {
             var barcode = document.getElementById("container").ej2_instances[0];
             barcode.value = args.value;
+            checkASCIINumeric();
         }
+        function checkASCIINumeric() {
+            var barcode = document.getElementById("container").ej2_instances[0];
+            var options = {
 
+                rules: {
+                    'password': { minLength: [customFn, 'Invalid input'] }
+                },
+                keyup() {
+                    if (canShowError) {
+                        canShowError = false;
+                    }
+                },
+                focusout(args) {
+                    barcode.value = (document.getElementById('barcodeValue')).value;
+                    barcode.dataBind();
+                },
+            };
+            var formObject = new ej.inputs.FormValidator('#form-element', options);
+            canShowError = false;
+            formObject.validate();
+            if (barcode.encoding === "ASCIINumeric" && isNaN(barcode.value)) {
+                canShowError = true;
+                formObject.validate();
+            }
+        }
         function barcodewidthChange(args) {
             var barcode = document.getElementById("container").ej2_instances[0];
             barcode.width = args.value;
@@ -431,7 +455,8 @@
         }
         function encodingChange(args) {
             var barcode = document.getElementById("container").ej2_instances[0];
-            barcode.encoding = args.itemData.value
+            barcode.encoding = args.itemData.value;
+            checkASCIINumeric();
         }
 
     </script>

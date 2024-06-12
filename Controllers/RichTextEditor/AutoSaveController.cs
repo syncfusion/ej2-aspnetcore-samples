@@ -18,7 +18,7 @@ namespace EJ2CoreSampleBrowser.Controllers
     {
         public IActionResult AutoSave()
         {          
-              ViewBag.items = new[] { "Bold", "Italic", "Underline", "|", "Formats", "Alignments", 
+              ViewBag.items = new[] { "Bold", "Italic", "Underline", "|", "Formats", "Alignments", "Blockquote",
                 "OrderedList", "UnorderedList", "|", "CreateLink", "Image", "|", "SourceCode", "Undo", "Redo" };
             return View();
         }

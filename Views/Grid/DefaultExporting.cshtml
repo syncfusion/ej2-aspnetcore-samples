@@ -7,15 +7,16 @@
 @section ControlsSection{
     <div class="col-lg-9 control-section">
         <div class="control-section">
-            <ejs-grid id="Grid" dataSource="ViewBag.datasource" allowExcelExport="true"  allowGrouping="true" allowSorting="true" allowMultiSorting="true" allowPdfExport="true" toolbarClick="toolbarClick" ExcelQueryCellInfo="exportQueryCellInfo"
+            <ejs-grid id="Grid" dataSource="ViewBag.datasource" allowExcelExport="true"  allowGrouping="true" allowFiltering="true" allowSorting="true" allowMultiSorting="true" allowPdfExport="true" toolbarClick="toolbarClick" ExcelQueryCellInfo="exportQueryCellInfo"
                       pdfQueryCellInfo="exportQueryCellInfo" dataBound="gridDataBound" toolbar="@(new List<string>() {"ExcelExport", "PdfExport", "CsvExport" })" height="350">
+                <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
                 <e-grid-columns>
                     <e-grid-column headerText="Employee Image" template="#template1" width="150" textAlign="Center"></e-grid-column>
                     <e-grid-column field="FirstName" headerText="Name" width="130"></e-grid-column>
                     <e-grid-column field="Title" headerText="Designation" width="180"></e-grid-column>
                     <e-grid-column headerText="Email ID" template="#template2" width="180"></e-grid-column>
                     <e-grid-column field="HireDate" headerText="Hire Date" format='yMd' textAlign="Right" width="135"></e-grid-column>
-                    <e-grid-column field="Address" width="180"></e-grid-column>
+                    <e-grid-column field="Address" allowGrouping="false" width="180"></e-grid-column>
                 </e-grid-columns>
             </ejs-grid>
         </div>
@@ -132,12 +133,12 @@
                 In this demo, while exporting, we have included images and hyperlinks from the template columns i.e <strong><i>Image</i></strong> and <strong><i>URL</i></strong>
                 using the <code>
                     <a target="_blank" class="code"
-                       href="https://ej2.syncfusion.com/documentation/api/grid/#excelquerycellinfo" aria-label="excelQueryCellInfo">
+                       href="https://ej2.syncfusion.com/documentation/api/grid/#excelquerycellinfo" aria-label="Navigate to the excelQueryCellInfo event reference for ASP.NET Core Grid control">
                         excelQueryCellInfo
                     </a>
                 </code> and <code>
                     <a target="_blank" class="code"
-                       href="https://ej2.syncfusion.com/documentation/api/grid/#pdfquerycellinfo" aria-label="pdfQueryCellInfo">
+                       href="https://ej2.syncfusion.com/documentation/api/grid/#pdfquerycellinfo" aria-label="Navigate to the pdfQueryCellInfo event reference for ASP.NET Core Grid control">
                         pdfQueryCellInfo
                     </a>
                 </code> events. The ExcelExport, PdfExport, and CsvExport items are defined in the toolbar,
@@ -151,7 +152,7 @@
         </div>
     }
     @section Title{
-                    <title>ASP.NET Core Data Grid Default Exporting Example - Syncfusion Demos </title> 
+                    <title>ASP.NET Core Data Grid Default Exporting Example - Syncfusion Demos </title>
                 }
     @section Header{
                     <h1 class='sb-sample-text'>Example of Default Exporting in ASP.NET Core Data Grid Control</h1>

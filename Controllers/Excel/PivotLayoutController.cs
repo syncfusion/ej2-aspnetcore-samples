@@ -22,7 +22,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Excel
         //
         // GET: /PivotTable/
 
-        public ActionResult PivotLayout(string button, string LayoutOption)
+        public ActionResult PivotLayout(string button, string layoutOption, string fileType)
         {
             if (button == null)
                 return View();
@@ -39,12 +39,12 @@ namespace EJ2CoreSampleBrowser.Controllers.Excel
             IWorkbook workbook = null;
             application.DefaultVersion = ExcelVersion.Excel2016;
 
-            if (button == "Convert Pivot Table")
+            if (fileType == "pdf")
             {
                 FileStream inputStream = new FileStream(basePath + @"/XlsIO/PivotLayout.xlsx", FileMode.Open, FileAccess.Read);
                 workbook = application.Workbooks.Open(inputStream);
 
-                CreatePivotTable(workbook, LayoutOption);
+                CreatePivotTable(workbook, layoutOption);
 
                 //Intialize the XlsIORenderer Class
                 XlsIORenderer renderer = new XlsIORenderer();
@@ -76,7 +76,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Excel
                 FileStream inputStream = new FileStream(basePath + @"/XlsIO/PivotLayout.xlsx", FileMode.Open, FileAccess.Read);
                 workbook = application.Workbooks.Open(inputStream);
 
-                CreatePivotTable(workbook, LayoutOption);
+                CreatePivotTable(workbook, layoutOption);
 
                 IPivotTable pivotTable = workbook.Worksheets[1].PivotTables[0];
                 pivotTable.Layout();
@@ -156,6 +156,9 @@ namespace EJ2CoreSampleBrowser.Controllers.Excel
                 IPivotCellFormat cellFormat2 = pivotTable.GetCellFormat("A31:C32");
                 cellFormat2.BackColorRGB = Color.FromArgb(255, 244, 176, 132);
             }
+
+            //Apply the show values row option in pivot table.
+            pivotTable.Options.ShowValuesRow = true;
 
             //Apply built in style.
             pivotTable.BuiltInStyle = PivotBuiltInStyles.PivotStyleMedium9;

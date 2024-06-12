@@ -6,6 +6,7 @@ window.samplesList = [
    {
         "name": "PDF",
         "directory": "Pdf",
+		"type": "update",
         "category": "Document Processing Library",
         "samples": [
             {
@@ -14,7 +15,7 @@ window.samplesList = [
                 "category": "PDF",
                 "order": 0,
                 "component": "PDF",
-                "dir": "Pdf",
+                "dir": "Pdf",                
                 "parentId": "046",
                 "uid": "00464600"
             },
@@ -470,6 +471,7 @@ window.samplesList = [
                 "order": 14,
                 "component": "PDF",
                 "dir": "Pdf",
+                 "type": "update",
                 "parentId": "046",
                 "uid": "00464633"
             },
@@ -504,8 +506,8 @@ window.samplesList = [
                 "uid": "00464636"
             },
             {
-                "url": "ImportAndStamp",
-                "name": "Import and Stamp",
+                "url": "WatermarkPDF",
+                "name": "Watermark PDF",
                 "category": "Modify Documents",
                 "order": 14,
                 "component": "PDF",
@@ -597,7 +599,6 @@ window.samplesList = [
               "url": "MultiFormatViewer",
               "name": "Multi-Format Viewer",
               "category": "File Management",
-              "type": "new",
               "order": 2,
               "component": "PdfViewer",
               "dir": "PdfViewer",
@@ -613,7 +614,7 @@ window.samplesList = [
               "dir": "PdfViewer",
               "parentId": "048",
               "uid": "0048483",
-              "type": "new"
+              "type": "update",
           },
           {
               "url": "CustomToolbar",
@@ -634,42 +635,35 @@ window.samplesList = [
               "dir": "PdfViewer",
               "parentId": "048",
               "uid": "0048485",
-              "type": "new"
           },
           {
               "url": "RightToLeft",
               "name": "Right To Left",
               "category": "Localization",
-
               "order": 5,
               "component": "PdfViewer",
               "dir": "PdfViewer",
               "parentId": "048",
-
               "uid": "0048486"
           },
           {
               "url": "FormFilling",
               "name": "Form Filling",
               "category": "PDF Form",
-
               "order": 6,
               "component": "PdfViewer",
               "dir": "PdfViewer",
               "parentId": "048",
-
               "uid": "0048487"
           },
           {
               "url": "FormDesigner",
               "name": "Form Designer",
               "category": "PDF Form",
-
               "order": 6,
               "component": "PdfViewer",
               "dir": "PdfViewer",
               "parentId": "048",
-
               "uid": "0048488"
           },
           {
@@ -686,7 +680,6 @@ window.samplesList = [
               "url": "HandwrittenSignature",
               "name": "Handwritten Signature",
               "category": "Signature",
-
               "order": 8,
               "component": "PdfViewer",
               "dir": "PdfViewer",

@@ -1,4 +1,4 @@
-@using Syncfusion.EJ2.Diagrams;
+﻿@using Syncfusion.EJ2.Diagrams;
 @section ControlsSection{
 
     <div class="control-section">
@@ -24,7 +24,8 @@
             </ejs-diagram>
         </div>
         <ejs-uploader id="fileupload" success="onUploadSuccess" showFileList="false">
-            <e-uploader-asyncsettings saveUrl="https://aspnetmvc.syncfusion.com/services/api/uploadbox/Save" removeUrl="https://aspnetmvc.syncfusion.com/services/api/uploadbox/Remove">
+            <e-uploader-asyncsettings saveUrl="https://ej2services.syncfusion.com/production/web-services/api/FileUploader/Save"
+                removeUrl="https://ej2services.syncfusion.com/production/web-services/api/FileUploader/Remove">
             </e-uploader-asyncsettings>
         </ejs-uploader>
     </div>
@@ -96,6 +97,13 @@
         .e-open::before {
             content: "\e713";
         }
+        .e-toggle-palette::before {
+            content: "\e700";
+        }
+
+        #palette-icon {
+            display: none;
+        }
         /* These styles are used for aligning palette and diagram */
         .sb-mobile-palette {
             width: 240px;
@@ -157,6 +165,7 @@
 
             #palette-icon {
                 font-size: 20px;
+                display: block;
             }
         }
 
@@ -289,6 +298,11 @@
         This example shows how to drag-and-drop shapes and connectors from symbol palette to build diagrams. You can save the diagram as text files and edit the pre-saved diagrams. The <code>saveDiagram</code> method can be used to save the diagram as string. The <code>loadDiagram</code> method can be used to load the diagram from a string. In this example, context menu and undo/redo features are enabled.
     </p>
     <p> The diagram component’s features are segregated into individual feature-wise modules. To enable undo/redo support, inject <code>UndoRedo</code> module using <code>Diagram.Inject(UndoRedo)</code> method. To enable  context menu, inject <code>DiagramContextMenu</code> module using <code>Diagram.Inject(DiagramContextMenu)</code> method.</p>
+    <p>
+        The uploader API control is used to load the JSON data into a diagram asynchronously. Define the properties
+        <code>saveUrl</code>, which will receive the uploaded files and save them on the server, and <code>removeUrl</code>,
+        which will receive the file information and handle the removal of files from the server.
+    </p>
 }
 @section Title{
                     <title>ASP.NET Core Diagram Save and Load Example - Syncfusion Demos </title> 

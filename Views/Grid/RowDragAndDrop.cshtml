@@ -1,26 +1,30 @@
 @section ControlsSection{
 <div class="control-section">
     <div class="col-lg-6">
-        <ejs-grid id="Grid" dataSource="ViewBag.datasource"  allowRowDragAndDrop="true" allowSorting="true" allowSelection="true" allowPaging="true">
+        <ejs-grid id="Grid" dataSource="ViewBag.datasource"  allowRowDragAndDrop="true" allowSorting="true" allowSelection="true" allowPaging="true" allowFiltering="true" toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })">
             <e-grid-selectionsettings type="Multiple"></e-grid-selectionsettings>
             <e-grid-pagesettings pageCount="1" pageSize="12"></e-grid-pagesettings>
             <e-grid-rowdropsettings targetID="DestGrid"></e-grid-rowdropsettings>
+            <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
+            <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true"></e-grid-editSettings>
             <e-grid-columns>
-                <e-grid-column field="OrderID" headerText="Order ID" textAlign="Right" width="120"></e-grid-column>
-                <e-grid-column field="CustomerID" headerText="Customer ID" width="135"></e-grid-column>
-                <e-grid-column field="OrderDate" headerText="Order Date" format="yMd" width="130"></e-grid-column>
+                <e-grid-column field="OrderID" headerText="Order ID" textAlign="Right" width="120" isPrimaryKey="true" validationRules="@(new { required=true, number=true})"></e-grid-column>
+                <e-grid-column field="CustomerID" headerText="Customer ID" width="135" validationRules="@(new { required=true, minLength=5})"></e-grid-column>
+                <e-grid-column field="OrderDate" headerText="Order Date" format="yMd" width="130" editType="datepickeredit"></e-grid-column>
             </e-grid-columns>
         </ejs-grid>
     </div>
     <div class="col-lg-6">
-        <ejs-grid id="DestGrid"  allowRowDragAndDrop="true" allowSelection="true" allowSorting="true" allowPaging="true">
+        <ejs-grid id="DestGrid"  allowRowDragAndDrop="true" allowSelection="true" allowSorting="true" allowPaging="true" allowFiltering="true" toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })">
             <e-grid-selectionsettings type="Multiple"></e-grid-selectionsettings>
             <e-grid-pagesettings pageCount="1" ></e-grid-pagesettings>
             <e-grid-rowdropsettings targetID="Grid"></e-grid-rowdropsettings>
+            <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
+            <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true"></e-grid-editSettings>
             <e-grid-columns>
-                <e-grid-column field="OrderID" headerText="Order ID" textAlign="Right" width="120"></e-grid-column>
-                <e-grid-column field="CustomerID" headerText="Customer ID" width="135"></e-grid-column>
-                <e-grid-column field="OrderDate" headerText="Order Date" format="yMd" width="130"></e-grid-column>
+                <e-grid-column field="OrderID" headerText="Order ID" textAlign="Right" width="120" isPrimaryKey="true" validationRules="@(new { required=true, number=true})"></e-grid-column>
+                <e-grid-column field="CustomerID" headerText="Customer ID" width="135" validationRules="@(new { required=true, minLength=5})"></e-grid-column>
+                <e-grid-column field="OrderDate" headerText="Order Date" format="yMd" width="130" editType="datepickeredit"></e-grid-column>
             </e-grid-columns>
         </ejs-grid>
         </div>

@@ -20,11 +20,11 @@ namespace EJ2CoreSampleBrowser.Controllers
         {
             var tool = new {
                 tooltipText = "Preview",
-                template = @"<button id='preview-code' class='e-tbar-btn e-control e-btn e-icon-btn'>
+                template = @"<button id='preview-code' class='e-tbar-btn e-control e-btn e-icon-btn'aria-label='Preview Code'>
                         <span class='e-btn-icon e-md-preview e-icons'></span></button>"
             };
            ViewBag.items = new object[] {"Bold", "Italic", "StrikeThrough", "|",
-                "Formats", "OrderedList", "UnorderedList", "Superscript", "Subscript", "|", "CreateTable",
+                "Formats", "Blockquote", "OrderedList", "UnorderedList", "Superscript", "Subscript", "|", "CreateTable",
                 "CreateLink", "Image", "|", tool
                 , "|", "Undo", "Redo"};
             return View();

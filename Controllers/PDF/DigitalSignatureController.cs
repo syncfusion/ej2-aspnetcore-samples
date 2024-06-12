@@ -35,20 +35,24 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
             string dataPath = string.Empty;
             dataPath = basePath + @"/PDF/";
 
-            if (submit == "Create Sign PDF")
+            if (submit == "Sign PDF")
             {
                 if (pdfdocument != null && pdfdocument.Length > 0 && certificate != null && certificate.Length > 0 && certificate.FileName.Contains(".pfx") && password != null && Location != null && Reason != null && Contact != null)
                 {
                     PdfLoadedDocument ldoc = new PdfLoadedDocument(pdfdocument.OpenReadStream());
-                    PdfCertificate pdfCert = new PdfCertificate(certificate.OpenReadStream(), password);                   
+                    PdfCertificate pdfCert = new PdfCertificate(certificate.OpenReadStream(), password);
+                    FileStream jpgFile = new FileStream(dataPath + "logo.png", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                    PdfBitmap bmp = new PdfBitmap(jpgFile);
                     PdfPageBase page = ldoc.Pages[0];
                     PdfSignature signature = new PdfSignature(ldoc, page, pdfCert, "Signature");
-                    signature.Bounds = new RectangleF(new PointF(5, 5), new SizeF(200,200));
+                    signature.Bounds = new RectangleF(new PointF(20,20), new SizeF(240, 70)); 
                     signature.ContactInfo = Contact;
                     signature.LocationInfo = Location;
                     signature.Reason = Reason;
                     SetCryptographicStandard(Cryptographic, signature);
                     SetDigest_Algorithm(Digest_Algorithm, signature);
+                    PdfGraphics graphics = signature.Appearance.Normal.Graphics;
+                    graphics.DrawImage(bmp, 0, 0);
                     MemoryStream stream = new MemoryStream();
                     ldoc.Save(stream);
                     stream.Position = 0;
@@ -79,28 +83,25 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
                 PdfSignature signature = new PdfSignature(page, pdfCert, "Signature");
                 FileStream jpgFile = new FileStream(dataPath + "logo.png", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
                 PdfBitmap bmp = new PdfBitmap(jpgFile);
-                signature.Bounds = new RectangleF(new PointF(5, 5), page.GetClientSize());
+                signature.Bounds = new RectangleF(new PointF(20, 20), new SizeF(240, 110));
                 signature.ContactInfo = "johndoe@owned.us";
                 signature.LocationInfo = "Honolulu, Hawaii";
                 signature.Reason = "I am author of this document.";
                 SetCryptographicStandard(Cryptographic, signature);
                 SetDigest_Algorithm(Digest_Algorithm, signature);
                 if (RadioButtonList2 == "Standard")
-                    signature.Certificated = true;
-                else
                     signature.Certificated = false;
+                else
+                    signature.Certificated = true;
                 PdfGraphics graphics = signature.Appearance.Normal.Graphics;
 
-                string validto = "Valid To: " + signature.Certificate.ValidTo.ToString();
-                string validfrom = "Valid From: " + signature.Certificate.ValidFrom.ToString();
+                string validto = " Valid To: " + signature.Certificate.ValidTo.ToString();
+                string validfrom = " Valid From: " + signature.Certificate.ValidFrom.ToString();
 
                 graphics.DrawImage(bmp, 0, 0);
 
-                doc.Pages[0].Graphics.DrawString(validfrom, font, pen, brush, 0, 90);
-                doc.Pages[0].Graphics.DrawString(validto, font, pen, brush, 0, 110);
-
-                doc.Pages[0].Graphics.DrawString(" Protected Document. Digitally signed Document.", font, pen, brush, 0, 130);
-                doc.Pages[0].Graphics.DrawString("* To validate Signature click on the signature on this page \n * To check Document Status \n click document status icon on the bottom left of the acrobat reader.", font, pen, brush, 0, 150);
+                doc.Pages[0].Graphics.DrawString(validfrom, font, pen, brush, 20, 90);
+                doc.Pages[0].Graphics.DrawString(validto, font, pen, brush, 20, 110);
 
                 // Save the pdf document to the Stream.
                 MemoryStream stream = new MemoryStream();
@@ -108,7 +109,7 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
                 doc.Save(stream);
 
                 //Close document
-                doc.Close();
+                doc.Close(true);
 
                 stream.Position = 0;
 

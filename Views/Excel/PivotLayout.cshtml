@@ -1,6 +1,6 @@
 @using Syncfusion.EJ2;
 @section ActionDescription{
-    This sample deomonstrates how to layout pivot table using XlsIO.
+    This sample demonstrates how to layout pivot table using XlsIO.
 }
 
 @section Meta{
@@ -23,36 +23,40 @@
 
 @section ControlsSection{
 <div class="control-section">
-    @{Html.BeginForm("PivotLayout", "Excel", FormMethod.Post);
+    @{Html.BeginForm("pivotlayout", "excel", FormMethod.Post);
         {
         <div class="tablediv">
             <div class="rowdiv">
                 <p style="font-weight:normal">
-                    Click the "Create Pivot Table" button to view the created Excel document. Please note that the Microsoft Excel viewer or Microsoft Excel is required to view the Excel document.
-                </p>
-                <p style="font-weight:normal">
-                    Click the "Convert Pivot Table" button to view the converted PDF document. PDF viewer is needed to view the converted PDF document.
+                    Choose the pivot table layout and file format type, then click the "Create Document" button to view the document in Excel or PDF. A PDF viewer is required to view the PDF document, and an Excel viewer is required to view the Excel document.
                 </p>
             </div>
             <br />
             <div class="rowdiv">
                 <div class="celldiv">
                     <div>
-						Layout options:
-						<input type="radio" id="Compact" name="LayoutOption" value="Compact" checked="checked" />
-						<label for="Compact" style="font-weight:normal">Compact</label>
-						&nbsp;
-						<input type="radio" id="Outline" name="LayoutOption" value="Outline" />
-						<label for="Outline" style="font-weight:normal">Outline</label>
-						&nbsp;
-						<input type="radio" id="Tabular" name="LayoutOption" value="Tabular" />
-						<label for="Tabular" style="font-weight:normal">Tabular</label>
+						Layout options
+                                <select name="layoutOption" id="layoutOption" style="width:auto;margin-left:1rem" class="e-dropdown-popup">
+                                    <option>Compact</option>
+                                    <option>Outline</option>
+                                    <option>Tabular</option>
+                                </select>
 					</div>
+                </div>
+                <br/>
+                <div class="celldiv">
+                    <div>
+                        File type
+                            <input type="radio" id="excel" name="fileType" value="xlsx" checked="checked" style="margin-left: 5rem;" />
+                            <label for="excel" style="font-weight:normal">XLSX</label>
+                            &nbsp;
+                            <input type="radio" id="pdf" name="fileType" value="pdf" />
+                            <label for="pdf" style="font-weight:normal">PDF</label>
+                    </div>
                 </div>
                 <br />
                 <div class="celldiv">
-                    <input id="createpivottable" class="e-btn" name="button" type="submit" value="Create Pivot Table" style="width: 200px;text-transform:capitalize" />
-                    <input id="convertpivottable" class="e-btn" name="button" type="submit" value="Convert Pivot Table" style="width: 200px;text-transform:capitalize" />
+                    <input id="createpivottable" class="e-btn" name="button" type="submit" value="Create Document" style="width: 200px;text-transform:capitalize" />
                 </div>
             </div>
         </div>

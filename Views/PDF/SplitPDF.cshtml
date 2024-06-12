@@ -1,6 +1,7 @@
-@section ControlsSection{
+@section ControlsSection {
     <div class="control-section">
-        @{ using (Html.BeginForm("SplitPDF", "Pdf", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        @{
+            using (Html.BeginForm("splitpdf", "pdf", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
 
                 <div class="tablediv" style="font-size:14px">
@@ -8,23 +9,62 @@
                     that Adobe Reader or its equivalent is required to view the resultant document.
                 </div>
                 <div id="errorlabel" value="error">
+                    <br />
                     <p style="color: #FF0000;">
                         @Html.Label("", (string)ViewBag.lab)
                 </div>
-                <br />
                 <div style="font-size:14px">
-                    <input type="file" name="file" value="PDF document to split" accept="application/pdf" />
+                    <input type="button" value="Choose File" onclick="openPage()">
+                    <input type="text" id="fileNameBox" value="SplitPDF.pdf" readonly="readonly" style="border:none" />
+                    <input type="file" name="file" id="fileUpload" accept="application/pdf" style="display:block;visibility:hidden;width:0;height:0;" />
                 </div>
-                <div style="padding-top:7px; font-size:14px">
-                    <text for="page index">Enter split page no</text>
-                    <input type="text" class="e-input" name="pageIndex" id="pageIndex" style="margin-left: 12px ; width:50px", value="1" />
+                <br />
+                <div style="font-size:14px;">
+                    Select the below options to split by:
+                </div>
+                <br />
+                <!-- Adding radio buttons for split options -->
+                <div style="font-size:14px">
+
+                    <label>
+                        <input type="radio" name="splitOption" value="fixedRange" checked /> Fixed Range
+                    </label>
+                    &nbsp;
+                    <label>
+                        <input type="radio" name="splitOption" value="fileCount" /> File Count
+                    </label>
+                    &nbsp;
+                    <label>
+                        <input type="radio" name="splitOption" value="pageCount" /> Page Count
+                    </label>
+                </div>
+                <br />
+
+                <!-- Inputs for Fixed Range -->
+                <div id="fixedRangeInputs" style="font-size:14px;">
+                    <text for="page index">Enter page ranges to split:  <br /> <br />From</text>
+                    <input type="text" class="e-input-form" name="startPageNumber" id="startPageNumber" style="margin-left: 12px ; width:50px" value="1" oninput="this.value = this.value.replace(/[^0-9]/g, '')" />
+                    <label style="margin-right: 10px;"></label>
+                    <text for="page index1">To</text>
+                    <input type="text" class="e-input-to" name="endPageNumber" id="endPageNumber" style="margin-left: 12px ; width:50px" value="1" oninput="this.value = this.value.replace(/[^0-9]/g, '')" />
+                </div>
+
+                <!-- Input for File Count -->
+                <div id="fileCountInput" style="font-size:14px; display:none;">
+                    <text for="fileCount">Enter the number of files to split:</text>
+                    <input type="text" class="e-input-form" name="fileCount" id="fileCount" style="margin-left: 12px ; width:50px" value="1" oninput="this.value = this.value.replace(/[^0-9]/g, '')" />
+                </div>
+
+                <!-- Input for Split by Page Count -->
+                <div id="pageCountInput" style="font-size:14px; display:none;">
+                    <text for="pageNoCount">Enter the number of pages to split:</text>
+                    <input type="text" class="e-input-form" name="pageNoCount" id="pageNoCount" style="margin-left: 12px ; width:50px" value="1" oninput="this.value = this.value.replace(/[^0-9]/g, '')" />
                 </div>
                 <br />
                 <div class="tablediv" style="font-size:14px">
                     <div class="rowdiv">
                         <div class="celldiv">
-                            <div>
-                                <br />
+                            <div>                                
                                 <input type="submit" class="e-btn" value="Split PDF" style="width: 150px; text-transform:capitalize" />
                             </div>
                         </div>
@@ -36,22 +76,74 @@
         }
     </div>
 }
-@section ActionDescription{
+<script>
+    function openPage() {
+        document.getElementById('fileUpload').click();
+        document.getElementById('fileUpload').addEventListener('change', readFile, false);
+    }
+    function readFile(evt) {
+        var upoadedFiles = evt.target.files;
+
+        filename = upoadedFiles[0].name;
+        document.getElementById('fileNameBox').value = filename;
+    }
+</script>
+@section ActionDescription {
     <div id="action-description" style="margin-top: 10px">
         This sample demonstrates how to split the pages of a PDF into multiple PDF documents, ensuring that their accessibility tags remain unchanged.
     </div>
 }
-@section Meta{
-                    <meta name="description" content="This example demonstrates the Split PDF in ASP.NET Core PDF library. Explore here for more details."/>
-                }
-@section Description{
+@section Meta {
+    <meta name="description" content="This example demonstrates the Split PDF in ASP.NET Core PDF library. Explore here for more details." />
+}
+@section Description {
     <div id="description" style="margin-top: 10px">
         This feature will be used to split the necessary pages from the PDF document, divide a large-sized PDF into smaller ones, and maintain their tags throughout the splitting process, among other functions.
     </div>
 }
-@section Title{
-                    <title>ASP.NET Core PDF library - Split PDF Example - Syncfusion Demos </title> 
+@section Title {
+    <title>ASP.NET Core PDF library - Split PDF Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Split PDF in ASP.NET Core PDF Library</h1>
+}
+
+<!-- JavaScript to handle the display of input fields based on radio button selection -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const splitOptions = document.querySelectorAll("input[name='splitOption']");
+        const fixedRangeInputs = document.getElementById("fixedRangeInputs");
+        const fileCountInput = document.getElementById("fileCountInput");
+        const pageCountInput = document.getElementById("pageCountInput");
+
+        // Initially display the Fixed Range input fields as the Fixed Range option is selected by default
+        fixedRangeInputs.style.display = "block";
+        fileCountInput.style.display = "none";
+        pageCountInput.style.display = "none";
+
+        splitOptions.forEach(option => {
+            option.addEventListener("change", function () {
+                if (this.checked) {
+                    if (this.value === "fixedRange") {
+                        fixedRangeInputs.style.display = "block";
+                        fileCountInput.style.display = "none";
+                        pageCountInput.style.display = "none";
+                        // Reset file count and page count inputs
+                        document.getElementById("fileCount").value = "";
+                        document.getElementById("pageNoCount").value = "";
+                    } else if (this.value === "fileCount") {
+                        fixedRangeInputs.style.display = "none";
+                        fileCountInput.style.display = "block";
+                        pageCountInput.style.display = "none";
+                                             
+                    } else if (this.value === "pageCount") {
+                        fixedRangeInputs.style.display = "none";
+                        fileCountInput.style.display = "none";
+                        pageCountInput.style.display = "block";
+                                                
+                    }
                 }
-@section Header{
-                    <h1 class='sb-sample-text'>Example of Split PDF in ASP.NET Core PDF Library</h1>
-                }
+            });
+        });
+    });
+</script>

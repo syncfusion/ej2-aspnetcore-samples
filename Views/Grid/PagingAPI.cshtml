@@ -2,12 +2,14 @@
     <div class="col-lg-8 control-section">
         <div class="control-wrapper">
             <div class="control-section">
-                <ejs-grid id="Grid" dataSource="ViewBag.datasource" locale="en-US" actionComplete="actionComplete" allowPaging="true" allowSorting="true">       
+                <ejs-grid id="Grid" dataSource="ViewBag.datasource" locale="en-US" actionComplete="actionComplete" allowPaging="true" allowSorting="true" allowFiltering="true" toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })">       
                     <e-grid-pageSettings pageCount="2"></e-grid-pageSettings>
+                    <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
+                    <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true"></e-grid-editSettings>
                     <e-grid-columns>
-                        <e-grid-column field="ProductID" headerText="Product ID" textAlign="Right" width="160"></e-grid-column>
-                        <e-grid-column field="ProductName" headerText="Product Name" width="170"></e-grid-column>
-                        <e-grid-column field="UnitPrice" headerText="Unit Price" format="C2" textAlign="Right" width="170"></e-grid-column>
+                        <e-grid-column field="ProductID" headerText="Product ID" textAlign="Right" width="160" isPrimaryKey="true" validationRules="@(new { required=true, number=true})"></e-grid-column>
+                        <e-grid-column field="ProductName" headerText="Product Name" width="170" validationRules="@(new { required=true, minLength=5})"></e-grid-column>
+                        <e-grid-column field="UnitPrice" headerText="Unit Price" format="C2" textAlign="Right" width="170" editType="numericedit"></e-grid-column>
                         <e-grid-column field="UnitsInStock" headerText="Units in Stock" textAlign="Right" width="170"></e-grid-column>
                     </e-grid-columns>
 

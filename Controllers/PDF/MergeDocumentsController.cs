@@ -25,7 +25,7 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
             return View();
         }
         [HttpPost]
-        public ActionResult MergeDocuments(string InsideBrowser, string OptimizeResources)
+        public ActionResult MergeDocuments(string InsideBrowser, string OptimizeResources, string MergeAccessibilityTags)
         {
             string basePath = _hostingEnvironment.WebRootPath;
             string dataPath = string.Empty;
@@ -42,10 +42,13 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
             object[] dobj = { doc1, doc2 };
             PdfDocument doc = new PdfDocument();
 
-            if (OptimizeResources == "OptimizeResources")
+            PdfMergeOptions mergeOption = new PdfMergeOptions();
+           
+            
+            if (MergeAccessibilityTags== "MergeAccessibilityTags" || OptimizeResources == "OptimizeResources")
             {
-                PdfMergeOptions mergeOption = new PdfMergeOptions();
-                mergeOption.OptimizeResources = true;
+                mergeOption.MergeAccessibilityTags = !string.IsNullOrEmpty(MergeAccessibilityTags)?true:false;
+                mergeOption.OptimizeResources = !string.IsNullOrEmpty(OptimizeResources) ? true : false;
                 PdfDocument.Merge(doc, mergeOption, dobj);
             }
             else

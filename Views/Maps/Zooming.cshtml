@@ -1,13 +1,12 @@
 @using Syncfusion.EJ2;
 @section ControlsSection{
     @{
-        var toolbars = new string[] { "Zoom", "ZoomIn", "ZoomOut", "Pan", "Reset" };
         var propertyPath = new[] { "continent" };
     }
     <div class="col-lg-8 control-section">
         <div id="maps">
             <ejs-maps id="maps" load="window.onMapLoad" loaded="onCreated">
-                <e-maps-zoomsettings enable="true" toolbars="toolbars" pinchZooming="true"></e-maps-zoomsettings>
+                <e-maps-zoomsettings enable="true" pinchZooming="true"></e-maps-zoomsettings>
                 <e-maps-legendsettings visible="false"></e-maps-legendsettings>
                 <e-maps-layers>
                     <e-maps-layer animationDuration="500" dataSource="ViewBag.random" shapeData="ViewBag.worldmap" shapeDataPath="continent" shapePropertyPath="propertyPath">
@@ -192,6 +191,7 @@
     @* custom code end *@
     window.onload = function () {
         window.maps = maps;
+        window.maps.zoomSettings.toolbarSettings.buttonSettings.toolbarItems = ['Zoom', 'ZoomIn', 'ZoomOut', 'Pan', 'Reset'];
         var slider = new ej.inputs.Slider(
             {
                 value: 500,

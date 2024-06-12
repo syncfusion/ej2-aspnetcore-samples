@@ -6,10 +6,6 @@
         var Xmaximum = new DateTime(2018, 6, 30);
         var yAxisLabel = new string[] { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
         var labelTextStyle = new { fontFamily = "inherit"};
-        var cellBorder = new
-        {
-            color = "white"
-        };
 
     }
     <div class="control-section">
@@ -29,7 +25,7 @@
                             <e-palette value="50" color="rgb(37, 78, 119)" label="50+ contributions"></e-palette>
                         </e-palettes>
                     </e-heatmap-palettesettings>
-                    <e-heatmap-cellsettings border="cellBorder" showLabel="false"></e-heatmap-cellsettings>
+                    <e-heatmap-cellsettings showLabel="false"></e-heatmap-cellsettings>
                     <e-heatmap-legendsettings position="Bottom" width="20%" showLabel="true" alignment="Near" labelDisplayType="None" textStyle="labelTextStyle" enableSmartLegend="true"></e-heatmap-legendsettings>
                     <e-heatmap-tooltipsettings>
                         <e-tooltipsettings-textstyle fontFamily="inherit"></e-tooltipsettings-textstyle>
@@ -44,6 +40,7 @@
             window.heatmap = args.heatmap;
             var selectedTheme = themeName ? themeName : 'Material';
              args.heatmap.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+            window.heatmap.cellSettings.border.color = selectedTheme.indexOf('dark') > -1 || selectedTheme.indexOf('highcontrast') > -1 ? '#000' : '#fff';
         }
         window.ontooltipRender = function (args) {
             var intl = new ej.base.Internationalization();

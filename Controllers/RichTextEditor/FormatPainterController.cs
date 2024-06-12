@@ -22,7 +22,7 @@ namespace EJ2CoreSampleBrowser.Controllers.RichTextEditor
             ViewBag.Items = new object[] {"FormatPainter", "Bold", "Italic", "Underline", "StrikeThrough", "SuperScript", "SubScript", "|",
                 "FontName", "FontSize", "FontColor", "BackgroundColor",
                 "LowerCase", "UpperCase", "|",
-                "Formats", "Alignments", "|", "OrderedList", "UnorderedList", "|",
+                "Formats", "Alignments", "Blockquote", "|", "OrderedList", "UnorderedList", "|",
                 "Outdent", "Indent", "|",
                 "CreateLink", "Image", "Video", "Audio", "CreateTable", "|",
                 "SourceCode", "Undo", "Redo"};

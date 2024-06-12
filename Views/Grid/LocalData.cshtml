@@ -1,14 +1,16 @@
 @section ControlsSection{
     <div class="control-section">
-        <ejs-grid id="Grid" dataSource="ViewBag.datasource" allowPaging="true" allowSorting="true" >
+        <ejs-grid id="Grid" dataSource="ViewBag.datasource" allowPaging="true" allowSorting="true" allowFiltering="true" toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })" >
             <e-grid-pagesettings pageCount="5"></e-grid-pagesettings>
+            <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
+            <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true"></e-grid-editSettings>
             <e-grid-columns>
-                <e-grid-column field="OrderID" headerText="Order ID" textAlign="Right" width="120"></e-grid-column>
-                <e-grid-column field="CustomerID" headerText="Customer Name" width="150"></e-grid-column>
-                <e-grid-column field="OrderDate" headerText=" Order Date" textAlign="Right" format="yMd" width="130"></e-grid-column>
-                <e-grid-column field="Freight" headerText="Freight" textAlign="Right" format="C2" width="120"></e-grid-column>
-                <e-grid-column field="ShippedDate" headerText="Shipped Date" textAlign="Right" format="yMd" width="140"></e-grid-column>                
-                <e-grid-column field="ShipCountry" headerText="Ship Country" width="150"></e-grid-column>
+                <e-grid-column field="OrderID" headerText="Order ID" textAlign="Right" width="120" isPrimaryKey="true" validationRules="@(new { required=true, number=true})"></e-grid-column>
+                <e-grid-column field="CustomerID" headerText="Customer Name" width="150" validationRules="@(new { required=true, minLength=5})"></e-grid-column>
+                <e-grid-column field="OrderDate" headerText=" Order Date" textAlign="Right" format="yMd" width="130" editType="datepickeredit"></e-grid-column>
+                <e-grid-column field="Freight" headerText="Freight" textAlign="Right" format="C2" width="120" editType="numericedit" validationRules="@(new { required=true, min=0})"></e-grid-column>
+                <e-grid-column field="ShippedDate" headerText="Shipped Date" textAlign="Right" format="yMd" width="140" editType="datepickeredit"></e-grid-column>                
+                <e-grid-column field="ShipCountry" headerText="Ship Country" width="150" editType="dropdownedit"></e-grid-column>
             </e-grid-columns>
 
         </ejs-grid>

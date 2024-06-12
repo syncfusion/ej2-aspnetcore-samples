@@ -1,51 +1,36 @@
-@using Syncfusion.EJ2
+﻿@using Syncfusion.EJ2
+
 @section ControlsSection{
     <div class="control-section">
         <div class="control-wrapper">
-            <ejs-richtexteditor id="defaultRTE" showCharCount="true" actionBegin="handleFullScreen" actionComplete="actionCompleteHandler" maxLength="2000" created="created" enableTabKey="true" >
-                <e-content-template>
-                    <div>
-                        <p>The Rich Text Editor is a WYSIWYG ('what you see is what you get') editor useful to create and edit content and return the valid <a href='https://ej2.syncfusion.com/aspnetcore/documentation/rich-text-editor/formation/?no-cache=1#markdown-editor'>HTML markup</a> or <a href='https://ej2.syncfusion.com/aspnetcore/documentation/rich-text-editor/formation/?no-cache=1#html-editor'>markdown</a> of the content</p>
-                        <p><b> Toolbar </b></p>
-                        <ol>
-                            <li>
-                                <p> The Toolbar contains commands to align the text, insert a link, insert an image, insert list, undo / redo operations, HTML view, etc </p>
-                            </li>
-                            <li>
-                                <p> The Toolbar is fully customizable </p>
-                            </li>
-                        </ol>
-                        <p><b> Links </b></p>
-                        <ol>
-                            <li>
-                                <p> You can insert a hyperlink with its corresponding dialog</p>
-                            </li>
-                            <li>
-                                <p> Attach a hyperlink to the displayed text. </p>
-                            </li>
-                            <li>
-                                <p> Customize the quick toolbar based on the hyperlink </p>
-                            </li>
-                        </ol>
-                        <p><b> Image.</b></p>
-                        <ol>
-                            <li>
-                                <p> Allows you to insert images from an online source as well as the local computer</p>
-                            </li>
-                            <li>
-                                <p> You can upload an image</p>
-                            </li>
-                            <li>
-                                <p> Provides an option to customize the quick toolbar for an image </p>
-                            </li>
-                        </ol>
-                        <img alt='Logo' src="@Url.Content("~/images/RichTextEditor/RTEImage-Feather.png")" style='width: 300px' />
-                    </div>
-                </e-content-template>
-                <e-richtexteditor-toolbarsettings items="@ViewBag.tools"></e-richtexteditor-toolbarsettings>
+            <ejs-richtexteditor id="allToolsRTE" value="@ViewBag.rteValue" showCharCount="true" actionBegin="actionBeginHandler" actionComplete="actionCompleteHandler" beforeQuickToolbarOpen="quickToolbarOpenHandler" quickToolbarClose="quickToolbarClosehandler" created="created" enableTabKey="true" enableXhtml="true"
+                placeholder="Type something or use @@ to tag a user..." >
+                <e-richtexteditor-toolbarsettings items="@ViewBag.tools" ></e-richtexteditor-toolbarsettings>
                 <e-richtexteditor-quicktoolbarsettings table="@ViewBag.table" showOnRightClick="true"></e-richtexteditor-quicktoolbarsettings>
                 <e-richtexteditor-filemanagersettings enable="true" path="/Pictures/Food" ajaxSettings="@ViewBag.ajaxSettings"></e-richtexteditor-filemanagersettings>
+                <e-richtexteditor-insertimagesettings saveUrl="@ViewBag.saveUrl" removeUrl="@ViewBag.removeUrl" path="@ViewBag.path"></e-richtexteditor-insertimagesettings>
             </ejs-richtexteditor>
+
+            <ejs-mention id="editorMention" dataSource="@ViewBag.mentionData" allowSpaces="true" popupHeight="200px" popupWidth="250px" sortOrder="Ascending"
+                target="#allToolsRTE_rte-edit-view" created="mentionCreated" 
+                itemTemplate="<div class='editor-mention-item-template'>
+                    <div class='em-header'>
+                        <div class='em-avatar' style='background-color: ${BgColor}; color: ${Color};'>
+                            <div class='em-initial'>${Initial}</div>
+                        </div>
+                    </div>
+                    <div class='em-content'>
+                        <div class='em-name'>${Name}</div>
+                        <div class='em-email'>${Email}</div>
+                    </div>
+                </div>" 
+                displayTemplate="<a href='mailto:${Email}' title='${Email}'>@@${Name}</a>">
+                <e-mention-fields text="Name"></e-mention-fields>
+            </ejs-mention>
+
+            <ejs-uploader id="rteCustomWordUpload" allowedExtensions=".docx,.doc,.rtf" success="onUploadSuccess" asyncsettings="@ViewBag.UploaderAjaxSettings" created="uploaderCreated"
+                          htmlAttributes="@ViewBag.htmlAttribute">
+            </ejs-uploader>
         </div>
     </div>
     <link href="~/css/richtexteditor/codemirror.css" rel="stylesheet" />
@@ -54,120 +39,198 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/htmlmixed/htmlmixed.js" type="text/javascript"></script>
     <style>
-        .e-code-mirror::before {
-            content: '\e345';
+        .e-rte-code-mirror-enabled .rte-code-mirror {
+            display: block !important; /* To show the custom source code view. */
         }
-
-        .e-html-preview::before {
-            content: '\e350';
+        .e-rte-code-mirror-enabled .e-rte-content {
+            display: none !important;  /* To hide the editor area when custom source code enabled. */
         }
-
-        .CodeMirror-linenumber,
-        .CodeMirror-gutters {
-            display: none;
+        /** Mention template styles **/
+        .editor-mention-item-template {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
         }
-
+        .em-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .em-avatar {
+            width: 32px;
+            height: 32px;
+            text-align: center;
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: 500;
+            text-indent: 0px;
+            line-height: 13px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .em-name {
+            color: rgb(16, 24, 40);
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 14px;
+            margin-bottom: 5px;
+        }
+        .em-email {
+            color: gray;
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 14px;
+        }
+        #allToolsRTE_rte-edit-view_options li {
+            padding: 10px;
+            height: 60px;
+        }
+        body[class*="-dark"] .em-name {
+            color: #fff !important;
+        }
+        /** custom source code styles **/
+        body[class*="-dark"] .rte-code-mirror .cm-tag {
+            color: #00ff00;
+        }
+        body[class*="-dark"] .rte-code-mirror .cm-string {
+            color: blue;
+        }
+        body[class*="-dark"] .rte-code-mirror .cm-attribute {
+            color: #f00;
+        }
+        body[class*="-dark"] .rte-code-mirror .CodeMirror-gutters, body[class*="-dark"] .rte-code-mirror .CodeMirror{
+            background-color: transparent;
+            color: #fff;
+        }
         .sb-header {
             z-index: 100;
         }
-
-        .fabric-dark .cm-s-default .cm-tag,
-        .bootstrap5-dark .cm-s-default .cm-tag,
-        .material-dark .cm-s-default .cm-tag,
-        .tailwind-dark .cm-s-default .cm-tag,
-        .highcontrast .cm-s-default .cm-tag {
-            color: #00ff00;
-        }
-
-        .fabric-dark .cm-s-default .cm-string,
-        .bootstrap5-dark .cm-s-default .cm-string,
-        .material-dark .cm-s-default .cm-string,
-        .tailwind-dark .cm-s-default .cm-string {
-            color: blue;
-        }
-
-        .highcontrast .cm-s-default .cm-string {
-            color: #ffd939;
-        }
-
-        .fabric-dark .cm-s-default .cm-attribute,
-        .bootstrap5-dark .cm-s-default .cm-attribute,
-        .material-dark .cm-s-default .cm-attribute,
-        .tailwind-dark .cm-s-default .cm-attribute,
-        .highcontrast .cm-s-default .cm-attribute {
-            color: #f00;
-        }
-        
-        .fabric-dark .CodeMirror,
-        .bootstrap5-dark .CodeMirror,
-        .material-dark .CodeMirror,
-        .tailwind-dark .CodeMirror {
-            background:  #303030;
-        }
-
-        .highcontrast .CodeMirror {
-            background: black;
-        }
-
         .sb-content.e-view.hide-header {
             top: 0 !important;
         }
-
         .sb-header.e-view.hide-header {
             display: none;
         }
-
-        .e-richtexteditor .e-rte-content .e-content[contenteditable="true"] pre {
-            padding: 10px;
-            background: #F4F5F7;
-        }
-
-        .fabric-dark .e-richtexteditor .e-rte-content .e-content pre,
-        .bootstrap5-dark .e-richtexteditor .e-rte-content .e-content pre,
-        .material-dark .e-richtexteditor .e-rte-content .e-content pre,
-        .tailwind-dark .e-richtexteditor .e-rte-content .e-content pre,
-        .highcontrast .e-richtexteditor .e-rte-content .e-content pre {
-            padding: 10px;
-            background: #303030;
-        }
-        
-        #defaultRTEmirror-view {    
-            padding: 0px;
-        }
-        
-        #defaultRTEmirror-view pre {
-            background: transparent;
-        }
     </style>
     <script type="text/javascript">
-        var rteObj, myCodeMirror, textArea;
+        var rteObj, myCodeMirror, mentionObj, uploaderObj;
+        var hostUrl = 'https://ej2services.syncfusion.com/production/web-services/';
         function created() {
             rteObj = this;
-            textArea = rteObj.contentModule.getEditPanel();
+            var importDoc = rteObj.element.querySelector('#custom_tbarbtn_1');
+            importDoc.onclick = function (e) {
+                uploaderObj.element.click();
+            }
+            var exportDoc = rteObj.element.querySelector('#custom_tbarbtn_2');
+            exportDoc.onclick = function (e) {
+                const rteHtmlData = rteObj.getHtml();
+                // Create the HTML elements programmatically
+                var htmlElement = document.createElement("html");
+                var headElement = document.createElement("head");
+                var bodyElement = document.createElement("body");
+                // Set rteHtmlData as the innerHTML of the body element
+                bodyElement.innerHTML = rteHtmlData;
+                // Append head and body elements to the html element
+                htmlElement.appendChild(headElement);
+                htmlElement.appendChild(bodyElement);
+                // Serialize the HTML element to a string
+                var htmlString = new XMLSerializer().serializeToString(htmlElement);
+                fetch(hostUrl + 'api/RichTextEditor/ExportToDocx', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ html: htmlString }) // Wrap HTML in a JSON object
+                }).then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    const filename = 'Result.docx';
+                    // Create a Blob from the response and initiate the download
+                    return response.blob().then(blob => ({ blob, filename }));
+                }).then(({ blob, filename }) => {
+                    const url = window.URL.createObjectURL(blob); // Create a Blob URL from the response and initiate the download
+                    const a = document.createElement('a');        // Create an anchor element
+                    a.href = url;
+                    a.download = filename;
+                    document.body.appendChild(a);                 // Append the anchor element to the document
+                    a.click();                                    // Trigger a click on the anchor element to initiate the download
+                    document.body.removeChild(a);                 // Remove the anchor element from the document
+                    window.URL.revokeObjectURL(url);               // Revoke the object URL to free up resources
+                }).catch(error => {
+                    console.error('Fetch error:', error);
+                });
+            }
+            var exportPdf = rteObj.element.querySelector('#custom_tbarbtn_3');
+            exportPdf.onclick = function (e) {
+                const rteHtmlData = rteObj.getHtml();
+                // Create the HTML elements programmatically
+                var htmlElement = document.createElement("html");
+                var headElement = document.createElement("head");
+                var bodyElement = document.createElement("body");
+                // Set rteHtmlData as the innerHTML of the body element
+                bodyElement.innerHTML = rteHtmlData;
+                // Append head and body elements to the html element
+                htmlElement.appendChild(headElement);
+                htmlElement.appendChild(bodyElement);
+                // Serialize the HTML element to a string
+                var htmlString = new XMLSerializer().serializeToString(htmlElement);
+                fetch(hostUrl + 'api/RichTextEditor/ExportToPdf', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ html: htmlString }) // Wrap HTML in a JSON object
+                }).then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.blob();
+                }).then(blob => {
+                    const url = window.URL.createObjectURL(blob);  // Create a Blob URL from the response and initiate the download
+                    const a = document.createElement('a');         // Create an anchor element
+                    a.href = url;
+                    a.download = 'Sample.pdf';
+                    document.body.appendChild(a);                  // Append the anchor element to the document
+                    a.click();                                     // Trigger a click on the anchor element to initiate the download
+                    document.body.removeChild(a);                  // Remove the anchor element from the document
+                    window.URL.revokeObjectURL(url);               // Revoke the object URL to free up resources
+                }).catch(error => {
+                    console.error('Fetch error:', error);
+                });
+            }
+        }
+        function mentionCreated() {
+            mentionObj = this;
+        }
+        function uploaderCreated() {
+            uploaderObj = this;
         }
         function mirrorConversion(e) {
-            var id = rteObj.getID() + 'mirror-view';
-            var mirrorView = rteObj.element.querySelector('#' + id);
-            var charCount = rteObj.element.querySelector('.e-rte-character-count');
+            const id = rteObj.getID() + 'mirror-view';
+            const rteContainer = rteObj.element.querySelector('.e-rte-container');
+            let mirrorView = rteObj.element.querySelector('#' + id);
             if (e.targetItem === 'Preview') {
-                textArea.style.display = 'block';
-                mirrorView.style.display = 'none';
-                textArea.innerHTML = myCodeMirror.getValue();
-                charCount.style.display = 'block';
-            }
-            else {
+                rteObj.value = myCodeMirror.getValue();
+                rteObj.dataBind();
+                rteContainer.classList.remove('e-rte-code-mirror-enabled');
+                rteObj.focusIn();
+            } else {
+                rteContainer.classList.add('e-rte-code-mirror-enabled');
+                rteContainer.classList.remove('e-source-code-enabled');
                 if (!mirrorView) {
-                    mirrorView = ej.base.createElement('div', { className: 'e-content' });
-                    mirrorView.id = id;
-                    textArea.parentNode.appendChild(mirrorView);
+                    mirrorView = ej.base.createElement('div', { className: 'rte-code-mirror', id: id, styles: 'display: none;' });
+                    rteContainer.appendChild(mirrorView);
+                    renderCodeMirror(mirrorView, rteObj.value === null ? '' : rteObj.value);
                 }
                 else {
-                    mirrorView.innerHTML = '';
+                    myCodeMirror.setValue(rteObj.value === null ? '' : rteObj.value);
                 }
-                textArea.style.display = 'none';
-                mirrorView.style.display = 'block';
-                renderCodeMirror(mirrorView, defaultRTE.value);
-                charCount.style.display = 'none';
+                myCodeMirror.focus();
             }
         }
         function renderCodeMirror(mirrorView, content) {
@@ -181,25 +244,79 @@
         function handleFullScreen(e) {
             var sbCntEle = document.querySelector('.sb-content.e-view');
             var sbHdrEle = document.querySelector('.sb-header.e-view');
+            var leftBar;
+            var transformElement;
+            if (ej.base.Browser.isDevice) {
+                leftBar = document.querySelector('#right-sidebar');
+                transformElement = document.querySelector('.sample-browser.e-view.e-content-animation');
+            }
+            else {
+                leftBar = document.querySelector('.sb-left-pane');
+                transformElement = document.querySelector('#right-pane');
+            }
             if (e.targetItem === 'Maximize') {
                 if (ej.base.Browser.isDevice && ej.base.Browser.isIos) {
                     ej.base.addClass([sbCntEle, sbHdrEle], ['hide-header']);
                 }
+                ej.base.addClass([leftBar], ['e-close']);
+                ej.base.removeClass([leftBar], ['e-open']);
+                if (!ej.base.Browser.isDevice) {
+                    transformElement.style.marginLeft = '0px';
+                }
+                transformElement.style.transform = 'inherit';
+                transformElement.style.zIndex = 1001;
             }
             else if (e.targetItem === 'Minimize') {
                 if (ej.base.Browser.isDevice && ej.base.Browser.isIos) {
                     ej.base.removeClass([sbCntEle, sbHdrEle], ['hide-header']);
                 }
+                ej.base.removeClass([leftBar], ['e-close']);
+                if (!ej.base.Browser.isDevice) {
+                    ej.base.addClass([leftBar], ['e-open']);
+                    transformElement.style.marginLeft = leftBar.offsetWidth + 'px';
+                }
+                transformElement.style.transform = 'translateX(0px)';
+                transformElement.style.zIndex = "";
+            }
+        }
+        function actionBeginHandler(e) {
+            if (e.requestType === 'EnterAction' && mentionObj.element.classList.contains('e-popup-open')) {
+                e.cancel = true;
+            }
+            if (e.requestType === 'Maximize' || e.requestType === 'Minimize') {
+                handleFullScreen(e);
             }
         }
         function actionCompleteHandler(e) {
             if (e.targetItem && (e.targetItem === 'SourceCode' || e.targetItem === 'Preview')) {
-                this.sourceCodeModule.getPanel().style.display = 'none';
                 mirrorConversion(e);
             }
-            else {
-                setTimeout(function () { rteObj.toolbarModule.refreshToolbarOverflow(); }, 1000);
+            if (e.requestType === 'SourceCode') {
+                rteObj.getToolbar().querySelector('#custom_tbarbtn_1').parentElement.classList.add('e-overlay');
+                rteObj.getToolbar().querySelector('#custom_tbarbtn_2').parentElement.classList.add('e-overlay');
+                rteObj.getToolbar().querySelector('#custom_tbarbtn_3').parentElement.classList.add('e-overlay');
+            } else if (e.requestType === 'Preview') {
+                rteObj.getToolbar().querySelector('#custom_tbarbtn_1').parentElement.classList.remove('e-overlay');
+                rteObj.getToolbar().querySelector('#custom_tbarbtn_2').parentElement.classList.remove('e-overlay');
+                rteObj.getToolbar().querySelector('#custom_tbarbtn_3').parentElement.classList.remove('e-overlay');
             }
+        }
+        function quickToolbarOpenHandler(e) {
+            if (!ej.base.isNullOrUndefined(e.targetElement) && e.targetElement.nodeName === 'IMG') {
+                rteObj.getToolbar().querySelector('#custom_tbarbtn_1').parentElement.classList.add('e-overlay');
+                rteObj.getToolbar().querySelector('#custom_tbarbtn_2').parentElement.classList.add('e-overlay');
+                rteObj.getToolbar().querySelector('#custom_tbarbtn_3').parentElement.classList.add('e-overlay');
+            }
+        }
+        function quickToolbarClosehandler(e) {
+            if (!ej.base.isNullOrUndefined(args.element) && args.element.classList.contains('e-rte-image-popup')) {
+                rteObj.getToolbar().querySelector('#custom_tbarbtn_1').parentElement.classList.remove('e-overlay');
+                rteObj.getToolbar().querySelector('#custom_tbarbtn_2').parentElement.classList.remove('e-overlay');
+                rteObj.getToolbar().querySelector('#custom_tbarbtn_3').parentElement.classList.remove('e-overlay');
+            }
+        }
+        function onUploadSuccess(args) {
+            rteObj.executeCommand('insertHTML', args.e.currentTarget.response, { undo: true });
         }
     </script>
 }

@@ -2,13 +2,15 @@
 
     <div class="col-lg-8 control-section">
         <div class="control-wrapper">
-            <ejs-grid id="Grid" dataSource="ViewBag.datasource" allowSorting="true" allowPaging="true">
+            <ejs-grid id="Grid" dataSource="ViewBag.datasource" allowSorting="true" allowPaging="true" allowFiltering="true" toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })">
                 <e-grid-pagesettings pageCount="2"></e-grid-pagesettings>
+                <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
+                <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true"></e-grid-editSettings>
                 <e-grid-columns>
-                    <e-grid-column field="OrderID" headerText="Order ID" type="number" textAlign="Right" width="120"></e-grid-column>
-                    <e-grid-column field="CustomerID" headerText="Customer ID" type="string" width="140"></e-grid-column>
-                    <e-grid-column field="Freight" headerText="Freight" textAlign="Right" format="C2" width="150"></e-grid-column>
-                    <e-grid-column field="OrderDate" headerText="Order Date" format='yMd' textAlign="Right" width="140"></e-grid-column>
+                    <e-grid-column field="OrderID" headerText="Order ID" type="number" textAlign="Right" width="120" isPrimaryKey="true" validationRules="@(new { required=true, number=true})"></e-grid-column>
+                    <e-grid-column field="CustomerID" headerText="Customer ID" type="string" width="140" validationRules="@(new { required=true, minLength=5})"></e-grid-column>
+                    <e-grid-column field="Freight" headerText="Freight" textAlign="Right" format="C2" width="150" editType="numericedit" validationRules="@(new { required=true, min=0})"></e-grid-column>
+                    <e-grid-column field="OrderDate" headerText="Order Date" format='yMd' textAlign="Right" width="140" editType="datepickeredit"></e-grid-column>
                 </e-grid-columns>
 
 

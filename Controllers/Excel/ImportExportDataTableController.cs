@@ -65,10 +65,15 @@ namespace EJ2CoreSampleBrowser.Controllers.Excel
                     sheet.ExportDataTableEvent += Sheet_ExportDataTableEventReplace;
                     ViewBag.importOptionReplace = "value=" + importOption + " checked = \"checked\"";
                 }
-                else
+                else if(importOption == "Stop")
                 {
                     sheet.ExportDataTableEvent += Sheet_ExportDataTableEventStop;
                     ViewBag.importOptionStop = "value=" + importOption + " checked = \"checked\"";
+                }
+                else
+                {
+                    sheet.ExportDataTableEvent += Sheet_ExportDataTableEventNone;
+                    ViewBag.importOptionNone = "value=" + importOption + " checked = \"checked\"";
                 }
 
                 dataTable = sheet.ExportDataTable(sheet.UsedRange, ExcelExportDataTableOptions.ColumnNames);
@@ -167,6 +172,10 @@ namespace EJ2CoreSampleBrowser.Controllers.Excel
         {
             if (exportDataTableArgs.ExcelValue != null && exportDataTableArgs.ExcelValue.ToString() == "BLONP")
                 exportDataTableArgs.ExportDataTableAction = ExportDataTableActions.StopExporting;
+        }
+        private void Sheet_ExportDataTableEventNone(ExportDataTableEventArgs exportDataTableArgs)
+        {
+            exportDataTableArgs.ExportDataTableAction = ExportDataTableActions.Default;
         }
     }
 }

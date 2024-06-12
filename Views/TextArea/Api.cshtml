@@ -1,0 +1,141 @@
+﻿@using Syncfusion.EJ2
+@section ControlsSection {
+    <div id="textarea-api"  class="col-lg-8 control-section api">
+        <div class="content_wrapper">
+            <div class="api-row">
+                <ejs-textarea id="api" placeholder='Enter your comments' floatLabelType='Auto'></ejs-textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 property-section">
+        <table id="property" title="Properties" class="api-property">
+
+            <tr>
+                <td class="left-side"> Rows </td>
+                <td><ejs-numerictextbox id="rows" format="##" value="2" min="1" max="10" change="rowHandler"></ejs-numerictextbox></td>
+            </tr>
+            <tr>
+                <td class="left-side"> Columns </td>
+                <td><ejs-numerictextbox id="cols" format="##" value="20" min="5" max="40" change="columnHandler"></ejs-numerictextbox></td>
+            </tr>
+            <tr>
+                <td class="left-side">Enable</td>
+                <td><ejs-checkbox id="enabled" change="enabledHandler" cssClass="api" checked="true"></ejs-checkbox></td>
+            </tr>
+            <tr>
+                <td class="left-side">Read only</td>
+                <td><ejs-checkbox id="readonly" change="readonlyHandler" cssClass="api" checked="false"></ejs-checkbox></td>
+            </tr>
+            <tr>
+                <td class="left-side"> MaxLength </td>
+                <td><ejs-numerictextbox id="maxlength" format="##" value="-1" change="maxLengthHandler"></ejs-numerictextbox></td>
+            </tr>
+            <tr>
+                <td class="left-side"> Value </td>
+                <td>
+                    <ejs-textbox id="value" placeholder="Enter a value" change="valueHandler"></ejs-textbox>
+                </td>
+            </tr>
+            <tr>
+                <td class="left-side">Show clear icon</td>
+                <td><ejs-checkbox id="clearicon" change="clearIconHandler" cssClass="api" checked="false"></ejs-checkbox></td>
+            </tr>
+        </table>
+    </div>
+}
+@*custom code start*@
+
+<style>
+    .content_wrapper div.api-row {
+        margin: 30px 150px;
+    }
+
+    .api-property .left-side {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .api-property.property-panel-table div.api {
+        padding-left: 0px;
+    }
+
+    #textarea-api .e-multi-line-input {
+        max-width: 100%;
+    }
+
+</style>
+@*custom code end*@
+
+@section PreScripts {
+    <script>
+        function enabledHandler(args) {
+            var textareaObj = document.getElementById("api")
+            textareaObj.ej2_instances[0].enabled = args.checked;
+        }
+        function readonlyHandler(args) {
+            var textareaObj = document.getElementById("api")
+            textareaObj.ej2_instances[0].readonly = args.checked;
+        }
+        function clearIconHandler(args) {
+            var textareaObj = document.getElementById("api")
+            textareaObj.ej2_instances[0].showClearButton = args.checked;
+        }
+        function rowHandler(args) {
+            var textareaObj = document.getElementById("api")
+            textareaObj.ej2_instances[0].rows = args.value;
+        }
+        function columnHandler(args) {
+            var textareaObj = document.getElementById("api")
+            textareaObj.ej2_instances[0].cols = args.value;
+        }
+        function maxLengthHandler(args) {
+            var textareaObj = document.getElementById("api")
+            textareaObj.ej2_instances[0].maxLength = args.value;
+        }
+        function valueHandler(args) {
+            var textareaObj = document.getElementById("api")
+            textareaObj.ej2_instances[0].value = args.value;
+        }
+    </script>
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>
+            This example demonstrates the api functionalities of the textarea control. You can customize the appearance and
+            behaviour of textarea component by choosing the corresponding option from the property panel.
+        </p>
+    </div>
+}
+
+@section Description {
+    <div id="description">
+        <p>
+            The TextArea has the options to customize the appearance and behaviour of the component dynamically by updating
+            the following properties:
+        </p>
+        <ul>
+            <li>Change the number of rows and columns of textarea by updating "Rows" and "Columns" options.</li>
+            <li>To make the textarea read-only, check the "read-only" option.</li>
+            <li>Disable the textarea by unchecking the "enabled" option.</li>
+            <li>
+                Set the maximum length of characters that can be entered in textarea by customizing the "MaxLength" option.
+            </li>
+            <li>Update the value of textarea by entering text in "Value" option.</li>
+            <li>To make the clear button visible, check the "Show clear icon" option..</li>
+        </ul>
+    </div>
+}
+
+@section Meta {
+    <meta name="description" content="This example demonstrates the api functionalities in ASP.NET Core TextArea control. Explore here for more details." />
+}
+@section Title {
+    <title>ASP.NET Core API Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Api in ASP.NET Core TextArea Control</h1>
+}
+
+

@@ -1,0 +1,113 @@
+@section ControlsSection{
+
+    <div class="col-lg-8 control-section">
+        <div class="control-wrapper">
+            <ejs-grid id="Grid" dataSource="ViewBag.datasource" allowSorting="true" allowPaging="true" allowFiltering="true" toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })">
+                <e-grid-pagesettings pageCount="2"></e-grid-pagesettings>
+                <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
+                <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true"></e-grid-editSettings>
+                <e-grid-columns>
+                    <e-grid-column field="OrderID" headerText="Order ID" type="number" textAlign="Right" width="120" isPrimaryKey="true" validationRules="@(new { required=true, number=true})"></e-grid-column>
+                    <e-grid-column field="CustomerID" headerText="Customer ID" type="string" width="140" validationRules="@(new { required=true, minLength=5})"></e-grid-column>
+                    <e-grid-column field="Freight" headerText="Freight" textAlign="Right" format="C2" width="150" editType="numericedit" validationRules="@(new { required=true, min=0})"></e-grid-column>
+                    <e-grid-column field="OrderDate" headerText="Order Date" format='yMd' textAlign="Right" width="140" editType="datepickeredit"></e-grid-column>
+                </e-grid-columns>
+
+
+            </ejs-grid>
+        </div>
+        </div>
+
+<div class="col-lg-4 property-section">
+
+   
+    <table id="property" title="Properties" style="width: 100%;">
+
+
+        <tr>
+            <td class="left-side">Column</td>
+            <td style="padding-bottom:10px">
+                <ejs-dropdownlist id="column" dataSource="@ViewBag.columns" value="@("OrderID")" popupHeight="220px">
+                    <e-dropdownlist-fields text="text" value="value"></e-dropdownlist-fields>
+                </ejs-dropdownlist>
+            </tdstyle="padding-bottom:10px">
+        </tr>
+
+        <tr>
+            <td class="left-side">Direction</td>
+            <td style="padding-bottom:10px">
+                <ejs-dropdownlist id="direction" dataSource="@ViewBag.direction" value="@("Ascending")" index="2" popupHeight="220px">
+                    <e-dropdownlist-fields text="text" value="value"></e-dropdownlist-fields>
+                </ejs-dropdownlist>
+            </td>
+        </tr>
+        <div></div>
+        <tr>
+            <td class="left-side">
+
+                <ejs-button id="sort" content="Sort"></ejs-button>
+            </td>
+            <td>
+                <ejs-button id="clear" content="Clear"></ejs-button>
+            </td>
+        </tr>
+
+    </table>
+</div>
+    <script>
+        
+
+        document.getElementById("sort").addEventListener('click', function () {
+            
+            var columnDropdown = document.getElementById("column").ej2_instances[0], directionDropdown = document.getElementById("direction").ej2_instances[0];
+            var gridObj = document.getElementById("Grid").ej2_instances[0];
+            gridObj.sortColumn(columnDropdown.value, directionDropdown.value);
+        });
+
+        document.getElementById("clear").addEventListener('click', function () {
+            
+            var gridObj = document.getElementById("Grid").ej2_instances[0];
+            gridObj.clearSorting();
+        });
+
+    </script>
+}
+@section ActionDescription{
+	<div id="action-description">
+		 <p>
+			This sample demonstrates the usage of sorting API in Grid. In this sample, use the properties panel to sort/unsort columns
+			using API.
+		</p>
+	</div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Sorting API in ASP.NET Core Data Grid control. Explore here for more details."/>
+                }
+
+@section Description{
+    <div id="description">
+		    <p>
+				Sorting feature enables us to order the data in a particular direction. It can be enabled by setting the <code>allowSorting</code> as true.
+			</p>
+        <p class="e-grid" style="border:none">To sort a Grid column simply click the column header. The icons <span class="e-icons e-icon-ascending"></span>(ascending)
+            and <span class="e-icons e-icon-descending"></span>(descending) specifies the sort direction of a column.</p>
+			<p>By default, multi-sorting is enabled in Grid, to sort multiple column hold <strong>CTRL</strong> key and click the column
+				header. To clear sort for a column, hold <strong>SHIFT</strong> key and click the column header.</p>
+			<p>
+				While using Grid in a touch device, you have an option for multi sorting in single tap on the grid header. By tapping on
+				the grid header, it will show the toggle button in small popup with sort icon. Now tap the button to enable the multi-sorting
+				in single tap.
+			</p>
+			<p>In this demo, select the column and direction from the properties panel then click the Sort button. Use the Clear button
+				to remove sort for the selected column.
+			</p>
+
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Data Grid Sorting API Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Sorting API in ASP.NET Core Data Grid Control</h1>
+                }

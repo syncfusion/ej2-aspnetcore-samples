@@ -1,0 +1,69 @@
+@using Syncfusion.EJ2;
+@section Meta{
+    <meta name="description" content="This example demonstrates the Default Functionalities in ASP.NET Core LinearGauge control. Explore here for more details." />
+                }
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample shows the linear gauge's basic rendering, which includes an axis, a pointer, major ticks, minor ticks and annotation.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            The linear gauge control shows scale values in either horizontal or vertical orientation. Axis, range, ticks, pointer, and container properties can be used to customize the basic appearance of the linear gauge.
+        </p>
+        <p>
+            More information on the linear gauge can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/linear-gauge/getting-started" aria-label="documentation section">documentation section</a>.
+        </p>
+    </div>
+}
+@section ControlsSection{
+@{ 
+        var labelFont = new Syncfusion.EJ2.LinearGauge.LinearGaugeFont { FontFamily = "inherit" };
+ }
+    <div class="control-section" style="display:block">
+        <ejs-lineargauge id="linear" load="gaugeLoad" background='Transparent' orientation="Horizontal">
+            <e-lineargauge-border color="Transparent"></e-lineargauge-border>
+            <e-lineargauge-axes>
+                <e-lineargauge-axis>
+                    <e-axis-labelstyle offset="48" font="labelFont">
+                    </e-axis-labelstyle>
+                    <e-axis-majorticks Interval="10" Height="20" Color="#9E9E9E"></e-axis-majorticks>
+                    <e-axis-minorticks Interval="2" Height="10" Color="#9E9E9E"></e-axis-minorticks>
+                        <e-lineargauge-pointers>
+                            <e-lineargauge-pointer Type="Marker" MarkerType=Triangle Value="10" Height=15 Width=15 offset="-40" Placement=Near></e-lineargauge-pointer>
+                        </e-lineargauge-pointers>
+                </e-lineargauge-axis>
+            </e-lineargauge-axes>
+            <e-lineargauge-annotations>
+                <e-lineargauge-annotation Content='<div style="width: 70px;margin-left:-3%;margin-top: 42%;font-size: 16px;">10 MPH</div>' X="10" Y="-70" AxisValue=10 AxisIndex=0 ZIndex="1"></e-lineargauge-annotation>
+            </e-lineargauge-annotations>
+        </ejs-lineargauge>
+    </div>
+    <!-- custom code start -->
+    <style>
+        .control-section {
+            min-height: 450px;
+        }
+    </style>
+    <!-- custom code end -->
+    <script>
+        window.gaugeLoad = function (args) {
+            @* custom code start *@
+            var theme = themeName ? themeName : 'Material';
+            args.gauge.theme = (theme.charAt(0).toUpperCase() +
+                theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+            @* custom code end *@
+        }
+    </script>
+
+}
+@section Title{
+    <title>ASP.NET Core LinearGauge Default Functionalities Example - Syncfusion Demos </title>
+                }
+@section Header{
+    <h1 class='sb-sample-text'>Example of Default Functionalities in ASP.NET Core LinearGauge Control</h1>
+                }

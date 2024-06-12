@@ -1,0 +1,122 @@
+@using Syncfusion.EJ2
+@{
+    List<Parentitems> parentitem = new List<Parentitems>();
+    List<Childitems> childitem = new List<Childitems>();
+    parentitem.Add(new Parentitems
+    {
+        nodeId = "01",
+        nodeText = "Music",
+        icon="folder",
+        child = childitem,
+    });
+    childitem.Add(new Childitems { nodeId = "01-01", nodeText = "Gouttes.mp3", icon= "audio" });
+
+    List<Childitems> childitem2 = new List<Childitems>();
+    parentitem.Add(new Parentitems
+    {
+        nodeId = "02",
+        nodeText = "Videos",
+        icon = "folder",
+        child = childitem2,
+    });
+    childitem2.Add(new Childitems { nodeId = "02-01", nodeText = "Naturals.mp4", icon = "video" });
+    childitem2.Add(new Childitems { nodeId = "02-02", nodeText = "Wild.mpeg", icon = "video" });
+    List<Childitems> childitem3 = new List<Childitems>();
+    parentitem.Add(new Parentitems
+    {
+        nodeId = "03",
+        nodeText = "Documents",
+        icon = "folder",
+        child = childitem3,
+    });
+    childitem3.Add(new Childitems { nodeId = "03-01", nodeText = "Environment Pollution.docx", icon = "docx" });
+    childitem3.Add(new Childitems { nodeId = "03-02", nodeText = "Global Water, Sanitation, & Hygiene.docx", icon = "docx" });
+    childitem3.Add(new Childitems { nodeId = "03-03", nodeText = "Global Warming.ppt", icon = "ppt" });
+    childitem3.Add(new Childitems { nodeId = "03-04", nodeText = "Social Network.pdf", icon = "pdf" });
+    childitem3.Add(new Childitems { nodeId = "03-05", nodeText = "Youth Empowerment.pdf", icon = "pdf" });
+
+    childitem2.Add(new Childitems { nodeId = "02-01", nodeText = "Naturals.mp4", icon = "video" });
+    childitem2.Add(new Childitems { nodeId = "02-02", nodeText = "Wild.mpeg", icon = "video" });
+    List<Childitems> childitem4 = new List<Childitems>();
+    parentitem.Add(new Parentitems
+    {
+        nodeId = "04",
+        nodeText = "Downloads",
+        icon = "folder",
+        child = childitem4,
+    });
+    childitem4.Add(new Childitems { nodeId = "04-01", nodeText = "UI-Guide.pdf", icon = "pdf" });
+    childitem4.Add(new Childitems { nodeId = "04-02", nodeText = "Tutorials.zip", icon = "zip" });
+    childitem4.Add(new Childitems { nodeId = "04-03", nodeText = "Game.exe", icon = "exe" });
+    childitem4.Add(new Childitems { nodeId = "04-04", nodeText = "TypeScript.7z", icon = "zip" });
+
+    char[] value = { 'c', 'h', 'i', 'l', 'd' };
+    string Child = new string(value);
+
+}
+@section ControlsSection{
+<div class="control-section">
+    <div class="control_wrapper">
+        <ejs-treeview id="treedata" sortOrder="Ascending" >
+            <e-treeview-fields dataSource="parentitem" child="Child" id="nodeId"  text="nodeText" hasChildren="hasChild" expanded="expanded" iconCss="icon" imageURL="image" ></e-treeview-fields>
+        </ejs-treeview>
+
+    </div>
+</div>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Icons and Images in ASP.NET Core TreeView control. Explore here for more details."/>
+                }
+@section ActionDescription{
+    <div id="action-description">
+        <p>This <a href="https://www.syncfusion.com/aspnet-core-ui-controls/treeview" target="_blank" aria-label="Navigate to explore the syncfusion ASP.NET Core TreeView example">ASP.NET Core TreeView example</a> demonstrates the node can be configured by icons/images in TreeView. Click on icon or double click on node to expand/collapse it, and show the icons/images that configured with nodes.</p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            The TreeView component has the built-in option to customize each node's appearance with the icons and images by mapping the iconCss and imageUrl fields.
+        </p>
+        <p>
+            In this demo, the TreeView is showcased like a file system with custom icons and images.
+        </p>
+    </div>
+}
+@*custom code start*@
+<style>
+    .control_wrapper {
+        max-width: 500px;
+        margin: auto;
+        border: 1px solid #dddddd;
+        border-radius: 3px;
+    }
+    .e-treeview .e-list-img {
+        width: 25px;
+        height: 25px;
+    }
+    /* Loading sprite image for TreeView */
+    .e-treeview .e-list-icon {
+        background-repeat: no-repeat;
+        background-image: url('@Url.Content("~/css/treeview/images/file_icons.png")');
+        height: 20px;
+    }
+    /* Specify the icon positions based upon class name */
+    .e-treeview .e-list-icon.folder { background-position: -197px -552px }
+    .e-bigger .e-treeview .e-list-icon.folder { background-position: -197px -550px; }
+    .e-treeview .e-list-icon.docx { background-position: -197px -20px }
+    .e-treeview .e-list-icon.ppt { background-position: -197px -48px }
+    .e-treeview .e-list-icon.pdf { background-position: -197px -104px }
+    .e-treeview .e-list-icon.images { background-position: -197px -132px }
+    .e-treeview .e-list-icon.zip { background-position: -197px -188px }
+    .e-treeview .e-list-icon.audio { background-position: -197px -244px }
+    .e-treeview .e-list-icon.video { background-position: -197px -272px }
+    .e-treeview .e-list-icon.exe { background-position: -197px -412px }
+</style>
+@*custom code end*@
+@section Title{
+                    <title>ASP.NET Core TreeView Icons and Images Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Icons and Images in ASP.NET Core TreeView Control</h1>
+                }

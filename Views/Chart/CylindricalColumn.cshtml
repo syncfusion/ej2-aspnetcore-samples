@@ -1,0 +1,72 @@
+﻿@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="control-section" align="center">
+        <ejs-chart id="lineContainer" load="load" title="Olympic Gold Medal Counts - RIO">
+            <e-chart-tooltipsettings enable="true" header="<b>${point.tooltip}</b>" format="Gold Medal: <b>${point.y}</b>">
+            </e-chart-tooltipsettings>
+            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category" interval="1">
+                <e-majorgridlines width="0"></e-majorgridlines>
+                <e-majorticklines width="0"></e-majorticklines>
+                <e-minorticklines width="0"></e-minorticklines>
+            </e-chart-primaryxaxis>
+            <e-chart-primaryyaxis title="Medal Count" maximum="50" interval="10">
+                <e-majorticklines width="0"></e-majorticklines>
+                <e-linestyle width="0"></e-linestyle>
+            </e-chart-primaryyaxis>
+            <e-chart-chartarea>
+                <e-chartarea-border width="0"></e-chartarea-border>
+            </e-chart-chartarea>
+            <e-series-collection>
+                <e-series dataSource="ViewBag.ChartPoints" columnFacet="@Syncfusion.EJ2.Charts.ShapeType.Cylinder" width="2" xName="Country" yName="GoldMedal" tooltipMappingName="MappingName" columnSpacing="0.1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                </e-series>
+            </e-series-collection>
+        </ejs-chart>
+    </div>
+
+    <script>
+        function load(args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+            args.chart.primaryXAxis.labelIntersectAction = ej.base.Browser.isDevice ? 'None' : 'Trim';
+            args.chart.primaryXAxis.labelRotation = ej.base.Browser.isDevice ? '-45' : '0';
+        }
+    </script>
+}
+@*custom code start*@
+@section Scripts {
+}
+<style>
+
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@section Meta{
+    <meta name="description" content="This example demonstrates the Cylindrical Column in ASP.NET Core Chart control. Explore here for more details." />
+                }
+@*custom code end*@
+@section ActionDescription{
+    <p>
+        This sample visualizes the gold medal count from the Rio Olympics using a cylindrical column chart.
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can observe the rendering and configuration of a cylindrical column chart. The cylindrical column chart serves the purpose of comparing the frequency, count, total, or average of data across various categories using a cylindrical shape.
+    </p>
+    <p>
+        Tooltips have been enabled in this example. To experience the tooltip functionality, simply hover over a point or tap on it in touch-enabled devices.
+    </p>
+    <p>
+        More information on the column series can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/chart-types/column" aria-label="Navigate to the documentation for column in ASP.NET Core Chart control">documentation section</a>.
+    </p>
+}
+@section Title{
+    <title>ASP.NET Core Chart Cylindrical Column Example - Syncfusion Demos </title>
+                }
+@section Header{
+    <h1 class='sb-sample-text'>Example of Cylindrical Column in ASP.NET Core Chart Control</h1>
+                }

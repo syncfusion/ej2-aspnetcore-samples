@@ -1,0 +1,117 @@
+@using Syncfusion.EJ2
+@{
+    ViewBag.Title = "    Essential Presentation (PowerPoint) : Find and Replace : Syncfusion";
+}
+@section ControlsSection{
+    <div class="control-section">
+        @{
+            Html.BeginForm("findandreplace", "powerpoint", FormMethod.Post);
+            {
+                <div style="margin-top: 10px;font-size:14px">
+                    Click the button to view the generated PowerPoint document. Please note that Microsoft PowerPoint Viewer or Microsoft PowerPoint is required to view the resultant PowerPoint document.
+                    <div style="margin-top: 10px">
+                        Find using:
+                        <select id="FindUsing" name="FindUsing" class="e-dropdown-btn" onChange="isFindUsingChanged(this)">
+                            <option value="0" selected>Text</option>
+                            <option value="1">Regex</option>
+                        </select>
+                    </div>
+                    <div style="margin-top: 10px; display: block;" id="FindText">
+                        Text to Find :
+                        <input type="text" class="e-input" id="textBox1" name="FindText" value="{product}" style="width:150px" />
+                        &nbsp;
+                        Text to Replace :
+                        <input type="text" class="e-input" id="textBox2" name="ReplaceText" value="Service" style="width:150px" />
+                    </div>
+                    <div style="margin-top: 10px; display: none;" id="FindTextUsingRegex">
+                        Regex to Find :
+                        <input type="text" class="e-input" id="textBox1" name="FindTextUsingRegex" value="{[A-Za-z]+}" style="width:150px" />
+                        &nbsp;
+                        Text to Replace :
+                        <input type="text" class="e-input" id="textBox2" name="ReplaceText" value="Service" style="width:150px" />
+                    </div>
+                    <div style="margin-top: 10px">
+                        <input type="checkbox" name="MatchCase" value="MatchCase" id="matchcase" />
+                        Match case
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="checkbox" name="MatchWholeWord" value="MatchWholeWord" id="matchwholeword" />
+                        Match whole word
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="checkbox" name="ReplaceFirst" value="ReplaceFirst" id="replacefirst" />
+                        Replace only the first occurrence
+                    </div>
+                    <div style="margin-top: 8px">
+                        <input id="viewtemplate" name="button" class="e-btn" type="submit" value="View Input Template" style="width: 150px; text-transform:capitalize" />
+                        &nbsp;
+                        <input id="generate" name="button" class="e-btn" type="submit" value="Replace" style="width:140px; text-transform:capitalize" />
+                    </div>
+                </div>
+                Html.EndForm();
+            }
+        }
+    </div>
+    <script type="text/javascript">
+        function isFindUsingChanged(element) {
+            var selectedValue = element.options[element.selectedIndex].text;
+            if (selectedValue == "Regex") {
+                document.getElementById("FindText").style.display = 'none';
+                document.getElementById("FindTextUsingRegex").style.display = 'block';
+                document.getElementById("matchcase").checked = false
+                document.getElementById("matchwholeword").checked = false;
+                document.getElementById("replacefirst").checked = false;
+                document.getElementById("matchcase").disabled = 'disabled';
+                document.getElementById("matchwholeword").disabled = 'disabled';
+            }
+            else {
+                document.getElementById("FindText").style.display = 'block';
+                document.getElementById("FindTextUsingRegex").style.display = 'none';
+                document.getElementById("matchcase").checked = false
+                document.getElementById("matchwholeword").checked = false;
+                document.getElementById("replacefirst").checked = false;
+                document.getElementById("matchcase").disabled = false
+                document.getElementById("matchwholeword").disabled = false;
+            }
+        }
+    </script>
+}
+@section ActionDescription{
+    <div>
+        This sample demonstrates how to replace a specific text or text pattern in the PowerPoint presentation with another text using Find and Replace functionality of .NET PowerPoint library.
+    </div>
+}
+@section Description{
+    <div>
+        .NET PowerPoint library allows you to replace a specific text in the PowerPoint presentation with another text.
+        <ul>
+            <li>
+                You can find the static text or text pattern using regular expression.
+            </li>
+            <li>
+                You can find and replace the text with another text in all PowerPoint slides and elements such as Shape, Textbox, Table, SmartArt, etc.
+            </li>
+            <li>
+                You can replace the text in specific slide, notes slide, master slide or layout slide.
+            </li>
+            <li>
+                You can replace the text by matching case, whole word and all occurrence or first occurrence alone.
+            </li>
+            <li>
+                You can also replace the content that spans across several lines.
+            </li>
+        </ul>
+    </div>
+    <div style="margin-top: 15px">
+        More information about the Find and Replace functionality can be found in this
+        <a href="https://help.syncfusion.com/file-formats/presentation/working-with-find-and-replace" aria-label="Documentation" >Documentation</a>
+        section.
+    </div>
+}
+@section Meta{
+    <meta name="description" content="This example demonstrates the Find and Replace in ASP.NET Core PowerPoint (Presentation) library. Explore here for more details." />
+                }
+@section Title{
+    <title>ASP.NET Core PowerPoint (Presentation) library - Find and Replace Example - Syncfusion Demos </title>
+                }
+@section Header{
+    <h1 class='sb-sample-text'>Example of Find and Replace in ASP.NET Core PowerPoint (Presentation) Library</h1>
+                }

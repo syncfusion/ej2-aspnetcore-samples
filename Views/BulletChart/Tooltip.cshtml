@@ -1,0 +1,84 @@
+@using Syncfusion.EJ2;
+@using EJ2CoreSampleBrowser.Controllers.BulletChart;
+@{
+    List<DotBulletData> bulletData1 = new List<DotBulletData>
+    {
+        new DotBulletData { value = 70, target = 50}
+    };
+}
+@section ControlsSection{
+    <div class="control-section" align='center'>
+        <div id="container">
+            <ejs-bulletchart id="bulletgraph" minimum="0" maximum="100" interval="10"
+              labelFormat="${value}K" title="Revenue YTD" subtitle="US $ in Thousands" valueField="value"
+                             targetField="target" dataSource="bulletData1" width="600" load="window.onLoad">
+                <e-bulletchart-animation enable="false"></e-bulletchart-animation>
+                <e-bulletchart-tooltipsettings enable="true" template="#Tooltip"></e-bulletchart-tooltipsettings>
+                <e-bullet-range-collection>
+                    <e-bullet-range end="30" color="#599C20"></e-bullet-range>
+                    <e-bullet-range end="60" color="#EFC820"></e-bullet-range>
+                    <e-bullet-range end="100" color="#CA4218"></e-bullet-range>
+                </e-bullet-range-collection>
+                <e-bulletchart-titlestyle textAlignment="@Syncfusion.EJ2.Charts.Alignment.Center"></e-bulletchart-titlestyle>
+            </ejs-bulletchart>
+        </div>
+    </div>
+    <script id='Tooltip' type="text/x-template">
+        <div id="wrap">
+            <table style="width:100%; background-color: #ffffff; border-spacing: 0px; border-collapse:separate; border: 1px solid grey; border-radius:10px; padding-top: 5px; padding-bottom:5px">
+                <tr>
+                    <td style="font-weight:bold; color:black; padding-left: 5px;padding-top: 2px;padding-bottom: 2px;">Sales</td>
+                </tr>
+                <tr>
+                    <td style="padding-left: 5px; color:black; padding-right: 5px; padding-bottom: 2px;">Target : ${target}K </td>
+                </tr>
+                <tr>
+                    <td style="padding-left: 5px; color:black; padding-right: 5px">Current : ${value} </td>
+                </tr>
+
+            </table>
+        </div>
+    </script>
+    
+    <script type="text/javascript">
+        window.onLoad = function (args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.bulletChart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+            args.bulletChart.width = ej.base.Browser.isDevice ? "100%" : "80%";
+        }
+    </script>
+}
+@*custom code start*@
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Tooltip Template in ASP.NET Core BulletChart control. Explore here for more details."/>
+                }
+@*custom code end*@
+@section ActionDescription{
+    <div id="action-description">
+        This sample illustrates bullet chart with different mode of rendering such as right to left and left to right.
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            Tooltip is enabled in this example. To see the tooltip in action, hover a feature bar or comparative bar on the bullet chart.
+        </p>
+    </div>
+}
+@*custom code start*@
+@section Scripts {
+}
+
+<style>
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@*custom code end*@
+@section Title{
+                    <title>ASP.NET Core BulletChart Tooltip Template Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Tooltip Template in ASP.NET Core BulletChart Control</h1>
+                }

@@ -1,0 +1,298 @@
+﻿@section ControlsSection{
+    @{
+        var labelFont = new Syncfusion.EJ2.LinearGauge.LinearGaugeLabel { Font = new Syncfusion.EJ2.LinearGauge.LinearGaugeFont { FontFamily = "inherit" } };
+        var titleStyle = new Syncfusion.EJ2.LinearGauge.LinearGaugeTitleStyleLinearGauge { FontFamily = "inherit", FontWeight = "499" };
+    }
+    <div class="control-section">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12"
+             style="display: flex;justify-content: center; align-items: center;">
+                <div style="margin: auto;padding: 10px;">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div id='horizontal' style="padding:6px;cursor:pointer;width:86px;color:black;font-size:15px;border:1px solid #0074E3;background-color:white;text-align:center">
+                                        Horizontal
+                                    </div>
+                                </td>
+                                <td>
+                                    <div id='vertical' style="padding:6px;cursor:pointer;width:86px;color:white;font-size:15px;border:1px solid #0074E3;background-color: #0074E3;text-align:center">
+                                        Vertical
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <pre style="background-color: inherit; border:hidden"></pre>
+        <div id="containerBox" style="float: left;padding: 4%;"></div>
+        <div id='containerTriangle' class="col-xs-4 col-sm-4 col-lg-2 col-md-2" style="display: flex;justify-content: center; align-items: center;">
+            <ejs-lineargauge load='gaugeLoad' dragStart='dragStartTriangle'
+                         dragMove='dragMoveTriangle' dragEnd='dragEndTriangle' id='linearTriangle'
+                         background='Transparent' title='Inverted triangle' titleStyle='titleStyle' width='150px'
+                         height='350px' style='display:block;' orientation='Vertical'>
+                <e-lineargauge-axes>
+                    <e-lineargauge-axis Minimum="0" Maximum="100" OpposedPosition="true" labelStyle="labelFont">
+                        <e-axis-majorticks Interval="20" Height="7" Width="1"></e-axis-majorticks>
+                        <e-axis-minorticks Interval="10" Height="3"></e-axis-minorticks>
+                        <e-axis-line Width="5"></e-axis-line>
+                        <e-lineargauge-pointers>
+                            <e-lineargauge-pointer Type="Bar" Value="40" Color="#0074E3" Height=5 Width=5 AnimationDuration=1500 Offset="12" Placement=Near></e-lineargauge-pointer>
+                            <e-lineargauge-pointer Type="Marker" MarkerType=Triangle Value="40" Height=15 Width=15 AnimationDuration=1500 EnableDrag=true Placement=Near></e-lineargauge-pointer>
+                        </e-lineargauge-pointers>
+                    </e-lineargauge-axis>
+                </e-lineargauge-axes>
+            </ejs-lineargauge>
+        </div>
+        <div id='containerCircle' class="col-xs-4 col-sm-4 col-lg-2 col-md-2" style="display: flex;justify-content: center; align-items: center;">
+            <ejs-lineargauge load='gaugeLoad' dragStart='dragStartCircle' dragEnd='dragEndCircle'
+                         dragMove='dragMoveCircle' id='linearCircle' background='Transparent' title='Circle'
+                         titleStyle='titleStyle' width='150px' height='350px' style='display:block;' orientation='Vertical'>
+                <e-lineargauge-axes>
+                    <e-lineargauge-axis Minimum="0" Maximum="100" OpposedPosition="true" labelStyle="labelFont">
+                        <e-axis-majorticks Interval="20" Height="7" Width="1"></e-axis-majorticks>
+                        <e-axis-minorticks Interval="10" Height="3"></e-axis-minorticks>
+                        <e-axis-line Width="5"></e-axis-line>
+                        <e-lineargauge-pointers>
+                            <e-lineargauge-pointer Type="Bar" Value="20" Color="#0074E3" Height=5 Width=5 AnimationDuration=1500 Offset="12" Placement=Near></e-lineargauge-pointer>
+                            <e-lineargauge-pointer Type="Marker" MarkerType=Circle Value="20" Height=15 Width=15 AnimationDuration=1500 EnableDrag=true Placement=Near></e-lineargauge-pointer>
+                        </e-lineargauge-pointers>
+                    </e-lineargauge-axis>
+                </e-lineargauge-axes>
+            </ejs-lineargauge>
+        </div>
+        <div id='containerRectangle' class="col-xs-4 col-sm-4 col-lg-2 col-md-2" style="display: flex;justify-content: center; align-items: center;">
+            <ejs-lineargauge load='gaugeLoad' dragStart='dragStartRectangle'
+                             dragMove='dragMoveRectangle' dragEnd='dragEndRectangle' id='linearRectangle'
+                             title='Rectangle' titleStyle='titleStyle' width='150px' height='350px'
+                             style='display:block;' background='Transparent' orientation='Vertical'>
+                <e-lineargauge-axes>
+                    <e-lineargauge-axis Minimum="0" Maximum="100" OpposedPosition="true" labelStyle="labelFont">
+                        <e-axis-majorticks Interval="20" Height="7" Width="1"></e-axis-majorticks>
+                        <e-axis-minorticks Interval="10" Height="3"></e-axis-minorticks>
+                        <e-axis-line Width="5"></e-axis-line>
+                        <e-lineargauge-pointers>
+                            <e-lineargauge-pointer Type="Bar" Value="30" Color="#0074E3" Height=5 Width=5 AnimationDuration=1500 Offset="12" Placement=Near></e-lineargauge-pointer>
+                            <e-lineargauge-pointer Type="Marker" MarkerType=Rectangle Value="30" Height=5 Width=15 AnimationDuration=1500 EnableDrag=true Placement=Near></e-lineargauge-pointer>
+                        </e-lineargauge-pointers>
+                    </e-lineargauge-axis>
+                </e-lineargauge-axes>
+            </ejs-lineargauge>
+        </div>
+        <div id='containerText' class="col-xs-4 col-sm-4 col-lg-2 col-md-2" style="display: flex;justify-content: center; align-items: center;">
+            <ejs-lineargauge load='gaugeLoad' dragStart='dragStartText' dragEnd='dragEndText'
+                         dragMove='dragMoveText' id='linearText' title='Text'
+                         titleStyle='titleStyle' width='168px' height='350px' style='display:block;' background='Transparent'
+                         orientation='Vertical'>
+                <e-lineargauge-axes>
+                    <e-lineargauge-axis Minimum="0" Maximum="100" OpposedPosition="true" labelStyle="labelFont">
+                        <e-axis-majorticks Interval="20" Height="7" Width="1"></e-axis-majorticks>
+                        <e-axis-minorticks Interval="10" Height="3"></e-axis-minorticks>
+                        <e-axis-line Width="5"></e-axis-line>
+                        <e-lineargauge-pointers>
+                            <e-lineargauge-pointer Type="Bar" Value="50" Color="#0074E3" Height=5 Width=5 AnimationDuration=1500 Offset="12" Placement=Near></e-lineargauge-pointer>
+                            <e-lineargauge-pointer Type="Marker" Offset="-10" Value="50" Height=15 Width=15 AnimationDuration=1500 EnableDrag=true Placement=Near></e-lineargauge-pointer>
+                        </e-lineargauge-pointers>
+                    </e-lineargauge-axis>
+                </e-lineargauge-axes>
+            </ejs-lineargauge>
+        </div>
+        <div id='containerMultiple' class="col-xs-4 col-sm-4 col-lg-2 col-md-2" style="display: flex;justify-content: center; align-items: center;">
+            <ejs-lineargauge load='gaugeLoad' dragStart='dragStartMultiple'
+                         dragMove='dragMoveMultiple' dragEnd='dragEndMultiple' id='linearMultiple'
+                         title='Multiple pointers' titleStyle='titleStyle' width='150px' height='350px'
+                         style='display:block;' background='Transparent' orientation='Vertical'>
+                <e-lineargauge-axes>
+                    <e-lineargauge-axis Minimum="0" Maximum="100" OpposedPosition="true" labelStyle="labelFont">
+                        <e-axis-majorticks Interval="20" Height="7" Width="1"></e-axis-majorticks>
+                        <e-axis-minorticks Interval="10" Height="3"></e-axis-minorticks>
+                        <e-axis-line Width="5"></e-axis-line>
+                        <e-lineargauge-pointers>
+                            <e-lineargauge-pointer Type="Bar" Value="10" Color="#0074E3" Height=5 Width=5 AnimationDuration=1500 Offset="12" Placement=Near></e-lineargauge-pointer>
+                            <e-lineargauge-pointer Type="Marker" MarkerType=Triangle Value="10" Height=15 Width=15 AnimationDuration=1500 EnableDrag=true Placement=Near></e-lineargauge-pointer>
+                            <e-lineargauge-pointer Type="Marker" MarkerType=Diamond Value="100" Height=15 Width=15 AnimationDuration=1500 EnableDrag=true Placement=Near></e-lineargauge-pointer>
+                        </e-lineargauge-pointers>
+                    </e-lineargauge-axis>
+                </e-lineargauge-axes>
+            </ejs-lineargauge>
+        </div>
+    </div>
+    <!-- custom code start -->
+    <style>
+        .control-section {
+            min-height: 450px;
+        }
+    </style>
+    <!-- custom code end -->
+}
+
+<script>
+    var linearTriangleGauge, linearCircleGauge, linearTextGauge, linearRectangleGauge, linearMultiGauge;
+    window.gaugeLoad = function (args) {
+    @* custom code start *@
+        var theme = themeName ? themeName : 'Material';
+        args.gauge.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+    @* custom code end *@
+        args.gauge.animationDuration = 3000;
+        if (args.gauge.element.id === 'linearTriangle') {
+            linearTriangleGauge = args.gauge;
+        }
+        if (args.gauge.element.id === 'linearCircle') {
+            linearCircleGauge = args.gauge;
+        }
+        if (args.gauge.element.id === 'linearText') {
+            linearTextGauge = args.gauge;
+            linearTextGauge.axes[0].pointers[1].markerType = "Text"; 
+            linearTextGauge.axes[0].pointers[1].text ="50 Points";
+        }
+        if (args.gauge.element.id === 'linearRectangle') {
+            linearRectangleGauge = args.gauge;
+        }
+        if (args.gauge.element.id === 'linearMultiple') {
+            linearMultiGauge = args.gauge;
+        }
+    }
+    
+    function dragEndTriangle(args) {
+        linearTriangleGauge.axes[0].pointers[0].animationDuration = 1500;
+        linearTriangleGauge.axes[0].pointers[1].animationDuration = 1500;
+    }
+    function dragStartTriangle(args) {
+        linearTriangleGauge.axes[0].pointers[0].animationDuration = 0;
+        linearTriangleGauge.axes[0].pointers[1].animationDuration = 0;
+    }
+    function dragMoveTriangle(args) {
+        if (args.pointerIndex == 1) {
+            linearTriangleGauge.setPointerValue(0, 0, args.currentValue);
+        }
+    }
+    function dragEndCircle(args) {
+        linearCircleGauge.axes[0].pointers[0].animationDuration = 1500;
+        linearCircleGauge.axes[0].pointers[1].animationDuration = 1500;
+    }
+    function dragStartCircle(args) {
+        linearCircleGauge.axes[0].pointers[0].animationDuration = 0;
+        linearCircleGauge.axes[0].pointers[1].animationDuration = 0;
+    }
+    function dragMoveCircle(args) {
+        if (args.pointerIndex == 1) {
+            linearCircleGauge.setPointerValue(0, 0, args.currentValue);
+        }
+    }
+    function dragEndText(args) {
+        linearTextGauge.axes[0].pointers[0].animationDuration = 1500;
+        linearTextGauge.axes[0].pointers[1].animationDuration = 1500;
+    }
+    function dragStartText(args) {
+        linearTextGauge.axes[0].pointers[0].animationDuration = 0;
+        linearTextGauge.axes[0].pointers[1].animationDuration = 0;
+    }
+    function dragMoveText(args) {
+        if (args.pointerIndex == 1) {
+            linearTextGauge.axes[0].pointers[1].text = (Math.round(args.currentValue) + " Points");
+            linearTextGauge.setPointerValue(0, 0, args.currentValue);
+        }
+    }
+    function dragEndRectangle(args) {
+        linearRectangleGauge.axes[0].pointers[0].animationDuration = 1500;
+        linearRectangleGauge.axes[0].pointers[1].animationDuration = 1500;
+    }
+    function dragStartRectangle(args) {
+        linearRectangleGauge.axes[0].pointers[0].animationDuration = 0;
+        linearRectangleGauge.axes[0].pointers[1].animationDuration = 0;
+    }
+    function dragMoveRectangle(args) {
+        if (args.pointerIndex == 1) {
+            linearRectangleGauge.setPointerValue(0, 0, args.currentValue);
+        }
+    }
+    function dragStartMultiple(args) {
+        if (args.pointerIndex == 1) {
+            linearMultiGauge.axes[0].pointers[0].animationDuration = 0;
+            linearMultiGauge.axes[0].pointers[1].animationDuration = 0;
+        }
+    }
+    function dragEndMultiple(args) {
+        if (args.pointerIndex == 1) {
+            linearMultiGauge.axes[0].pointers[0].animationDuration = 1500;
+            linearMultiGauge.axes[0].pointers[1].animationDuration = 1500;
+        }
+    }
+    function dragMoveMultiple(args) {
+        if (args.pointerIndex == 1) {
+            linearMultiGauge.setPointerValue(0, 0, args.currentValue);
+        }
+    }
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById('horizontal').addEventListener('click', function () {
+             linearTriangleGauge.width = linearCircleGauge.width = linearTextGauge.width = linearRectangleGauge.width = linearMultiGauge.width = '450px';
+        linearTriangleGauge.height = linearCircleGauge.height = linearTextGauge.height = linearRectangleGauge.height = linearMultiGauge.height = '150px';
+        linearTriangleGauge.orientation = linearCircleGauge.orientation = linearTextGauge.orientation = linearRectangleGauge.orientation = linearMultiGauge.orientation = "Horizontal";
+          document.getElementById('horizontal').style.color = "white";
+            document.getElementById('horizontal').style.backgroundColor = "#0074E3";
+            document.getElementById('vertical').style.color = "black";
+            document.getElementById('vertical').style.backgroundColor = "white";
+            document.getElementById('containerTriangle').className = document.getElementById('containerCircle').className =
+                document.getElementById('containerText').className = document.getElementById('containerRectangle').className =
+                document.getElementById('containerMultiple').className = "col-xs-12 col-sm-12 col-lg-12 col-md-12";
+                document.getElementById('containerBox').style.padding = "0%";
+        });
+        document.getElementById('vertical').addEventListener('click', function () {
+            linearTriangleGauge.width = linearCircleGauge.width = linearRectangleGauge.width = linearMultiGauge.width = '150px';
+            linearTextGauge.width = '168px';
+            linearTriangleGauge.height = linearCircleGauge.height = linearTextGauge.height = linearRectangleGauge.height = linearMultiGauge.height = '350px';
+            linearTriangleGauge.orientation = linearCircleGauge.orientation = linearTextGauge.orientation = linearRectangleGauge.orientation = linearMultiGauge.orientation = "Vertical";
+            document.getElementById('vertical').style.color = "white";
+            document.getElementById('vertical').style.backgroundColor = "#0074E3";
+            document.getElementById('horizontal')['style']['color'] = "black";
+            document.getElementById('horizontal')['style']['backgroundColor'] = "white";
+            document.getElementById('containerTriangle').className = document.getElementById('containerCircle').className =
+                document.getElementById('containerText').className = document.getElementById('containerRectangle').className =
+                document.getElementById('containerMultiple').className = "col-xs-4 col-sm-4 col-lg-2 col-md-2";
+                document.getElementById('containerBox').style.padding = "4%";
+        });
+    });
+
+</script>
+
+@section Meta{
+    <meta name="description" content="This example demonstrates the Marker Pointer in ASP.NET Core LinearGauge control. Explore here for more details." />
+                }
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample shows the various marker pointer shapes available in the linear gauge. Additionally, multiple marker pointer, animation and drag support are enabled.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this example, you can see how to render and configure marker pointer in the linear gauge. The
+            <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.LinearGauge.LinearGaugePointer.html" aria-label="e-lineargauge-pointer">
+                e-lineargauge-pointer
+            </a> collection is useful for displaying multiple pointers. The properties available in
+            <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.LinearGauge.LinearGaugePointer.html" aria-label="e-lineargauge-pointer">
+                e-lineargauge-pointer
+            </a> help in the customization of the marker pointer in the linear gauge. Drag pointers are assisted by the
+            <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.LinearGauge.LinearGauge.html#Syncfusion_EJ2_LinearGauge_LinearGauge_DragStart" aria-label="dragStart">
+                dragStart
+            </a> and
+            <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.LinearGauge.LinearGauge.html#Syncfusion_EJ2_LinearGauge_LinearGauge_DragEnd" aria-label="dragEnd">dragEnd</a> events.
+        </p>
+        <p>
+            More information on the marker pointer can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/linear-gauge/pointers#marker-pointer" aria-label="documentation section">documentation section</a>.
+        </p>
+    </div>
+}
+@section Title{
+    <title>ASP.NET Core LinearGauge Marker Pointer Example - Syncfusion Demos </title>
+                }
+@section Header{
+    <h1 class='sb-sample-text'>Example of Marker Pointer in ASP.NET Core LinearGauge Control</h1>
+                }

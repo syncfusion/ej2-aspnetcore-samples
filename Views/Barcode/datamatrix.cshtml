@@ -1,0 +1,484 @@
+@using Syncfusion.EJ2;
+@using Syncfusion.EJ2.DropDowns;
+@using EJ2CoreSampleBrowser.Controllers.Barcode;
+@{
+    List<coorectionLevel> encoding = new List<coorectionLevel>();
+    encoding.Add(new coorectionLevel() { text = "Auto", value = "Auto" });
+    encoding.Add(new coorectionLevel() { text = "ASCII", value = "ASCII" });
+    encoding.Add(new coorectionLevel() { text = "ASCIINumeric", value = "ASCIINumeric" });
+    encoding.Add(new coorectionLevel() { text = "Base256", value = "Base256" });
+
+
+    List<coorectionLevel> size = new List<coorectionLevel>();
+    size.Add(new coorectionLevel() { text = "Size22x22", value = "7" });
+    size.Add(new coorectionLevel() { text = "Size24x24", value = "8" });
+    size.Add(new coorectionLevel() { text = "Size26x26", value = "9" });
+    size.Add(new coorectionLevel() { text = "Size32x32", value = "10" });
+    size.Add(new coorectionLevel() { text = "Size36x36", value = "11" });
+    size.Add(new coorectionLevel() { text = "Size40x40", value = "12" });
+    size.Add(new coorectionLevel() { text = "Size44x44", value = "13" });
+    size.Add(new coorectionLevel() { text = "Size48x48", value = "14" });
+    size.Add(new coorectionLevel() { text = "Size52x52", value = "15" });
+    size.Add(new coorectionLevel() { text = "Size64x64", value = "16" });
+    size.Add(new coorectionLevel() { text = "Size72x72", value = "17" });
+    size.Add(new coorectionLevel() { text = "Size80x80", value = "18" });
+    size.Add(new coorectionLevel() { text = "Size88x88", value = "19" });
+    size.Add(new coorectionLevel() { text = "Size96x96", value = "20" });
+    size.Add(new coorectionLevel() { text = "Size104x104", value = "21" });
+    size.Add(new coorectionLevel() { text = "Size120x120", value = "22" });
+    size.Add(new coorectionLevel() { text = "Size132x132", value = "23" });
+    size.Add(new coorectionLevel() { text = "Size144x144", value = "24" });
+    size.Add(new coorectionLevel() { text = "Auto", value = "0" });
+    size.Add(new coorectionLevel() { text = "Size10x10", value = "1" });
+    size.Add(new coorectionLevel() { text = "Size12x12", value = "2" });
+    size.Add(new coorectionLevel() { text = "Size14x14", value = "3" });
+    size.Add(new coorectionLevel() { text = "Size16x16", value = "4" });
+    size.Add(new coorectionLevel() { text = "Size18x18", value = "5" });
+    size.Add(new coorectionLevel() { text = "Size20x20", value = "6" });
+    size.Add(new coorectionLevel() { text = "Size8x18", value = "25" });
+    size.Add(new coorectionLevel() { text = "Size8x32", value = "26" });
+    size.Add(new coorectionLevel() { text = "Size12x26", value = "27" });
+    size.Add(new coorectionLevel() { text = "Size12x36", value = "28" });
+    size.Add(new coorectionLevel() { text = "Size16x36", value = "29" });
+    size.Add(new coorectionLevel() { text = "Size16x48", value = "30" });
+
+    var value = "Auto";
+}
+@section ControlsSection{
+    <div class="col-lg-8 control-section" width="64%">
+        <div class="content-wrapper" style="width: 100%;height: 590px;">
+            <div class='center'>
+                <div class='centercontrol'>
+                    <ejs-datamatrixgenerator id="container" width="200px" height="150px" value="Syncfusion" mode="SVG">
+                        <e-datamatrixgenerator-displaytext visibility="false"></e-datamatrixgenerator-displaytext>
+                    </ejs-datamatrixgenerator>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="col-lg-4 property-section" style="padding-right: 0px;padding-left: 18px;">
+        <div class="property-panel-header">
+            Appearance
+        </div>
+        <div id="propertypanel" class="e-remove-selection">
+            <div class="property-section-content">
+                <div class="row sb-child-row">
+                    <div class="col-xs-2 top" style="padding-left: 0px;">
+                        Value
+                    </div>
+                    <div class="col-xs-10" style="padding-left: 0px">
+                        <form id="form-element" class="form-horizontal">
+                            <div id='barcodevaluediv'>
+                                <ejs-textbox id="barcodeValue" value="SYNCFUSION" name="password" class="form-control" change="barcodeValueChange"></ejs-textbox>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row sb-child-row">
+                    <div>
+                        <div class="col-xs-2 top" style="padding-left: 0px;padding-right: 20px;padding-top: 12px;">
+                            Width
+                        </div>
+                        <div class="col-xs-3" style="width: 33%;padding-left: 0px;padding-top: 12px;">
+                            <ejs-numerictextbox id="barcodewidth" format="###.##" value="200" enabled="true" step="2" min="150" max="250" change="barcodewidthChange"></ejs-numerictextbox>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="rightProperty" style="padding-top: 12px;">
+                            Height
+                        </div>
+                        <div class="col-xs-3" style="width: 33%;padding-left: 0px;padding-top: 12px;">
+                            <ejs-numerictextbox id="barcodeheight" format="###.##" value="150" enabled="true" step="2" min="100" max="200" change="barcodeheightChange"></ejs-numerictextbox>
+                        </div>
+                    </div>
+                </div>
+                <div class="row sb-child-row" style="margin-top: 20px;">
+                    <div class="col-xs-6" style="padding-left: 0px;">
+                        <div class="col-xs-1" style="padding-left: 0px;">
+                            <ejs-checkbox id="textVisibility" checked="false" change="textVisibilityChange"></ejs-checkbox>
+                        </div>
+                        <div class="col-xs-10">Text Visibility</div>
+                    </div>
+                    <div class="col-xs-4" style="padding-left: 0;margin-left: 13px;">
+                        <div class="col-xs-1" style="padding-left: 0px;">
+                            <ejs-checkbox id="svgMode" checked="true" change="svgModeChange"></ejs-checkbox>
+                        </div>
+                        <div class="svgTextClass">SVG Mode</div>
+                    </div>
+                </div>
+                <div class="row sb-child-row">
+                    <div style="margin-top: 15px">
+                        <div class="col-xs-2" style="margin-top: 5px;padding-left: 0px;">BG Color</div>
+                        <div class="col-xs-4" style="padding-left: 0px;">
+                            <ejs-colorpicker id='bgColor' value="#ffffff" change="bgColorChange"></ejs-colorpicker>
+                        </div>
+                        <div class="col-xs-2" style="width: 18%;padding-left: 12px;margin-top: 5px;">Fore Color</div>
+                        <div class="col-xs-3" style="padding-left: 2px;">
+                            <ejs-colorpicker id='foreColor' value="#000000" change="foreColorChange"></ejs-colorpicker>
+                        </div>
+                    </div>
+                </div>
+                <div class="property-panel-header">
+                    Margin
+                </div>
+                <div class="row sb-child-row">
+                    <div class="col-xs-2 top" style="padding-left: 0px;"> Left</div>
+                    <div class="col-xs-3" style="width: 33%;padding-left: 0px;">
+                        <ejs-numerictextbox id="marginLeft" format="###.##" value="10" enabled="true" step="1" min="-10" max="30" change="marginLeftChange"></ejs-numerictextbox>
+                    </div>
+                    <div class="rightProperty">Right</div>
+                    <div class="col-xs-3" style="width: 33%;padding-left: 0px;">
+                        <ejs-numerictextbox id="MarginRight" format="###.##" value="10" enabled="true" step="1" min="-10" max="30" change="MarginRightChange"></ejs-numerictextbox>
+                    </div>
+                </div>
+
+                <div class="row sb-child-row">
+                    <div class="col-xs-2 top" style="padding-left: 0px;">Top</div>
+                    <div class="col-xs-3" style="width: 33%;padding-left: 0px;">
+                        <div style="padding-bottom: 8px">
+                            <ejs-numerictextbox id="marginTop" format="###.##" value="10" enabled="true" step="1" min="-10" max="30" change="marginTopChange"></ejs-numerictextbox>
+                        </div>
+                    </div>
+                    <div class="rightProperty">Bottom</div>
+                    <div class="col-xs-3" style="width: 33%;padding-left: 0px;">
+                        <ejs-numerictextbox id="MarginBottom" format="###.##" value="10" enabled="true" step="1" min="-10" max="30" change="MarginBottomChange"></ejs-numerictextbox>
+                        <!-- </div> -->
+                    </div>
+                </div>
+                <div class="row sb-child-row">
+                    <div class="col-xs-2 top" style="padding-left: 0px;">
+                        Size
+                    </div>
+                    <div class="matrixSize">
+                        <ejs-dropdownlist id="expand" dataSource="size" value="value" change="sizeChange"></ejs-dropdownlist>
+                    </div>
+                </div>
+                <div class="row sb-child-row">
+                    <div class="col-xs-3 top" style="width: 17%;padding-left: 0px;">
+                        Encoding
+                    </div>
+                    <div class="matrixSize">
+                        <ejs-dropdownlist id="encoding" dataSource="encoding" value="value" change="encodingChange"></ejs-dropdownlist>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        .column-style {
+            display: table;
+            height: 35px;
+            padding-right: 4px;
+            padding-left: 0px;
+            width: calc((100% - 12px) / 3);
+        }
+
+        .row {
+            margin-left: 0px;
+            margin-right: 0px;
+        }
+
+        .row-header {
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .labelstyle {
+            padding-top: 10px;
+            float: left;
+            padding-right: 10px
+        }
+
+        .propertystyle {
+            padding-top: 22px;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .sb-child-row {
+            margin-top: 8px;
+        }
+
+        .center {
+            margin-left: 14px;
+            margin-right: 17px;
+            margin-top: 14px;
+            min-width: 280px;
+            width: auto;
+            border: 2px solid lightgray;
+            min-height: 40%;
+            padding-top: 35px;
+        }
+
+        .col-lg-4-property-section {
+            width: 36%;
+        }
+
+        .rightProperty {
+            margin-top: 10px;
+            width: 16.66666667%;
+            float: left;
+            position: relative;
+            min-height: 1px;
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+
+        .textProperty {
+            width: 81%;
+            padding-left: 0px;
+            padding-right: 0;
+            float: left;
+            position: relative;
+            min-height: 1px;
+        }
+
+        .sb-mobile-prop-pane .svgTextClass {
+            width: 40px;
+            padding-left: 24px;
+        }
+
+        .svgTextClass {
+            width: 100px;
+            float: left;
+            position: relative;
+            min-height: 1px;
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+
+        .matrixSize {
+            width: 33%;
+            padding-left: 0px;
+            float: left;
+            position: relative;
+            min-height: 1px;
+            padding-right: 15px;
+        }
+
+
+
+        .sb-mobile-prop-pane .rightProperty {
+            padding-left: 2px;
+        }
+
+        .sb-mobile-prop-pane .textPropertyClass {
+            padding-left: 30px;
+        }
+
+        .sb-mobile-prop-pane .textProperty {
+            padding-left: 30px;
+            width: 77%
+        }
+
+        .textPropertyClass {
+            width: 83.33333333%;
+            float: left;
+            padding-left: 0px;
+            position: relative;
+            min-height: 1px;
+            padding-right: 15px;
+        }
+
+        .allowedText {
+            margin-left: 14px;
+            margin-right: 17px;
+            margin-top: 14px;
+            width: auto;
+            height: auto;
+        }
+
+        .errorMessage {
+            margin-left: 14px;
+            margin-right: 17px;
+            margin-top: 14px;
+            width: auto;
+            height: auto;
+        }
+
+        .errorMessage {
+            margin-left: 14px;
+            margin-right: 17px;
+            margin-top: 14px;
+            width: auto;
+            height: auto;
+        }
+
+
+        .top {
+            margin-top: 10px;
+        }
+
+        .centercontrol {
+            margin: auto;
+            width: 200px;
+            height: 200px;
+        }
+
+        #password-info {
+            position: absolute;
+        }
+    </style>
+    <script type="text/javascript">
+        function barcodeValueChange(args) {
+            var barcode = document.getElementById("container").ej2_instances[0];
+            barcode.value = args.value;
+            checkASCIINumeric();
+        }
+        function checkASCIINumeric() {
+            var barcode = document.getElementById("container").ej2_instances[0];
+            var options = {
+
+                rules: {
+                    'password': { minLength: [customFn, 'Invalid input'] }
+                },
+                keyup() {
+                    if (canShowError) {
+                        canShowError = false;
+                    }
+                },
+                focusout(args) {
+                    barcode.value = (document.getElementById('barcodeValue')).value;
+                    barcode.dataBind();
+                },
+            };
+            var formObject = new ej.inputs.FormValidator('#form-element', options);
+            canShowError = false;
+            formObject.validate();
+            if (barcode.encoding === "ASCIINumeric" && isNaN(barcode.value)) {
+                canShowError = true;
+                formObject.validate();
+            }
+        }
+        function barcodewidthChange(args) {
+            var barcode = document.getElementById("container").ej2_instances[0];
+            barcode.width = args.value;
+        }
+        function barcodeheightChange(args) {
+            var barcode = document.getElementById("container").ej2_instances[0];
+            barcode.height = args.value;
+        }
+        function textVisibilityChange(args) {
+            var barcode = document.getElementById("container").ej2_instances[0];
+            barcode.displayText.visibility = args.checked;
+        }
+        let canShowError = false;
+        var customFn = (args) => {
+            if (canShowError) {
+                return false;
+            }
+            return true;
+        };
+
+
+
+        function invalidInput() {
+            var barcode = document.getElementById("container").ej2_instances[0];
+            var options = {
+
+                rules: {
+                    'password': { minLength: [customFn, 'Invalid input'] }
+                },
+                keyup() {
+                    if (canShowError) {
+                        canShowError = false;
+                    }
+                },
+                focusout(args) {
+                    barcode.value = (document.getElementById('barcodeValue')).value;
+                    barcode.dataBind();
+                },
+            };
+            var formObject = new ej.inputs.FormValidator('#form-element', options);
+            canShowError = true;
+            if (!barcode.displayText.text)
+                formObject.validate();
+        }
+        function svgModeChange(args) {
+            var barcode = document.getElementById("container").ej2_instances[0];
+            barcode.mode = args.checked ? 'SVG' : 'Canvas';
+        }
+        function bgColorChange(args) {
+            var barcode = document.getElementById("container").ej2_instances[0];
+            barcode.backgroundColor = args.currentValue.hex
+        }
+        function foreColorChange(args) {
+            var barcode = document.getElementById("container").ej2_instances[0];
+            barcode.foreColor = args.currentValue.hex
+        }
+        function marginLeftChange(args) {
+            var barcode = document.getElementById("container").ej2_instances[0];
+            barcode.margin.left = args.value;
+        }
+        function MarginRightChange(args) {
+            var barcode = document.getElementById("container").ej2_instances[0];
+            barcode.margin.right = args.value;
+        }
+        function marginTopChange(args) {
+            var barcode = document.getElementById("container").ej2_instances[0];
+            barcode.margin.top = args.value;
+        }
+        function MarginBottomChange(args) {
+            var barcode = document.getElementById("container").ej2_instances[0];
+            barcode.margin.bottom = args.value;
+        }
+
+        function TextmarginTopChange(args) {
+            var barcode = document.getElementById("container").ej2_instances[0];
+            barcode.displayText.margin.top = args.value;
+        }
+        function TextMarginBottompChange(args) {
+            var barcode = document.getElementById("container").ej2_instances[0];
+            barcode.displayText.margin.bottom = args.value;
+        }
+        function versionChange(args) {
+            barcode.version = (args.value);
+        }
+        function expandChange(args) {
+            var barcode = document.getElementById("container").ej2_instances[0];
+            barcode.displayText.position = (args.value);
+        }
+        function sizeChange(args) {
+            var barcode = document.getElementById("container").ej2_instances[0];
+            barcode.size = args.itemData.value
+        }
+        function alignChange(args) {
+            var barcode = document.getElementById("container").ej2_instances[0];
+            barcode.displayText.alignment = (args.value);
+        }
+        function displayTextChange(args) {
+            var barcode = document.getElementById("container").ej2_instances[0];
+            barcode.displayText.text = args.value;
+        }
+        function encodingChange(args) {
+            var barcode = document.getElementById("container").ej2_instances[0];
+            barcode.encoding = args.itemData.value;
+            checkASCIINumeric();
+        }
+
+    </script>
+}
+@section ActionDescription{
+    <p>
+        This sample displays encoded numerals or text as an optical label using solid adjacent borders in an L-shape and two other borders consisting of alternating dark and light cells or modules. Within these borders are rows and columns of cells that encode information.
+    </p>
+}
+
+@section Description{
+
+    <p>
+        This example shows how to display encoded text or numerical values as the label using the Barcode component. The `type` property can be used to set the barcode type as data matrix. The data matrix encoding type can be set using the `encoding` property of the Barcode component and the data matrix size can be defined using the `size` property of the component.
+    </p>
+}
+@section Title{
+                    <title>ASP.NET Core Barcode Data Matrix Example - Syncfusion Demos </title> 
+                }
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Data Matrix in ASP.NET Core Barcode control. Explore here for more details."/>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Data Matrix in ASP.NET Core Barcode Control</h1>
+                }

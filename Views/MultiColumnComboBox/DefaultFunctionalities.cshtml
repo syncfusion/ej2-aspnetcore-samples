@@ -1,0 +1,88 @@
+﻿@using Syncfusion.EJ2
+
+@section ControlsSection {
+    <div class="col-lg-8 control-section">
+        <div class="control-wrapper">
+            <div style='padding-top:50px;'>
+                <ejs-multicolumncombobox id="multicolumnDefault" dataSource="ViewBag.dataSource" popupHeight="230px"
+                    placeholder="Select the country" value="10001" text="Denmark" change="valueChange" showClearButton=true>
+                    <e-multicolumncombobox-fields text="ShipCountry" value="OrderID"></e-multicolumncombobox-fields>
+                    <e-multicolumncombobox-columns>
+                        <e-multicolumncombobox-column field="OrderID" header="Order ID" width="110"></e-multicolumncombobox-column>
+                        <e-multicolumncombobox-column field="CustomerID" header="Customer ID" width="130"></e-multicolumncombobox-column>
+                        <e-multicolumncombobox-column field="Freight" header="Freight" width="90"></e-multicolumncombobox-column>
+                        <e-multicolumncombobox-column field="ShipCountry" header="Ship Country" width="140"></e-multicolumncombobox-column>
+                    </e-multicolumncombobox-columns>
+                </ejs-multicolumncombobox>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 property-section">
+        <table id="property" title="Properties" style="width: 100%; margin:10px">
+            <tr>
+                <td class="left-side">Value</td>
+                <td>:<span id='value' class="right-side">10001</span></td>
+            </tr>
+            <tr>
+                <td class="left-side">Text</td>
+                <td>:<span id='text' class="right-side">Denmark</span></td>
+            </tr>
+        </table>
+    </div>
+    <!-- custom code start -->
+    <style>
+        .control-wrapper {
+            margin: 0 auto;
+            width: 500px;
+        }
+
+        @@media only screen and (max-width: 480px) {
+            .control-wrapper {
+                width: 300px;
+            }
+        }
+
+        .property-section .right-side {
+            padding-left: 10px;
+        }
+
+        .property-section .left-side {
+            padding: 5px;
+            width: 25%
+        }
+    </style>
+    <!-- custom code end-->
+    <script>
+        function valueChange() {
+            var muliticolumnObj = document.getElementById('multicolumnDefault').ej2_instances[0];
+            var value = document.getElementById('value');
+            var text = document.getElementById('text');
+            value.innerHTML = muliticolumnObj.value ? muliticolumnObj.value.toString() : 'null';
+            text.innerHTML = muliticolumnObj.text ? muliticolumnObj.text.toString() : 'null';
+        }
+    </script>
+}
+
+@section Meta {
+    <meta name="description" content="This example demonstrates the Default Functionalities in ASP.NET Core MultiColumn ComboBox control. Explore here for more details." />
+}
+@section ActionDescription {
+    <div id="action-description">
+        <p>
+            This sample demonstrates the default functionalities of the <code>MultiColumn ComboBox</code>.
+        </p>
+    </div>
+}
+@section Description {
+    <div id="description">
+        <p>
+            The <code>MultiColumn ComboBox</code> allows the user to display detailed information about items in multiple columns. In the above sample, type any character in the MultiColumn ComboBox or click the dropdown icon to choose an item from the options available in the list. The selected item's <code>value</code> and <code>text</code> property values will be shown in the property panel.
+        </p>
+    </div>
+}
+@section Title {
+    <title>ASP.NET Core MultiColumn ComboBox Default Functionalities Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Default Functionalities in ASP.NET Core MultiColumn ComboBox Control</h1>
+}

@@ -1,0 +1,122 @@
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+    <div class="control-section">
+        <ejs-spreadsheet id="spreadsheet" openUrl="RemoteDataOpen" saveUrl="RemoteDataSave" created="createdHandler">
+            <e-spreadsheet-sheets>
+                <e-spreadsheet-sheet name="Shipment Details">
+                    <e-spreadsheet-ranges>
+                        <e-spreadsheet-range showFieldAsHeader=false startCell="A2" query="new ej.data.Query().from('Orders').select(['OrderID', 'CustomerID', 'Freight', 'ShipName', 'ShipCity', 'ShipCountry']).take(200)">
+                            <e-data-manager url="https://services.odata.org/V4/Northwind/Northwind.svc" adaptor="ODataV4Adaptor" crossdomain="true"></e-data-manager>
+                        </e-spreadsheet-range>
+                    </e-spreadsheet-ranges>
+                    <e-spreadsheet-rows>
+                        <e-spreadsheet-row>
+                            <e-spreadsheet-cells>
+                                <e-spreadsheet-cell value="Order ID"></e-spreadsheet-cell>
+                                <e-spreadsheet-cell value="Customer Name"></e-spreadsheet-cell>
+                                <e-spreadsheet-cell value="Freight"></e-spreadsheet-cell>
+                                <e-spreadsheet-cell value="Ship Name"></e-spreadsheet-cell>
+                                <e-spreadsheet-cell value="Ship City"></e-spreadsheet-cell>
+                                <e-spreadsheet-cell value="Ship Country"></e-spreadsheet-cell>
+                            </e-spreadsheet-cells>
+                        </e-spreadsheet-row>
+                    </e-spreadsheet-rows>
+                    <e-spreadsheet-columns>
+                        <e-spreadsheet-column width=100></e-spreadsheet-column>
+                        <e-spreadsheet-column width=130></e-spreadsheet-column>
+                        <e-spreadsheet-column width=100></e-spreadsheet-column>
+                        <e-spreadsheet-column width=220></e-spreadsheet-column>
+                        <e-spreadsheet-column width=150></e-spreadsheet-column>
+                        <e-spreadsheet-column width=180></e-spreadsheet-column>
+                    </e-spreadsheet-columns>
+                </e-spreadsheet-sheet>
+            </e-spreadsheet-sheets>
+        </ejs-spreadsheet>
+    </div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Remote Data Binding in ASP.NET Core Spreadsheet control. Explore here for more details."/>
+                }
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates data binding to the <code>Spreadsheet</code> component with a remote service
+            using <code>DataManager</code>.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            The <code>Spreadsheet</code> supports data binding. The <code>dataSource</code> property can be assigned with
+            the instance of <code>DataManager</code> to bind remote data.
+        </p>
+        <p>
+            DataManager, which will act as an interface between the service endpoint and the Spreadsheet, requires the
+            following minimum configuration to interact with the service endpoint properly:
+            <ul>
+                <li><code>DataManager > url</code> : Defines the service endpoint to fetch data.</li>
+                <li>
+                    <code>DataManager > adaptor</code> : Defines the adaptor option. By default, <code>ODataAdaptor</code>
+                    is used for remote binding.
+                </li>
+            </ul>
+        </p>
+        <p>
+            Adaptor is responsible for processing the response from the service endpoint and the request to it. The
+            <code>syncfusion/ej2-data</code> package provides some predefined adaptors that are designed to interact
+            with service endpoints. They are:
+            <ul>
+                <li>
+                    <code>UrlAdaptor</code> : Use this to interact with any remote services. This is the base adaptor for
+                    all remote-based adaptors.
+                </li>
+                <li><code>ODataAdaptor</code> : Use this to interact with OData endpoints.</li>
+                <li><code>ODataV4Adaptor</code> : Use this to interact with OData V4 endpoints.</li>
+                <li><code>WebApiAdaptor</code> : Use this to interact with Web API created under OData standards.</li>
+                <li><code>WebMethodAdaptor</code> : Use this to interact with web methods.</li>
+            </ul>
+        </p>
+        <p>
+            In this demo, remote data is bound by assigning service data as an instance of <code>DataManager</code> to the
+            <code>dataSource</code> property under the <code>ranges</code> of sheet.
+        </p>
+        <p>
+            More information about remote data binding can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/spreadsheet/getting-started-core" aria-label="documentation section">
+                documentation
+            </a> section.
+        </p>
+    </div>
+}
+
+<script>
+    function createdHandler() {
+        //Apply style to a range
+        this.cellFormat({ fontWeight: 'bold', textAlign: 'center' }, 'A1:G1');
+    }
+</script>
+
+@*custom code start*@
+
+<style>
+
+    .control-section {
+        height: 550px;
+    }
+    #sb-content .e-spreadsheet .e-tab .e-tab-text {
+        display: inherit;
+    }
+</style>
+
+@*custom code end*@
+@section Title{
+                    <title>ASP.NET Core Spreadsheet Remote Data Binding Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Remote Data Binding in ASP.NET Core Spreadsheet Control</h1>
+                }

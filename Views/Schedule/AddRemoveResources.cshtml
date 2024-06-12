@@ -1,0 +1,138 @@
+@section ControlsSection{
+    <div class="col-lg-9 control-section">
+        <div class="content-wrapper">
+            <ejs-schedule id="schedule" height="650" selectedDate="new DateTime(DateTime.Today.Year, 4, 1)">
+                <e-schedule-eventsettings dataSource="@ViewBag.datasource"></e-schedule-eventsettings>
+                <e-schedule-resources>
+                    <e-schedule-resource field="CalendarId" title="Calendars" name="Calendars" allowMultiple="true" dataSource="@ViewBag.Calendars" textField="CalendarName" idField="CalendarId" colorField="CalendarColor"></e-schedule-resource>
+                </e-schedule-resources>
+                <e-schedule-group resources="@ViewBag.Resources"></e-schedule-group>
+                <e-schedule-views>
+                    <e-schedule-view option="Month"></e-schedule-view>
+                    <e-schedule-view option="TimelineWeek"></e-schedule-view>
+                    <e-schedule-view option="TimelineMonth"></e-schedule-view>
+                </e-schedule-views>
+            </ejs-schedule>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Show / Hide Resource" style="width: 100%">
+            <tbody>
+                <tr style="height: 50px">
+                    <td style="width: 100%">
+                        <ejs-checkbox id="personal" change="onChange" checked="true" disabled="true" label="My Calendar" value="1" cssClass="personal"></ejs-checkbox>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td style="width: 100%">
+                        <ejs-checkbox id="company" change="onChange" checked="false" label="Company" value="2" cssClass="company"></ejs-checkbox>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td style="width: 100%">
+                        <ejs-checkbox id="birthdays" change="onChange" checked="false" label="Birthdays" value="3" cssClass="birthday"></ejs-checkbox>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td style="width: 100%">
+                        <ejs-checkbox id="holidays" change="onChange" checked="false" label="Holidays" value="4" cssClass="holiday"></ejs-checkbox>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <style>
+        /* custom code start*/
+        .property-panel-content .e-checkbox-wrapper.personal .e-label {
+            color: #808080;
+        }
+
+        .property-panel-content .e-checkbox-wrapper.personal .e-frame {
+            background-color: #c43081;
+            border-color: transparent;
+        }
+
+        .property-panel-content .e-checkbox-wrapper.company .e-frame {
+            background-color: #ff7f50;
+            border-color: transparent;
+        }
+
+        .property-panel-content .e-checkbox-wrapper.birthday .e-frame {
+            background-color: #AF27CD;
+            border-color: transparent;
+        }
+
+        .property-panel-content .e-checkbox-wrapper.holiday .e-frame {
+            background-color: #808000;
+            border-color: transparent;
+        }
+
+        .highcontrast .property-panel-content .e-checkbox-wrapper .e-frame.e-check,
+        .bootstrap .property-panel-content .e-checkbox-wrapper .e-frame.e-check,
+        .material3-dark .property-panel-content .e-checkbox-wrapper .e-frame.e-check,
+        .fluent2-dark .property-panel-content .e-checkbox-wrapper .e-frame.e-check,
+        .fluent2-highcontrast .property-panel-content .e-checkbox-wrapper .e-frame.e-check {
+            color: #fff;
+        }
+        /* custom code end*/
+
+        .e-schedule .e-timeline-view .e-resource-left-td,
+        .e-schedule .e-timeline-month-view .e-resource-left-td {
+            width: 110px;
+        }
+
+        .e-schedule .e-timeline-view .e-resource-text,
+        .e-schedule .e-timeline-month-view .e-resource-text {
+            padding: 0;
+        }
+    </style>
+    <script type="text/javascript">
+        function onChange(args) {
+            var calendarCollections = [
+                { CalendarName: 'My Calendar', CalendarId: 1, CalendarColor: '#c43081' },
+                { CalendarName: 'Company', CalendarId: 2, CalendarColor: '#ff7f50' },
+                { CalendarName: 'Birthday', CalendarId: 3, CalendarColor: '#AF27CD' },
+                { CalendarName: 'Holiday', CalendarId: 4, CalendarColor: '#808000' }
+            ];
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            var value = parseInt(args.event.currentTarget.querySelector('input').getAttribute('value'), 10);
+            var resourceData = calendarCollections.filter(function (calendar) { return calendar.CalendarId === value; });
+            if (args.checked) {
+                scheduleObj.addResource(resourceData[0], 'Calendars', value - 1);
+            } else {
+                scheduleObj.removeResource(value, 'Calendars');
+            }
+        }
+    </script>
+}
+@*custom code start*@
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Show/Hide Resources in ASP.NET Core Scheduler control. Explore here for more details."/>
+                }
+@*custom code end*@
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This demo illustrates how to dynamically add or remove resources to and from the Scheduler layout.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this demo, Scheduler is initially displayed with single resource with its related set of appointments. When the additional
+            checkboxes given are checked and unchecked, the respective resources gets added up or removed from the scheduler layout.
+            To add new resources dynamically,
+            <code>addResource</code> method is used which accepts the arguments such as resource object, resource name (within which level, the resource
+            object to be added) and index (position where the resource needs to be added). To remove the resources dynamically,
+            <code>removeResource</code> method is used which accepts the index (position from where the resource to be removed) and resource name (within
+            which level, the resource object presents) as parameters.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Scheduler Show/Hide Resources Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Show/Hide Resources in ASP.NET Core Scheduler Control</h1>
+                }

@@ -1,0 +1,306 @@
+﻿@using Syncfusion.EJ2
+@using Syncfusion.EJ2.Navigations
+
+@section ControlsSection{
+    <div class="control-section">
+        <div class="validation-stepper-section">
+            <ejs-stepper id="validation-stepper" linear=true stepChanging="function (args) {handleStepChange(args)}" created="function(args) {handleStepCreated()}">
+                <e-stepper-steps>
+                    <e-stepper-step text="Survey Introduction" iconCss="sf-icon-survey-intro"></e-stepper-step>
+                    <e-stepper-step text="Feedback" iconCss="sf-icon-survey-feedback"></e-stepper-step>
+                    <e-stepper-step text="Status" iconCss="sf-icon-survey-status"></e-stepper-step>
+                </e-stepper-steps>
+            </ejs-stepper>
+        </div>
+        <div id="validation-step-content">
+        </div>
+    </div>
+}
+<script>
+
+    let validationStepper;
+
+    var isEmailValid = false;
+    var isFeedbackTextValid = false;
+    var isUserNavigatingReverse = false;
+    var isCurrentStepValid = false;
+    var stepperContentWrapper;
+    var regex = new RegExp('^[A-Za-z0-9._%+-]{1,}@@[A-Za-z0-9._%+-]{1,}');
+
+
+    var stepperContents = [
+        "<div class='step-content step-content-0 step-active'><div id='agreement-text'><p>Welcome! This survey is an opportunity for you to share your opinions and experiences, contributing to the ongoing improvement of our offerings. Your participation is highly appreciated, and we look forward to gaining a deeper understanding of your preferences. </p></div><label style='margin-top: 15px'>Enter your email <span class='required'>*</span></label><input class='e-input inputContainer' id='add-email' placeholder='Enter here' oninput='onInputChange(this, true)' /><div class='add-email error-label'>Email cannot be empty.</div><button style='margin-top: 20px;' class='e-btn nextStep stepperBtn' onclick='onNextStep(this)'>Next</button></div>",
+        "<div class='step-content step-content-1'> <div class='question-container'> <div class='survey-question'><p> Is this the first time you have visited this website? <span class='required'>*</span></p><label> <input type='radio' class='inputContainer new-user' name='service-usage' value='yes' checked> Yes </label> <label style='margin: 0px 10px'> <input type='radio' class='inputContainer old-user' name='service-usage' value='no'> No </label></div> <div class='feedback-section'> <p class='feedback-label'>Anything else you would like to share? <span class='required'>*</span></p> <textarea id='feedback-text' class='inputContainer' placeholder='I have feedback on...' oninput='onInputChange(this)' required></textarea> <div class='feedback-area error-label' style='margin: 0'>Feedback cannot be empty.</div> </div> </div><div style='display: flex;'> <button style='margin-top: 20px; margin-right: 5%;' class='e-btn previousStep' onclick='onPreviousStep(this)'>Previous</button> <button style='margin-top: 20px;' class='e-btn nextStep' onclick='onNextStep(this)'>Submit Feedback</button></div></div></div>",
+        "<div class='step-content step-content-2'><div class='confirm-section'><div class='feedback-msg'><b>Please confirm to submit your feedback.</b></div><br/><div class='feedback-msg' id='feedback-message'></div> <button style='margin-top: 20px; margin-right: 5%;' class='e-btn previousStep' onclick='onPreviousStep(this)'>Previous</button> <button style='margin-top: 20px; margin-right: 5%;' class='e-btn confirmbutton' id='confirm-button' onclick='onConfirm(this)'>Confirm</button></div></div>",
+        "<div class='step-content step-content-3'><div class='success-section'><div class='success-message' id='success-message'>Thanks! Feedback has been submitted successfully.</div><button style='margin-top: 20px; margin-right: 5%;' type='reset' class='e-btn e-hide' id='reset-button' onclick='onReset(this)'> Reset </button> </div></div>"
+    ];
+
+    window.onNextStep = function () { return validationStepper.nextStep(); };
+    window.onPreviousStep = function () { return validationStepper.previousStep(); };
+    window.onConfirm = function () {
+        var stepContent = document.querySelector('.step-content-3');
+        if (!stepContent) {
+            stepperContentWrapper.insertAdjacentHTML('beforeend', stepperContents[3]);
+            stepContent = document.querySelector(".step-content.step-content-3");
+        }
+        document.querySelectorAll('.step-content').forEach(function (step) { return step.classList.remove('step-active'); });
+        if (stepContent) {
+            stepContent.classList.add('step-active');
+            validationStepper.steps[validationStepper.activeStep].isValid = true;
+            validationStepper.steps[validationStepper.activeStep].status = 'completed';
+        }
+    };
+
+    window.onInputChange = function (args, isEmailInput) {
+        var elementId = isEmailInput ? 'add-email' : 'feedback-area';
+        var errElement = document.querySelector(".".concat(elementId, ".error-label"));
+        if (args.value.length === 0) {
+            if (isEmailInput) {
+                errElement.textContent = 'Email cannot be empty.';
+                isEmailValid = false;
+            }
+            else {
+                errElement.textContent = 'Feedback cannot be empty.';
+                isFeedbackTextValid = false;
+            }
+        }
+        else {
+            if (isEmailInput) {
+                isEmailValid = regex.test(args.value);
+                errElement.textContent = isEmailValid ? '' : 'Enter a valid email address.';
+            }
+            else {
+                isFeedbackTextValid = args.value.length > 15;
+                errElement.textContent = isFeedbackTextValid ? '' : 'Please enter at least 15 characters.';
+            }
+        }
+        errElement.style.visibility = errElement.textContent ? 'visible' : 'hidden';
+    };
+
+    window.onReset = function () {
+        isCurrentStepValid = false;
+        validationStepper.reset();
+        Array.from(document.querySelectorAll('.inputContainer')).forEach(function (ele) {
+            ele.value = '';
+            if (ele.classList.contains('new-user')) ele.checked = true;
+            else ele.checked = false;
+        })
+        for (var i = 0; i < validationStepper.steps.length; i++) {
+            validationStepper.steps[i].isValid = null;
+        }
+    };
+
+
+    function handleStepCreated() {
+        validationStepper = document.getElementById("validation-stepper").ej2_instances[0];
+        stepperContentWrapper = document.getElementById('validation-step-content');
+        stepperContentWrapper.innerHTML = stepperContents[validationStepper.activeStep];
+    };
+
+    function handleStepChange(args) {
+        isUserNavigatingReverse = args.activeStep < args.previousStep ? true : false;
+        if (!isUserNavigatingReverse) {
+            setValidState(args);
+        }
+        else {
+            validationStepper.steps[args.activeStep].isValid = validationStepper.steps[args.activeStep + 1].isValid = null;
+            isCurrentStepValid = true;
+        }
+        if (isCurrentStepValid) {
+            var stepContent = document.querySelector(".step-content-" + args.activeStep);
+            document.querySelectorAll('.step-content').forEach(function (step) { return step.classList.remove('step-active'); });
+            if (!stepContent) {
+                stepperContentWrapper.insertAdjacentHTML('beforeend', stepperContents[args.activeStep]);
+                stepContent = document.querySelector(".step-content.step-content-" + args.activeStep);
+            }
+            if (stepContent) {
+                stepContent.classList.add('step-active');
+            }
+            if (args.activeStep === 2) {
+                var feedbackMessage = document.getElementById('feedback-message');
+                feedbackMessage.textContent = document.getElementById('feedback-text').value;
+            }
+        }
+    };
+
+    function setValidState(args) {
+        var stepIndexToValidate = validationStepper.activeStep;
+        if (validationStepper.activeStep === 0) {
+            var emailInput = document.getElementById('add-email');
+            window.onInputChange(document.getElementById('add-email'), true);
+            isCurrentStepValid = emailInput.value.length && isEmailValid;
+        }
+        if (validationStepper.activeStep === 1) {
+            var radioInputs = document.querySelectorAll('.survey-question input');
+            var isChecked = Array.from(radioInputs).some(function (input) { return input.checked; });
+            window.onInputChange(document.getElementById('feedback-text'));
+            isCurrentStepValid = isChecked && isFeedbackTextValid;
+        }
+        if (validationStepper.activeStep === 2)
+            isCurrentStepValid = true;
+        args.cancel = !isCurrentStepValid;
+        validationStepper.steps[stepIndexToValidate].isValid = isCurrentStepValid;
+    };
+
+</script>
+
+<style>
+
+    @@font-face {
+        font-family: 'Survey-icons';
+        src: url(data:application/x-font-ttf;charset=utf-8;base64,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) format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    [class^="sf-icon-"],
+    [class*=" sf-icon-"] {
+        font-family: 'Survey-icons' !important;
+        speak: none;
+        font-size: 55px;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: inherit;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .sf-icon-survey-feedback:before {
+        content: "\e700";
+    }
+
+    .sf-icon-survey-intro:before {
+        content: "\e703";
+    }
+
+    .sf-icon-survey-status:before {
+        content: "\e707";
+    }
+
+    #validation-step-content input[type=radio] {
+        vertical-align: top;
+    }
+
+    .feedback-label {
+        margin-bottom: 10px;
+    }
+
+    #feedback-text {
+        color: #000;
+        width: 90%;
+        height: 50px;
+        resize: vertical;
+    }
+
+    #agreement-text p {
+        text-align: justify;
+    }
+
+    #validation-step-content .success-message {
+        color: green;
+        font-weight: bold;
+        margin-top: 10px;
+        font-size: 16px;
+    }
+
+    #validation-step-content .required {
+        color: red;
+    }
+
+    #validation-step-content .content-wrapper {
+        min-height: 200px;
+    }
+
+    #validation-step-content .error-label {
+        height: 20px;
+        color: #e5184b;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 15px;
+        visibility: hidden;
+        margin: 3px 0 0;
+    }
+
+    #validation-step-content .question-container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .validation-stepper-section {
+        width: 70%;
+        margin: 40px auto;
+    }
+
+    #validation-step-content {
+        position: relative;
+        width: 65%;
+        min-height: 250px;
+        margin: 0 auto;
+    }
+
+    .step-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    /* Display the active step content */
+    .step-content.step-active {
+        animation: fadeInUp 0.4s;
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    /* Keyframes */
+    @@keyframes fadeInUp {
+        from {
+            opacity: 0;
+            -webkit-transform: translate3d(0, 50%, 0);
+            transform: translate3d(0, 50%, 0);
+        }
+
+        to {
+            opacity: 1;
+            -webkit-transform: none;
+            transform: none;
+        }
+    }
+
+    @@media only screen and (max-width: 965px) {
+        .validation-stepper-section {
+            width: 100%;
+        }
+
+        #validation-step-content {
+            width: auto;
+            margin: auto 5%;
+        }
+    }
+
+</style>
+
+@section Meta{
+    <meta name="description" content="This example demonstrates the Validation in ASP.NET MVC Stepper Control. Explore here for more details." />
+}
+@section ActionDescription{
+<div id="action-description">
+    <p>This sample showcases the integration of validation support in the Stepper Control.</p>
+</div>
+}
+@section Description{
+<div id="description">
+        <p>This example demonstrates using the <code>isValid</code> property for validating the state of each step within the Stepper. Stepper validation ensures that user inputs are correct and guides them to prevent errors before proceeding to the next steps.</p>
+</div>
+}
+@section Title{
+    <title>ASP.NET MVC Stepper Validation Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Stepper Validation in ASP.NET MVC Stepper Control</h1>
+}

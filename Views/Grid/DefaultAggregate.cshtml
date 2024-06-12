@@ -1,0 +1,75 @@
+@{
+    ViewData["Title"] = "DefaultAggregate";
+}
+
+@section ControlsSection{
+     <div class="control-section">
+         <div class="control-wrapper">
+    
+        <ejs-grid id="Grid" dataSource="ViewBag.datasource" allowSorting="true" allowPaging="true" allowFiltering="true" toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })">
+            <e-grid-aggregates>
+                <e-grid-aggregate>
+                    <e-aggregate-columns>
+                        <e-aggregate-column  field="Freight" type="Sum" format="C2" footerTemplate="Sum:${Sum}"></e-aggregate-column>                        
+                    </e-aggregate-columns>
+                </e-grid-aggregate>
+                <e-grid-aggregate>
+                    <e-aggregate-columns>
+                        <e-aggregate-column field="Freight" type="Average" format="C2"  footerTemplate="Average:${Average}"></e-aggregate-column>
+                    </e-aggregate-columns>
+                </e-grid-aggregate>
+            </e-grid-aggregates>
+            <e-grid-groupsettings></e-grid-groupsettings>
+            <e-grid-pagesettings pageCount="5"></e-grid-pagesettings>
+            <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
+            <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true"></e-grid-editSettings>
+            <e-grid-columns>           
+                <e-grid-column field="OrderID" headerText="Order ID" minWidth="100" width="150" maxWidth="200" textAlign="Right" isPrimaryKey="true" validationRules="@(new { required=true, number=true})"></e-grid-column>     
+                <e-grid-column field="CustomerID" headerText="Customer Name" width="150" validationRules="@(new { required=true, minLength=5})"></e-grid-column>
+                <e-grid-column field="Freight" headerText="Freight" TextAlign="Right" format="C2" width="160" editType="numericedit" validationRules="@(new { required=true, min=0})"></e-grid-column>
+                <e-grid-column field="OrderDate" headerText="Order Date" format="yMd"  width="130" editType="datepickeredit"></e-grid-column>               
+                <e-grid-column field="ShipCountry"  headerText="Ship Country" width="140" editType="dropdownedit"></e-grid-column>                
+            </e-grid-columns>
+
+
+        </ejs-grid>
+      </div>
+      </div>
+}
+
+@section ActionDescription{
+	<div id="action-description">
+		<p>This sample demonstrates aggregate functionality of the Grid. In this sample, the aggregate value for the column “Freight” is displayed in column footer.</p>
+	</div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Default Aggregate in ASP.NET Core Data Grid control. Explore here for more details."/>
+                }
+
+@section Description{
+    <div id="description">
+		<p>The Grid supports aggregates which will be displayed at the footer, group footer and group caption of the Grid.
+		The aggregate configurations can be provided by the <code>aggregates</code> property.</p>
+		<p>The built-in aggregates are,</p>
+		 <ul>
+			<li><code>Sum</code></li>     
+			<li><code>Average</code></li>     
+			<li><code>Min</code></li>     
+			<li><code>Max</code></li>     
+			<li><code>Count</code></li>     
+			<li><code>Truecount</code></li>     
+			<li><code>Falsecount</code></li>     
+			<li><code>Custom</code> - Requires the <code>customAggregate</code> property to perform aggregation.
+			</li>     
+		</ul>    
+         <p>The custom aggregate value can be accessed inside template using the key <code>${Custom}</code></p>
+		<p>The template expression should be provided inside <code>${...}</code> the interpolation syntax.</p>
+	</div>
+}
+@section Title{
+                    <title>ASP.NET Core Data Grid Default Aggregate Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Default Aggregate in ASP.NET Core Data Grid Control</h1>
+                }

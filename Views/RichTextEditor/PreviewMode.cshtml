@@ -1,0 +1,211 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="control-section">
+        <div class="control-wrapper">
+        <div class="col-lg-12 col-sm-12 col-md-12">
+            <ejs-splitter id="splitter-rte-markdown-preview" height="450px" width="100%" resizing="resizing" created="onCreateSplitter">
+                <e-splitter-panes>
+                    <e-splitter-pane size="50%" resizable="true" cssClass="pane1" min="40%">
+                        <e-content-template>
+                            <div class="content">
+                                <ejs-richtexteditor id="defaultRTE" height="448px" editorMode="Markdown" saveInterval=1 maxLength=5000 showCharCount="true" change="onChange" actionComplete="updateValue" created="onCreate" placeholder="Enter your text here...">
+                                    <e-content-template>
+In Rich Text Editor, you click the toolbar buttons to format the words and the changes are visible immediately. Markdown is not like that. When you format the word in Markdown format, you need to add Markdown syntax to the word to indicate which words and phrases should look different from each other
+
+Rich Text Editor supports markdown editing when the editorMode set as **markdown** and using both *keyboard interaction* and *toolbar action*, you can apply the formatting to text.
+
+We can add our own custom formation syntax for the Markdown formation, [sample link](https://ej2.syncfusion.com/javascript/demos/#/material/rich-text-editor/markdown-editor-custom-format.html).
+
+The third-party library <b>Marked</b> is used in this sample to convert markdown into HTML content
+                                    </e-content-template>
+                                    <e-richtexteditor-toolbarsettings enableFloating="false" items="@ViewBag.items"></e-richtexteditor-toolbarsettings>
+                                </ejs-richtexteditor>
+                            </div>
+                        </e-content-template>
+                    </e-splitter-pane>
+                    <e-splitter-pane cssClass="pane2" min="40%">
+                        <e-content-template>
+                            <div class="heading right">
+                                <h6 class="title"><b>Markdown Preview</b></h6>
+                                <div class="content">
+                                    <div class="splitter-default-content source-code pane2" style="padding:20px"></div>
+                                </div>
+                            </div>
+                        </e-content-template>
+                    </e-splitter-pane>
+                </e-splitter-panes>
+            </ejs-splitter>
+        </div>
+        </div>
+    </div>
+    <style>
+        .heading {
+            float: left;
+            width: 50%;
+            border: 1px solid #e8e8e8;
+            border-bottom: none;
+            position: relative;
+            box-sizing: border-box;
+            padding: 5px;
+            border-left: none;
+            border-top: none;
+        }
+        .title {
+            color: #333333;
+            letter-spacing: 1px;
+            padding-left: 10px;
+            text-align: center;
+        }
+        .e-richtexteditor textarea.e-content {
+            float: left;
+            border-right: 1px solid rgba(0, 0, 0, 0.12);
+        }
+
+        .e-richtexteditor .e-rte-content .e-content {
+            min-height: 150px;
+        }
+
+        .e-richtexteditor .e-rte-content {
+            overflow: hidden;
+        }
+
+        .e-icon-btn.e-active .e-md-preview::before {
+            content: '\e350';
+        }
+
+        .e-icon-btn .e-md-preview::before {
+            content: '\e345';
+        }
+
+        .bootstrap4 .e-icon-btn.e-active .e-md-preview::before {
+            content: '\e790';
+        }
+
+        .bootstrap4 .e-icon-btn .e-md-preview::before {
+            content: '\e787';
+        }
+        
+        .tailwind .e-icon-btn .e-md-preview::before,
+        .tailwind-dark .e-icon-btn .e-md-preview::before {
+            content: '\e7d0';
+        }
+        
+        .fluent .e-icon-btn.e-active .e-md-preview::before,
+        .fluent-dark .e-icon-btn.e-active .e-md-preview::before,
+        .fluent2 .e-icon-btn.e-active .e-md-preview::before,
+        .fluent2-dark .e-icon-btn.e-active .e-md-preview::before,
+        .tailwind .e-icon-btn.e-active .e-md-preview::before,
+        .tailwind-dark .e-icon-btn.e-active .e-md-preview::before,
+        .bootstrap5 .e-icon-btn.e-active .e-md-preview::before,
+        .bootstrap5 .e-icon-btn.e-active .e-md-preview::before,
+        .material3 .e-icon-btn.e-active .e-md-preview::before,
+        .material3-dark .e-icon-btn.e-active .e-md-preview::before {
+            content: '\e80e';
+        }
+
+        .tailwind .e-icon-btn .e-md-preview::before,
+        .tailwind-dark .e-icon-btn .e-md-preview::before,
+        .bootstrap5 .e-icon-btn .e-md-preview::before,
+        .bootstrap5-dark .e-icon-btn .e-md-preview::before,
+        .fluent .e-icon-btn .e-md-preview::before,
+        .fluent-dark .e-icon-btn .e-md-preview::before,
+        .fluent2 .e-icon-btn .e-md-preview::before,
+        .fluent2-dark .e-icon-btn .e-md-preview::before,
+        .material3 .e-icon-btn .e-md-preview::before,
+        .material3-dark .e-icon-btn .e-md-preview::before {
+            content: '\e7de';
+        }
+
+        .e-rte-content .e-content {
+            float: right;
+            width: 50%;
+            overflow: auto;
+            height: inherit;
+            padding: 8px;
+            height: 100%;
+        }
+
+            .e-rte-content .e-content.e-pre-source {
+                width: 100%;
+            }
+
+        .highcontrast .e-richtexteditor textarea.e-content {
+            border-right: 1px solid #fff;
+        }
+        /* custom code start */
+        .sb-header {
+            z-index: 100;
+        }
+
+        .sb-content.e-view.hide-header {
+            top: 0 !important;
+        }
+
+        .sb-header.e-view.hide-header {
+            display: none;
+        }
+        /* custom code end */
+    </style>
+    <script type="text/javascript">
+        var rteObj, textArea, srcArea, splitObj;
+        function onCreate() {
+            rteObj = this;
+            loadExternalFile();
+            textArea = rteObj.contentModule.getEditPanel() ;
+            srcArea = document.querySelector('.source-code');
+        }
+        function onChange() {
+            updateValue();
+        }
+        function resizing() {
+            rteObj.refreshUI();
+        }
+        function updateValue() {
+            srcArea.innerHTML = marked(rteObj.contentModule.getEditPanel().value);
+        }
+        function onCreateSplitter() {
+            splitObj = this;
+            rteObj.refreshUI();
+            if (ej.base.Browser.isDevice) {
+                splitObj.orientation = 'Vertical';
+                document.body.querySelector('.heading').style.width = 'auto';
+            }
+        }
+        function loadExternalFile() {
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.19/marked.js';
+            script.onload = function () {
+                updateValue();
+            };
+            document.getElementsByTagName('head')[0].appendChild(script);
+        }
+    </script>
+}
+
+@*custom code start*@
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Preview in ASP.NET Core Rich Text Editor control. Explore here for more details."/>
+                }
+
+@*custom code end*@
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This example illustrates how to preview Markdown changes within the Rich Text Editor. You can input or modify the display text, apply formatting, and observe the Markdown preview alongside. This capability is enabled by utilizing the splitter component, which effectively separates the Rich Text Editor from the preview section.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>The Rich Text Editor provides the ability to instantly <code>preview</code> Markdown changes through the preview functionality. To achieve this, the sample utilizes the third-party library Marked.js to convert Markdown into HTML content.</p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Rich Text Editor Preview Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Preview in ASP.NET Core Rich Text Editor Control</h1>
+                }

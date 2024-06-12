@@ -1,0 +1,153 @@
+@using Syncfusion.EJ2
+@{
+    var data = new GameList().MaskEditModel();
+}
+@section ControlsSection{
+    <div class="col-lg-8 control-section">
+        <div class="content-wrapper">
+            <div class="control-label">Formats</div>
+            <ejs-maskedtextbox id="mask1" mask="(999)-999-9999" floatLabelType="Never" created="OnCreate" change="OnChange">
+            </ejs-maskedtextbox>
+        </div>
+    </div>
+    <div class="col-lg-4 property-section" style="padding-left: 0px">
+        <table id="property" title="Properties" style="width: 100%">
+            <tbody>
+                <tr>
+                    <td style="width: 50%">
+                        <div>Mask</div>
+                    </td>
+                    <td style="width: 50%">
+                        <div style="max-width: 200px">
+                            <!-- Input to customize mask format -->
+                            <input class="e-input" id="input1" type="text">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 50%">
+                        <div>Prompt Character</div>
+                    </td>
+                    <td style="width: 50%">
+                        <div style="max-width: 200px">
+                            <!-- Prompt character options -->
+                            <ejs-dropdownlist id="ddl" dataSource="@data" popupHeight="200px" change="valueChange" index="1">
+                                <e-dropdownlist-fields text="Mask" value="Id"></e-dropdownlist-fields>
+                            </ejs-dropdownlist>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 50%;padding-top:10px">
+                        <div>Value</div>
+                    </td>
+                    <td style="width: 50%;padding-top:10px">
+                        <!-- Display un-masked value -->
+                        <div id="val1" type="text"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 50%;padding-top:10px">
+                        <div>Masked Value</div>
+                    </td>
+                    <td style="width: 50%;padding-top:10px">
+                        <!-- Display masked value -->
+                        <div id="val2" type="text"></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        /**/
+        /**/
+        var ele1 = document.getElementById('input1');
+        var ele3 = document.getElementById('val1');
+        var ele4 = document.getElementById('val2');
+
+        function valueChange() {
+                var ddlObj = document.getElementById('ddl').ej2_instances[0];
+                mask.setProperties({ promptChar: ddlObj.value });
+                ele3.innerHTML = mask.value;
+                ele4.innerHTML = mask.getMaskedValue();
+            }
+
+        function OnChange(args) {
+            ele3.innerHTML = args.value;
+            ele4.innerHTML = args.maskedValue;
+        }
+        ele1.oninput = function () {
+            var start = ele1.selectionStart;
+            var end = ele1.selectionEnd;
+            mask.setProperties({ mask: ele1.value });
+            ele1.setSelectionRange(start, end);
+            ele3.innerHTML = mask.value;
+            ele4.innerHTML = mask.getMaskedValue();
+        };
+    </script>
+
+
+    @*custom code start*@
+    <style>
+        .property-panel-content {
+            padding: 0 10px 10px 0;
+            overflow: auto;
+        }
+
+        .content-wrapper {
+            width: 45%;
+            margin: 0 auto;
+            min-width: 185px;
+            max-width: 350px;
+        }
+
+        .control-label {
+            padding: 24px 0px 10px 0px;
+            font-size: 12px;
+        }
+    </style>
+    @*custom code end*@
+}
+
+@section PreScripts {
+    <script>
+        var mask;
+        function OnCreate() {
+            mask = this;
+            ele1.value = '(999)-999-9999';
+            ele4.innerHTML = mask.getMaskedValue();
+        }
+    </script>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Formats in ASP.NET Core Input Mask control. Explore here for more details."/>
+                }
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This sample demonstrates that the different formats can be applied to MaskedTextBox component. You can customize the mask and prompt character values in the property panel.</p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            Here, the "Value" and "Masked Value" labels from the properties panel returns the raw value (unmasked value) and masked value of the MaskedTextBox component. You can also get these raw value and masked value anytime through the value property and getMaskedValue method.
+        </p>
+        <p>
+            More information about MaskedTextBox can be found in this
+            <a target="_blank"
+               href="https://ej2.syncfusion.com/aspnetcore/documentation/maskedtextbox/mask-configuration" aria-label="Navigate to the documentation for Mask Configuration in ASP.NET Core MaskedTextBox control">
+        documentation section</a>.
+            </a>.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Input Mask Formats Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Formats in ASP.NET Core Input Mask Control</h1>
+                }

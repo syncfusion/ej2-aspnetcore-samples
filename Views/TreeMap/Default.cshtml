@@ -1,0 +1,68 @@
+@using Syncfusion.EJ2.TreeMap;
+@section ControlsSection{
+    @{
+        var border = new TreeMapBorder{ Color = "white", Width = 0.5 };
+        var palette = new string[] { "#C33764", "#AB3566", "#993367", "#853169", "#742F6A", "#632D6C", "#532C6D", "#412A6F", "#312870", "#1D2671" };
+        var titleFont = new TreeMapFont { FontFamily = "Segoe UI" };
+    }
+    <div class="control-section">
+            <div class="col-md-12">
+                <ejs-treemap id="container" load="treemapLoad" itemMove="dataChange" itemClick="dataChange" palette="palette" dataSource="ViewBag.dataSource" weightValuePath="Sales" format="n" useGroupingSeparator="true">
+                    <e-treemap-legendsettings visible="false" position="@Syncfusion.EJ2.TreeMap.LegendPosition.Top" shape="@Syncfusion.EJ2.TreeMap.LegendShape.Rectangle">
+                    </e-treemap-legendsettings>
+                    <e-treemap-tooltipsettings visible="true" format=" ${Size}<br>${Name}<br>" textStyle="titleFont"></e-treemap-tooltipsettings>
+                    <e-treemap-titlesettings text="Car Sales by Country - 2017" textStyle="titleFont"></e-treemap-titlesettings>
+                    <e-treemap-leafitemsettings labelPath="Company" border="border" labelStyle="titleFont"></e-treemap-leafitemsettings>
+                    <e-treemap-levels>
+                        <e-treemap-level groupPath="Continent" border="border" headerStyle="titleFont">
+                        </e-treemap-level>
+                    </e-treemap-levels>
+                </ejs-treemap>
+                <div style="float: right; margin-right: 10px;">
+                    Source:
+                    <a href="https://www.indexmundi.com/facts/visualizations/treemap#SL.UEM.TOTL.ZS:SL.UEM.TOTL.ZS" target="_blank" aria-label="indexmundi">www.indexmundi.com</a>
+                </div>
+        </div>
+    </div>
+}
+<script>
+    function dataChange(args) {
+        args.item['data'].Sales = args.item['weight'];
+        args.treemap.tooltipSettings.format = args.item['groupIndex'] === 0 ? 'Country: ${Continent}<br>Sales: ${Sales}' :
+            'Country: ${Continent}<br>Company: ${Company}<br>Sales: ${Sales}';
+    }
+    @* custom code start *@
+    function treemapLoad(args) {
+        var theme = themeName ? themeName : 'Material';
+        args.treemap.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+    }
+    @* custom code end *@
+</script>
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Default Functionalities in ASP.NET Core TreeMap control. Explore here for more details."/>
+                }
+@section ActionDescription{
+    <div id="action-description">
+    <p>
+        This sample visualizes the car sales of various countries in 2017 by rendering the countries at top level and car manufacturing companies as leaf items.
+    </p>
+</div>
+}
+@section Description{
+
+    <div id="description">
+    <p>
+        In this example, you can see how to render a treemap with the provided data source. Palette color is applied for the items in treemap. Default legend is enabled in this example to represent the items in top level.
+    </p>
+    <p>
+        Tooltip is enabled in this example. To see the tooltip in action, hover the mouse over an item or tap an item in touch enabled devices.
+    </p>
+</div>
+}
+@section Title{
+                    <title>ASP.NET Core TreeMap Default Functionalities Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Default Functionalities in ASP.NET Core TreeMap Control</h1>
+                }

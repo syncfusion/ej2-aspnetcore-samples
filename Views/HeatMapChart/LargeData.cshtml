@@ -1,0 +1,78 @@
+@using Syncfusion.EJ2.HeatMap
+@section ControlsSection{
+    @{
+        var textStyle = new { size = "15px", fontWeight = "500", fontStyle = "Normal", fontFamily = "inherit"};
+        var Xminimum = new DateTime(2017, 1, 1);
+        var Xmaximum = new DateTime(2017, 12, 31);
+        var labelTextStyle = new { fontFamily = "inherit" };
+        var yAxisLabel = new string[] { "1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00",
+"12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00",
+"22:00", "23:00", "24:00" };
+        var cellBorder = new
+        {
+            width = "0",
+        };
+    }
+    <div class="control-section">
+        <div class="row">
+            <div class="col-md-12">
+                <ejs-heatmap id='container' load="window.onHeatmapLoad" tooltipRender="window.tooltipRender" renderingMode="Canvas" dataSource="ViewBag.dataSource">
+                    <e-heatmap-titlesettings text="Annual Flight Traffic Report" textStyle="textStyle">
+                    </e-heatmap-titlesettings>
+                    <e-heatmap-xaxis minimum="Xminimum" textStyle="labelTextStyle" maximum="Xmaximum" showLabelOn="Months" intervalType="Days" valueType="DateTime" labelFormat="MMM"></e-heatmap-xaxis>
+                    <e-heatmap-yaxis labels="yAxisLabel" textStyle="labelTextStyle" ></e-heatmap-yaxis>
+                    <e-heatmap-palettesettings type="Gradient">
+                        <e-palettes>
+                            <e-palette value="150" color="#A6DC7E"></e-palette>
+                            <e-palette value="250" color="#DCD57E"></e-palette>
+                            <e-palette value="300" color="#DC8D7E"></e-palette>
+                        </e-palettes>
+                    </e-heatmap-palettesettings>
+                    <e-heatmap-cellsettings border="cellBorder" showLabel="false"></e-heatmap-cellsettings>
+                    <e-heatmap-legendsettings visible="false"></e-heatmap-legendsettings>
+                    <e-heatmap-tooltipsettings>
+                        <e-tooltipsettings-textstyle fontFamily="inherit"></e-tooltipsettings-textstyle>
+                    </e-heatmap-tooltipsettings>
+                </ejs-heatmap>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        window.onHeatmapLoad = function (args) {
+            var selectedTheme = themeName ? themeName : 'Material';
+             args.heatmap.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+        }
+        window.tooltipRender = function (args) {
+            let format = args.heatmap.intl.getDateFormat({ format: "MMM dd, yyyy" });
+            let value = format(args.xValue);
+            args.content = [value + " " + args.yLabel + " : " + args.value + " flight arrivals"];
+        }
+    </script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample visualizes the annual traffic report of an airport with the number of flight arrivals in a year.The data label is disabled in this sample, the tooltip displays the data point values.
+        </p>
+    </div>
+}
+@section Description{
+
+    <div id="description">
+        <p>
+            In this example, you can see how to switch the Heatmap to canvas rendering mode.The rendering performance will be better in <code>Canvas</code> rendering mode, while loading large datasets. You can switch the rendering mode for Heatmap between <code>SVG</code> and <code>Canvas</code> using the <a href="https://ej2.syncfusion.com/aspnetcore/documentation/heatmap-chart/rendering-mode" target="_blank" aria-label="renderingMode">renderingMode</a> property. When the <code>renderingMode</code> property is set to <code>Auto</code>, the rendering mode will be switched automatically based of the size of data source to improve the rendering performance.
+        </p>
+        <p>The tooltip is enabled in this example. To see the tooltip in action, hover the mouse over an item or tap an item on touch-enabled devices.</p>
+        <br> 
+    </div>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Large Data in ASP.NET Core HeatMap Chart control. Explore here for more details."/>
+                }
+@section Title{
+                    <title>ASP.NET Core HeatMap Chart Large Data Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Large Data in ASP.NET Core HeatMap Chart Control</h1>
+                }

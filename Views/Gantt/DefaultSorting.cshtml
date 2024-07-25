@@ -1,0 +1,73 @@
+@using Syncfusion.EJ2.Gantt;
+@section ControlsSection{
+    @{ 
+        List<GanttSortDescriptor> cols = new List<GanttSortDescriptor>();
+        cols.Add(new GanttSortDescriptor { Field = "TaskName", Direction = Syncfusion.EJ2.Gantt.SortDirection.Ascending });
+        cols.Add(new GanttSortDescriptor { Field = "TaskId", Direction = Syncfusion.EJ2.Gantt.SortDirection.Ascending });
+    }
+    <div class="control-section">
+        <div class="row">
+            <div class="col-md-12">
+                <ejs-gantt id='Sorting' dataSource="ViewBag.dataSource" height="450px" highlightWeekends="true" allowSelection="true" treeColumnIndex="1"
+                           allowSorting="true" selectedRowIndex="0" projectStartDate="03/25/2024" projectEndDate="07/28/2024">
+                    <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate"
+                            endDate="EndDate" duration="Duration" progress="Progress" dependency="Predecessor" child="SubTasks">
+                    </e-gantt-taskfields>
+                    <e-gantt-columns>
+                        <e-gantt-column field="TaskId"></e-gantt-column>
+                        <e-gantt-column field="TaskName" width="250"></e-gantt-column>
+                        <e-gantt-column field="StartDate"></e-gantt-column>
+                        <e-gantt-column field="EndDate"></e-gantt-column>
+                        <e-gantt-column field="Duration"></e-gantt-column>
+                        <e-gantt-column field="Progress"></e-gantt-column>
+                    </e-gantt-columns>
+                    <e-gantt-labelSettings leftLabel="TaskName"></e-gantt-labelSettings>
+                    <e-gantt-splittersettings columnIndex="2"></e-gantt-splittersettings>
+                    <e-gantt-sortsettings columns="cols">
+                    </e-gantt-sortsettings>
+                </ejs-gantt>
+            </div>
+        </div>
+    </div>
+
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the Gantt multi-sorting feature. To sort two or more columns, hold the CTRL key, and
+            click the column header.
+        </p>
+    </div>
+}
+@section Description{
+
+    <div id="description">
+        <p>
+            The sorting feature enables you to order data in a particular direction. It can be enabled by setting
+            <code>allowSorting</code> to true.
+        </p>
+        <p>
+            To sort a Gantt column, click the column header. The icons (ascending) and (descending) specifies the sort
+            direction of a column.
+        </p>
+        <p>
+            By default, the multi-sorting feature is enabled in Gantt. To sort multiple columns, hold the
+            <strong>CTRL</strong> key, and then click the column header. To clear sort for a column, hold the
+            <strong>SHIFT</strong> key, and then click the column header.
+        </p>
+        <p>
+            In this demo, multiple sorting is enabled on load time by assigning multiple columns into <code>sortSettings</code>
+            property.
+        </p>
+    </div>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Default in ASP.NET Core Gantt control. Explore here for more details."/>
+                }
+@section Title{
+                    <title>ASP.NET Core Gantt Default Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Default in ASP.NET Core Gantt Control</h1>
+                }

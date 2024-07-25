@@ -1,0 +1,207 @@
+﻿@using Syncfusion.EJ2
+@using Syncfusion.EJ2.Charts
+@section ControlsSection{
+    @{
+        /**/
+        var majorGridLines = new RangeNavigatorMajorTickLines { Width = 0.000001 };
+        var lineStyle = new ChartAxisLine { Width = 0.000001 };
+        var crosshairTooltip = new ChartCrosshairTooltip { Enable = true };
+        var line = new ChartMajorGridLines { Width = 0.00001 };
+        var lineTicks = new ChartMajorTickLines { Width = 0.00001 };
+        var lineAxis = new ChartAxisLine { Width = 0.00001 };
+        var border = new ChartBorder { Color = "Transparent", Width = 0 };
+        var width = "10%";
+    }
+    <div class="control-section">
+        <div id="container" align="center">
+            <ejs-rangenavigator id="container" disabled="true" animationDuration="0"
+                                majorTickLines="majorGridLines" valueType="DateTime"
+                                load="onChartLoad" loaded="loaded" changed="changed" xName="x" yName="close">
+                <e-rangenavigator-periodselectorsettings position="Top">
+                    <e-periods>
+                        <e-period interval="1" intervalType="Months" text="1M"></e-period>
+                        <e-period interval="2" intervalType="Months" text="2M"></e-period>
+                        <e-period interval="6" intervalType="Months" text="6M"></e-period>
+                        <e-period text="YTD"></e-period>
+                        <e-period interval="1" intervalType="Years" text="1Y"></e-period>
+                        <e-period interval="2" intervalType="Years" text="2Y"></e-period>
+                        <e-period text="All"></e-period>
+                    </e-periods>
+                </e-rangenavigator-periodselectorsettings>
+            </ejs-rangenavigator>
+        </div>
+        <div id="chartcontainer" align="center">
+            <ejs-chart id="chart"
+                       load="window.load" tooltipRender="tooltiprender" chartMouseLeave="chartmouseleave" chartMouseMove="chartmouseMove">
+                <e-chart-tooltipsettings enable="true" shared="true">
+                </e-chart-tooltipsettings>
+                <e-chart-margin top="0"></e-chart-margin>
+                <e-chart-annotations>
+                    <e-chart-annotation content="<div id='annotation'></div>" coordinateUnits="Pixel" region="Series" x="width" y="20%"></e-chart-annotation>
+                </e-chart-annotations>
+                <e-chart-primaryxaxis valueType="DateTime"
+                                      majorGridLines="line"
+                                      crosshairTooltip="crosshairTooltip"></e-chart-primaryxaxis>
+                <e-chart-primaryyaxis title="Price"
+                                      labelFormat="${value}"
+                                      minimum=50
+                                      crosshairTooltip="crosshairTooltip"
+                                      maximum=170
+                                      plotOffset=25
+                                      interval=30
+                                      rowIndex=1
+                                      opposedPosition=true
+                                      majorTickLines="lineTicks"
+                                      lineStyle="lineAxis"></e-chart-primaryyaxis>
+                <e-chart-chartarea border="border"></e-chart-chartarea>
+                <e-chart-legendsettings visible="false">
+                </e-chart-legendsettings>
+                <e-chart-zoomsettings enableMouseWheelZooming="true" mode="X"></e-chart-zoomsettings>
+                <e-chart-crosshairsettings enable=true lineType="Both"></e-chart-crosshairsettings>
+                <e-chart-axes>
+                    <e-chart-axis name="secondary" crosshairTooltip="crosshairTooltip"
+                                  opposedPosition=true rowIndex=0
+                                  majorGridLines="line" lineStyle="lineStyle" minimum=-3.5 maximum=3.5
+                                  interval=3 majorTickLines="lineTicks" title="MACD">
+                        <e-striplines>
+                            <e-stripline start="-3.5" end="3.5" text="" color="black" visible="true" opacity="0.03" zIndex="Behind"></e-stripline>
+                        </e-striplines>
+                    </e-chart-axis>
+                </e-chart-axes>
+                <e-chart-rows>
+                    <e-chart-row height="40%"></e-chart-row>
+                    <e-chart-row height="60%"></e-chart-row>
+                </e-chart-rows>
+                <e-series-collection>
+                    <e-series xName="x" yName="y" low="low" high="high" close="close" volume="volume" open="open" width=2
+                              name="Apple Inc" bearFillColor="#2ecd71" bullFillColor="#e74c3d"
+                              type="@Syncfusion.EJ2.Charts.ChartSeriesType.Candle"></e-series>
+                </e-series-collection>
+                <e-indicators>
+                    <e-indicator type="@Syncfusion.EJ2.Charts.TechnicalIndicators.Macd" period=3
+                                 fastPeriod=8 slowPeriod=5 seriesName="Apple Inc" macdType="Both"
+                                 width=2 macdPositiveColor="#2ecd71" macdNegativeColor="#e74c3d"
+                                 fill="#6063ff" yAxisName="secondary">
+                    </e-indicator>
+                </e-indicators>
+            </ejs-chart>
+        </div>
+    </div>
+    <script src="~/scripts/datasource.js"></script>
+    <script>
+        var data = chartData;
+        var zoomFactor, zoomPosition;
+        var selectedTheme = location.hash.split('/')[1];
+        selectedTheme = selectedTheme ? selectedTheme : 'Material';
+        var theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+        window.onChartLoad = function (args) {
+            args.rangeNavigator.periodSelectorSettings.height =
+                document.body.className.indexOf('e-bigger') > -1 ? 56 : 42;
+            args.rangeNavigator.theme = theme;
+            args.rangeNavigator.width = ej.base.Browser.isDevice ? "100%" : "75%";
+            args.rangeNavigator.dataSource = data;
+            args.rangeNavigator.value = [new Date(2014, 9, 18), new Date(2015, 9, 18)];            
+        }
+        var loaded = function (args) {
+            if (!ej.base.Browser.isDevice && document.getElementById('container_Secondary_Element')) {
+                document.getElementById('container_Secondary_Element').style.transform = 'translate(13%)';
+            }
+        }
+        window.changed = function (args) {
+            zoomFactor = args.zoomFactor;
+            zoomPosition = args.zoomPosition;
+            if ((document.getElementById('chart').childNodes.length > 1)) {
+                var chart = document.getElementById('chart').ej2_instances[0];
+                chart.primaryXAxis.zoomFactor = args.zoomFactor;
+                chart.primaryXAxis.zoomPosition = args.zoomPosition;
+                chart.dataBind();
+                chart.setAnnotationValue(
+                    0,
+                    '<div id="annotation"></div>'
+                );
+            }
+        }
+        window.load = function (args) {
+            args.chart.theme = theme;
+            args.chart.zoomSettings.toolbarItems = [];
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "80%";
+            args.chart.series[0].dataSource = data;
+            args.chart.zoomFactor = zoomFactor;
+            args.chart.zoomPosition = zoomPosition;
+        }
+        var chartmouseMove = function (args) {
+            var chart = document.getElementById('chart').ej2_instances[0];
+            if (!ej.charts.withInBounds(chart.mouseX, chart.mouseY, chart.chartAxisLayoutPanel.seriesClipRect)) {
+                removeSecondaryElement();
+            }
+
+        }
+        var tooltiprender = function (args) {
+            var chart = document.getElementById('chart').ej2_instances[0];
+            if (args.text.indexOf('Apple Inc') > -1) {
+                var text = args.text.split('<br/>');
+                var html = '<table><thead>' + text[0] + '</thead>';
+                var value = void 0;
+                for (var i = 1; i < text.length; i++) {
+                    value = text[i].split(':');
+                    html += '<tr><td>' + value[0] + ':</td><td>$' +
+                        (+value[1].split(' <b>')[1].split('$')[1].split('</b>')[0]).toFixed(2) +
+                        '</td></tr>';
+                }
+                html += '</table>';
+                chart.setAnnotationValue(0, '<div id="annotation" style="line-height: 18px; font-size: 13px;background: #fff; opacity:0.9; color: #464e56; box-shadow:0 0 8px 0 rgba(70,78,86,.25); padding: 7px 10px; border-radius: 3px">' +
+                    html +
+                    '</div>');
+            }
+            args.text = '';
+
+        }
+        var chartmouseleave = function (args) {
+            removeSecondaryElement();
+        }
+        function removeSecondaryElement() {
+            setTimeout(function () {
+                if (ej.charts.getElement("annotation")) {
+                    ej.charts.getElement("annotation").remove();
+                }
+            }, 2000);
+        }
+    </script>
+}
+   @*custom code start*@
+@section Scripts {
+
+}
+
+<style>
+    #control-container {
+        padding: 0px !important;
+    }
+
+    #container_Secondary_Element {
+        transform: translate(14%) !important
+    }
+
+    #chart_tooltip {
+        opacity: 0;
+    }
+    #chart_HorizontalLine, #chart_VerticalLine {
+        stroke-dasharray: 2
+    }
+</style>
+@section Meta{
+    <meta name="description" content="This demo for Essential JS2 Range Navigator control shows how to render the stock charts with specified periods using period selector." />
+}
+   @*custom code end*@
+@section ActionDescription{
+    <p>
+        This sample illustrates a stock chart with MACD indicator.
+        Period Selector show the information about the stock chart range values with out range navigator.
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can see how to render and configure the Period Selector.
+        Tooltip is enabled in this example, to see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+    </p>
+}

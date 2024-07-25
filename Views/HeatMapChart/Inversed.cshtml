@@ -1,0 +1,120 @@
+@using Syncfusion.EJ2.HeatMap;
+@using Syncfusion.EJ2.Buttons;
+@section ControlsSection{
+    @{
+        var textStyle = new { size = "15px", fontWeight = "500", fontStyle = "Normal", fontFamily = "inherit" };
+        var xAxisLabel = new string[] { "China", "India", "USA", "Indonesia", "Brazil", "Pakistan",
+"Nigeria", "Bangladesh", "Russia", "Mexico" };
+        var yAxisLabel = new string[] { "1965-1970", "1970-1975", "1975-1980", "1980-1985", "1985-1990",
+"1990-1995", "1995-2000", "2000-2005", "2005-2010", "2010-2015" };
+        var labelTextStyle = new { fontFamily = "inherit" };
+        var cellBorder = new
+        {
+            width = "0",
+        };
+    }
+    <div class="col-lg-9 control-section">
+        <div id="container">
+            <ejs-heatmap id='container' load="window.onHeatmapLoad" dataSource="ViewBag.dataSource">
+                <e-heatmap-titlesettings text="Population Growth Rate of the most Populous Countries" textStyle="textStyle">
+                </e-heatmap-titlesettings>
+                <e-heatmap-xaxis labels="xAxisLabel" textStyle="labelTextStyle" labelRotation="45" labelIntersectAction="None" isInversed="true"></e-heatmap-xaxis>
+                <e-heatmap-yaxis labels="yAxisLabel" textStyle="labelTextStyle" isInversed="true"></e-heatmap-yaxis>
+                <e-heatmap-palettesettings>
+                    <e-palettes>
+                        <e-palette value="0" color="#4b7287"></e-palette>
+                        <e-palette value="0.5" color="#b5b29f"></e-palette>
+                        <e-palette value="1" color="#F0D6AD"></e-palette>
+                        <e-palette value="1.5" color="#9da49a"></e-palette>
+                        <e-palette value="2" color="#466f86"></e-palette>
+                        <e-palette value="2.5" color="#d7c7a7"></e-palette>
+                        <e-palette value="3" color="#6e888f"></e-palette>
+                    </e-palettes>
+                </e-heatmap-palettesettings>
+                <e-heatmap-tooltipsettings>
+                    <e-tooltipsettings-textstyle fontFamily="inherit"></e-tooltipsettings-textstyle>
+                </e-heatmap-tooltipsettings>
+                <e-heatmap-cellsettings border="cellBorder" showLabel="false" format="{value} %"></e-heatmap-cellsettings>
+                <e-heatmap-legendsettings visible="false"></e-heatmap-legendsettings>
+            </ejs-heatmap>
+        </div>
+        <div style="float: right; margin-right: 10px;">
+            Source:
+            <a href="https://en.wikipedia.org/wiki/List_of_countries_by_oil_production" target="_blank">https://en.wikipedia.org/</a>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties" style="width: 100%;margin-left: -20px;">
+            <tbody>
+                <tr style="height: 50px">
+                    <td style="width: 40%;">
+                        <div>
+                            <ejs-checkbox id="XOpposedPosition" checked="true" label="Reverse X-Axis Origin" change="window.valueXChange"></ejs-checkbox>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td style="width: 40%;">
+                        <div>
+                            <ejs-checkbox id="YOpposedPosition" checked="true" label="Reverse Y-Axis Origin" change="window.valueYChange"></ejs-checkbox>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script type="text/javascript">
+
+        window.onHeatmapLoad = function (args) {
+            window.heatmap = args.heatmap;
+            var selectedTheme = themeName ? themeName : 'Material';
+             args.heatmap.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+        }
+        window.valueXChange = function (args) {
+            window.heatmap.xAxis.isInversed = args.checked;
+        }
+        window.valueYChange = function (args) {
+            window.heatmap.yAxis.isInversed = args.checked;
+        }
+    </script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample illustrates the population growth rate of the most populous countries over the years. The data label is disabled
+            in this sample, the tooltip displays the data point values. In property panel, the options are available to reverse
+            the origin of the axes by means of checkbox for each axis.
+        </p>
+    </div>
+}
+@section Description{
+
+    <div id="description">
+        <p>
+            In this example, you can see how to reverse the axis origin for both axes, once the axis origin has been reversed the axis
+            data will be displayed inverted. You can reverse the axis origin by enabling the
+            <a href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.HeatMap.HeatMapAxis.html#Syncfusion_EJ2_HeatMap_HeatMapAxis_IsInversed" target="_blank" aria-label="isInversed">isInversed</a> property for each axis.
+        </p>
+        <p>The tooltip is enabled in this example. To see the tooltip in action, hover the mouse over an item or tap an item on touch-enabled devices.</p>
+        <br>
+    </div>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Inversed Axis in ASP.NET Core HeatMap Chart control. Explore here for more details."/>
+                }
+@section Title{
+                    <title>ASP.NET Core HeatMap Chart Inversed Axis Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Inversed Axis in ASP.NET Core HeatMap Chart Control</h1>
+                }
+<style>
+    body.material-dark .property-panel-section {
+        color: #ffffff;
+    }
+
+    .e-view.fluent2 #property .e-checkbox-wrapper, .e-view.fluent2-dark #property .e-checkbox-wrapper {
+        padding-left: 0px;
+    }
+</style>

@@ -1,0 +1,78 @@
+@using Syncfusion.EJ2
+@{ViewBag.Title = "    Essential DocIO (Word) : Word To Image : Syncfusion";}
+@section ControlsSection{
+    <div class="control-section">
+        @{Html.BeginForm("wordtoimage", "word", FormMethod.Post, new { enctype = "multipart/form-data" });
+            {
+                <div style="margin-top: 10px;font-size:14px">
+                    Click the button to view the resultant Image being converted from Word document using Essential DocIO. In this example, we have converted only the first page of the Word document into an image. Also, you can convert entire Word document as Images using Essential DocIO.
+                    <div style="margin-top: 10px">
+                        <div>
+                            <input type="button" value="Choose File" onclick="openPage()">
+                            <input type="text" id="fileNameBox" value="WordtoImage.docx" readonly="readonly" style="border:none" />
+                            <input type="file" name="file" id="fileUpload" accept=".doc,.docx,.rtf,.dot,.dotm,.dotx,docm,.xml" style="display:block;visibility:hidden;width:0;height:0;">
+                            <br />
+                        </div>
+                        <div style="margin-top: 8px">
+                            <input class="e-btn" type="submit" value="Convert to Image" name="button" style="width:170px; text-transform:capitalize" />
+                            <br />
+                            <div class="text-danger">
+                                @ViewBag.Message
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                Html.EndForm();
+            }
+        }
+    </div>
+
+}
+<script>
+    function openPage() {
+        document.getElementById('fileUpload').click();
+        document.getElementById('fileUpload').addEventListener('change', readFile, false);
+    }
+    function readFile(evt) {
+        var upoadedFiles = evt.target.files;
+
+        filename = upoadedFiles[0].name;
+        document.getElementById('fileNameBox').value = filename;
+    }
+</script>
+
+@section ActionDescription{
+    <div>
+        This sample illustrates how to convert Word document to Image using Essential DocIO.
+    </div>
+}
+@section Description{
+    <div>
+        DocIO provides support to render Word document from flow to fixed page model and export as Image. With this support to render Word document,
+        <ul>
+            <li>
+                You can generate invoice and other reports in Image, starting from Word document.
+            </li>
+            <li>
+                You can view or print the contents of Word document by converting as Image.
+            </li>
+            <li>
+                You can save a page of the document as thumbnail image for reference.
+            </li>
+        </ul>
+    </div>
+    <div style="margin-top: 15px">
+        More information about Word to Image conversion can be found in this
+        <a href="https://help.syncfusion.com/file-formats/docio/word-to-image" aria-label="Documentation" >Documentation</a>
+        section.
+    </div>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Word to Image in ASP.NET Core Word (DocIO) library. Explore here for more details."/>
+                }
+@section Title{
+                    <title>ASP.NET Core Word (DocIO) library - Word to Image Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Word to Image in ASP.NET Core Word (DocIO) Library</h1>
+                }

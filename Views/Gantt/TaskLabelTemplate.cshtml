@@ -1,0 +1,99 @@
+@using Syncfusion.EJ2.Gantt;
+@section ControlsSection{
+
+    <div class="control-section">
+        <div class="row">
+            <div class="col-md-12">
+                <ejs-gantt id='TaskLabelTemplate' dataSource="ViewBag.dataSource" height="450px" highlightWeekends="true" allowSelection="true"
+                           rowHeight="46" treeColumnIndex="1" resources="ViewBag.resources"
+                           projectStartDate="03/24/2024" projectEndDate="05/04/2024">
+                    <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate" endDate="EndDate" duration="Duration" progress="Progress"
+                                        dependency="Predecessor" resourceInfo="ResourceId" child="SubTasks">
+                    </e-gantt-taskfields>
+                    <e-gantt-resourcefields id="ResourceId" name="ResourceName">
+                    </e-gantt-resourcefields>
+                    <e-gantt-columns>
+                        <e-gantt-column field="TaskId" width="80"></e-gantt-column>
+                        <e-gantt-column field="TaskName" width="250"></e-gantt-column>
+                        <e-gantt-column field="StartDate"></e-gantt-column>
+                        <e-gantt-column field="EndDate"></e-gantt-column>
+                        <e-gantt-column field="Duration"></e-gantt-column>
+                        <e-gantt-column field="Predecessor"></e-gantt-column>
+                        <e-gantt-column field="Progress"></e-gantt-column>
+                        <e-gantt-column field="ResourceId"></e-gantt-column>
+                    </e-gantt-columns>
+                    <e-gantt-labelSettings leftLabel="#leftLabel" rightLabel="#rightLabel" taskLabel="${Progress}%"></e-gantt-labelSettings>
+                    <e-gantt-splittersettings columnIndex="2"></e-gantt-splittersettings>
+                </ejs-gantt>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/x-template" id="leftLabel">
+        <div style="margin-top=-7px;">
+            <div id="leftLabel">
+                <span>${TaskName} [ ${Progress}% ]</span>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/x-template" id="rightLabel">
+        <div style="margin-top=-7px;">
+            ${if(ganttProperties.resourceInfo)}
+            <div id="rightLabel">
+                ${getResourceElements(ganttProperties.resourceInfo)}
+            </div>
+            ${/if}
+        </div>
+    </script>
+
+    <script>
+        function getResourceElements(value) {
+            var out = "";
+            var img = document.createElement('img');
+            img.height = 40;
+            img.alt = "Profile Picture";
+            var span = document.createElement('span');
+            span.style.marginLeft = "5px";
+            span.style.marginRight = "5px";
+            for (var index = 0; index < value.length; index++) {
+                img.src = '../images/Gantt/' + value[index].ResourceName + '.png';
+                span.innerHTML = value[index].ResourceName;
+                out = out + img.outerHTML + span.outerHTML;
+            }
+            return out;
+        }
+
+    </script>
+
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample explains the way of rendering label template for left, right, and task labels by mapping template
+            elements to the leftLabel, rightLabel and taskLabel properties in
+            labelSettings.
+        </p>
+    </div>
+}
+@section Description{
+
+    <div id="description">
+        <p>
+            In this demo, the label template is rendered using the <code>leftLabel</code>, <code>rightLabel</code>, and
+            <code>taskLabel</code> properties in
+            <code>labelSettings</code>.
+        </p>
+
+    </div>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Task Label Template in ASP.NET Core Gantt control. Explore here for more details."/>
+                }
+@section Title{
+                    <title>ASP.NET Core Gantt Task Label Template Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Task Label Template in ASP.NET Core Gantt Control</h1>
+                }

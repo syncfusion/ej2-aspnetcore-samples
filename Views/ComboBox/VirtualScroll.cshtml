@@ -1,0 +1,62 @@
+@using Syncfusion.EJ2
+@*@model directive allows you to access the model values*@
+@model EJ2CoreSampleBrowser.Controllers.ComboBoxRecord
+@section ControlsSection{
+    <div class="control-section col-lg-12">
+        <div id='local-data' class='col-lg-6' style='padding-top:15px'>
+            <div class='content'>
+                <h4>Local Data</h4>
+                <ejs-combobox id="local" dataSource="@Model.RecordList" placeholder="e.g. Item 1" allowFiltering="true" enableVirtualization="true" popupHeight="200px">
+                    <e-combobox-fields text="Text" value="ID"></e-combobox-fields>
+                </ejs-combobox>
+            </div>
+        </div>
+        <div id='remote-data' class='col-lg-6' style='padding-top:15px'>
+            <div class='content'>
+                <h4>Remote Data</h4>
+                <ejs-combobox id="remote" placeholder="OrderId" popupHeight="200px" allowFiltering="true" enableVirtualization="true">
+                    <e-data-manager adaptor="WebApiAdaptor" url="https://services.syncfusion.com/js/production/api/orders" crossDomain="true"></e-data-manager>
+                    <e-combobox-fields text="OrderID" value="OrderID"></e-combobox-fields>
+                </ejs-combobox>
+            </div>
+        </div>
+        <div id='local-data' class='col-lg-6' style='padding-top:15px'>
+            <div class='content'>
+                <h4>Grouping</h4>
+                <ejs-combobox id="group" dataSource="@Model.RecordList" placeholder="e.g. Item 1" allowFiltering="true" enableVirtualization="true" popupHeight="200px">
+                    <e-combobox-fields groupBy="Group" text="Text" value="ID"></e-combobox-fields>
+                </ejs-combobox>
+            </div>
+        </div>
+    </div>
+
+    @*custom code start*@
+    <style>
+         .content {
+            margin: 0 auto;
+            width: 250px;
+        }
+    </style>
+    @*custom code end*@
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Virtualization in ASP.NET Core ComboBox control. Explore here for more details."/>
+                }
+@section ActionDescription{
+    <div id="action-description">
+        <p>This example demonstrates the virtualization support of the ComboBox. The component has 150 items bound to it; however, when you open the suggestion list, only few items are loaded based on the popup height, and the remaining items are loaded while scrolling.</p> 
+    </div>
+}
+@section Description{
+    <div id="description">
+          <p>The <code>ComboBox</code> component supports virtualization, which improves UI performance for large amounts of data. To enable virtualization, set the <code>enableVirtualization</code> property to true. When virtualization is enabled, ComboBox doesn't render the entire suggestion data source on initial component rendering. It loads the N number of items in the popup on initial rendering and the remaining set number of items will load while scrolling.
+        Virtualization works with both local and remote data.</p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core ComboBox Virtualization Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Virtualization in ASP.NET Core ComboBox Control</h1>
+                }

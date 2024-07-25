@@ -1,0 +1,78 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="control-section" align="center">
+        <ejs-chart id="container" load="load" title="Music Album Sales" isTransposed="true">
+            <e-chart-tooltipsettings enable="true" shared="true" format="${point.x}: <b>${point.y}</b>" header="<b>Album Sale</b>">
+            </e-chart-tooltipsettings>
+            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Double"
+                                  interval="4"
+                                  title="Years"
+                                  edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift"
+                                  minimum="2000"
+                                  maximum="2016">
+                <e-minorticklines width="0"></e-minorticklines>
+            </e-chart-primaryxaxis>
+            <e-chart-primaryyaxis labelFormat="{value}M"
+                                  edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift"
+                                  title="Sales (In Millions)"
+                                  minimum="0"
+                                  maximum="25"
+                                  interval="5">
+            </e-chart-primaryyaxis>
+            <e-chart-chartarea>
+                <e-chartarea-border width="1"></e-chartarea-border>
+            </e-chart-chartarea>
+            <e-series-collection>
+                <e-series dataSource="ViewBag.ChartPoints" xName="Month" width="2" yName="FR_Temperature" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline">
+                    <e-series-marker visible="true" height="7" width="7" isFilled="true"></e-series-marker>
+                </e-series>
+            </e-series-collection>
+        </ejs-chart>
+        </div>
+    <script>
+        function load(args) {
+            var selectedTheme = location.hash.split("/")[1];
+            selectedTheme = selectedTheme ? selectedTheme : "Material";
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+        }
+    </script>
+}
+@*custom code start*@
+@section Scripts {
+
+}
+
+<style>
+
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Inversed Spline in ASP.NET Core Chart control. Explore here for more details."/>
+                }
+@*custom code end*@
+@section ActionDescription{
+    <p>
+        This sample shows the music album sales with the spline series by inverting X and Y axes. Data points are enhanced by a marker and tooltip.
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can see how to render and configure the spline type charts. A Spline chart uses a curved line to connect points in a data series. <code>Markers</code> are used to represent individual data and its values.
+    </p>
+    <p>
+        <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+    </p>
+    <p>
+        More information about the spline series can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/chart-types/spline" aria-label="Navigate to the documentation for spline in ASP.NET Core Chart control">documentation section</a>.
+    </p>
+}
+@section Title{
+                    <title>ASP.NET Core Chart Inversed Spline Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Inversed Spline in ASP.NET Core Chart Control</h1>
+                }

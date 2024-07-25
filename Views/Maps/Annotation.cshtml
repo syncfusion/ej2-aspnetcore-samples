@@ -1,0 +1,120 @@
+@using Syncfusion.EJ2;
+@section ControlsSection{
+    @{
+        var data = new[]
+                {
+    new { name = "Africa", latitude = 13.97274101999902, longitude = 20.390625 }
+};
+        var propertyPath = new[] { "name" };
+    }
+    <div class="control-section">
+        <div class="row">
+            <div class="col-md-12">
+                <ejs-maps id="maps" load="window.onMapLoad">
+                    <e-maps-annotations>
+                        <e-maps-annotation content="#maps-annotation" x="0%" y="60%"></e-maps-annotation>
+                        <e-maps-annotation content="#compass-maps" x="80%" y="5%"></e-maps-annotation>
+                    </e-maps-annotations>
+                    <e-maps-zoomsettings enable="false"></e-maps-zoomsettings>
+                    <e-maps-layers>
+                        <e-maps-layer shapeData="ViewBag.africa" shapeDataPath="name" shapePropertyPath="propertyPath">
+                            <e-layersettings-shapesettings fill="url(#grad1)"></e-layersettings-shapesettings>
+                            <e-layersettings-markers>
+                                <e-layersettings-marker visible="true" template="<h3 style='color:white'>{{:name}}</h3>" animationDuration="1" dataSource="data"></e-layersettings-marker>
+                            </e-layersettings-markers>
+                        </e-maps-layer>
+                    </e-maps-layers>
+                </ejs-maps>
+                <div style="float: right; margin-right: 10px;">
+                    Source:
+                    <a href="https://en.wikipedia.org/wiki/Africa" target="_blank" aria-label="wikipedia">en.wikipedia.org</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<svg height="150" width="400">
+    <defs>
+        <linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#C5494B;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#4C134F;stop-opacity:1" />
+        </linearGradient>
+    </defs>
+</svg>
+<div id="maps-annotation" style="display: none;">
+    <div id="annotation">
+        <div>
+            <p style="margin-left:10px;font-size:13px;font-weight:500">Facts about Africa</p>
+        </div>
+        <hr style="margin-top:-3px;margin-bottom:10px;border:0.5px solid #DDDDDD">
+        <div>
+            <ul style="list-style-type:disc; margin-left:-20px;margin-bottom:2px; font-weight:400">
+                <li>Africa is the second largest and second most populated continent in the world.</li>
+                <li style="padding-top:5px;">Africa has 54 sovereign states and 10 non-sovereign territories.</li>
+                <li style="padding-top:5px;">Algeria is the largest country in Africa, where as Mayotte is the smallest.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div id="compass-maps" style="display: none;">
+    <img src="../styles/images/maps/compass.svg" alt="Direction compass"height="75px" width="75px" />
+</div>
+<style>
+    #annotation {
+        color: #DDDDDD;
+        font-size: 12px;
+        font-family: Roboto;
+        background: #3E464C;
+        margin: 20px;
+        padding: 10px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        width: 300px;
+        -moz-box-shadow: 0px 2px 5px #666;
+        -webkit-box-shadow: 0px 2px 5px #666;
+        box-shadow: 0px 2px 5px #666;
+    }
+
+    .country-label {
+        color: white;
+        font-size: 25px;
+    }
+</style>
+@*custom code start*@
+<script>
+    function onMapLoad(args) {
+        var theme = themeName ? themeName : "Material";
+        args.maps.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+    }
+</script>
+@*custom code end*@
+@section Description{
+    <div id="description">
+        <p>
+            In this example, you can see how to place a desired HTML element at desired location in the maps. Any number of annotation can be placed on the maps. In this sample, the gradient fill color has been applied for the shape.
+        </p>
+        <br />
+        <p style="font-weight: 500">Injecting Module</p>
+        <p>
+            Maps component features are segregated into individual feature-wise modules. To use an annotation, inject the <code>Annotations</code> module using the <code>Maps.Inject(Annotations)</code> method.
+        </p>
+    </div>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Annotations in ASP.NET Core Maps control. Explore here for more details."/>
+                }
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample depicts the facts about Africa in an annotation. Africa shape is filled with gradient color.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Maps Annotations Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Annotations in ASP.NET Core Maps Control</h1>
+                }

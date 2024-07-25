@@ -1,0 +1,283 @@
+@using Syncfusion.EJ2;
+@section ControlsSection{
+    @{
+        var propertyPath = new[] { "continent" };
+    }
+    <div class="col-lg-8 control-section">
+        <div id="maps">
+            <ejs-maps id="maps" load="window.onMapLoad" loaded="onCreated">
+                <e-maps-zoomsettings enable="true" pinchZooming="true"></e-maps-zoomsettings>
+                <e-maps-legendsettings visible="false"></e-maps-legendsettings>
+                <e-maps-layers>
+                    <e-maps-layer animationDuration="500" dataSource="ViewBag.random" shapeData="ViewBag.worldmap" shapeDataPath="continent" shapePropertyPath="propertyPath">
+                        <e-layersettings-shapesettings autofill="true" colorValuePath="color"></e-layersettings-shapesettings>
+                    </e-maps-layer>
+                </e-maps-layers>
+            </ejs-maps>
+        </div>
+        </div>
+<div class="col-lg-4 property-section">
+    <table id="property" title="Properties" style="width: 100%;">
+		<tbody>
+			<tr style="height: 50px">
+				<td style="width: 50%">
+					<div style="margin-top: 5px;">Zooming</div>
+				</td>
+				<td>
+                    <div style="margin-left:-10px">
+                        <input type="checkbox" checked id="zoom" style="margin-top: 10px; margin-left:10px;" />
+                    </div>
+				</td>
+			</tr>
+			<tr style="height: 50px">
+				<td style="width: 50%">
+					<div style="margin-top: 5px;">Panning</div>
+				</td>
+				<td>
+                    <div style="margin-left:-10px">
+                        <input type="checkbox" checked id="panning" style="margin-top: 10px; margin-left:10px;" />
+                    </div>
+				</td>
+			</tr>
+			<tr style="height: 50px">
+				<td style="width: 50%">
+					<div style="margin-top: 5px;">Mouse wheel zoom</div>
+				</td>
+				<td>
+                    <div style="margin-left:-10px">
+                        <input type="checkbox" checked id="mousewheel" style="margin-top: 10px; margin-left:10px;" />
+                    </div>
+				</td>
+			</tr>
+			<tr style="height: 50px">
+				<td style="width: 50%">
+					<div style="margin-top: 5px;">Pinch zoom</div>
+				</td>
+				<td>
+                    <div style="margin-left:-10px">
+                        <input type="checkbox" checked id="pinch" style="margin-top: 10px; margin-left:10px;" />
+                    </div>
+				</td>
+			</tr>
+			<tr style="height: 50px">
+				<td style="width: 50%">
+					<div style="margin-top: 5px;">Single click zoom</div>
+				</td>
+				<td>
+                    <div style="margin-left:-10px">
+                        <input type="checkbox" id="singletap" style="margin-top: 10px; margin-left:10px;" />
+                    </div>
+				</td>
+			</tr>
+			<tr style="height: 50px">
+				<td style="width: 50%">
+					<div style="margin-top: 5px;">Double click zoom</div>
+				</td>
+				<td>
+                    <div style="margin-left:-10px">
+                        <input type="checkbox" id="doubletap" style="margin-top: 10px; margin-left:10px;" />
+                    </div>
+				</td>
+			</tr>
+            <tr style="height: 50px">
+                <td style="width: 50%">
+                    <div>Animation duration</div>
+                </td>
+                <td>
+                    <div style="margin-left:-10px">
+                        <input type="range" id="range" value="500" min="0" max="500" step="250" style="width:60%;">
+                    </div>
+                </td>
+                <td style="padding-top: 20px;text-align: center;">
+                    <span id='dur' style="margin-left: -28px;">500</span>
+                </td>
+            </tr>
+		</tbody>
+    </table>
+</div>
+
+}
+<style>
+    .slider-content-wrapper {
+        width: 40%;
+        margin: 0 auto;
+        min-width: 185px;
+    }
+
+    #range > * {
+        padding: 0px !important;
+    }
+
+    .slider-userselect {
+        -webkit-user-select: none;
+        /* Safari 3.1+ */
+        -moz-user-select: none;
+        /* Firefox 2+ */
+        -ms-user-select: none;
+        /* IE 10+ */
+        user-select: none;
+        /* Standard syntax */
+    }
+
+    .slider-labeltext {
+        text-align: -webkit-left;
+        font-weight: 500;
+        font-size: 13px;
+        padding-bottom: 10px;
+    }
+
+    .slider_container {
+        margin-top: 40px;
+    }
+
+    .e-bigger .slider-content-wrapper {
+        width: 80%;
+    }
+
+    #height_slider .e-tab-handle::after {
+        background-color: #f9920b;
+    }
+
+    #height_slider.e-control.e-slider .e-slider-track {
+        height: 8px;
+        top: calc(50% - 4px);
+        border-radius: 0;
+    }
+
+    .highcontrast #height_slider.e-control.e-slider .e-slider-track {
+        height: 10px;
+        top: calc(50% - 5px);
+        border-radius: 0;
+    }
+
+    .fabric .slider_container .e-slider-hover .e-slider-track, .fabric .slider_container .e-slider-container:active .e-slider-track,
+    .fabric .slider_container .e-slider-container .e-slider .e-tab-track {
+        background-color: #c8c8c8;
+    }
+
+    #gradient_slider.e-control.e-slider .e-range {
+        height: 6px;
+        top: calc(50% - 3px);
+        border-radius: 5px;
+        background: linear-gradient(to top left, #f9f9f9 25%, #f9920b 90%);
+    }
+
+    .fabric .slider_container .e-slider-hover .e-slider-track,
+    .fabric .slider_container .e-slider-container:active .e-slider-track,
+    .fabric .slider_container .e-slider-container .e-slider .e-tab-track {
+        background-color: #c8c8c8;
+    }
+
+    #gradient_slider.e-control.e-slider .e-slider-track {
+        height: 8px;
+        top: calc(50% - 4px);
+        border-radius: 5px;
+    }
+    .property-panel-header {
+        margin-left: 10px;
+    }
+</style>
+<script>
+    var maps;
+    function onCreated() {
+        maps = document.getElementById('maps').ej2_instances[0];
+    }
+    @* custom code start *@
+    function onMapLoad(args) {
+        var theme = themeName ? themeName : "Material";
+        args.maps.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+    }
+    @* custom code end *@
+    window.onload = function () {
+        window.maps = maps;
+        window.maps.zoomSettings.toolbarSettings.buttonSettings.toolbarItems = ['Zoom', 'ZoomIn', 'ZoomOut', 'Pan', 'Reset'];
+        var slider = new ej.inputs.Slider(
+            {
+                value: 500,
+                min: 0, max: 1000, step: 250,
+                change: function (args) {
+                    window.maps.layers[0].animationDuration = args.value;
+                }
+            },
+            '#range');
+        slider.change = sliderChange = function (e) {
+            maps.layers[0].animationDuration = e.value;
+            maps.refresh();
+            document.getElementById('dur').innerHTML = e.value.toString();
+        };
+        document.getElementById('mousewheel').onchange = function () {
+            var element = (document.getElementById('mousewheel'));
+            maps.zoomSettings.mouseWheelZoom = element.checked;
+            maps.refresh();
+        };
+        document.getElementById('pinch').onchange = function () {
+            var element = (document.getElementById('pinch'));
+            maps.zoomSettings.pinchZooming = element.checked;
+            maps.refresh();
+        };
+        document.getElementById('zoom').onchange = function () {
+            var element = (document.getElementById('zoom'));
+            maps.zoomSettings.enable = element.checked;
+            maps.refresh();
+        };
+		document.getElementById('panning').onchange = function () {
+			var element = (document.getElementById('panning'));
+			maps.zoomSettings.enablePanning = element.checked;
+			maps.refresh();
+		};
+        document.getElementById('doubletap').onchange = function () {
+            var element = (document.getElementById('doubletap'));
+            maps.zoomSettings.doubleClickZoom = element.checked;
+            var ele1 = document.getElementById('singletap');
+            if (element.checked) {
+                ele1.disabled = true;
+            }
+            else {
+                ele1.disabled = false;
+            }
+        };
+        document.getElementById('singletap').onchange = function () {
+            var element = (document.getElementById('singletap'));
+            var ele1 = document.getElementById('doubletap');
+            maps.zoomSettings.zoomOnClick = element.checked;
+            if (element.checked) {
+                ele1.disabled = true;
+            }
+            else {
+                ele1.disabled = false;
+            }
+        };
+    };
+</script>
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Zooming & Panning in ASP.NET Core Maps control. Explore here for more details."/>
+                }
+@section ActionDescription{
+
+    <div id="action-description">
+		<p>
+			This sample depicts the zooming and panning options in the maps. You can customize these options by changing the Zooming, Panning, Mouse wheel zoom, Pinch zoom, Single-click zoom, and Double-click zoom in the Properties panel.
+		</p>
+    </div>
+}
+@section Description{
+
+    <div id="description">
+		<p>
+			In this example, you can see how to zoom and pan the map. The support has been provided for zooming with the toolbar, rectangle zoom, pinch zoom, mouse wheel zoom, single-click, and double-click zoom.Panning can be enabled or disabled using
+			the Panning option. When it is disabled, the map will switch to zooming mode.
+		</p>
+        <br />
+        <p style="font-weight: 500">Injecting Module</p>
+        <p>
+            Maps component features are segregated into individual feature-wise modules. To use the zooming feature, inject the <code>Zoom</code> module using the <code>Maps.Inject(Zoom)</code> method.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Maps Zooming & Panning Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Zooming & Panning in ASP.NET Core Maps Control</h1>
+                }

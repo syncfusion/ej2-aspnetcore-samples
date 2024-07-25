@@ -1,0 +1,91 @@
+﻿@section ControlsSection{
+    @{
+        var labelFont =  new Syncfusion.EJ2.LinearGauge.LinearGaugeFont { FontFamily = "inherit" };
+        var titleStyle = new Syncfusion.EJ2.LinearGauge.LinearGaugeTitleStyleLinearGauge { FontFamily = "inherit", FontWeight = "499" };
+    }
+    <div class="control-section" style="min-height: 290px;">
+        <div style="justify-content: center; display: flex; align-items: center;">
+            <ejs-lineargauge load="gaugeLoad" DragMove='dragMove' id='enableSliderGauge'
+                         Background='Transparent' style='display:block;' Title='Enabled' TitleStyle='titleStyle'
+                         Orientation='Horizontal' Height='150px' Width='450px' Format='N0'>
+                <e-lineargauge-tooltip Enable="true" ShowAtMousePosition=true></e-lineargauge-tooltip>
+                <e-lineargauge-axes>
+                    <e-lineargauge-axis Minimum="0" Maximum="100" OpposedPosition="true">
+                        <e-axis-majorticks Interval="20" Height="0"></e-axis-majorticks>
+                        <e-axis-minorticks Interval="10" Height="0"></e-axis-minorticks>
+                        <e-axis-line Width="5" Color="#C2DEF8"></e-axis-line>
+                        <e-axis-labelstyle offset=10 font=labelFont></e-axis-labelstyle>
+                        <e-lineargauge-pointers>
+                            <e-lineargauge-pointer Type="Bar" Value="50" Color="#0074E3" Height=5 Width=5 Offset="12" Placement=Center></e-lineargauge-pointer>
+                            <e-lineargauge-pointer Type="Marker" MarkerType=Circle Value="50" Color="#0074E3" Height=15 Width=15 offset="-10" EnableDrag=true Placement=Center></e-lineargauge-pointer>
+                        </e-lineargauge-pointers>
+                    </e-lineargauge-axis>
+                </e-lineargauge-axes>
+            </ejs-lineargauge>
+        </div>
+        <div style="justify-content: center; display: flex; align-items: center;">
+            <ejs-lineargauge load="gaugeLoad" id='disableSliderGauge' Background='Transparent' style='display:block;'
+                         Title='Disabled' TitleStyle='titleStyle' Orientation='Horizontal' Height='150px'
+                         Width='450px'>
+                <e-lineargauge-axes>
+                    <e-lineargauge-axis Minimum="0" Maximum="100" OpposedPosition="true">
+                        <e-axis-majorticks Interval="20" Height="0"></e-axis-majorticks>
+                        <e-axis-minorticks Interval="10" Height="0"></e-axis-minorticks>
+                        <e-axis-line Width="5" Color="#E0E0E0"></e-axis-line>
+                        <e-axis-labelstyle offset=10 font=labelFont></e-axis-labelstyle>
+                        <e-lineargauge-pointers>
+                            <e-lineargauge-pointer Type="Bar" Value="50" Color="#ADADAD" Height=5 Width=5 EnableDrag=false Offset="12" Placement=Center></e-lineargauge-pointer>
+                            <e-lineargauge-pointer Type="Marker" MarkerType=Circle Value="50" Color="#ADADAD" Height=15 Width=15 offset="-10" EnableDrag=false Placement=Center></e-lineargauge-pointer>
+                        </e-lineargauge-pointers>
+                    </e-lineargauge-axis>
+                </e-lineargauge-axes>
+            </ejs-lineargauge>
+        </div>
+    </div>
+}
+
+<script>
+    var enableSliderGauge;
+    window.gaugeLoad = function (args) {
+    @* custom code start *@
+        var theme = themeName ? themeName : 'Material';
+        args.gauge.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+    @* custom code end *@
+        if (args.gauge.element.id === 'enableSliderGauge') {
+            enableSliderGauge = args.gauge;
+        }
+    }
+    function dragMove(args) {
+        if (args.pointerIndex == 1) {
+            enableSliderGauge.setPointerValue(0, 0, args.currentValue);
+        }
+    }
+</script>
+@section Meta{
+    <meta name="description" content="This example demonstrates the Slider in ASP.NET Core LinearGauge control. Explore here for more details." />
+                }
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates how to create a slider by utilizing the functionalities available in the linear gauge.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this example, you can see how to render and configure a new slider in the linear gauge. This can be accomplished by combining axis, range, and pointer. The pointer has been made interactive, so the value changes as you drag it.
+        </p>
+        <p>
+            More information on the linear gauge can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/linear-gauge/getting-started" aria-label="documentation section">documentation section</a>.
+        </p>
+    </div>
+}
+@section Title{
+    <title>ASP.NET Core Slider Example - Syncfusion Demos </title>
+                }
+@section Header{
+    <h1 class='sb-sample-text'>Example of Slider in ASP.NET Core LinearGauge Control</h1>
+                }

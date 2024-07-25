@@ -1,0 +1,120 @@
+@using Syncfusion.EJ2.Gantt;
+@section ControlsSection{
+    <div class="control-section">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="container switch-control" style="display: flex;">
+            <div>
+                <label class="overlap" for="checked" style="margin: 5px;font-size: 15px;"> Allow Taskbar DragAndDrop </label>
+                <ejs-switch id="checked" change="dragDropChange"></ejs-switch>
+            </div>
+            <div>
+                <label class="overlap" for="unchecked" style="margin: 5px;font-size: 15px;"> Allow Taskbar Overlap </label>
+                <ejs-switch id="unchecked" change="overlapChange" checked="true"></ejs-switch>
+            </div>
+        </div>
+        <div>
+                <ejs-gantt id='ResourceMultiTaskbar' dataSource="ViewBag.dataSource" resources="ViewBag.projectResources" 
+                           viewType="ResourceView" allowResizing="true" allowSelection="true" highlightWeekends="true"
+                           treeColumnIndex="1" height="450px" showOverAllocation="true" enableMultiTaskbar="true"
+                           projectStartDate="03/24/2024" projectEndDate="05/18/2024" taskType="FixedWork"
+                           toolbar="@(new List<string>() { "Add", "Edit", "Update", "Delete", "Cancel", "ExpandAll", "CollapseAll" })">
+                    <e-gantt-editsettings allowAdding="true" allowEditing="true" allowDeleting="true"
+                                          allowTaskbarEditing="true" showDeleteConfirmDialog="true"></e-gantt-editsettings>
+                    <e-gantt-columns>
+                        <e-gantt-column field="TaskId" visible="false"></e-gantt-column>
+                        <e-gantt-column field="TaskName" headerText="Name" width="250"></e-gantt-column>
+                        <e-gantt-column field="Work" headerText="Work"></e-gantt-column>
+                        <e-gantt-column field="Progress"></e-gantt-column>
+                        <e-gantt-column field="ResourceGroup" headerText="Group"></e-gantt-column>
+                        <e-gantt-column field="StartDate"></e-gantt-column>
+                        <e-gantt-column field="Duration"></e-gantt-column>
+                    </e-gantt-columns>
+                    <e-gantt-labelSettings taskLabel="TaskName"></e-gantt-labelSettings>
+                    <e-gantt-splitterSettings columnIndex="2"></e-gantt-splitterSettings>
+
+                    <e-gantt-resourcefields id="ResourceId" name="ResourceName" unit="ResourceUnit" group="ResourceGroup">
+                    </e-gantt-resourcefields>
+                    <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate"
+                                        endDate="EndDate" duration="Duration" progress="Progress" dependency="Predecessor"
+                                        child="SubTasks" work="Work" expandState="IsExpand" resourceInfo="Resources">
+                    </e-gantt-taskfields>
+                </ejs-gantt>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        .fluent2 .control-section,
+        .fluent2-dark .control-section{
+            padding-top: 0px !important;
+        }
+       .fluent2 .e-switch-wrapper,
+        .fluent2-dark .e-switch-wrapper {
+           top:12px !important
+       }
+    </style>
+    <script>
+        function dragDropChange(args) {
+             var ganttObj =document.getElementsByClassName('e-gantt')[0].ej2_instances[0];
+             if (args.checked) {
+                ganttObj.allowTaskbarDragAndDrop = true;
+             } else {
+                ganttObj.allowTaskbarDragAndDrop = false;
+             }
+        }
+        function overlapChange(args) {
+             var ganttObj =document.getElementsByClassName('e-gantt')[0].ej2_instances[0];
+             if (args.checked) {
+                ganttObj.allowTaskbarOverlap = true;
+             } else {
+                ganttObj.allowTaskbarOverlap = false;
+             }
+        }
+</script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample explains you about, how to visualize the list of tasks assigned for a resource in a parent row of collapsed state. It is also possible to change the tasks scheduling in the collapsed state.
+        This feature can be enabled by setting the <code>enableMultiTaskbar</code> property as "true".
+        </p>
+    </div>
+
+}
+@section Description{
+
+    <div id="description">
+       <p>
+        In this example, you can enable taskbar drag and drop from one resource to another resource vertically by enabling <code>allowTaskbarDragAndDrop</code> property. Also, you can prevent the taskbar overlap  in resource task by disabling the <code>allowTaskbarOverlap</code> property.
+      </p>
+       <p>
+        In this example, you can see that, the resource breaks down from a bulk of tasks can be done by mapping the pre-defined resource ID-s to each task and the resource information can be shown by using the labelSetting property.
+        Using the toolbar action, you can perform the CRUD operation for the resource allocation based on their availability and task complexity.
+    </p>
+        <p>The resources and tasks assigned to those resources can be grouped into categories. Resources can be mapped using the <code>resourceFields:-</code>.</p>
+        <p><code>ID</code>: To map resource ID.</p>
+        <p><code>Name</code>: To map resource name.</p>
+        <p><code>Unit</code>: To map resource unit.</p>
+        <p><code>Group</code>: To map resource group.</p>
+    <p style="font-weight: 500">Injecting module:</p>
+    <p>
+        The Gantt control features are segregated into individual feature-wise modules. To use a selection, inject the
+        <code>Selection</code> module using the <code>Gantt.Inject(Selection)</code> method. To use markers, inject the
+        <code>DayMarkers</code> module using the <code>Gantt.Inject(DayMarkers)</code> method.
+        To edit, inject the <code>Toolbar</code> module using the <code>Gantt.Inject(Toolbar)</code> method and <code>Edit</code> module
+        using the <code>Gantt.Inject(Edit)</code> method.
+    </p> 
+    </div>
+
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Resource Multi Taskbar in ASP.NET Core Gantt control. Explore here for more details."/>
+                }
+@section Title{
+                    <title>ASP.NET Core Gantt Resource Multi Taskbar Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Resource Multi Taskbar in ASP.NET Core Gantt Control</h1>
+                }

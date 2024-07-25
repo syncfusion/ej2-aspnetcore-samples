@@ -1,0 +1,249 @@
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+<div class="col-lg-12 control-section">
+    <div class="control_wrapper">
+        <div class="pane1">
+            <ejs-splitter id="splitter-accordin" height="300px" width="100%" created="onLoad">
+                <e-splitter-panes>
+                    <e-splitter-pane size="40%" min="30%" content ="<div><div id='Accordion_default'></div></div>">                       
+                    </e-splitter-pane>
+                    <e-splitter-pane size="60%" min="45%" content ="<div><div id='content'></div></div>">
+                    </e-splitter-pane>
+                </e-splitter-panes>
+            </ejs-splitter>
+        </div>
+    </div>
+</div>
+}
+
+<style>
+    .control_wrapper {
+        max-width: 700px;
+        margin: auto;
+    }
+
+    #content {
+        padding: 18px;
+    }
+    /* custom code start */
+    #target {
+        margin: 20px 150px;
+    }
+    /* custom code end */
+
+    .content {
+        padding: 9px;
+    }
+
+    #splitter .e-accordion .e-acrdn-item .e-acrdn-panel .e-acrdn-content {
+        padding: 0px;
+    }
+
+    #splitter .e-accordion {
+        border: none;
+    }
+
+        #splitter .e-accordion .e-acrdn-item.e-select {
+            border: none;
+        }
+
+        #splitter .e-accordion .e-acrdn-item.e-selected.e-select > .e-acrdn-header {
+            border: none;
+        }
+
+    #splitter .e-acrdn-header-content {
+        display: block;
+        text-decoration: none;
+    }
+	.bootstrap #splitter .e-list-parent.e-ul li:nth-child(3),
+	.bootstrap4 #splitter .e-list-parent.e-ul li:nth-child(3) {
+		border-bottom: none;
+	}
+	
+	.bootstrap4 #splitter .e-listview {
+		border: none;
+	}
+</style>
+
+@section PreScripts {
+    <script>
+        function onLoad(args) {
+            var acrdnObj = new ej.navigations.Accordion({  //Initialize Accordion component
+                items: [
+                    { header: 'ASP.NET', expanded: true, content: '<div id="nested_Acc1"></div>' },
+                    { header: 'ASP.NET MVC', content: '<div id="nested_Acc2"></div>' },
+                    { header: 'JavaScript', content: '<div id="nested_Acc3"></div>' }
+                ],
+                expanded: onexpanded,
+                expanding: onexpanding
+            });
+            acrdnObj.appendTo('#Accordion_default');
+        }
+
+        function onexpanded(e) {
+            if (e.isExpanded && [].indexOf.call(this.items, e.item) === 0) {
+                if (e.element.querySelectorAll('.e-list-parent').length > 0) {
+                    return;
+                }
+                var data = [
+                    { text: 'Grid', id: '1' },
+                    { text: 'Schedule', id: '2' },
+                    { text: 'Chart', id: '7' }
+                ];
+                var listObj = new ej.lists.ListView({
+                    dataSource: data,
+                    select: onselect
+
+                });
+                listObj.appendTo('#nested_Acc1');
+            }
+            if (e.isExpanded && [].indexOf.call(this.items, e.item) === 1) {
+                if (e.element.querySelectorAll('.e-list-parent').length > 0) {
+                    return;
+                }
+                var data = [
+                    { text: 'Grid', id: '3' },
+                    { text: 'Schedule', id: '4' },
+                    { text: 'Chart', id: '8' }
+                ];
+                var listObj1 = new ej.lists.ListView({
+                    dataSource: data,
+                    select: onselect
+                });
+                listObj1.appendTo('#nested_Acc2');
+            }
+            if (e.isExpanded && [].indexOf.call(this.items, e.item) === 2) {
+                if (e.element.querySelectorAll('.e-list-parent').length > 0) {
+                    return;
+                }
+                var data = [
+                    { text: 'Grid', id: '5' },
+                    { text: 'Schedule', id: '6' },
+                    { text: 'Chart', id: '9' }
+                ];
+                var listObj2 = new ej.lists.ListView({
+                    dataSource: data,
+                    select: onselect
+                });
+                listObj2.appendTo('#nested_Acc3');
+            }
+        }
+
+
+        function onselect(e) {
+            var listid = e.item.dataset.uid;
+            switch (listid) {
+                case '1':
+                    var ajax = new ej.base.Ajax('@Url.Content("~/splitter/aspnet-grid-ajax.html")', 'GET', true);
+                    ajax.send().then();
+                    ajax.onSuccess = (data) => {
+                        document.getElementById('content').innerHTML = data;
+                    };
+                    break;
+                case '2':
+                    var ajax1 = new ej.base.Ajax('@Url.Content("~/splitter/aspnet-schedule-ajax.html")', 'GET', true);
+                    ajax1.send().then();
+                    ajax1.onSuccess = (data) => {
+                        document.getElementById('content').innerHTML = data;
+                    };
+                    break;
+                case '3':
+                    var ajax2 = new ej.base.Ajax('@Url.Content("~/splitter/aspnetmvc-grid-ajax.html")', 'GET', true);
+                    ajax2.send().then();
+                    ajax2.onSuccess = (data) => {
+                        document.getElementById('content').innerHTML = data;
+                    };
+                    break;
+                case '4':
+                    var ajax3 = new ej.base.Ajax('@Url.Content("~/splitter/aspnetmvc-schedule-ajax.html")', 'GET', true);
+                    ajax3.send().then();
+                    ajax3.onSuccess = (data) => {
+                        document.getElementById('content').innerHTML = data;
+                    };
+                    break;
+                case '5':
+                    var ajax4 = new ej.base.Ajax('@Url.Content("~/splitter/javascript-grid-ajax.html")', 'GET', true);
+                    ajax4.send().then();
+                    ajax4.onSuccess = (data) => {
+                        document.getElementById('content').innerHTML = data;
+                    };
+                    break;
+                case '6':
+                    var ajax5 = new ej.base.Ajax('@Url.Content("~/splitter/javascript-schedule-ajax.html")', 'GET', true);
+                    ajax5.send().then();
+                    ajax5.onSuccess = (data) => {
+                        document.getElementById('content').innerHTML = data;
+                    };
+                    break;
+                case '7':
+                    var ajax6 = new ej.base.Ajax('@Url.Content("~/splitter/aspnet-chart-ajax.html")', 'GET', true);
+                    ajax6.send().then();
+                    ajax6.onSuccess = (data) => {
+                        document.getElementById('content').innerHTML = data;
+                    };
+                    break;
+                case '8':
+                    var ajax7 = new ej.base.Ajax('@Url.Content("~/splitter/aspnetmvc-chart-ajax.html")', 'GET', true);
+                    ajax7.send().then();
+                    ajax7.onSuccess = (data) => {
+                        document.getElementById('content').innerHTML = data;
+                    };
+                    break;
+                case '9':
+                    var ajax8 = new ej.base.Ajax('@Url.Content("~/splitter/javascript-chart-ajax.html")', 'GET', true);
+                    ajax8.send().then();
+                    ajax8.onSuccess = (data) => {
+                        document.getElementById('content').innerHTML = data;
+                    };
+                    break;
+            }
+        }
+        function onexpanding(e) {
+            var index = e.index;
+            switch (index) {
+                case 0:
+                    document.getElementById('content').innerHTML = '<h4>About ASP.NET</h4>Microsoft ASP.NET is a set of technologies in the Microsoft .NET Framework for building Web applications and XML Web services. ASP.NET pages execute on the server and generate markup such as HTML, WML, or XML that is sent to a desktop or mobile browser. ASP.NET pages use a compiled,event-driven programming model that improves performance and enables the separation of application logic and user interface.';
+                    break;
+                case 1:
+                    document.getElementById('content').innerHTML = '<h4>About ASP.NET MVC</h4>The Model-View-Controller (MVC) architectural pattern separates an application into three main components: the model, the view, and the controller. The ASP.NET MVC framework provides an alternative to the ASP.NET Web Forms pattern for creating Web applications. The ASP.NET MVC framework is a lightweight, highly testable presentation framework that (as with Web Forms-based applications) is integrated with existing ASP.NET features, such as master pages.';
+                    break;
+                case 2:
+                    document.getElementById('content').innerHTML = '<h4>About JavaScript</h4>JavaScript (JS) is an interpreted computer programming language.It was originally implemented as part of web browsers so that client-side scripts could interact with the user, control the browser, communicate asynchronously, and alter the document content that was displayed.More recently, however, it has become common in both game development and the creation of desktop applications.';
+                    break;
+            }
+        }
+
+    </script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This example demonstrates the Accordion control that can be integrated within the split pane. Select the product from the left pane to display the corresponding product details on the right pane
+        </p>
+
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            The Splitter is the layout user interface (UI) control and allows integrating other JavaScript UI controls within its pane. In this sample, 
+            the Splitter control is used to design navigation menu-like application using JavaScript Accordion control. The Accordion control is integrated within left pane to display the product menu and selected product details on right pane.
+        </p>
+    </div>
+}
+
+@*custom code start*@
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Accordion Navigation Menu in ASP.NET Core Splitter control. Explore here for more details."/>
+                }
+
+@*custom code end*@
+@section Title{
+                    <title>ASP.NET Core Splitter Accordion Navigation Menu Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Accordion Navigation Menu in ASP.NET Core Splitter Control</h1>
+                }

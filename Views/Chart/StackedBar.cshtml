@@ -1,0 +1,84 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="control-section" align="center">
+
+        <ejs-chart id="splineContainer" load="load" title="Sales Comparison">
+            <e-chart-chartarea>
+                <e-chartarea-border width="0"></e-chartarea-border>
+            </e-chart-chartarea>
+            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category">
+                <e-majorgridlines width="0"></e-majorgridlines>
+                <e-majorticklines width="0"></e-majorticklines>
+            </e-chart-primaryxaxis>
+            <e-chart-primaryyaxis edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift" labelFormat="{value}%">
+                <e-linestyle width="0"></e-linestyle>
+                <e-majorticklines width="0"></e-majorticklines>
+            </e-chart-primaryyaxis>
+            <e-series-collection>
+                <e-series dataSource="ViewBag.ChartPoints" xName="Month" yName="AppleSales" name="Apple" width=2 columnWidth="0.6" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StackingBar">
+                    <e-series-border width="1" color="#ffffff"></e-series-border>
+                </e-series>
+                <e-series dataSource="ViewBag.ChartPoints" xName="Month" yName="OrangeSales" name="Orange" width=2 columnWidth="0.6" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StackingBar">
+                    <e-series-border width="1" color="#ffffff"></e-series-border>
+                </e-series>
+                <e-series dataSource="ViewBag.ChartPoints" xName="Month" yName="Wastage" name="Wastage" width=2 columnWidth="0.6" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StackingBar">
+                    <e-series-border width="1" color="#ffffff"></e-series-border>
+                </e-series>
+            </e-series-collection>
+            <e-chart-tooltipsettings enable="true"></e-chart-tooltipsettings>
+            <e-chart-legendsettings visible="true" enableHighlight="true"></e-chart-legendsettings>
+        </ejs-chart>
+    </div>
+
+    <script>
+        function load(args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+        }
+    </script>
+}
+@*custom code start*@
+@section Scripts {
+
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Stacked Bar in ASP.NET Core Chart control. Explore here for more details."/>
+                }
+@*custom code end*@
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This <a target="_blank" href="https://www.syncfusion.com/aspnet-core-ui-controls/charts/chart-types/stacked-bar-chart" aria-label="Navigate to explore the syncfusion ASP.NET Core Stacked Bar Chart">ASP.NET Core Stacked Bar Chart</a> example visualizes a comparison of several months’ sales with the default stacked bar series. The legend in the sample shows more information about the series.
+        </p>
+    </div>
+}
+@section Description{
+    <div>
+        <p>
+            In this example, you can see how to render and configure the stacked bar chart. The stacked bar chart stacks points in the series horizontally. You can also use the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.ChartSeries.html#Syncfusion_EJ2_Charts_ChartSeries_StackingGroup" aria-label="Navigate to the StackingGroup property reference for ASP.NET Core ChartSeries">StackingGroup</a> property to group stacked collections based on category.
+        </p>
+        <p>
+            <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover over a point or tap on a point in touch-enabled devices.
+        </p>
+        <p>
+            More information about the stacked bar series can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/chart-types/stacked-bar" aria-label="Navigate to the documentation for Stacked Bar in ASP.NET CORE Charts Component">documentation section</a>.
+        </p>
+    </div>
+}
+@*custom code start*@
+<style>
+
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@*custom code end*@
+@section Title{
+                    <title>ASP.NET Core Chart Stacked Bar Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Stacked Bar in ASP.NET Core Chart Control</h1>
+                }

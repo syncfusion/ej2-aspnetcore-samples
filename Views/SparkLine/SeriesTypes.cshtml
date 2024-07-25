@@ -1,0 +1,224 @@
+@using Syncfusion.EJ2.Charts;
+
+@section ControlsSection {
+    @{
+        var markerVisible = new string[] { "All" };
+        var areaBorder = new SparklineSparklineBorder { Color = "#3C78EF", Width = 2 };
+        var areaLine = new { visible = true };
+        var trackLine = new SparklineTrackLineSettings { Visible = true };
+    }
+
+    <div class="control-section">
+        <div id="spark-container" class="row">
+            <div class="cols-sample-area" align="center" style="margin-top: 8%;">
+                <div align="center" class="col-lg-2 col-md-3 col-sm-5 sparent">
+                    <div class="spark" id="line" align="center">
+                        <ejs-sparkline id="line" load="sparkLoad" height="80px" width="120px" lineWidth="1" type="@SparklineType.Line" fill="#3C78EF"
+                                       valueType="@Syncfusion.EJ2.Charts.SparklineValueType.Numeric" xName="x" yName="yval">
+                            <e-sparkline-tooltipsettings visible="true" format="${x} : ${yval}" trackLineSettings="trackLine">
+                            </e-sparkline-tooltipsettings>
+                            <e-sparkline-markersettings visible="markerVisible" size="2.5" fill="blue"></e-sparkline-markersettings>
+                        </ejs-sparkline>
+                        <div class="sparktext" align="center" style="position: absolute; margin-top: 90px; margin-left: 2px; width: 100%;">Power production for a day</div>
+                    </div>
+                </div>
+                <div align="center" class="col-lg-2 col-md-3 col-sm-5 sparent">
+                    <div class="spark" id="area" align="center">
+                        <ejs-sparkline id="area" load="sparkLoad" height="80px" width="120px" lineWidth="1" type="@SparklineType.Area" fill="#b2cfff"
+                                       border="areaBorder" valueType="@Syncfusion.EJ2.Charts.SparklineValueType.Category" xName="xval" yName="yval">
+                            <e-sparkline-tooltipsettings visible="true" format="${xval} : ${yval}°C" trackLineSettings="trackLine">
+                            </e-sparkline-tooltipsettings>
+                        </ejs-sparkline>
+                        <div class="sparktext" align="center" style="position: absolute; margin-top: 90px; margin-left: 3px; width: 100%;">Average weather comparision</div>
+                    </div>
+                </div>
+                <div align="center" class="col-lg-2 col-md-3 col-sm-5 sparent">
+                    <div class="spark" id="column" align="center">
+                        <ejs-sparkline id="column" load="sparkLoad" height="80px" width="120px" lineWidth="1" type="@SparklineType.Column" fill="#3C78EF"
+                                       valueType="@Syncfusion.EJ2.Charts.SparklineValueType.Category" xName="xval" yName="yval" highPointColor="#14aa21">
+                            <e-sparkline-tooltipsettings visible="true" format="${xval} : ${yval}">
+                            </e-sparkline-tooltipsettings>
+                        </ejs-sparkline>
+                        <div class="sparktext" align="center" style="position: absolute; margin-top: 90px; margin-left: 10px; width: 100%;">Revenue status</div>
+                    </div>
+                </div>
+                <div align="center" class="col-lg-2 col-md-5 col-sm-5 sparent">
+                    <div class="spark" id="winloss" align="center">
+                        <ejs-sparkline id="winloss" load="sparkLoad" height="80px" width="120px" lineWidth="1" type="@SparklineType.WinLoss" fill="#3C78EF"
+                                       xName="x" yName="y" highPointColor="#fc5070">
+                            <e-sparkline-tooltipsettings visible="true" format="${x} : ${y}">
+                            </e-sparkline-tooltipsettings>
+                        </ejs-sparkline>
+                        <div class="sparktext" align="center" style="position: absolute; margin-top: 90px; margin-left: 5px; width: 100%;">Customer satisfaction score</div>
+                    </div>
+                </div>
+                <div align="center" class="col-lg-2 col-md-5 col-sm-10 sparent">
+                    <div class="spark" align="center" style="height: 87px;">
+                        <div class="sparkpie" id="pie1" style="height:40px;width: 29%;">
+                            <ejs-sparkline id="pie1" load="sparkLoad" height="40px" width="40px" lineWidth="1" type="@SparklineType.Pie" fill="#3C78EF"
+                                           valueType="@Syncfusion.EJ2.Charts.SparklineValueType.Category" xName="x" yName="y" highPointColor="#fc5070">
+                                <e-sparkline-tooltipsettings visible="true" format="${x} : ${y}">
+                                </e-sparkline-tooltipsettings>
+                            </ejs-sparkline>
+                            <div align="center" class="pietext" style="position: absolute; margin-top: 40px; width: 50%;">USA</div>
+                        </div>
+                        <div class="sparkpie" id="pie2" style="height:40px;width: 29%;">
+                            <ejs-sparkline id="pie2" load="sparkLoad" height="40px" width="40px" lineWidth="1" type="@SparklineType.Pie" fill="#3C78EF"
+                                           valueType="@Syncfusion.EJ2.Charts.SparklineValueType.Category" xName="x" yName="y" highPointColor="#fc5070">
+                                <e-sparkline-tooltipsettings visible="true" format="${x} : ${y}">
+                                </e-sparkline-tooltipsettings>
+                            </ejs-sparkline>
+                            <div align="center" class="pietext" style="position: absolute; margin-top: 40px; width: 50%;">GBR</div>
+                        </div>
+                        <div class="sparkpie" id="pie3" style="height:40px;width: 29%;">
+                            <ejs-sparkline id="pie3" load="sparkLoad" height="40px" width="40px" lineWidth="1" type="@SparklineType.Pie" fill="#3C78EF"
+                                           valueType="@Syncfusion.EJ2.Charts.SparklineValueType.Category" xName="x" yName="y" highPointColor="#fc5070">
+                                <e-sparkline-tooltipsettings visible="true" format="${x} : ${y}">
+                                </e-sparkline-tooltipsettings>
+                            </ejs-sparkline>
+                            <div align="center" class="pietext" style="position: absolute; margin-top: 40px; width: 50%;">CHN</div>
+                        </div>
+                        <div class="sparktext" align="center" style="position: absolute; margin-top: 90px; width: 90%;">Olympics medal details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*custom code start*@
+    <style>
+        td {
+            font-family: "Roboto", "Segoe UI", "GeezaPro", "DejaVu Serif", "sans-serif";
+            font-weight: 600;
+        }
+
+        .spark {
+            border: 1px solid rgb(209, 209, 209);
+            border-radius: 2px;
+            width: 100%;
+        }
+
+        .sparent {
+            height: 110px;
+            margin-left: 3%;
+            margin-right: 0%;
+        }
+
+        .sparkpie {
+            float: left;
+            margin-top: 15px;
+            margin-left: 2%;
+        }
+
+        .pieparent {
+            width: 93%;
+        }
+
+        .pietext {
+            float: left;
+            margin-left: 25%;
+        }
+
+        .sparktext {
+            text-anchor: middle;
+            width: 100%;
+        }
+    </style>
+    @*custom code end*@
+    <script type="text/javascript">
+        function sparkLoad(args) {
+            var selectedTheme = themeName ? themeName : 'Material';
+            args.sparkline.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+            if (args.sparkline.element.id === "line") {
+                args.sparkline.dataSource = [
+                    { x: 1, yval: 5 },
+                    { x: 2, yval: 6 },
+                    { x: 3, yval: 5 },
+                    { x: 4, yval: 7 },
+                    { x: 5, yval: 4 },
+                    { x: 6, yval: 3 },
+                    { x: 7, yval: 9 },
+                    { x: 8, yval: 5 },
+                    { x: 9, yval: 6 },
+                    { x: 10, yval: 5 },
+                    { x: 11, yval: 7 },
+                    { x: 12, yval: 8 },
+                    { x: 13, yval: 4 },
+                    { x: 14, yval: 5 },
+                    { x: 15, yval: 3 },
+                    { x: 16, yval: 4 },
+                    { x: 17, yval: 11 },
+                    { x: 18, yval: 10 },
+                    { x: 19, yval: 2 },
+                    { x: 20, yval: 12 },
+                    { x: 21, yval: 4 },
+                    { x: 22, yval: 7 },
+                    { x: 23, yval: 6 },
+                    { x: 24, yval: 8 },
+                ];
+            } else if (args.sparkline.element.id === "area") {
+                args.sparkline.dataSource = [
+                    { x: 1, xval: 'Jan', yval: 34 },
+                    { x: 2, xval: 'Feb', yval: 36 },
+                    { x: 3, xval: 'Mar', yval: 32 },
+                    { x: 4, xval: 'Apr', yval: 35 },
+                    { x: 5, xval: 'May', yval: 40 },
+                    { x: 6, xval: 'Jun', yval: 38 },
+                    { x: 7, xval: 'Jul', yval: 33 },
+                    { x: 8, xval: 'Aug', yval: 37 },
+                    { x: 9, xval: 'Sep', yval: 34 },
+                    { x: 10, xval: 'Oct', yval: 31 },
+                    { x: 11, xval: 'Nov', yval: 30 },
+                    { x: 12, xval: 'Dec', yval: 29 },
+                ];
+            } else if (args.sparkline.element.id === "column") {
+                args.sparkline.dataSource = [
+                    { x: 1, xval: 'Jan', yval: 10 },
+                    { x: 2, xval: 'Feb', yval: 6 },
+                    { x: 3, xval: 'Mar', yval: 8 },
+                    { x: 4, xval: 'Apr', yval: -5 },
+                    { x: 5, xval: 'May', yval: 11 },
+                    { x: 6, xval: 'Jun', yval: 5 },
+                    { x: 7, xval: 'Jul', yval: -2 },
+                    { x: 8, xval: 'Aug', yval: 7 },
+                    { x: 9, xval: 'Sep', yval: -3 },
+                    { x: 10, xval: 'Oct', yval: 6 },
+                    { x: 11, xval: 'Nov', yval: 8 },
+                    { x: 12, xval: 'Dec', yval: 10 },
+                ];
+            } else if (args.sparkline.element.id === "winloss") {
+                args.sparkline.dataSource = [12, 15, -10, 13, 15, 6, -12, 17, 13, 0, 8, -10];
+            } else if (args.sparkline.element.id === "pie1") {
+                args.sparkline.dataSource = [{ x: 'Gold', y: 46 }, { x: 'Silver', y: 37 }, { x: 'Bronze', y: 38 }];
+            } else if (args.sparkline.element.id === "pie2") {
+                args.sparkline.dataSource = [{ x: 'Gold', y: 27 }, { x: 'Silver', y: 23 }, { x: 'Bronze', y: 17 }];
+            } else if (args.sparkline.element.id === "pie3") {
+                args.sparkline.dataSource = [{ x: 'Gold', y: 26 }, { x: 'Silver', y: 18 }, { x: 'Bronze', y: 26 }];
+            } else {
+                args.sparkline.dataSource = [{ x: 'Gold', y: 19 }, { x: 'Silver', y: 17 }, { x: 'Bronze', y: 19 }];
+            }
+        }
+    </script>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Series Types in ASP.NET Core Sparkline control. Explore here for more details."/>
+                }
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample depicts the various types of series available in Sparkline.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this example, you can see the sparkline with various series types such as line, area, column, win loss and pie. Tooltip is enabled in this example. To see the tooltip in action, hover the mouse over the data points or tap on a data point in touch enabled devices.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Sparkline Series Types Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Series Types in ASP.NET Core Sparkline Control</h1>
+                }

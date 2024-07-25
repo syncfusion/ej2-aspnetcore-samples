@@ -1,0 +1,61 @@
+@using Syncfusion.EJ2.Gantt;
+@section ControlsSection{
+   
+    <div class="control-section">
+        <div class="row">
+            <div class="col-md-12">
+                <ejs-gantt id='Holidays' dataSource="ViewBag.dataSource" treeColumnIndex="1" height="450px" highlightWeekends="true"
+                           projectStartDate="03/24/2024" projectEndDate="07/06/2024">
+                    <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate"
+                                        endDate="EndDate" duration="Duration" progress="Progress" dependency="Predecessor"
+                                        child="SubTasks">
+                    </e-gantt-taskfields>
+                    <e-gantt-columns>
+                        <e-gantt-column field="TaskId" width="80"></e-gantt-column>
+                        <e-gantt-column field="TaskName" headerText="Name" width="250" clipMode="EllipsisWithTooltip"></e-gantt-column>
+                        <e-gantt-column field="StartDate"></e-gantt-column>
+                        <e-gantt-column field="Duration"></e-gantt-column>
+                        <e-gantt-column field="Progress"></e-gantt-column>
+                        <e-gantt-column field="Predecessor"></e-gantt-column>
+                    </e-gantt-columns>
+                    <e-gantt-splitterSettings columnIndex="2"></e-gantt-splitterSettings>
+                    <e-gantt-holidays>
+                        <e-gantt-holiday from="04/04/2024" to="04/04/2024" label="Local Holiday"></e-gantt-holiday>
+                        <e-gantt-holiday from="04/19/2024" to="04/19/2024" label="Good Friday"></e-gantt-holiday>
+                        <e-gantt-holiday from="04/30/2024" to="04/30/2024" label="Release Holiday"></e-gantt-holiday>
+                    </e-gantt-holidays>
+                    <e-gantt-labelSettings leftLabel="TaskName"></e-gantt-labelSettings>
+                </ejs-gantt>
+            </div>
+        </div>
+    </div>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample visualizes how to define the holidays in between the project timeline.
+        </p>
+    </div>
+}
+@section Description{
+
+    <div id="description">
+        <p>
+            In this example,<code> holidays </code> are displayed with vertical bar with the desired text using the <code>label</code> property. You can also mention the continuous holidays by specifying the <code>from</code> and <code>to</code> range. For single holiday, you can define from value alone. Holidays are defined as an array of object collection, so that we can display more than one holiday in the project.
+        </p>
+        <p>
+            You can even assign the <code>cssClass</code> to each holiday to change the default color of label and background.
+        </p>
+        <br />
+    </div>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Holidays in ASP.NET Core Gantt control. Explore here for more details."/>
+                }
+@section Title{
+                    <title>ASP.NET Core Gantt Holidays Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Holidays in ASP.NET Core Gantt Control</h1>
+                }

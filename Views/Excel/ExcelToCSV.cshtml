@@ -1,0 +1,67 @@
+﻿@using Syncfusion.EJ2;
+@section ActionDescription {
+    This sample demonstrates how to convert Excel documents to CSV documents using XlsIO.
+}
+
+@section Meta {
+    <meta name="description" content="This example demonstrates the conversion of Excel To CSV in ASP.NET Core Excel (XlsIO) library. Explore here for more details." />
+}
+
+@section Description {
+    <br />Essential XlsIO allows to export Excel document to CSV.
+    <br />
+    <br /><b>Features:</b>
+    <br />
+    <br />
+    <ul>
+        <li>Supports conversion of Excel documents to CSV format that includes text, numbers, formulas, and number formatting.</li>
+    </ul>
+}
+@section ControlsSection {
+    <div class="control-section">
+        @{
+            Html.BeginForm("exceltocsv", "excel", FormMethod.Post, new { enctype = "multipart/form-data" });
+            {
+                <div>
+                    <p style="font-weight:normal">
+                        Select the Excel document to convert to CSV and click the "Convert to CSV" button. Please note that a text file viewer is required to view the CSV document.
+                    </p>
+                </div>
+                <br />
+                <div style="display:flex">
+                    <label style="font-weight:normal;margin-right: 1rem;">Select document</label>
+                    <input type="button" value="Browse" onclick="openPage()">
+                    <input type="text" id="fileNameBox" value="ExcelToCSVTemplate.xlsx" readonly="readonly" style="border:none;margin-left:1rem;" />
+                    <input type="file" name="file" id="fileUpload" accept=".xlsx,.xls,.xlsm,.xltm,.xltx,.tsv,.xml" style="display:block;visibility:hidden;width:0;height:0;">
+                </div>
+                <br />
+                <div style="margin-top: 8px">
+                    <input id="generate" name="Button" class="e-btn" type="submit" value="Convert to CSV" style="width:170px; text-transform:capitalize" />
+                    <br />
+                    <div class="text-danger">
+                        @ViewBag.Message
+                    </div>
+                </div>
+                Html.EndForm();
+            }
+        }
+    </div>
+    <script>
+        function openPage() {
+            document.getElementById('fileUpload').click();
+            document.getElementById('fileUpload').addEventListener('change', readFile, false);
+        }
+        function readFile(evt) {
+            var upoadedFiles = evt.target.files;
+
+            filename = upoadedFiles[0].name;
+            document.getElementById('fileNameBox').value = filename;
+        }
+    </script>
+}
+@section Title {
+    <title>ASP.NET Core Excel (XlsIO) library - Excel To CSV Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Excel To CSV conversion in ASP.NET Core Excel (XlsIO) Library</h1>
+}

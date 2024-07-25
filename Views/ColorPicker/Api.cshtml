@@ -1,0 +1,169 @@
+@{
+    ViewData["Title"] = "Api ColorPicker";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var data = new GameList().ColorPickerModeModel();
+}
+
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="col-lg-8 control-section">
+        <div id="colorpicker-control">
+            <h4>Choose a color</h4>
+            <ejs-colorpicker id='color-picker' value="#0db1e7" change="onChange"></ejs-colorpicker>
+        </div>
+    </div>
+    <div class="col-lg-4 property-section">
+        <table id="property" title="Properties" style="width: 100%">
+            <tbody>
+                <tr>
+                    <td style="width: 50%">
+                        <div>Value</div>
+                    </td>
+                    <td style="width: 50%">
+                        <div style="max-width: 200px">
+                            <input id="hex-value" value="#0db1e7" maxlength="9" spellcheck="false" type="text" oninput="inputChange()">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 50%;padding-top:10px">
+                        <div>Mode</div>
+                    </td>
+                    <td style="width: 50%;padding-top:10px">
+                        <div style="max-width: 200px">
+                            <ejs-dropdownlist id="ddl" dataSource="@data" popupHeight="200px" change="valueChanged" index="0">
+                                <e-dropdownlist-fields text="Mode" value="Id"></e-dropdownlist-fields>
+                            </ejs-dropdownlist>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 50%;padding-top:15px">
+                        <div>Disable</div>
+                    </td>
+                    <td style="width: 50%;padding-top:15px">
+                        <ejs-checkbox id='disabled' checked="false" change="disabled_onChange"></ejs-checkbox>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 50%;padding-top:15px">
+                        <div>Show Buttons</div>
+                    </td>
+                    <td style="width: 50%;padding-top:15px">
+                        <ejs-checkbox id='show-btn' checked="true" change="button_onChange"></ejs-checkbox>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 50%;padding-top:15px">
+                        <div>Mode Switcher</div>
+                    </td>
+                    <td style="width: 50%;padding-top:15px">
+                        <ejs-checkbox id='mode-switch' checked="true" change="mode_onChange"></ejs-checkbox>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the API in ASP.NET Core Color Picker control. Explore here for more details."/>
+                }
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This sample demonstrates customization of the ColorPicker component by using its properties from the property pane. Select
+        any combination of properties from the property pane to customize the ColorPicker component.</p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+    <p>
+        The ColorPicker is a user interface to select and adjust color values. This supports various color specifications like RGB
+        (Red Green Blue), HSV (Hue Saturation Value), and Hex codes.
+    </p>
+    <p>In this sample, ColorPicker is rendered with default configuration.</p>
+    <p>This sample can be customized further with the combination of ColorPicker properties from the property pane. For example,</p>
+    <ul>
+        <li>Control (apply/cancel) buttons can be enabled or disabled using
+            <i>Show Buttons</i> checkbox from the property pane.</li>
+        <li>You can select the color by entering the color value in the property pane
+            <i>Value</i> textbox.</li>
+        <li>You can switch to 'Picker' and 'Palette' modes by clicking and selecting the mode from
+            <i>Select Mode</i> dropdownlist.</li>
+        <li>you can enable or disable the ColorPicker using
+            <i>Disabled</i> checkbox from property pane.</li>
+        <li>you can enable or disable the mode switcher using
+            <i>Mode Switcher</i> checkbox from property pane.</li>
+    </ul>
+    <p>
+        More information about ColorPicker can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/color-picker/getting-started" aria-label="Navigate to the documentation for Getting Started with ASP.NET Core ColorPicker Control">
+            documentation section</a>.
+    </p>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        // Getting COlorPicker control instance
+        var colorPicker = ej.base.getComponent(document.getElementById('color-picker'), 'colorpicker');
+        var input = document.getElementById('hex-value');
+        ej.inputs.Input.createInput({
+            element: input
+        });
+    </script>
+}
+
+<script>
+    function onChange(args) {
+        input.value = args.currentValue.hex;
+    }
+    function inputChange() {
+        var val = input.value;
+        // Sets to color picker default color value if user enters the invalid hex code
+        colorPicker.value = val && val.length > 2 ? (val[0] !== '#' ? '#' + val : val) : '#008000';
+    }
+    function valueChanged(args) {
+        colorPicker.mode = args.value;
+    }
+    function mode_onChange(args) {
+       colorPicker.modeSwitcher = args.checked;
+    }
+    function button_onChange(args) {
+        colorPicker.showButtons = args.checked;
+    }
+    function disabled_onChange(args) {
+        colorPicker.disabled = args.checked;
+    }
+</script>
+
+@*custom code start*@
+<style>
+    .property-panel-content {
+        padding: 0 10px 10px 0;
+        overflow: auto;
+    }
+
+    #colorpicker-control {
+        margin: 30px auto;
+        padding-top: 50px;
+        text-align: center;
+    }
+
+    #colorpicker-control h4 {
+        margin-bottom: 20px;
+    }
+
+    .e-bigger #colorpicker-control h4 {
+        font-size: 20px;
+    }
+</style>
+@*custom code end*@
+@section Title{
+                    <title>ASP.NET Core Color Picker API Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of API in ASP.NET Core Color Picker Control</h1>
+                }

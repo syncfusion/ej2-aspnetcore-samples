@@ -1,0 +1,188 @@
+﻿@using Syncfusion.EJ2
+@using Syncfusion.EJ2.DropDowns;
+@using Syncfusion.EJ2.Base;
+@using EJ2CoreSampleBrowser_NET6.Models
+@section ControlsSection{
+    <div class="control-section">
+        <div class="sample-container">
+            <div class="default-section">
+                <ejs-richtexteditor id="defaultRTE" toolbarClick="onToolbarClick" destroyed="destroyed" >
+                    <e-richtexteditor-quicktoolbarsettings image="@ViewBag.image"></e-richtexteditor-quicktoolbarsettings>
+                    <e-content-template>
+                        <div>
+                            <p>
+                              An image can be edited within a Rich Text Editor using an Image Editor.
+                              <img id="img1" style="height: 350px;" src="@Url.Content("~/images/RichTextEditor/bridge.png")" alt="Bridge picture" aria-label="Bridge" />
+                            </p>
+                            <p>
+                              It allows users to quickly and easily add an Image Editor to their Rich Text Editor. It provides a variety of features, including image cropping, resizing, rotation, and more. Additionally, it supports a wide range of image formats, including JPEG, PNG, and GIF.
+                            </p>
+                        </div>
+                    </e-content-template>
+                </ejs-richtexteditor>
+                <div id="imageeditorContainer" style="height:400px;">
+                    <ejs-dialog id="default_dialog" visible="false" width="800px" height='550px' open="OnOpen" close="onclose" created="onDialogCreate" target="body" showCloseIcon="true" header="@ViewBag.header">
+                        <e-content-template>
+                            <div class="e-img-editor-sample">
+                                <div id="imageeditor"></div>
+                            </div>
+                        </e-content-template>
+                        <e-dialog-buttons>
+                            <e-dialog-dialogbutton buttonModel="ViewBag.insertButton" click="onInsert"></e-dialog-dialogbutton>
+                            <e-dialog-dialogbutton buttonModel="ViewBag.cancelButton" click="onCancel"></e-dialog-dialogbutton>
+                        </e-dialog-buttons>
+                    </ejs-dialog>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .e-rte-quick-popup .e-rte-quick-toolbar .e-rte-image-editor::before {
+            content: '\e730';
+        }
+        .material .e-rte-quick-popup .e-rte-quick-toolbar .e-rte-image-editor::before,
+        .material-dark .e-rte-quick-popup .e-rte-quick-toolbar .e-rte-image-editor::before {
+            content: '\e891';
+        }
+        .bootstrap4 .e-rte-quick-popup .e-rte-quick-toolbar .e-rte-image-editor::before {
+            content: '\e78f';
+        }
+    </style>
+    <script type="text/javascript">
+
+        var dialogObj;
+        var RTEObj;
+        var imageEditorObj;
+        var selection = new ej.richtexteditor.NodeSelection();
+        var range;
+        var saveSelection;
+        var dataURL;
+        var isLoaded = false;
+        var imageELement;
+
+        function onToolbarClick(args) {
+            if (args.item.tooltipText === 'Image Editor') {
+                range = selection.getRange(document);
+                saveSelection = selection.save(range, document);
+                dialogEle = document.getElementById("default_dialog");
+                dialogObj = dialogEle.ej2_instances[0];
+                dialogObj.show();
+            }
+        };
+
+        function onDialogCreate() {
+            dialogObj = this;
+        }
+
+        function destroyed() {
+            dialogObj.destroy();
+        }
+
+        function onInsert() {
+            if (rteObj.formatter.getUndoRedoStack().length === 0) {
+                rteObj.formatter.saveData();
+            }
+            saveSelection.restore();
+            var canvas = document.createElement('CANVAS');
+            var ctx = canvas.getContext('2d');
+            var imgData = imageEditorObj.getImageData();
+            canvas.height = imgData.height;
+            canvas.width = imgData.width;
+            ctx.putImageData(imgData, 0, 0);
+            isLoaded = true;
+            rteObj.executeCommand('editImage', {
+                url: canvas.toDataURL(),
+                width: { width: canvas.width },
+                height: { height: canvas.height },
+                selection: saveSelection,
+                cssClass: imageELement.getAttribute('class').replace('e-rte-image', ''),
+            });
+            rteObj.formatter.saveData();
+            rteObj.formatter.enableUndo(rteObj);
+            dispose();
+            dialogObj.hide();
+            imageELement.crossOrigin = null;
+        }
+
+        function onCancel() {
+            dispose();
+            dialogObj.hide();
+            isLoaded = true;
+            imageELement.crossOrigin = null;
+        }
+        function onclose() {
+            dispose();
+            dialogObj.hide();
+            isLoaded = true;
+            imageELement.crossOrigin = null;
+        }
+        function dispose() {
+            if (imageEditorObj !== null && imageEditorObj !== undefined) {
+                const imageEditorInstance = ej.base.getComponent(document.getElementById('imageeditor'), 'image-editor');
+                if (imageEditorInstance !== null && imageEditorInstance !== undefined) {
+                    imageEditorInstance.destroy();
+                }
+            }
+        }
+        function OnOpen() {
+            isLoaded = false;
+            rteEle = document.getElementById("defaultRTE");
+            rteObj = rteEle.ej2_instances[0];
+            var selectNodes = rteObj.formatter.editorManager.nodeSelection.getNodeCollection(range);
+            if (selectNodes.length == 1 && selectNodes[0].tagName == 'IMG') {
+                imageELement = selectNodes[0];
+                imageELement.crossOrigin = 'anonymous';
+                var canvas = document.createElement('CANVAS');
+                var ctx = canvas.getContext('2d');
+                canvas.height = imageELement.offsetHeight;
+                canvas.width = imageELement.offsetWidth;
+                imageELement.onload = function () {
+                    ctx.drawImage(imageELement, 0, 0, canvas.width, canvas.height);
+                    dataURL = canvas.toDataURL();
+                    if (!isLoaded) {
+                        imageEditorObj = new ej.imageeditor.ImageEditor({
+                            height: '450px',
+                            created: function () {
+                                imageEditorObj.open(dataURL);
+                            }
+                        });
+                        imageEditorObj.appendTo('#imageeditor')
+                    }
+                };
+            }
+        }
+
+    </script>
+}
+
+    @*custom code start*@
+
+    @section Meta{
+    <meta name="description" content="This example demonstrates the Image Editor Integration in ASP.NET Core Rich Text Editor component. Explore here for more details." />
+                }
+
+    @*custom code end*@
+
+    @section ActionDescription{
+    <div id="action-description">
+        <p>This example demonstrates how to integrate Image Editor into Rich Text Editor control. To use it, simply click on the image to open the quick toolbar and select Image Editor custom quick toolbar. Then, the image will be opened in the Image Editor.</p>
+    </div>
+}
+    @section Description{
+    <div id="description">
+        <p>The Image Editor control is integrated into the Rich Text Editor and opens the Image Editor within a Dialog when the Image Editor custom quick toolbar is clicked and allows to edit the image. To achieve this, the sample is customized for the Image Editor and Rich Text Editor</p>
+        <ul>
+            <li>Include the Image Editor custom toolbar item in the <a href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.RichTextEditor.RichTextEditorQuickToolbarSettings.html#Syncfusion_EJ2_RichTextEditor_RichTextEditorQuickToolbarSettings_Image" aria-label="Navigate to the Image property reference for ASP.NET Core RichTextEditorQuickToolbarSettings"> quickToolbarSettings.image </a> property of the Rich Text Editor</li>
+            <li>Configure Image Editor within a Dialog using the <a href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Popups.Dialog.html#Syncfusion_EJ2_Popups_Dialog_BeforeOpen" aria-label="Navigate to the BeforeOpen property reference for ASP.NET Core Dialog control"> beforeOpen </a> event of the Dialog</li>
+            <li>Open the Dialog on clicking the Image Editor custom toolbar item</li>
+            <li>Insert the edited image into the Rich Text Editor by clicking the Insert button</li>
+        </ul>
+    </div>
+}
+    @section Title{
+    <title>ASP.NET Core Rich Text Editor Image editor Integration Example - Syncfusion Demos </title>
+                }
+    @section Header{
+    <h1 class='sb-sample-text'>Example of Image editor Integration in ASP.NET Core Rich Text Editor component</h1>
+                }

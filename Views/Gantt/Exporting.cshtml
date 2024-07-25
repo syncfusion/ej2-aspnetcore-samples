@@ -1,0 +1,118 @@
+@using Syncfusion.EJ2.Gantt;
+@section ControlsSection{
+    <div class="control-section">
+        <div class="row">
+            <div class="col-md-12">
+                 <div style="display: flex;">
+            <div>
+                        <label for="unchecked" style="margin-right: 5px;font-size: 15px;"> AutoFit in Pdf Export </label>
+                <ejs-switch id="unchecked" change="Change" checked="false"></ejs-switch>
+            </div>
+        </div>
+        <div>
+                <ejs-gantt id='Exporting' dataSource="ViewBag.dataSource" gridLines="Both"
+                           treeColumnIndex="1" height="450px" toolbarClick="toolbarClick"
+                           allowExcelExport="true" allowSelection="true" highlightWeekends="true"
+                           allowPdfExport="true"
+                           resources="ViewBag.projectResources"
+                           projectStartDate="03/25/2024" projectEndDate="07/28/2024"
+                           toolbar="@(new List<string>() { "ExcelExport", "CsvExport", "PdfExport" })">
+                    <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate"
+                                        endDate="EndDate" duration="Duration" progress="Progress" dependency="Predecessor"
+                                        child="SubTasks" resourceInfo="ResourceId">
+                    </e-gantt-taskfields>
+                    <e-gantt-resourcefields id="ResourceId" name="ResourceName">
+                    </e-gantt-resourcefields>
+                    <e-gantt-columns>
+                        <e-gantt-column field="TaskId" visible="false" width="100"></e-gantt-column>
+                        <e-gantt-column field="TaskName" headerText="Task Name" width="200" clipMode="EllipsisWithTooltip"></e-gantt-column>
+                    </e-gantt-columns>
+                        <e-gantt-eventmarkers>
+                            <e-gantt-eventmarker day="04/02/2024" label="Project starts"></e-gantt-eventmarker>
+                            <e-gantt-eventmarker day="04/09/2024" label="Design phase"></e-gantt-eventmarker>
+                            <e-gantt-eventmarker day="04/19/2024" label="Research phase"></e-gantt-eventmarker>
+                            <e-gantt-eventmarker day="05/23/2024" label="Production phase"></e-gantt-eventmarker>
+                            <e-gantt-eventmarker day="06/20/2024" label="Sales and marketing phase"></e-gantt-eventmarker>
+                        </e-gantt-eventmarkers>
+                        <e-gantt-holidays>
+                            <e-gantt-holiday from="04/04/2024" to="04/04/2024" label="Local Holiday"></e-gantt-holiday>
+                            <e-gantt-holiday from="04/19/2024" to="04/19/2024" label="Good Friday"></e-gantt-holiday>
+                            <e-gantt-holiday from="04/30/2024" to="04/30/2024" label="Release Holiday"></e-gantt-holiday>
+                        </e-gantt-holidays>
+                    <e-gantt-timelinesettings>
+                        <e-timelinesettings-toptier unit="Week" format="MMM dd, y"></e-timelinesettings-toptier>
+                        <e-timelinesettings-bottomtier unit="Day"></e-timelinesettings-bottomtier>
+                    </e-gantt-timelinesettings>
+                    <e-gantt-labelSettings leftLabel="TaskName"></e-gantt-labelSettings>
+                </ejs-gantt>
+            </div>
+        </div>
+    </div>
+        <style>
+            .fluent2 .control-section,
+            .fluent2-dark .control-section {
+                padding-top: 0px !important;
+            }
+            .fluent2 .e-switch-wrapper,
+            .fluent2-dark .e-switch-wrapper {
+                top: 12px !important
+            }
+        </style>
+    <script>
+        var isFitToWidth;
+
+        function toolbarClick(args) {
+            var ganttObj = document.getElementById("Exporting").ej2_instances[0];
+            if (args.item.id === 'Exporting_excelexport') {
+                ganttObj.excelExport();
+            }
+            else if (args.item.id === 'Exporting_csvexport') {
+                ganttObj.csvExport();
+            }
+            else if (args.item.id === 'Exporting_pdfexport') {
+                    var exportProperties = {
+                        fitToWidthSettings: {
+                            isFitToWidth: isFitToWidth,
+                        }
+                    };
+                    ganttObj.pdfExport(exportProperties);
+            }
+        }
+            function Change(args) {
+                if (args.checked) {
+                    isFitToWidth = true;
+                } else {
+                    isFitToWidth = false;
+                }
+            }
+    </script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This sample demonstrates client-side exporting of the Gantt, which allows you to export Gantt data to Excel, PDF and CSV formats. Using the Gantt toolbar buttons, you can export Gantt data to the desired format. </p>
+    </div>
+
+}
+@section Description{
+    <div id="description">
+        <p>Gantt supports client-side exporting, which allows you to export its data to the Excel, PDF and CSV formats. </p>
+        <p>In this demo, we have defined actions in the  <code><a target="_blank" class="code" href="https://ej2.syncfusion.com/javascript/documentation/api/gantt/#toolbarclick"aria-label="Navigate to the toolbarClick event reference for ASP.NET Core Gantt Chart control">toolbarClick</a></code> event
+                to export the Gantt data using the <code><a target="_blank" class="code" href="https://ej2.syncfusion.com/javascript/documentation/api/gantt/#excelexport" aria-label="Navigate to the excelExport event reference for ASP.NET Core Gantt Chart control">excelExport</a></code> ,
+                <code><a target="_blank" class="code" href="https://ej2.syncfusion.com/javascript/documentation/api/gantt/#pdfexport" aria-label="Navigate to the pdfExport event reference for ASP.NET Core Gantt Chart control">pdfExport</a></code> and
+                <code><a target="_blank" class="code" href="https://ej2.syncfusion.com/javascript/documentation/api/gantt/#csvexport" aria-label="Navigate to the csvExport event reference for ASP.NET Core Gantt Chart control">csvExport</a></code> methods.
+            </p>
+        <p>In addition we have provided support to export the Gantt component where each rows are auto-fit to the PDF document page width using
+                <code><a target="_blank" class="code" href="https://ej2.syncfusion.com/javascript/documentation/gantt/pdf-export/pdf-export" aria-label="Navigate to the documentation for fitToWidthSettings in ASP.NET Core Gantt Chart control">fitToWidthSettings</a></code> in  <code>PdfExportProperties</code> and also it includes the functionality allowing the PDF export of <code>holidays</code> and <code>eventMarkers</code>.
+            </p>
+    </div>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Exporting in ASP.NET Core Gantt control. Explore here for more details."/>
+                }
+@section Title{
+                    <title>ASP.NET Core Gantt Exporting Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Exporting in ASP.NET Core Gantt Control</h1>
+                }

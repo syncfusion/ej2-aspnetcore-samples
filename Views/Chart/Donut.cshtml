@@ -1,0 +1,112 @@
+
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="control-section" align='center'>
+        <ejs-accumulationchart id="container" pointRender="pointRender" load="load" enableSmartLabels="true" enableBorderOnMouseMove="false">
+            <e-accumulationchart-legendsettings visible="false" position="@Syncfusion.EJ2.Charts.LegendPosition.Top">
+            </e-accumulationchart-legendsettings>
+            <e-accumulationchart-centerlabel text="Mobile<br>Browsers<br>Statistics" hoverTextFormat="${point.x}<br>Browser Share<br>${point.y}%">
+            </e-accumulationchart-centerlabel>
+            <e-accumulation-series-collection>
+                <e-accumulation-series xName="Browser" yName="Users" innerRadius="65%" name="Project" explodeOffset="10%" explodeIndex=0 startAngle="62" dataSource="ViewBag.ChartPoints">
+                    <e-accumulationseries-datalabel visible="true" name="DataLabelMappingName" position="@Syncfusion.EJ2.Charts.AccumulationLabelPosition.Outside">
+                        <e-font fontWeight="600"></e-font>
+                        <e-connectorstyle type="@Syncfusion.EJ2.Charts.ConnectorType.Curve" length="20px"></e-connectorstyle>
+                    </e-accumulationseries-datalabel>
+                    <e-accumulationseries-border width="1"></e-accumulationseries-border>
+                </e-accumulation-series>
+            </e-accumulation-series-collection>
+        </ejs-accumulationchart>
+    </div>
+    <script>
+        var seriesColor = ['#FFE066', "#FAB666", "#F68F6A", "#F3646A", "#CC555A", "#9C4649"];
+        function load(args) {
+            var indexedTheme = location.hash.split('/')[1];
+            indexedTheme = indexedTheme ? indexedTheme : 'Material';
+            args.accumulation.theme = (indexedTheme.charAt(0).toUpperCase() + indexedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+            args.accumulation.series[0].radius = ej.base.Browser.isDevice ? "40%" : "70%";
+            args.accumulation.series[0].startAngle = ej.base.Browser.isDevice ? 30 : 62;
+            args.accumulation.centerLabel.textStyle.size = ej.base.Browser.isDevice ? "7px" : "15px";
+            args.accumulation.series[0].dataSource[0].DataLabelMappingName = ej.base.Browser.isDevice ? "Chrome: <br> 61.3%" : "Chrome: 61.3%";
+            args.accumulation.series[0].dataSource[1].DataLabelMappingName = ej.base.Browser.isDevice ? "Safari: <br> 24.6%" : "Safari: 24.6%";
+            args.accumulation.series[0].dataSource[3].DataLabelMappingName = ej.base.Browser.isDevice ? "Samsung <br> Internet: 2.72%" : "Samsung Internet: 2.7%";
+            args.accumulation.series[0].dataSource[4].DataLabelMappingName = ej.base.Browser.isDevice ? "Firefox: <br> 2.6%" : "Firefox: 2.6%";
+            args.accumulation.series[0].dataSource[5].DataLabelMappingName = ej.base.Browser.isDevice ? "Others: <br> 3.6%" : "Others: 3.6%";
+        }
+        function pointRender(args) {
+            let selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            if (selectedTheme === 'fluent') {
+                args.fill = seriesColor[args.point.index % 10];
+            }
+            else if (selectedTheme === 'bootstrap5') {
+                args.fill = seriesColor[args.point.index % 10];
+            }
+            if (selectedTheme.indexOf('dark') > -1) {
+                  if (selectedTheme.indexOf('material') > -1) {
+                         args.border.color = '#303030';
+                  }
+                  else if (selectedTheme.indexOf('bootstrap5') > -1) {
+                         args.border.color = '#212529';
+                  }
+                  else if (selectedTheme.indexOf('bootstrap') > -1) {
+                         args.border.color = '#1A1A1A';
+                  }
+                  else if (selectedTheme.indexOf('fabric') > -1) {
+                         args.border.color = '#201f1f';
+                  }
+                  else if (selectedTheme.indexOf('fluent') > -1) {
+                         args.border.color = '#252423';
+                  }
+                  else if (selectedTheme.indexOf('bootstrap') > -1) {
+                         args.border.color = '#1A1A1A';
+                  }
+                  else if (selectedTheme.indexOf('tailwind') > -1) {
+                         args.border.color = '#1F2937';
+                  }
+                  else {
+                         args.border.color = '#222222';
+                  }
+            }
+            else if (selectedTheme.indexOf('highcontrast') > -1) {
+                  args.border.color = '#000000';
+            }
+            else if (selectedTheme.indexOf('fluent2') > -1) {
+                args.fill = seriesColor[args.point.index % 10];
+            }
+            else {
+                  args.border.color = '#FFFFFF';
+            }
+        }
+    </script>
+}
+
+@*custom code start*@
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Donut in ASP.NET Core Chart control. Explore here for more details."/>
+                }
+@*custom code end*@
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This ASP.NET Core donut chart example visualizes mobile browser statistics. The center label shows information about the data in the donut series.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this example, you can see how to render and configure a donut chart. To create a donut in the pie series, we use the <code>InnerRadius</code> property. The <code>CenterLabel</code> property allows you to specify the default text that will be rendered in the center. You can also customize the text that will render when the mouse pointer is hovered over one of the donut slices using the <code>HoverTextFormat</code> property.
+        </p>
+        <p>
+            More information about the donut series can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/accumulation-chart/pie-dough-nut#doughnut-chart" aria-label="Navigate to the documentation for Doughnut Chart in ASP.NET Core accumulation Chart control">documentation section</a>.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Chart Donut Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Donut in ASP.NET Core Chart Control</h1>
+                }

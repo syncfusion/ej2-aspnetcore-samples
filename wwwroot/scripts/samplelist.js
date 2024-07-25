@@ -7,7 +7,6 @@ window.samplesList = [
         "name": "Data Grid",
         "directory": "Grid",
         "category": "Grids",
-        "type": "update",
         "samples": [
             {
                 "url": "GridOverview",
@@ -559,7 +558,6 @@ window.samplesList = [
             {
                 "url": "LazyLoadGroupWithPaging",
                 "name": "Grouping with Paging",
-                "type": "update",
                 "category": "Lazy Load Grouping",
                 "uid": "00003",
                 "order": 12,
@@ -570,7 +568,6 @@ window.samplesList = [
             {
                 "url": "LazyLoadGroupWithInfiniteScrolling",
                 "name": "Grouping with Infinite Scrolling",
-                "type": "update",
                 "category": "Lazy Load Grouping",
                 "uid": "00094",
                 "order": 12,
@@ -581,7 +578,6 @@ window.samplesList = [
             {
                 "url": "LazyLoadGroupWithVirtualScrolling",
                 "name": "Grouping with Virtual Scrolling",
-                "type": "update",
                 "category": "Lazy Load Grouping",
                 "uid": "00194",
                 "order": 12,
@@ -5051,6 +5047,7 @@ window.samplesList = [
         "name": "Barcode",
         "directory": "Barcode",
         "category": "Data Visualization",
+	"type": "update",
         "samples": [
             {
                 "url": "Ean8",
@@ -5189,7 +5186,8 @@ window.samplesList = [
                 "order": 0,
                 "component": "BarcodeGenerator",
                 "dir": "Barcode",
-                "parentId": "00"
+                "parentId": "00",
+		"type": "update"
             },
             {
                 "url": "datamatrix",
@@ -7699,7 +7697,7 @@ window.samplesList = [
             "url": "TimelineTemplate",
             "name": "Timeline Template",
             "category": "Templates",
-            "uid": "00806",
+            "uid": "00794",
             "order": 6,
             "type": "new",
             "component": "Gantt",
@@ -9367,7 +9365,7 @@ window.samplesList = [
                 "url": "FlatData",
                 "name": "Flat Data",
                 "category": "File Manager",
-                "uid": "0054554",
+                "uid": "0054546",
                 "order": 0,
                 "component": "FileManager",
                 "dir": "FileManager",
@@ -12814,7 +12812,7 @@ window.samplesList = [
             },
             {
                 "url": "WatermarkPDF",
-                "name": "Watermark PDF",
+                "name": "Watermark PDF", 
                 "category": "Modify Documents",
                 "order": 14,
                 "component": "PDF",
@@ -13606,7 +13604,6 @@ window.samplesList = [
                 "component": "PdfViewer",
                 "dir": "PdfViewer",
                 "parentId": "048",
-
                 "uid": "0048483",
                 "type": "update"
             },
@@ -13628,37 +13625,42 @@ window.samplesList = [
                 "component": "PdfViewer",
                 "dir": "PdfViewer",
                 "parentId": "048",
-
-                "uid": "0048485"
+                "uid": "0048485",
             },
             {
                 "url": "RightToLeft",
                 "name": "Right To Left",
                 "category": "Localization",
+
                 "order": 5,
                 "component": "PdfViewer",
                 "dir": "PdfViewer",
                 "parentId": "048",
+
                 "uid": "0048486"
             },
             {
                 "url": "FormFilling",
                 "name": "Form Filling",
                 "category": "PDF Form",
+
                 "order": 6,
                 "component": "PdfViewer",
                 "dir": "PdfViewer",
                 "parentId": "048",
+
                 "uid": "0048487"
             },
             {
                 "url": "FormDesigner",
                 "name": "Form Designer",
                 "category": "PDF Form",
+
                 "order": 6,
                 "component": "PdfViewer",
                 "dir": "PdfViewer",
                 "parentId": "048",
+
                 "uid": "0048488"
             },
             {
@@ -13675,6 +13677,7 @@ window.samplesList = [
                 "url": "HandwrittenSignature",
                 "name": "Handwritten Signature",
                 "category": "Signature",
+
                 "order": 8,
                 "component": "PdfViewer",
                 "dir": "PdfViewer",

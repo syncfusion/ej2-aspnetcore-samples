@@ -28,22 +28,10 @@ namespace EJ2CoreSampleBrowser.Controllers
         /// <returns></returns>
         public ActionResult ImportData()
         {
-            if(PresentationData.presentationData == null)
-            {
-                PresentationData.presentationData = new PresentationData().GetAllRecords();
-                order1.Add(new DataPosition() { text = "Top" });
-                order1.Add(new DataPosition() { text = "Bottom" });
-                ViewBag.ddData = order1;
-            }
-            else if(ViewBag.ddData == null)
-            {
-                if (order1.Count == 0)
-                {
-                    order1.Add(new DataPosition() { text = "Top" });
-                    order1.Add(new DataPosition() { text = "Bottom" });
-                }
-                ViewBag.ddData = order1;
-            }
+            PresentationData.presentationData = new PresentationData().GetAllRecords();
+            order1.Add(new DataPosition() { text = "Top" });
+            order1.Add(new DataPosition() { text = "Bottom" });
+            ViewBag.ddData = order1;
             return View();
         }
         /// <summary>
@@ -53,10 +41,8 @@ namespace EJ2CoreSampleBrowser.Controllers
         /// <param name="Group">Radio button group value</param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult ImportData(string button, string Group)
+        public ActionResult Export(string Group)
         {
-            if (button == null)
-                return View();
             //Instatiate the presentation
             IPresentation presentation = null;
             //Checks whether the export option is table

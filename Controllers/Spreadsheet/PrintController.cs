@@ -109,7 +109,14 @@ namespace EJ2CoreSampleBrowser.Controllers
             };
             ViewBag.PrintData = printData;
             ViewBag.YearlyReport = yearlyReportDataSource;
+            ViewBag.ImageSource = this.GetImageSource();
             return View();
+        }
+
+        public string GetImageSource()
+        {
+            string allText = System.IO.File.ReadAllText("./wwwroot/scripts/Spreadsheet/SpreadsheetImage.txt");
+            return allText;
         }
 
         public IActionResult PrintOpen(IFormCollection openRequest)

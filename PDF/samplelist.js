@@ -6,7 +6,7 @@ window.samplesList = [
    {
         "name": "PDF",
         "directory": "Pdf",
-		"type": "update",
+        "type": "update",
         "category": "Document Processing Library",
         "samples": [
             {
@@ -15,7 +15,7 @@ window.samplesList = [
                 "category": "PDF",
                 "order": 0,
                 "component": "PDF",
-                "dir": "Pdf",                
+                "dir": "Pdf",
                 "parentId": "046",
                 "uid": "00464600"
             },
@@ -640,32 +640,38 @@ window.samplesList = [
               "url": "RightToLeft",
               "name": "Right To Left",
               "category": "Localization",
+
               "order": 5,
               "component": "PdfViewer",
               "dir": "PdfViewer",
               "parentId": "048",
+
               "uid": "0048486"
           },
           {
               "url": "FormFilling",
               "name": "Form Filling",
               "category": "PDF Form",
+
               "order": 6,
               "component": "PdfViewer",
               "dir": "PdfViewer",
               "parentId": "048",
+
               "uid": "0048487"
           },
           {
               "url": "FormDesigner",
               "name": "Form Designer",
               "category": "PDF Form",
+
               "order": 6,
               "component": "PdfViewer",
               "dir": "PdfViewer",
               "parentId": "048",
+
               "uid": "0048488"
-          },
+          },         
           {
               "url": "Annotations",
               "name": "Annotations",
@@ -674,12 +680,13 @@ window.samplesList = [
               "component": "PdfViewer",
               "dir": "PdfViewer",
               "parentId": "048",
-              "uid": "0048489",
+              "uid": "004889",
           },
           {
               "url": "HandwrittenSignature",
               "name": "Handwritten Signature",
               "category": "Signature",
+
               "order": 8,
               "component": "PdfViewer",
               "dir": "PdfViewer",

@@ -5,7 +5,7 @@
     <div class="control-section">
         <div class='control-wrapper'>
             <div style='padding-top:60px;'>
-                <ejs-multicolumncombobox id="multicolumnFiltering" dataSource="ViewBag.dataSource" popupHeight="200px"
+                <ejs-multicolumncombobox id="multicolumnFiltering" dataSource="@Model.OrderDetails" popupHeight="200px"
                     placeholder="Select the country" filtering="onfiltering">
                     <e-multicolumncombobox-fields text="ShipCountry" value="OrderID"></e-multicolumncombobox-fields>
                     <e-multicolumncombobox-columns>
@@ -36,7 +36,7 @@
         function onfiltering(e) {
             var query = new ej.data.Query();
             query = (e.text !== '') ? query.where('Name', 'startswith', e.text, true) : query;
-            e.updateData(@Html.Raw(JsonConvert.SerializeObject(ViewBag.dataSource)), query);
+            e.updateData(@Html.Raw(JsonConvert.SerializeObject(@Model.OrderDetails)), query);
         }
     </script>
 }

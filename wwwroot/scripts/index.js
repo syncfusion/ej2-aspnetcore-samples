@@ -1048,6 +1048,21 @@ function showHideControlTree() {
     } else {
         viewSwitch(controlTree, controlList, reverse);
     }
+     const url = location.pathname;
+     const pathParts = url.split("/");
+     const sampleName = pathParts[pathParts.length - 2];
+     const listItem = document.querySelector(`li[control-name="${sampleName}"]`);
+     if (listItem) {
+        listItem.classList.add('e-active');
+     }
+     const selectedDiv = document.querySelector('.e-active');
+     if (selectedDiv) 
+     {
+          selectedDiv.scrollIntoView({
+                        block: 'center'
+                        });
+      }
+	
 }
 
 function viewSwitch(from, to, reverse) {
@@ -1389,17 +1404,23 @@ function loadJSON() {
 loadJSON();
 
 function ScrollToSelected() {
-    const selectedDiv = document.querySelector('.e-list-item.e-active');
+    const selectedDiv = document.querySelector('.sb-left-pane .e-listview .e-list-item.e-active');
     if (selectedDiv) {
-        selectedDiv.scrollIntoView({ block: 'nearest' });
+        selectedDiv.scrollIntoView({ block: 'center'
+				   });
     }
 }
 
 //window.onload = function () {
-//    setTimeout(function () {
-//        ScrollToSelected();
-//    }, 500);
+//   setTimeout(function () {
+//       ScrollToSelected();
+//   }, 500);
 //}
+
+document.addEventListener("DOMContentLoaded", function () { setTimeout(function () { ScrollToSelected(); }, 500); });
+
+//on load for mobile mode
+window.addEventListener('resize', ScrollToSelected);
 
 // Get the button element
 var button = document.getElementById('buttoncolor');

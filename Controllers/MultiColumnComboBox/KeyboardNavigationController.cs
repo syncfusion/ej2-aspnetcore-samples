@@ -14,9 +14,11 @@ namespace EJ2CoreSampleBrowser_NET8.Controllers.MultiColumnComboBox
     {
         public IActionResult KeyboardNavigation()
         {
-            var order = OrdersDetails.GetAllRecords();
-            ViewBag.datasource = order;
-            return View();
+            var model = new OrderDetailsViewModel
+            {
+                OrderDetails = GetOrderDetails()
+            };
+            return View(model);
         }
     }
 }

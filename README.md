@@ -1,4 +1,4 @@
-# Syncfusion ASP.NET Core Component Examples
+# Syncfusion ASP.NET Core Component Examples 
 
 This repository contains the demos of [Syncfusion ASP.NET Core Components](https://www.syncfusion.com/aspnet-core-ui-controls/). This is the best place to check the controls to get more insight into the usage of APIs.
 

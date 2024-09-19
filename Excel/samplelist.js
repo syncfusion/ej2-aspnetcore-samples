@@ -197,7 +197,11 @@ window.samplesList = [
                 "component": "Excel",
                 "dir": "Excel",
                 "uid": "00444417",
-                "parentId": "044"
+                "parentId": "044",
+                "sourceFiles": [
+                    { "displayName": "CollectionObjects.cshtml", path: "../Views/Excel/CollectionObjects.cshtml" },
+                    { "displayName": "CollectionObjectsController.cs", path: "../Controllers/Excel/CollectionObjectsController.cs" }
+                ]
             },
             {
                 "url": "ImportNestedCollection",
@@ -227,17 +231,31 @@ window.samplesList = [
                 "component": "Excel",
                 "dir": "Excel",
                 "uid": "00444420",
-                "parentId": "044"
+                "parentId": "044",
+                "sourceFiles": [
+                    { "displayName": "ImportExportDataTable.cshtml", path: "../Views/Excel/ImportExportDataTable.cshtml" },
+                    { "displayName": "ImportExportDataTableController.cs", path: "../Controllers/Excel/ImportExportDataTableController.cs" }
+                ]
             },
             {
                 "url": "ExcelToPDF",
                 "name": "Excel To PDF",
                 "category": "Conversions",
                 "order": 8,
-                "type": "update",
                 "component": "Excel",
                 "dir": "Excel",
                 "uid": "00444421",
+                "parentId": "044"
+            },
+            {
+                "url": "ExcelToPDFUA",
+                "name": "Excel To PDF/UA",
+                "category": "Conversions",
+                "order": 8,
+                "type": "new",
+                "component": "Excel",
+                "dir": "Excel",
+                "uid": "00444443",
                 "parentId": "044"
             },
             {
@@ -305,7 +323,6 @@ window.samplesList = [
                 "name": "Pivot Table Layout",
                 "category": "Business Intelligence",
                 "order": 10,
-                "type": "update",
                 "component": "Excel",
                 "dir": "Excel",
                 "uid": "00616128",
@@ -438,7 +455,6 @@ window.samplesList = [
  {
         "name": "Spreadsheet",
         "directory": "Spreadsheet",
-        "type": "update",
         "category": "Editor",
         "samples": [
             {
@@ -449,7 +465,11 @@ window.samplesList = [
                 "dir": "Spreadsheet",
                 "order": 1,
                 "parentId": "03",
-                "uid": "0301"
+                "uid": "0301",
+				"sourceFiles": [
+                    { "displayName": "DefaultFunctionalities.cshtml", path: "../Views/Spreadsheet/DefaultFunctionalities.cshtml" },
+                    { "displayName": "DefaultFunctionalitiesController.cs", path: "../Controllers/Spreadsheet/DefaultFunctionalitiesController.cs" }
+                ]
             },
             {
                 "url": "Formula",
@@ -459,7 +479,11 @@ window.samplesList = [
                 "dir": "Spreadsheet",
                 "order": 1,
                 "parentId": "03",
-                "uid": "0302"
+                "uid": "0302",
+				"sourceFiles": [
+                    { "displayName": "Formula.cshtml", path: "../Views/Spreadsheet/Formula.cshtml" },
+                    { "displayName": "FormulaController.cs", path: "../Controllers/Spreadsheet/FormulaController.cs" }
+                ]
             },
             {
                 "url": "ProtectSheet",
@@ -469,7 +493,11 @@ window.samplesList = [
                 "dir": "Spreadsheet",
                 "order": 1,
                 "parentId": "03",
-                "uid": "0303"
+                "uid": "0303",
+				"sourceFiles": [
+                    { "displayName": "ProtectSheet.cshtml", path: "../Views/Spreadsheet/ProtectSheet.cshtml" },
+                    { "displayName": "ProtectSheetController.cs", path: "../Controllers/Spreadsheet/ProtectSheetController.cs" }
+                ]
             },
             {
                 "url": "CellDataBinding",
@@ -479,7 +507,11 @@ window.samplesList = [
                 "dir": "Spreadsheet",
                 "order": 2,
                 "parentId": "03",
-                "uid": "0304"
+                "uid": "0304",
+				"sourceFiles": [
+                    { "displayName": "CellDataBinding.cshtml", path: "../Views/Spreadsheet/CellDataBinding.cshtml" },
+                    { "displayName": "CellDataBindingController.cs", path: "../Controllers/Spreadsheet/CellDataBindingController.cs" }
+                ]
             },
             {
                 "url": "RemoteDataBinding",
@@ -489,7 +521,11 @@ window.samplesList = [
                 "dir": "Spreadsheet",
                 "order": 2,
                 "parentId": "03",
-                "uid": "0305"
+                "uid": "0305",
+				"sourceFiles": [
+                    { "displayName": "RemoteDataBinding.cshtml", path: "../Views/Spreadsheet/RemoteDataBinding.cshtml" },
+                    { "displayName": "RemoteDataBindingController.cs", path: "../Controllers/Spreadsheet/RemoteDataBindingController.cs" }
+                ]
             },
             {
                 "url": "CellFormatting",
@@ -499,7 +535,11 @@ window.samplesList = [
                 "dir": "Spreadsheet",
                 "order": 3,
                 "parentId": "03",
-                "uid": "0306"
+                "uid": "0306",
+				"sourceFiles": [
+                    { "displayName": "CellFormatting.cshtml", path: "../Views/Spreadsheet/CellFormatting.cshtml" },
+                    { "displayName": "CellFormattingController.cs", path: "../Controllers/Spreadsheet/CellFormattingController.cs" }
+                ]
             },
             {
                 "url": "NumberFormatting",
@@ -509,7 +549,11 @@ window.samplesList = [
                 "dir": "Spreadsheet",
                 "order": 3,
                 "parentId": "03",
-                "uid": "0307"
+                "uid": "0307",
+				"sourceFiles": [
+                    { "displayName": "NumberFormatting.cshtml", path: "../Views/Spreadsheet/NumberFormatting.cshtml" },
+                    { "displayName": "NumberFormattingController.cs", path: "../Controllers/Spreadsheet/NumberFormattingController.cs" }
+                ]
             },
             {
                 "url": "ConditionalFormatting",
@@ -519,7 +563,11 @@ window.samplesList = [
                 "dir": "Spreadsheet",
                 "order": 3,
                 "parentId": "03",
-                "uid": "0308"
+                "uid": "0308",
+				"sourceFiles": [
+                    { "displayName": "ConditionalFormatting.cshtml", path: "../Views/Spreadsheet/ConditionalFormatting.cshtml" },
+                    { "displayName": "ConditionalFormattingController.cs", path: "../Controllers/Spreadsheet/ConditionalFormattingController.cs" }
+                ]
             },
             {
                 "url": "SortingFiltering",
@@ -529,7 +577,11 @@ window.samplesList = [
                 "dir": "Spreadsheet",
                 "order": 4,
                 "parentId": "03",
-                "uid": "0309"
+                "uid": "0309",
+				"sourceFiles": [
+                    { "displayName": "SortingFiltering.cshtml", path: "../Views/Spreadsheet/SortingFiltering.cshtml" },
+                    { "displayName": "SortingFilteringController.cs", path: "../Controllers/Spreadsheet/SortingFilteringController.cs" }
+                ]
             },
             {
                 "url": "Chart",
@@ -539,7 +591,11 @@ window.samplesList = [
                 "dir": "Spreadsheet",
                 "order": 5,
                 "parentId": "03",
-                "uid": "0310"
+                "uid": "0310",
+				"sourceFiles": [
+                    { "displayName": "Chart.cshtml", path: "../Views/Spreadsheet/Chart.cshtml" },
+                    { "displayName": "ChartController.cs", path: "../Controllers/Spreadsheet/ChartController.cs" }
+                ]
             },
             {
                 "url": "Image",
@@ -549,7 +605,11 @@ window.samplesList = [
                 "dir": "Spreadsheet",
                 "order": 6,
                 "parentId": "03",
-                "uid": "0311"
+                "uid": "0311",
+				"sourceFiles": [
+                    { "displayName": "Image.cshtml", path: "../Views/Spreadsheet/Image.cshtml" },
+                    { "displayName": "ImageController.cs", path: "../Controllers/Spreadsheet/ImageController.cs" }
+                ]
             },
             {
                 "url": "CellTemplates",
@@ -559,7 +619,11 @@ window.samplesList = [
                 "dir": "Spreadsheet",
                 "order": 7,
                 "parentId": "03",
-                "uid": "0312"
+                "uid": "0312",
+				"sourceFiles": [
+                    { "displayName": "CellTemplates.cshtml", path: "../Views/Spreadsheet/CellTemplates.cshtml" },
+                    { "displayName": "CellTemplatesController.cs", path: "../Controllers/Spreadsheet/CellTemplatesController.cs" }
+                ]
             },
             {
                 "url": "FreezePane",
@@ -569,7 +633,11 @@ window.samplesList = [
                 "dir": "Spreadsheet",
                 "order": 1,
                 "parentId": "03",
-                "uid": "0313"
+                "uid": "0313",
+				"sourceFiles": [
+                    { "displayName": "FreezePane.cshtml", path: "../Views/Spreadsheet/FreezePane.cshtml" },
+                    { "displayName": "FreezePaneController.cs", path: "../Controllers/Spreadsheet/FreezePaneController.cs" }
+                ]
             },
             {
                 "url": "DataValidation",
@@ -579,7 +647,11 @@ window.samplesList = [
                 "dir": "Spreadsheet",
                 "order": 1,
                 "parentId": "03",
-                "uid": "0314"
+                "uid": "0314",
+				"sourceFiles": [
+                    { "displayName": "DataValidation.cshtml", path: "../Views/Spreadsheet/DataValidation.cshtml" },
+                    { "displayName": "DataValidationController.cs", path: "../Controllers/Spreadsheet/DataValidationController.cs" }
+                ]
             },
             {
                 "url": "Hyperlink",
@@ -589,7 +661,11 @@ window.samplesList = [
                 "dir": "Spreadsheet",
                 "order": 1,
                 "parentId": "03",
-                "uid": "0315"
+                "uid": "0315",
+				"sourceFiles": [
+                    { "displayName": "Hyperlink.cshtml", path: "../Views/Spreadsheet/Hyperlink.cshtml" },
+                    { "displayName": "HyperlinkController.cs", path: "../Controllers/Spreadsheet/HyperlinkController.cs" }
+                ]
             },
             {
                 "url": "Notes",
@@ -600,7 +676,10 @@ window.samplesList = [
                 "order": 8,
                 "parentId": "03",
                 "uid": "0316",
-                "type": "new"
+				"sourceFiles": [
+                    { "displayName": "Notes.cshtml", path: "../Views/Spreadsheet/Notes.cshtml" },
+                    { "displayName": "NotesController.cs", path: "../Controllers/Spreadsheet/NotesController.cs" }
+                ]
             },
             {
                 "url": "Print",
@@ -611,7 +690,10 @@ window.samplesList = [
                 "order": 9,
                 "parentId": "03",
                 "uid": "0317",
-                "type": "new"
+				"sourceFiles": [
+                    { "displayName": "Print.cshtml", path: "../Views/Spreadsheet/Print.cshtml" },
+                    { "displayName": "PrintController.cs", path: "../Controllers/Spreadsheet/PrintController.cs" }
+                ]
             }
         ],
         "order": 0,

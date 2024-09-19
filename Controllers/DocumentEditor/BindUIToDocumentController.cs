@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+
 namespace EJ2CoreSampleBrowser.Controllers {
     public partial class DocumentEditorController : Controller
     {
@@ -21,7 +22,6 @@ namespace EJ2CoreSampleBrowser.Controllers {
             exportItems.Add(new { text = "Plain Text (*.txt)", id = "txt" });
             ViewBag.ExportItems = exportItems;
             return View();
-            
         }
     }
 }

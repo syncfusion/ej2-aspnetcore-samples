@@ -1,6 +1,3 @@
-@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
 @using Syncfusion.EJ2;
 @using Syncfusion.EJ2.Navigations;
 @{
@@ -173,8 +170,8 @@
             <div class="e-pv-search-bar" id="container_search_box" style="top:113px;right:0px;z-index:1111">
                 <div class="e-pv-search-bar-elements" id="container_search_box_elements" style="width:330px">
                     <div class="e-input-group e-pv-search-input" id="container_search_input_container">
-                        <input class="e-input" id="container_search_input" type="text" placeholder="Find in document" onkeypress="searchInputKeypressed(event)" />
-                        <span class="e-input-group-icon e-input-search-group-icon e-icons e-search" id="container_search_box-icon" onclick="initiateTextSearch()" style="top: 4px;" ></span>
+                        <input class="e-input" id="container_search_input" type="text" placeholder="Find in document" onkeypress="searchInputKeypressed(event)" oninput="inputChange()" />
+                        <span class="e-input-group-icon e-input-search-group-icon e-icons e-search" id="container_search_box-icon" onclick="initiateTextSearch()" style="margin: 0px;" ></span>
                         <span class="e-input-group-icon e-input-search-group-icon e-icons e-close" id="container_close_search_box-icon" style="display: none;" onclick="clearTextSearch()" style="top: 4px;"></span>
                     </div>
                     <button class=" e-icon-btn e-pv-search-btn e-icons e-chevron-left" id="container_prev_occurrence" type="button" onclick="previousTextSearch()" style="border: none; width: 28px; height: 17px; background: white;" aria-label="Previous Search text">
@@ -265,7 +262,6 @@
             More information on the PDF Viewer instantiation can be found in this
             <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/pdfviewer/getting-started" aria-label="Navigate to the documentation for getting started with ASP.NET Core PDF Viewer control">
         documentation section</a>.
-            </a>.
         </p>
     </div>
 }
@@ -400,9 +396,11 @@
     var matchCase = false;
     var filename;
     var isInkEnabled = false;
+    var searchActive = false;
     window.onload = function () {
         currentPageBox = document.getElementById('currentPage');
         currentPageBox.value = '1';
+        document.addEventListener('click', checkSearchActive);
         document.getElementById('fileUpload').addEventListener('change', readFile, false);
         currentPageBox.addEventListener('keypress', () => {
             var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
@@ -534,6 +532,7 @@
             var uploadedFileUrl = this.result;
             obj.documentPath = uploadedFileUrl;
             obj.fileName = filename;
+            obj.downloadFileName = filename;
             currentPageBox = document.getElementById('currentPage');
             currentPageBox.value = '1';
             var pageCount = document.getElementById('totalPage');
@@ -936,6 +935,21 @@
             initiateTextSearch();
         }
     }
+    function checkSearchActive() {
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if (!searchActive) {
+            pdfViewer.textSearchModule.clearAllOccurrences();
+        }
+    }
+    function inputChange() {
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        pdfViewer.textSearchModule.clearAllOccurrences();
+        searchActive = false;
+        var textsearchcloseElement = document.getElementById('container_close_search_box-icon');
+        var textsearchElement = document.getElementById('container_search_box-icon');
+        textsearchcloseElement.style.display = 'none';
+        textsearchElement.style.display = 'block';
+    }
 
     var searchText = '';
     var prevMatchCase = false;
@@ -960,6 +974,7 @@
                 pdfViewer.textSearchModule.cancelTextSearch();
                 searchText = (document.getElementById('container_search_input')).value;
                 pdfViewer.textSearchModule.searchText(searchText, matchCase);
+                searchActive = true;
                 prevMatchCase = matchCase;
             } else {
                 nextTextSearch();
@@ -981,11 +996,13 @@
     function previousTextSearch() {
         var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
         pdfViewer.textSearchModule.searchPrevious();
+        searchActive = true;
     }
 
     function nextTextSearch() {
         var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
         pdfViewer.textSearchModule.searchNext();
+        searchActive = true;
     }
     function checkBoxChanged(event) {
         const target = event.target;

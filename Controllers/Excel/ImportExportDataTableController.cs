@@ -65,7 +65,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Excel
                     sheet.ExportDataTableEvent += Sheet_ExportDataTableEventReplace;
                     ViewBag.importOptionReplace = "value=" + importOption + " checked = \"checked\"";
                 }
-                else if(importOption == "Stop")
+                else if (importOption == "Stop")
                 {
                     sheet.ExportDataTableEvent += Sheet_ExportDataTableEventStop;
                     ViewBag.importOptionStop = "value=" + importOption + " checked = \"checked\"";

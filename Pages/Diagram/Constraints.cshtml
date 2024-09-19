@@ -1,0 +1,282 @@
+@page
+@model EJ2CoreSampleBrowser_NET8.Pages.Diagram.ConstraintsModel
+@using static EJ2CoreSampleBrowser_NET8.Pages.Diagram.UserHandleModel; EJ2CoreSampleBrowser_NET8.Pages.Diagram.UserHandleModel;
+@using Syncfusion.EJ2;
+@{
+    var getTool = "getTool";
+    var getNodeDefaults = "getNodeDefaults";
+    var getConnectorDefaults = "getConnectorDefaults";
+}
+@section ControlsSection{
+    <div class="col-lg-9 control-section">
+        <div class="content-wrapper" style="width:100%;background: white">
+            <ejs-diagram id="diagram" selectedItems="@Model.selectedItems" width="100%" height="580px"  getNodeDefaults="@getNodeDefaults" getConnectorDefaults="@getConnectorDefaults" nodes="@Model.nodes" connectors="@Model.Connectors" getCustomTool="@getTool" selectedItems="@selector" selectionChange="selectionChange">
+            <e-diagram-rulersettings showRulers="true"></e-diagram-rulersettings>
+            <e-diagram-contextmenusettings show="true"></e-diagram-contextmenusettings>
+            </ejs-diagram>
+        </div>
+    </div>
+    <div class="col-lg-2 property-section">
+        <div class="property-panel-header">
+            Diagram Constraints
+        </div>
+        <div class="row property-panel-content" style="padding-top: 10px">
+            <div class="row" style="padding-top: 8px">
+                <ejs-checkbox id="zooming" checked="true" label="Zooming" change="zooming" style="width: 15px;margin-left:30px;margin-right: 10px;"></ejs-checkbox>
+            </div>
+            <div class="row" style="padding-top: 8px">
+                <ejs-checkbox id="undoRedo" checked="true" label="Undo/Redo" change="undoRedo" style="width: 15px;margin-left:30px;margin-right: 10px;"></ejs-checkbox>
+            </div>
+            <div class="row" style="padding-top: 8px">
+                <ejs-checkbox id="editing" checked="true" label="Editing" change="editing" style="width: 15px;margin-left:30px;margin-right: 10px;"></ejs-checkbox>
+            </div>
+            <div class="row" style="padding-top: 8px">
+                <ejs-checkbox id="contextmenu" checked="true" label="Context Menu" change="contextmenu" style="width: 15px;margin-left:30px;margin-right: 10px;"></ejs-checkbox>
+            </div>
+            <div class="row" style="padding-top: 8px">
+                <ejs-checkbox id="selectable" checked="true" label="Selectable" change="selectable" style="width: 15px;margin-left:30px;margin-right: 10px;"></ejs-checkbox>
+            </div>
+            <div class="row" style="padding-top: 8px">
+                <ejs-checkbox id="drag" checked="true" label="Draggable" change="draggableFn" style="width: 15px;margin-left:30px;margin-right: 10px;"></ejs-checkbox>
+            </div>
+        </div>
+    </div>
+    <style>
+        /* Property panel CSS */
+
+        .row {
+            margin-left: 0px;
+            margin-right: 0px;
+        }
+
+    </style>
+    <script>
+
+        function zooming() {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            diagram.constraints = diagram.constraints ^ ej.diagrams.DiagramConstraints.Zoom;
+        };
+
+        function undoRedo(args) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            diagram.constraints = diagram.constraints ^ ej.diagrams.DiagramConstraints.UndoRedo;
+            diagram.dataBind();
+        }
+
+        function editing(args) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            for (var i = 0; i < diagram.nodes.length; i++) {
+                var node = diagram.nodes[i];
+                for (var j = 0; j < node.annotations.length; j++) {
+                    if (node.annotations[j].content) {
+                        if (args.checked) {
+                            if (node.id !== 'Plus') {
+                                node.annotations[j].constraints =
+                                    node.annotations[j].constraints ^
+                                    ej.diagrams.AnnotationConstraints.ReadOnly;
+                            }
+                        } else {
+                            node.annotations[j].constraints =
+                                node.annotations[j].constraints | ej.diagrams.AnnotationConstraints.ReadOnly;
+                        }
+                    }
+                }
+            }
+            for (var x = 0; x < diagram.connectors.length; x++) {
+                var connector = diagram.connectors[x];
+                for (var y = 0; y < connector.annotations.length; y++) {
+                    if (connector.annotations[y].content) {
+                        if (args.checked) {
+                            if (connector.id === 'select') {
+                                connector.constraints =
+                                    connector.constraints & ~(ej.diagrams.ConnectorConstraints.Select);
+                            } else {
+                                connector.annotations[y].constraints =
+                                    connector.annotations[y].constraints ^
+                                    ej.diagrams.AnnotationConstraints.ReadOnly;
+                            }
+                        } else {
+                            connector.annotations[y].constraints =
+                                connector.annotations[y].constraints ^
+                                ej.diagrams.AnnotationConstraints.ReadOnly;
+                        }
+                    }
+                }
+            }
+            diagram.dataBind();
+        }
+
+        function selectable(args) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            for (var i = 0; i < diagram.nodes.length; i++) {
+                var node = diagram.nodes[i];
+                if (node.id != 'rectangle') {
+                    if (args.checked) {
+                        node.constraints = node.constraints | ej.diagrams.NodeConstraints.Select;
+                    } else {
+                        node.constraints = node.constraints & ~ej.diagrams.NodeConstraints.Select;
+                    }
+                }
+                diagram.dataBind();
+            }
+            for (var j = 0; j < diagram.connectors.length; j++) {
+                var connector = diagram.connectors[j];
+                if (connector.id != 'select') {
+                    if (args.checked) {
+                        connector.constraints =
+                            connector.constraints | ej.diagrams.ConnectorConstraints.Select;
+                    } else {
+                        connector.constraints =
+                            connector.constraints & ~ej.diagrams.ConnectorConstraints.Select;
+                    }
+                }
+                diagram.dataBind();
+            }
+        }
+
+        function draggableFn(args) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            for (var i = 0; i < diagram.nodes.length; i++) {
+                var nodes = diagram.nodes[i];
+                if (args.checked) {
+                    if (nodes.id === "ellipse") {
+                        nodes.constraints = ej.diagrams.NodeConstraints.Default & ~ej.diagrams.NodeConstraints.Drag;
+                    }
+                    else {
+                        nodes.constraints = nodes.constraints | ej.diagrams.NodeConstraints.Drag;
+                    }
+                }
+                else {
+                    nodes.constraints = nodes.constraints & ~ej.diagrams.NodeConstraints.Drag;
+                }
+                diagram.dataBind();
+            }
+            for (var j = 0; j < diagram.connectors.length; j++) {
+                var connectors = diagram.connectors[j];
+                if (args.checked) {
+                    connectors.constraints = connectors.constraints | ej.diagrams.ConnectorConstraints.Drag;
+                } else {
+                    connectors.constraints = connectors.constraints & ~ej.diagrams.ConnectorConstraints.Drag;
+                }
+                diagram.dataBind();
+            }
+        }
+
+        function contextmenu(args) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            if (args.checked) {
+                diagram.contextMenuSettings.show = true;
+                diagram.refresh();
+            }
+            else {
+                diagram.contextMenuSettings.show = false;
+            }
+            diagram.dataBind();
+        }
+        function create() {
+       
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            for (let i = 0; i < diagram.connectors.length; i++) {
+                if (diagram.connectors[i].id === 'endThumb') {
+                    diagram.connectors[i].constraints =
+                        (ej.diagrams.ConnectorConstraints.Default |
+                            ej.diagrams.ConnectorConstraints.DragSegmentThumb) &
+                        ~ej.diagrams.ConnectorConstraints.Drag;
+                }
+            }
+        }
+
+        function getTool(action) {
+            var tool;
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            if (action === 'delete') {
+                diagram.remove();
+            }
+            return tool;
+        }
+
+        function selectionChange(args) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            if (args.state === 'Changing') {
+                if (args.type === 'Addition') {
+                    if (args.newValue.length > 0 && args.newValue[0].id === 'endThumb') {
+                        diagram.selectedItems.constraints =
+                            ej.diagrams.SelectorConstraints.All &
+                            ~(
+                                ej.diagrams.SelectorConstraints.ConnectorSourceThumb |
+                                ej.diagrams.SelectorConstraints.ConnectorTargetThumb
+                            );
+                    } else {
+                        diagram.selectedItems.constraints =
+                            ej.diagrams.SelectorConstraints.All;
+                    }
+                } else {
+                    diagram.selectedItems.constraints =
+                        ej.diagrams.SelectorConstraints.All;
+                }
+            }
+            if (args.state === 'Changed') {
+                if (
+                    args.newValue.length > 0 &&
+                    args.newValue[0] instanceof ej.diagrams.Node
+                ) {
+                    var handles = [
+                        {
+                            name: 'delete', pathData: "M 7.04 22.13 L 92.95 22.13 L 92.95 88.8 C 92.95 91.92 91.55 94.58 88.76 96.74 C 85.97 98.91 82.55 100 78.52 100 L 21.48 100 C 17.45 100 14.03 98.91 11.24 96.74 C 8.45 94.58 7.04 91.92 7.04 88.8 z M 32.22 0 L 67.78 0 L 75.17 5.47 L 100 5.47 L 100 16.67 L 0 16.67 L 0 5.47 L 24.83 5.47 z",
+                            visible: true, offset: 0.5, side: 'Bottom', margin: { top: 0, bottom: 0, left: 0, right: 0 }
+                        }
+                    ];
+                    diagram.selectedItems = {
+                        constraints: ej.diagrams.SelectorConstraints.All | ej.diagrams.SelectorConstraints.UserHandle,
+                        userHandles :  handles
+                    };
+                } else {
+                    if (args.newValue.length > 0 && args.newValue[0].id !== 'endThumb') {
+                        diagram.selectedItems = {
+                            constraints:
+                                ej.diagrams.SelectorConstraints.All &
+                                ~ej.diagrams.SelectorConstraints.UserHandle,
+                        };
+                    } else {
+                        diagram.selectedItems = {
+                            constraints:
+                                ej.diagrams.SelectorConstraints.All &
+                                ~(
+                                    ej.diagrams.SelectorConstraints.UserHandle |
+                                    ej.diagrams.SelectorConstraints.ConnectorSourceThumb |
+                                    ej.diagrams.SelectorConstraints.ConnectorTargetThumb
+                                ),
+                        };
+                    }
+                }
+            }
+        }
+
+
+    </script>
+}
+@section ActionDescription{
+    <p>
+        This sample illustrates how node constraints are used to restrict end-users from performing certain operations on nodes and connector constraints are used to restrict end-users from performing certain operation on connectors.
+    </p>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Constraints in ASP.NET Core Diagram control. Explore here for more details."/>
+                }
+@section Description{
+   <p>This sample illustrates how node constraints are used to restrict end-users from performing certain operations on nodes and connector constraints are used to restrict end-users from performing certain operation on connectors.</p>
+                
+                <p>The <code>NodeConstraints</code> property allows you to enable or disable node behaviors like select, drag, resize, rotate, and delete.</p>
+            
+                <p>The <code>ConnectorConstraints</code> property allows you to enable or disable connector behaviors like select, drag, delete, drag source end, and drag target end.</p>
+            
+                <p>The <code>AnnotationConstraints</code> property allows you to enable or disable the annotation behavior, text editing.</p>
+            
+               <p> Using the <code>DiagramConstraints</code> property, enable or disable certain features of the diagram like zoom, undo/redo, context menu, drag, and select.</p>
+}
+@section Title{
+                    <title>ASP.NET Core Diagram Constraints Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Constraints in ASP.NET Core Diagram Control</h1>
+                }

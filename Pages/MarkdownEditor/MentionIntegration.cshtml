@@ -1,0 +1,255 @@
+@page
+@using EJ2CoreSampleBrowser.Models
+
+@using Syncfusion.EJ2
+
+@{
+    var value = "Hello [Albert](mailto:albert@gmail.com)\n\nWelcome to the mention integration with markdown editor demo. Type @ character and tag user from the suggestion list.";
+    var mentionData = new EditorMentionUser().GetUserData();
+    var items = new object[]{
+        "Bold", "Italic", "StrikeThrough", "|", "Formats", "Blockquote", "OrderedList", "UnorderedList", "|", "CreateLink", "Image", "|",
+                new {
+                tooltipText= "Preview",
+                template= "<button id='preview-code' class='e-tbar-btn e-control e-btn e-icon-btn' aria-label='Preview Code'><span class='e-btn-icon e-icons e-md-preview'></span></button>"
+                }, "Undo", "Redo"
+    };
+}
+
+@using Syncfusion.EJ2.DropDowns;
+@using EJ2CoreSampleBrowser_NET6.Models
+
+@section ControlsSection{
+    <div class="control-section">
+        <div class="control-wrapper">
+            <ejs-richtexteditor id="defaultmarkdown" value="@value" height="250px" editorMode="Markdown"  created="created" placeholder="Enter your text here...">
+                <e-richtexteditor-toolbarsettings items="@items"></e-richtexteditor-toolbarsettings>
+            </ejs-richtexteditor>
+            <ejs-mention id="editorMention" dataSource="@mentionData" allowSpaces="true" popupHeight="200px" popupWidth="250px" sortOrder="Ascending"
+                         target="#defaultmarkdown_editable-content" created="mentionCreated"
+                         itemTemplate="<div class='editor-mention-item-template'>
+                    <div class='em-header'>
+                        <div class='em-avatar' style='background-color: ${BgColor}; color: ${Color};'>
+                            <div class='em-initial'>${Initial}</div>
+                        </div>
+                    </div>
+                    <div class='em-content'>
+                        <div class='em-name'>${Name}</div>
+                        <div class='em-email'>${Email}</div>
+                    </div>
+                </div>"
+                    displayTemplate="[${Name}](mailto:${Email})">
+                    <e-mention-fields text="Name"></e-mention-fields>
+                </ejs-mention>
+        </div>
+    </div>
+    <style>
+
+        .editor-mention-item-template {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .em-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .em-avatar {
+            width: 32px;
+            height: 32px;
+            text-align: center;
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: 500;
+            text-indent: 0px;
+            line-height: 13px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .em-name {
+            color: rgb(16, 24, 40);
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 14px;
+            margin-bottom: 5px;
+        }
+
+        .em-email {
+            color: gray;
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 14px;
+        }
+
+        #defaultmarkdown_editable-content_popup li {
+            padding: 10px;
+            height: 60px;
+        }
+
+        body[class*="-dark"] .em-name {
+            color: #fff !important;
+        }
+
+        .e-richtexteditor textarea.e-content {
+            float: left;
+        }
+
+        .e-richtexteditor .e-rte-content {
+            overflow: hidden;
+        }
+
+        .e-icon-btn.e-active .e-md-preview::before {
+            content: '\e350';
+        }
+
+        .e-icon-btn .e-md-preview::before {
+            content: '\e345';
+        }
+
+        .bootstrap4 .e-icon-btn.e-active .e-md-preview::before {
+            content: '\e790';
+        }
+
+        .bootstrap4 .e-icon-btn .e-md-preview::before {
+            content: '\e787';
+        }
+
+        .fluent .e-icon-btn.e-active .e-md-preview::before,
+        .fluent-dark .e-icon-btn.e-active .e-md-preview::before,
+        .fluent2 .e-icon-btn.e-active .e-md-preview::before,
+        .fluent2-dark .e-icon-btn.e-active .e-md-preview::before,
+        .tailwind .e-icon-btn.e-active .e-md-preview::before,
+        .tailwind-dark .e-icon-btn.e-active .e-md-preview::before,
+        .bootstrap5 .e-icon-btn.e-active .e-md-preview::before,
+        .bootstrap5-dark .e-icon-btn.e-active .e-md-preview::before,
+        .bootstrap5\.3 .e-icon-btn.e-active .e-md-preview::before,
+        .bootstrap5\.3-dark .e-icon-btn.e-active .e-md-preview::before,
+        .material3 .e-icon-btn.e-active .e-md-preview::before,
+        .material3-dark .e-icon-btn.e-active .e-md-preview::before {
+            content: '\e80e';
+        }
+
+        .tailwind .e-icon-btn .e-md-preview::before,
+        .tailwind-dark .e-icon-btn .e-md-preview::before,
+        .bootstrap5 .e-icon-btn .e-md-preview::before,
+        .bootstrap5-dark .e-icon-btn .e-md-preview::before,
+        .bootstrap5\.3 .e-icon-btn .e-md-preview::before,
+        .bootstrap5\.3-dark .e-icon-btn .e-md-preview::before,
+        .fluent .e-icon-btn .e-md-preview::before,
+        .fluent-dark .e-icon-btn .e-md-preview::before,
+        .fluent2 .e-icon-btn .e-md-preview::before,
+        .fluent2-dark .e-icon-btn .e-md-preview::before,
+        .material3 .e-icon-btn .e-md-preview::before,
+        .material3-dark .e-icon-btn .e-md-preview::before {
+            content: '\e7de';
+        }
+
+    </style>
+    <script type="text/javascript">
+        var rteObj, textArea, mdsource, mentionObj;
+        function created() {
+            rteObj = this;
+            rteObj.formatter = new ej.richtexteditor.MarkdownFormatter({ listTags: { 'OL': '1., 2., 3.' } });
+            rteObj.dataBind();
+            textArea = rteObj.contentModule.getEditPanel();
+            textArea.addEventListener('keyup', function (e) {
+                markdownConversion();
+            });
+            mdsource = document.getElementById('preview-code');
+            mdsource.addEventListener('click', function (e) {
+                fullPreview();
+                if (e.currentTarget.classList.contains('e-active')) {
+                    rteObj.disableToolbarItem(['Bold', 'Italic', 'StrikeThrough', 'OrderedList',
+                        'UnorderedList', 'CreateLink', 'Image', 'Formats', 'Blockquote', 'Undo', 'Redo', 'CreateTable', 'SuperScript', 'SubScript']);
+                }
+                else {
+                    rteObj.enableToolbarItem(['Bold', 'Italic', 'StrikeThrough', 'OrderedList',
+                        'UnorderedList', 'CreateLink', 'Image', 'Formats', 'Blockquote', 'Undo', 'Redo', 'CreateTable', 'SuperScript', 'SubScript']);
+                }
+            });
+        }
+        loadExternalFile();
+        function loadExternalFile() {
+            var script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.19/marked.js';
+            document.getElementsByTagName('head')[0].appendChild(script);
+        }
+        function markdownConversion() {
+            if (mdsource.classList.contains('e-active')) {
+                var id = rteObj.getID() + 'html-preview';
+                var htmlPreview = rteObj.element.querySelector('#' + id);
+                htmlPreview.innerHTML = marked(rteObj.contentModule.getEditPanel().value);
+            }
+        }
+        function mentionCreated() {
+            mentionObj = this;
+        }
+        function fullPreview() {
+            var id = rteObj.getID() + 'html-preview';
+            var htmlPreview = rteObj.element.querySelector('#' + id);
+            var previewTextArea = rteObj.element.querySelector('.e-rte-content');
+            if (mdsource.classList.contains('e-active')) {
+                mdsource.classList.remove('e-active');
+                mdsource.parentElement.title = 'Preview';
+                textArea.style.display = 'block';
+                htmlPreview.style.display = 'none';
+                previewTextArea.style.overflow = 'hidden';
+            }
+            else {
+                mdsource.classList.add('e-active');
+                if (!htmlPreview) {
+                    htmlPreview = ej.base.createElement('div', { className: 'e-content e-pre-source' });
+                    htmlPreview.id = id;
+                    textArea.parentNode.appendChild(htmlPreview);
+                    previewTextArea.style.overflow = 'auto';
+                }
+                if (previewTextArea.style.overflow === 'hidden') {
+                    previewTextArea.style.overflow = 'auto';
+                }
+                textArea.style.display = 'none';
+                htmlPreview.style.display = 'block';
+                htmlPreview.innerHTML = marked(rteObj.contentModule.getEditPanel().value);
+                mdsource.parentElement.title = 'Code View';
+            }
+        }
+
+    </script>
+}
+
+@*custom code start*@
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Mention Integration in ASP.NET Core Markdown Editor control. Explore here for more details."/>
+                }
+
+@*custom code end*@
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This example shows how to integrate @@mention control within Markdown Editor control. Type <code>@@</code> character and select a user from the suggestion list.</p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p> The @@Mention is a control used to display a list of items that users can select or tag from the suggested list. In this demo, configured the following properties with popup dimensions.</p>
+            <ul>
+                <li><code>AllowSpaces</code> - Allows to search a word with space.</li>
+                <li><code>SuggestionCount</code> - Control the items in suggestion list.</li>
+                <li><code>ItemTemplate</code> - Used to display the customized appearance in suggestion list.</li>
+            </ul>
+        
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Markdown Editor Mention Integration Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Mention Integration in ASP.NET Core Markdown Editor Control</h1>
+                }

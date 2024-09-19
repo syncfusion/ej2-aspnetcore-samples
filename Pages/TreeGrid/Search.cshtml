@@ -1,0 +1,105 @@
+﻿@page
+@using EJ2CoreSampleBrowser.Models;
+@using Syncfusion.EJ2
+@model EJ2CoreSampleBrowser_NET8.Pages.TreeGrid.SearchModel
+
+@section ControlsSection{
+    <div class="col-lg-9 control-section">
+        <div class="control-wrapper">
+            <div class="control-section">
+                <ejs-treegrid id="TreeGrid" dataSource="@TreeData.GetDefaultData()" toolbar="@(new List<string>() { "Search" })" allowPaging="true" height="350" childMapping="Children" treeColumnIndex="1">
+                    <e-treegrid-pagesettings pageSize="10"></e-treegrid-pagesettings>
+                    <e-treegrid-columns>
+                        <e-treegrid-column field="TaskId" headerText="Task ID" textAlign="Right" width="80"></e-treegrid-column>
+                        <e-treegrid-column field="TaskName" headerText="Task Name" width="200"></e-treegrid-column>
+                        <e-treegrid-column field="StartDate" headerText=" Start Date" textAlign="Right" format="yMd" type="date" width="100"></e-treegrid-column>
+                        <e-treegrid-column field="Duration" headerText="Duration" textAlign="Right" width="90"></e-treegrid-column>
+                        <e-treegrid-column field="Progress" headerText="Progress" textAlign="Right" width="90"></e-treegrid-column>
+                    </e-treegrid-columns>
+                </ejs-treegrid>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties" style="width: 100%;">
+            <tr>
+                <td class="left-side">Hierarchy Mode</td>
+                <td>
+                    <ejs-dropdownlist id="mode" dataSource="@Model.DropData" placeholder="Select a Mode" change="onModeChange" index="0" popupHeight="220px">
+                        <e-dropdownlist-fields text="mode" value="id"></e-dropdownlist-fields>
+                    </ejs-dropdownlist>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        function onModeChange(e) {
+            var mode = e.value;
+            var treegrid = document.getElementById("TreeGrid").ej2_instances[0];
+            treegrid.search('');
+            treegrid.searchSettings.hierarchyMode = mode;
+
+        }
+    </script>
+
+}
+
+@*custom code start*@
+
+@section Meta{
+    <meta name="description" content="This example demonstrates the Search in ASP.NET Core Tree Grid control. Explore here for more details." />
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the TreeGrid searching feature. In this sample, use the search box from toolbar to search TreeGrid records and the hierarchy mode of searching can be changed using property panel.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>The TreeGrid has an option to search its content using the search method with search key as the parameter.</p>
+
+        <p>The tree grid supports different types of search mode through the <code>searchSettings.hierarchyMode property</code>.</p>
+
+        <p>The following are the types of search modes available in the tree grid.</p>
+
+        <ul>
+            <li>
+                <code>Parent</code> - This is the default search hierarchy mode in the tree grid. It displays a searched record with its parent records.
+                If the searched records do not have any parent record, it displays only the searched record.
+            </li>
+
+            <li>
+                <code>Child</code> - Displays the searched record with its child record.
+                If the searched records do not have any child record, it displays only the searched record.
+            </li>
+
+            <li>
+                <code>Both</code> - Displays the searched record with both its parent and child records.
+                If the searched records do not have any parent and child records, it displays only the searched record.
+            </li>
+
+            <li><code>None</code> - Displays only the searched record.</li>
+        </ul>
+
+        <p>
+            In this demo, The TreeGrid toolbar provides an option to search the TreeGrid's records. The user can type the text box in the toolbar and click search button or press Enter key to perform search operation.
+        </p>
+        <br />
+
+        <p>
+            More information on the data binding can be found in this <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/tree-grid/searching" aria-label="Navigate to the documentation for searching in ASP.NET Core TreeGrid control">documentation section</a>.
+        </p>
+    </div>
+}
+
+@*custom code end*@
+@section Title{
+    <title>ASP.NET Core Tree Grid Search Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Search in ASP.NET Core Tree Grid Control</h1>
+}

@@ -1,0 +1,196 @@
+@page
+@model EJ2CoreSampleBrowser_NET8.Pages.Schedule.GroupCustomWorkdays
+
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2
+
+@{
+    var doctorData = new ScheduleData().GetDoctorData();
+    string[] resources = new string[] { "Doctors" };
+}
+
+@section ControlsSection{
+    <div class="control-section">
+        <div class="content-wrapper">
+            <ejs-schedule id="schedule" width="100%" height="650px" resourceHeaderTemplate="#resourceTemplate" allowDragAndDrop="false" allowResizing="false" selectedDate="new DateTime(DateTime.Today.Year, 4, 6)" popupOpen="onPopupOpen" actionBegin="onActionBegin" renderCell="onRenderCell">
+                <e-schedule-group resources="@resources"></e-schedule-group>
+                <e-schedule-resources>
+                    <e-schedule-resource dataSource="@Model.doctors" field="DoctorId" title="Doctor Name" name="Doctors" textField="text" idField="id" colorField="color" workDaysField="workDays" startHourField="startHour" endHourField="endHour"></e-schedule-resource>
+                </e-schedule-resources>
+                <e-schedule-views>
+                    <e-schedule-view option="WorkWeek"></e-schedule-view>
+                    <e-schedule-view option="Month"></e-schedule-view>
+                </e-schedule-views>
+                <e-schedule-eventsettings dataSource="@doctorData">
+                    <e-eventsettings-fields>
+                        <e-field-subject name="Subject" title="Service Type"></e-field-subject>
+                        <e-field-location name="Location" title="Patient Name"></e-field-location>
+                        <e-field-description name="Description" title="Summary"></e-field-description>
+                        <e-field-starttime name="StartTime" title="From"></e-field-starttime>
+                        <e-field-endtime name="EndTime" title="To"></e-field-endtime>
+                    </e-eventsettings-fields>
+                </e-schedule-eventsettings>
+            </ejs-schedule>
+        </div>
+    </div>
+    <style>
+        .e-schedule .e-month-view .e-work-days.willsmith,
+        .e-schedule .e-vertical-view .e-work-hours.willsmith {
+            background-color: rgb(250 235 215 / 50%);
+        }
+
+        .e-schedule .e-month-view .e-work-days.alice,
+        .e-schedule .e-vertical-view .e-work-hours.alice {
+            background-color: rgb(222 236 252 / 50%);
+        }
+
+        .e-schedule .e-month-view .e-work-days.robson,
+        .e-schedule .e-vertical-view .e-work-hours.robson {
+            background-color: rgb(222 238 172 / 50%);
+        }
+
+        .e-schedule .e-vertical-view .e-resource-cells {
+            height: 66px;
+        }
+
+        .e-schedule .template-wrap {
+            display: flex;
+            text-align: left;
+        }
+
+            .e-schedule .template-wrap .resource-image {
+                background-repeat: no-repeat;
+                background-size: 45px;
+                height: 45px;
+                width: 45px;
+            }
+
+            .e-schedule .template-wrap .resource-details {
+                padding-left: 10px;
+            }
+
+                .e-schedule .template-wrap .resource-details .resource-name {
+                    font-size: 16px;
+                    font-weight: 500;
+                    margin-top: 5px;
+                }
+
+        .e-schedule.e-device .template-wrap .resource-details .resource-name {
+            font-size: inherit;
+            font-weight: inherit;
+        }
+
+        .e-schedule.e-device .e-resource-tree-popup .e-fullrow {
+            height: 50px;
+        }
+
+        .e-schedule.e-device .template-wrap .resource-details .resource-designation {
+            display: none;
+        }
+
+        .e-schedule .template-wrap .resource-image img {
+            width: 45px;
+            height: 45px;
+        }
+    </style>
+    <script id="resourceTemplate" type="text/x-template">
+        <div class='template-wrap'>
+            <div class="resource-image"><img src="@Url.Content("~/css/schedule/images/${getDoctorImage(data)}.png")" alt="Doctor Image"/></div>
+            <div class="resource-details">
+                <div class="resource-name">${getDoctorName(data)}</div>
+                <div class="resource-designation">${getDoctorLevel(data)}</div>
+            </div>
+        </div>
+    </script>
+    <script type="text/javascript">
+        window.getDoctorName = function (value) {
+            return value.resourceData ? value.resourceData[value.resource.textField] : value.resourceName;
+        };
+        window.getDoctorImage = function (value) {
+            var resourceName = window.getDoctorName(value);
+            return resourceName.replace(' ', '-').toLowerCase();
+        };
+        window.getDoctorLevel = function (value) {
+            var resourceName = window.getDoctorName(value);
+            return (resourceName === 'Will Smith') ? 'Cardiologist' : (resourceName === 'Alice') ? 'Neurologist' : 'Orthopedic Surgeon';
+        };
+
+        function onActionBegin(args) {
+            var isEventChange = (args.requestType === 'eventChange');
+            if ((args.requestType === 'eventCreate' && args.data.length > 0) || isEventChange) {
+                var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+                var eventData = (isEventChange) ? args.data : args.data[0];
+                var eventField = scheduleObj.eventFields;
+                var startDate = eventData[eventField.startTime];
+                var endDate = eventData[eventField.endTime];
+                var resourceIndex = [1, 2, 3].indexOf(eventData.DoctorId);
+                args.cancel = !isValidateTime(startDate, endDate, resourceIndex, scheduleObj);
+                if (!args.cancel) {
+                    args.cancel = !scheduleObj.isSlotAvailable(startDate, endDate, resourceIndex);
+                }
+            }
+        }
+
+        function isValidateTime(startDate, endDate, resIndex, scheduleObj) {
+            var resource = scheduleObj.getResourcesByIndex(resIndex);
+            var startHour = parseInt(resource.resourceData.startHour.toString().slice(0, 2), 10);
+            var endHour = parseInt(resource.resourceData.endHour.toString().slice(0, 2), 10);
+            return (startHour <= startDate.getHours() && endHour >= endDate.getHours());
+        }
+
+        function onPopupOpen(args) {
+            if (args.target && args.target.classList.contains('e-work-cells')) {
+                args.cancel = !args.target.classList.contains('e-work-hours');
+            }
+        }
+
+        function onRenderCell(args) {
+            if (args.element.classList.contains('e-work-hours') || args.element.classList.contains('e-work-cells')) {
+                ej.base.addClass([args.element], ['willsmith', 'alice', 'robson'][parseInt(args.element.getAttribute('data-group-index'), 10)]);
+            }
+        }
+    </script>
+}
+@*custom code start*@
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Different Work Days in ASP.NET Core Scheduler control. Explore here for more details."/>
+                }
+@*custom code end*@
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This demo showcases the different available dates of doctors and their appointments on those days.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this demo, different working days are assigned by passing the
+            <code>workDays</code> collection for each doctor to show their available dates. On each of their available dates, their daily available
+            time range is also depicted by mentioning the
+            <code>startHour</code> and
+            <code>endHour</code> for each doctor. These values needs to be provided along with the resource
+            <code>dataSource</code> by mapping the appropriate fields namely
+            <code>workDaysField</code>,
+            <code>startHourField</code> and
+            <code>endHourField</code>.
+        </p>
+        <p>
+            Here, we have customized the background cell color of the available times of each doctor using
+            <code>renderCell</code> event to denote that, only those timeslots are available for booking appointments. All other cells are simply read-only
+            and no appointments can be booked on it. Also, if the applicable timeslot already contains an appointment, then no
+            more appointments can be added to that cell which has been prevented by making use of the
+            <code>isSlotAvailable</code> function within the
+            <code>actionBegin</code> event checking for
+            <code>eventCreate</code> request type. The resource header is customized by making use of the
+            <code>resourceHeaderTemplate</code> option.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Scheduler Different Work Days Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Different Work Days in ASP.NET Core Scheduler Control</h1>
+                }

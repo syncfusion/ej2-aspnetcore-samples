@@ -1,9 +1,29 @@
-@using Syncfusion.EJ2
-@using EJ2CoreSampleBrowser.Controllers.Dialog
-@using Syncfusion.EJ2
+﻿@using Syncfusion.EJ2
+@* @using EJ2CoreSampleBrowser.Controllers.Dialog *@
 @using Syncfusion.EJ2.DocumentEditor
-@model UserModel
+@model EJ2CoreSampleBrowser.Controllers.UserModel
 
+@{
+    var items = new List<object>
+    {
+        new { text = "Syncfusion Document Text (*.sfdt)", id = "sfdt" },
+        new { text = "Word Document (*.docx)", id = "word" },
+        new { text = "Word Template (*.dotx)", id = "dotx" },
+        new { text = "Plain Text (*.txt)", id = "txt" }
+    };
+    // Set the text and tooltips based on RTL or LTR
+    string downloadText =  "Download";
+    string printText = "Print";
+    string printToolTip = "Print this document (Ctrl+P)";
+    string closeToolTip = "Close this document";
+    string documentTileText = "Document Name. Click or tap to rename this document.";
+
+    string iconCss = "e-de-padding-right";
+    string btnFloatStyle = "float:right;";
+    string titleCss =  "";
+    string btnStyles = btnFloatStyle + "background: transparent; box-shadow:none; font-family: inherit; border-color: transparent;" +
+                       "border-radius: 2px; color:inherit; font-size:12px; text-transform:capitalize; margin-top:4px; height:28px; font-weight:400;";
+}
 @{
     var defaultAnimation = new Syncfusion.EJ2.Popups.DialogAnimationSettings { Effect = Syncfusion.EJ2.Popups.DialogEffect.None };
     Dictionary<string, object> resetType = new Dictionary<string, object>();
@@ -32,7 +52,23 @@
                 created="dialogCreated" visible=false enableResize=true isModal=true zIndex="1500">
             <e-content-template>
                 <div class="e-content">
-                    <div id='documenteditor_titlebar' class="e-de-ctn-title"></div>
+                    <div id="documenteditor_titlebar" class="e-de-ctn-title">
+                        <div class="single-line" id="documenteditor_title_contentEditor" title="@documentTileText" contenteditable="false" tabindex="0"  style="@titleCss">
+                            <label id="documenteditor_title_name" style="font-weight:400; text-overflow:ellipsis; white-space:pre; overflow:hidden; user-select:none; cursor:text;">
+                                Getting started
+                            </label>
+                        </div>
+
+                        <ejs-button id="de-close" iconCss="e-icons e-close e-de-padding-right" style="@btnStyles" title="@closeToolTip" onclick="onClose()">
+                        </ejs-button>
+
+                        <ejs-button id="de-print" iconCss="e-de-icon-Print @iconCss" style="@btnStyles" onclick="onPrint()" title="@printToolTip">
+                            @printText
+                        </ejs-button>
+
+                        <ejs-dropdownbutton select="onExportClick" id="documenteditor-share" iconCss="e-de-icon-Download @iconCss" content="@downloadText" cssClass="e-caret-hide" onselect="onExportClick()" style="@btnStyles" items=items open="setTooltipForPopup">
+                        </ejs-dropdownbutton>
+                    </div>
                     <ejs-documenteditorcontainer id="container" created="editorCreated" documentChange="onDocumentChange" height="789px" enableToolbar=true zIndex="3000"></ejs-documenteditorcontainer>
                 </div>
             </e-content-template>
@@ -58,7 +94,6 @@
             <a target="_blank"
            href="https://ej2.syncfusion.com/aspnetcore/documentation/document-editor/overview" aria-label="Navigate to the documentation for Overview in ASP.NET Core Document Editor control">
         documentation section</a>.
-            </a>.
         </p>
     </div>
 }
@@ -238,7 +273,7 @@
 
 @section PreScripts{
 
-    <script id="fileNameTemplate">
+    <script type="text/x-template" id="fileNameTemplate">
          <HTMLDivElement >
             <svg width="30" height = "30" viewBox = "0 0 30 30" fill = "none" xmlns = "http://www.w3.org/2000/svg" >
                 <path d="M3 3C3 1.34315 4.34315 0 6 0H16.7574C17.553 0 18.3161 0.316071 18.8787 0.87868L26.1213 8.12132C26.6839 8.68393 27 9.44699 27 10.2426V27C27 28.6569 25.6569 30 24 30H6C4.34315 30 3 28.6569 3 27V3Z" fill = "#4889EF" />
@@ -266,13 +301,47 @@
             bindClose();
         }
 
+        function bindClose() {
+            if (dialogObj == null || dialogObj == undefined) {
+                close.style.display = 'none';
+            } else {
+                close.style.display = 'block';
+            }
+        }
+
         function editorCreated() {
             var titleBar = document.getElementById("documenteditor_titlebar");
             var container = document.getElementById("container").ej2_instances[0];
+            close = document.getElementById("de-close");
+            documentTitleContentEditor = document.getElementById("documenteditor_title_contentEditor");
+            wireDocumentTitleEditorEvents(container);
+        }
+
+        function wireDocumentTitleEditorEvents(container) {
+            documentTitleContentEditor.addEventListener('keydown', function (e) {
+                if (e.keyCode === 13) {
+                    e.preventDefault();
+                    documentTitleContentEditor.contentEditable = 'false';
+                    if (documentTitleContentEditor.textContent === '') {
+                        documentTitleContentEditor.textContent = 'Document1';
+                    }
+                }
+            });
+            documentTitleContentEditor.addEventListener('blur', function () {
+                if (documentTitleContentEditor.textContent === '') {
+                    documentTitleContentEditor.textContent = 'Document1';
+                }
+                documentTitleContentEditor.contentEditable = 'false';
+                container.documentEditor.documentName = documentTitle.textContent;
+            });
+            documentTitleContentEditor.addEventListener('click', function () {
+                updateDocumentEditorTitle();
+            });
         }
 
         function onDocumentChange() {
             var container = document.getElementById("container").ej2_instances[0];
+            documentTitle = document.getElementById('documenteditor_title_name');
             documentTitle.textContent = container.documentEditor.documentName;
         }
 
@@ -321,8 +390,7 @@
         container.documentChange = function (args) {
             updateDocumentTitle();
         };
-        titleBarDiv = document.getElementById('documenteditor_titlebar');
-        initComponentAndWireEvent();
+
     </script>
 }
 

@@ -15,7 +15,7 @@ using EJ2CoreSampleBrowser.Models;
 using Syncfusion.EJ2.Navigations;
 using System.ComponentModel.DataAnnotations;
 
-namespace EJ2CoreSampleBrowser.Controllers.Dialog
+namespace EJ2CoreSampleBrowser.Controllers
 {
     public partial class PdfViewerController : Controller
     {
@@ -24,5 +24,22 @@ namespace EJ2CoreSampleBrowser.Controllers.Dialog
         {
             return View();
         }
+    }
+    public class UserModels
+    {
+        [Required(ErrorMessage = "UserName is Required.")]
+        public string UserName { get; set; }
+
+        [Required(ErrorMessage = "Date of Birth is Required")]
+        public DateTime? DOB { get; set; }
+
+        [Required(ErrorMessage = "Addresss is Required")]
+        public string Address { get; set; }
+
+        [Required(ErrorMessage = "City is Required")]
+        public string City { get; set; }
+
+        [Required(ErrorMessage = "State is Required")]
+        public string State { get; set; }
     }
 }

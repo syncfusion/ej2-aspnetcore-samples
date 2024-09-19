@@ -15,12 +15,31 @@ using System.Collections.Generic;
 using System.Collections;
 using Syncfusion.OfficeChart;
 using System.Globalization;
+using Microsoft.Extensions.Caching.Memory;
+#if REDIS
+using Microsoft.Extensions.Caching.Distributed;
+#endif
 
 namespace EJ2CoreSampleBrowser.Controllers
 {
     public partial class PowerPointController : Controller
     {
+        private IMemoryCache _cache;
         private List<DataPosition> order1 = new List<DataPosition>();
+        private readonly IWebHostEnvironment _hostingEnvironment;
+#if REDIS
+        private IDistributedCache _distributedCache;
+        public PowerPointController(IWebHostEnvironment hostingEnvironment, IMemoryCache memoryCache, IDistributedCache distributedCache)
+#else
+        public PowerPointController(IWebHostEnvironment hostingEnvironment, IMemoryCache memoryCache)
+#endif
+        {
+            _cache = memoryCache;
+#if REDIS
+            _distributedCache = distributedCache;
+#endif
+            _hostingEnvironment = hostingEnvironment;
+        }
         #region Action Methods
         /// <summary>
         /// Imports the data to the Grid.

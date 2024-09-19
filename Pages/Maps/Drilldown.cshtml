@@ -1,0 +1,200 @@
+@page
+@model EJ2CoreSampleBrowser_NET8.Pages.Maps.Drilldown
+
+@using Syncfusion.EJ2;
+
+@{
+    var data1 = new[]
+    {
+        new { name = "Asia", latitude = 50.32087157990324, longitude = 90.015625 },
+        new { name = "Australia", latitude = -27.88583769986199, longitude = 127.296875 },
+        new { name = "Africa", latitude = 16.97274101999902, longitude = 16.390625 },
+        new { name = "Europe", latitude = 47.95121990866204, longitude = 18.468749999999998 },
+        new { name = "North America", latitude = 59.88893689676585, longitude = -114.3359375 },
+        new { name = "South America", latitude = -12.64607562172573, longitude = -57.54687499999999 }
+    };
+    var propertyPath = new[] { "continent" };
+    var layerStyle = new Syncfusion.EJ2.Maps.MapsFont
+    {
+        FontFamily = "Segoe UI"
+    };
+    var worldMap = new Drilldown().GetWorldMap();
+    var defaultData = new Drilldown().GetDefaultData();
+    var asia = new Drilldown().GetAsia();
+    var africa = new Drilldown().GetAfrica();
+    var northAmerica = new Drilldown().GetNorthAmerica();
+    var southAmerica = new Drilldown().GetSouthAmerica();
+    var oceania = new Drilldown().GetOceania();
+    var europe = new Drilldown().GetEurope();
+}
+@section ControlsSection{
+    
+<div id="button" style="font-size:14px;margin-left: 10px;margin-top: 20px;display:none;left:50px;top:50px;">
+    <a id="category" style="visibility:hidden; display:inline-block">
+        World Map
+    </a>
+    <p style="visibility:hidden; display:inline-block" id="symbol">&nbsp;&gt;&gt;&nbsp;</p>
+    <p id="text" style="display:inline-block;"></p>
+</div>
+    <div class="control-section">
+        <div class="row">
+            <div class="col-md-12">
+                <ejs-maps id="mapdrilldown" load="window.onMapLoad" loaded="onCreated" shapeSelected="window.shapeSelected">
+                    <e-maps-zoomsettings enable="false"></e-maps-zoomsettings>
+                    <e-maps-legendsettings visible="false"></e-maps-legendsettings>
+                    <e-maps-layers>
+                        <e-maps-layer shapeData="@worldMap" layerType="Geometry" shapeDataPath="continent" shapePropertyPath="propertyPath" dataSource="@defaultData">
+                            <e-layersettings-tooltipsettings visible="true" valuePath="continent" textStyle="layerStyle"></e-layersettings-tooltipsettings>
+                            <e-layersettings-shapesettings colorValuePath="drillColor"></e-layersettings-shapesettings>
+                            <e-layersettings-markers>
+                                <e-layersettings-marker visible="true" template="<div id='marker1' class='markerTemplate'>{{:name}}</div>" animationDuration="0" dataSource="data1"></e-layersettings-marker>
+                            </e-layersettings-markers>
+                        </e-maps-layer>
+                        <e-maps-layer layerType="Geometry" shapeData="@africa">
+                            <e-layersettings-shapesettings fill="#80306A"></e-layersettings-shapesettings>
+                            <e-layersettings-highlightsettings enable="true" fill="#80306A"></e-layersettings-highlightsettings>
+                            <e-layersettings-tooltipsettings visible="true" valuePath="name" textStyle="layerStyle"></e-layersettings-tooltipsettings>
+                        </e-maps-layer>
+                        <e-maps-layer layerType="Geometry" shapeData="@europe">
+                            <e-layersettings-shapesettings fill="#622D6C"></e-layersettings-shapesettings>
+                            <e-layersettings-highlightsettings enable="true" fill="#622D6C"></e-layersettings-highlightsettings>
+                            <e-layersettings-tooltipsettings visible="true" valuePath="name" textStyle="layerStyle"></e-layersettings-tooltipsettings>
+                        </e-maps-layer>
+                        <e-maps-layer layerType="Geometry" shapeData="@asia">
+                            <e-layersettings-shapesettings fill="#462A6D"></e-layersettings-shapesettings>
+                            <e-layersettings-highlightsettings enable="true" fill="#462A6D"></e-layersettings-highlightsettings>
+                            <e-layersettings-tooltipsettings visible="true" valuePath="name" textStyle="layerStyle"></e-layersettings-tooltipsettings>
+                        </e-maps-layer>
+                        <e-maps-layer layerType="Geometry" shapeData="@northAmerica">
+                            <e-layersettings-shapesettings fill="#C13664"></e-layersettings-shapesettings>
+                            <e-layersettings-highlightsettings enable="true" fill="#C13664"></e-layersettings-highlightsettings>
+                            <e-layersettings-tooltipsettings visible="true" valuePath="name" textStyle="layerStyle"></e-layersettings-tooltipsettings>
+                        </e-maps-layer>
+                        <e-maps-layer layerType="Geometry" shapeData="@southAmerica">
+                            <e-layersettings-shapesettings fill="#9C3367"></e-layersettings-shapesettings>
+                            <e-layersettings-highlightsettings enable="true" fill="#9C3367"></e-layersettings-highlightsettings>
+                            <e-layersettings-tooltipsettings visible="true" valuePath="name" textStyle="layerStyle"></e-layersettings-tooltipsettings>
+                        </e-maps-layer>
+                        <e-maps-layer layerType="Geometry" shapeData="@oceania">
+                            <e-layersettings-shapesettings fill="#2A2870"></e-layersettings-shapesettings>
+                            <e-layersettings-highlightsettings enable="true" fill="#2A2870"></e-layersettings-highlightsettings>
+                            <e-layersettings-tooltipsettings visible="true" valuePath="name" textStyle="layerStyle"></e-layersettings-tooltipsettings>
+                        </e-maps-layer>
+                    </e-maps-layers>
+                </ejs-maps>
+                <div align="center"><div align="center"><p id="content" style="font-size: 16px;color:grey"><i>Click on a shape to drill</i></p></div></div>
+            </div>
+        </div>
+        </div>
+}
+<script>
+    @* custom code start *@
+    function onMapLoad(args) {
+        var theme = themeName ? themeName : "Material";
+        args.maps.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-high/i, 'High').replace(/5.3/i, '5');
+    }
+    @* custom code end *@
+    window.onload = function() {
+        document.getElementById('category').onclick = function () {
+        maps.baseLayerIndex = 0;
+        maps.refresh();
+        var button = document.getElementById('button');
+        button.style.display = 'none';
+        document.getElementById('content').innerHTML = '<i>Click on a shape to drill</i>';
+    };
+    };
+    var maps, touchmove = false;
+    function onCreated() {
+        maps = document.getElementById('mapdrilldown').ej2_instances[0];
+        document.getElementById('mapdrilldown_svg').addEventListener('touchmove', function (e) {
+            touchmove = true;
+        }, false);
+    }
+    function shapeSelected(args) {
+        var shape = args.shapeData.continent;
+        if (maps.baseLayerIndex === 0 && !touchmove) {
+            if (shape === 'Africa') {
+                maps.baseLayerIndex = 1;
+                maps.refresh();
+            }
+            else if (shape === 'Europe') {
+                maps.baseLayerIndex = 2;
+                maps.refresh();
+            }
+            else if (shape === 'Asia') {
+                maps.baseLayerIndex = 3;
+                maps.refresh();
+            }
+            else if (shape === 'North America') {
+                maps.baseLayerIndex = 4;
+                maps.refresh();
+            }
+            else if (shape === 'South America') {
+                maps.baseLayerIndex = 5;
+                maps.refresh();
+            }
+            else if (shape === 'Australia') {
+                maps.baseLayerIndex = 6;
+                maps.refresh();
+            }
+            var button = document.getElementById('button');
+            button.style.display = 'block';
+            document.getElementById('content').innerHTML = '';
+
+            document.getElementById('category').style.visibility = 'visible';
+            document.getElementById('text').innerHTML = shape;
+            document.getElementById('symbol').style.visibility = 'visible';
+        }
+        touchmove = false;
+    }
+</script>
+<style>
+
+    .backLabel:hover {
+        cursor: pointer;
+    }
+
+    .markerTemplate {
+        height: 30px;
+        width: 30px;
+        display: block;
+        margin: auto;
+    }
+
+    #category:hover {
+        cursor: pointer;
+    }
+
+    .markerTemplate {
+        font-size: 12px;
+        color: white;
+        text-shadow: 0px 1px 1px black;
+        font-weight: 500
+    }
+</style>
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Drill Down in ASP.NET Core Maps control. Explore here for more details."/>
+                }
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+           This sample demonstrates drill down with all the continents in the initial view. By clicking a continent, you can view all the countries available in that continent.
+       </p>
+    </div>
+}
+@section Description{
+    
+    <div id="description">
+        <p>
+          In this example, you can see how to display an another layer by clicking a shape in previous layer.
+    
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Maps Drill Down Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Drill Down in ASP.NET Core Maps Control</h1>
+                }

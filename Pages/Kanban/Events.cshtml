@@ -1,0 +1,171 @@
+@page
+
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2
+
+@{
+    var data = new KanbanDataModels().KanbanTasks();
+}
+
+@section ControlsSection{
+    <div class="col-lg-8 control-section">
+        <div class="control_wrapper">
+            <ejs-kanban id="Kanban" keyField="Status" height="500" dataSource="@data" created="onCreate" actionBegin="onActionBegin"
+                        actionComplete="onActionComplete" actionFailure="onActionFailure" dataBinding="onDataBinding" dataBound="onDataBound" cardRendered="onCardRendered" queryCellInfo="OnQueryCellInfo" cardClick="onCardClick" cardDoubleClick="onCardDoubleClick" dragStart="onDragStart" drag="onDrag"
+                        dragStop="onDragStop">
+                <e-kanban-columns>
+                    <e-kanban-column headerText="To Do" keyField="Open" allowToggle="true"></e-kanban-column>
+                    <e-kanban-column headerText="In Progress" keyField="InProgress" allowToggle="true"></e-kanban-column>
+                    <e-kanban-column headerText="Done" keyField="Close" allowToggle="true"></e-kanban-column>
+                </e-kanban-columns>
+                <e-kanban-cardsettings contentField="Summary" headerField="Id"></e-kanban-cardsettings>
+                <e-kanban-swimlanesettings keyField="Assignee"></e-kanban-swimlanesettings>
+            </ejs-kanban>
+        </div>
+    </div>
+    <div class="col-lg-4 property-section">
+        <table id="property" title="Event Trace">
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="eventarea">
+                            <span class="EventLog" id="EventLog"></span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="evtbtn">
+                            <ejs-button id="clear" content="Clear"></ejs-button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+}
+
+<style>
+    .eventarea {
+        height: 245px;
+        overflow: auto
+    }
+
+    .EventLog {
+        word-break: normal;
+    }
+
+    .evtbtn {
+        padding-bottom: 10px
+    }
+
+    #EventLog b {
+        color: #018607;
+    }
+    .fluent-dark .e-kanban #EventLog b, .bootstrap5-dark .e-kanban #EventLog b, .tailwind-dark .e-kanban #EventLog b, .material-dark .e-kanban #EventLog b, .fabric-dark .e-kanban #EventLog b, .bootstrap-dark .e-kanban #EventLog b, .highcontrast .e-kanban #EventLog b, .material3-dark .e-kanban #EventLog b {
+        color:#21A32E;
+    }
+
+    hr {
+        margin: 1px 10px 1px 0px;
+        border-top: 1px solid #eee;
+    }
+</style>
+
+@section PreScripts {
+    <script>
+        document.getElementById('clear').onclick = () => {
+            document.getElementById('EventLog').innerHTML = '';
+        };
+        function onCreate() {
+            appendElement('Kanban <b>Load</b> event called<hr>');
+        }
+        function onActionBegin() {
+            appendElement('Kanban <b>Action Begin</b> event called<hr>');
+        }
+        function onActionComplete() {
+            appendElement('Kanban <b>Action Complete</b> event called<hr>');
+        }
+        function onActionFailure() {
+            appendElement('Kanban <b>Action Failure</b> event called<hr>');
+        }
+        function onDataBinding() {
+            appendElement('Kanban <b>Data Binding</b> event called<hr>');
+        }
+        function onDataBound() {
+            appendElement('Kanban <b>Data Bound</b> event called<hr>');
+        }
+        function onCardRendered(args) {
+            appendElement('Kanban - ' + args.data.Id + ' - <b>Card Rendered</b> event called<hr>');
+        }
+        function OnQueryCellInfo() {
+            appendElement('Kanban <b>Query Cell Info</b> event called<hr>');
+        }
+        function onCardClick(args) {
+            appendElement('Kanban - ' + args.data.Id + ' - <b>Card Click</b> event called<hr>');
+        }
+        function onCardDoubleClick(args) {
+            appendElement('Kanban - ' + args.data.Id + ' - <b>Card Double Click</b> event called<hr>');
+        }
+        function onDragStart() {
+            appendElement('Kanban <b>Drag Start</b> event called<hr>');
+        }
+        function onDrag() {
+            appendElement('Kanban <b>Drag</b> event called<hr>');
+        }
+        function onDragStop() {
+            appendElement('Kanban <b>Drag Stop</b> event called<hr>');
+        }
+        function appendElement(html) {
+            var span = document.createElement('span');
+            span.innerHTML = html;
+            var log = document.getElementById('EventLog');
+            log.insertBefore(span, log.firstChild);
+        }
+    </script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            The sample showcases the client-side events of JavaScript Kanban. For every action in a Kanban board,
+            corresponding
+            events will be displayed in the event tracer panel.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            The demo is showcased to list-out the client-side events of Kanban. The events are useful to customize the
+            Kanban board
+            from the application end.
+        </p>
+        <p>The following events are bounded in this demo.</p>
+        <ol>
+            <li>Created</li>
+            <li>Action Begin</li>
+            <li>Action Complete</li>
+            <li>Action Failure</li>
+            <li>Data Binding</li>
+            <li>Data Bound</li>
+            <li>Card Rendered</li>
+            <li>Query Cell Info</li>
+            <li>Card Click</li>
+            <li>Card Double Click</li>
+            <li>Drag Start</li>
+            <li>Drag</li>
+            <li>Drag Stop</li>
+        </ol>
+    </div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Events in ASP.NET Core Kanban control. Explore here for more details."/>
+                }
+@section Title{
+                    <title>ASP.NET Core Kanban Events Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Events in ASP.NET Core Kanban Control</h1>
+                }

@@ -1,0 +1,123 @@
+@page
+@model EJ2CoreSampleBrowser_NET8.Pages.Maps.SalesMap
+
+@using Syncfusion.EJ2.Maps;
+
+@{
+    var titleStyle = new MapsFont
+    {
+        Size = "16px",
+        FontFamily = "Segoe UI"
+    };
+    var cluster = new MapsMarkerClusterSettings
+    {
+        AllowClustering = true,
+        AllowClusterExpand = true,
+        Shape = Syncfusion.EJ2.Maps.MarkerType.Image,
+        Height = 40,
+        Width = 40,
+        ImageUrl = "../styles/images/maps/cluster.svg",
+        LabelStyle = new MapsFont
+        {
+            Color = "White",
+            FontFamily = "Segoe UI"
+        }
+
+    };
+    var tooltip = new MapsTooltipSettings
+    {
+        Visible = true,
+        Format = "<b>Name</b> : ${name}<br><b>Product</b> : ${product}<br><b>Total value</b> : ${worth}",
+        ValuePath = "area",
+        TextStyle = new MapsFont
+        {
+            FontFamily = "Segoe UI"
+        }
+    };
+    var salesMap = new SalesMap().SaleWorldMap();
+    var productWorh = new SalesMap().productWorth();
+}
+
+@section ControlsSection{
+    
+    <div class="control-section">
+        <ejs-maps id="maps" format="n" useGroupingSeparator="true" load="onMapLoad" tooltipDisplayMode="@Syncfusion.EJ2.Maps.TooltipGesture.Click">
+            <e-maps-titlesettings alignment="@Syncfusion.EJ2.Maps.Alignment.Center" text="Sales details of products in various countries" textStyle="titleStyle"></e-maps-titlesettings>
+            <e-maps-zoomsettings enable="true" mouseWheelZoom="false" pinchZooming="false"></e-maps-zoomsettings>
+            <e-maps-layers>
+                <e-maps-layer shapeData="@salesMap" markerClusterSettings="cluster">
+                    <e-layersettings-shapesettings fill="#C1DFF5"></e-layersettings-shapesettings>
+                    <e-layersettings-markers>
+                        <e-layersettings-marker visible="true" shape="Image" imageUrl="../styles/images/maps/ballon.png" height="15" width="15" animationDuration="0" tooltipSettings="tooltip" dataSource="@productWorh"></e-layersettings-marker>
+                    </e-layersettings-markers>
+                </e-maps-layer>
+            </e-maps-layers>
+        </ejs-maps>
+        <div style="float: right; margin-right: 10px;">
+            Source:
+            <a href="http://www.citymayors.com/statistics/largest-cities-population-125.html"
+               target="_blank" aria-label="citymayors">www.citymayors.com</a>
+        </div>
+
+    </div>
+    <div id="template" style="display:none">
+        <div class="toolback">
+            <div>
+                <span class="listing1">Name : </span><span class="listing2">${name}</span>
+            </div>
+            <div>
+                <span class="listing1">Product : </span><span class="listing2">${product}</span>
+            </div>
+            <div>
+                <span class="listing1">Total purchase : </span><span class="listing2">${worth}</span>
+            </div>
+        </div>
+
+    </div>
+}
+@* custom code start *@
+<script>
+    function onMapLoad(args) {
+        var theme = themeName ? themeName : "Material";
+        args.maps.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-high/i, 'High').replace(/5.3/i, '5');
+    }
+</script>
+@* custom code end *@
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample illustrates the world's top 50 cities by showing the markers in their locations and clustering the markers to avoid intersecting.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            This sample illustrates the sales details of the products and users location by rendering the markers. Marker clustering is also enabled in this sample.
+        </p>
+
+    </div>
+    <div id="description">
+        <p>
+            In this example, you can see how to render cluster for more number of markers if it is at the exact latitude and longitude values. On clicking the cluster, it will gets expanded.
+        </p>
+        <p>
+            Tooltip is enabled in this example. To see the tooltip in action, click the mouse over the marker or tap a marker in touch-enabled devices.
+        </p>
+        <br />
+        <p style="font-weight: 500">Injecting Module</p>
+        <p>
+            Maps component features are segregated into individual feature-wise modules. To use a marker and cluster, inject the <code>Marker</code> module using the <code>Maps.Inject(Marker)</code> method.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Maps Sales Map Example - Syncfusion Demos </title> 
+                }
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Sales Map in ASP.NET Core Maps control. Explore here for more details."/>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Sales Map in ASP.NET Core Maps Control</h1>
+                }

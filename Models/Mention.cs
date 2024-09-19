@@ -11,7 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 
-namespace EJ2CoreSampleBrowser_NET6.Models
+namespace EJ2CoreSampleBrowser.Models
 {
     public class SportsData
     {
@@ -94,6 +94,42 @@ namespace EJ2CoreSampleBrowser_NET6.Models
             status.Add(new StatusData { Id = "Status3", Value = "Hold" });
             status.Add(new StatusData { Id = "Status4", Value = "Closed" });
             return status;
+        }
+    }
+
+    public class EmailData
+    {
+        public string Name { get; set; }
+        public string Eimg { get; set; }
+        public string EmailId { get; set; }
+        public bool State { get; set; }
+
+        public List<EmailData> EmailList()
+        {
+            List<EmailData> email = new List<EmailData>();
+            email.Add(new EmailData { Name = "Selma Rose (inactive)", Eimg = "3", EmailId = "selma@gmail.com", State = true });
+            email.Add(new EmailData { Name = "Russo Kay", Eimg = "8", EmailId = "russo@gmail.com", State = false });
+            email.Add(new EmailData { Name = "Camden Kate", Eimg = "9", EmailId = "camden@gmail.com", State = false });
+            email.Add(new EmailData { Name = "Mary Kate (inactive)", Eimg = "4", EmailId = "mary@gmail.com", State = true });
+            email.Add(new EmailData { Name = "Ursula Ann", Eimg = "2", EmailId = "ursula@gmail.com", State = false });
+            email.Add(new EmailData { Name = "Margaret", Eimg = "5", EmailId = "margaret@gmail.com", State = false });
+            email.Add(new EmailData { Name = "Laura Grace", Eimg = "6", EmailId = "laura@gmail.com", State = false });
+            email.Add(new EmailData { Name = "Robert (inactive)", Eimg = "8", EmailId = "robert@gmail.com", State = true });
+            email.Add(new EmailData { Name = "Albert", Eimg = "9", EmailId = "albert@gmail.com", State = false });
+            email.Add(new EmailData { Name = "Michale", Eimg = "10", EmailId = "michale@gmail.com", State = false });
+            email.Add(new EmailData { Name = "Andrew James", Eimg = "7", EmailId = "james@gmail.com", State = false });
+            email.Add(new EmailData { Name = "Rosalie", Eimg = "4", EmailId = "rosalie@gmail.com", State = false });
+            email.Add(new EmailData { Name = "Stella Ruth (inactive)", Eimg = "2", EmailId = "stella@gmail.com", State = true });
+            email.Add(new EmailData { Name = "Richard Rose", Eimg = "10", EmailId = "richard@gmail.com", State = false });
+            email.Add(new EmailData { Name = "Gabrielle", Eimg = "3", EmailId = "gabrielle@gmail.com", State = false });
+            email.Add(new EmailData { Name = "Thomas", Eimg = "7", EmailId = "thomas@gmail.com", State = false });
+            email.Add(new EmailData { Name = "Charles Danny", Eimg = "8", EmailId = "charles@gmail.com", State = false });
+            email.Add(new EmailData { Name = "Daniel (inactive)", Eimg = "10", EmailId = "daniel@gmail.com", State = true });
+            email.Add(new EmailData { Name = "Matthew", Eimg = "7", EmailId = "matthew@gmail.com", State = false });
+            email.Add(new EmailData { Name = "Donald Krish", Eimg = "9", EmailId = "donald@gmail.com", State = false });
+            email.Add(new EmailData { Name = "Yohana (inactive)", Eimg = "1", EmailId = "yohana@gmail.com", State = true });
+            email.Add(new EmailData { Name = "Kevin Paul", Eimg = "10", EmailId = "kevin@gmail.com", State = false });
+            return email;
         }
     }
 }

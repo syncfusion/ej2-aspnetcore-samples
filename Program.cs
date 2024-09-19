@@ -17,8 +17,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.FileProviders;
 using Syncfusion.Licensing;
-using EJ2ScheduleSample.Controllers;
-using EJ2SpreadsheetSample.Controllers;
+using EJ2ScheduleSample.Pages;
+using EJ2SpreadsheetSample.Pages;
+
 using System.Text.RegularExpressions;
 
 if (File.Exists(Directory.GetCurrentDirectory() + "/SyncfusionLicense.txt"))
@@ -40,9 +41,11 @@ if (File.Exists(Directory.GetCurrentDirectory() + "/SyncfusionLicense.txt"))
 }
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
+
 builder.Services.AddMvc()
     .AddNewtonsoftJson(x =>
     {
@@ -51,32 +54,42 @@ builder.Services.AddMvc()
 builder.Services.AddSignalR();
 builder.Services.AddDirectoryBrowser();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation(); 
+builder.Services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
 #if REDIS
 builder.Services.AddMemoryCache();
 builder.Services.AddDistributedRedisCache(option => { option.Configuration = builder.Configuration["ConnectionStrings:Redis"]; });
 #endif
 var app = builder.Build();
-if (app.Environment.IsDevelopment())
+
+if (!app.Environment.IsDevelopment())
 {
-    app.UseDeveloperExceptionPage();
-}
-else
-{
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
 }
 
 app.UseRouting();
 app.UseAuthorization();
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapControllerRoute(name: "default",
+    pattern: "{controller}/{action}");
+app.MapRazorPages();
+
 app.UseFileServer();
 app.UseStaticFiles(new StaticFileOptions
 {
     ServeUnknownFileTypes = true,
     DefaultContentType = "plain/text",
     FileProvider = new PhysicalFileProvider(
-    Path.Combine(Directory.GetCurrentDirectory(), "Controllers")),
+    Path.Combine(Directory.GetCurrentDirectory(), "Pages")),
+    RequestPath = "/Pages"
+});
+app.UseStaticFiles(new StaticFileOptions
+{
+    ServeUnknownFileTypes = true,
+    DefaultContentType = "plain/text",
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "Controllers")),
     RequestPath = "/Controllers"
 });
 app.UseStaticFiles(new StaticFileOptions
@@ -84,7 +97,7 @@ app.UseStaticFiles(new StaticFileOptions
     ServeUnknownFileTypes = true,
     DefaultContentType = "plain/text",
     FileProvider = new PhysicalFileProvider(
-    Path.Combine(Directory.GetCurrentDirectory(), "Views")),
+        Path.Combine(Directory.GetCurrentDirectory(), "Views")),
     RequestPath = "/Views"
 });
 app.UseEndpoints(endpoints =>
@@ -92,5 +105,6 @@ app.UseEndpoints(endpoints =>
     endpoints.MapHub<ScheduleHub>("/scheduleHub");
     endpoints.MapHub<SpreadsheetHub>("/spreadsheetHub");
 });
+
 app.Run();
 

@@ -46,8 +46,12 @@ namespace EJ2CoreSampleBrowser.Models
             public List<GanttSegment> Segments { get; set; }
 
         }
-
-        public class ResourceModel
+        public class DropDownData
+        {
+            public string id { get; set; }
+            public string day { get; set; }
+        }
+            public class ResourceModel
         {
             public int ResourceId { get; set; }
             public Nullable<int> ResourceUnit { get; set; }
@@ -87,7 +91,22 @@ namespace EJ2CoreSampleBrowser.Models
             public DateTime? EndDate { get; set; }
         }
 
-        public static List<GanttDataSource> ProjectNewData()
+        public static string GetWorkWeek()
+        {
+            return "Monday";
+        }
+        public static List<DropDownData> GetDays()
+        {
+            List<DropDownData> dayOfWeek = new List<DropDownData>();
+            dayOfWeek.Add(new DropDownData { id = "Monday", day = "Monday" });
+            dayOfWeek.Add(new DropDownData { id = "Tuesday", day = "Tuesday" });
+            dayOfWeek.Add(new DropDownData { id = "Wednesday", day = "Wednesday" });
+            dayOfWeek.Add(new DropDownData { id = "Thursday", day = "Thursday" });
+            dayOfWeek.Add(new DropDownData { id = "Friday", day = "Friday" });
+            return dayOfWeek;
+        }
+
+        public static List<GanttDataSource> ProjectNewData ()
         {
             List<GanttDataSource> GanttDataSourceCollection = new List<GanttDataSource>();
 
@@ -379,7 +398,7 @@ namespace EJ2CoreSampleBrowser.Models
 
             GanttIndicators indicator3 = new GanttIndicators()
             {
-                date = new DateTime(2024, 06, 03),
+                date = new DateTime(2024, 05, 24),
                 name = "Production phase",
                 tooltip = "Production phase completed",
                 iconClass = "productionPhase e-icons"
@@ -1080,7 +1099,7 @@ namespace EJ2CoreSampleBrowser.Models
             GanttDataSourceCollection.Add(Record3);
             return GanttDataSourceCollection;
         }
-        public static List<GanttDataSource> ZoomingData()
+        public static List<GanttDataSource> ZoomingData ()
         {
             List<GanttDataSource> GanttDataSourceCollection = new List<GanttDataSource>();
 
@@ -1206,7 +1225,7 @@ namespace EJ2CoreSampleBrowser.Models
             GanttDataSourceCollection.Add(Record3);
             return GanttDataSourceCollection;
         }
-        public static List<GanttResources> EditingResources()
+        public static List<GanttResources> EditingResources ()
         {
             List<GanttResources> GanttResourcesCollection = new List<GanttResources>();
 
@@ -1284,7 +1303,7 @@ namespace EJ2CoreSampleBrowser.Models
             GanttResourcesCollection.Add(Record12);
             return GanttResourcesCollection;
         }
-        public static List<GanttDataSource> EditingData()
+        public static List<GanttDataSource> EditingData ()
         {
             List<GanttDataSource> GanttDataSourceCollection = new List<GanttDataSource>();
 
@@ -1854,7 +1873,7 @@ namespace EJ2CoreSampleBrowser.Models
             GanttDataSourceCollection.Add(Record12);
             return GanttDataSourceCollection;
         }
-        public static List<GanttDataSource> RemoteData()
+        public static List<GanttDataSource> RemoteData ()
         {
             List<GanttDataSource> GanttDataSourceCollection = new List<GanttDataSource>();
 
@@ -2374,7 +2393,7 @@ namespace EJ2CoreSampleBrowser.Models
             //GanttDataSourceCollection.Add(Record11);
             return GanttDataSourceCollection;
         }
-        public static List<GanttResources> TimelineResources()
+        public static List<GanttResources> TimelineResources ()
         {
             List<GanttResources> GanttResourcesCollection = new List<GanttResources>();
 
@@ -2404,7 +2423,7 @@ namespace EJ2CoreSampleBrowser.Models
             GanttResourcesCollection.Add(Record4);
             return GanttResourcesCollection;
         }
-        public static List<GanttDataSource> TimelineData()
+        public static List<GanttDataSource> TimelineData ()
         {
             List<GanttDataSource> GanttDataSourceCollection = new List<GanttDataSource>();
 
@@ -2839,7 +2858,7 @@ namespace EJ2CoreSampleBrowser.Models
             GanttDataSourceCollection.Add(Record1Child6);
             return GanttDataSourceCollection;
         }
-        public static List<GanttDataSource> BaselineData()
+        public static List<GanttDataSource> BaselineData ()
         {
             List<GanttDataSource> GanttDataSourceCollection = new List<GanttDataSource>();
 
@@ -3074,7 +3093,7 @@ namespace EJ2CoreSampleBrowser.Models
             GanttDataSourceCollection.Add(Record23);
             return GanttDataSourceCollection;
         }
-        public static List<TaskbarData> TaskbarTemplateData()
+        public static List<TaskbarData> TaskbarTemplateData ()
         {
             List<TaskbarData> GanttDataSourceCollection = new List<TaskbarData>();
 
@@ -3417,91 +3436,91 @@ namespace EJ2CoreSampleBrowser.Models
             GanttDataSourceCollection.Add(Record33);
             return GanttDataSourceCollection;
         }
-        public static List<GanttDataSource> FilteredData()
+        public static List<GanttDataSource> FilteredData ()
         {
             List<GanttDataSource> GanttDataSourceCollection = new List<GanttDataSource>();
             GanttDataSource Record1 = new GanttDataSource()
             {
                 TaskId = 1,
                 TaskName = "Launch and flight to lunar orbit",
-                StartDate = new DateTime(1969, 07, 16),
+                StartDate = new DateTime(2024, 07, 16),
                 SubTasks = new List<GanttDataSource>(),
             };
             GanttDataSource Record1Child1 = new GanttDataSource()
             {
                 TaskId = 2,
                 TaskName = "Apollo 11 blasts off from launch pad",
-                StartDate = new DateTime(1969, 07, 16, 3, 32, 0),
-                EndDate = new DateTime(1969, 07, 16, 3, 32, 0),
+                StartDate = new DateTime(2024, 07, 16, 3, 32, 0),
+                EndDate = new DateTime(2024, 07, 16, 3, 32, 0),
                 Duration = 0
             };
             GanttDataSource Record1Child2 = new GanttDataSource()
             {
                 TaskId = 3,
                 TaskName = "Entry to earth’s orbit",
-                StartDate = new DateTime(1969, 07, 16, 3, 32, 0),
-                EndDate = new DateTime(1969, 07, 16, 3, 44, 0),
+                StartDate = new DateTime(2024, 07, 16, 3, 32, 0),
+                EndDate = new DateTime(2024, 07, 16, 3, 44, 0),
                 Predecessor = "2"
             };
             GanttDataSource Record1Child3 = new GanttDataSource()
             {
                 TaskId = 4,
                 TaskName = "Travelling in earth’s orbit",
-                StartDate = new DateTime(1969, 07, 16, 3, 44, 0),
-                EndDate = new DateTime(1969, 07, 16, 4, 22, 13),
+                StartDate = new DateTime(2024, 07, 16, 3, 44, 0),
+                EndDate = new DateTime(2024, 07, 16, 4, 22, 13),
                 Predecessor = "3"
             };
             GanttDataSource Record1Child4 = new GanttDataSource()
             {
                 TaskId = 5,
                 TaskName = "Trajectory change toward the Moon",
-                StartDate = new DateTime(1969, 07, 16, 4, 22, 13),
-                EndDate = new DateTime(1969, 07, 16, 4, 52, 0),
+                StartDate = new DateTime(2024, 07, 16, 4, 22, 13),
+                EndDate = new DateTime(2024, 07, 16, 4, 52, 0),
                 Predecessor = "4"
             };
             GanttDataSource Record1Child5 = new GanttDataSource()
             {
                 TaskId = 6,
                 TaskName = "extraction maneuver performed",
-                StartDate = new DateTime(1969, 07, 16, 4, 52, 0),
-                EndDate = new DateTime(1969, 07, 16, 4, 52, 0),
+                StartDate = new DateTime(2024, 07, 16, 4, 52, 0),
+                EndDate = new DateTime(2024, 07, 16, 4, 52, 0),
                 Predecessor = "5"
             };
             GanttDataSource Record1Child6 = new GanttDataSource()
             {
                 TaskId = 7,
                 TaskName = "Travelling toward moon and entering into lunar orbit",
-                StartDate = new DateTime(1969, 07, 16, 4, 52, 0),
-                EndDate = new DateTime(1969, 07, 16, 16, 21, 50),
+                StartDate = new DateTime(2024, 07, 16, 4, 52, 0),
+                EndDate = new DateTime(2024, 07, 16, 16, 21, 50),
                 Predecessor = "6"
             };
             GanttDataSource Record1Child7 = new GanttDataSource()
             {
                 TaskId = 8,
                 TaskName = "Midcourse correction, sharpening the course and testing the engine",
-                StartDate = new DateTime(1969, 07, 16, 23, 22, 0),
-                EndDate = new DateTime(1969, 07, 17, 5, 21, 50)
+                StartDate = new DateTime(2024, 07, 16, 23, 22, 0),
+                EndDate = new DateTime(2024, 07, 17, 5, 21, 50)
             };
             GanttDataSource Record1Child8 = new GanttDataSource()
             {
                 TaskId = 9,
                 TaskName = "Reached half the distance spanning between earth and moon",
-                StartDate = new DateTime(1969, 07, 17, 5, 22, 0),
-                EndDate = new DateTime(1969, 07, 17, 08, 0, 50)
+                StartDate = new DateTime(2024, 07, 17, 5, 22, 0),
+                EndDate = new DateTime(2024, 07, 17, 08, 0, 50)
             };
             GanttDataSource Record1Child9 = new GanttDataSource()
             {
                 TaskId = 10,
                 TaskName = "Reached 3/4th distance spanning between earth and moon",
-                StartDate = new DateTime(1969, 07, 17, 20, 02, 0),
-                EndDate = new DateTime(1969, 07, 18, 16, 21, 50)
+                StartDate = new DateTime(2024, 07, 17, 20, 02, 0),
+                EndDate = new DateTime(2024, 07, 18, 16, 21, 50)
             };
             GanttDataSource Record1Child10 = new GanttDataSource()
             {
                 TaskId = 11,
                 TaskName = "Reached distance 45000 miles from moon",
-                StartDate = new DateTime(1969, 07, 18, 23, 20, 0),
-                EndDate = new DateTime(1969, 07, 19, 17, 21, 0)
+                StartDate = new DateTime(2024, 07, 18, 23, 20, 0),
+                EndDate = new DateTime(2024, 07, 19, 17, 21, 0)
             };
 
             Record1.SubTasks.Add(Record1Child1);
@@ -3519,38 +3538,38 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 TaskId = 12,
                 TaskName = "Lunar descent",
-                StartDate = new DateTime(1969, 07, 19, 17, 21, 50),
+                StartDate = new DateTime(2024, 07, 19, 17, 21, 50),
                 SubTasks = new List<GanttDataSource>(),
             };
             GanttDataSource Record2Child1 = new GanttDataSource()
             {
                 TaskId = 13,
                 TaskName = "Lunar orbiting (30 orbits)",
-                StartDate = new DateTime(1969, 07, 19, 17, 21, 50),
-                EndDate = new DateTime(1969, 07, 20, 12, 52, 0),
+                StartDate = new DateTime(2024, 07, 19, 17, 21, 50),
+                EndDate = new DateTime(2024, 07, 20, 12, 52, 0),
                 Predecessor = "11"
             };
             GanttDataSource Record2Child2 = new GanttDataSource()
             {
                 TaskId = 14,
                 TaskName = "Landing site identified",
-                StartDate = new DateTime(1969, 07, 20, 12, 52, 0),
-                EndDate = new DateTime(1969, 07, 20, 12, 52, 0),
+                StartDate = new DateTime(2024, 07, 20, 12, 52, 0),
+                EndDate = new DateTime(2024, 07, 20, 12, 52, 0),
                 Predecessor = "13"
             };
             GanttDataSource Record2Child3 = new GanttDataSource()
             {
                 TaskId = 15,
                 TaskName = "Eagle separated from Columbia",
-                StartDate = new DateTime(1969, 07, 20, 17, 44, 0),
-                EndDate = new DateTime(1969, 07, 20, 17, 44, 0)
+                StartDate = new DateTime(2024, 07, 20, 17, 44, 0),
+                EndDate = new DateTime(2024, 07, 20, 17, 44, 0)
             };
             GanttDataSource Record2Child4 = new GanttDataSource()
             {
                 TaskId = 16,
                 TaskName = "Eagle’s decent to Moon",
-                StartDate = new DateTime(1969, 07, 20, 17, 44, 0),
-                EndDate = new DateTime(1969, 07, 20, 20, 16, 40)
+                StartDate = new DateTime(2024, 07, 20, 17, 44, 0),
+                EndDate = new DateTime(2024, 07, 20, 20, 16, 40)
             };
 
             Record2.SubTasks.Add(Record2Child1);
@@ -3562,43 +3581,43 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 TaskId = 17,
                 TaskName = "Landing",
-                StartDate = new DateTime(1969, 07, 20, 20, 17, 40),
+                StartDate = new DateTime(2024, 07, 20, 20, 17, 40),
                 SubTasks = new List<GanttDataSource>(),
             };
             GanttDataSource Record3Child1 = new GanttDataSource()
             {
                 TaskId = 18,
                 TaskName = "Eagle’s touch down",
-                StartDate = new DateTime(1969, 07, 20, 20, 17, 40),
-                EndDate = new DateTime(1969, 07, 20, 20, 17, 40)
+                StartDate = new DateTime(2024, 07, 20, 20, 17, 40),
+                EndDate = new DateTime(2024, 07, 20, 20, 17, 40)
             };
             GanttDataSource Record3Child2 = new GanttDataSource()
             {
                 TaskId = 19,
                 TaskName = "Radio communication and Performing post landing checklist",
-                StartDate = new DateTime(1969, 07, 20, 20, 17, 40),
-                EndDate = new DateTime(1969, 07, 20, 23, 43, 0)
+                StartDate = new DateTime(2024, 07, 20, 20, 17, 40),
+                EndDate = new DateTime(2024, 07, 20, 23, 43, 0)
             };
             GanttDataSource Record3Child3 = new GanttDataSource()
             {
                 TaskId = 20,
                 TaskName = "Preparations for EVA (Extra Vehicular Activity)",
-                StartDate = new DateTime(1969, 07, 20, 23, 43, 0),
-                EndDate = new DateTime(1969, 07, 21, 2, 39, 33)
+                StartDate = new DateTime(2024, 07, 20, 23, 43, 0),
+                EndDate = new DateTime(2024, 07, 21, 2, 39, 33)
             };
             GanttDataSource Record3Child4 = new GanttDataSource()
             {
                 TaskId = 21,
                 TaskName = "Hatch open and climbing down the moon",
-                StartDate = new DateTime(1969, 07, 21, 2, 39, 33),
-                EndDate = new DateTime(1969, 07, 21, 2, 56, 15)
+                StartDate = new DateTime(2024, 07, 21, 2, 39, 33),
+                EndDate = new DateTime(2024, 07, 21, 2, 56, 15)
             };
             GanttDataSource Record3Child5 = new GanttDataSource()
             {
                 TaskId = 22,
                 TaskName = "Armstrong stepped down on the moon",
-                StartDate = new DateTime(1969, 07, 21, 2, 56, 15),
-                EndDate = new DateTime(1969, 07, 21, 3, 11, 0)
+                StartDate = new DateTime(2024, 07, 21, 2, 56, 15),
+                EndDate = new DateTime(2024, 07, 21, 3, 11, 0)
             };
             Record3.SubTasks.Add(Record3Child1);
             Record3.SubTasks.Add(Record3Child2);
@@ -3610,43 +3629,43 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 TaskId = 23,
                 TaskName = "Lunar surface operations",
-                StartDate = new DateTime(1969, 07, 21, 2, 56, 15),
+                StartDate = new DateTime(2024, 07, 21, 2, 56, 15),
                 SubTasks = new List<GanttDataSource>(),
             };
             GanttDataSource Record4Child1 = new GanttDataSource()
             {
                 TaskId = 24,
                 TaskName = "Soil sample collections",
-                StartDate = new DateTime(1969, 07, 21, 2, 56, 15),
-                EndDate = new DateTime(1969, 07, 21, 3, 11, 0)
+                StartDate = new DateTime(2024, 07, 21, 2, 56, 15),
+                EndDate = new DateTime(2024, 07, 21, 3, 11, 0)
             };
             GanttDataSource Record4Child2 = new GanttDataSource()
             {
                 TaskId = 25,
                 TaskName = "Aldrin joined Armstrong",
-                StartDate = new DateTime(1969, 07, 21, 3, 11, 0),
-                EndDate = new DateTime(1969, 07, 21, 3, 41, 0)
+                StartDate = new DateTime(2024, 07, 21, 3, 11, 0),
+                EndDate = new DateTime(2024, 07, 21, 3, 41, 0)
             };
             GanttDataSource Record4Child3 = new GanttDataSource()
             {
                 TaskId = 26,
                 TaskName = "planted the Lunar Flag Assembly",
-                StartDate = new DateTime(1969, 07, 21, 3, 41, 0),
-                EndDate = new DateTime(1969, 07, 21, 3, 46, 0)
+                StartDate = new DateTime(2024, 07, 21, 3, 41, 0),
+                EndDate = new DateTime(2024, 07, 21, 3, 46, 0)
             };
             GanttDataSource Record4Child4 = new GanttDataSource()
             {
                 TaskId = 27,
                 TaskName = "President Richard Nixon’s telephone-radio transmission",
-                StartDate = new DateTime(1969, 07, 21, 3, 48, 0),
-                EndDate = new DateTime(1969, 07, 21, 3, 51, 0)
+                StartDate = new DateTime(2024, 07, 21, 3, 48, 0),
+                EndDate = new DateTime(2024, 07, 21, 3, 51, 0)
             };
             GanttDataSource Record4Child5 = new GanttDataSource()
             {
                 TaskId = 28,
                 TaskName = "Collect rock samples, photos and other mission controls",
-                StartDate = new DateTime(1969, 07, 21, 3, 52, 0),
-                EndDate = new DateTime(1969, 07, 21, 4, 50, 0)
+                StartDate = new DateTime(2024, 07, 21, 3, 52, 0),
+                EndDate = new DateTime(2024, 07, 21, 4, 50, 0)
             };
             Record4.SubTasks.Add(Record4Child1);
             Record4.SubTasks.Add(Record4Child2);
@@ -3657,57 +3676,57 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 TaskId = 29,
                 TaskName = "Lunar ascent",
-                StartDate = new DateTime(1969, 07, 21, 4, 51, 0),
+                StartDate = new DateTime(2024, 07, 21, 4, 51, 0),
                 SubTasks = new List<GanttDataSource>(),
             };
             GanttDataSource Record5Child1 = new GanttDataSource()
             {
                 TaskId = 30,
                 TaskName = "Climbing the eagle to ascent",
-                StartDate = new DateTime(1969, 07, 21, 4, 51, 0),
-                EndDate = new DateTime(1969, 07, 21, 5, 0, 0)
+                StartDate = new DateTime(2024, 07, 21, 4, 51, 0),
+                EndDate = new DateTime(2024, 07, 21, 5, 0, 0)
             };
             GanttDataSource Record5Child2 = new GanttDataSource()
             {
                 TaskId = 31,
                 TaskName = "Hatch closing",
-                StartDate = new DateTime(1969, 07, 21, 5, 1, 0),
-                EndDate = new DateTime(1969, 07, 21, 5, 1, 0)
+                StartDate = new DateTime(2024, 07, 21, 5, 1, 0),
+                EndDate = new DateTime(2024, 07, 21, 5, 1, 0)
             };
             GanttDataSource Record5Child3 = new GanttDataSource()
             {
                 TaskId = 32,
                 TaskName = "Final housekeeping",
-                StartDate = new DateTime(1969, 07, 21, 5, 2, 0),
-                EndDate = new DateTime(1969, 07, 21, 8, 0, 0)
+                StartDate = new DateTime(2024, 07, 21, 5, 2, 0),
+                EndDate = new DateTime(2024, 07, 21, 8, 0, 0)
             };
             GanttDataSource Record5Child4 = new GanttDataSource()
             {
                 TaskId = 33,
                 TaskName = "Resting of astronauts",
-                StartDate = new DateTime(1969, 07, 21, 8, 0, 0),
-                EndDate = new DateTime(1969, 07, 21, 15, 0, 0)
+                StartDate = new DateTime(2024, 07, 21, 8, 0, 0),
+                EndDate = new DateTime(2024, 07, 21, 15, 0, 0)
             };
             GanttDataSource Record5Child5 = new GanttDataSource()
             {
                 TaskId = 34,
                 TaskName = "Preparation for lift off and Ascent engine started",
-                StartDate = new DateTime(1969, 07, 21, 15, 0, 0),
-                EndDate = new DateTime(1969, 07, 21, 17, 54, 0)
+                StartDate = new DateTime(2024, 07, 21, 15, 0, 0),
+                EndDate = new DateTime(2024, 07, 21, 17, 54, 0)
             };
             GanttDataSource Record5Child6 = new GanttDataSource()
             {
                 TaskId = 35,
                 TaskName = "Eagle lifted off",
-                StartDate = new DateTime(1969, 07, 21, 17, 54, 0),
-                EndDate = new DateTime(1969, 07, 21, 21, 23, 0)
+                StartDate = new DateTime(2024, 07, 21, 17, 54, 0),
+                EndDate = new DateTime(2024, 07, 21, 21, 23, 0)
             };
             GanttDataSource Record5Child7 = new GanttDataSource()
             {
                 TaskId = 36,
                 TaskName = "Eagle’s travel toward Columbia",
-                StartDate = new DateTime(1969, 07, 21, 21, 24, 0),
-                EndDate = new DateTime(1969, 07, 21, 21, 35, 0)
+                StartDate = new DateTime(2024, 07, 21, 21, 24, 0),
+                EndDate = new DateTime(2024, 07, 21, 21, 35, 0)
             };
             Record5.SubTasks.Add(Record5Child1);
             Record5.SubTasks.Add(Record5Child2);
@@ -3721,22 +3740,22 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 TaskId = 37,
                 TaskName = "Return",
-                StartDate = new DateTime(1969, 07, 21, 21, 24, 0),
+                StartDate = new DateTime(2024, 07, 21, 21, 24, 0),
                 SubTasks = new List<GanttDataSource>(),
             };
             GanttDataSource Record6Child1 = new GanttDataSource()
             {
                 TaskId = 38,
                 TaskName = "Eagle docked with Columbia",
-                StartDate = new DateTime(1969, 07, 16, 21, 24, 0),
-                EndDate = new DateTime(1969, 07, 16, 21, 35, 0)
+                StartDate = new DateTime(2024, 07, 16, 21, 24, 0),
+                EndDate = new DateTime(2024, 07, 16, 21, 35, 0)
             };
             GanttDataSource Record6Child2 = new GanttDataSource()
             {
                 TaskId = 39,
                 TaskName = "Eagle’s ascent stage jettisoned into lunar orbit",
-                StartDate = new DateTime(1969, 07, 21, 21, 35, 0),
-                EndDate = new DateTime(1969, 07, 21, 23, 41, 0)
+                StartDate = new DateTime(2024, 07, 21, 21, 35, 0),
+                EndDate = new DateTime(2024, 07, 21, 23, 41, 0)
             };
             Record6.SubTasks.Add(Record6Child1);
             Record6.SubTasks.Add(Record6Child2);
@@ -3744,57 +3763,57 @@ namespace EJ2CoreSampleBrowser.Models
             {
                 TaskId = 40,
                 TaskName = "Decent toward earth  and splashdown",
-                StartDate = new DateTime(1969, 07, 21),
+                StartDate = new DateTime(2024, 07, 21),
                 SubTasks = new List<GanttDataSource>(),
             };
             GanttDataSource Record7Child1 = new GanttDataSource()
             {
                 TaskId = 41,
                 TaskName = "Spacecraft reaches 1/4th distance spanning between moon and earth",
-                StartDate = new DateTime(1969, 07, 21, 23, 50, 0),
-                EndDate = new DateTime(1969, 07, 22, 16, 40, 0)
+                StartDate = new DateTime(2024, 07, 21, 23, 50, 0),
+                EndDate = new DateTime(2024, 07, 22, 16, 40, 0)
             };
             GanttDataSource Record7Child2 = new GanttDataSource()
             {
                 TaskId = 42,
                 TaskName = "Spacecraft travels to midway point of journey",
-                StartDate = new DateTime(1969, 07, 22, 16, 0, 0),
-                EndDate = new DateTime(1969, 07, 23, 16, 0, 0)
+                StartDate = new DateTime(2024, 07, 22, 16, 0, 0),
+                EndDate = new DateTime(2024, 07, 23, 16, 0, 0)
             };
             GanttDataSource Record7Child3 = new GanttDataSource()
             {
                 TaskId = 43,
                 TaskName = "Spacecraft travels to 3/4th point of journey",
-                StartDate = new DateTime(1969, 07, 23, 16, 40, 0),
-                EndDate = new DateTime(1969, 07, 24, 10, 0, 0)
+                StartDate = new DateTime(2024, 07, 23, 16, 40, 0),
+                EndDate = new DateTime(2024, 07, 24, 10, 0, 0)
             };
             GanttDataSource Record7Child4 = new GanttDataSource()
             {
                 TaskId = 44,
                 TaskName = "Crew prepares for splashdown",
-                StartDate = new DateTime(1969, 07, 24, 11, 47, 0),
-                EndDate = new DateTime(1969, 07, 24, 16, 20, 0)
+                StartDate = new DateTime(2024, 07, 24, 11, 47, 0),
+                EndDate = new DateTime(2024, 07, 24, 16, 20, 0)
             };
             GanttDataSource Record7Child5 = new GanttDataSource()
             {
                 TaskId = 45,
                 TaskName = "Command and service modules separates",
-                StartDate = new DateTime(1969, 07, 24, 16, 20, 0),
-                EndDate = new DateTime(1969, 07, 24, 16, 35, 0)
+                StartDate = new DateTime(2024, 07, 24, 16, 20, 0),
+                EndDate = new DateTime(2024, 07, 24, 16, 35, 0)
             };
             GanttDataSource Record7Child6 = new GanttDataSource()
             {
                 TaskId = 46,
                 TaskName = "Command module re-enters the Earth’s atmosphere",
-                StartDate = new DateTime(1969, 07, 24, 16, 35, 0),
-                EndDate = new DateTime(1969, 07, 24, 16, 50, 0)
+                StartDate = new DateTime(2024, 07, 24, 16, 35, 0),
+                EndDate = new DateTime(2024, 07, 24, 16, 50, 0)
             };
             GanttDataSource Record7Child7 = new GanttDataSource()
             {
                 TaskId = 47,
                 TaskName = "Spacecraft splashes near USS hornet",
-                StartDate = new DateTime(1969, 07, 24, 16, 51, 0),
-                EndDate = new DateTime(1969, 07, 24, 16, 51, 0)
+                StartDate = new DateTime(2024, 07, 24, 16, 51, 0),
+                EndDate = new DateTime(2024, 07, 24, 16, 51, 0)
             };
 
             Record7.SubTasks.Add(Record7Child1);
@@ -3815,7 +3834,7 @@ namespace EJ2CoreSampleBrowser.Models
             return GanttDataSourceCollection;
         }
 
-        public static List<GanttDataSource> UnscheduledData()
+        public static List<GanttDataSource> UnscheduledData ()
         {
             List<GanttDataSource> ganttData = new List<GanttDataSource>();
             GanttDataSource record1 = new GanttDataSource()
@@ -3856,7 +3875,7 @@ namespace EJ2CoreSampleBrowser.Models
             return ganttData;
         }
 
-        public static List<GanttDataSource> SelfData()
+        public static List<GanttDataSource> SelfData ()
         {
             List<GanttDataSource> GanttDataSourceCollection = new List<GanttDataSource>();
 
@@ -3981,7 +4000,7 @@ namespace EJ2CoreSampleBrowser.Models
             return GanttDataSourceCollection;
         }
 
-        public static List<GanttDataSource> TempData()
+        public static List<GanttDataSource> TempData ()
         {
             List<GanttDataSource> GanttDataSourceCollection = new List<GanttDataSource>();
 
@@ -4393,7 +4412,7 @@ namespace EJ2CoreSampleBrowser.Models
             return GanttDataSourceCollection;
         }
 
-        public static List<GanttDataSource> VirtualData()
+        public static List<GanttDataSource> VirtualData ()
         {
             List<GanttDataSource> list = new List<GanttDataSource>();
             for (var i = 0; i < 50; i++)
@@ -4419,7 +4438,7 @@ namespace EJ2CoreSampleBrowser.Models
             }
             return list;
         }
-        public static List<GanttDataSource> LabelData()
+        public static List<GanttDataSource> LabelData ()
         {
             List<GanttDataSource> GanttDataSourceCollection = new List<GanttDataSource>();
 
@@ -4588,7 +4607,7 @@ namespace EJ2CoreSampleBrowser.Models
             return GanttDataSourceCollection;
         }
 
-        public static List<GanttDataSource> TooltipData()
+        public static List<GanttDataSource> TooltipData ()
         {
             List<GanttDataSource> GanttDataSourceCollection = new List<GanttDataSource>();
 
@@ -4757,7 +4776,7 @@ namespace EJ2CoreSampleBrowser.Models
             return GanttDataSourceCollection;
         }
 
-        public static List<ResourceGroupCollection> GetResourceGroup()
+        public static List<ResourceGroupCollection> GetResourceGroup ()
         {
             List<ResourceGroupCollection> GanttResourcesCollection = new List<ResourceGroupCollection>();
 
@@ -4810,7 +4829,7 @@ namespace EJ2CoreSampleBrowser.Models
             GanttResourcesCollection.Add(Record6);
             return GanttResourcesCollection;
         }
-        public static List<GanttResources> GetResources()
+        public static List<GanttResources> GetResources ()
         {
             List<GanttResources> GanttResourcesCollection = new List<GanttResources>();
 
@@ -4888,7 +4907,43 @@ namespace EJ2CoreSampleBrowser.Models
             GanttResourcesCollection.Add(Record12);
             return GanttResourcesCollection;
         }
-        public static List<GanttDataSource> ResourceData()
+        public static List<GanttResources> GetResourceAllocation ()
+        {
+            List<GanttResources> GanttResourcesCollection = new List<GanttResources>();
+
+            GanttResources Record1 = new GanttResources()
+            {
+                ResourceId = 1,
+                ResourceName = "Rose Fuller"
+            };
+            GanttResources Record2 = new GanttResources()
+            {
+                ResourceId = 2,
+                ResourceName = "Fuller King"
+            };
+            GanttResources Record3 = new GanttResources()
+            {
+                ResourceId = 3,
+                ResourceName = "Tamer Vinet"
+            };
+            GanttResources Record4 = new GanttResources()
+            {
+                ResourceId = 4,
+                ResourceName = "Van Jack"
+            };
+            GanttResources Record5 = new GanttResources()
+            {
+                ResourceId = 5,
+                ResourceName = "Bergs Anton"
+            };
+            GanttResourcesCollection.Add(Record1);
+            GanttResourcesCollection.Add(Record2);
+            GanttResourcesCollection.Add(Record3);
+            GanttResourcesCollection.Add(Record4);
+            GanttResourcesCollection.Add(Record5);
+            return GanttResourcesCollection;
+        }
+        public static List<GanttDataSource> ResourceData ()
         {
             List<GanttDataSource> GanttResourceSampleCollection = new List<GanttDataSource>();
 
@@ -4910,8 +4965,7 @@ namespace EJ2CoreSampleBrowser.Models
                 Work = 16,
                 Resources = new List<ResourceModel>
                 {
-                   new ResourceModel { ResourceId = 1, ResourceUnit = 70 },
-                   new ResourceModel { ResourceId = 6 }
+                   new ResourceModel { ResourceId = 4 }
                 }
             };
             GanttDataSource Record1Child2 = new GanttDataSource()
@@ -4920,12 +4974,10 @@ namespace EJ2CoreSampleBrowser.Models
                 TaskName = "Perform soil test",
                 StartDate = new DateTime(2024, 03, 29),
                 Duration = 4,
-                Work = 96,
+                Work = 32,
                 Resources = new List<ResourceModel>
                 {
-                    new ResourceModel { ResourceId = 2 },
-                    new ResourceModel{ ResourceId = 3 },
-                    new ResourceModel{ ResourceId = 5 }
+                    new ResourceModel { ResourceId = 1 }
                 }
             };
             GanttDataSource Record1Child3 = new GanttDataSource()
@@ -4933,13 +4985,12 @@ namespace EJ2CoreSampleBrowser.Models
                 TaskId = 4,
                 TaskName = "Soil test approval",
                 StartDate = new DateTime(2024, 03, 29),
-                Duration = 1,
+                Duration = 2,
                 Progress = 30,
                 Work = 16,
                 Resources = new List<ResourceModel>
                 {
-                   new ResourceModel { ResourceId = 8 },
-                new ResourceModel { ResourceId = 9, ResourceUnit = 50 }
+                   new ResourceModel { ResourceId = 2 }
                 }
             };
             Record1.SubTasks.Add(Record1Child1);
@@ -4964,7 +5015,7 @@ namespace EJ2CoreSampleBrowser.Models
                 Work = 30,
                 Resources = new List<ResourceModel>
                 {
-                   new ResourceModel { ResourceId = 4, ResourceUnit = 60 }
+                   new ResourceModel { ResourceId = 3 }
                 }
             };
             GanttDataSource Record2Child2 = new GanttDataSource()
@@ -4976,8 +5027,7 @@ namespace EJ2CoreSampleBrowser.Models
                 Work = 48,
                 Resources = new List<ResourceModel>
                 {
-                   new ResourceModel { ResourceId = 8 },
-                 new ResourceModel{ ResourceId = 4 }
+                 new ResourceModel{ ResourceId = 2 }
                 }
             };
             GanttDataSource Record2Child3 = new GanttDataSource()
@@ -4989,8 +5039,7 @@ namespace EJ2CoreSampleBrowser.Models
                 Work = 60,
                 Resources = new List<ResourceModel>
                 {
-                   new ResourceModel { ResourceId = 12 },
-                 new ResourceModel{ ResourceId = 5, ResourceUnit = 70 }
+                   new ResourceModel { ResourceId = 4 }
                 }
             };
             Record2.SubTasks.Add(Record2Child1);
@@ -5002,12 +5051,12 @@ namespace EJ2CoreSampleBrowser.Models
                 TaskId = 9,
                 TaskName = "Sign contract",
                 StartDate = new DateTime(2024, 04, 01),
-                Duration = 1,
+                Duration = 2,
                 Predecessor = "8",
                 Progress = 30,
                 Resources = new List<ResourceModel>
                 {
-                   new ResourceModel { ResourceId = 12 }
+                   new ResourceModel { ResourceId = 5 }
             }
             };
             GanttResourceSampleCollection.Add(Record1);
@@ -5016,7 +5065,7 @@ namespace EJ2CoreSampleBrowser.Models
             return GanttResourceSampleCollection;
         }
 
-        public static List<GanttDataSource> ResourceViewData()
+        public static List<GanttDataSource> ResourceViewData ()
         {
             List<GanttDataSource> GanttResourceSampleCollection = new List<GanttDataSource>();
 
@@ -5156,7 +5205,7 @@ namespace EJ2CoreSampleBrowser.Models
                 Work = 24,
                 Resources = new List<ResourceModel>
                 {
-                    new ResourceModel { ResourceId = 2 , ResourceUnit = 100}
+                    new ResourceModel { ResourceId = 2, ResourceUnit = 100 }
                 }
             };
             GanttDataSource Record2Child7 = new GanttDataSource()
@@ -5193,7 +5242,7 @@ namespace EJ2CoreSampleBrowser.Models
             GanttResourceSampleCollection.Add(Record3);
             return GanttResourceSampleCollection;
         }
-        public static List<GanttDataSource> TaskModeData()
+        public static List<GanttDataSource> TaskModeData ()
         {
             List<GanttDataSource> GanttDataSourceCollection = new List<GanttDataSource>();
 
@@ -5350,7 +5399,7 @@ namespace EJ2CoreSampleBrowser.Models
             GanttDataSourceCollection.Add(Record3);
             return GanttDataSourceCollection;
         }
-        public static List<GanttDataSource> MultiTaskbarData()
+        public static List<GanttDataSource> MultiTaskbarData ()
         {
             List<GanttDataSource> GanttDataSourceCollection = new List<GanttDataSource>();
 
@@ -5492,7 +5541,7 @@ namespace EJ2CoreSampleBrowser.Models
                 Work = 72,
                 Resources = new List<ResourceModel>
                 {
-                    new ResourceModel { ResourceId = 3, ResourceUnit = 100}
+                    new ResourceModel { ResourceId = 3, ResourceUnit = 100 }
                 },
             };
 
@@ -5528,7 +5577,6 @@ namespace EJ2CoreSampleBrowser.Models
                 StartDate = new DateTime(2024, 04, 01),
                 Duration = 2,
                 Progress = 30,
-                Work = 16,
                 Resources = new List<ResourceModel>
                 {
                     new ResourceModel { ResourceId = 4, ResourceUnit = 100 }
@@ -5541,10 +5589,9 @@ namespace EJ2CoreSampleBrowser.Models
                 StartDate = new DateTime(2024, 04, 04),
                 Duration = 2,
                 Predecessor = "14FS+1",
-                Work = 16,
                 Resources = new List<ResourceModel>
                 {
-                    new ResourceModel { ResourceId = 4, ResourceUnit = 100}
+                    new ResourceModel { ResourceId = 4, ResourceUnit = 100 }
                 }
             };
             GanttDataSource Record4Child3 = new GanttDataSource()
@@ -5555,7 +5602,6 @@ namespace EJ2CoreSampleBrowser.Models
                 Duration = 2,
                 Progress = 30,
                 Predecessor = "15",
-                Work = 16,
                 Resources = new List<ResourceModel>
                 {
                     new ResourceModel { ResourceId = 4, ResourceUnit = 100 }
@@ -5580,7 +5626,6 @@ namespace EJ2CoreSampleBrowser.Models
                 StartDate = new DateTime(2024, 04, 03),
                 Duration = 2,
                 Progress = 30,
-                Work = 16,
                 Resources = new List<ResourceModel>
                 {
                     new ResourceModel { ResourceId = 5, ResourceUnit = 100 }
@@ -5594,7 +5639,6 @@ namespace EJ2CoreSampleBrowser.Models
                 StartDate = new DateTime(2024, 04, 08),
                 Duration = 4,
                 Predecessor = "18",
-                Work = 32,
                 Resources = new List<ResourceModel>
                 {
                     new ResourceModel { ResourceId = 5, ResourceUnit = 100 }
@@ -5607,7 +5651,6 @@ namespace EJ2CoreSampleBrowser.Models
                 StartDate = new DateTime(2024, 04, 11),
                 Duration = 2,
                 Progress = 30,
-                Work = 16,
                 Predecessor = "19FS+1",
                 Resources = new List<ResourceModel>
                 {
@@ -5626,7 +5669,7 @@ namespace EJ2CoreSampleBrowser.Models
             GanttDataSourceCollection.Add(Record5);
             return GanttDataSourceCollection;
         }
-        public static List<ResourceGroupCollection> MultitaskbarResource()
+        public static List<ResourceGroupCollection> MultitaskbarResource ()
         {
             List<ResourceGroupCollection> GanttResourcesCollection = new List<ResourceGroupCollection>();
 
@@ -5672,7 +5715,7 @@ namespace EJ2CoreSampleBrowser.Models
             GanttResourcesCollection.Add(Record5);
             return GanttResourcesCollection;
         }
-        public static List<GanttDataSource> SplitTasksData()
+        public static List<GanttDataSource> SplitTasksData ()
         {
             List<GanttDataSource> GanttDataSourceCollection = new List<GanttDataSource>();
 
@@ -5806,7 +5849,7 @@ namespace EJ2CoreSampleBrowser.Models
             GanttDataSourceCollection.Add(Record1);
             return GanttDataSourceCollection;
         }
-        public static List<GanttDataSource> TimezoneData()
+        public static List<GanttDataSource> TimezoneData ()
         {
             List<GanttDataSource> GanttDataSourceCollection = new List<GanttDataSource>();
 
@@ -5930,7 +5973,7 @@ namespace EJ2CoreSampleBrowser.Models
 
             return GanttDataSourceCollection;
         }
-        public static List<GanttDataSource> OverviewData()
+        public static List<GanttDataSource> OverviewData ()
         {
             List<GanttDataSource> Tasks = new List<GanttDataSource>()
             {

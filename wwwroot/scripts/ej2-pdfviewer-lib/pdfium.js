@@ -3745,6 +3745,7 @@ var PDFiumModule = (() => {
         });
         FS.FSNode = FSNode;
         FS.staticInit();
+        Module["FS"] = FS;
         var wasmImports = {
             "__call_sighandler": ___call_sighandler,
             "__syscall_fcntl64": ___syscall_fcntl64,

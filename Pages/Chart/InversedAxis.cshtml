@@ -1,0 +1,123 @@
+﻿@page
+@model EJ2CoreSampleBrowser_NET8.Pages.Chart.InversedAxisModel
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+    <div class="control-section">
+        <div id="container" align="center">
+            <ejs-chart id="lineContainer" title="Exchange Rate(INR per USD)" pointRender="labelRender" load="load">
+                <e-chart-tooltipsettings enable="true">
+                </e-chart-tooltipsettings>
+                <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category"
+                                      opposedPosition="true"
+                                      isInversed="true">
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                    <e-majorticklines width="0"></e-majorticklines>
+                </e-chart-primaryxaxis>
+                <e-chart-primaryyaxis edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift"
+                                      labelIntersectAction="@Syncfusion.EJ2.Charts.LabelIntersectAction.Rotate45"
+                                      isInversed="true">
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                    <e-majorticklines width="0"></e-majorticklines>
+                    <e-linestyle width="0"></e-linestyle>
+                    <e-labelstyle color="transparent"></e-labelstyle>
+                </e-chart-primaryyaxis>
+                <e-chart-chartarea>
+                    <e-chartarea-border width="0"></e-chartarea-border>
+                </e-chart-chartarea>
+                <e-chart-legendsettings visible="false">
+                </e-chart-legendsettings>
+                <e-series-collection>
+                    <e-series dataSource="@Model.ChartPoints" name="Rate" xName="Year" width="2" opacity="1" yName="ExchangeRate" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                        <e-series-marker>
+                            <e-series-datalabel visible="true" position="@Syncfusion.EJ2.Charts.LabelPosition.Top">
+                                <e-font color="#ffffff" fontWeight="600"></e-font>
+                            </e-series-datalabel>
+                        </e-series-marker>
+                    </e-series>
+                </e-series-collection>
+            </ejs-chart>
+        </div>
+    </div>
+    <script src="~/scripts/chart/financial-data.js"></script>
+    <script>
+        function load(args) {
+            var indexedTheme = location.hash.split('/')[1];
+            indexedTheme = indexedTheme ? indexedTheme : 'Fluent2';
+            args.chart.theme = (indexedTheme.charAt(0).toUpperCase() + indexedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5'));
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+        }
+        function labelRender(args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Fluent2';
+            var materialColors = ["#00bdae", "#404041", "#357cd2", "#e56590", "#f8b883", "#70ad47", "#dd8abd", "#7f84e8", "#7bb4eb",
+                "#ea7a57", "#404041", "#00bdae"];
+            var fabricColors = ["#4472c4", "#ed7d31", "#ffc000", "#70ad47", "#5b9bd5",
+                "#c1c1c1", "#6f6fe2", "#e269ae", "#9e480e", "#997300", "#4472c4", "#70ad47", "#ffc000", "#ed7d31"];
+            var bootstrapColors = ["#a16ee5", "#f7ce69", "#55a5c2", "#7ddf1e", "#ff6ea6",
+                "#7953ac", "#b99b4f", "#407c92", "#5ea716", "#b91c52"];
+            var highContrastColors = ["#79ECE4", "#E98272", "#DFE6B6", "#C6E773", "#BA98FF",
+                "#FA83C3", "#00C27A", "#43ACEF", "#D681EF", "#D8BC6E"];
+            var fluentColors = ['#1AC9E6', '#DA4CB2', '#EDBB40', '#AF4BCF', '#FF7266', '#1BD565', '#EE993D', '#5887FF', '#EC548D',
+                '#7D39C0'];
+            var fluentDarkColors = ['#1AC9E6', '#DA4CB2', '#EDBB40', '#AF4BCF', '#FF7266', '#1BD565', '#EE993D', '#5887FF', '#EC548D',
+                '#7D39C0'];
+            var fluent2Colors = ["#6200EE", "#09AF74", "#0076E5", "#CB3587", "#E7910F", "#0364DE", "#66CD15", "#F3A93C", "#107C10",
+                "#C19C00"];
+            var fluent2HighContrastColors = ["#9BB449", "#2A72D5", "#43B786", "#3F579A", "#584EC6", "#E85F9C", "#6E7A89", "#EA6266",
+                "#0B6A0B", "#C19C00"];
+            if (selectedTheme && selectedTheme.indexOf('fabric') > -1) {
+                args.fill = fabricColors[args.point.index % 10];
+            } else if (selectedTheme === 'material') {
+                args.fill = materialColors[args.point.index % 10];
+            } else if (selectedTheme === 'highcontrast') {
+                args.fill = highContrastColors[args.point.index % 10];
+            } else if (selectedTheme === 'fluent') {
+                args.fill = fluentColors[args.point.index % 10];
+            } else if (selectedTheme === 'fluent-dark') {
+                args.fill = fluentDarkColors[args.point.index % 10];
+            } else if (selectedTheme === 'fluent2') {
+                args.fill = fluent2Colors[args.point.index % 10];
+            } else if (selectedTheme === 'fluent2-highcontrast' || selectedTheme === 'fluent2-dark') {
+                args.fill = fluent2HighContrastColors[args.point.index % 10];
+            } else {
+                args.fill = bootstrapColors[args.point.index % 10];
+            }
+        }
+    </script>
+}
+@*custom code start*@
+
+@section Meta{
+    <meta name="description" content="This example demonstrates the Inversed Axis in ASP.NET Core Chart control. Explore here for more details." />
+}
+@*custom code end*@
+@section ActionDescription{
+
+    <div id="action-description">
+        <p>
+            This sample uses an inverse axis in a chart to plot an exchange rate over a period of time.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this example, you can see how to invert the axis of the chart. Here, both X and Y axis are inverse by setting the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.ChartAxis.html#Syncfusion_EJ2_Charts_ChartAxis_IsInversed" aria-label="Navigate to the IsInversed property reference for ASP.NET Core ChartAxis">IsInversed</a> property in axis to <b>true</b>.
+        </p>
+        <p>
+            <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover over a data point or tap one on touch-enabled devices.
+        </p>
+        <p>
+            More information about the inverse axis can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/axis-customization#inversed-axis" aria-label="Navigate to the documentation for Inversed Axis in ASP.NET Core Chart control">documentation section</a>.
+        </p>
+    </div>
+
+}
+@section Title{
+    <title>ASP.NET Core Chart Inversed Axis Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Inversed Axis in ASP.NET Core Chart Control</h1>
+}

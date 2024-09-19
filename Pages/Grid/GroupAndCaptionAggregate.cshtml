@@ -1,0 +1,130 @@
+@page
+@model EJ2CoreSampleBrowser_NET8.Pages.Grid.GroupAndCaptionAggregateModel
+@{
+    ViewData["Title"] = "GroupAndCaptionAggregate";
+}
+
+<h2>GroupAndCaptionAggregate</h2>
+
+@section ControlsSection{
+
+<div class="control-section">
+    <ejs-grid id="group-aggregate-grid" dataSource="@Model.DataSource" height="300" enableHover="false" gridLines="Vertical" allowGrouping="true" allowSorting="true" allowMultiSorting="true" allowFiltering="true">        
+        <e-grid-aggregates>
+            <e-grid-aggregate>
+                <e-aggregate-columns>
+                    <e-aggregate-column field="EnergyProduced" format="N2" type="Sum" footerTemplate="Total Energy Produced: ${Sum} KWh"></e-aggregate-column>
+                    <e-aggregate-column field="EnergyProduced" format="N2" type="Max" groupCaptionTemplate="<div><span class='e-maximum'>Max : ${Max}</span></div>"></e-aggregate-column>
+                    <e-aggregate-column field="EnergyProduced" format="N2"  type="Sum" groupFooterTemplate="Total Energy Produced: ${Sum} KWh"></e-aggregate-column>
+                </e-aggregate-columns>
+            </e-grid-aggregate>
+            <e-grid-aggregate>
+                <e-aggregate-columns>
+                    <e-aggregate-column field="EnergyProduced" format="N2" type="Average" footerTemplate="Average Energy Produced: ${Average} KWh"></e-aggregate-column>    
+                </e-aggregate-columns>
+            </e-grid-aggregate>
+        </e-grid-aggregates>
+        <e-grid-groupsettings showDropArea = "false" showGroupedColumn ="true" columns="@(new string[] { "ConsumptionCategory"})"></e-grid-groupsettings>
+        <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
+        <e-grid-columns>
+            <e-grid-column field="ID" visible='false' isPrimaryKey='true'></e-grid-column>
+            <e-grid-column field="Month" headerText="Month" clipMode="EllipsisWithTooltip" width="120" textAlign="Right" format="yMd"></e-grid-column>
+            <e-grid-column field="ConsumptionCategory" clipMode="EllipsisWithTooltip" headerText="Category"  textAlign="Left" width="130"></e-grid-column>
+                <e-grid-column headerTemplate="#energyTemplate" textAlign="Center" columns=@(new List<Syncfusion.EJ2.Grids.GridColumn>() { new Syncfusion.EJ2.Grids.GridColumn { Field = "EnergyConsumed", Width = "150", HeaderText = "Consumed", ClipMode=Syncfusion.EJ2.Grids.ClipMode.EllipsisWithTooltip, TextAlign= Syncfusion.EJ2.Grids.TextAlign.Right},
+                new Syncfusion.EJ2.Grids.GridColumn { Field = "EnergyProduced", Width = "300", HeaderText = "Produced",  TextAlign= Syncfusion.EJ2.Grids.TextAlign.Right } })></e-grid-column>
+            <e-grid-column field="WeatherCondition" headerText="Weather" clipMode="EllipsisWithTooltip" textAlign="Right" width="120"></e-grid-column>
+            <e-grid-column field="EnergyPrice" headerText="Price ($)" format="C2" clipMode="EllipsisWithTooltip" textAlign="Right" width="130"></e-grid-column>
+        </e-grid-columns>
+    </ejs-grid>
+    </div>
+    <style>
+    .e-maximum{
+        color:#008000;
+        font-weight: bold;
+    }
+    .e-minimum{
+        color:#dc3545;
+        font-weight: bold;
+    }
+    
+    .bootstrap5 .e-grid .e-icon.energy.e-icons::before,
+    .bootstrap5-dark .e-grid .e-icon.energy.e-icons::before {
+        content: '\e8cd';
+    }
+    
+    .highcontrast .e-grid .e-icon.energy.e-icons::before {
+        content: '\e991';
+    }
+    
+    .tailwind .e-grid .e-icon.energy.e-icons::before,
+    .tailwind-dark .e-grid .e-icon.energy.e-icons::before,
+    .fluent .e-grid .e-icon.energy.e-icons::before,
+    .fluent-dark .e-grid .e-icon.energy.e-icons::before,
+    .fluent2 .e-grid .e-icon.energy.e-icons::before,
+    .fluent2-dark .e-grid .e-icon.energy.e-icons::before,
+    .fluent2-highcontrast .e-grid .e-icon.energy.e-icons::before,
+    .material3 .e-grid .e-icon.energy.e-icons::before,
+    .material3-dark .e-grid .e-icon.energy.e-icons::before {
+        content: '\e8cd';
+    }
+
+    #group-aggregate-grid.e-grid tr.e-altrow .e-rowcell:not(.e-selectionbackground.e-active) {
+        background-color: rgb(228 228 228 / 15%);
+    }
+</style>
+<script id="energyTemplate" type="text/x-template"> 
+    <span class="energy e-icons e-icon"></span>
+    <span> Energy (KWh)</span>
+</script>
+}
+@section ActionDescription{
+	<div id="action-description">
+		<p>This sample demonstrates the aggregate functionality of the Grid. In this sample, the “Energy Produced” column will displays its <code>sum</code> aggregate value in the group footer and the <code>max</code> aggregate values in group caption. </p>
+	</div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Group and Caption Aggregate in ASP.NET Core Data Grid control. Explore here for more details."/>
+                }
+
+
+@section Description{    
+    <div id="description">
+		<p>The Grid supports displaying aggregates in its footer, group footer and group caption.
+    The aggregate configurations can be provided by the <code>aggregates</code> property.</p>
+    <p>Built-in aggregates:</p>
+     <ul>
+        <li><code>Sum</code></li>     
+        <li><code>Average</code></li>     
+        <li><code>Min</code></li>     
+        <li><code>Max</code></li>     
+        <li><code>Count</code></li>     
+        <li><code>TrueCount</code></li>     
+        <li><code>FalseCount</code></li>     
+        <li><code>Custom</code> - Requires the <code>customAggregate</code> property to perform the aggregation.
+        The custom aggregate value can be accessed inside template using the key <code>${custom}</code>.</li>     
+    </ul>    
+    <p>
+        In this demo, the <code>groupFooterTemplate</code> property is used to display the group footer 
+        aggregation for the <strong><i>Energy Produced</i></strong> column and the <code>groupCaptionTemplate</code> 
+        property is used to display its group caption aggregation.
+    </p>    
+    <p>    To enable group footer aggregation for the <strong><i>Energy Produced</i></strong> column, use the <code>Sum</code> aggregate type by setting the <code>type</code> and set the 
+    <code>field</code> property to <strong><i>EnergyProduced</i></strong> which will be used to perform the aggregation.
+        The aggregate value is accessed inside the <code>groupFooterTemplate</code> using its <code>type</code> name (<code>${Sum}</code>).
+    </p>
+    <p>    To enable group caption aggregation for the <strong><i>Energy Produced</i></strong> column, the <code>max</code> and <code>min</code>aggregate 
+        types are used by setting the <code>type</code> and the <code>field</code> property is set to <strong><i>EnergyProduced</i></strong>, which will be used to perform the aggregation.
+        The aggregate value is accessed inside the<code>groupCaptionTemplate</code> using its <code>type</code> name (<code>${Max}</code> and <code>${Min}</code>).
+    </p>
+    <p>In this sample, we use the <code>groupCaptionTemplate</code> to show multiple aggregate values.</p>
+    <p>The template expression should be provided inside the <code>${...}</code> the interpolation syntax.</p>
+	
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Data Grid Group and Caption Aggregate Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Group and Caption Aggregate in ASP.NET Core Data Grid Control</h1>
+                }

@@ -1,0 +1,96 @@
+﻿@page
+@model EJ2CoreSampleBrowser_NET8.Pages.Excel.PivotTable
+@section ActionDescription {
+    This sample demonstrates how to use PivotTable in spreadsheets using XlsIO.
+}
+@section Meta {
+    <meta name="description" content="This example demonstrates the Pivot Table in ASP.NET Core Excel (XlsIO) library. Explore here for more details." />
+}
+@section Description {
+        When there is a need to summarize large reports, Excel allows you to summarize data through pivot table insertion. Microsoft Excel supplies various built-in styles for pivot tables, allowing the creation of pivot tables with rich formats and more flexibility in summarizing reports.
+    <br />
+    <br />
+    <b>Features:</b>
+    <br />
+    <br />
+    <ul>
+        <li>Creating pivot tables from template data</li>
+        <li>Customizing pivot tables with various properties</li>
+        <li>Formatting pivot tables with built-in styles</li>
+    </ul>
+    <br />
+}
+@section ControlsSection {
+    <div class="control-section">
+        @{
+            Html.BeginForm("pivottable", "excel", FormMethod.Post);
+            {
+                <div class="rowdiv">
+                    <p style="font-weight:normal">
+                        Click the "Create Document" button to view the created Excel document and click the "Customize Pivot Table" button to view the Excel document created with customized pivot table. Please note that the Microsoft Excel viewer or Microsoft Excel is required to view the Excel document.
+                    </p>
+                </div>
+                <br />
+                <div class="rowdiv">
+                    <div class="celldiv">
+                        <label style="font-weight:normal">
+                            Page Filter :
+                        </label>
+                        <input id="ckbPageFilter" type="checkbox" name="PageFilter" checked="checked" value="PageFilter" onclick="MultipleFilterDisable();" />
+                        <label for="rbtnPageFilter" style="font-weight:normal">
+                            Page Filter
+                        </label>
+                        <input id="ckbMultiplePageFilter" type="checkbox" name="MultiplePageFilter" value="MultiplePageFilter" onclick="PageFilterDisable();" />
+                        <label for="rbtnMultiplePageFilter" style="font-weight:normal">
+                            Multiple Page Filter
+                        </label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                    <br />
+                    <div class="celldiv">
+                        <label style="font-weight:normal">
+                            Row and Column Filter :
+                        </label>
+                        <input id="ckbRowFilter" type="checkbox" name="RowFilter" value="RowFilter" />
+                        <label for="rbtnRowFilter" style="font-weight:normal">
+                            Row Filter
+                        </label>
+                        <input id="ckbColumnFilter" type="checkbox" name="ColumnFilter" value="ColumnFilter" />
+                        <label for="rbtnColumnFilter" style="font-weight:normal">
+                            Column Filter
+                        </label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                    <br />
+                    <div class="celldiv">
+                        <input id="ckbApplyGrouping" type="checkbox" name="ApplyGrouping" value="ApplyGrouping" />
+                        <label for="ApplyGrouping" style="font-weight:normal">
+                            Apply Grouping
+                        </label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                    <div class="celldiv">
+                        <input id="createdocument" class="e-btn" name="button" type="submit" value="Create Document" style="width: 200px;text-transform:capitalize" />
+                        <input id="customizepivottable" class="e-btn" name="button" type="submit" value="Customize Pivot Table"
+                               style="width: 200px;text-transform:capitalize" />
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    function PageFilterDisable() {
+                        document.getElementById("ckbPageFilter").checked = false;
+                    }
+                    function MultipleFilterDisable() {
+                        document.getElementById("ckbMultiplePageFilter").checked = false;
+                    }
+                </script>
+                Html.EndForm();
+            }
+        }
+    </div>
+}
+@section Title {
+    <title>ASP.NET Core Excel (XlsIO) library - Pivot Table Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Pivot Table in ASP.NET Core Excel (XlsIO) Library</h1>
+}

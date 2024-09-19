@@ -15,7 +15,7 @@ window.samplesList = [
                 "category": "PDF",
                 "order": 0,
                 "component": "PDF",
-                "dir": "Pdf",
+                "dir": "Pdf",                
                 "parentId": "046",
                 "uid": "00464600"
             },
@@ -57,7 +57,11 @@ window.samplesList = [
                 "component": "PDF",
                 "dir": "Pdf",
                 "parentId": "046",
-                "uid": "00464646"
+                "uid": "00464646",
+                "sourceFiles": [
+                    { "displayName": "CompressExistingPDF.cshtml", path: "../Views/Pdf/CompressExistingPDF.cshtml" },
+                    { "displayName": "CompressExistingPDFController.cs", path: "../Controllers/PDF/CompressExistingPDFController.cs" }
+                ]
             },
             {
                 "url": "TextFlow",
@@ -157,7 +161,11 @@ window.samplesList = [
                 "component": "PDF",
                 "dir": "Pdf",
                 "parentId": "046",
-                "uid": "00464612"
+                "uid": "00464612",
+                "sourceFiles": [
+                    { "displayName": "AdventureCycle.cshtml", path: "../Views/Pdf/AdventureCycle.cshtml" },
+                    { "displayName": "AdventureCycleController.cs", path: "../Controllers/PDF/AdventureCycleController.cs" }
+                ]
             },
             {
                 "url": "TableFeatures",
@@ -187,7 +195,11 @@ window.samplesList = [
                 "component": "PDF",
                 "dir": "Pdf",
                 "parentId": "046",
-                "uid": "00464615"
+                "uid": "00464615",
+                "sourceFiles": [
+                    { "displayName": "FindText.cshtml", path: "../Views/Pdf/FindText.cshtml" },
+                    { "displayName": "FindTextController.cs", path: "../Controllers/PDF/FindTextController.cs" }
+                ]
             },
 	    {
                 "url": "ImageExtraction",
@@ -260,8 +272,8 @@ window.samplesList = [
                 "uid": "00464659",
                 "parentId": "038",
                 "sourceFiles": [
-                    { "displayName": "htmltopdfcontroller.cs", path: "../PDF/HtmlToPDFController.txt" },
-                    { "displayName": "htmltopdf.cshtml", path: "../PDF/HtmltoPDFConversion.txt" }
+                    { "displayName": "HtmltoPDF.cshtml", path: "../PDF/HtmltoPDFConversion.txt" },
+                    { "displayName": "HtmlToPDFController.cs", path: "../PDF/HtmlToPDFController.txt" }
                 ]
             },
             {
@@ -292,7 +304,11 @@ window.samplesList = [
                 "component": "PDF",
                 "dir": "Pdf",
                 "parentId": "046",
-                "uid": "00464644"
+                "uid": "00464644",
+                "sourceFiles": [
+                    { "displayName": "DigitalSignatureValidation.cshtml", path: "../Views/Pdf/DigitalSignatureValidation.cshtml" },
+                    { "displayName": "DigitalSignatureValidationController.cs", path: "../Controllers/PDF/DigitalSignatureValidationController.cs" }
+                ]
             },
             {
                 "url": "Redaction",
@@ -352,7 +368,11 @@ window.samplesList = [
                 "component": "PDF",
                 "dir": "Pdf",
                 "parentId": "046",
-                "uid": "00464643"
+                "uid": "00464643",
+                "sourceFiles": [
+                    { "displayName": "FindPDFCorruption.cshtml", path: "../Views/Pdf/FindPDFCorruption.cshtml" },
+                    { "displayName": "FindPDFCorruptionController.cs", path: "../Controllers/PDF/FindPDFCorruptionController.cs" }
+                ]
             },
             {
                 "url": "InteractiveFeatures",
@@ -372,7 +392,11 @@ window.samplesList = [
                 "component": "PDF",
                 "dir": "Pdf",
                 "parentId": "046",
-                "uid": "00464624"
+                "uid": "00464624",
+                "sourceFiles": [
+                    { "displayName": "FormFilling.cshtml", path: "../Views/Pdf/FormFilling.cshtml" },
+                    { "displayName": "FormFillingController.cs", path: "../Controllers/PDF/FormFillingController.cs" }
+                ]
             },
             {
                 "url": "XFAFormCreation",
@@ -409,6 +433,7 @@ window.samplesList = [
                 "name": "Annotations",
                 "category": "User Interaction",
                 "order": 12,
+                "type": "update",
                 "component": "PDF",
                 "dir": "Pdf",
                 "parentId": "046",
@@ -471,7 +496,6 @@ window.samplesList = [
                 "order": 14,
                 "component": "PDF",
                 "dir": "Pdf",
-                 "type": "update",
                 "parentId": "046",
                 "uid": "00464633"
             },
@@ -573,7 +597,11 @@ window.samplesList = [
               "component": "PdfViewer",
               "dir": "PdfViewer",
               "parentId": "048",
-              "uid": "0048480"
+              "uid": "0048480",
+			  "sourceFiles": [
+                    { "displayName": "Default.cshtml", path: "../Views/PdfViewer/Default.cshtml" },
+                    { "displayName": "DefaultController.cs", path: "../Controllers/PdfViewer/DefaultController.cs" }
+                ]
           },
           {
               "url": "ReadOnly",
@@ -584,6 +612,10 @@ window.samplesList = [
               "dir": "PdfViewer",
               "parentId": "048",
               "uid": "0048481",
+			  "sourceFiles": [
+                    { "displayName": "ReadOnly.cshtml", path: "../Views/PdfViewer/ReadOnly.cshtml" },
+                    { "displayName": "ReadOnlyController.cs", path: "../Controllers/PdfViewer/ReadOnlyController.cs" }
+                ]
           },
           {
               "url": "DocumentList",
@@ -594,6 +626,10 @@ window.samplesList = [
               "dir": "PdfViewer",
               "parentId": "048",
               "uid": "0048482",
+			  "sourceFiles": [
+                    { "displayName": "DocumentList.cshtml", path: "../Views/PdfViewer/DocumentList.cshtml" },
+                    { "displayName": "DocumentListController.cs", path: "../Controllers/PdfViewer/DocumentListController.cs" }
+                ]
           },
           {
               "url": "MultiFormatViewer",
@@ -603,7 +639,11 @@ window.samplesList = [
               "component": "PdfViewer",
               "dir": "PdfViewer",
               "parentId": "048",
-              "uid": "0048492",
+              "uid": "0048483",
+			  "sourceFiles": [
+                    { "displayName": "MultiFormatViewer.cshtml", path: "../Views/PdfViewer/MultiFormatViewer.cshtml" },
+                    { "displayName": "MultiFormatViewerController.cs", path: "../Controllers/PdfViewer/MultiFormatViewerController.cs" }
+                ]
           },
           {
               "url": "OrganizePages",
@@ -613,9 +653,28 @@ window.samplesList = [
               "component": "PdfViewer",
               "dir": "PdfViewer",
               "parentId": "048",
-              "uid": "0048483",
+              "uid": "0048484",
               "type": "update",
+			  "sourceFiles": [
+                    { "displayName": "OrganizePages.cshtml", path: "../Views/PdfViewer/OrganizePages.cshtml" },
+                    { "displayName": "OrganizePagesController.cs", path: "../Controllers/PdfViewer/OrganizePagesController.cs" }
+                ]
           },
+		  {
+                "url": "Redaction",
+                "name": "Redaction",
+                "category": "Editor",
+                "order": 3,
+                "component": "PdfViewer",
+                "dir": "PdfViewer",
+                "parentId": "048",
+                "uid": "0048485",
+                "type": "new",
+                "sourceFiles": [
+                    { "displayName": "Redaction.cshtml", path: "../Views/PdfViewer/Redaction.cshtml" },
+                    { "displayName": "RedactionController.cs", path: "../Controllers/PdfViewer/RedactionController.cs" }
+                ]
+            },
           {
               "url": "CustomToolbar",
               "name": "Toolbar",
@@ -624,7 +683,11 @@ window.samplesList = [
               "component": "PdfViewer",
               "dir": "PdfViewer",
               "parentId": "048",
-              "uid": "0048484",
+              "uid": "0048486",
+			  "sourceFiles": [
+                    { "displayName": "CustomToolbar.cshtml", path: "../Views/PdfViewer/CustomToolbar.cshtml" },
+                    { "displayName": "CustomToolbarController.cs", path: "../Controllers/PdfViewer/CustomToolbarController.cs" }
+                ]
           },
           {
               "url": "CustomContextMenu",
@@ -634,7 +697,11 @@ window.samplesList = [
               "component": "PdfViewer",
               "dir": "PdfViewer",
               "parentId": "048",
-              "uid": "0048485",
+              "uid": "0048487",
+			  "sourceFiles": [
+                    { "displayName": "CustomContextMenu.cshtml", path: "../Views/PdfViewer/CustomContextMenu.cshtml" },
+                    { "displayName": "CustomContextMenuController.cs", path: "../Controllers/PdfViewer/CustomContextMenuController.cs" }
+                ]
           },
           {
               "url": "RightToLeft",
@@ -646,7 +713,11 @@ window.samplesList = [
               "dir": "PdfViewer",
               "parentId": "048",
 
-              "uid": "0048486"
+              "uid": "0048488",
+			  "sourceFiles": [
+                    { "displayName": "RightToLeft.cshtml", path: "../Views/PdfViewer/RightToLeft.cshtml" },
+                    { "displayName": "RightToLeftController.cs", path: "../Controllers/PdfViewer/RightToLeftController.cs" }
+                ]
           },
           {
               "url": "FormFilling",
@@ -658,7 +729,11 @@ window.samplesList = [
               "dir": "PdfViewer",
               "parentId": "048",
 
-              "uid": "0048487"
+              "uid": "0048489",
+			  "sourceFiles": [
+                    { "displayName": "FormFilling.cshtml", path: "../Views/PdfViewer/FormFilling.cshtml" },
+                    { "displayName": "FormFillingController.cs", path: "../Controllers/PdfViewer/FormFillingController.cs" }
+                ]
           },
           {
               "url": "FormDesigner",
@@ -670,8 +745,47 @@ window.samplesList = [
               "dir": "PdfViewer",
               "parentId": "048",
 
-              "uid": "0048488"
-          },         
+              "uid": "0048490",
+			  "sourceFiles": [
+                    { "displayName": "FormDesigner.cshtml", path: "../Views/PdfViewer/FormDesigner.cshtml" },
+                    { "displayName": "FormDesignerController.cs", path: "../Controllers/PdfViewer/FormDesignerController.cs" }
+                ]
+          },
+          {
+              "url": "ESigningFormDesigner",
+              "name": "eSigning Form Designer",
+              "category": "PDF Form",
+
+              "order": 6,
+              "component": "PdfViewer",
+              "dir": "PdfViewer",
+              "parentId": "048",
+              "type": "new",
+              "hideOnDevice": true,
+
+              "uid": "0048491",
+			  "sourceFiles": [
+                    { "displayName": "ESigningFormDesigner.cshtml", path: "../Views/PdfViewer/ESigningFormDesigner.cshtml" },
+                    { "displayName": "ESigningFormDesigner.cs", path: "../Controllers/PdfViewer/ESigningFormDesigner.cs" }
+                ]
+          },
+          {
+              "url": "ESigningPdfForms",
+              "name": "eSigning PDF Forms",
+              "category": "PDF Form",
+
+              "order": 6,
+              "component": "PdfViewer",
+              "dir": "PdfViewer",
+              "parentId": "048",
+              "type": "new",
+
+              "uid": "0048492",
+			  "sourceFiles": [
+                    { "displayName": "ESigningPdfForms.cshtml", path: "../Views/PdfViewer/ESigningPdfForms.cshtml" },
+                    { "displayName": "ESigningPdfForms.cs", path: "../Controllers/PdfViewer/ESigningPdfForms.cs" }
+                ]
+          },
           {
               "url": "Annotations",
               "name": "Annotations",
@@ -680,7 +794,12 @@ window.samplesList = [
               "component": "PdfViewer",
               "dir": "PdfViewer",
               "parentId": "048",
-              "uid": "004889",
+              "uid": "0048493",
+              "type": "update",
+			  "sourceFiles": [
+                    { "displayName": "Annotations.cshtml", path: "../Views/PdfViewer/Annotations.cshtml" },
+                    { "displayName": "AnnotationsController.cs", path: "../Controllers/PdfViewer/AnnotationsController.cs" }
+                ]
           },
           {
               "url": "HandwrittenSignature",
@@ -692,7 +811,11 @@ window.samplesList = [
               "dir": "PdfViewer",
               "parentId": "048",
 
-              "uid": "0048490",
+              "uid": "0048494",
+			  "sourceFiles": [
+                    { "displayName": "HandwrittenSignature.cshtml", path: "../Views/PdfViewer/HandwrittenSignature.cshtml" },
+                    { "displayName": "HandwrittenSignatureController.cs", path: "../Controllers/PdfViewer/HandwrittenSignatureController.cs" }
+                ]
           },
           {
               "url": "InvisibleSignature",
@@ -702,7 +825,11 @@ window.samplesList = [
               "component": "PdfViewer",
               "dir": "PdfViewer",
               "parentId": "048",
-              "uid": "0048491",
+              "uid": "0048495",
+			  "sourceFiles": [
+                    { "displayName": "InvisibleSignature.cshtml", path: "../Views/PdfViewer/InvisibleSignature.cshtml" },
+                    { "displayName": "InvisibleSignatureController.cs", path: "../Controllers/PdfViewer/InvisibleSignatureController.cs" }
+                ]
           }
       ],
       "order": 8,

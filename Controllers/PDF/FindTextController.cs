@@ -30,11 +30,15 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
             message.Message = string.Empty;
             return View("FindText", message);
         }
-
-        [HttpPost]
-        public IActionResult FindText(string findText, string find)
+        private readonly IWebHostEnvironment _hostingEnvironment;
+        public PdfController(IWebHostEnvironment hostingEnvironment)
         {
-            if (!string.IsNullOrEmpty(findText))
+            _hostingEnvironment = hostingEnvironment;
+        }
+        [HttpPost]
+        public IActionResult FindText(string ViewTemplate, string findText, string find)
+        {
+            if (!string.IsNullOrEmpty(find))
             {
                 Stream fileStream = GetSplitPDFDocument();
                 PdfLoadedDocument loadedDocument = new PdfLoadedDocument(fileStream);
@@ -60,7 +64,7 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
                         }
 
                     }
-                    var text = "The text \"" + findText + "\" appears " + textCounts + " times in this document " + "\n";
+                    var text = " The text \"" + findText + "\" appears " + textCounts + " times in this document " + "\n";
                     message.Message = text + findTextResults;
 
                 }
@@ -68,7 +72,7 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
                 {
                     ViewBag.Message = "No such word found in in the PDF document";
                 }
-                ViewBag.SearchText = findText;
+
                 return View("FindText", message);
 
             }

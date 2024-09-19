@@ -18,13 +18,14 @@ namespace CoreDemos
         public List<ThemeList> ThemeLists()
         {
             List<ThemeList> theme = new List<ThemeList>();
-            theme.Add(new ThemeList { Id = "material3", Theme = "Material3", Index = 0 });
+            theme.Add(new ThemeList { Id = "material3", Theme = "Material 3", Index = 0 });
             //theme.Add(new ThemeList { Id = "material3-dark", Theme = "Material3 Dark", Index = 1});
             theme.Add(new ThemeList { Id = "fluent", Theme = "Fluent", Index = 1 });
-            theme.Add(new ThemeList { Id = "fluent2", Theme = "Fluent2", Index = 2 });
+            theme.Add(new ThemeList { Id = "fluent2", Theme = "Fluent 2", Index = 2 });
             //theme.Add(new ThemeList { Id = "fluent-dark", Theme = "Fluent Dark", Index = 3});
-            theme.Add(new ThemeList { Id = "bootstrap5", Theme = "Bootstrap v5", Index = 3 });
+            theme.Add(new ThemeList { Id = "bootstrap5.3", Theme = "Bootstrap 5", Index = 3 });
             // theme.Add(new ThemeList { Id = "bootstrap5-dark", Theme = "Bootstrap v5 Dark", Index = 4 });
+            //theme.Add(new ThemeList { Id = "bootstrap5.3", Theme = "Bootstrap 5.3", Index = 4 });
             theme.Add(new ThemeList { Id = "tailwind", Theme = "Tailwind CSS", Index = 4 });
             //theme.Add(new ThemeList { Id = "tailwind-dark", Theme = "Tailwind CSS Dark", Index = 6});
             // theme.Add(new ThemeList { Id = "material", Theme = "Material", Index = 7 });
@@ -35,7 +36,7 @@ namespace CoreDemos
             //    theme.Add(new ThemeList { Id = "bootstrap-dark", Theme = "Bootstrap Dark", Index = 10 });
             //}
             theme.Add(new ThemeList { Id = "highcontrast", Theme = "High Contrast", Index = 5 });
-            //theme.Add(new ThemeList { Id = "fluent2-highcontrast", Theme = "Fluent2 High Contrast", Index = 6 });
+            theme.Add(new ThemeList { Id = "fluent2-highcontrast", Theme = "Fluent 2 High Contrast", Index = 6 });
             return theme;
         }
     }

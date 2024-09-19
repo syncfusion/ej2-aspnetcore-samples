@@ -31,7 +31,11 @@ namespace EJ2CoreSampleBrowser.Controllers.Excel
     {
         public static List<Brand> _sales = new List<Brand>();
         public static List<Brand> businessObjects = null;
-
+        private readonly IWebHostEnvironment _hostingEnvironment;
+        public ExcelController(IWebHostEnvironment hostingEnvironment)
+        {
+            _hostingEnvironment = hostingEnvironment;
+        }
         //For Session 
         //public HttpSessionStateBase Session { get; }
         public ActionResult CollectionObjects(string saveOption, string button)

@@ -25,7 +25,12 @@ using System.Collections.Generic;
 namespace EJ2CoreSampleBrowser.Controllers.Word
 {   
     public partial class WordController : Controller
-    {    
+    {
+        private readonly IWebHostEnvironment _hostingEnvironment;
+        public WordController(IWebHostEnvironment hostingEnvironment)
+        {
+            _hostingEnvironment = hostingEnvironment;
+        }
         public ActionResult SalesInvoice(int id, string SaveOption, string Button)
         {
             ArrayList orderID = GetTestOrderID();

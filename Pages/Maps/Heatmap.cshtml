@@ -1,0 +1,96 @@
+@page
+@model EJ2CoreSampleBrowser_NET8.Pages.Maps.Heatmap
+
+@using Syncfusion.EJ2.Maps;
+
+@{
+    var border = new MapsBorder
+    {
+        Width = 0.5,
+        Color = "white",
+        Opacity = 1
+    };
+    var colormapping = new List<Syncfusion.EJ2.Maps.MapsColorMapping>
+    {
+        new MapsColorMapping { From = 60000, To = 400000, Color = "#9fdfdf", Label = "<0.4M" },
+        new MapsColorMapping { From = 400000, To = 10000000, Color = "#79d2d2", Label = "0.4-10M" },
+        new MapsColorMapping { From = 10000000, To = 20000000, Color = "#53C6C6", Label = "10-20M" },
+        new MapsColorMapping { From = 20000000, To = 70000000, Color = "#39acac", Label = "20-70M" },
+        new MapsColorMapping { From = 70000000, To = 100000000, Color = "#339999", Label = "70-100M" },
+        new MapsColorMapping { From = 100000000, To = 200000000, Color = "#2d8686", Label = ">100M" }
+    };
+    var titlestyle = new MapsFont
+    {
+        Size = "16px",
+        FontFamily = "Segoe UI"
+    };
+    var tooltipStyle = new MapsFont
+    {
+        FontFamily = "Segoe UI"
+    };
+    var propertyPath = new[] { "NAME_1" };
+    var indiaMap = new Heatmap().GetIndiaData();
+    var indiaPopulation = new Heatmap().GetIndianPopulation();
+}
+
+@section ControlsSection{
+    
+    <div class="control-section">
+        <div class="row">
+            <div class="col-md-12">
+                <ejs-maps id="maps" load="window.onMapLoad" format="n" useGroupingSeparator="true">
+                    <e-maps-titlesettings alignment="@Syncfusion.EJ2.Maps.Alignment.Center" text="State wise Indian population - 2011" textStyle="titlestyle"></e-maps-titlesettings>
+                    <e-maps-zoomsettings enable="false"></e-maps-zoomsettings>
+                    <e-maps-legendsettings mode="Interactive" height="10" width="350" labelDisplayMode="Trim" alignment="Center" visible="true" position="Bottom"></e-maps-legendsettings>
+                    <e-maps-layers>
+                        <e-maps-layer dataSource="@indiaPopulation" shapeData="@indiaMap" shapePropertyPath="propertyPath" shapeDataPath="Name">
+                            <e-layersettings-shapesettings colorValuePath="population" border="border" colorMapping="colormapping"></e-layersettings-shapesettings>
+                            <e-layersettings-tooltipsettings visible="true" valuePath="population" format="State: ${Name} <br> Population: ${population}" textStyle="tooltipStyle"></e-layersettings-tooltipsettings>
+                        </e-maps-layer>
+                    </e-maps-layers>
+                </ejs-maps>
+                <div style="float: right; margin-right: 10px;">
+                    Source:
+                    <a href="https://en.wikipedia.org/wiki/List_of_states_and_union_territories_of_India_by_population" target="_blank" aria-label="Source">en.wikipedia.org</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@*custom code start*@
+<script>
+    function onMapLoad(args) {
+        var theme = themeName ? themeName : "Material";
+        args.maps.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-high/i, 'High').replace(/5.3/i, '5');
+    }
+</script>
+@*custom code end*@
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Heat Map in ASP.NET Core Maps control. Explore here for more details."/>
+                }
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample visualizes the state wise population of India in the year 2011. Color for each state will be applied based on its value.
+        </p>
+    </div>
+}
+@section Description{
+
+    <div id="description">
+        <p>
+            In this example, you can see how to apply the desired colors for the shapes, if its value is within the specified range using the ColorMapping property. Also, the interactive legend has been placed at the bottom of the map.
+
+        </p>
+        <p>
+            Tooltip is enabled in this example. To see the tooltip in action, hover the mouse over a shape or tap a shape in touch enabled devices.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Maps Heat Map Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Heat Map in ASP.NET Core Maps Control</h1>
+                }

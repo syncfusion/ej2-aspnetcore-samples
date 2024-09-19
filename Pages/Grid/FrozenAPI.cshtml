@@ -1,0 +1,149 @@
+@page
+@model EJ2CoreSampleBrowser_NET8.Pages.Grid.FrozenAPIModel
+@{
+    ViewData["Title"] = "FrozenAPI";
+}
+
+@{
+    var defaultanimation = new Syncfusion.EJ2.Popups.DialogAnimationSettings { Effect = Syncfusion.EJ2.Popups.DialogEffect.None };
+    var DefaultButtons = new
+    {
+        content = "OK",
+        isPrimary = true
+    };
+}
+
+@section ControlsSection{
+    <div class="control-section">
+        <div class="freezeprop">
+            <div class="freezecol">
+                <div class="freezecol">
+                    <span>
+                        Column Name
+                    </span>
+                </div>
+                <div class="freezecol">
+                    <ejs-dropdownlist id="column" dataSource="@Model.columns" change="columnChange" index="7">
+                        <e-dropdownlist-fields text="name" value="id"></e-dropdownlist-fields>
+                    </ejs-dropdownlist>
+                </div>
+            </div>
+            <div class="freezecol">
+                <div class="freezecol">
+                    <span>
+                        Freeze Direction
+                    </span>
+                </div>
+                <div class="freezecol">
+                    <ejs-dropdownlist id="FreezeDirection" dataSource="@Model.direction" change="directionChange" index="0">
+                        <e-dropdownlist-fields text="name" value="id"></e-dropdownlist-fields>
+                    </ejs-dropdownlist>
+                </div>
+            </div>
+        </div>
+
+        <ejs-grid id="FrozenGrid" dataSource="@Model.DataSource" height="410" enableHover="false" frozenRows="2" allowSorting="true" allowFiltering="true" toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })">
+            <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
+            <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true"></e-grid-editSettings>
+            <e-grid-columns>
+                <e-grid-column field="OrderID" headerText="Order ID" textAlign="Right" width="120" freeze="Left" isPrimaryKey="true" validationRules="@(new { required=true, number=true})"></e-grid-column>
+                <e-grid-column field="Freight" headerText="Freight" textAlign="Right" format="C2" width="125" editType="numericedit" validationRules="@(new { required=true, min=0})"></e-grid-column>
+                <e-grid-column field="CustomerID" headerText="Customer ID" width="130" freeze="Right" validationRules="@(new { required=true, minLength=5})"></e-grid-column>
+                <e-grid-column field="OrderDate" headerText=" Order Date" textAlign="Right" format="yMd" width="150" editType="datepickeredit"></e-grid-column>
+                <e-grid-column field="ShipName" headerText="Ship Name" width="300"></e-grid-column>
+                <e-grid-column field="ShipAddress" headerText="Ship Address" width="270" freeze="Fixed"></e-grid-column>
+                <e-grid-column field="ShipCity" headerText="Ship City" width="250"></e-grid-column>
+                <e-grid-column field="ShipCountry" headerText="Ship Country" width="250" editType="dropdownedit" ></e-grid-column>
+            </e-grid-columns>
+        </ejs-grid>
+        <ejs-dialog id="AlertDialog" header="Frozen" content="Atleast one Column should be in movable" showCloseIcon="false" target=".control-section" width="300px" visible="false" animationSettings="defaultanimation">
+            <e-dialog-buttons>
+                <e-dialog-dialogbutton buttonModel="@DefaultButtons" click="alertDlgBtnClick"></e-dialog-dialogbutton>
+            </e-dialog-buttons>
+        </ejs-dialog>
+    </div>
+
+    <style>
+        .freezeprop {
+            padding-bottom: 5px;
+        }
+
+        .freezecol {
+            display: inline-block;
+            padding-right: 10px;
+        }
+    </style>
+
+    <script>
+        var refresh = true;
+        function columnChange(e) {
+            var grid = document.getElementById("FrozenGrid").ej2_instances[0];
+            var columnName = e.value;
+            var column = grid.getColumnByField(columnName);
+            var directionDropDown = document.getElementById("FreezeDirection").ej2_instances[0];
+            var value = column.freeze === undefined ? 'Center' : column.freeze;
+            refresh = directionDropDown.value === value;
+            directionDropDown.value = value;
+        }
+
+        function directionChange(e) {
+            if (refresh) {
+                var grid = document.getElementById("FrozenGrid").ej2_instances[0];
+                var columnName = document.getElementById("column").ej2_instances[0].value;
+                var mvblColumns = grid.getMovableColumns();
+                if (mvblColumns.length === 1 && columnName === mvblColumns[0].field && e.value !== mvblColumns[0].freeze) {
+                    document.getElementById("AlertDialog").ej2_instances[0].show();
+                    refresh = false; this.value = "Center"; this.refresh();
+                } else {
+                    grid.getColumnByField(columnName).freeze = e.value === 'Center' ? undefined : e.value;
+                    grid.refreshColumns();
+                }
+            }
+            refresh = true;
+        }
+        function alertDlgBtnClick() {
+            document.getElementById("AlertDialog").ej2_instances[0].hide();
+        }
+    </script>
+
+}
+@section ActionDescription{
+<div id="action-description">
+    <p>This sample demonstrates the frozen rows and columns feature of the Grid. Scroll the movable content
+        horizontally to view the frozen and fixed columns, vertically to view the frozen rows with the content.
+    </p>
+</div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Frozen API in ASP.NET Core Data Grid control. Explore here for more details."/>
+                }
+
+@section Description{
+<div id="description">
+    <p>
+        This feature enables users to freeze certain columns at specific positions. This can be achieved by
+        setting the <code><a target="_blank" class="code" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Grids.GridColumn.html#Syncfusion_EJ2_Grids_GridColumn_Freeze" aria-label="Navigate to the freeze property reference for ASP.NET Core Grid column">freeze</a></code>
+        property of column settings. The various modes are:
+    </p>
+    <ul>
+        <li><code>Left</code> : Freezes the column at the left.</li>
+        <li><code>Right</code> : Freezes the column at the right.</li>
+        <li><code>Center</code> : Freezes the column at the center.</li>
+        <li><code>Fixed</code> : Freezes the column at a fixed position. This will ensure its visibility while scrolling horizontally.</li>
+    </ul>
+    <p> In this demo sample, the <b>Order ID</b> column is frozen at the left, the <b>Customer ID</b> column is
+        frozen at the right and the <b>Ship Address</b> column at a fixed position using <code>column->freeze</code> property.
+    </p>
+    <p>
+        More information on the frozen rows and columns can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/grid/frozen "aria-label="Navigate to the documentation for Frozen rows and columns in ASP.NET Core Grid control" > Documentation section</a>.
+    </p>
+</div>
+}
+@section Title{
+                    <title>ASP.NET Core Data Grid Frozen API Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Frozen API in ASP.NET Core Data Grid Control</h1>
+                }

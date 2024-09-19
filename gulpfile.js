@@ -168,8 +168,19 @@ gulp.task('title-section', function (done) {
             let featureName = sample.name;
             let url = sample.url;
             let dir = sample.dir;
-            let path = `./Views/${dir}/${url}.cshtml`;
-            let content = fileExistsWithCaseSync(path) ? fs.readFileSync(path, 'utf8').trim() : errorFileList.push(`Views/${dir}/${url}.cshtml`);
+            let path = `./Pages/${dir}/${url}.cshtml`; 
+            let content;
+            if (fileExistsWithCaseSync(path)) {
+                content = fs.readFileSync(path, 'utf8').trim();
+            }
+            else {
+                path = path.replace("Pages", "Views");
+                if (fileExistsWithCaseSync(path)) {
+                    content = fs.readFileSync(path, 'utf8').trim();
+                } else {
+                    errorFileList.push(fsPath.basename(path));
+                }
+            }      
             let title = `ASP.NET Core ${componentName} ${featureName} Example - Syncfusion Demos `;
             if (typeof content === 'string') {
             if ((/@section Title\s?{/).test(content)) {
@@ -220,9 +231,17 @@ Expected razor file name:\n\n${fileName}`);
 });
 
 function fileExistsWithCaseSync(filepath) {
-    var dir = fsPath.dirname(filepath);
-    var filenames = fs.readdirSync(dir);
-    return filenames.indexOf(fsPath.basename(filepath)) !== -1;
+    var checkPath = (path) => {
+        var dir = fsPath.dirname(path);
+        try {
+            var filenames = fs.readdirSync(dir);
+            return filenames.indexOf(fsPath.basename(filepath)) !== -1;
+        } catch (err) {
+            // If an error occurs (e.g., directory does not exist), return false
+            return false;
+        }
+    };
+    return checkPath(filepath);
 }
 
 const SITEMAP_TEMPLATE =

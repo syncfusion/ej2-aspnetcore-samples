@@ -28,6 +28,10 @@ using Syncfusion.PresentationRenderer;
 using Syncfusion.XlsIO;
 using Syncfusion.XlsIORenderer;
 using WFormatType = Syncfusion.DocIO.FormatType;
+using Microsoft.AspNetCore.Cors;
+using Syncfusion.Pdf.Interactive;
+using Syncfusion.Pdf.Redaction;
+using Syncfusion.Drawing;
 #if REDIS
 using Microsoft.Extensions.Caching.Distributed;
 #endif
@@ -99,6 +103,57 @@ namespace EJ2CoreSampleBrowser.Controllers.PdfViewer
             }
             jsonResult = pdfviewer.Load(stream, jsonObject);
             return Content(JsonConvert.SerializeObject(jsonResult));
+        }
+
+        [AcceptVerbs("Post")]
+        [HttpPost]
+        [Route("api/[controller]/ValidatePassword")]
+        public IActionResult ValidatePassword([FromBody] Dictionary<string, string> jsonObject)
+        {
+#if REDIS
+            PdfRenderer pdfviewer = new PdfRenderer(_cache, _distributedCache);
+#else
+            PdfRenderer pdfviewer = new PdfRenderer(_cache);
+#endif
+            MemoryStream stream = new MemoryStream();
+            object jsonResult = new object();
+            if (jsonObject != null && jsonObject.ContainsKey("document"))
+            {
+                if (bool.Parse(jsonObject["isFileName"]))
+                {
+                    string documentPath = GetDocumentPath(jsonObject["document"]);
+                    if (!string.IsNullOrEmpty(documentPath))
+                    {
+                        byte[] bytes = System.IO.File.ReadAllBytes(documentPath);
+                        stream = new MemoryStream(bytes);
+                    }
+                    else
+                    {
+                        string fileName = jsonObject["document"].Split(new string[] { "://" }, StringSplitOptions.None)[0];
+                        if (fileName == "http" || fileName == "https")
+                        {
+                            WebClient WebClient = new WebClient();
+                            byte[] pdfDoc = WebClient.DownloadData(jsonObject["document"]);
+                            stream = new MemoryStream(pdfDoc);
+                        }
+                        else
+                            return this.Content(jsonObject["document"] + " is not found");
+                    }
+                }
+                else
+                {
+                    byte[] bytes = Convert.FromBase64String(jsonObject["document"]);
+                    stream = new MemoryStream(bytes);
+                }
+            }
+            string password = null;
+            if (jsonObject.ContainsKey("password"))
+            {
+                password = jsonObject["password"];
+            }
+            var result = pdfviewer.Load(stream, password);
+
+            return Content(JsonConvert.SerializeObject(result));
         }
 
         [AcceptVerbs("Post")]
@@ -573,6 +628,173 @@ namespace EJ2CoreSampleBrowser.Controllers.PdfViewer
                 documentPath = document;
             }
             return documentPath;
+        }
+
+
+        [AcceptVerbs("Post")]
+        [HttpPost]
+        [Route("api/[controller]/Redaction")]
+        public IActionResult Redaction([FromBody] Dictionary<string, string> jsonObject)
+        {
+            string RedactionText = "Redacted";
+            var finalbase64 = string.Empty;
+#if REDIS
+            PdfRenderer pdfviewer = new PdfRenderer(_cache,_distributedCache);
+#else
+            PdfRenderer pdfviewer = new PdfRenderer(_cache);
+#endif
+            string documentBase = pdfviewer.GetDocumentAsBase64(jsonObject);
+            string base64String = documentBase.Split(new string[] { "data:application/pdf;base64," }, StringSplitOptions.None)[1];
+            if (base64String != null || base64String != string.Empty)
+            {
+                byte[] byteArray = Convert.FromBase64String(base64String);
+                Console.WriteLine("redaction");
+                PdfLoadedDocument loadedDocument = new PdfLoadedDocument(byteArray);
+                foreach (PdfLoadedPage loadedPage in loadedDocument.Pages)
+                {
+                    List<PdfLoadedAnnotation> removeItems = new List<PdfLoadedAnnotation>();
+                    foreach (PdfLoadedAnnotation annotation in loadedPage.Annotations)
+                    {
+                        if (annotation is PdfLoadedRectangleAnnotation)
+                        {
+                            if (annotation.Author == "Redaction")
+                            {
+                                // Add the annotation to the removeItems list
+                                removeItems.Add(annotation);
+                                // Create a new redaction with the annotation bounds and color
+                                PdfRedaction redaction = new PdfRedaction(annotation.Bounds, annotation.Color);
+                                // Add the redaction to the page
+                                loadedPage.AddRedaction(redaction);
+                                annotation.Flatten = true;
+                            }
+                            if (annotation.Author == "Text")
+                            {
+                                // Add the annotation to the removeItems list
+                                removeItems.Add(annotation);
+                                // Create a new redaction with the annotation bounds and color
+                                PdfRedaction redaction = new PdfRedaction(annotation.Bounds);
+                                //Set the font family and font size
+                                PdfStandardFont font = new PdfStandardFont(PdfFontFamily.Courier, 8);
+                                //Create the appearance like repeated text in the redaction area 
+                                CreateRedactionAppearance(redaction.Appearance.Graphics, PdfTextAlignment.Left, true, new SizeF(annotation.Bounds.Width, annotation.Bounds.Height), RedactionText, font, PdfBrushes.Red);
+                                // Add the redaction to the page
+                                loadedPage.AddRedaction(redaction);
+                                annotation.Flatten = true;
+                            }
+                            //Apply the pattern for the Redaction
+                            if (annotation.Author == "Pattern")
+                            {
+                                // Add the annotation to the removeItems list
+                                removeItems.Add(annotation);
+                                // Create a new redaction with the annotation bounds and color
+                                PdfRedaction redaction = new PdfRedaction(annotation.Bounds);
+                                Syncfusion.Drawing.RectangleF rect = new Syncfusion.Drawing.RectangleF(0, 0, 8, 8);
+                                PdfTilingBrush tillingBrush = new PdfTilingBrush(rect);
+                                tillingBrush.Graphics.DrawRectangle(PdfBrushes.Gray, new Syncfusion.Drawing.RectangleF(0, 0, 2, 2));
+                                tillingBrush.Graphics.DrawRectangle(PdfBrushes.White, new Syncfusion.Drawing.RectangleF(2, 0, 2, 2));
+                                tillingBrush.Graphics.DrawRectangle(PdfBrushes.LightGray, new Syncfusion.Drawing.RectangleF(4, 0, 2, 2));
+                                tillingBrush.Graphics.DrawRectangle(PdfBrushes.DarkGray, new Syncfusion.Drawing.RectangleF(6, 0, 2, 2));
+                                tillingBrush.Graphics.DrawRectangle(PdfBrushes.White, new Syncfusion.Drawing.RectangleF(0, 2, 2, 2));
+                                tillingBrush.Graphics.DrawRectangle(PdfBrushes.LightGray, new Syncfusion.Drawing.RectangleF(2, 2, 2, 2));
+                                tillingBrush.Graphics.DrawRectangle(PdfBrushes.Black, new Syncfusion.Drawing.RectangleF(4, 2, 2, 2));
+                                tillingBrush.Graphics.DrawRectangle(PdfBrushes.LightGray, new Syncfusion.Drawing.RectangleF(6, 2, 2, 2));
+                                tillingBrush.Graphics.DrawRectangle(PdfBrushes.LightGray, new Syncfusion.Drawing.RectangleF(0, 4, 2, 2));
+                                tillingBrush.Graphics.DrawRectangle(PdfBrushes.DarkGray, new Syncfusion.Drawing.RectangleF(2, 4, 2, 2));
+                                tillingBrush.Graphics.DrawRectangle(PdfBrushes.LightGray, new Syncfusion.Drawing.RectangleF(4, 4, 2, 2));
+                                tillingBrush.Graphics.DrawRectangle(PdfBrushes.White, new Syncfusion.Drawing.RectangleF(6, 4, 2, 2));
+                                tillingBrush.Graphics.DrawRectangle(PdfBrushes.Black, new Syncfusion.Drawing.RectangleF(0, 6, 2, 2));
+                                tillingBrush.Graphics.DrawRectangle(PdfBrushes.LightGray, new Syncfusion.Drawing.RectangleF(2, 6, 2, 2));
+                                tillingBrush.Graphics.DrawRectangle(PdfBrushes.Black, new Syncfusion.Drawing.RectangleF(4, 6, 2, 2));
+                                tillingBrush.Graphics.DrawRectangle(PdfBrushes.DarkGray, new Syncfusion.Drawing.RectangleF(6, 6, 2, 2));
+                                rect = new Syncfusion.Drawing.RectangleF(0, 0, 16, 14);
+                                PdfTilingBrush tillingBrushNew = new PdfTilingBrush(rect);
+                                tillingBrushNew.Graphics.DrawRectangle(tillingBrush, rect);
+                                //Set the pattern for the redaction area
+                                redaction.Appearance.Graphics.DrawRectangle(tillingBrushNew, new Syncfusion.Drawing.RectangleF(0, 0, annotation.Bounds.Width, annotation.Bounds.Height));
+                                // Add the redaction to the page
+                                loadedPage.AddRedaction(redaction);
+                                annotation.Flatten = true;
+                            }
+                        }
+                        else if (annotation is PdfLoadedRubberStampAnnotation)
+                        {
+                            if (annotation.Author == "Image")
+                            {
+                                Stream[] images = PdfLoadedRubberStampAnnotationExtension.GetImages(annotation as PdfLoadedRubberStampAnnotation);
+                                // Create a new redaction with the annotation bounds and color
+                                PdfRedaction redaction = new PdfRedaction(annotation.Bounds);
+                                images[0].Position = 0;
+                                PdfImage image = new PdfBitmap(images[0]);
+                                //Apply the image to redaction area
+                                redaction.Appearance.Graphics.DrawImage(image, new Syncfusion.Drawing.RectangleF(0, 0, annotation.Bounds.Width, annotation.Bounds.Height));
+                                // Add the redaction to the page
+                                loadedPage.AddRedaction(redaction);
+                                annotation.Flatten = true;
+                            }
+                        }
+                    }
+                    foreach (PdfLoadedAnnotation annotation1 in removeItems)
+                    {
+                        loadedPage.Annotations.Remove(annotation1);
+                    }
+                }
+                loadedDocument.Redact();
+                MemoryStream stream = new MemoryStream();
+                loadedDocument.Save(stream);
+                stream.Position = 0;
+                loadedDocument.Close(true);
+                byteArray = stream.ToArray();
+                finalbase64 = "data:application/pdf;base64," + Convert.ToBase64String(byteArray);
+                stream.Dispose();
+            }
+            return Content(finalbase64);
+        }
+
+        //The Method used for apply the text in the full area of redaction rectangle
+        private static void CreateRedactionAppearance(PdfGraphics graphics, PdfTextAlignment alignment, bool repeat, SizeF size, string overlayText, PdfFont font, PdfBrush textcolor)
+        {
+            float col = 0, row;
+            if (font == null) font = new PdfStandardFont(PdfFontFamily.Helvetica, 10);
+            int textAlignment = Convert.ToInt32(alignment);
+            float y = 0, x = 0, diff = 0;
+            Syncfusion.Drawing.RectangleF rect;
+            Syncfusion.Drawing.SizeF textsize = font.MeasureString(overlayText);
+
+            if (repeat)
+            {
+                col = size.Width / textsize.Width;
+                row = (float)Math.Floor(size.Height / font.Size);
+                diff = Math.Abs(size.Width - (float)(Math.Floor(col) * textsize.Width));
+                if (textAlignment == 1)
+                    x = diff / 2;
+                if (textAlignment == 2)
+                    x = diff;
+                for (int i = 1; i < col; i++)
+                {
+                    for (int j = 0; j < row; j++)
+                    {
+                        rect = new Syncfusion.Drawing.RectangleF(x, y, 0, 0);
+                        graphics.DrawString(overlayText, font, textcolor, rect);
+                        y = y + font.Size;
+                    }
+                    x = x + textsize.Width;
+                    y = 0;
+                }
+            }
+            else
+            {
+                diff = Math.Abs(size.Width - textsize.Width);
+                if (textAlignment == 1)
+                {
+                    x = diff / 2;
+                }
+                if (textAlignment == 2)
+                {
+                    x = diff;
+                }
+                rect = new Syncfusion.Drawing.RectangleF(x, 0, 0, 0);
+                graphics.DrawString(overlayText, font, textcolor, rect);
+            }
         }
 
     }

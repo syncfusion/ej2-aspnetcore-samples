@@ -17,7 +17,11 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "0047470"
+                "uid": "0047470",
+                "sourceFiles": [
+                    { "displayName": "SalesInvoice.cshtml", path: "../Views/Word/SalesInvoice.cshtml" },
+                    { "displayName": "SalesInvoiceController.cs", path: "../Controllers/Word/SalesInvoiceController.cs" }
+                ]
             },
             {
                 "url": "UpdateFields",
@@ -103,7 +107,6 @@ window.samplesList = [
                 "url": "SplitBySection",
                 "name": "Split by Section",
                 "category": "Split Word Documents",
-				"type": "update",
                 "order": 3,
                 "component": "Word",
                 "dir": "Word",
@@ -114,7 +117,6 @@ window.samplesList = [
                 "url": "SplitByHeading",
                 "name": "Split by Heading",
                 "category": "Split Word Documents",
-				"type": "update",
                 "order": 3,
                 "component": "Word",
                 "dir": "Word",
@@ -125,7 +127,6 @@ window.samplesList = [
                 "url": "SplitByBookmark",
                 "name": "Split by Bookmark",
                 "category": "Split Word Documents",
-				"type": "update",
                 "order": 3,
                 "component": "Word",
                 "dir": "Word",
@@ -136,7 +137,6 @@ window.samplesList = [
                 "url": "SplitByPlaceholder",
                 "name": "Split by Placeholder",
                 "category": "Split Word Documents",
-				"type": "update",
                 "order": 3,
                 "component": "Word",
                 "dir": "Word",
@@ -201,7 +201,6 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "type": "new",
                 "uid": "00474718"
             },
             {
@@ -218,6 +217,7 @@ window.samplesList = [
                 "url": "HeaderandFooter",
                 "name": "Header and Footer",
                 "category": "Insert Content",
+                "type": "update",
                 "order": 6,
                 "component": "Word",
                 "dir": "Word",
@@ -358,11 +358,34 @@ window.samplesList = [
                 "url": "WordToImage",
                 "name": "Word to Image",
                 "category": "Conversions",
+                "type": "update",
                 "order": 9,
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
                 "uid": "00474734"
+            },
+            {
+                "url": "WordToHTML",
+                "name": "Word to HTML",
+                "category": "Conversions",
+                "type": "update",
+                "order": 9,
+                "component": "Word",
+                "dir": "Word",
+                "parentId": "047",
+                "uid": "00474735"
+            },
+            {
+                "url": "HTMLToWord",
+                "name": "HTML to Word",
+                "category": "Conversions",
+                "type": "update",
+                "order": 9,
+                "component": "Word",
+                "dir": "Word",
+                "parentId": "047",
+                "uid": "00474736"
             },
             {
                 "url": "WordToMarkdown",   
@@ -372,7 +395,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474735"
+                "uid": "00474737"
             },
             {
                 "url": "MarkdownToWord",   
@@ -382,7 +405,18 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474736"
+                "uid": "00474738"
+            },
+            {
+                "url": "WordToRTF",
+                "name": "Word to RTF",
+                "category": "Conversions",
+                "type": "update",
+                "order": 9,
+                "component": "Word",
+                "dir": "Word",
+                "parentId": "047",
+                "uid": "00474739"
             },
             {
                 "url": "RTFToDoc",
@@ -392,7 +426,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474737"
+                "uid": "00474740"
             },
             {
                 "url": "WordToWordML",
@@ -402,7 +436,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474738"
+                "uid": "00474741"
             },
             {
                 "url": "WordMLToWord",
@@ -412,7 +446,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474739"
+                "uid": "00474742"
             },
             {
                 "url": "DOCtoODT",
@@ -422,7 +456,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474740"
+                "uid": "00474743"
             },
             {
                 "url": "InsertBreak",
@@ -432,7 +466,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474741"
+                "uid": "00474744"
             },
             {
                 "url": "Watermark",
@@ -442,17 +476,18 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474742"
+                "uid": "00474745"
             },
             {
                 "url": "TableOfContents",
                 "name": "Table of Contents",
                 "category": "References",
+                "type": "update",
                 "order": 11,
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474743"
+                "uid": "00474746"
             },
             {
                 "url": "TableOfFigures",
@@ -462,7 +497,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474744"
+                "uid": "00474747"
             },
             {
                 "url": "FootnotesandEndnotes",
@@ -472,7 +507,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474745"
+                "uid": "00474748"
             },
             {
                 "url": "AutoShapes",
@@ -482,7 +517,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474746"
+                "uid": "00474749"
             },
             {
                 "url": "GroupShapes",
@@ -492,7 +527,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474747"
+                "uid": "00474750"
             },
             {
                 "url": "PieChart",
@@ -502,7 +537,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474748"
+                "uid": "00474751"
             },
             {
                 "url": "BarChart",
@@ -512,7 +547,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474749"
+                "uid": "00474752"
             },
             {
                 "url": "DocumentSettings",
@@ -522,7 +557,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474750"
+                "uid": "00474753"
             },
             {
                 "url": "MacroPreservation",
@@ -532,7 +567,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474751"
+                "uid": "00474754"
             },
             {
                 "url": "DocumentProtection",
@@ -542,7 +577,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474752"
+                "uid": "00474755"
             },
             {
                 "url": "EncryptAndDecrypt",
@@ -552,7 +587,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474753"
+                "uid": "00474756"
             },
             {
                 "url": "TrackChanges",
@@ -562,7 +597,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474754"
+                "uid": "00474757"
             },
             {
                 "url": "CompareDocuments",
@@ -572,7 +607,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474755"
+                "uid": "00474758"
             }
 
         ],
@@ -591,22 +626,30 @@ window.samplesList = [
                 "url": "Default",
                 "name": "Default Functionalities",
                 "category": "DocumentEditor",
+                "type": "update",
                 "order": 0,
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
-                "uid": "0036342"
+                "uid": "0036342",
+                "sourceFiles": [
+                    { "displayName": "Default.cshtml", path: "../Views/DocumentEditor/Default.cshtml" },
+                    { "displayName": "DefaultController.cs", path: "../Controllers/DocumentEditor/DefaultController.cs" }
+                ]
             },
-            {
-                "url": "BindUIToDocument",
+			{
+                "url": "BindUItoDocument",
                 "name": "Bind UI To Document",
                 "category": "DocumentEditor",
-                "type": "new",
                 "order": 0,
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
-                "uid": "0036350"
+                "uid": "0036350",
+                "sourceFiles": [
+                    { "displayName": "BindUIToDocument.cshtml", path: "../Views/DocumentEditor/BindUIToDocument.cshtml" },
+                    { "displayName": "BindUIToDocumentController.cs", path: "../Controllers/DocumentEditor/BindUIToDocumentController.cs" }
+                ]
             },
             {
                 "url": "DocumentList",
@@ -616,7 +659,11 @@ window.samplesList = [
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
-                "uid": "0036343"
+                "uid": "0036343",
+                "sourceFiles": [
+                    { "displayName": "DocumentList.cshtml", path: "../Views/DocumentEditor/DocumentList.cshtml" },
+                    { "displayName": "DocumentListController.cs", path: "../Controllers/DocumentEditor/DocumentListController.cs" }
+                ]
             },
             {
                 "url": "MailMerge",
@@ -627,16 +674,25 @@ window.samplesList = [
                 "dir": "DocumentEditor",
                 "parentId": "035",
                 "uid": "0036365",
+				"sourceFiles": [
+                    { "displayName": "MailMerge.cshtml", path: "../Views/DocumentEditor/MailMerge.cshtml" },
+                    { "displayName": "MailMergeController.cs", path: "../Controllers/DocumentEditor/MailMergeController.cs" }
+                ]
             },
             {
                 "url": "Comments",
                 "name": "Comments",
                 "category": "Review",
+                "type": "update",
                 "order": 3,
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
-                "uid": "0036362"
+                "uid": "0036362",
+                "sourceFiles": [
+                    { "displayName": "Comments.cshtml", path: "../Views/DocumentEditor/Comments.cshtml" },
+                    { "displayName": "CommentsController.cs", path: "../Controllers/DocumentEditor/CommentsController.cs" }
+                ]
             },
             {
                 "url": "TrackChanges",
@@ -646,7 +702,11 @@ window.samplesList = [
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
-                "uid": "0036363"
+                "uid": "0036363",
+                "sourceFiles": [
+                    { "displayName": "TrackChanges.cshtml", path: "../Views/DocumentEditor/TrackChanges.cshtml" },
+                    { "displayName": "TrackChangesController.cs", path: "../Controllers/DocumentEditor/TrackChangesController.cs" }
+                ]
             },
             {
                 "url": "DocumentProtection",
@@ -656,7 +716,11 @@ window.samplesList = [
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
-                "uid": "0036358"
+                "uid": "0036358",
+                "sourceFiles": [
+                    { "displayName": "DocumentProtection.cshtml", path: "../Views/DocumentEditor/DocumentProtection.cshtml" },
+                    { "displayName": "DocumentProtectionController.cs", path: "../Controllers/DocumentEditor/DocumentProtectionController.cs" }
+                ]
             },
             {
                 "url": "CustomContextMenu",
@@ -666,7 +730,11 @@ window.samplesList = [
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
-                "uid": "0036355"
+                "uid": "0036355",
+                "sourceFiles": [
+                    { "displayName": "CustomContextMenu.cshtml", path: "../Views/DocumentEditor/CustomContextMenu.cshtml" },
+                    { "displayName": "CustomContextMenuController.cs", path: "../Controllers/DocumentEditor/CustomContextMenuController.cs" }
+                ]
             },
             {
                 "url": "AutoSave",
@@ -676,7 +744,11 @@ window.samplesList = [
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
-                "uid": "0036356"
+                "uid": "0036356",
+                "sourceFiles": [
+                    { "displayName": "AutoSave.cshtml", path: "../Views/DocumentEditor/AutoSave.cshtml" },
+                    { "displayName": "AutoSaveController.cs", path: "../Controllers/DocumentEditor/AutoSaveController.cs" }
+                ]
             },
             {
                 "url": "ToolbarCustomization",
@@ -687,16 +759,25 @@ window.samplesList = [
                 "dir": "DocumentEditor",
                 "parentId": "035",
                 "uid": "0036361",
+                "sourceFiles": [
+                    { "displayName": "ToolbarCustomization.cshtml", path: "../Views/DocumentEditor/ToolbarCustomization.cshtml" },
+                    { "displayName": "ToolbarCustomizationController.cs", path: "../Controllers/DocumentEditor/ToolbarCustomizationController.cs" }
+                ]
             },
             {
                 "url": "ColorpickerCustomization",
                 "name": "Colorpicker Customization",
                 "category": "Customization",
+                "type": "new",
                 "order": 5,
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
                 "uid": "0036369",
+                "sourceFiles": [
+                    { "displayName": "ColorpickerCustomization.cshtml", path: "../Views/DocumentEditor/ColorpickerCustomization.cshtml" },
+                    { "displayName": "ColorpickerCustomizationController.cs", path: "../Controllers/DocumentEditor/ColorpickerCustomizationController.cs" }
+                ]
             },
             {
                 "url": "RightToLeft",
@@ -706,7 +787,11 @@ window.samplesList = [
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
-                "uid": "0036354"
+                "uid": "0036354",
+                "sourceFiles": [
+                    { "displayName": "RightToLeft.cshtml", path: "../Views/DocumentEditor/RightToLeft.cshtml" },
+                    { "displayName": "RightToLeftController.cs", path: "../Controllers/DocumentEditor/RightToLeftController.cs" }
+                ]
             },
             {
                 "url": "Print",
@@ -717,16 +802,25 @@ window.samplesList = [
                 "dir": "DocumentEditor",
                 "parentId": "035",
                 "uid": "0036353",
+				"sourceFiles": [
+                    { "displayName": "Print.cshtml", path: "../Views/DocumentEditor/Print.cshtml" },
+                    { "displayName": "PrintController.cs", path: "../Controllers/DocumentEditor/PrintController.cs" }
+                ]
             },
             {
                 "url": "Export",
                 "name": "Advanced Exporting",
                 "category": "Exporting",
+                "type": "new",
                 "order": 7,
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
                 "uid": "0036368",
+				"sourceFiles": [
+                    { "displayName": "Export.cshtml", path: "../Views/DocumentEditor/Export.cshtml" },
+                    { "displayName": "ExportController.cs", path: "../Controllers/DocumentEditor/ExportController.cs" }
+                ]
             },
             {
                 "url": "TableOfContents",
@@ -736,7 +830,11 @@ window.samplesList = [
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
-                "uid": "0036352"
+                "uid": "0036352",
+                "sourceFiles": [
+                    { "displayName": "TableOfContents.cshtml", path: "../Views/DocumentEditor/TableOfContents.cshtml" },
+                    { "displayName": "TableOfContentsController.cs", path: "../Controllers/DocumentEditor/TableOfContentsController.cs" }
+                ]
             },
             {
                 "url": "Notes",
@@ -746,7 +844,26 @@ window.samplesList = [
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
-                "uid": "0036366"
+                "uid": "0036366",
+                "sourceFiles": [
+                    { "displayName": "Notes.cshtml", path: "../Views/DocumentEditor/Notes.cshtml" },
+                    { "displayName": "NotesController.cs", path: "../Controllers/DocumentEditor/NotesController.cs" }
+                ]
+            },
+			{
+                "url": "AutoShapes",
+                "name": "Auto Shapes",
+                "category": "Shapes",
+                "order": 9,
+                "component": "DocumentEditor",
+                "type":"new",
+                "dir": "DocumentEditor",
+                "parentId": "035",
+                "uid": "0036372",
+                "sourceFiles": [
+                    { "displayName": "AutoShapes.cshtml", path: "../Views/DocumentEditor/AutoShapes.cshtml" },
+                    { "displayName": "AutoShapesController.cs", path: "../Controllers/DocumentEditor/AutoShapesController.cs" }
+                ]
             },
             {
                 "url": "WebLayout",
@@ -757,6 +874,10 @@ window.samplesList = [
                 "dir": "DocumentEditor",
                 "parentId": "035",
                 "uid": "0036359",
+				"sourceFiles": [
+                    { "displayName": "WebLayout.cshtml", path: "../Views/DocumentEditor/WebLayout.cshtml" },
+                    { "displayName": "WebLayoutController.cs", path: "../Controllers/DocumentEditor/WebLayoutController.cs" }
+                ]
             },
             {
                 "url": "Ruler",
@@ -767,16 +888,26 @@ window.samplesList = [
                 "dir": "DocumentEditor",
                 "parentId": "035",
                 "uid": "0036371",
+				"sourceFiles": [
+                    { "displayName": "Ruler.cshtml", path: "../Views/DocumentEditor/Ruler.cshtml" },
+                    { "displayName": "RulerController.cs", path: "../Controllers/DocumentEditor/RulerController.cs" }
+                ]
             },
             {
                 "url": "HeadingNavigation",
                 "name": "Heading Navigation",
                 "category": "View",
+                "type": "new",
                 "order": 9,
+                "type": "new",
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
                 "uid": "0036370",
+				"sourceFiles": [
+                    { "displayName": "HeadingNavigation.cshtml", path: "../Views/DocumentEditor/HeadingNavigation.cshtml" },
+                    { "displayName": "HeadingNavigationController.cs", path: "../Controllers/DocumentEditor/HeadingNavigationController.cs" }
+                ]
             },
             {
                 "url": "CharacterFormat",
@@ -786,7 +917,11 @@ window.samplesList = [
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
-                "uid": "0036344"
+                "uid": "0036344",
+                "sourceFiles": [
+                    { "displayName": "CharacterFormat.cshtml", path: "../Views/DocumentEditor/CharacterFormat.cshtml" },
+                    { "displayName": "CharacterFormatController.cs", path: "../Controllers/DocumentEditor/CharacterFormatController.cs" }
+                ]
             },
             {
                 "url": "ParagraphFormat",
@@ -796,7 +931,11 @@ window.samplesList = [
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
-                "uid": "0036345"
+                "uid": "0036345",
+                "sourceFiles": [
+                    { "displayName": "ParagraphFormat.cshtml", path: "../Views/DocumentEditor/ParagraphFormat.cshtml" },
+                    { "displayName": "ParagraphFormatController.cs", path: "../Controllers/DocumentEditor/ParagraphFormatController.cs" }
+                ]
             },
             {
                 "url": "Styles",
@@ -806,7 +945,11 @@ window.samplesList = [
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
-                "uid": "0036346"
+                "uid": "0036346",
+                "sourceFiles": [
+                    { "displayName": "Styles.cshtml", path: "../Views/DocumentEditor/Styles.cshtml" },
+                    { "displayName": "StylesController.cs", path: "../Controllers/DocumentEditor/StylesController.cs" }
+                ]
             },
             {
                 "url": "BulletsAndNumbering",
@@ -816,7 +959,11 @@ window.samplesList = [
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
-                "uid": "0036347"
+                "uid": "0036347",
+                "sourceFiles": [
+                    { "displayName": "BulletsAndNumbering.cshtml", path: "../Views/DocumentEditor/BulletsAndNumbering.cshtml" },
+                    { "displayName": "BulletsAndNumberingController.cs", path: "../Controllers/DocumentEditor/BulletsAndNumberingController.cs" }
+                ]
             },
             {
                 "url": "HyperlinksAndBookmarks",
@@ -826,7 +973,11 @@ window.samplesList = [
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
-                "uid": "0036348"
+                "uid": "0036348",
+                "sourceFiles": [
+                    { "displayName": "HyperlinksAndBookmarks.cshtml", path: "../Views/DocumentEditor/HyperlinksAndBookmarks.cshtml" },
+                    { "displayName": "HyperlinksAndBookmarksController.cs", path: "../Controllers/DocumentEditor/HyperlinksAndBookmarksController.cs" }
+                ]
             },
             {
                 "url": "TableFormat",
@@ -836,7 +987,11 @@ window.samplesList = [
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
-                "uid": "0036349"
+                "uid": "0036349",
+                "sourceFiles": [
+                    { "displayName": "TableFormat.cshtml", path: "../Views/DocumentEditor/TableFormat.cshtml" },
+                    { "displayName": "TableFormatController.cs", path: "../Controllers/DocumentEditor/TableFormatController.cs" }
+                ]
             },
             {
                 "url": "SectionFormat",
@@ -846,7 +1001,11 @@ window.samplesList = [
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
-                "uid": "00363450"
+                "uid": "00363450",
+                "sourceFiles": [
+                    { "displayName": "SectionFormat.cshtml", path: "../Views/DocumentEditor/SectionFormat.cshtml" },
+                    { "displayName": "SectionFormatController.cs", path: "../Controllers/DocumentEditor/SectionFormatController.cs" }
+                ]
             },
             {
                 "url": "HeadersAndFooters",
@@ -856,7 +1015,11 @@ window.samplesList = [
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
-                "uid": "0036351"
+                "uid": "0036351",
+                "sourceFiles": [
+                    { "displayName": "HeadersAndFooters.cshtml", path: "../Views/DocumentEditor/HeadersAndFooters.cshtml" },
+                    { "displayName": "HeadersAndFootersController.cs", path: "../Controllers/DocumentEditor/HeadersAndFootersController.cs" }
+                ]
             },
             {
                 "url": "FormFields",
@@ -867,6 +1030,10 @@ window.samplesList = [
                 "dir": "DocumentEditor",
                 "parentId": "035",
                 "uid": "0036364",
+				"sourceFiles": [
+                    { "displayName": "FormFields.cshtml", path: "../Views/DocumentEditor/FormFields.cshtml" },
+                    { "displayName": "FormFieldsController.cs", path: "../Controllers/DocumentEditor/FormFieldsController.cs" }
+                ]
             },
             {
                 "url": "MultipleColumns",
@@ -876,7 +1043,11 @@ window.samplesList = [
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
-                "uid": "0036367"
+                "uid": "0036367",
+                "sourceFiles": [
+                    { "displayName": "MultipleColumns.cshtml", path: "../Views/DocumentEditor/MultipleColumns.cshtml" },
+                    { "displayName": "MultipleColumnsController.cs", path: "../Controllers/DocumentEditor/MultipleColumnsController.cs" }
+                ]
             },
             {
                 "url": "Chart",
@@ -886,7 +1057,11 @@ window.samplesList = [
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",
-                "uid": "0036357"
+                "uid": "0036357",
+                "sourceFiles": [
+                    { "displayName": "Chart.cshtml", path: "../Views/DocumentEditor/Chart.cshtml" },
+                    { "displayName": "ChartController.cs", path: "../Controllers/DocumentEditor/ChartController.cs" }
+                ]
             },
         ],
         "order": 4,

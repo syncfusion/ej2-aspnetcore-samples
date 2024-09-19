@@ -104,13 +104,7 @@ function initializeTitleBar(isShareNeeded, isRtl) {
     }
     close.element.style.display = 'none';
 }
-function bindClose() {
-    if (dialogObj == null || dialogObj == undefined) {
-        close.element.style.display = 'none';
-    } else {
-        close.element.style.display = 'block';
-    }
-}
+
 function wireEventsInTitleBar() {
     print.element.addEventListener('click', onPrint);
     close.element.addEventListener('click', onClose);

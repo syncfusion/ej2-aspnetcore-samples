@@ -10,10 +10,10 @@ var searchInstance;
 var headerThemeSwitch = document.getElementById('header-theme-switcher');
 var settingElement = ej.base.select('.sb-setting-btn');
 var themeList = document.getElementById('themelist');
-var themes = ['material3', 'fluent', 'fluent2', 'bootstrap5', 'tailwind', 'highcontrast'];
+var themes = ['material3', 'fluent', 'fluent2', 'bootstrap5.3', 'tailwind', 'highcontrast', 'fluent2-highcontrast'];
 //var themeIndex = { 'material3': 0, 'material3-dark': 1, 'fluent': 2, 'fluent-dark': 3, 'bootstrap5': 4, 'bootstrap5-dark': 5, 'tailwind': 6, 'tailwind-dark': 7, 'material': 8, 'bootstrap4': 9, 'bootstrap': 10, 'bootstrap-dark': 11, 'highcontrast': 12 };
-var themeIndex = { 'material3': 0, 'fluent': 1, 'fluent2': 2, 'bootstrap5': 3, 'tailwind': 4, 'highcontrast': 5  };
-var themeMode_Index = { 'material3': 'Material3', 'fluent': 'Fluent', 'fluent2': 'Fluent2' , 'bootstrap5': 'Bootstrap v5', 'tailwind': 'Tailwind CSS', 'highcontrast': 'High Contrast'  };
+var themeIndex = { 'material3': 0, 'fluent': 1, 'fluent2': 2, 'bootstrap5.3': 3, 'tailwind': 4, 'highcontrast': 5, 'fluent2-highcontrast' : 6 , };
+var themeMode_Index = { 'material3': 'Material 3', 'fluent': 'Fluent', 'fluent2': 'Fluent 2', 'bootstrap5.3': 'Bootstrap 5', 'tailwind': 'Tailwind CSS', 'highcontrast': 'High Contrast', 'fluent2-highcontrast': 'Fluent 2 High Contrast'  };
 var cultureData = { "English": "en", "German - Germany*": "de", "French - Switzerland*": "fr-CH", "Arabic*": "ar", "Chinese - China*":"zh" };
 var defaultTheme = 'fluent2';
 var themeDropDown;
@@ -410,8 +410,9 @@ function changeTheme(e) {
     var target = e.target;
     target = ej.base.closest(target, 'li');
     var themeName = target.id;
+    themeName = themeName === 'bootstrap5.3' ? 'bootstrap5' : themeName;
     var storedURL = localStorage.getItem('PreviousURL');
-    if (storedURL != null && storedURL.includes("-dark") && themeName != "highcontrast") {
+    if (storedURL != null && storedURL.includes("-dark") && themeName != "highcontrast" && themeName != "fluent2-highcontrast") {
         themeName = themeName + "-dark";
     } else {
         themeName = themeName;
@@ -430,13 +431,34 @@ function switchTheme(str) {
     } else {
         if (str.value) {
             var dropdownMode = document.getElementById("sb-setting-mode").ej2_instances[0];
-            // Set the value of the second dropdown to "light"
-            dropdownMode.value = "light";
+            if (window.matchMedia("(max-width: 550px)").matches) {
+                if (str.value != "highcontrast" && str.value != "fluent2-highcontrast") {
+                    if (dropdownMode.itemData.ThemeId == "dark") {
+                        // Set the value of the second dropdown to "dark"
+                        dropdownMode.value = "dark";
+                        themeName = str.value + "-dark";
+                    }
+                    else {
+                        // Set the value of the second dropdown to "light"
+                        dropdownMode.value = "light";
+                        themeName = str.value;
+                    }
+                }
+                else {
+                    dropdownMode.value = dropdownMode.itemData.ThemeId;
+                    themeName = str.value;
+                }
+            }
+            else {
+                // Set the value of the second dropdown to "light"
+                dropdownMode.value = "light";
+                themeName = str.value;
+            }
             // localStorage.setItem('dropdownlistsb-setting-mode', str.itemData.Index);
-            themeName = str.value;
         }
     }
     var hash = location.hash.split('/');
+    themeName = themeName === 'bootstrap5.3' ? 'bootstrap5' : themeName === 'bootstrap5.3-dark' ? 'bootstrap5-dark' : themeName;
     if (hash[1] !== themeName) {
         hash[1] = themeName;
         localStorage.setItem('ej2-switch', ej.base.select('.sb-responsive-section .active').id);
@@ -756,11 +778,13 @@ function loadTheme(theme) {
             body.classList.remove(themes[themeItem]);
         }
     }
+    theme = theme == 'bootstrap5' ? 'bootstrap5.3' : theme == 'bootstrap5-dark' ? 'bootstrap5.3-dark' : theme;
     body.classList.add(theme);
     themeList.querySelector('.active').classList.remove('active');
    
     var currentUpdatedTheme = theme.replace("-dark", "");
-    themeList.querySelector('#' + currentUpdatedTheme).classList.add('active');
+
+    currentUpdatedTheme == 'bootstrap5.3' ? themeList.querySelector('#bootstrap5\\.3').classList.add('active') : themeList.querySelector('#' + currentUpdatedTheme).classList.add('active');
 
     selectedTheme = theme;
     renderLeftPaneComponents();
@@ -777,6 +801,11 @@ function loadTheme(theme) {
     hasher.initialized.add(parseHash);
     hasher.changed.add(parseHash);
     hasher.init();
+   /* removing dark or light them options for fluent2-highcontrast themeSwitchDiv*/
+    if (theme == 'fluent2-highcontrast') {
+        var theamswitchDivDisable = document.getElementById("themeSwitchDiv");
+        theamswitchDivDisable.style.display = 'none';
+    }
 }
 
 function toggleMobileOverlay() {
@@ -950,7 +979,11 @@ function getSamples(samples) {
 }
 
 function getThemeName() {
-    return location.hash.split('/')[1] ? location.hash.split('/')[1] : defaultTheme;
+    var themeName = defaultTheme;
+    if (location.hash.split('/')[1] != null) {
+        themeName = location.hash.split('/')[1] === 'bootstrap5.3' ? 'bootstrap5' : location.hash.split('/')[1];
+    }
+    return themeName;
 }
 
 function getPathName() {
@@ -996,7 +1029,7 @@ function controlSelect(arg) {
             location.href = location.origin + curHashCollection.slice(0, -1);
         }
         else if (path) {
-            if (curHashCollection.indexOf(path) === -1) {
+            if (curHashCollection.replace(/^\//, '').split("#")[0] !== path) {
                 sampleOverlay();
                 if (arg.item && ((isMobile && !ej.base.select('.sb-mobile-left-pane').classList.contains('sb-hide')) ||
                     ((isTablet || (ej.base.Browser.isDevice && isPc)) && isLeftPaneOpen()))) {
@@ -1062,7 +1095,6 @@ function showHideControlTree() {
                         block: 'center'
                         });
       }
-	
 }
 
 function viewSwitch(from, to, reverse) {
@@ -1193,12 +1225,19 @@ function addRoutes(samplesList) {
 function onDataSourceLoad(node, subNode, control, sample, sampleName) {
     var controlID = node.uid;
     var sampleID = subNode.uid;
+    var subNodeDir = subNode.dir;
+    var subNodeUrl = subNode.url;
     setSbLink();
-    var ajaxCS = new ej.base.Ajax(baseurl + 'Controllers/' + subNode.dir.toLowerCase() + '/' + subNode.url.toLowerCase() + 'Controller.cs', 'GET', false);
-    var ajaxCSHTML = new ej.base.Ajax(baseurl + 'Views/' + subNode.dir.toLowerCase() + '/' + subNode.url.toLowerCase() + '.cshtml', 'GET', false);
+    // Checking whether the OS is Linux or not. If not we are converting the dir and url to lower case.
+    if(window.navigator.userAgent.indexOf("Linux") == -1){
+        subNodeDir = subNode.dir.toLowerCase();
+        subNodeUrl = subNode.url.toLowerCase();
+    }
+    var ajaxCS = new ej.base.Ajax(baseurl + 'Pages/' + subNodeDir + '/' + subNodeUrl + '.cshtml.cs', 'GET', false);
+    var ajaxCSHTML = new ej.base.Ajax(baseurl + 'Pages/' + subNodeDir + '/' + subNodeUrl + '.cshtml', 'GET', false);
     var add = [ajaxCSHTML, ajaxCS];
-    var cs = subNode.url.toLowerCase() + 'controller.cs';
-    var cshtml = subNode.url.toLowerCase() + '.cshtml';
+    var cs = subNodeUrl + '.cshtml.cs';
+    var cshtml = subNodeUrl + '.cshtml';
     var name = [cshtml, cs];
     //var p2 = loadScriptfile('src/' + control + '/' + sample + '.js');
     //var ajaxJs = new ej.base.Ajax('src/' + control + '/' + sample + '.js', 'GET', true);
@@ -1406,15 +1445,14 @@ loadJSON();
 function ScrollToSelected() {
     const selectedDiv = document.querySelector('.sb-left-pane .e-listview .e-list-item.e-active');
     if (selectedDiv) {
-        selectedDiv.scrollIntoView({ block: 'center'
-				   });
+        selectedDiv.scrollIntoView({ block: 'center' });
     }
 }
 
 //window.onload = function () {
-//   setTimeout(function () {
-//       ScrollToSelected();
-//   }, 500);
+ //   setTimeout(function () {
+ //       ScrollToSelected();
+ //   }, 500);
 //}
 
 document.addEventListener("DOMContentLoaded", function () { setTimeout(function () { ScrollToSelected(); }, 500); });
@@ -1435,7 +1473,7 @@ button.addEventListener('click', function () {
 function onModeChanges(event) {
     var currentURL = window.location.href;
     var updatedURL1 = "";
-    if (!currentURL.includes("highcontrast")) {
+    if (!currentURL.includes("highcontrast") && !currentURL.includes("fluent2-highcontrast")) {
         // Check if the URL already contains "-dark"
         if (!currentURL.includes("-dark")) {
             // Append "-dark" to the current URL

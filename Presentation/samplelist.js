@@ -27,7 +27,11 @@ window.samplesList = [
                 "component": "PowerPoint",
                 "dir": "PowerPoint",
                 "parentId": "045",
-                "uid": "0045451"
+                "uid": "0045451",
+                "sourceFiles": [
+                    { "displayName": "PowerPointViewer.cshtml", path: "../Views/PowerPoint/PowerPointViewer.cshtml" },
+                    { "displayName": "PowerPointViewerController.cs", path: "../Controllers/PowerPoint/PowerPointViewerController.cs" }
+                ]
             },            
             {
                 "url": "PPTXToImage",
@@ -45,7 +49,6 @@ window.samplesList = [
                 "name": "PPTX To PDF",
                 "category": "Conversions",
                 "order": 2,
-                "type": "update",
                 "component": "PowerPoint",
                 "dir": "PowerPoint",
                 "parentId": "045",
@@ -86,7 +89,6 @@ window.samplesList = [
                 "name": "Find and Highlight",
                 "category": "Editing",
                 "order": 3,
-                "type": "update",
                 "component": "PowerPoint",
                 "dir": "PowerPoint",
                 "parentId": "045",
@@ -211,7 +213,11 @@ window.samplesList = [
                 "component": "PowerPoint",
                 "dir": "PowerPoint",
                 "parentId": "045",
-                "uid": "0045469"
+                "uid": "0045469",
+                "sourceFiles": [
+                    { "displayName": "ImportData.cshtml", path: "../Views/PowerPoint/ImportData.cshtml" },
+                    { "displayName": "ImportDataController.cs", path: "../Controllers/PowerPoint/ImportDataController.cs" }
+                ]
             },
             {
                 "url": "CreateAnimation",

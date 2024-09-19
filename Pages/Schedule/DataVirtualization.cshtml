@@ -1,0 +1,59 @@
+@page
+@model EJ2CoreSampleBrowser_NET8.Pages.Schedule.DataVirtualization
+
+@using Syncfusion.EJ2
+
+@{
+    var dataManager = new DataManager() { Url = "http://localhost:62928/api/VirtualEventData", Adaptor = "WebApiAdaptor", CrossDomain = true };
+    string[] resources = new string[] { "Resources" };
+    var resourceDataVirtualization = new DataVirtualization().GenerateResourceData(1, 1000);
+}
+
+@section ControlsSection{
+    <div class="col-lg-12 control-section">
+        <div class="schedule-wrapper">
+            <ejs-schedule id="schedule" width="100%" height="650px" readonly="true" selectedDate="new DateTime(2023, 4, 1)" currentView="TimelineMonth">
+                <e-schedule-views>
+                    <e-schedule-view option="TimelineMonth" enableLazyLoading="true"></e-schedule-view>
+                    <e-schedule-view option="Month" enableLazyLoading="true"></e-schedule-view>
+                </e-schedule-views>
+                <e-schedule-group enableCompactView="false" resources="@resources"></e-schedule-group>
+                <e-schedule-resources>
+                    <e-schedule-resource field="ResourceId" dataSource="@resourceDataVirtualization" title="Resource" name="Resources" textField="Text" idField="Id" colorField="Color"></e-schedule-resource>
+                </e-schedule-resources>
+                <e-schedule-eventsettings dataSource="dataManager"></e-schedule-eventsettings>
+            </ejs-schedule>
+        </div>
+    </div>
+}
+
+@*custom code start*@
+@section Meta{
+    <meta name="description" content="This example demonstrates the Data Virtualization in ASP.NET Core Scheduler control. Explore here for more details." />
+                }
+@*custom code end*@
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This example demonstrates the dynamic retrieval of events on each scroll within the Scheduler.
+            As the content is scrolled, a data-loading request is dispatched to a remote data server.
+            This request specifically aims to load appointments only for the resources currently being displayed.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this example, the lazy loading option is enabled in timeline month and month views to load 1000 resources, and data from remote service is bound to the Scheduler
+            using the instance of <code><a target="_blank" class="code" href="https://ej2.syncfusion.com/documentation/api/data/dataManager" aria-label="Navigate to DataManager API in JavaScript DataManager API control">DataManager</a></code>.
+            To enable the on-demand loading of events in the Scheduler, set the <code>enableLazyLoading</code> property to <code>true</code> within the view-specific settings.
+        </p>
+    </div>
+}
+@section Title{
+    <title>ASP.NET Core Scheduler Data Virtualization Example - Syncfusion Demos </title>
+                }
+@section Header{
+    <h1 class='sb-sample-text'>Example of Data Virtualization in ASP.NET Core Scheduler Control</h1>
+                }

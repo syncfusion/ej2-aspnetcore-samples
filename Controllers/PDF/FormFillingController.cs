@@ -17,7 +17,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace EJ2CoreSampleBrowser.Controllers.PDF
 {
     public partial class PdfController : Controller
-    {        
+    {
+        public List<string> Countries { get; set; }
         //
         // GET: /FormFilling/
 
@@ -125,12 +126,9 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
                 if (user.Newsletter)
                     newsCheck!.Checked = true;
 
-                //Disable the default appearance.
-                doc.Form.SetDefaultAppearance(false);
 
                 if (!string.IsNullOrEmpty(fillAndFlatten))
                 {
-                    //Flatten the form fields.
                     doc.Form.Flatten = true;
                 }
 

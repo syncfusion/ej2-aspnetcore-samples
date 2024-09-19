@@ -1,12 +1,16 @@
 @using Syncfusion.EJ2
 
+@{
+    var fieldsOrder = new string[] { "OrderID", "CustomerID", "Freight", "ShipName", "ShipCity", "ShipCountry" };
+}
+
 @section ControlsSection{
     <div class="control-section">
         <ejs-spreadsheet id="spreadsheet" openUrl="RemoteDataOpen" saveUrl="RemoteDataSave" created="createdHandler">
             <e-spreadsheet-sheets>
                 <e-spreadsheet-sheet name="Shipment Details">
                     <e-spreadsheet-ranges>
-                        <e-spreadsheet-range showFieldAsHeader=false startCell="A2" query="new ej.data.Query().from('Orders').select(['OrderID', 'CustomerID', 'Freight', 'ShipName', 'ShipCity', 'ShipCountry']).take(200)">
+                        <e-spreadsheet-range showFieldAsHeader=false startCell="A2" fieldsOrder="@fieldsOrder" query="new ej.data.Query().from('Orders').take(200)">
                             <e-data-manager url="https://services.odata.org/V4/Northwind/Northwind.svc" adaptor="ODataV4Adaptor" crossdomain="true"></e-data-manager>
                         </e-spreadsheet-range>
                     </e-spreadsheet-ranges>

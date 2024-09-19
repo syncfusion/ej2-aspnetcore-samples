@@ -8,7 +8,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Syncfusion.EJ2.Spreadsheet;
 
-namespace EJ2CoreSampleBrowser.Controllers
+namespace EJ2CoreSampleBrowser_NET6.Controllers.Spreadsheet
 {
     public partial class SpreadsheetController : Controller
     {

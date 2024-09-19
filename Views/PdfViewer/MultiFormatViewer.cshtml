@@ -1,11 +1,7 @@
 @using Syncfusion.EJ2
-@using EJ2CoreSampleBrowser.Controllers.Uploader
+@* @using EJ2CoreSampleBrowser.Controllers.Uploader *@
 @using Syncfusion.EJ2.PdfViewer
 
-@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-
-}
 @section ControlsSection{
     <div class="control-section">
         <div>
@@ -37,7 +33,7 @@
                     </div>
                 </div>
                 <div style="display: none;">
-                    <ejs-uploader #templateupload id='templatefileupload' multiple=false dropArea="#dropArea" allowedExtensions=".doc, .docx, .rtf, .docm, .dotm, .dotx, .dot, .xls, .xlsx, .pptx, .pptm, .potx, .potm .jpeg, .png, .bmp, .pdf" selected="onSelect"></ejs-uploader>
+                    <ejs-uploader #templateupload id='templatefileupload' multiple=false dropArea="#dropArea" allowedExtensions=".doc, .docx, .rtf, .docm, .dotm, .dotx, .dot, .xls, .xlsx, .pptx, .pptm, .potx, .potm .jpeg, .png, .bmp, .pdf, .jpg" selected="onSelect"></ejs-uploader>
                 </div>
             </div>
             <div id="pdfviewer-container" style="display: none;">
@@ -51,7 +47,7 @@
                         <ejs-switch cssClass="buttonSwitch" id="checked" change="change" checked="true"></ejs-switch>
                     </div>
                 </div>
-                <ejs-pdfviewer #pdfviewer id="pdfViewer" resourceUrl="https://cdn.syncfusion.com/ej2/23.2.6/dist/ej2-pdfviewer-lib" documentLoad="documentLoaded" ajaxRequestSuccess="ajaxRequestSuccess" toolbarSettings="@(new Syncfusion.EJ2.PdfViewer.PdfViewerToolbarSettings  { ShowTooltip = true, ToolbarItems = ( "UndoRedoTool PageNavigationTool MagnificationTool PanTool SelectionTool CommentTool SubmitForm SearchOption AnnotationEditTool FormDesignerEditTool PrintOption DownloadOption" )  })" style="height:641px;"></ejs-pdfviewer>
+                <ejs-pdfviewer #pdfviewer id="pdfViewer" resourceUrl="https://cdn.syncfusion.com/ej2/23.2.6/dist/ej2-pdfviewer-lib" zoomMode="FitToPage" documentLoad="documentLoaded" ajaxRequestSuccess="ajaxRequestSuccess" toolbarSettings="@(new Syncfusion.EJ2.PdfViewer.PdfViewerToolbarSettings  { ShowTooltip = true, ToolbarItems = ( "UndoRedoTool PageNavigationTool MagnificationTool PanTool SelectionTool CommentTool SubmitForm SearchOption AnnotationEditTool FormDesignerEditTool PrintOption DownloadOption" )  })" style="height:641px;"></ejs-pdfviewer>
             </div>
         </div>
     </div>
@@ -94,7 +90,6 @@
             More information on the PDF Viewer instantiation can be found in this
             <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/pdfviewer/getting-started" aria-label="Navigate to the documentation for getting started with ASP.NET Core PDF Viewer control">
         documentation section</a>.
-            </a>.
         </p>
 
     </div>
@@ -149,7 +144,7 @@
         var parentElement;
         var pdfViewerProgressValue = 0;
         var uploadProgressValue = 0;
-        var extensions = ['doc', 'docx', 'rtf', 'docm', 'dotm', 'dotx', 'dot', 'xls', 'xlsx', 'pptx', 'pptm', 'potx', 'potm', 'jpeg', 'png', 'bmp', 'pdf'];
+        var extensions = ['doc', 'docx', 'rtf', 'docm', 'dotm', 'dotx', 'dot', 'xls', 'xlsx', 'pptx', 'pptm', 'potx', 'potm', 'jpeg', 'png', 'bmp', 'pdf', 'jpg'];
         var dropElement = document.getElementById('dropArea');
         document.getElementById('browse').onclick = function () {
             document.getElementsByClassName('e-file-select-wrap')[0].querySelector('button').click();
@@ -344,7 +339,6 @@
                 pdfViewerProgressValue = 0;
                 progressValue.innerHTML = "0%";
             }, 1000);
-            viewer.magnification.fitToPage();
         }
 
         function change(args) {

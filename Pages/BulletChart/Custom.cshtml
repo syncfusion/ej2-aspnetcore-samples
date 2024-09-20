@@ -1,0 +1,163 @@
+﻿@page
+@using Syncfusion.EJ2;
+@using EJ2CoreSampleBrowser_NET8.Pages.BulletChart;
+@model EJ2CoreSampleBrowser_NET8.Pages.BulletChart.CustomModel
+
+@section ControlsSection{
+    <div class="col-md-8 control-section">
+        <div id="container" align='center'>
+            <ejs-bulletchart id="bulletgraph" minimum="0" maximum="3" interval="0.5"
+                             title="Package Downloads" subtitle="in Thousands" valueField="Value"
+                             targetField="Target" dataSource="@Model.BulletData1" load="window.onLoad">
+                <e-bulletchart-animation enable="false"></e-bulletchart-animation>
+                <e-bulletchart-tooltipsettings enable="true"></e-bulletchart-tooltipsettings>
+                <e-bullet-range-collection>
+                    <e-bullet-range end="1.5" color="#599C20"></e-bullet-range>
+                    <e-bullet-range end="2.5" color="#EFC820"></e-bullet-range>
+                    <e-bullet-range end="3" color="#CA4218"></e-bullet-range>
+                </e-bullet-range-collection>
+            </ejs-bulletchart>
+        </div>
+    </div>
+    <div class="col-md-4 property-section">
+        <div class="property-panel-header">Properties</div>
+        <table title="Properties" style="width: 100%; height: 100%;">
+            <tr>
+                <td style="width: 60%">
+                    <div class="prop-text">Start Color:</div>
+                </td>
+                <td style="width: 40%;">
+                    <div align="center">
+                        <ejs-colorpicker id='color-picker1' value='#599C20' mode="Palette" change="onColorChange1"></ejs-colorpicker>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 60%">
+                    <div class="prop-text">Middle Color:</div>
+                </td>
+                <td style="width: 40%;">
+                    <div align="center">
+                        <ejs-colorpicker id='color-picker2' value='#EFC820' mode="Palette" change="onColorChange2"></ejs-colorpicker>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 60%">
+                    <div class="prop-text">End Color:</div>
+                </td>
+                <td style="width: 40%;">
+                    <div align="center">
+                        <ejs-colorpicker id='color-picker3' value='#d61e3f' mode="Palette" change="onColorChange3"></ejs-colorpicker>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 60%">
+                    <div class="prop-text">Use Range Color:</div>
+                </td>
+                <td style="width: 40%;">
+                    <div align="center">
+                        <ejs-checkbox id='rangeColor' checked="false" change="changeRangeColor"></ejs-checkbox>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 60%">
+                    <div class="prop-text">Opposed position:</div>
+                </td>
+                <td style="width: 40%;">
+                    <div align="center">
+                        <ejs-checkbox id='opPosition' checked="false" change="changeOpposedPosition"></ejs-checkbox>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script type="text/javascript">
+        window.onLoad = function (args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Fluent2';
+            args.bulletChart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5'));
+            args.bulletChart.width = ej.base.Browser.isDevice ? "100%" : "80%";
+        }
+        function onColorChange1(args) {
+            var bullet = document.getElementById("bulletgraph").ej2_instances[0];
+            bullet.ranges[0].color = args.currentValue.hex;
+            bullet.refresh();
+        }
+        function onColorChange2(args) {
+            var bullet = document.getElementById("bulletgraph").ej2_instances[0];
+            bullet.ranges[1].color = args.currentValue.hex;
+            bullet.refresh();
+        }
+        function onColorChange3(args) {
+            var bullet = document.getElementById("bulletgraph").ej2_instances[0];
+            bullet.ranges[2].color = args.currentValue.hex;
+            bullet.refresh();
+        }
+        function onActualValueChange(args) {
+            var bullet = document.getElementById("bulletgraph").ej2_instances[0];
+            bullet.dataSource[0].value = args.value;
+            bullet.refresh();
+        }
+        function onTargetValueChange(args) {
+            var bullet = document.getElementById("bulletgraph").ej2_instances[0];
+            bullet.dataSource[0].target = args.value;
+            bullet.refresh();
+        }
+        function changeRangeColor(args) {
+            var bullet = document.getElementById("bulletgraph").ej2_instances[0];
+            bullet.majorTickLines.useRangeColor = args.checked;
+            bullet.minorTickLines.useRangeColor = args.checked;
+            bullet.labelStyle.useRangeColor = args.checked
+            bullet.refresh();
+        }
+        function changeOpposedPosition(args) {
+            var bullet = document.getElementById("bulletgraph").ej2_instances[0];
+            bullet.opposedPosition = args.checked;
+            bullet.refresh();
+        }
+    </script>
+    @*custom code start*@
+    <style>
+        td {
+            padding: 10px;
+        }
+    </style>
+    @*custom code end*@
+}
+@*custom code start*@
+@section Meta{
+    <meta name="description" content="This example demonstrates the Customization in ASP.NET Core BulletChart control. Explore here for more details." />
+}
+@*custom code end*@
+@section ActionDescription{
+    <div id="action-description">
+        This sample illustrates a bullet chart with different customization for ranges and labels in bullet chart.
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            Tooltip is enabled in this example. To see the tooltip in action, hover a feature bar or comparative bar on the bullet chart.
+        </p>
+    </div>
+}
+@*custom code start*@
+@section Scripts{
+}
+
+<style>
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@*custom code end*@
+@section Title{
+    <title>ASP.NET Core BulletChart Customization Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Customization in ASP.NET Core BulletChart Control</h1>
+}

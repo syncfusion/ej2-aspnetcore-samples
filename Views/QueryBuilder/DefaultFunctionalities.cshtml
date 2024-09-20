@@ -1,0 +1,306 @@
+@using Syncfusion.EJ2;
+@using Syncfusion.EJ2.QueryBuilder;
+@using Syncfusion.EJ2.Buttons;
+@using Syncfusion.EJ2.SplitButtons
+@using Syncfusion.EJ2.QueryBuilder;
+@using Syncfusion.EJ2.Navigations;
+@using Syncfusion.EJ2.Popups;
+@{
+    QueryBuilderRule rule = new QueryBuilderRule()
+    {
+        Condition = "and",
+        Rules = new List<QueryBuilderRule>()
+        {
+            new QueryBuilderRule { Label="Employee ID", Field="EmployeeID", Type="number", Operator="equal", Value = 1 },
+            new QueryBuilderRule { Label="Title", Field="Title", Type="string", Operator="equal", Value = "Sales Manager" }
+        }
+    };
+
+    List<string> values = new List<string> { "Mr.", "Mrs." };
+
+    var employee = EmployeeView.GetAllRecords();
+}
+@section ControlsSection{
+    <div class="control-pane">
+        <div class="control-section">
+            <div class="top-right-button">
+                <ejs-button cssClass="e-btn e-custom-btn" id="json-btn" content="Import JSON"></ejs-button>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 control-section">
+                    <div class="App">
+                        <ejs-dialog id="dialog" width="700px" height="420px" isModal=true header="JSON" visible=false closeOnEscape=false showCloseIcon=true beforeOpen="dialogOpen">
+                            <e-content-template>
+                                <form>
+                                    <textarea class="json-content-area" id="json-content-area"></textarea>
+                                    <span id="dlgSpan" style="visibility: hidden;">Invalid Query</span>
+                                </form>
+                            </e-content-template>
+                            <e-dialog-buttons>
+                                <e-dialog-dialogbutton buttonModel="@ViewBag.CancelBtn" click="cancelClick"></e-dialog-dialogbutton>
+                                <e-dialog-dialogbutton buttonModel="@ViewBag.ImportBtn" click="importClick"></e-dialog-dialogbutton>
+                            </e-dialog-buttons>
+                            <e-dialog-animationsettings effect="Zoom" duration="400" delay="0"></e-dialog-animationsettings>
+                        </ejs-dialog>
+                    </div>
+                    <ejs-querybuilder id="querybuilder" rule="rule" dataSource="employee" maxGroupCount=5 created="createdControl" ruleChange="updateRule">
+                        <e-querybuilder-columns>
+                            <e-querybuilder-column field="EmployeeID" label="Employee ID" type="number"></e-querybuilder-column>
+                            <e-querybuilder-column field="FirstName" label="First Name" type="string"></e-querybuilder-column>
+                            <e-querybuilder-column field="TitleOfCourtesy" label="Title Of Courtesy" type="boolean" values="values"></e-querybuilder-column>
+                            <e-querybuilder-column field="Title" label="Title" type="string"></e-querybuilder-column>
+                            <e-querybuilder-column field="HireDate" label="Hire Date" type="date" format="dd/MM/yyyy"></e-querybuilder-column>
+                            <e-querybuilder-column field="Country" label="Country" type="string"></e-querybuilder-column>
+                            <e-querybuilder-column field="City" label="City" type="string"></e-querybuilder-column>
+                        </e-querybuilder-columns>
+                    </ejs-querybuilder>
+                    <div id="json-preview" class="e-query-json-preview">
+                        <div style="border: none; width: 100% ">
+                            <label style="padding: 10px">JSON</label>
+                            <div class="copy-tooltip" style="display: none" id="copy-json">
+                                <ejs-tooltip id="Tooltip" opensOn="Click" content="Copied to clipboard">
+                                    <e-content-template>
+                                        <div class="e-icons e-copy"></div>
+                                    </e-content-template>
+                                </ejs-tooltip>
+                            </div>
+                        </div>
+                        <div readonly id="json-texarea" class="e-json-content">
+                            <pre class="e-pre-content"></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Default Functionalities in ASP.NET Core Query Builder control. Explore here for more details."/>
+                }
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the Query Builder control showing how to import and export a query in JSON format. The query preview can be showcased in the tab component, and the query can be imported to Query Builder using the Import button.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this demo features export and import of queries in JSON format is showcased.
+        </p>
+        <p>In mobile mode, the component is shown vertically.</p>
+        <p>
+            More information about Query Builder can be found in this
+            <a target="_blank" href="http://ej2.syncfusion.com/aspnetcore/documentation/query-builder/getting-started" aria-label="Navigate to the documentation for getting started with ASP.NET Core Query Builder control">
+        documentation section</a>.
+            </a>.
+        </p>
+    </div>
+}
+@*custom code start*@
+<style>
+    .e-query-builder {
+        margin: 0 auto;
+    }
+
+    .e-query-json-preview {
+        margin-bottom: 20px !important;
+        margin-top: 20px !important;
+        border: 1px solid #e5e7eb;
+        border-radius: 4px;
+        height: 330px;
+    }
+
+    .top-right-button {
+        height: 32px;
+    }
+
+    .top-right-button {
+        float: right;
+    }
+
+    .e-query-json-preview .copy-tooltip {
+        position: unset;
+        margin-top: 10px;
+        float: right;
+        height: 32px;
+        width: 32px;
+        cursor: pointer;
+        background: #f4f4f4;
+        border-radius: 2px;
+        margin: 10px 10px 0 10px;
+    }
+
+        .e-query-json-preview .copy-tooltip.e-control.e-tooltip:hover {
+            background: #D8D8D8;
+        }
+
+
+        .e-query-json-preview .copy-tooltip {
+        position: unset;
+        margin-top: 10px;
+        float: right;
+        height: 32px;
+        width: 32px;
+        cursor: pointer;
+        background: #f4f4f4;
+        border-radius: 2px;
+    }
+
+    .e-query-json-preview .e-icons.e-copy {
+        padding-left: 3px;
+        padding-top: 4px;
+        color: rgba(0, 0, 0, .54);
+        float: right;
+        font-size: 25px;
+        padding-right: 5px;
+        padding-top: 4px;
+        color: rgba(0, 0, 0, .54);
+    }
+
+    .e-query-json-preview .e-json-content {
+        margin: 10px;
+        border: none;
+        height: 260px;
+        width: 98%;
+        padding: 10px !important;
+    }
+
+    .e-query-json-preview .CodeMirror {
+        height: 280px !important;
+    }
+
+    #json-btn {
+        margin-left: 15px;
+    }
+
+    #mongo-btn {
+        margin-left: 15px;
+    }
+
+    #sql-btn {
+        margin-left: 15px;
+    }
+
+    .json-content-area {
+        height: 240px !important;
+        width: 99% !important;
+        overflow-x: hidden;
+        margin: 10px !important;
+    }
+
+    #dlgSpan.error {
+        color: red;
+        padding-left: 20px;
+    }
+
+    .e-pre-content {
+        height: 220px;
+        background: transparent;
+        border: none;
+    }
+
+    @@media only screen and (max-width: 700px) {
+        .e-query-json-preview .e-json-content {
+            width: 95%;
+        }
+    }
+</style>
+@*custom code end*@
+<script>
+    var content = "";
+    var textAreacontent = document.getElementsByClassName('e-json-content');
+    function createdControl() {
+        var qbObj = ej.base.getComponent(document.getElementById("querybuilder"), 'query-builder');
+         if(ej.base.Browser.isDevice) {
+            qbObj.summaryView = true;
+         }
+        updateRule();
+    }
+
+
+    function updateRule() {
+        var qbObj = ej.base.getComponent(document.getElementById("querybuilder"), 'query-builder');
+        var validRule = qbObj.getValidRules(qbObj.rule);
+        content = JSON.stringify(validRule, null, 4);
+        document.querySelector('.e-json-content .e-pre-content').textContent = content;
+        hljs.highlightBlock(document.querySelector('.e-json-content'));
+    }
+
+    function dialogOpen() {
+        var dlgContentElement = document.getElementById('json-content-area');
+        var errorElem = document.getElementById('dlgSpan');
+        var qbObj = ej.base.getComponent(document.getElementById("querybuilder"), 'query-builder');
+        if (dlgContentElement) {
+            var validRule = qbObj.getValidRules(qbObj.rule);
+            content = JSON.stringify(validRule, null, 4);
+            dlgContentElement.value = content;
+            errorElem.style.visibility = 'hidden';
+            if (errorElem.classList.contains("error")) {
+                errorElem.classList.remove("error");
+            }
+        }
+    }
+
+    function importClick() {
+        try {
+            let textAreacontent = document.getElementById('json-content-area');
+            var qbObj = ej.base.getComponent(document.getElementById("querybuilder"), 'query-builder');
+            qbObj.setRules(JSON.parse(textAreacontent.value));
+            updateRule();
+            var dialogObj = ej.base.getComponent(document.getElementById("dialog"), 'dialog');
+            dialogObj.hide();
+        } catch (error) {
+            var errorElem = document.getElementById('dlgSpan');
+            if (!errorElem.classList.contains("error")) {
+                errorElem.style.visibility = 'visible';
+                errorElem.classList.add("error");
+            }
+        }
+    }
+
+    function cancelClick() {
+        var dialogObj = ej.base.getComponent(document.getElementById("dialog"), 'dialog');
+        dialogObj.hide();
+    }
+
+
+</script>
+
+@section Scripts {
+    <script>
+        var previewElement = document.getElementById('json-preview');
+        var copyJsonTooltip = document.getElementById('copy-json');
+        document.getElementById("json-btn").onclick = () => {
+            var dialogObj = ej.base.getComponent(document.getElementById("dialog"), 'dialog');
+            dialogObj.show();
+        };
+
+        previewElement.addEventListener('mouseenter', function () {
+            var elem = document.getElementsByClassName("copy-tooltip");
+            elem[0].style.display = 'block';
+        });
+
+        previewElement.addEventListener('mouseleave', function () {
+            var elem = document.getElementsByClassName("copy-tooltip");
+            elem[0].style.display = 'none';
+        });
+
+        copyJsonTooltip.addEventListener('click', function (args) {
+            navigator.clipboard.writeText(content);
+            setTimeout(function () {
+                ej.base.getComponent(args.target.closest('.e-tooltip'), 'tooltip').close();
+            }, 1000);
+        });
+    </script>
+}
+
+@section Title{
+                    <title>ASP.NET Core Query Builder Default Functionalities Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Default Functionalities in ASP.NET Core Query Builder Control</h1>
+                }

@@ -1,0 +1,175 @@
+@page
+@model EJ2CoreSampleBrowser_NET8.Pages.Grid.RowTemplateModel
+@section ControlsSection{
+    <div class="control-section">
+
+        <style type="text/css" class="cssStyles">
+            .e-pizza-info-container {
+                display: flex;
+                padding: 10px 100px 10px 30px;
+            }
+
+            .e-flex-grow {
+                flex-grow: 1;
+            }
+
+            .e-pizza-image-layout {
+                margin-right: 30px;
+            }
+
+            .e-pizza-image {
+                width: 100px;
+                height: 100px;
+            }
+
+            .e-pizza-info-layout {
+                text-wrap: pretty;
+            }
+
+            .e-info-text-separator {
+                margin-bottom: 10px;
+            }
+
+            .e-pizza-title {
+                font-weight: 700;
+            }
+
+            .e-pizza-size {
+                font-weight: 300;
+                margin-left: 10px;
+            }
+
+            .e-pizza-price-layout {
+                text-align: center;
+                margin-left: 30px;
+            }
+
+            .e-pizza-price-text {
+                font-weight: 300;
+            }
+
+            .e-pizza-price {
+                font-weight: 500;
+                font-size: 25px;
+            }
+
+            .e-pizza-original-price {
+                text-decoration: line-through;
+            }
+
+            .e-chip-list {
+                padding-left: 0px;
+            }
+
+            .e-chip.e-outline {
+                margin-left: 0px;
+            }
+
+            .e-pizza-price-min-layout {
+                display: none;
+                margin-top: 20px;
+            }
+
+	    .e-grid .e-headercell.e-pizza-cell .e-headertext {
+	        text-transform: uppercase;
+	        font-weight: 900;
+	    }
+
+        .details {
+            border-color: #e0e0e0;
+            border-style: solid;
+            border-width: 1px 0px 0px 0px;
+            padding-left: 18px;
+        }
+
+            @@media only screen and (max-width: 1050px) {
+                .e-pizza-info-container {
+                    padding: 10px 15%;
+                }
+
+                .e-pizza-price-layout {
+                    display: none;
+                }
+
+                .e-pizza-price-min-layout {
+                    display: block;
+                }
+            }
+        </style>
+        <script>
+            window.chiptags = function (tags) {
+                const chipElement = document.createElement('div');
+                const chipList = new ej.buttons.ChipList({ chips: tags, cssClass: 'e-outline' }, chipElement);
+                return chipList.element.outerHTML;
+            };
+        </script>
+  <script id="rowtemplate" type="text/x-template">
+            <tr>
+                <td class="details">
+                <div class="e-pizza-info-container">
+                    <div class="e-pizza-image-layout">
+                        <img class="e-pizza-image" src="@Url.Content("~/scripts/Images/pizza/${ImageURL}")" alt="${Title}" />
+                    </div>
+                    <div class="e-pizza-info-layout">
+                        <div class="e-info-text-separator"><span class="e-pizza-title">${Title}</span><span class="e-pizza-size">(${Size} size)</span></div>
+                        <div class="e-info-text-separator"><span>${Description}</span></div>
+                        <div class="e-info-text-separator">${chiptags(Tags)}</div>
+                        <div class="e-pizza-price-min-layout e-info-text-separator">
+                            <span class="e-pizza-price-text">Buy at&nbsp;</span>
+                            <span class="e-pizza-price">${Price}</span>
+                            ${if(OriginalPrice)}
+                                (<span class="e-pizza-original-price">${OriginalPrice}</span>)
+                            ${/if}
+                        </div>
+                    </div>
+                    <div class="e-flex-grow"></div>
+                    <div class="e-pizza-price-layout">
+                        <div class="e-info-text-separator"><span class="e-pizza-price-text">Buy at</span></div>
+                        <div class="e-info-text-separator"><span class="e-pizza-price">${Price}</span></div>
+                        ${if(OriginalPrice)}
+                        <div class="e-info-text-separator"><span class="e-pizza-original-price">${OriginalPrice}</span></div>
+                        ${/if}
+                    </div>
+                </div>
+                </td>
+            </tr>
+        </script>
+       <ejs-grid id="Grid" dataSource="@Model.DataSource" height="335" width="auto" rowTemplate="#rowtemplate">
+           <e-grid-columns>
+                <e-grid-column headerText="PIZZA MENU" field="Title" textAlign="Center" customAttributes=@(new{@class="e-pizza-cell"})></e-grid-column>
+            </e-grid-columns>
+        </ejs-grid>
+    </div>
+}
+@section ActionDescription{
+	<div id="action-description">
+    <p>
+        The Grid utilizes the row template feature to design a custom layout for its rows.
+        The <code>rowTemplate</code> property can accept either a string or the ID of an HTML element, which is used as
+        the template for each row.
+    </p>
+	</div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Row Template in ASP.NET Core Data Grid control. Explore here for more details."/>
+                }
+
+@section Description{
+    <div id="description">
+    <p>
+        In this demo, various types of pizza are displayed along with their ingredients, additional toppings,
+        prices, and discount offers, all presented within a custom layout in the Grid.
+    </p>
+    <p>
+        For more details on the row template feature, refer to this <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/grid/row/row-template">
+            documentation</a>.
+    </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Data Grid Row Template Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Row Template in ASP.NET Core Data Grid Control</h1>
+                }

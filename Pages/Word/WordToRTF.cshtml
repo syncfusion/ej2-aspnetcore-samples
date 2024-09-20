@@ -1,0 +1,70 @@
+@page
+@model EJ2CoreSampleBrowser_NET8.Pages.Word.WordToRTF
+
+@using Syncfusion.EJ2
+@{var Title = "Essential DocIO (Word) : Word to RTF : Syncfusion";}
+@section ControlsSection{
+    <div class="control-section">
+        @{
+            Html.BeginForm("wordtortf", "word", FormMethod.Post, new { enctype = "multipart/form-data" });
+            {
+                <div style="margin-top: 10px;font-size:14px">
+                    Click the button to view the generated RTF document converted from a Word document using the .NET Word Library (DocIO). Please note that Microsoft Word Viewer or Microsoft Word is required to view the resultant Word document.
+                    <div style="margin-top: 10px">
+                        <div>
+                            <input type="button" value="Choose File" onclick="openPage()">
+                            <input type="text" id="fileNameBox" value="WordtoRTF.docx" readonly="readonly" style="border:none" />
+                            <input type="file" name="file" id="fileUpload" accept=".doc,.docx,.dot,.dotm,.dotx,.docm,.xml" style="display:block;visibility:hidden;width:0;height:0;">
+                            <br />
+                        </div>
+                    </div>
+                    <div style="margin-top: 8px">
+                        <input id="generate" name="Button" class="e-btn" type="submit" value="Convert to RTF" style="width:170px; text-transform:capitalize" />
+                        <div class="text-danger">
+                            @Model.Message
+                        </div>
+                    </div>
+                </div>
+                Html.EndForm();
+            }
+        }
+    </div>
+}
+
+<script>
+    function openPage() {
+        document.getElementById('fileUpload').click();
+        document.getElementById('fileUpload').addEventListener('change', readFile, false);
+    }
+    function readFile(evt) {
+        var upoadedFiles = evt.target.files;
+
+        filename = upoadedFiles[0].name;
+        document.getElementById('fileNameBox').value = filename;
+    }
+</script> 
+
+@section ActionDescription{
+    <div>
+        This sample demonstrates how to convert a Word document to an RTF file using .NET Word Library (DocIO).
+    </div>
+}
+@section Description{
+    <div>
+        .NET Word Library (DocIO) provides support to convert the Word document to RTF file and vice versa.
+    </div>
+    <div style="margin-top: 15px">
+        More information about Word to RTF and vice versa can be found in this
+        <a href="https://help.syncfusion.com/document-processing/word/word-library/net/rtf" aria-label="Documentation">Documentation</a>
+        section.
+    </div>
+}
+@section Meta{
+    <meta name="description" content="This example demonstrates the Word to RTF conversion in ASP.NET Core Word (DocIO) library. Explore here for more details." />
+                }
+@section Title{
+    <title>ASP.NET Core Word (DocIO) library - Word to RTF Example - Syncfusion Demos</title>
+                }
+@section Header{
+    <h1 class='sb-sample-text'>Example of Word to RTF conversion in ASP.NET Core Word (DocIO) Library</h1>
+                }

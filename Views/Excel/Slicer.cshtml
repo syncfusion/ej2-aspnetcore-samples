@@ -1,0 +1,109 @@
+@using Syncfusion.EJ2
+
+
+@section ActionDescription{
+   The sample shows how to create and use slicers in table
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Slicers in ASP.NET Core Excel (XlsIO) library. Explore here for more details.."/>
+                }
+@section Description{
+        Slicers are UI filters that help to display only specific data based on the selection criteria. It provides easy and simple UI options to enable/disable the filters in a table.
+    <br />
+    <br /><b>Features:</b>
+    <br />    
+    <ul>
+        <li>Create slicers and filter table data.</li>
+        <li>Format slicers with built-in styles.</li>        
+    </ul>
+}
+@section ControlsSection
+{
+    <div class="control-section">
+        @{Html.BeginForm("slicer", "excel", FormMethod.Post);
+        { 
+                <div class="rowdiv">
+                    <p style="font-weight:normal">
+                        Click the "Input Template" button to view the input Excel document and click the "Create Document" button to view the output Excel document. Please note that the Microsoft Excel viewer or Microsoft Excel is required to view the Excel document.
+                    </p>
+                </div>               
+                <div class="rowdiv">
+                    <table id="PanelTable" width="450px">               
+                        <tr>
+                            <td>                               
+                                Choose the column to create a slicer
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <br />
+                                            Select Column &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </td>
+                                        <td>
+                                            <select name="Columns1" id="columns1" onchange="change()" class="e-dropdown-popup">
+                                                <option>Requester</option>
+                                                <option>Assignee</option>                                           
+                                                <option>Status</option>
+                                            </select>                                   
+                                        </td>                                
+                                    </tr>
+                                </table>
+                             </td>                          
+                        </tr>                                 
+                        <tr>
+                            <td>
+                                <table id="tblColumns">
+                                    <tr>
+                                        <td>
+                                            <br />
+                                            Select Column &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </td>
+                                        <td>
+                                            <select name="Columns2" id="columns2" onchange="change1()" class="e-dropdown-popup">
+                                                <option>Requester</option>
+                                                <option>Assignee</option>
+                                                <option selected>Status</option>
+                                            </select>
+                                        </td>                                
+                                    </tr>
+                                </table>
+                               
+                            </td>                    
+                        </tr>                 
+                        <tr>                    
+                            <td>
+                                <br />
+                                <br />
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <input id="viewtemplate" class="e-btn" type="submit" name="view" value="Input Template" text-transform:capitalize" />
+                                        </td>
+                                        <td style="width:20px;">
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </td>
+                                        <td>
+                                            <input id="Create Document" class="e-btn" type="submit" name="CreateDocument" value="Create Document"  text-transform:capitalize" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>                        
+                        </tr>
+                    </table>
+                </div>                                   
+                Html.EndForm();
+                Html.EndForm();
+        }
+    }
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Excel (XlsIO) library - Slicer Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Slicer in ASP.NET Core Excel (XlsIO) Library</h1>
+                }

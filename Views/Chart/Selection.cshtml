@@ -1,0 +1,245 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+    @{
+      var Point = "Point";
+    }
+    <div class="control-section col-md-8">
+        <ejs-chart id="container" load="load" title="Age Distribution by Country"
+                  selectionMode="@Syncfusion.EJ2.Charts.SelectionMode.Point" isMultiSelect="false" selectionPattern="@Syncfusion.EJ2.Charts.SelectionPattern.None" highlightMode="@Syncfusion.EJ2.Charts.HighlightMode.None" highlightPattern="@Syncfusion.EJ2.Charts.SelectionPattern.None">
+            <e-chart-chartarea>
+                <e-chartarea-border width="0"></e-chartarea-border>
+            </e-chart-chartarea>
+            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category" interval="1">
+                <e-majorgridlines width="0"></e-majorgridlines>
+                <e-majorticklines width="0"></e-majorticklines>
+            </e-chart-primaryxaxis>
+            <e-chart-primaryyaxis title="Distribution" interval="20" labelFormat="{value}%">
+                <e-majorticklines width="0"></e-majorticklines>
+                <e-linestyle width="0"></e-linestyle>
+            </e-chart-primaryyaxis>
+            <e-chart-legendsettings visible="true" toggleVisibility="false"></e-chart-legendsettings>
+            <e-series-collection>
+                <e-series dataSource="ViewBag.ChartPoints" xName="Country" yName="Children" name="Age 0-14" width=2 columnSpacing="0.1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                   <e-series-animation enable="false"></e-series-animation>
+                </e-series>
+                <e-series dataSource="ViewBag.ChartPoints" xName="Country" yName="Adult" name="Age 15-64" width=2 columnSpacing="0.1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                    <e-series-animation enable="false"></e-series-animation>
+                </e-series>
+                <e-series dataSource="ViewBag.ChartPoints" xName="Country" yName="SeniorAdult" name="Age 65 & Above" width=2 columnSpacing="0.1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                    <e-series-animation enable="false"></e-series-animation>
+                </e-series>
+            </e-series-collection>
+            <e-chart-tooltipsettings enable="false"></e-chart-tooltipsettings>
+            <e-chart-legendsettings visible="true" toggleVisibility="false"></e-chart-legendsettings>
+        </ejs-chart>
+    </div>
+    <div class="col-md-4 property-section">
+        <table id="property" title="Properties" style="width: 100%">
+            <tr id='' style="height: 50px">
+                <td style="width: 80%">
+                    <div> Enable Multi-selection:</div>
+                </td>
+                <td>
+                    <input type="checkbox" id="select" style="margin-top: 15px">
+                </td>
+            </tr>
+            <tr style="height: 50px">
+                <td style="width: 60%">
+                    <div>Selection Mode:</div>
+                </td>
+                <td style="width: 40%;">
+                    <select name="selectIndex" autocomplete="off" id="selmode" style="margin-left: -25px">
+                        <option value="Point">Point</option>
+                        <option value="Series">Series</option>
+                        <option value="Cluster">Cluster</option>
+                    </select>
+                </td>
+            </tr>
+            <tr style="height: 50px">
+                <td style="width: 60%">
+                    <div>Selection Patterns:</div>
+                </td>
+                <td style="width: 40%;">
+                    <select name="selectIndex" autocomplete="off" id="selpattern" style="margin-left: -25px; display: none;">
+                        <option value="None" selected>None</option>
+                        <option value="DiagonalForward">DiagonalForward</option>
+                        <option value="Chessboard">Chessboard</option>
+                        <option value="Triangle">Triangle</option>
+                        <option value="Box">Box</option>
+                        <option value="HorizontalDash">HorizontalDash</option>
+                    </select>
+                </td>
+            </tr>
+            <tr style="height: 50px">
+                <td style="width: 50%">
+                    <div> Enable Highlight:</div>
+                </td>
+                <td>
+                    <input type="checkbox" id="highlight" style="margin-top: 15px">
+                </td>
+            </tr>
+             <tr style="height: 50px">
+                <td style="width: 60%">
+                    <div>Highlight Color:</div>
+                </td>
+                <td>
+                    <ejs-colorpicker id="element" value="null" mode="Palette" change="onChange"></ejs-colorpicker>
+                </td>
+            </tr>
+            <tr style="height: 50px">
+                <td style="width: 60%">
+                    <div>Highlight Patterns:</div>
+                </td>
+                <td style="width: 40%;">
+                    <select name="selectIndexpat" autocomplete="off" id="highpattern" style="margin-left: -25px; display: none;">
+                        <option value="None" selected>None</option>
+                        <option value="Dots">Dots</option>
+                        <option value="Chessboard">Chessboard</option>
+                        <option value="Triangle">Triangle</option>
+                        <option value="Tile">Tile</option>
+                        <option value="Grid">Grid</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        var highlightselect = document.getElementById('highlight');
+        // Triggers while selecting colors from palette.
+        function onChange(args) {
+            var chart = document.getElementById("container").ej2_instances[0];
+            chart.highlightColor = args.currentValue.hex;
+            chart.dataBind();
+        }
+        function load(args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+        };
+        var mode = new ej.dropdowns.DropDownList({
+            index: 0,
+            placeholder: 'Select Range Bar Color',
+            width: 120,
+            change: function () {
+                var chart = document.getElementById("container").ej2_instances[0];
+                chart.selectionMode = mode.value;
+                if (highlightselect.checked) {
+                    chart.highlightMode = mode.value;
+                }
+                else {
+                    chart.highlightMode = 'None';
+                }
+                chart.dataBind();
+            }
+        });
+        mode.appendTo('#selmode');
+        document.getElementById('select').onchange = () => {
+            var chart = document.getElementById('container').ej2_instances[0];
+            var element = (document.getElementById('select'));
+            chart.isMultiSelect = element.checked;
+        };
+
+        var pattern = new ej.dropdowns.DropDownList({
+            index: 0,
+            placeholder: 'Select pattern values',
+            width: 120,
+             change: function () {
+                var chart = document.getElementById("container").ej2_instances[0];
+                chart.selectionPattern = pattern.value;
+                chart.dataBind();
+            }
+        });
+        pattern.appendTo('#selpattern');
+        var highLight = new ej.dropdowns.DropDownList({
+            index: 0,
+            placeholder: 'Select pattern values',
+            width: 120,
+            change: function () {
+                var chart = document.getElementById("container").ej2_instances[0];
+                if (highlightselect.checked) {
+                    chart.highlightPattern = highLight.value;
+                }
+                else {
+                    chart.highlightPattern = 'None';
+                }
+                chart.dataBind();
+            }
+        });
+        highLight.appendTo('#highpattern');
+        document.getElementById('highlight').onchange = function () {
+            var element = (document.getElementById('highlight'));
+            var chart = document.getElementById("container").ej2_instances[0];
+            if (element.checked) {
+                chart.highlightMode = mode.value;
+                chart.highlightPattern = highLight.value;
+            }
+            else {
+                chart.highlightMode = 'None';
+                chart.highlightPattern = 'None';
+            }
+            chart.dataBind();
+        };
+    </script>
+}
+@*custom code start*@
+<style>
+
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Selection in ASP.NET Core Chart control. Explore here for more details."/>
+                }
+@*custom code end*@
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+           This sample demonstrates the different modes of selection and highlight behavior in the charts.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this sample, any point or series can be selected in a chart by clicking on or touching the point. You can change the <b>Selection Mode</b> option in the properties panel. You can also enable multiple selection. You can select a point while loading a chart using the
+            <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.ChartSelectedDataIndexes.html" aria-label="Navigate to the class reference for ChartSelectedDataIndexes">SelectedDataIndexes</a> option.
+        </p>
+        <p>
+            Highlight the points in the sample using the <b>Enable Highlight</b> option. You can set different <b>highlight patterns</b> and <b>colors</b>.
+        </p>
+        <p>
+            Selection can be set using the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.SelectionMode.html" aria-label="Navigate to the class reference for Chart SelectionMode">SelectionMode</a> property and it supports the following modes.
+        </p>
+        <ul>
+            <li>
+                <code>Series</code> - Select the series in the chart.
+            </li>
+            <li>
+                <code>Point</code> - Select a point in the series.
+            </li>
+            <li>
+                <code>Cluster</code> - Select a group of points in the chart.
+            </li>
+            <li>
+                <code>DragXY</code> - Rectangular selection with respect to both axes.
+            </li>
+            <li>
+                <code>DragX</code> - Rectangular selection with respect to horizontal axis.
+            </li>
+            <li>
+                <code>DragY</code> - Rectangular selection with respect to vertical axis.
+            </li>
+        </ul>
+        <p>
+            More information about the selection can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/selection" aria-label="Navigate to the documentation for selection in ASP.NET Core Chart control">documentation section</a>.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Chart Selection Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Selection in ASP.NET Core Chart Control</h1>
+                }

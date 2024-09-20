@@ -1,0 +1,201 @@
+﻿@using Syncfusion.EJ2
+@using Syncfusion.EJ2.DropDowns;
+@using EJ2CoreSampleBrowser_NET6.Models
+@{
+    var formatList = new FormatData().FormatList();
+    char nameMentionChar = '/';
+}
+@section ControlsSection {
+    <div class="control-section">
+        <div class="control-wrapper">
+            <ejs-richtexteditor id="MentionInlineFormat" created="created" placeholder="Type '/' and choose format" actionBegin="actionBegin">
+                <e-richtexteditor-toolbarsettings items="@ViewBag.items"></e-richtexteditor-toolbarsettings>
+            </ejs-richtexteditor>
+        </div>
+    </div>
+    <ejs-mention id="mention" target="#MentionInlineFormat_rte-edit-view" created="onMentionCreate"  mentionChar="@nameMentionChar" beforeOpen="beforeOpen" dataSource="@formatList" popupHeight="290px" popupWidth="320px" allowSpaces="true" select="applyCommand" itemTemplate="<table class='format-table'><tr><td><span class='${Icon}' id='icons'></span></td><td><span class='font'>${FormatName}</span> <span class='description'>${Description}</span></td></tr></table>">
+          <e-mention-fields text="FormatName" groupBy="FormatType"></e-mention-fields>
+    </ejs-mention>
+
+    <style>
+        .e-icons.block-view:before{
+            content: open-quote;
+            font-size: 30px;
+            line-height: 20px;
+        }
+        .e-icons.e-text:before{
+            content: 'T';
+        }
+        .e-icons.h1-view:before{
+            content: 'H1';
+        }
+        .e-icons.h2-view:before{
+            content: 'H2';
+        }
+        .e-icons.h3-view:before{
+            content: 'H3';
+        }
+        .e-icons.h4-view:before{
+            content: 'H4';
+        }
+
+        .format-table .description {
+            display: block;
+            line-height: 20px;
+            font-size: 12px;
+            padding: 1px 0px 5px 0px;
+        }
+        .format-table .font {
+            font-size: 16px;
+            display: block;
+            line-height: 20px;
+            padding: 5px 0px 1px 0px;
+        }
+        .format-table #icons{
+            padding: 15px 15px;
+            display: inline-block;
+            width: 55px;
+            font-size:20px;
+            line-height: 0px;
+        }
+
+        .e-icons.e-image, .e-icons.e-audio, .e-icons.e-table, .e-icons.e-video,
+        .e-icons.e-list-unordered, .e-icons.e-list-ordered{
+            line-height: 10px !important;
+        }
+
+        #MentionInlineFormat .e-mention-chip{
+            cursor: pointer;
+        }
+
+        #rteEmoticons-smiley, #rteEmoticons-animal {
+            padding: 15px 0 15px 15px;
+        }
+
+        @@media (min-width: 320px) and (max-width: 480px) {
+            #rteEmoticons-smiley, #rteEmoticons-animal {
+                padding: 15px 0 15px 0px;
+            }
+        }
+
+    </style>
+
+    <script type="text/javascript">
+
+        var rteObj, selection, ranges, dialogObj, mentionObj;
+        var selection = new ej.richtexteditor.NodeSelection();
+
+        function actionBegin(args) {
+            if (args.requestType === 'EnterAction') {
+                if (mentionObj.element.classList.contains('e-popup-open')) {
+                    args.cancel = true;
+                }
+            }
+        }
+
+        function onMentionCreate() {
+            mentionObj = this;
+        }
+
+        function beforeApplyFormat() {
+            var currentRange = rteObj.getRange();
+            var node = rteObj.formatter.editorManager.nodeSelection.getNodeCollection(currentRange)[0];
+            rteObj.formatter.editorManager.nodeSelection.setSelectionText(document, node, node, currentRange.startOffset - 1, currentRange.endOffset);
+            var slashRange = rteObj.getRange();
+            var slashNode = rteObj.formatter.editorManager.nodeCutter.GetSpliceNode(slashRange, node);
+            var previouNode = slashNode.previousSibling;
+            if ( slashNode.parentElement && slashNode.parentElement.innerHTML.length === 1) {
+                slashNode.parentElement.appendChild(document.createElement('br'));
+            }
+            slashNode.parentNode.removeChild(slashNode);
+            if (previouNode) {
+                selection.setCursorPoint(document, previouNode, previouNode.textContent.length);
+            }
+        }
+
+        function beforeOpen() {
+            saveSelection = selection.save(selection.getRange(document), document);
+        }
+
+        function created() {
+            rteObj = this;
+        }
+
+        function applyCommand(args) {
+            args.cancel = true;
+            rteObj.focusIn();
+            saveSelection.restore();
+            if (args.itemData.FormatType != "Inline") {
+                beforeApplyFormat();
+            }
+
+            switch (args.itemData.Command) {
+                case "OL":
+                    mentionObj.hidePopup();
+                    rteObj.executeCommand("insertOrderedList");
+                    break;
+                case "UL":
+                    mentionObj.hidePopup();
+                    rteObj.executeCommand("insertUnorderedList");
+                    break;
+                case "CreateTable":
+                case "Image":
+                case "Audio":
+                case "Video":
+                    mentionObj.hidePopup();
+                    setTimeout(function() {
+                    rteObj.showDialog(
+                        args.itemData.Command === "CreateTable" ? "InsertTable" :
+                        args.itemData.Command === "Image" ? "InsertImage" :
+                        args.itemData.Command === "Audio" ? "InsertAudio" : "InsertVideo"
+                    );
+                    }, 150);
+                    break;
+                case "EmojiPicker":
+                    beforeApplyFormat();
+                    mentionObj.hidePopup();
+                    setTimeout(function() { rteObj.showEmojiPicker(); }, 150);
+                    break;
+                default:
+                    mentionObj.hidePopup();
+                    rteObj.executeCommand("formatBlock", args.itemData.Command);
+                    break;
+            }
+        }
+    </script>
+}
+
+@*custom code start*@
+
+@section Meta{
+    <meta name="description" content="This example demonstrates the Smart Suggestion in ASP.NET Core Rich Text Editor control. Explore here for more details."/>
+}
+
+@*custom code end*@
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This example demonstrates how to easily apply formatting or insert media and tables in the Rich Text Editor content using the Mention control. To use it, simply type the slash (/) key in the editor and select the desired format from the suggestion list that appears.</p>
+    </div>
+}
+@section Description{
+    <div id="description">
+    <p> The @@mention control is integrated into the Rich Text Editor and shows the suggestion list when the slash (/) key is pressed in an editor and applies suggested formats. To achieve this, the sample is customized for the Mention and Rich Text Editor.
+        <ul>
+            <li>Prevent the @@mention default selection action by setting the <a target='_blank' href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.dropdowns.mention.html#Syncfusion_EJ2_DropDowns_Mention_Select" aria-label="Navigate to the Select property reference for ASP.NET Core DropDowns">args.cancel</a> as <code>true</code> at the <a target='_blank' href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.dropdowns.mention.html#Syncfusion_EJ2_DropDowns_Mention_Select" aria-label="Navigate to the Select property reference for ASP.NET Core DropDowns">select</a> event.</li>
+            <li> Get the command name from the Mention control, select an event, and pass it to the public method <code>executeCommand</code> to perform the specified formats on the selected text in an editor.</li>
+        </ul>
+    <p> The following formats are shown in the mention suggestion list; apply them in an editor.</p>
+        <ul>
+            <li><code>Basic blocks</code> - The Rich Text Editor supports basic text formatting blocks, including <code>paragraph</code>, <code>headings</code>, <code>code</code>, <code>quotation</code>, <code>lists</code>, and <code>table</code> making it easier for users to structure their content. When a user selects a basic block format, it will be applied to the next line or paragraph.</li>
+            <li><code>Inline formats</code> - The Rich Text Editor supports inline formatting, allowing you to add <code>emojis</code> to the specific text within the content.</li>
+            <li><code>Media formats</code> -  The Rich Text Editor also supports media formats, including <code>images</code>, <code>videos</code>, and <code>audio</code>, making it an efficient tool for the content creation.</li>
+        </ul>
+    </div>
+}
+@section Title{
+    <title>ASP.NET Core Rich Text Editor Smart Suggestion Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Smart Suggestion in ASP.NET Core Rich Text Editor Control</h1>
+}

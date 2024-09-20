@@ -1,0 +1,71 @@
+﻿@page
+@model EJ2CoreSampleBrowser_NET8.Pages.Timeline.DefaultModel
+@using Syncfusion.EJ2
+@using Syncfusion.EJ2.Layouts
+
+@section ControlsSection{
+    <div class="col-lg-12 control-section">
+        <div class="default-timeline-section">
+            <ejs-timeline id="default">
+                <e-timeline-items>
+                    @for (int i = 0; i < Model.Items.Count; i++)
+                    {
+                        <e-timeline-item content="@Model.Items[i].Content" cssClass="@Model.Items[i].CssClass" dotCss="@Model.Items[i].DotCss"></e-timeline-item>
+                    }
+                </e-timeline-items>
+            </ejs-timeline>
+        </div>
+    </div>
+}
+
+<style>
+    /* Customized dot color */
+    .default-timeline-section .state-progress {
+        outline-color: #007bff;
+        background-color: #007bff;
+        --dot-size: 25px;
+    }
+
+    .default-timeline-section .state-success {
+        outline-color: #28a745;
+        background-color: #28a745;
+    }
+
+    /* Customized connector color */
+    .default-timeline-section .completed.e-connector::after {
+        border-color: #28a745;
+    }
+
+    .default-timeline-section .intermediate.e-connector::after {
+        border-style: dashed;
+    }
+
+    .default-timeline-section {
+        height: 350px;
+        width: 290px;
+        margin: 30px auto;
+    }
+</style>
+
+@section Meta{
+    <meta name="description" content="This example demonstrates the Default Functionalities in ASP.NET Core Timeline Control. Explore here for more details." />
+}
+@section ActionDescription{
+<div id="action-description">
+    <p>This sample demonstrates the default functionalities of the Timeline control including the highlighted customization.</p>
+</div>
+}
+@section Description{
+<div id="description">
+    <p>
+        The Timeline control enables users to display a series of data in chronological order, such as user activities, tracking progress, and more.
+        In this example, we have used the <code>content</code> property to display the item's content, <code>dotCss</code> property to customize the dot with background color and <code>cssClass</code> to customize the last connector as dashed style.
+    </p>
+</div>
+}
+@section Title{
+    <title>ASP.NET Core Timeline DefaultFunctionalities Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Default Functionalities in ASP.NET Core Timeline Control</h1>
+}

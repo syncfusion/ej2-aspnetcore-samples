@@ -1,0 +1,73 @@
+@page
+@model EJ2CoreSampleBrowser_NET8.Pages.Grid.BatchEditingModel
+
+
+@{
+    ViewData["Title"] = "BatchEditing";
+}
+
+<h2>BatchEditing</h2>
+
+@section ControlsSection{
+    <div class="control-section">
+        <ejs-grid id="Grid" dataSource="@Model.datasource" allowSorting="true" allowFiltering="true" toolbar="@(new List<string>() { "Add","Delete","Update","Cancel" })" allowPaging="true">
+            <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Batch"></e-grid-editSettings>
+            <e-grid-pagesettings pageCount="5" ></e-grid-pagesettings>
+            <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
+            <e-grid-columns>
+                <e-grid-column field="OrderID" headerText="Order ID" isPrimaryKey="true" validationRules="@(new { required=true, number=true})" textAlign="Right" width="120"></e-grid-column>
+                <e-grid-column field="CustomerID" headerText="Customer Name" validationRules="@(new { required=true, minLength=5})" width="150"></e-grid-column>
+                <e-grid-column field="Freight" headerText="Freight" validationRules="@(new { required=true, min=0, number=true})" textAlign="Right" editType="numericedit" format="C2" width="120"></e-grid-column>
+                <e-grid-column field="OrderDate" headerText="Order Date" editType="datepickeredit" format="yMd" width="170"></e-grid-column>
+                <e-grid-column field="ShipCountry" headerText="Ship Country" editType="dropdownedit" width="150"></e-grid-column>
+             </e-grid-columns>
+        </ejs-grid>
+    </div>
+}
+
+@section ActionDescription{
+	<div id="action-description">
+		 <p>This sample demonstrates CRUD operations in Grid. You can perform CRUD operations as follows,</p>
+         <ul>
+            <li><code>Add</code> -  To add a new record, click the add toolbar button. </li>
+            <li><code>Edit</code> - To edit record, double-click a cell. </li>
+            <li><code>Delete</code> - To delete record, click the toolbar delete button after selecting a row. </li>
+            <li><code>Update</code> and <code>Cancel</code> - Save or discard changes by clicking the toolbar update and cancel button respectively.</li>
+        </ul>
+    </div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Batch Editing in ASP.NET Core Data Grid control. Explore here for more details."/>
+                }
+
+@section Description{
+    <div id="description">
+    <p> Grid supports CRUD operations and they can be configured using
+        <code>editSettings</code>. It has the following modes to manipulate the datasource.
+    </p>
+    <ul>
+        <li><code>Normal</code></li>
+        <li><code>Dialog</code></li>
+        <li><code>Batch</code></li>
+    </ul>
+    <p>
+        In this demo, the Batch mode is enabled for editing by defining the <code>editSettings.mode</code> as <code>batch</code>. You can start editing by double clicking a cell and changing the cell value.
+        The edited cell will be highlighted while navigating to a new cell.
+        You can bulk save the edited data to the datasource by clicking the toolbar's <code>update</code> button or by externally
+        invoking the <code>batchSave</code> method.
+    </p>
+    <p>
+        More information on the batch editing can be found in this
+        <a target="_blank"
+            href="https://ej2.syncfusion.com/aspnetcore/documentation/grid/editing/batch-editing" aria-label="Navigate to the documentation for Batch Editing in Grid Control">
+            documentation section</a>.
+        </p>
+	</div>
+}
+@section Title{
+                    <title>ASP.NET Core Data Grid Batch Editing Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Batch Editing in ASP.NET Core Data Grid Control</h1>
+                }

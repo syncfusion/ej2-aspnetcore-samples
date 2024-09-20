@@ -1,0 +1,175 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="control-section" align="center">
+
+        <ejs-chart id="lineContainer"  load="load" title="Literacy rate by Country in 2015"
+                   pointRender="pointRender" enableSideBySidePlacement="false">
+            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category" interval="1" labelPosition="@Syncfusion.EJ2.Charts.AxisPosition.Outside">
+                <e-majorgridlines width="0"></e-majorgridlines>
+            </e-chart-primaryxaxis>
+            <e-chart-primaryyaxis minimum="0" maximum="100" interval="25" labelFormat="{value}%">
+                <e-majorticklines width="0"></e-majorticklines>
+                <e-minorticklines width="0"></e-minorticklines>
+                <e-linestyle width="0"></e-linestyle>
+            </e-chart-primaryyaxis>
+            <e-chart-chartarea>
+                <e-chartarea-border width="0"></e-chartarea-border>
+            </e-chart-chartarea>
+            <e-series-collection>
+                <e-series dataSource="ViewBag.ChartPoints" xName="Country" yName="Rate" opacity="0.5" columnWidth="0.8" enableTooltip="false" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                    <e-series-marker>
+                        <e-series-datalabel visible="false" position="@Syncfusion.EJ2.Charts.LabelPosition.Top">
+                            <e-font color="#ffffff" fontWeight="600"></e-font>
+                        </e-series-datalabel>
+                    </e-series-marker>
+                </e-series>
+                <e-series dataSource="ViewBag.ChartPoints" xName="Country" yName="Literacy_Rate" tooltipMappingName="Text" columnWidth="0.8" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                    <e-series-marker>
+                        <e-series-datalabel visible="true" name="Text" position="@Syncfusion.EJ2.Charts.LabelPosition.Top">
+                            <e-font color="#ffffff" fontWeight="600"></e-font>
+                        </e-series-datalabel>
+                    </e-series-marker>
+                </e-series>
+            </e-series-collection>
+            <e-chart-tooltipsettings enable="true" header="<b>${point.x}</b>" format="Rate : <b>${point.tooltip}</b>"></e-chart-tooltipsettings>
+            <e-chart-legendsettings visible="false"></e-chart-legendsettings>
+        </ejs-chart>
+    </div>
+
+    <script>
+        function pointRender(args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'material';
+            if (selectedTheme && selectedTheme.indexOf('fabric-dark') > -1) {
+                 if (args.series.yName === "Rate")
+                       args.fill = "f9fafb";
+            }
+            else if (selectedTheme && selectedTheme.indexOf('fabric') > -1) {
+                 if (args.series.yName === "Rate")
+                       args.fill = "grey";
+            }
+            else if (selectedTheme === 'material-dark') {
+                 if (args.series.yName === "Rate")
+                       args.fill = "f9fafb";
+            }
+            else if (selectedTheme === 'material') {
+                 if (args.series.yName === "Rate")
+                       args.fill = "grey";
+            }
+            else if (selectedTheme === 'bootstrap5-dark') {
+                 if (args.series.yName === "Rate")
+                       args.fill = "#f9fafb";
+            }
+            else if (selectedTheme === 'bootstrap5') {
+                 if (args.series.yName === "Rate")
+                       args.fill = "grey";
+            }
+            else if (selectedTheme === 'bootstrap-dark') {
+                 if (args.series.yName === "Rate")
+                       args.fill = "f9fafb";
+            }
+            else if (selectedTheme === 'bootstrap') {
+                 if (args.series.yName === "Rate")
+                       args.fill = "grey";
+            }
+            else if (selectedTheme === 'highcontrast') {
+                 if (args.series.yName === "Rate")
+                       args.fill = "#f9fafb";
+            }
+            else if (selectedTheme === 'fluent-dark') {
+                 if (args.series.yName === "Rate")
+                       args.fill = "#f9fafb";
+            }
+            else if (selectedTheme === 'fluent') {
+                 if (args.series.yName === "Rate")
+                       args.fill = "grey";
+            }
+            else if (selectedTheme === 'tailwind-dark') {
+                 if (args.series.yName === "Rate")
+                       args.fill = "#f9fafb";
+            }
+            else if (selectedTheme === 'tailwind') {
+                 if (args.series.yName === "Rate")
+                       args.fill = "grey";
+            }
+            else if (selectedTheme === 'material3-dark') {
+                 if (args.series.yName === "Rate")
+                       args.fill = "f9fafb";
+            }
+            else if (selectedTheme === 'material3') {
+                 if (args.series.yName === "Rate")
+                       args.fill = "grey";
+            }
+            else if (selectedTheme === 'fluent2-dark') {
+                if (args.series.yName == "Rate")
+                       args.fill = "#f9fafb";
+            }
+            else if (selectedTheme === 'fluent2') {
+                if (args.series.yName == "Rate")
+                       args.fill = "grey";
+            }
+            else {
+                 if (args.series.yName === "Rate")
+                       args.fill = "grey";
+            }
+        }
+        function load(args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "77%";
+            args.chart.series[0].cornerRadius.bottomLeft = ej.base.Browser.isDevice ? 12 : 35;
+            args.chart.series[0].cornerRadius.bottomRight = ej.base.Browser.isDevice ? 12 : 35;
+            args.chart.series[0].cornerRadius.topLeft = ej.base.Browser.isDevice ? 12 : 35;
+            args.chart.series[0].cornerRadius.topRight = ej.base.Browser.isDevice ? 12 : 35;
+            args.chart.series[1].cornerRadius.bottomLeft = ej.base.Browser.isDevice ? 12 : 35;
+            args.chart.series[1].cornerRadius.bottomRight = ej.base.Browser.isDevice ? 12 : 35;
+            args.chart.series[1].cornerRadius.topLeft = ej.base.Browser.isDevice ? 12 : 35;
+            args.chart.series[1].cornerRadius.topRight = ej.base.Browser.isDevice ? 12 : 35;
+            args.chart.series[1].marker.dataLabel.enableRotation = ej.base.Browser.isDevice ? "true" : "false";
+            args.chart.series[1].marker.dataLabel.angle = ej.base.Browser.isDevice ? -90 : 0;
+            args.chart.series[1].marker.dataLabel.font.size = ej.base.Browser.isDevice ? "9px" : "11px";
+            args.chart.primaryXAxis.labelIntersectAction = ej.base.Browser.isDevice?'None':'Rotate45';
+            args.chart.primaryXAxis.labelRotation = ej.base.Browser.isDevice?'-45':'0';
+        }
+    </script>
+}
+@*custom code start*@
+@section Scripts {
+    <script>
+    </script>
+}
+
+<style>
+
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Rounded Column in ASP.NET Core Chart control. Explore here for more details."/>
+                }
+@*custom code end*@
+@section ActionDescription{
+    <p>
+        This sample shows the literacy rate by country in 2015 with the default column series in the chart.
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can see how to render and configure the column chart. The column chart is used to compare the frequency, count, total or average of data in different categories. You can use the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.ChartCornerRadius.html" aria-label="Navigate to the class reference for ChartCornerRadius">ChartCornerRadius</a> option to customize the vertical rectangle, resulting in a rounded column.
+    </p>
+    <p>
+        <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+    </p>
+    <p>
+        More information about the column series can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/chart-types/column" aria-label="Navigate to the documentation for Column Chart in ASP.NET CORE Charts Component">documentation section</a>.
+    </p>
+}
+@section Title{
+                    <title>ASP.NET Core Chart Rounded Column Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Rounded Column in ASP.NET Core Chart Control</h1>
+                }

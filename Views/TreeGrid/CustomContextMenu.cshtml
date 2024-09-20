@@ -1,0 +1,87 @@
+@using Syncfusion.EJ2
+
+
+@section ControlsSection{
+    @{
+        List<object> contextItems = new List<Object>();
+        contextItems.Add(new { text = "Collapse the Row", target = ".e-content", id = "collapserow" });
+        contextItems.Add(new { text = "Expand the Row", target = ".e-content", id = "expandrow" });
+    }
+    <div class="control-section">
+
+        <ejs-treegrid id="TreeGrid" dataSource="ViewBag.dataSource"
+                      contextMenuOpen="onOpen" contextMenuClick="onClick"
+                      contextMenuItems="contextItems" allowExcelExport="true" allowPdfExport="true" allowSorting="true" allowPaging="true" childMapping="Children" height="350" treeColumnIndex="1">
+            <e-treegrid-pagesettings pageSize="10"></e-treegrid-pagesettings>
+            <e-treegrid-columns>
+                <e-treegrid-column field="TaskId" headerText="Task ID" isPrimaryKey="true" validationRules="@(new { required=true, number=true})" textAlign="Right" width="100"></e-treegrid-column>
+                <e-treegrid-column field="TaskName" headerText="Task Name" width="190" validationRules="@(new { required=true})"></e-treegrid-column>
+                <e-treegrid-column field="StartDate" headerText=" Start Date" validationRules="@(new { date=true})" editType="datepickeredit" textAlign="Right" format="yMd" type="date" width="120"></e-treegrid-column>
+                <e-treegrid-column field="Duration" headerText="Duration" validationRules="@(new { number=true, min=0})" editType="numericedit" textAlign="Right" width="110"></e-treegrid-column>
+                <e-treegrid-column field="Progress" headerText="Progress" validationRules="@(new { number=true, min=0})" editType="numericedit" textAlign="Right" width="120"></e-treegrid-column>
+                <e-treegrid-column field="Priority" headerText="Priority" width="100"></e-treegrid-column>
+            </e-treegrid-columns>
+        </ejs-treegrid>
+    </div>
+
+    <script>
+        function onOpen(args) {
+            var treegrid = document.getElementById("TreeGrid").ej2_instances[0];
+            var elem = args.event.target;
+            var row = elem.closest('.e-row');
+            var uid = row && row.getAttribute('data-uid');
+            if (ejs.base.isNullOrUndefined(uid) || ejs.base.isNullOrUndefined(ejs.base.getValue('hasChildRecords', treegrid.grid.getRowObjectFromUID(uid).data))) {
+                args.cancel = true;
+            } else {
+                var flag = ejs.base.getValue('expanded', treegrid.grid.getRowObjectFromUID(uid).data);
+                var val = flag ? 'none' : 'block';
+                document.querySelectorAll('li#expandrow')[0].setAttribute('style', 'display: ' + val + ';');
+                val = !flag ? 'none' : 'block';
+                document.querySelectorAll('li#collapserow')[0].setAttribute('style', 'display: ' + val + ';');
+            }
+        }
+        function onClick(args) {
+            var treegrid = document.getElementById("TreeGrid").ej2_instances[0];
+            treegrid.getColumnByField("TaskId");
+            if (args.item.id === "collapserow")
+                treegrid.collapseRow(treegrid.getSelectedRows()[0], treegrid.getSelectedRecords()[0]);
+            else
+                treegrid.expandRow(treegrid.getSelectedRows()[0], treegrid.getSelectedRecords()[0]);
+        }
+    </script>
+}
+
+@*custom code start*@
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Custom ContextMenu in ASP.NET Core Tree Grid control. Explore here for more details."/>
+                }
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the usage of custom context menu in TreeGrid component. Right click anywhere on a parent row in the TreeGrid to view custom context menu. 
+        </p>
+
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            TreeGrid has an option to show the custom context menu when right click on it. To configure the custom items in context menu, you should define custom item in  <code>contextMenuItems</code>.
+
+            In this demo, Custom Context Menu feature has enabled by defining the custom context menu <code>Expand the Row</code> and <code>Collapse the Row</code> for the parent nodes in <code>contextMenuItems</code>  property.
+        </p>
+
+    </div>
+
+}
+
+@*custom code end*@
+@section Title{
+                    <title>ASP.NET Core Tree Grid Custom ContextMenu Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Custom ContextMenu in ASP.NET Core Tree Grid Control</h1>
+                }

@@ -1,0 +1,136 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+<div class="col-lg-12 control-section">
+    <ejs-querybuilder id="querybuilder" rule="ViewBag.rule" actionBegin="actionBegin">
+        <e-querybuilder-columns>
+            <e-querybuilder-column field="EmployeeID" label="Employee ID" type="number"></e-querybuilder-column>
+            <e-querybuilder-column field="FirstName" label="First Name" type="string"></e-querybuilder-column>
+            <e-querybuilder-column field="LastName" label="Last Name" type="string"></e-querybuilder-column>
+            <e-querybuilder-column field="HireDate" label="Hire Date" type="date" format="dd/MM/yyyy"></e-querybuilder-column>
+            <e-querybuilder-column field="Country" label="Country" type="string" ruleTemplate="#ruleTemplate"></e-querybuilder-column>
+        </e-querybuilder-columns>
+    </ejs-querybuilder>
+</div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Rule Template in ASP.NET Core Query Builder control. Explore here for more details."/>
+                }
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the Rule Template functionality in QueryBuilder component using RadioButton components.  In the Country column, user can change the Operator as equal/not equal using RadioButton component and select the Value from DropDownList component.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            This sample illustrates how to integrate ruleTemplate to the columns in the QueryBuilder. This is used for creating custom user interface for the columns with custom components and update the rule collection by using the component events.
+        </p>
+        <p>
+            More information about Query Builder can be found in this
+            <a target="_blank" href="http://ej2.syncfusion.com/aspnetcore/documentation/query-builder/getting-started" aria-label="Navigate to the documentation for getting started with ASP.NET Core Query Builder control">
+        documentation section</a>.
+            </a>.
+        </p>
+    </div>
+}
+@*custom code start*@
+<style>
+    .e-query-builder {
+        margin: 0 auto;
+    }
+    .e-radio-wrapper:nth-child(1) {
+       margin-right: 5px !important;
+    }
+    .e-radio-wrapper:nth-child(2) {
+       margin-right: 0px !important;
+    }
+    .e-rule-value {
+        display: inline-block;
+    }
+    .e-rule-filter {
+        display: inline-block;
+    }
+    .e-rule-operator {
+        display: inline-block;
+    }
+    @@media only screen and (max-width: 700px) {
+        .e-radio-wrapper:nth-child(1) {
+            padding-bottom: 10px !important;
+        }
+
+        .e-rule-value.e-custom-value {
+            width: auto !important;
+        }
+
+        .e-rule-value-delete .e-custom-delete {
+            padding-right: 0px !important;
+        }
+    }
+
+</style>
+@*custom code end*@
+
+<script id="ruleTemplate" type="text/x-template">
+    <div id="ruleTemp"></div>
+</script>
+
+<script type="text/javascript">
+    var querybuilder;
+    function actionBegin(args) {
+        if (args.requestType === 'template-initialize') {
+            querybuilder = ej.base.getComponent(document.getElementById("querybuilder"), "query-builder");
+            args.columns = querybuilder.columns;
+            args.fields =  {text:"label", value: "field"};
+            const group = querybuilder.getGroup(args.ruleID.split("_")[1]);
+            const grpId = args.ruleID.split("_")[0] + '_' + args.ruleID.split("_")[1];
+            var condition = "and";
+            var ruleElem = document.getElementById(args.ruleID);
+            if (ruleElem && ruleElem.previousSibling) {
+                var rule = querybuilder.getRule(ruleElem.previousSibling);
+                if (rule.condition) {
+                    condition = rule.condition;
+                }
+            }
+            var ajax = new ej.base.Ajax({
+                url: "@Url.Action("RuleTemplatePartial", "QueryBuilder")", //render the partial view
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ value: args })
+            });
+            ajax.send().then(function (data) {
+               appendElement(data, args.ruleID, "ruleTemp");
+            }).catch(function (xhr) {
+               console.log(xhr);
+            });
+        }
+    }
+    function appendElement(elementString, ruleID, templateID) {
+        form = document.getElementById("querybuilder");
+        form.querySelector("#" + ruleID).querySelector("#" + templateID).innerHTML = elementString;
+        var script = document.createElement('script');
+        script.type = "text/javascript";
+        var serverScript = form.querySelector("#" + ruleID).querySelector("#" + templateID).querySelector('script');
+        script.textContent = serverScript.innerHTML;
+        document.head.appendChild(script);
+        serverScript.remove();
+    }
+    function fieldChange (args) {
+        querybuilder.notifyChange(args.value, args.element, 'field');
+    }
+    function valueChange (args) {
+        querybuilder.notifyChange(args.value, args.element, 'value');
+    }
+    function operatorChange(args) {
+        querybuilder.notifyChange(args.value, args.event.target, 'operator');
+    }
+
+</script>
+@section Title{
+                    <title>ASP.NET Core Query Builder Rule Template Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Rule Template in ASP.NET Core Query Builder Control</h1>
+                }

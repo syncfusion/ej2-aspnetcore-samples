@@ -1,0 +1,73 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+
+    <div class="control-section" align="center">
+        <div id="container">
+            <ejs-stockchart id="stockchartohlc" load="stockload" title="AAPL Stock Price" tooltipRender="tooltipRender">
+                <e-stockchart-chartarea>
+                    <e-stockchartarea-border width="0"></e-stockchartarea-border>
+                </e-stockchart-chartarea>
+                <e-stockchart-border width="0"></e-stockchart-border>
+                <e-stockchart-primaryxaxis>
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                    <e-crosshairtooltip enable="true"></e-crosshairtooltip>
+                </e-stockchart-primaryxaxis>
+                <e-stockchart-primaryyaxis labelFormat="n0">
+                    <e-linestyle width="0"></e-linestyle>
+                    <e-majorticklines height="0"></e-majorticklines>
+                </e-stockchart-primaryyaxis>
+                <e-stockchart-tooltipsettings enable="true" shared="true" position="Nearest"></e-stockchart-tooltipsettings>
+                <e-stockchart-crosshairsettings enable="true"></e-stockchart-crosshairsettings>
+                <e-stockchart-series-collection>
+                    <e-stockchart-series type='HiloOpenClose' bearFillColor='#2ecd71' bullFillColor='#e74c3d' xName='x' name='Apple'> </e-stockchart-series>
+                </e-stockchart-series-collection>
+            </ejs-stockchart>
+        </div>
+    </div>
+     <script src="~/scripts/StockChartData/googl.js"></script>
+    <script>
+        var data = googl;
+        function stockload(args) {
+            let selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Material';
+            args.stockChart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+            args.stockChart.series[0].dataSource = data;
+        }
+        function tooltipRender(args) {
+            if (args.text.split('<br/>')[4]) {
+                let target = parseFloat(args.text.split('<br/>')[4].split('<b>')[1].split('</b>')[0]);
+                let value = (target / 100000000).toFixed(1) + 'B';
+                args.text = args.text.replace(args.text.split('<br/>')[4].split('<b>')[1].split('</b>')[0], value);
+            }
+        }
+    </script>
+}
+@*custom code start*@
+@section Scripts {
+
+}
+@*custom code end*@
+@section ActionDescription{
+    <p>This <a target="_blank" href="https://www.syncfusion.com/aspnet-core-ui-controls/stock-chart" aria-label="Navigate to explore the syncfusion ASP.NET Core Stock Chart">ASP.NET Core Stock Chart</a> example visualizes the AAPL stock price with OHLC chart. Tooltip and crosshair show the information about the data and period.</p>
+}
+@section Description{
+    <p>
+        In this example, you can see how to render and configure the stock chart with <code>HILO Open Close</code> type series. The horizontal lines on the left and the right are used to show the open and close values of the stock, and the vertical line represents both high and low values.
+    </p>
+    <p>
+        <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover the chart or tap on it in touch enabled devices.
+    </p>
+    <p>
+        More information about the series type can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/stock-chart/series-types" aria-label="Navigate to the documentation for Stock Chart Series Types">documentation section</a>.
+    </p>
+}
+@section Title{
+                    <title>ASP.NET Core StockChart OHLC Example - Syncfusion Demos </title>
+                }
+@section Meta{
+                    <meta name="description" content="This example demonstrates the OHLC in ASP.NET Core StockChart control. Explore here for more details."/>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of OHLC in ASP.NET Core StockChart Control</h1>
+                }

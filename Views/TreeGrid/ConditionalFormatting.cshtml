@@ -1,0 +1,108 @@
+@using Syncfusion.EJ2
+
+
+@section ControlsSection{
+    <div class="control-section">
+
+        <ejs-treegrid id="TreeGrid" dataSource="ViewBag.dataSource" queryCellInfo="cellFormat" allowPaging="true" childMapping="Children" height="350" treeColumnIndex="1">
+            <e-treegrid-pagesettings pageSize="10"></e-treegrid-pagesettings>
+            <e-treegrid-columns>
+                <e-treegrid-column field="TaskId" headerText="Task ID" textAlign="Right" width="70"></e-treegrid-column>
+                <e-treegrid-column field="TaskName" headerText="Task Name" width="200"></e-treegrid-column>
+                <e-treegrid-column field="StartDate" headerText=" Start Date" textAlign="Right" format="yMd" type="date" width="90"></e-treegrid-column>
+                <e-treegrid-column field="EndDate" headerText=" End Date" textAlign="Right" format="yMd" type="date" width="90"></e-treegrid-column>
+                <e-treegrid-column field="Duration" headerText="Duration" textAlign="Right" width="80"></e-treegrid-column>
+                <e-treegrid-column field="Progress" headerText="Progress" textAlign="Right" width="80"></e-treegrid-column>
+                <e-treegrid-column field="Priority" headerText="Priority" width="90"></e-treegrid-column>
+            </e-treegrid-columns>
+        </ejs-treegrid>
+
+    </div>
+    <script>
+        function cellFormat(args) {
+            if (args.cell.innerHTML === 'High') {
+                var x = document.createElement('IMG');
+                x.setAttribute('src', '@Url.Content("~/styles/images/treegrid/high.png")');
+                x.setAttribute('height', '15px');
+                x.setAttribute('alt', 'High priority icon');
+                var span = document.createElement('span');
+                span.innerHTML = args.cell.innerHTML;
+                span.setAttribute('style', 'padding-left:7px;');
+                args.cell.innerHTML = '';
+                args.cell.appendChild(x);
+                args.cell.appendChild(span);
+            } else if (args.cell.innerHTML === 'Critical') {
+                var y = document.createElement('IMG');
+                y.setAttribute('src', '@Url.Content("~/styles/images/treegrid/critical.png")');
+                y.setAttribute('height', '15px');
+                y.setAttribute('alt', 'Critical priority icon');
+                var span = document.createElement('span');
+                span.innerHTML = args.cell.innerHTML;
+                span.setAttribute('style', 'padding-left:7px;');
+                args.cell.innerHTML = '';
+                args.cell.appendChild(y);
+                args.cell.appendChild(span);
+            } else if (args.cell.innerHTML === 'Low') {
+                var z = document.createElement('IMG');
+                z.setAttribute('src', '@Url.Content("~/styles/images/treegrid/low.png")');
+                z.setAttribute('height', '15px');
+                z.setAttribute('alt', 'Low priority icon');
+                var span = document.createElement('span');
+                span.innerHTML = args.cell.innerHTML;
+                span.setAttribute('style', 'padding-left:7px;');
+                args.cell.innerHTML = '';
+                args.cell.appendChild(z);
+                args.cell.appendChild(span);
+            } else if (args.cell.innerHTML === 'Normal') {
+                var a = document.createElement('IMG');
+                a.setAttribute('src', '@Url.Content("~/styles/images/treegrid/normal.png")');
+                a.setAttribute('height', '15px');
+                a.setAttribute('alt', 'Normal priority icon');
+                var span = document.createElement('span');
+                span.innerHTML = args.cell.innerHTML;
+                span.setAttribute('style', 'padding-left:7px;');
+                args.cell.innerHTML = '';
+                args.cell.appendChild(a);
+                args.cell.appendChild(span);
+            } else if (+args.cell.innerHTML > 90 && +args.cell.innerHTML <= 100 && args.column.field === 'Progress') {
+                args.cell.setAttribute('style', 'background-color:#336c12;color:white;');
+            } else if (+args.cell.innerHTML > 20 && args.column.field === 'Progress') {
+                args.cell.setAttribute('style', 'background-color:#7b2b1d;color:white;');
+            }
+        }
+    </script>
+}
+
+@*custom code start*@
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Conditional Formatting in ASP.NET Core Tree Grid control. Explore here for more details."/>
+                }
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This samples demonstrates the way of customizing the cells by adding icons for Priority column and highlight the cells of Progress column based on certain condition using queryCellInfo event.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            The appearance of cells can be customized by using the queryCellInfo event. The queryCellInfo event triggers for every cell. In that event handler, you can get QueryCellInfoEventArgs
+            that contains the details of the cell.
+        </p>
+        <p>
+            In this demo, we have customized the column values by adding icons for Priority column and highlighted the Progress column based on certain condition using queryCellInfo event.
+        </p>
+    </div>
+}
+
+@*custom code end*@
+@section Title{
+                    <title>ASP.NET Core Tree Grid Conditional Formatting Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Conditional Formatting in ASP.NET Core Tree Grid Control</h1>
+                }

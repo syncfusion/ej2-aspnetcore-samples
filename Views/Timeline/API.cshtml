@@ -1,0 +1,194 @@
+﻿@using Syncfusion.EJ2
+@using Syncfusion.EJ2.Layouts
+@using Syncfusion.EJ2.Buttons
+@using Syncfusion.EJ2.DropDowns
+
+@{
+    List<object> orientationData = new List<object>();
+    orientationData.Add(new { text = "Vertical", value = "vertical" });
+    orientationData.Add(new { text = "Horizontal", value = "horizontal" });
+
+    List<object> alignData = new List<object>();
+    alignData.Add(new { text = "Before", value = "before" });
+    alignData.Add(new { text = "After", value = "after" });
+    alignData.Add(new { text = "Alternate", value = "alternate" });
+    alignData.Add(new { text = "Alternate reverse", value = "alternatereverse" });
+
+    List<object> travelItenary = new List<object>();
+    travelItenary.Add(new { date = "May 13, 2024", details = "Flight Booking: Reserving airline tickets", icon = "sf-icon-onward" });
+    travelItenary.Add(new { date = "June 20, 2024", details = "Hotel Accommodation= Booking lodging for the trip", icon = "sf-icon-accomodation" });
+    travelItenary.Add(new { date = "July 2, 2024", details = "Excursion Plans= Organized visits to popular attractions", icon = "sf-icon-explore" });
+    travelItenary.Add(new { date = "Aug 14, 2024", details = "Return Journey= Flight Confirmation", icon = "sf-icon-return" });
+}
+
+@section ControlsSection{
+    
+<div class="col-lg-8 control-section">
+    <div class="timeline-api-section">
+        <p style="font-weight: 600;"> Travel Itenary </p>
+        <ejs-timeline id="timeline" created="created">
+            <e-timeline-items>
+                @foreach (var item in travelItenary)
+                {
+                    <e-timeline-item content="@item.GetType().GetProperty("date")?.GetValue(item)" oppositecontent="@item.GetType().GetProperty("details")?.GetValue(item)" dotCss="@item.GetType().GetProperty("icon")?.GetValue(item)"></e-timeline-item>
+                }
+            </e-timeline-items>
+        </ejs-timeline>
+    </div>
+</div>
+<div class="col-lg-4 property-section">
+    <div class="property-panel-header"> Properties </div>
+    <div class="property-panel-content">
+        <table>
+            <tbody>
+                <tr>
+                    <td> Orientation </td>
+                    <td>
+                        <ejs-dropdownlist id="orientation" dataSource="orientationData" placeholder="Select orientation" popupHeight="200px" change="orientationChange" index="0"></ejs-dropdownlist>
+                    </td>
+                </tr>
+                <tr>
+                    <td> Alignment </td>
+                    <td>
+                        <ejs-dropdownlist id="align" dataSource="alignData" placeholder="Select alignment" popupHeight="200px" change="alignmentChange" index="1"></ejs-dropdownlist>
+                    </td>
+                </tr>
+                <tr>
+                    <td> Opposite content </td>
+                    <td>
+                        <ejs-switch id="showOppositeContent" checked=true change="updateOppositeContent"></ejs-switch>
+                    </td>
+                </tr>
+                <tr>
+                    <td> Show Icon </td>
+                    <td>
+                        <ejs-switch id="showDotCss" checked=true change="updateDotCss"></ejs-switch>
+                    </td>
+                </tr>
+                <tr>
+                    <td> Reverse </td>
+                    <td>
+                        <ejs-switch id="reverse-timeline" change="change"></ejs-switch>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+}
+
+<script>
+
+    var timeline;
+
+    function created() {
+        timeline = document.getElementById('timeline').ej2_instances[0];
+    }
+
+    function orientationChange(e) {
+        timeline.orientation = e.itemData.value;
+    }
+
+    function alignmentChange(e) {
+        timeline.align = e.itemData.value;
+    }
+
+    function change(e) {
+        timeline.reverse = e.checked;
+    }
+
+    function updateOppositeContent(e) {
+        var travelItenaryJson = @Html.Raw(Json.Serialize(travelItenary));
+        for (var i = 0; i < timeline.items.length; i++) {
+            timeline.items[i].oppositeContent = e.checked ? travelItenaryJson[i].details : "";
+        }
+    }
+
+    function updateDotCss(e) {
+        var travelItenaryJson = @Html.Raw(Json.Serialize(travelItenary));
+        for (var i = 0; i < timeline.items.length; i++) {
+            timeline.items[i].dotCss = e.checked ? travelItenaryJson[i].icon : "";
+        }
+    }
+
+</script>
+
+<style>
+    @@font-face {
+        font-family: 'timeline';
+        src: url(data:application/x-font-ttf;charset=utf-8;base64,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) format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    [class^="sf-icon-"],
+    [class*=" sf-icon-"] {
+        font-family: 'timeline' !important;
+        speak: none;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .sf-icon-onward:before {
+        content: "\e70a";
+    }
+
+    .sf-icon-return:before {
+        content: "\e801";
+    }
+
+    .sf-icon-accomodation:before {
+        content: "\e80a";
+    }
+
+    .sf-icon-explore:before {
+        content: "\e70f";
+    }
+
+    .timeline-api-section {
+        height: 350px;
+        margin-top: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .property-panel-content td {
+        padding: 10px 0px;
+        width: 50%;
+    }
+</style>
+
+@section Meta{
+    <meta name="description" content="This example demonstrates the API's' in ASP.NET Core Timeline Control. Explore here for more details." />
+}
+@section ActionDescription{
+<div id="action-description">
+    <p>This sample demonstrates the properties available in the Timeline control.</p>
+</div>
+}
+@section Description{
+<div id="description">
+    <p>This sample can be customized further with the combination of Timeline properties from the property pane. For example,</p>
+    <ul>
+        <li>The layout can be changed by selecting the orientation dropdownlist from property pane.</li>
+        <li>Items alignment can be changed by selecting the alignment dropdownlist from property pane.</li>
+        <li>Show or hide the information opposite to the content by toggling the opposite content switcher button.</li>
+        <li>Show or hide the item icons by toggling the show icon switcher button.</li>
+        <li>Reverse the timeline items by toggling the reverse switcher button.</li>
+    </ul>
+</div>
+}
+@section Title{
+    <title>ASP.NET Core Timeline API Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of API's' in ASP.NET Core Timeline Control</h1>
+}

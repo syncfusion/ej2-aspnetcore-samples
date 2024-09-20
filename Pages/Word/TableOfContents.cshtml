@@ -1,0 +1,152 @@
+@page
+@model EJ2CoreSampleBrowser_NET8.Pages.Word.TableOfContents
+
+@using Syncfusion.EJ2
+@{ var Title = "Essential DocIO (Word) : TOC, Table of Contents : Syncfusion"; }
+@section ControlsSection{
+    <div class="control-section">
+        @{Html.BeginForm("tableofcontents", "word", FormMethod.Post);
+            {
+                <div style="margin-top: 10px; font-size:14px">
+                    Click the button to view the generated Word document or PDF. Please note that Microsoft Word Viewer or Microsoft Word is required to view the resultant Word document and PDF viewer is required to view the resultant PDF.
+                    <div style="margin-top: 10px">
+                        Title :
+                        &nbsp;
+                        <input type="text" class="e-input" id="txtTitle" name="txtTitle" value="Table Of Contents" style="font-weight:normal;width:150px" />
+                    </div>
+                    <div style="margin-top: 10px">
+                        <div class="celldiv">
+                            Styles:
+                            <input type="radio" id="rdButtonDefault" name="StylesOption" value="Default" style="margin-left: 7px" checked="checked" />
+                            <label for="rdButtonDefault" style="font-weight:normal">Default</label>
+                            &nbsp;
+                            <input type="radio" id="rdButtonCustom" name="StylesOption" value="Custom" style="margin-left: 7px" />
+                            <label for="rdButtonCustom" style="font-weight:normal">Custom</label>
+                            &nbsp;
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px">
+                        Heading Level :
+                        &nbsp
+                        Lower Level
+                        &nbsp;
+                        <select id="lowerLevel" name="lowerLevel" class="e-dropdown-btn">
+                            <option value="1" Selected=true>1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                        </select>
+                        &nbsp;&nbsp
+                        Upper Level
+                        &nbsp;
+                        <select id="upperLevel" name="upperLevel" class="e-dropdown-btn">
+                            <option value="1">1</option>
+                            <option value="2" Selected=true>2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                        </select>
+                    </div>
+                    <div style="margin-top: 10px">
+                        <table>
+                            <tr>
+                                <td align="left">
+                                    <input type="checkbox" id="chkPageNumbers" name="chkPageNumbers" value="PageNumbers" style="margin-left: 7px" checked="checked" />
+                                    <label for="chkPageNumbers" style="font-weight:normal">Include Page Numbers</label>
+                                </td>
+                                <td align="left">
+                                    <input type="checkbox" id="chkHyperlink" name="chkHyperlink" value="Hyperlink" style="margin-left: 7px" checked="checked" />
+                                    <label for="chkHyperlink" style="font-weight:normal">Use Hyperlink</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left">
+                                    <input type="checkbox" id="chkAlign" name="chkAlign" value="Align" style="margin-left: 7px" checked="checked" />
+                                    <label for="chkAlign" style="font-weight:normal">Right Align Page Numbers</label>
+                                </td>
+                                <td align="left">
+                                    <input type="checkbox" id="chkOutline" name="chkOutline" value="Outline" style="margin-left: 7px" checked="checked" />
+                                    <label for="chkOutline" style="font-weight:normal">Use Outline Levels</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left">
+                                    <input type="checkbox" id="chkTableEntry" name="chkTableEntry" value="TableEntry" style="margin-left: 7px" />
+                                    <label for="chkTableEntry" style="font-weight:normal">Use Table Entry Fields</label>
+                                </td>
+                                <td align="left">
+                                    <input type="checkbox" id="chkUpdateTOC" name="chkUpdateTOC" value="UpdateTOC" style="margin-left: 7px" checked="checked" />
+                                    <label for="chkUpdateTOC" style="font-weight:normal">Update Table of Contents</label>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div style="margin-top: 10px">
+                        Save As :
+                        <input type="radio" id="rdButtonDoc" name="Group1" value="WordDoc" style="margin-left: 7px" />
+                        <label for="rdButtonDoc" style="font-weight:normal">DOC</label>
+                        &nbsp;
+                        <input type="radio" id="rdButtonDocx" name="Group1" value="WordDocx" style="margin-left: 7px" checked="checked" />
+                        <label for="rdButtonDocx" style="font-weight:normal">DOCX</label>
+                        &nbsp;
+                        <input type="radio" id="rdButtonWordML" name="Group1" value="WordML" style="margin-left: 7px" />
+                        <label for="rdButtonWordML" style="font-weight:normal">WordML</label>
+                        &nbsp;
+                        <input type="radio" id="rdButtonPdf" name="Group1" value="Pdf" style="margin-left: 7px" />
+                        <label for="rdButtonPdf" style="font-weight:normal">PDF</label>
+                        &nbsp;
+                    </div>
+                    <div style="margin-top: 8px">
+                        <input class="e-btn" type="submit" value="Generate Document" name="button" style="width:170px; text-transform:capitalize" />
+                        <br />
+                        <div class="text-danger">
+                            @Model.Message
+                        </div>
+                    </div>
+                </div>
+                Html.EndForm();
+            }
+        }
+    </div>
+}
+@section ActionDescription {
+    <div>
+        This sample demonstrates how to insert and update the Table of Contents (TOC) in a Word document using .NET Word Library (DocIO).
+    </div>
+}
+@section Description {
+    <div>
+        DocIO supports to insert Table of Contents based on custom and default heading styles, include page numbers, hyperlinks to easily navigate to specific topic or heading within the document, specify the outline levels.
+        <ul>
+            <li>
+                You can draft books in Word document with table of contents that provides outline of the book like chapter, section titles, sub titles with its commencing page number.
+            </li>
+            <li>
+                You can update or rebuild the Table of Contents in an existing Word document.
+            </li>
+        </ul>
+    </div>
+    <div style="margin-top: 15px">
+        More information about the Table of Contents can be found in this
+        <a href="https://help.syncfusion.com/file-formats/docio/working-with-table-of-contents" aria-label="Documentation">Documentation</a>
+        section.
+    </div>
+}
+@section Meta {
+    <meta name="description" content="This example demonstrates the Table of Contents in ASP.NET Core Word (DocIO) library. Explore here for more details." />
+}
+@section Title {
+    <title>ASP.NET Core Word (DocIO) library - Table of Contents Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Table of Contents in ASP.NET Core Word (DocIO) Library</h1>
+}

@@ -1,0 +1,292 @@
+@page
+@model EJ2CoreSampleBrowser_NET8.Pages.Tab.Orientation
+@using Syncfusion.EJ2;
+@using Syncfusion.EJ2.Navigations;
+@{
+    var template = "<div class='template-container'><div class='left'><img class='empImg' src='./../css/tab/${Id}.png' alt='${Id}' /></div><div class='left empl-info'><div class='name'>${Name}</div> <div class='role'>${Role}</div></div></div>";
+    var contentOne = "#rome";
+    var contentTwo = "#paris";
+    var contentThree = "#london";
+
+    var headerRome = new TabHeader { Text = "Rome" };
+    var headerParis = new TabHeader { Text = "Paris" };
+    var headerLondon = new TabHeader { Text = "London" };
+
+    var styleData = new string[] { "Default", "Fill", "Accent" };
+    var orientationData = new string[] { "Top", "Bottom", "Left", "Right" };
+
+    
+}
+
+@section ControlsSection{
+    <div class="e-tab-section">
+    <div class="col-lg-8 content-wrapper control-section">
+        <div class="e-sample-resize-container">
+            <div id="rome" style="display: none">
+                <div class="content-title">
+                    <div class="cnt-text">Employee Info</div>
+                </div>
+                <ejs-listview id="romeListView" dataSource="@Model.Rome" template=@template>
+                </ejs-listview>
+            </div>
+            <div id="paris" style="display: none">
+                <div class="content-title">
+                    <div class="cnt-text">Employee Info</div>
+                </div>
+                <ejs-listview id="parisListView" dataSource="@Model.Paris" template=@template>
+                </ejs-listview>
+            </div>
+            <div id="london" style="display: none">
+                <div class="content-title">
+                    <div class="cnt-text">Employee Info</div>
+                </div>
+                <ejs-listview id="londonListView" dataSource="@Model.London" template=@template>
+                </ejs-listview>
+            </div>
+
+            <ejs-tab id="orientationTab" height="320" showCloseButton="true" created="tabCreated">
+                <e-tab-tabitems>
+                    <e-tab-tabitem header="headerRome" content="@contentOne"></e-tab-tabitem>
+                    <e-tab-tabitem header="headerParis" content="@contentTwo"></e-tab-tabitem>
+                    <e-tab-tabitem header="headerLondon" content="@contentThree"></e-tab-tabitem>
+                </e-tab-tabitems>
+            </ejs-tab>
+        </div>
+    </div>
+    <div class="col-lg-4 property-section">
+        <table id="property" title="Properties">
+            <tbody>
+                <tr>
+                    <td style="width: 50%;">
+                        <div>Header Placement</div>
+                    </td>
+                    <td style="width: 50%;">
+                        <div>
+                            <ejs-dropdownlist id="orientation" width="90%" dataSource="orientationData" change="changeHeaderPosition" index="0"></ejs-dropdownlist>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 50%;">
+                        <div>Header Styles</div>
+                    </td>
+                    <td style="width: 50%;">
+                        <div>
+                            <ejs-dropdownlist id="headerStyles" width="90%" dataSource="styleData" change="changeHeaderStyle" index="0"></ejs-dropdownlist>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+}
+
+@section ActionDescription{
+    <p>
+        This sample demonstrates the <code>header</code> orientation of the <code>Tab</code>. Select option from drop-downs to switch header placement and changing the header style in properties panel.
+    </p>
+}
+
+@section Description{
+    <p>
+        The <code>Tab</code> allows to place the header section inside the Tab component either at <code>top / bottom / left / right</code> position by using <code>headerPlacement</code> property.
+    </p>
+    <p>
+        This sample illustrates the use of header placement and <code>showCloseButton</code> property.
+        Users can change the header position by changing the drop-down value options and can close the Tab item by clicking close icon in header.<br /><br />
+
+        The User can also view different header styles of Tab component by selecting options from `Header Styles` drop-down.
+        Header styles changed by adding predefined classes in Tab root element and it class names listed below
+        <br />
+        <ul>
+            <li>Material and Fabric theme differentiates all the available tab header styles such as <code>e-fill</code>, <code>e-background e-accent</code>.</li>
+            <li>In bootstrap theme, all the styles such as <code>e-fill</code> & <code>e-background e-accent</code> will have the same look with no difference.</li>
+        </ul>
+        If above classes not included in root element default style will applied in Tab component.
+    </p>
+    <p>
+        More information about Tab can be found in this <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/tab/getting-started" aria-label="Navigate to the documentation for getting started with ASP.NET Core Tab control" > Documentation </a> section.
+    </p>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Orientation in ASP.NET Core Tab control. Explore here for more details."/>
+                }
+
+<script type="text/javascript">
+    var tabObj;
+    function tabCreated() {
+        tabObj = document.getElementById('orientationTab').ej2_instances[0];
+    }
+
+    // Change event funtion for DropDownList component
+    function changeHeaderPosition(e) {
+        tabObj.headerPlacement = e.itemData.value;
+        tabObj.dataBind();
+    }
+
+    // Change event funtion for DropDownList component
+    function changeHeaderStyle(e) {
+        removeStyleClass();
+        let name = e.itemData.value;
+        if (e.itemData.value != null && name === 'Fill') {
+            tabObj.element.classList.add('e-fill');
+        } else if (e.itemData.value != null && name === 'Accent') {
+            tabObj.element.classList.add('e-background');
+            tabObj.element.classList.add('e-accent');
+        }
+        tabObj.refreshActiveBorder();
+    }
+
+    function removeStyleClass() {
+        tabObj.element.classList.remove('e-fill');
+        tabObj.element.classList.remove('e-background');
+        tabObj.element.classList.remove('e-accent');
+    }
+</script>
+
+<style>
+    .e-content .e-item {
+        font-size: 12px;
+        padding: 10px;
+        text-align: justify;
+    }
+
+    .e-bigger .e-tab .e-list-item {
+        border-bottom: 1px solid gainsboro;
+    }
+
+    .e-tab .e-list-item {
+        height: 63px;
+        border-bottom: 1px solid gainsboro;
+    }
+
+    .e-bigger .e-tab .e-list-item {
+        height: 63px;
+    }
+
+    .e-tab .e-list-item:last-child {
+        border-bottom: 1px solid gainsboro;
+    }
+
+    .template-container {
+        height: 100%;
+        padding-top: 7px;
+    }
+
+    .left {
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    .empImg {
+        height: 48px;
+        width: 48px;
+    }
+
+    .name, .role {
+        line-height: normal;
+    }
+
+    .name {
+        font-weight: 500;
+    }
+
+    .role {
+        color: grey;
+        font-weight: 100;
+    }
+
+    .empl-info {
+        padding: 7px 15px 0 15px;
+    }
+
+    .content-title {
+        height: 50px;
+        display: table;
+        margin: 0 auto;
+    }
+
+    .cnt-text {
+        vertical-align: middle;
+        display: table-cell;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .e-tab .e-listview .e-header {
+        height: 50px;
+    }
+
+    .e-tab .e-listview .e-text {
+        display: block;
+        text-align: center;
+    }
+
+    .property-panel-content {
+        padding: 10px;
+    }
+
+    #orientationTab .e-listview:not(.e-list-template) .e-list-item {
+        height: 63px;
+        padding: 0 16px !important;
+    }
+
+    #orientationTab .e-tab-text {
+        display: inherit;
+    }
+
+    .e-vertical-tab .e-content .e-item.e-active,
+    .e-vertical-tab .e-content .e-item.e-active ul.e-list-parent {
+        width: 100%;
+    }
+
+@*custom code start*@
+    @@media screen and (min-width: 768px) {
+        .e-sample-resize-container {
+            width: 75%;
+            margin: 0 auto;
+        }
+    }
+@*custom code end*@
+
+    @@media screen and (max-width: 481px) {
+        .control-section.e-tab-section,
+        .container-fluid,
+        .e-tab-section .content-wrapper,
+        .sb-sample-content-area .e-active {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+
+     @@media screen and (max-width: 376px) {
+        #orientationTab .e-listview:not(.e-list-template) .e-list-item {
+            padding: 0;
+        }
+        .e-tab-section {
+            padding: 0 5px;
+        }
+        .e-tab .e-content.sb-sample-content-area .e-item.e-active {
+            padding-left: 0;
+            padding-right: 0;
+        }
+        .template-container {
+            padding: 7px 5px 0;
+        }
+        #orientationTab .e-content .e-item.e-active {
+            padding: 10px 0;
+        }
+        .info {
+            padding: 7px 0 0 8px;
+        }
+    }
+
+</style>
+@section Title{
+                    <title>ASP.NET Core Tab Orientation Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Orientation in ASP.NET Core Tab Control</h1>
+                }

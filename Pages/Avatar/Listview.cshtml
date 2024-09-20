@@ -1,0 +1,207 @@
+@page
+@model EJ2CoreSampleBrowser_NET8.Pages.Avatar.Listview
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+    @{ var template = "<div class='listWrapper'>" +
+                 "${if(avatar!=='')}" +
+                 "<span class='e-avatar e-avatar-small e-avatar-circle'>${avatar}</span>" +
+                 "${else}" +
+                 "<span class='${pic} e-avatar e-avatar-small e-avatar-circle'> </span>" +
+                 "${/if}" +
+                 "<span class='list-text'>" +
+                 "${text} </span> </div>";}
+    <div class="col-lg-12 control-section">
+        <ejs-listview id='letterAvatarList' dataSource="@Model.data" headerTitle='Contacts' template="@template" showHeader=true sortOrder="Ascending">
+        </ejs-listview>
+    </div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the ListView in ASP.NET Core Avatar control. Explore here for more details."/>
+                }
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This sample demonstrates the integration of avatar component into listview to create contacts applications.</p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            The avatar can be used with other components to create various applications. Here, the avatar is used to display images
+            or their initials from the persons contact lists.
+        </p>
+        <p>
+            Here, the xsmall avatar is used in circle type. To change the size of the avatar to xsmall and circle style, add
+            <code>.e-avatar-xsmall</code> and
+            <code>.e-avatar-circle</code>.
+        </p>
+    </div>
+}
+
+    <style>
+    .control-section {
+        overflow: auto;
+    }
+
+    /* Listview Customization */
+
+    #letterAvatarList {
+        max-width: 350px;
+        margin: auto;
+        border-radius: 3px;
+    }
+
+    body.material #letterAvatarList,
+    body.material-dark #letterAvatarList,
+    body.fabric #letterAvatarList,
+    body.fabric-dark #letterAvatarList,
+    body.bootstrap #letterAvatarList,
+    body.bootstrap-dark #letterAvatarList,
+    body.highcontrast #letterAvatarList{
+        border: 1px solid #dddddd;
+    }
+
+        #letterAvatarList .listWrapper {
+            width: inherit;
+            height: inherit;
+            position: relative;
+        }
+
+        #letterAvatarList .e-list-header {
+            height: 54px;
+        }
+
+    .material3 #letterAvatarList .e-list-header .e-text,
+    .material3-dark #letterAvatarList .e-list-header .e-text,
+    .material #letterAvatarList .e-list-header .e-text,
+    .fabric #letterAvatarList .e-list-header .e-text {
+        line-height: 22px;
+    }
+
+    .bootstrap #letterAvatarList .e-list-header .e-text {
+        line-height: 13px;
+    }
+
+    .highcontrast #letterAvatarList .e-list-header .e-text {
+        line-height: 20px;
+    }
+
+    .material3 #letterAvatarList .e-list-item,
+    .material3-dark #letterAvatarList .e-list-item,
+    .tailwind #letterAvatarList .e-list-item {
+       padding-top: 0;
+       padding-bottom: 0;
+    }
+
+    #letterAvatarList .e-list-item {
+        cursor: pointer;
+        height: 50px;
+        line-height: 44px;
+        border: 0;
+    }
+
+    /* Badge Positioning */
+
+    #letterAvatarList .e-badge {
+        margin-top: 12px;
+    }
+
+    #letterAvatarList .listWrapper .list-text {
+        width: 60%;
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0 50px;
+    }
+
+    /* Avatar Positioning */
+
+    #letterAvatarList .listWrapper .e-avatar {
+        position: absolute;
+        top: calc(100% - 40px);
+        font-size: 16px;
+        left: 5px;
+    }
+
+    /* Avatar Background Customization */
+
+    #letterAvatarList .e-list-item:nth-child(1) .e-avatar {
+        background-color: #039BE5;
+    }
+
+    #letterAvatarList .e-list-item:nth-child(3) .e-avatar {
+        background-color: #E91E63;
+    }
+
+    #letterAvatarList .e-list-item:nth-child(5) .e-avatar {
+        background-color: #009688;
+    }
+
+    /* Avatar images using 'background-image' property */
+
+    .pic01 {
+        background-image: url('@Url.Content("~/css/avatar/images/pic01.png")');
+    }
+
+    .pic02 {
+        background-image: url('@Url.Content("~/css/avatar/images/pic02.png")');
+    }
+
+    .pic03 {
+        background-image: url('@Url.Content("~/css/avatar/images/pic03.png")');
+    }
+
+    .pic04 {
+        background-image: url('@Url.Content("~/css/avatar/images/pic04.png")');
+    }
+
+    .bootstrap4 #letterAvatarList .e-list-item {
+        line-height: 30px;
+        padding: 8px 16px 8px 16px;
+    }
+
+    .bootstrap4 #letterAvatarList .e-list-item .e-avatar {
+        top: calc(100% - 45px);
+    }
+
+    body.tailwind-dark #letterAvatarList .e-list-item {
+        line-height: 35px;
+    }
+
+    body.bootstrap5 #letterAvatarList .e-list-item,
+    body.bootstrap5-dark #letterAvatarList .e-list-item,
+    body.bootstrap5\.3 #letterAvatarList .e-list-item,
+    body.bootstrap5\.3-dark #letterAvatarList .e-list-item {
+        line-height: 30px;
+    }
+
+    body.bootstrap #letterAvatarList .e-list-item,
+    body.bootstrap-dark #letterAvatarList .e-list-item {
+        line-height: 45px;
+    }
+
+    body.bootstrap5 #letterAvatarList .listWrapper .e-avatar,
+    body.bootstrap5-dark #letterAvatarList .listWrapper .e-avatar,
+    body.bootstrap5\.3 #letterAvatarList .listWrapper .e-avatar,
+    body.bootstrap5\.3-dark #letterAvatarList .listWrapper .e-avatar,
+    body.tailwind-dark #letterAvatarList .listWrapper .e-avatar{
+        top: calc(100% - 48px);
+    }
+
+    .material3 #letterAvatarList .e-list-item,
+    .material3-dark #letterAvatarList .e-list-item,
+    .tailwind #letterAvatarList .e-list-item,
+    body.material #letterAvatarList .e-list-item,
+    body.material-dark #letterAvatarList .e-list-item {
+        line-height: 50px;
+    }
+
+    </style>
+@section Title{
+                    <title>ASP.NET Core Avatar ListView Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of ListView in ASP.NET Core Avatar Control</h1>
+                }

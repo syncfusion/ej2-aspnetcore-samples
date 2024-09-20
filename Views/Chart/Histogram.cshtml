@@ -1,0 +1,80 @@
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="control-section">
+        <div id="container" align="center">
+            <ejs-chart id="lineContainer" load="load" title="Examination Result">
+                <e-chart-tooltipsettings enable="true">
+                </e-chart-tooltipsettings>
+                <e-chart-chartarea>
+                    <e-chartarea-border width="0"></e-chartarea-border>
+                </e-chart-chartarea>
+                <e-chart-primaryxaxis title="Score of Final Examination" minimum="0" maximum="100" edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift">
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                </e-chart-primaryxaxis>
+                <e-chart-primaryyaxis minimum="0" maximum="50" title="Number of Students" interval=10 >
+                    <e-linestyle width="0"></e-linestyle>
+                </e-chart-primaryyaxis>
+                <e-series-collection>
+                    <e-series dataSource="ViewBag.ChartPoints" binInterval=20 yName="Score" showNormalDistribution="true" columnWidth="0.99"
+                              type="@Syncfusion.EJ2.Charts.ChartSeriesType.Histogram">
+                        <e-series-marker visible="true" width="7" height="7">
+                            <e-series-datalabel visible="true" position="@Syncfusion.EJ2.Charts.LabelPosition.Top" >
+                                <e-font color="#ffffff" fontWeight="600"></e-font>
+                            </e-series-datalabel>
+                        </e-series-marker>
+                    </e-series>
+                </e-series-collection>
+            </ejs-chart>
+        </div>
+        <script>
+            function load(args) {
+                var selectedTheme = location.hash.split('/')[1];
+                selectedTheme = selectedTheme ? selectedTheme : 'Material';
+                args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast'));
+                if (selectedTheme === 'highcontrast') {
+                        args.chart.series[0].marker.dataLabel.font.color = '#000000';
+                }
+                args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+            }
+        </script>
+        @*custom code start*@
+        <style>
+            #control-container {
+                padding: 0px !important;
+            }
+        </style>
+        @*custom code end*@
+    </div>
+}
+@*custom code start*@
+@section Scripts {
+
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Histogram in ASP.NET Core Chart control. Explore here for more details."/>
+                }
+@*custom code end*@
+@section ActionDescription{
+    <p>
+        This <a target="_blank" href="https://www.syncfusion.com/aspnet-core-ui-controls/charts/chart-types/histogram-chart" aria-label="Navigate to explore the syncfusion ASP.NET Core Histogram Chart">ASP.NET Core Histogram Chart</a> example visualizes final examination results. The number of students between each interval is shown in data labels.
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can see how to render and configure the histogram chart. The histogram chart is a bar (column) chart used for frequency distribution in which the widths of the bars are proportional to classes into which variables have been divided and the heights of the bars are proportional to class frequencies. The <code>DataLabel</code> property is used to present details on individual data points.
+    </p>
+    <p>
+        <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover over a point or tap on a point in touch-enabled devices.
+    </p>
+    <p>
+        More information about the histogram series can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/chart-types/histogram" aria-label="Navigate to the documentation for histogram in ASP.NET Core Chart control">documentation section</a>.
+    </p>
+}
+@section Title{
+                    <title>ASP.NET Core Chart Histogram Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Histogram in ASP.NET Core Chart Control</h1>
+                }

@@ -1,0 +1,121 @@
+@using Syncfusion.EJ2.HeatMap;
+@using Syncfusion.EJ2.DropDowns;
+@section ControlsSection{
+    @{
+        var textStyle = new { size = "15px", fontWeight = "500", fontStyle = "Normal", fontFamily = "inherit"};
+        var xAxisLabel = new string[] { "Singapore", "Spain", "Australia", "Germany", "Belgium", "USA", "France", "UK" };
+        var yAxisLabel = new string[] { "1995", "2000", "2005", "2010", "2015" };
+        var labelTextStyle = new { fontFamily = "inherit"};
+        var cellBorder = new
+        {
+            width = "1",
+        };
+    }
+    <div class="col-lg-9 control-section">
+        <div id="container">
+            <ejs-heatmap id='container' load="window.onHeatmapLoad" dataSource="ViewBag.dataSource" tooltipRender="window.tooltipRender">
+                <e-heatmap-titlesettings text="Female Participation Rate in Labor Force for the Countries" textStyle="textStyle">
+                </e-heatmap-titlesettings>
+                <e-heatmap-xaxis labels="xAxisLabel" labelRotation="45" labelIntersectAction="None" textStyle="labelTextStyle"></e-heatmap-xaxis>
+                <e-heatmap-yaxis labels="yAxisLabel" textStyle="labelTextStyle"></e-heatmap-yaxis>
+                <e-heatmap-palettesettings>
+                    <e-palettes>
+                        <e-palette value="35" color="#50A3B1"></e-palette>
+                        <e-palette value="45" color="#78D1BD"></e-palette>
+                        <e-palette value="55" color="#CAE8B4"></e-palette>
+                        <e-palette value="65" color="#EDF8B6"></e-palette>
+                        <e-palette value="78" color="#FFFFDA"></e-palette>
+                    </e-palettes>
+                </e-heatmap-palettesettings>
+                <e-heatmap-cellsettings border="cellBorder" showLabel="false" tileType="Bubble" bubbleType="Size" textStyle="labelTextStyle"></e-heatmap-cellsettings>
+                <e-heatmap-legendsettings visible="true" textStyle="labelTextStyle"></e-heatmap-legendsettings>
+                <e-heatmap-tooltipsettings>
+                    <e-tooltipsettings-textstyle fontFamily="inherit"></e-tooltipsettings-textstyle>
+                </e-heatmap-tooltipsettings>
+            </ejs-heatmap>
+        </div>
+        <div style="float: right; margin-right: 10px;">
+            Source:
+            <a href="https://data.worldbank.org" target='_blank' aria-label="worldbank">https://data.worldbank.org/</a>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties" style="width: 100%;margin-left: -10px;">
+            <tbody>
+                <tr style="height: 50px">
+                    <td style="width: 40%">
+                        <div>Bubble Type:</div>
+                    </td>
+                    <td style="width: 60%;">
+                        <div>
+                            <select id="bubbleType">
+                                <option value="Size">Size</option>
+                                <option value="Color">Color</option>
+                                <option value="Sector">Sector</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script type="text/javascript">
+
+        window.onHeatmapLoad = function (args) {
+            window.heatmap = args.heatmap;
+            var selectedTheme = themeName ? themeName : 'Material';
+             args.heatmap.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast');
+        }
+        window.onload = function () {
+            window.bubbleTypeObj = new ej.dropdowns.DropDownList({
+                index: 0,
+                width: 120,
+                change: function (args) {
+                    window.heatmap.cellSettings.bubbleType = bubbleTypeObj.value.toString() === 'Size' ?
+                        'Size' : bubbleTypeObj.value.toString() === 'Color' ?
+                            'Color' : bubbleTypeObj.value.toString() === 'Sector' ?
+                                'Sector' : null;
+                }
+            });
+            window.bubbleTypeObj.appendTo('#bubbleType');
+        };
+        window.tooltipRender = function (args) {
+            args.content = [args.xLabel + ' | ' + args.yLabel + ' : ' + args.value + ' %']
+        };
+    </script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample visualizes the female participation rate of the total female population in the country’s work force. In Bubble Heatmap, the data points can be visualized using bubble size, bubble shade and sector view types. In property panel, the options are available to change the view of the data points in the bubble Heatmap by means of dropdown.
+        </p>
+    </div>
+}
+@section Description{
+
+    <div id="description">
+        <p>
+            In this example, you can see how to display the data points in bubble heatmap using multiple views such as bubble size, bubble shade and the sector. You can change the cell type to bubble by using the <a target='_blank' href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.HeatMap.HeatMapCellSettings.html#Syncfusion_EJ2_HeatMap_HeatMapCellSettings_TileType" aria-label="tileType">tileType</a> property in <a target='_blank' href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.HeatMap.HeatMapCellSettings.html" aria-label="cellSettings">cellSettings</a> , and you can change the view of the bubble heatmap by using the <a target='_blank' href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.HeatMap.HeatMapCellSettings.html#Syncfusion_EJ2_HeatMap_HeatMapCellSettings_BubbleType" aria-label="bubbleType">bubbleType</a> property in <code>cellSettings</code>.
+        </p>
+         <p>
+            The tooltip is enabled in this example. To see the tooltip in action, hover the mouse over an item or tap an item on touch-enabled devices.
+        </p>
+    </div>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Bubble Types in ASP.NET Core HeatMap Chart control. Explore here for more details."/>
+                }
+@section Title{
+                    <title>ASP.NET Core HeatMap Chart Bubble Types Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Bubble Types in ASP.NET Core HeatMap Chart Control</h1>
+                }
+
+
+<style>
+            body.material-dark .property-panel-section {
+            color: #ffffff;
+        }
+</style>

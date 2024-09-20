@@ -1,0 +1,108 @@
+@page
+@model EJ2CoreSampleBrowser_NET8.Pages.Button.SwitchFor
+
+@{
+ViewData["Title"] = "Switch";
+Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+<div class="col-lg-12 control-section">
+    <div class="content-wrapper">
+        <div class="container switch-control">
+            <form method="post">
+                <div>
+                    <label for="switchfor">I agree to receive newsletter</label>
+                    <ejs-switch id="switchfor" ejs-for="@Model.model.check"></ejs-switch>
+                </div>
+                <div id="error-message">
+                    <span asp-validation-for="@Model.model.check"></span>
+                </div>
+                <ejs-button id="submit-button" content="Submit"></ejs-button>
+            </form>
+        </div>
+    </div>
+</div>
+}
+
+@section Meta{
+<meta name="description" content="This example demonstrates the Switch in ASP.NET Core Button control. Explore here for more details."/>
+}
+@section ActionDescription{
+<div id="action-description">
+    <p>Click the submit button to post the current state of the Switch. When submitting the Switch in `off` state, validation error message will be shown by using Data Annotation.</p>
+</div>
+}
+@section Description{
+<div id="description">
+    <p>
+        This sample demonstrates For extensions tag helper support in Switch. You can bind model property to the Switch by adding an attribute `ejs-for` and assign model property to it.
+        While submitting form, the model property will be based on <code>checked</code> state of the Switch.
+    </p>
+    <p>
+        More information on Switch can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/switch/getting-started" aria-label="Navigate to the documentation for getting started with ASP.NET Core Switch control">
+            documentation section</a>.
+    </p>
+</div>
+}
+
+<script>
+    window.onload = function () {
+        // Function to handle ripple effect for Switch with label.
+        var elemArray = document.querySelectorAll('.switch-control label');
+        for (var i = 0, len = elemArray.length; i < len; i++) {
+            elemArray[i].addEventListener('mouseup', rippleHandler);
+            elemArray[i].addEventListener('mousedown', rippleHandler);
+        }
+
+        function rippleHandler(e) {
+            let rippleSpan = this.nextElementSibling.querySelector('.e-ripple-container');
+            rippleSpan && ejs.buttons.rippleMouseHandler(e, rippleSpan);
+        }
+    }
+</script>
+
+@*custom code start*@
+<style>
+    /* Switch Styles */
+    .switch-control {
+        text-align: center;
+        width: 250px;
+        margin: 0 auto;
+        margin-top: 9%;
+    }
+
+    .switch-control div {
+        display: flex;
+        align-items: center;
+    }
+
+    .switch-control label {
+        -webkit-tap-highlight-color: transparent;
+        cursor: pointer;
+        user-select: none;
+        font-weight: 400;
+        font-size: 13px;
+        margin: 10px;
+    }
+
+    .field-validation-error {
+        color: red;
+        display: block;
+        margin: 10px 0;
+    }
+
+    #submit-button {
+        margin-top: 10px;
+    }
+</style>
+@*custom code end*@
+@section Title{
+<title>ASP.NET Core Button Switch Example - Syncfusion Demos </title>
+}
+@section Header{
+<h1 class='sb-sample-text'>Example of Switch in ASP.NET Core Button Control</h1>
+}

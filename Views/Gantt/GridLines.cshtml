@@ -1,0 +1,96 @@
+@using Syncfusion.EJ2.Gantt;
+@section ControlsSection{
+
+    <div class="col-lg-9 control-section">
+        <div class="row">
+            <div class="col-md-12">
+                <ejs-gantt id='GridLines' dataSource="ViewBag.dataSource" height="450px" highlightWeekends="true" allowSelection="true" treeColumnIndex="1"
+                           gridLines="Both" projectStartDate="03/24/2024" projectEndDate="07/06/2024">
+                    <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate"
+                            endDate="EndDate" duration="Duration" progress="Progress" dependency="Predecessor" child="SubTasks">
+                    </e-gantt-taskfields>
+                    <e-gantt-columns>
+                        <e-gantt-column field="TaskId" width="80"></e-gantt-column>
+                        <e-gantt-column field="TaskName" width="250"></e-gantt-column>
+                        <e-gantt-column field="StartDate"></e-gantt-column>
+                        <e-gantt-column field="EndDate"></e-gantt-column>
+                        <e-gantt-column field="Duration"></e-gantt-column>
+                        <e-gantt-column field="Predecessor"></e-gantt-column>
+                        <e-gantt-column field="Progress"></e-gantt-column>
+                    </e-gantt-columns>
+                    <e-gantt-labelSettings leftLabel="TaskName"></e-gantt-labelSettings>
+                    <e-gantt-splittersettings columnIndex="2"></e-gantt-splittersettings>
+                </ejs-gantt>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties">
+            <tr>
+                <td style="width: 50%">
+                    <div style="fontSize: 15px">
+                        Grid Lines
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 100%;padding: 10px 10px 10px 0px">
+                    <div>
+                        <ejs-dropdownlist id="Drop" dataSource="ViewBag.data"  value="@("Both")" change="change">
+                            <e-dropdownlist-fields text="type" value="id"></e-dropdownlist-fields>
+                        </ejs-dropdownlist>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        function change(e) {
+            var ganttObj = document.getElementById("GridLines").ej2_instances[0];
+            var lines = e.value;
+            ganttObj.gridLines = lines;
+            ganttObj.refresh();
+        }
+    </script>
+
+
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the visibility of Gantt lines that separate the rows and columns.
+            In this sample, you can change the gridlines from the property panel.
+        </p>
+    </div>
+}
+@section Description{
+
+    <div id="description">
+        <p>
+            The <code>gridLines</code> property is used to control the visibility of line that separates the rows and
+            columns.
+            Gantt allows us to display the following grid lines:
+        </p>
+        <ul>
+            <li><code>None</code> - Shows no line.</li>
+            <li><code>Both</code> - Shows both horizontal and vertical lines.</li>
+            <li><code>Horizontal</code> - Shows the horizontal line.</li>
+            <li><code>Vertical</code> - Shows the vertical line.</li>
+        </ul>
+        <p>
+            In this demo, you can modify the visibility of gridlines by selecting values from the dropdown list.
+        </p>
+    </div>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Grid Lines in ASP.NET Core Gantt control. Explore here for more details."/>
+                }
+@section Title{
+                    <title>ASP.NET Core Gantt Grid Lines Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Grid Lines in ASP.NET Core Gantt Control</h1>
+                }

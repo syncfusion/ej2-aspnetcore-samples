@@ -1,0 +1,189 @@
+@page
+@model EJ2CoreSampleBrowser_NET8.Pages.Maps.Export
+
+@using Syncfusion.EJ2.Maps;
+
+@{
+	var markerData = new Object[]
+	{
+		new { longitude = 116.5703749, latitude = 40.4319077, name = "The Great Wall of China, China " },
+		new { longitude = 35.4443622, latitude = 30.3284544, name = "Petra, Jorden" },
+		new { longitude = 78.0421552, latitude = 27.1750151, name = "Taj Mahal, Agra, India" },
+		new { longitude = 12.4922309, latitude = 41.8902102, name = "The Roman Colosseum, Rome, Italy" },
+		new { longitude = -88.5677826, latitude = 20.6842849, name = "The Chichen Itza, Mexico" },
+		new { longitude = -72.5449629, latitude = -13.1631412, name = "Machu Picchu, Peru" },
+		new { longitude = -43.2104872, latitude = -22.951916, name = "Christ Redeemer, Rio de janeiro, Brazil" }
+	};
+	var border = new MapsBorder
+	{
+		Width = 0.1,
+		Color = "black",
+		Opacity = 1
+	};
+	var markerTooltip = new MapsTooltipSettings { Visible = true, ValuePath = "name" };
+	var worldMap = new Export().GetWorldMap();
+}
+
+@section ControlsSection{
+    
+    <div class="col-lg-9 control-section">
+        <div id="maps">
+            <ejs-maps id="maps" load="onMapLoad" allowImageExport="true" allowPdfExport="true">
+                <e-maps-titlesettings alignment="@Syncfusion.EJ2.Maps.Alignment.Center" text="Location of the Wonders in the World"></e-maps-titlesettings>
+                <e-maps-layers>
+                    <e-maps-layer shapeData="@worldMap">
+                        <e-layersettings-shapesettings border="border" fill="lightgrey">
+                        </e-layersettings-shapesettings>
+                        <e-layersettings-markers>
+                            <e-layersettings-marker dataSource="markerData" animationDuration=" 0" visible="true" shape="@MarkerType.Balloon" fill="#E13E40" height="20" width="15" tooltipSettings="markerTooltip">
+                            </e-layersettings-marker>
+                        </e-layersettings-markers>
+                    </e-maps-layer>
+                </e-maps-layers>
+            </ejs-maps>
+        </div>
+        <div style="float:right; margin-right:10px;">
+            Source:
+            <a href="https=//en.wikipedia.org/wiki/List_of_members_of_the_United_Nations_Security_Council" target="_blank" aria-label="Source">en.wikipedia.org</a>
+        </div>
+        </div>
+        <div class="col-lg-3 property-section">
+			<table id="property" title="Properties" style="width: 100%;">
+				<tr style="height: 50px">
+					<td>
+						<div>
+							Map Type
+						</div>
+					</td>
+					<td>
+						<div>
+							<select id="layertype">
+								<option value='Geometry'>Geometry</option>
+								<option value='OSM'>OSM</option>
+							</select>
+						</div>
+					</td>
+				</tr>
+				<tr style="height: 50px">
+					<td>
+						<div>
+							Export Type
+						</div>
+					</td>
+					<td>
+						<div>
+							<input id="mode">
+						</div>
+					</td>
+				</tr>
+				<tr style="height: 50px">
+					<td>
+						<div>File Name</div>
+					</td>
+					<td>
+						<div style='margin-top: 0px;'>
+							<ejs-textbox id="fileName" value="Maps" width="100%"></ejs-textbox>
+						</div>
+					</td>
+				</tr>
+				<tr id="button-control" style="height: 50px">
+					<td align="center">
+						<div>
+							<ejs-button id="togglebtn" content="Export" isPrimary=true style="margin-left: 60%;"></ejs-button>
+						</div>
+					</td>
+				</tr>
+			</table>
+</div>
+    <style>
+		#button-control {
+			width: 100%;
+			text-align: center;
+		}
+        td {
+            width: 50%;
+        }
+        .property-panel-table div {
+            padding-left:0px;
+        }
+    </style>
+}
+<script>
+	var shapeData;
+    @* custom code start *@
+    function onMapLoad(args) {
+        window.maps = args.maps;
+        var theme = themeName ? themeName : "Material";
+        args.maps.theme = (theme.charAt(0).toUpperCase() +
+				theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-high/i, 'High').replace(/5.3/i, '5');
+	    if (!shapeData) {
+		    shapeData = window.maps.layers[0].shapeData;
+	    }
+    }
+    @* custom code end *@
+    window.onload = function () {
+		var modeData = ['JPEG', 'PNG', 'PDF', 'SVG'];
+        window.exportType = new ej.dropdowns.DropDownList({
+            index: 0,
+			dataSource: modeData,
+            width: '100%'
+        });
+        window.exportType.appendTo("#mode");
+		window.layerType = new ej.dropdowns.DropDownList({
+			index: 0,
+            width: '100%',
+			change: () => {
+                if (layerType.value === 'OSM') {
+	                window.maps.layers[0].urlTemplate = "https://tile.openstreetmap.org/level/tileX/tileY.png";
+	                window.maps.layers[0].shapeData = null;
+                    if (window.exportType.value === 'SVG') {
+                        window.exportType.value = modeData[0];
+                    }
+                    window.exportType.dataSource = modeData.slice(0, 3);
+                    @* custom code start *@
+                    window.maps.isReset = true;
+                    @* custom code end *@
+				} else {
+	                window.maps.layers[0].urlTemplate = '';
+	                window.maps.layers[0].shapeData = shapeData;
+					window.exportType.dataSource = modeData;
+				}
+				window.maps.refresh();
+			}
+	
+			});
+			window.layerType.appendTo("#layertype");
+        document.getElementById("togglebtn").onclick = () => {
+            var fileName = document.getElementById("fileName").value;
+            window.maps.export(window.exportType.value, fileName);
+        };
+    };
+</script>
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Export in ASP.NET Core Maps control. Explore here for more details."/>
+                }
+@section ActionDescription{
+    <div id="action-description">
+		<p>
+			This sample illustrates the exporting feature in Maps. You can modify the map type to geometric or OSM using the Map type dropdown list in this sample. By clicking the Export button, you can export the map in PNG, JPEG, SVG or in PDF formats.
+		</p>
+    </div>
+}
+@section Description{
+
+    <div id="description">
+        <p>
+            In this example, you can see how to render and configure the export functionality. The rendered map can be exported as either JPEG, PNG, SVG and PDF formats. Also this sample visualizes the locations of the wonders in the world using markers. Export functionality is done by <code>export</code> method when <code>AllowImageExport</code> and <code>AllowPdfExport</code> is set as true.
+        </p>
+        <p>
+            More information about export can be found in this
+            <a target="_blank"
+               href=" https://ej2.syncfusion.com/documentation/maps/print/#export " aria-label="documentation section">documentation section</a>.
+        </p></div>
+}
+@section Title{
+                    <title>ASP.NET Core Maps Export Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Export in ASP.NET Core Maps Control</h1>
+                }

@@ -1,0 +1,201 @@
+@page
+@model EJ2CoreSampleBrowser_NET8.Pages.Carousel.API
+
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+    <div class="col-lg-9 control-section api-carousel-section">
+        <div class="e-sample-resize-container carousel-sample">
+            <ejs-carousel id="apiCarousel" cssClass="api-carousel" interval="3000">
+                <e-carousel-items>
+                    <e-carousel-item template="#templateItem1"></e-carousel-item>
+                    <e-carousel-item template="#templateItem2"></e-carousel-item>
+                    <e-carousel-item template="#templateItem3"></e-carousel-item>
+                    <e-carousel-item template="#templateItem4"></e-carousel-item>
+                    <e-carousel-item template="#templateItem5"></e-carousel-item>
+                </e-carousel-items>
+            </ejs-carousel>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section api-carousel-section">
+        <table id="property" title="Properties" class="property-panel-table" style="width: 100%;">
+            <tbody>
+                <tr>
+                    <td>Enable AutoPlay</td>
+                    <td>
+                        <div class="datepicker-control-section">
+                            <ejs-switch id="autoPlay" checked="true" change="autoPlayChange"></ejs-switch>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Infinite Looping</td>
+                    <td>
+                        <div class="datepicker-control-section">
+                            <ejs-switch id="loop" checked="true" change="loopChange"></ejs-switch>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Show Indicators</td>
+                    <td>
+                        <div class="datepicker-control-section">
+                            <ejs-switch id="indicator" checked="true" change="showIndicatorChange"></ejs-switch>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Show Play Button</td>
+                    <td>
+                        <div class="datepicker-control-section">
+                            <ejs-switch id="playBtn" checked="false" change="showPlayButtonChange"></ejs-switch>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Show Arrows</td>
+                    <td>
+                        <div class="datepicker-control-section">
+                            <ejs-dropdownlist id="arrow" dataSource="@Model.arrows" index="1" change="showArrowChange">
+                                <e-dropdownlist-fields text="Arrow" value="Id"></e-dropdownlist-fields>
+                            </ejs-dropdownlist>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Slide Interval</td>
+                    <td>
+                        <div class="datepicker-control-section">
+                            <ejs-dropdownlist id="interval" dataSource="@Model.intervals" index="1" change="intervalChange">
+                                <e-dropdownlist-fields text="Interval" value="Id"></e-dropdownlist-fields>
+                            </ejs-dropdownlist>
+                        </div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+}
+
+@section ActionDescription{
+    <p>
+        This sample demonstrates the basic rendering of the <a href="https://www.syncfusion.com/aspnet-core-ui-controls/carousel" target="_blank" aria-label="Navigate to explore the syncfusion ASP.NET Core Carousel">ASP.NET Core Carousel </a> component.
+    </p>
+}
+
+@section Description{
+    <p>
+        In this demo, you can manually change the properties of the <code>ASP.NET Core Carousel</code> component like <code>autoPlay</code>, <code>buttonsVisibility</code>, <code>showIndicators</code>,
+        <code>interval</code>, <code>showPlayButton</code>, <code>loop</code> using the property panel.
+    </p>
+    <p>
+        More information about the properties available in the Carousel component can be found in this <a target="_blank" href="https://ej2.syncfusion.com/documentation/api/carousel" aria-label="Navigate to the documentation for API of ASP.NET Core carousel">documentation section</a>.
+    </p>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the API in ASP.NET Core Carousel control. Explore here for more details."/>
+                }
+
+<style>
+    .api-carousel-section .carousel-sample {
+        margin: 0 auto 2em;
+        max-width: 500px;
+        height: 300px;
+    }
+
+    .api-carousel-section .property-panel-table td {
+        margin: 0;
+        padding-bottom: 1em;
+    }
+
+    .api-carousel .e-carousel-items .e-carousel-item .img-container {
+        height: 100%;
+    }
+
+        .api-carousel .e-carousel-items .e-carousel-item .img-container .img-caption {
+            color: rgba(255, 255, 255);
+            font-style: oblique;
+            font-size: 1.5rem;
+            margin: 0;
+            left: 1.5rem;
+            position: absolute;
+            text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+            top: 1.5rem;
+        }
+</style>
+
+<script id="templateItem1" type="text/x-template">
+    <figure class="img-container">
+        <img src="./../css/carousel/images/bridge.jpg" alt="bridge" style="height:100%; width: 100%" />
+        <figcaption class="img-caption">Showing 1 of 5</figcaption>
+    </figure>
+</script>
+
+<script id="templateItem2" type="text/x-template">
+    <figure class="img-container">
+        <img src="./../css/carousel/images/trees.jpg" alt="spring_trees" style="height:100%; width: 100%" />
+        <figcaption class="img-caption">Showing 2 of 5</figcaption>
+    </figure>
+</script>
+
+<script id="templateItem3" type="text/x-template">
+    <figure class="img-container">
+        <img src="./../css/carousel/images/waterfall.jpg" alt="waterfall" style="height:100%; width: 100%" />
+        <figcaption class="img-caption">Showing 3 of 5</figcaption>
+    </figure>
+</script>
+
+<script id="templateItem4" type="text/x-template">
+    <figure class="img-container">
+        <img src="./../css/carousel/images/sea.jpg" alt="sea" style="height:100%; width: 100%" />
+        <figcaption class="img-caption">Showing 4 of 5</figcaption>
+    </figure>
+</script>
+
+<script id="templateItem5" type="text/x-template">
+    <figure class="img-container">
+        <img src="./../css/carousel/images/rocks.jpeg" alt="rocks" style="height:100%; width: 100%" />
+        <figcaption class="img-caption">Showing 5 of 5</figcaption>
+    </figure>
+</script>
+
+<script type="text/javascript">
+    function showArrowChange(args) {
+        var carouselObj = document.querySelector('.e-carousel').ej2_instances[0];
+        carouselObj.buttonsVisibility = args.value;
+        carouselObj.dataBind();
+    }
+    function showIndicatorChange(args) {
+        var carouselObj = document.querySelector('.e-carousel').ej2_instances[0];
+        carouselObj.showIndicators = args.checked;
+        carouselObj.dataBind();
+    }
+    function showPlayButtonChange(args) {
+        var carouselObj = document.querySelector('.e-carousel').ej2_instances[0];
+        carouselObj.showPlayButton = args.checked;
+        carouselObj.dataBind();
+    }
+    function intervalChange(args) {
+        var carouselObj = document.querySelector('.e-carousel').ej2_instances[0];
+        carouselObj.interval = args.value;
+        carouselObj.dataBind();
+    }
+    function autoPlayChange(args) {
+        var carouselObj = document.querySelector('.e-carousel').ej2_instances[0];
+        carouselObj.autoPlay = args.checked;
+        carouselObj.dataBind();
+    }
+    function loopChange(args) {
+        var carouselObj = document.querySelector('.e-carousel').ej2_instances[0];
+        carouselObj.loop = args.checked;
+        carouselObj.dataBind();
+    }
+</script>
+@section Title{
+                    <title>ASP.NET Core Carousel API Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of API in ASP.NET Core Carousel Control</h1>
+                }

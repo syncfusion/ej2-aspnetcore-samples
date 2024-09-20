@@ -1,0 +1,121 @@
+@page
+@using Syncfusion.EJ2
+@section ControlsSection{
+    @{
+        var Polar = "Polar";
+        var select = new string[] { "Polar", "Radar" };
+    }
+
+    <div class="control-section col-lg-9">
+        <ejs-chart id="container" load="load" title="Microphone Types Polar Patterns">
+            <e-chart-tooltipsettings enable="true">
+            </e-chart-tooltipsettings>
+            <e-chart-legendsettings enableHighlight="true">
+            </e-chart-legendsettings>
+            <e-chart-primaryxaxis minimum="-180" maximum="180" interval="30" labelFormat="{value}°"></e-chart-primaryxaxis>
+            <e-series-collection>
+                <e-series name="Cardioid (unidirectional)" xName="x" width="2" dashArray="5 5 2" yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Polar" drawType="@Syncfusion.EJ2.Charts.ChartDrawType.Spline"></e-series>
+                <e-series name="Omnidirectional" xName="x" width="2" dashArray="2" yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Polar" drawType="@Syncfusion.EJ2.Charts.ChartDrawType.Spline"></e-series>
+                <e-series name="Bidirectional" xName="x" width="2" yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Polar" drawType="@Syncfusion.EJ2.Charts.ChartDrawType.Spline"></e-series>
+            </e-series-collection>
+        </ejs-chart>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties" style="width: 100%">
+            <tbody>
+                <tr style="height: 50px">
+                    <td style="width: 50%">
+                        <div>
+                            Series Type:
+                        </div>
+                    </td>
+                    <td style="width: 50%;">
+                        <ejs-dropdownlist id="type" dataSource="@select" change="onChange" index="0" value="Polar" popupHeight="220px"></ejs-dropdownlist>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        function load(args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Fluent2';
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5'));
+            args.chart.primaryXAxis.coefficient = ej.base.Browser.isDevice ? 80 : 100;
+            var cardData = [];
+            var biDirData = [];
+            var omniDirData = [];
+            var point1;
+            var point2;
+            for (var x = -180; x < 180; x++) {
+                point1 = { x: x, y: -12.6 * (1 - Math.cos(x * 3.14 / 180)) };
+                cardData.push(point1);
+                point2 = { x: x, y: -3 };
+                omniDirData.push(point2);
+            }
+            for (var x = -180; x < -90; x++) {
+                point1 = { x: x, y: -26 * (1 + Math.cos(x * 3.14 / 180)) };
+                biDirData.push(point1);
+            }
+            for (var x = -90; x < 90; x++) {
+                point1 = { x: x, y: -26 * (1 - Math.cos(x * 3.14 / 180)) };
+                biDirData.push(point1);
+            }
+            for (var x = 90; x < 180; x++) {
+                point1 = { x: x, y: -26 * (1 + Math.cos(x * 3.14 / 180)) };
+                biDirData.push(point1);
+            }
+            args.chart.series[0].dataSource = cardData;
+            args.chart.series[1].dataSource = omniDirData;
+            args.chart.series[2].dataSource = biDirData;
+        }
+        function onChange(args) {
+            var chart = document.getElementById('container').ej2_instances[0];
+            chart.series[0].type = this.value;
+            chart.series[1].type = this.value;
+            chart.series[2].type = this.value;
+            chart.series[0].animation.enable = false;
+            chart.series[1].animation.enable = false;
+            chart.series[2].animation.enable = false;
+            chart.refresh();
+        }
+    </script>
+    @*custom code start*@
+    <style>
+        #control-container {
+            padding: 0px !important;
+        }
+    </style>
+    @*custom code end*@
+}
+@*custom code start*@
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Spline in ASP.NET Core Chart control. Explore here for more details."/>
+                }
+@*custom code end*@
+@section ActionDescription{
+    <p>
+        This sample demonstrates polar series with spline type for the microphone type data. The switching between polar and radar series can be done by using <code>Series Type</code> in property panel.
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can see how to render and configure the spline type charts. Spline chart connects each point in series
+        through a curved line. You can use <code>DashArray</code>, <code>Width</code>, <code>Fill</code> properties
+        to customize the spline. <code>Marker</code> and <code>DataLabel</code> are used to represent individual data and
+        its value.
+    </p>
+    <p>
+        Tooltip is enabled in this example, to see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+    </p>
+    <p>
+        More information about the polar and radar chart with an spline series can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/chart-types/polar#spline" aria-label="Navigate to the documentation for polar spline in ASP.NET Core Chart control">documentation section</a>.
+    </p>
+}
+@section Title{
+                    <title>ASP.NET Core Chart Spline Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Spline in ASP.NET Core Chart Control</h1>
+                }

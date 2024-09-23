@@ -17,7 +17,7 @@ The following topics can help you to use the Syncfusion ASP.NET Core Components 
 
 ## How to run the demo
 
-Clone the repository. This repository contains the .NET 6 and .NET 7 project and solution files.
+Clone the repository. This repository contains the .NET 6 and .NET 8 project and solution files.
 
 ### Run the demo using .NET CLI
 

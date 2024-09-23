@@ -63,8 +63,13 @@ Clone the repository. This repository contains the .NET 6 and .NET 8 project and
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/tree-grid/getting-started-core">TreeGrid</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/spreadsheet/getting-started-core">Spreadsheet</a></div>
             <p>&nbsp;</p>
+            <div><p class="controlcategory">Interactive Chat</p></div>
+            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/ai-assistview/getting-started">AI AssistView - Preview</a></div>
+            <p>&nbsp;</p>
             <div><p class="controlcategory">DATA VISUALIZATION</p></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/getting-started">Charts</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/3d-chart/getting-started">3D Chart</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/circular-chart-3d/getting-started">3D Circular Chart</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/stock-chart/getting-started">Stock Chart</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/circular-gauge/getting-started">Arc Gauge</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/circular-gauge/getting-started">Circular Gauge</a></div>
@@ -89,10 +94,12 @@ Clone the repository. This repository contains the .NET 6 and .NET 8 project and
             <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/file-formats/docio/create-word-document-in-asp-net-core">Word</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/file-formats/presentation/create-read-edit-powerpoint-files-in-asp-net-core-c-sharp">PowerPoint</a></div>
             <p>&nbsp;</p>
+            <p>&nbsp;</p>
         </td>
         <td>
             <p></p>
-            <div><p class="controlcategory">EDITORS</p></div>
+            <div><p class="controlcategory">Viewer & Editors</p></div>
+            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/pdfviewer/getting-started">PDF Viewer</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/rich-text-editor/getting-started">RichTextEditor</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/document-editor/getting-started-core">Word Processor</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/in-place-editor/getting-started">In-place Editor</a></div>
@@ -122,6 +129,10 @@ Clone the repository. This repository contains the .NET 6 and .NET 8 project and
             <p>&nbsp;</p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
         </td>
         <td>
             <p></p>
@@ -133,6 +144,7 @@ Clone the repository. This repository contains the .NET 6 and .NET 8 project and
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/multi-select/getting-started">Multiselect DropDown</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/mention/getting-started">Mention</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/list-box/getting-started-core">ListBox</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/multicolumn-combobox/getting-started">MultiColumn ComboBox - Preview</a></div>
             <p>&nbsp;</p>
             <div><p class="controlcategory">NAVIGATION</p></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/accordion/getting-started">Accordion</a></div>
@@ -144,9 +156,10 @@ Clone the repository. This repository contains the .NET 6 and .NET 8 project and
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/sidebar/getting-started">Sidebar</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/tab/getting-started">Tabs</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/toolbar/getting-started">Toolbar</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/ribbon/getting-started">Ribbon - Preview</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/ribbon/getting-started">Ribbon</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/treeview/getting-started">TreeView</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/file-manager/getting-started">File Manager</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/stepper/getting-started">Stepper</a></div>
             <p>&nbsp;</p>
             <div><p class="controlcategory">NOTIFICATION</p></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/message/getting-started">Message</a></div>
@@ -157,10 +170,14 @@ Clone the repository. This repository contains the .NET 6 and .NET 8 project and
             <p>&nbsp;</p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
         </td>
         <td>
             <div><p class="controlcategory">INPUTS</p></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/textbox/getting-started">TextBox</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/textarea/getting-started">TextArea</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/maskedtextbox/getting-started/">Input Mask</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/numerictextbox/getting-started">Numeric TextBox</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/radio-button/getting-started">RadioButton</a></div>
@@ -171,6 +188,7 @@ Clone the repository. This repository contains the .NET 6 and .NET 8 project and
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/switch/getting-started">Toggle Switch Button</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/signature/getting-started">Signature</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/rating/getting-started">Rating</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/otp-input/getting-started">OTP Input</a></div>
             <p>&nbsp;</p>
             <div><p class="controlcategory">LAYOUT</p></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/avatar/getting-started-asp-core">Avatar</a></div>
@@ -181,9 +199,12 @@ Clone the repository. This repository contains the .NET 6 and .NET 8 project and
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/tooltip/getting-started-asp-core">Tooltip</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/splitter/getting-started">Splitter</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/dashboard-layout/getting-started/">Dashboard Layout</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/timeline/getting-started">Timeline</a></div>
             <p>&nbsp;</p>
-            <div><p class="controlcategory">VIEWER</p></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/pdfviewer/getting-started">PDF Viewer</a></div>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>

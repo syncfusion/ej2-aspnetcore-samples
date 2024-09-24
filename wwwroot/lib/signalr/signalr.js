@@ -3139,9 +3139,9 @@ var HttpConnection = /** @class */ (function () {
         }
         // Setting the url to the href propery of an anchor tag handles normalization
         // for us. There are 3 main cases.
-        // 1. Relative  path normalization e.g "b" -> "http://localhost:62928/a/b"
-        // 2. Absolute path normalization e.g "/a/b" -> "http://localhost:62928/a/b"
-        // 3. Networkpath reference normalization e.g "//localhost:5000/a/b" -> "http://localhost:62928/a/b"
+        // 1. Relative  path normalization e.g "b" -> "https://services.syncfusion.com/aspnet/production/a/b"
+        // 2. Absolute path normalization e.g "/a/b" -> "https://services.syncfusion.com/aspnet/production/a/b"
+        // 3. Networkpath reference normalization e.g "//localhost:5000/a/b" -> "https://services.syncfusion.com/aspnet/production/a/b"
         var aTag = window.document.createElement("a");
         aTag.href = url;
         this.logger.log(ILogger.LogLevel.Information, "Normalizing '" + url + "' to '" + aTag.href + "'.");

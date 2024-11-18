@@ -1,0 +1,342 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Diagram.DiagramEventsModel
+@using Syncfusion.EJ2.Diagrams;
+@{
+    var getSymbolDefaults = "getSymbolNodes";
+    var getSymbolInfo = "getSymbolInfo";
+}
+@section ControlsSection{
+<div class="col-lg-8 control-section">
+    <div id="diagramEventsControlSection" class="content-wrapper" style="width:100%;background: white">
+        <div id="palette-space" class="sb-mobile-palette">
+            <ejs-symbolpalette id="symbolpalette" getNodeDefaults="@getSymbolDefaults"  width="100%" height="700px" symbolHeight="60" symbolWidth="60" expandMode="@Model.Multiple" palettes="@Model.Palettes" getSymbolInfo="@getSymbolInfo" symbolMargin="new SymbolPaletteMargin() { Left=15,Right=15,Top=15,Bottom=15}">
+            </ejs-symbolpalette>
+        </div>
+        <div id="diagram-space" class="sb-mobile-diagram">
+            <ejs-diagram id="diagram" width="100%" height="700px" dragEnter="dragEnter"
+                dragLeave="dragLeave" dragOver="dragOver" click="click" historyChange="historyChange" doubleClick="doubleClick"
+                textEdit="textEdit" scrollChange="scrollChange" selectionChange="selectionChange" sizeChange="sizeChange"
+                connectionChange="connectionChange" sourcePointChange="sourcePointChange" targetPointChange="targetPointChange"
+                propertyChange="propertyChange" positionChange="positionChange" rotateChange="rotateChange" collectionChange="collectionChange"
+                mouseEnter="mouseEnter" mouseLeave="mouseLeave" mouseOver="mouseOver" contextMenuOpen="contextMenuOpen" contextMenuBeforeItemRender="contextMenuBeforeItemRender"
+                contextMenuClick="contextMenuClick">
+                <e-diagram-contextmenusettings show="true"></e-diagram-contextmenusettings>
+                <e-diagram-snapsettings constraints="None"></e-diagram-snapsettings>
+            </ejs-diagram>
+        </div>
+    </div>
+   </div>
+    <div class="col-lg-4 property-section">
+        <div id="diagramEventsPropertySection" style="height:100%;border: 1px solid #e0e0e0">
+            <div class="listbox">
+                <div class="heading" style="height:40px"><span>Client-side events</span></div>
+                <ejs-listview id="listview" enable="true" height="calc(100% - 40px)" dataSource="@Model.data" showCheckBox="true">
+                </ejs-listview>
+            </div>
+            <div class="prop-grid content" style="height:50%; border-top: 1px solid #e0e0e0">
+                <div class="heading">
+                    <span style="display: inline-block;margin-top: 5px;">Event Trace</span>
+                    <div class="evtbtn">
+                        <ejs-button id="clearbtn" content="Clear"></ejs-button>
+                    </div>
+                </div>
+                <div id="EventLog">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+
+        /* Symbol palette alignment CSS */
+         #diagramEventsControlSection .sb-mobile-palette {
+           width: 200px;
+           height: 100%;
+           float: left;
+         }
+
+        #diagramEventsControlSection .sb-mobile-palette-bar {
+           display: none;
+         }
+
+        /* Diagram alignment CSS */
+        #diagramEventsControlSection .sb-mobile-diagram {
+           width: calc(100% - 200px);
+           height: 100%;
+           float: left;
+           border: 1px solid #d9dedd;
+         }
+
+         @@media (max-width: 550px) {
+           #diagramEventsControlSection .sb-mobile-palette {
+             z-index: 19;
+             position: absolute;
+             display: none;
+             transition: transform 300ms linear, visibility 0s linear 300ms;
+             width: 39%;
+             height: 100%;
+           }
+
+           #diagramEventsControlSection .sb-mobile-palette-bar {
+             display: block;
+             width: 100%;
+             background: #fafafa;
+             padding: 10px 10px;
+             border: 0.5px solid #e0e0e0;
+             min-height: 40px;
+           }
+
+           #diagramEventsControlSection .sb-mobile-diagram {
+             width: 100%;
+             height: 100%;
+             float: left;
+             left: 0px;
+           }
+
+         }
+
+         #diagramEventsControlSection .sb-mobile-palette-open {
+           position: absolute;
+           display: block;
+           right: 15px;
+         }
+
+        /* Event property panel CSS */
+         #diagramEventsPropertySection .event-tracer {
+           width: 240px;
+           height: 700px;
+           min-height: 700px;
+           float: left;
+         }
+
+        #diagramEventsPropertySection .heading {
+           color: #807f7f;
+           font-size: 15px;
+           height: 50px;
+           width: 100%;
+           border-bottom: 1px solid #d9dedd;
+           padding: 10px;
+         }
+
+        /* These color is to indicate the event name in specific color */
+        #EventLog b {
+            color: #388e3c;
+        }
+
+        hr {
+            margin: 1px 10px 1px 0px;
+            border-top: 1px solid #eee;
+        }
+
+        /* Property panel CSS */
+         .property-section {
+           padding-top: 20px;
+           padding-bottom: 20px;
+           height: 740px;
+           padding-right: 0px;
+         }
+
+         #diagramEventsPropertySection .evtbtn {
+           float: right;
+         }
+
+         #diagramEventsPropertySection .listbox {
+           width: 100%;
+           height: 50%;
+         }
+
+        #diagramEventsPropertySection .event-tracer .prop-grid {
+           width: 100%;
+           height: 50%;
+         }
+
+        #diagramEventsPropertySection #EventLog {
+           height: calc(100% - 50px);
+           padding: 15px;
+           overflow: auto;
+           width: 100%;
+         }
+    </style>
+
+    <script>
+
+        function getSymbolNodes(symbol, diagram) {
+            symbol.style.strokeColor = '#757575';
+        }
+
+        function getSymbolInfo(symbol) {
+            return { fit: true };
+        }
+
+        function dragEnter(args) {
+            getEventDetails(args);
+        }
+
+        function dragLeave(args) {
+            getEventDetails(args);
+        }
+
+        function dragOver(args) {
+            if (args.target) {
+                getEventDetails(args);
+            }
+        }
+
+        function click(args) {
+            getEventDetails(args);
+        }
+
+        function historyChange(args) {
+            getEventDetails(args);
+        }
+
+        function doubleClick(args) {
+            getEventDetails(args);
+        }
+
+        function textEdit(args) {
+            getEventDetails(args);
+        }
+
+        function scrollChange(args) {
+            getEventDetails(args);
+        }
+
+        function selectionChange(args) {
+            getEventDetails(args);
+        }
+
+        function sizeChange(args) {
+            if (args.state === 'Completed') {
+                getEventDetails(args);
+            }
+        }
+
+        function connectionChange(args) {
+            if (args.state === 'Changed') {
+                getEventDetails(args);
+            }
+        }
+
+        function sourcePointChange(args) {
+            if (args.state === 'Completed') {
+                getEventDetails(args);
+            }
+        }
+
+        function targetPointChange(args) {
+            if (args.state === 'Completed') {
+                getEventDetails(args);
+            }
+        }
+
+        function propertyChange(args) {
+            getEventDetails(args);
+        }
+
+        function positionChange(args) {
+            if (args.state === 'Completed') {
+                getEventDetails(args);
+            }
+        }
+
+        function rotateChange(args) {
+            if (args.state === 'Completed') {
+                getEventDetails(args);
+            }
+        }
+
+        function collectionChange(args) {
+            getEventDetails(args);
+        }
+
+        function mouseEnter(args) {
+            getEventDetails(args);
+        }
+
+        function mouseLeave(args) {
+            getEventDetails(args);
+        }
+
+        function mouseOver(args) {
+            getEventDetails(args);
+        }
+
+        function contextMenuOpen(args) {
+            getEventDetails(args);
+        }
+
+        function contextMenuBeforeItemRender(args) {
+            getEventDetails(args);
+        }
+
+        function contextMenuClick(args) {
+            getEventDetails(args);
+        }
+
+        document.getElementById('clearbtn').onclick = function (args) {
+            var data = document.getElementById("EventLog");
+            for (var i = data.childNodes.length - 1; i >= 0; i--) {
+                data.removeChild(data.childNodes[i]);
+            }
+        }
+
+        function getEventDetails(args) {
+            if (document.getElementById("listview").ej2_instances) {
+                var listViewComponent = document.getElementById("listview").ej2_instances[0];
+                var selectedItems = listViewComponent.getSelectedItems();
+                if (selectedItems.data.length > 0) {
+                    var elementName = getName(selectedItems, args);
+                    if (elementName) {
+                        eventInformation(args);
+                    }
+                } else {
+                    eventInformation(args);
+                }
+            }
+        }
+
+        function getName(selectedItems, args) {
+            for (var i = 0; i < selectedItems.data.length; i++) {
+                var eventName = selectedItems.data[i].id;
+                if (eventName === args.name) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function eventInformation(args) {
+            var span = document.createElement('span');
+            span.innerHTML = 'Diagram ' + args.name.bold() + ' event called' + '<hr>';
+            var log = document.getElementById('EventLog');
+            log.insertBefore(span, log.firstChild);
+        }
+
+         
+    </script>
+
+}
+@section ActionDescription{
+    <p>
+        This sample visualize what are the client side events are available in the diagram.
+    </p>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Events in ASP.NET Core Diagram control. Explore here for more details."/>
+                }
+
+@section Description{
+    <p>
+        Diagram events are the actions that can be detected by <code>JavaScript</code> and the event argument are the information
+        about the event that has occurred. Some time we want to execute some JavaScript when and event occurs, such as when the
+        user clicks on the node. We can achieve this scenario using <code>click</code> event of the diagram. So, in this shows
+        how to hook all the diagram events and how to handle its <code>arguments</code>.
+    </p>
+}
+@section Title{
+                    <title>ASP.NET Core Diagram Events Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Events in ASP.NET Core Diagram Control</h1>
+                }

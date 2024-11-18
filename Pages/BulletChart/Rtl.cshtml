@@ -1,0 +1,68 @@
+﻿@page
+@using Syncfusion.EJ2;
+@using EJ2CoreSampleBrowser.Pages.BulletChart;
+@model EJ2CoreSampleBrowser.Pages.BulletChart.RtlModel
+
+@section ControlsSection{
+    <div class="control-section" align='center'>
+        <div id="container">
+            <ejs-bulletchart id="bulletgraph" minimum="0" maximum="300" interval="50"
+                             orientation="@Syncfusion.EJ2.Charts.OrientationType.Horizontal"
+                             enableRtl="true" labelFormat="${value}K"
+                             title="Revenue YTD" valueField="Value"
+                             targetField="Target" dataSource="@Model.BulletData1" width="600" load="window.onLoad">
+                <e-bulletchart-animation enable="false"></e-bulletchart-animation>
+                <e-bulletchart-tooltipsettings enable="true"></e-bulletchart-tooltipsettings>
+                <e-bullet-range-collection>
+                    <e-bullet-range end="150"></e-bullet-range>
+                    <e-bullet-range end="250"></e-bullet-range>
+                    <e-bullet-range end="300"></e-bullet-range>
+                </e-bullet-range-collection>
+
+                <e-bulletchart-titlestyle textAlignment="@Syncfusion.EJ2.Charts.Alignment.Center"></e-bulletchart-titlestyle>
+            </ejs-bulletchart>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        window.onLoad = function (args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Fluent2';
+            args.bulletChart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5'));
+            args.bulletChart.width = ej.base.Browser.isDevice ? "100%" : "80%";
+        }
+    </script>
+}
+@*custom code start*@
+@section Meta{
+    <meta name="description" content="This example demonstrates the RTL in ASP.NET Core BulletChart control. Explore here for more details." />
+}
+@*custom code end*@
+@section ActionDescription{
+    <div id="action-description">
+        This sample illustrates bullet chart with diferent mode of rendering such as right to left and left to right.
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            Tooltip is enabled in this example. To see the tooltip in action, hover a feature bar or comparative bar on the bullet chart.
+        </p>
+    </div>
+}
+@*custom code start*@
+@section Scripts{
+}
+
+<style>
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@*custom code end*@
+@section Title{
+    <title>ASP.NET Core BulletChart RTL Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of RTL in ASP.NET Core BulletChart Control</h1>
+}

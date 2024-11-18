@@ -1,0 +1,83 @@
+@page
+
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2
+
+@{
+    var workDays = new int[] { 0, 1, 2, 3, 4, 5 };
+    var scheduleData = new ScheduleData().GetScheduleData();
+    var timelineData = new ScheduleData().GetTimelineData();
+    var appointments = scheduleData.Concat(timelineData);
+}
+
+@section ControlsSection{
+    <div class="col-lg-9 control-section">
+        <div class="schedule-wrapper">
+            <ejs-schedule id="schedule" height="650px" selectedDate="new DateTime(DateTime.Today.Year, 1, 10)" currentView="TimelineWeek" workDays="@workDays">
+                <e-schedule-views>
+                    <e-schedule-view option="TimelineDay"></e-schedule-view>
+                    <e-schedule-view option="TimelineWeek"></e-schedule-view>
+                    <e-schedule-view option="TimelineWorkWeek"></e-schedule-view>
+                    <e-schedule-view option="TimelineMonth"></e-schedule-view>
+                    <e-schedule-view option="Agenda"></e-schedule-view>
+                </e-schedule-views>
+                <e-schedule-eventsettings dataSource="@appointments"></e-schedule-eventsettings>
+            </ejs-schedule>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id='property' title='Properties' class='property-panel-table' style="width: 100%;">
+            <tbody>
+                <tr style="height: 50px">
+                    <td style="width: 100%">
+                        <div class='datepicker-control-section'>
+                            <ejs-datepicker id="datepicker" value="new DateTime(DateTime.Today.Year, 1, 10)" ShowClearButton="false" change="onChange" placeholder="Current Date" floatLabelType="Always"></ejs-datepicker>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="~/scripts/schedule/applyCategoryColor.js"></script>
+    <script type="text/javascript">
+        function onChange(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            scheduleObj.selectedDate = args.value;
+            scheduleObj.dataBind();
+        }
+    </script>
+}
+
+@*custom code start*@
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Timeline Views in ASP.NET Core Scheduler control. Explore here for more details."/>
+                }
+@*custom code end*@
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This demo showcases how the timeline scheduler looks like with its default set of configurations.</p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            Like the vertical scheduler, timeline view has the similar view types such as
+        </p>
+        <ul>
+            <li>Timeline Day</li>
+            <li>Timeline Week</li>
+            <li>Timeline WorkWeek</li>
+            <li>Timeline Month</li>
+        </ul>
+        <p>The Agenda and MonthAgenda views shares the same layout for both the vertical and timeline views.</p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Scheduler Timeline Views Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Timeline Views in ASP.NET Core Scheduler Control</h1>
+                }

@@ -1,0 +1,409 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Grid.FlexibleDataModel
+@{
+    ViewData["Title"] = "FlexibleData";
+}
+
+<h2>FlexibleData</h2>
+
+@section ControlsSection{
+    <div class="col-lg-8 control-section">
+        <div class="control-wrapper">
+            <div class="control-section">
+            <div id="payload-detail"></div>
+            <ejs-grid id="Grid" allowPaging="true">
+                <e-data-manager url="https://services.odata.org/V4/Northwind/Northwind.svc/Orders/" crossdomain="true" adaptor="ODataV4Adaptor"></e-data-manager>
+                <e-grid-columns>
+                    <e-grid-column field="OrderID" headerText="Order ID" textAlign="Right" width="120"></e-grid-column>
+                    <e-grid-column field="CustomerID" headerText="Customer ID" width="140"></e-grid-column>
+                    <e-grid-column field="EmployeeID" headerText="Employee ID" textAlign="Right" width="120"></e-grid-column>
+                    <e-grid-column field="ShipCity" headerText="Ship City" width="150" ></e-grid-column>
+                </e-grid-columns>
+            </ejs-grid>
+        </div>
+    </div>
+</div>
+
+<!-- custom code start -->
+    <style>
+          @@media screen and (max-width: 590px) {
+            #property tr:nth-child(3) {
+            display: none;
+            }
+          }
+          #numericbox {
+            min-width: 130px;
+          }
+          .prop-name{
+            padding-right: 10px;
+          }
+          #payload-detail{
+            word-wrap: break-word;
+            margin-bottom: 10px;
+            border: 1px solid rgb(215, 215, 215);
+            padding: 10px;
+          }
+          .prop-value .prop_page {
+            padding-left: 0;
+            margin-bottom: 10px;
+          }
+          .hide_elem {
+            display: none;
+          }
+    </style>
+<!-- custom code end -->
+
+<div class="col-lg-4 property-section">
+        <div>
+            <table id="property" title="Properties" style="width: 100%">
+                <tr style="height: 50px">
+                    <td style="width: 50%">
+                        <div class="prop-name">Service</div>
+                    </td>
+                    <td style="width: 50%; ">
+                        <div class="prop-value">
+                               <ejs-dropdownlist id="service_drop" dataSource="@Model.urlDataList" value="@("ODataV4Adaptor")" change="serviceChange" popupWidth="auto" popupHeight="220px">
+                               <e-dropdownlist-fields text="text" value="value"></e-dropdownlist-fields></ejs-dropdownlist>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td style="width: 50%">
+                        <div class="prop-name">Adaptor</div>
+                    </td>
+                    <td style="width: 50%;">
+                        <div class="prop-value">
+                            <input class="e-input" id="adaptor_txt" style="width : 100%" readonly="true" value="ODataV4Adaptor" type="text">
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 40px">
+                    <td colspan="2">
+                        <div class="prop-value">
+                            <ejs-checkbox id="pageCheckbox" label="Enable Paging" cssClass="prop_page" checked="true"></ejs-checkbox>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="params_show_hide" style="height: 40px">
+                    <td style="width: 50%" colspan="2">
+                        <div class="prop-name" style="font-size: 15px;">Additional Parameters</div>
+                    </td>
+                </tr>
+                <tr class="params_show_hide" style="height: 50px">
+                    <td style="width: 50%;">
+                        <div>
+                            <input class="e-input" style="width : 100%" type="text" id="paramsKey" placeholder="Enter Name">
+                        </div>
+                    </td>
+                    <td style="width: 50%;">
+                        <div>
+                            <input class="e-input" style="width : 100%" type="text" id="paramsValue" placeholder="Enter Value">
+                        </div>
+                    </td>
+                </tr>
+                <tr class="params_show_hide" style="height: 50px">
+                    <td style="width: 50%">
+                        <div class="prop-name">
+                            <button style=" width :100%;" id="additionalParams" class="samplebtn e-control e-btn e-primary"
+                                    type="button" data-ripple="true">
+                                Add
+                            </button>
+                        </div>
+                    </td>
+                    <td style="width: 50%;">
+                        <div>
+                            <textarea style="width: 100%; height: 45px;" class="e-input e-textarea" rows="2" id="addParams" readonly></textarea>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="params_show_hide header_show_hide" style="height: 40px">
+                    <td style="width: 50%" colspan="2">
+                        <div class="prop-name" style="font-size: 15px;">HTTP Headers</div>
+                    </td>
+                </tr>
+                <tr class="params_show_hide header_show_hide" style="height: 50px">
+                    <td style="width: 50%;">
+                        <div>
+                            <input class="e-input" style="width : 100%" type="text" id="hkey" placeholder="Enter Key">
+                        </div>
+                    </td>
+                    <td style="width: 50%; ">
+                        <div>
+                            <input class="e-input" style="width : 100%" type="text" id="hvalue" placeholder="Enter Value">
+                        </div>
+                    </td>
+                </tr>
+                <tr class="params_show_hide header_show_hide" style="height: 50px">
+                    <td style="width: 50%">
+                        <div class="prop-name">
+                            <button style="width : 100%" id="headerId" class="samplebtn e-control e-btn e-primary" type="button"
+                                    data-ripple="true">
+                                Add
+                            </button>
+                        </div>
+                    </td>
+                    <td style="width: 50%;">
+                        <div>
+                            <textarea style="width: 100%; height: 45px;" class="e-input e-textarea" rows="2" id="hdvalue" readonly></textarea>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td style="width: 50%;" colspan="2">
+                        <div>
+                            <button style="width:100%" id="validateSubmit" class="samplebtn e-control e-btn e-primary" type="submit"
+                                    data-ripple="true">
+                                Connect
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+       <script>
+        var changedAdaptor = "ODataV4Adaptor";
+        var selectedService = "https://services.odata.org/V4/Northwind/Northwind.svc/Orders/";
+        var defaultParam;
+        var defaultHeader;
+        var header;
+        var params;
+        var defaultColumns = [
+            { field: 'OrderID', headerText: 'Order ID', textAlign: 'Right', width: 120, type: 'number' },
+            { field: 'CustomerID', width: 140, headerText: 'Customer ID' },
+            { field: 'EmployeeID', headerText: 'Employee ID', width: 120, textAlign: 'Right' },
+            { field: 'ShipCity', headerText: 'Ship City', width: 140 },
+        ];
+        var empColumns = [
+            { field: 'EmployeeID', headerText: 'Employee ID', width: 130, textAlign: 'Right' },
+            { field: 'Employees', headerText: 'Employee Name', width: 150 },
+            { field: 'Designation', headerText: 'Designation', width: 130 },
+            { field: 'CurrentSalary', headerText: 'Current Salary', format: "C2", textAlign: 'Right', width: 140 }
+        ];
+        document.getElementById('payload-detail').innerHTML = "<b><u>Payload Information</u></b><br> Service URL: 'http://localhost:62928/api/Orders' <br> Adaptor Type: ODataV4Adaptor";
+        document.getElementById('additionalParams').addEventListener('click', function () {
+            httpAdditionalInfo("paramsKey", "paramsValue", "addParams");
+        });
+        document.getElementById('headerId').addEventListener('click', function () {
+            httpAdditionalInfo("hkey", "hvalue", "hdvalue");
+        });
+        function serviceChange(e) {
+            selectedService = e.itemData.text;
+            changedAdaptor = e.itemData.value;
+            document.getElementById('adaptor_txt').value = changedAdaptor;
+            var paramElements = document.querySelectorAll('.params_show_hide');
+            var headerElements = document.querySelectorAll('.header_show_hide');
+            ej.base.removeClass(paramElements, 'hide_elem');
+            ej.base.removeClass(headerElements, 'hide_elem');
+            if (changedAdaptor === 'Custom Binding') {
+                ej.base.addClass(paramElements, 'hide_elem');
+                ej.base.addClass(headerElements, 'hide_elem');
+            }
+        }
+        function createObjectArray(headers) {
+            var result = headers.trim().split('\n').map(function (head) { return JSON.parse(head); });
+            return result;
+        }
+        var BASE_URL = 'https://services.odata.org/V4/Northwind/Northwind.svc/Orders';
+        var ajax = new ej.base.Ajax({
+            type: 'GET', mode: true,
+            onFailure: function (e) { return false; }
+        });
+        function executeCustomData(state) {
+            return getData(state)
+                .then(function (result) {
+                    grid.changeDataSource(result, defaultColumns);
+                });
+        }
+        function getData(state) {
+            defaultParam = document.getElementById("addParams").value;
+            params = defaultParam ? createObjectArray(defaultParam) : [];
+            var pageQuery = "$skip=" + state.skip + "&$top=" + state.take;
+            if (document.getElementById("pageCheckbox").ej2_instances[0].checked) {
+                ajax.url = BASE_URL + "?" + pageQuery + "&$count=true";
+            }
+            else {
+                ajax.url = BASE_URL + "?" + "&$count=true";
+            }
+            return ajax.send()
+                .then(function (response) {
+                    var data = JSON.parse(response);
+                    var result = data["value"];
+                    var count = parseInt(data["@@odata.count"], 10);
+                    return { result: result, count: count };
+                });
+        }
+        document.getElementById('validateSubmit').onclick = function (e) {
+            changedAdaptor = document.getElementById('service_drop').ej2_instances[0].value;
+            grid = document.getElementsByClassName('e-grid')[0].ej2_instances[0];
+            grid.query.params = [];
+            grid.query.queries = [];
+            var newDataSource;
+            var checkboxState = document.getElementById("pageCheckbox").ej2_instances[0].checked;
+            var newQuery = new ej.data.Query();
+            defaultParam = document.getElementById("addParams").value;
+            defaultHeader = document.getElementById('hdvalue').value;
+            header = defaultHeader ? createObjectArray(defaultHeader) : [];
+            params = defaultParam ? createObjectArray(defaultParam) : [];
+            params.forEach(function (obj) {
+                for (var key in obj) {
+                    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+                        var value = obj[key];
+                        newQuery.addParams(key, value);
+                        if (changedAdaptor !== 'UrlAdaptor' && changedAdaptor !== 'Custom Binding' && !checkboxState) {
+                            if (key == 'skip') {
+                                newQuery.skip(value);
+                            }
+                            if (key == 'take') {
+                                newQuery.take(value);
+                            }
+                        }
+                    }
+                }
+            });
+            grid.setProperties({ query: newQuery, allowPaging: checkboxState }, true);
+            if (changedAdaptor === 'Custom Binding') {
+                var state = { skip: 0, take: 12 };
+                executeCustomData(state);
+                grid.dataStateChange = function (args) {
+                    executeCustomData(args);
+                };
+            }
+            else {
+                var col = changedAdaptor === 'UrlAdaptor' ? empColumns : defaultColumns;
+                if (changedAdaptor === 'ODataV4Adaptor') {
+                    newDataSource = new ej.data.DataManager({
+                        url: 'https://services.syncfusion.com/js/production/api/Orders',
+                        adaptor: new ej.data.ODataV4Adaptor(),
+                        headers: header,
+                        crossDomain: true
+                    });
+                }
+                else if (changedAdaptor === 'UrlAdaptor') {
+                    newDataSource = new ej.data.DataManager({
+                        url: 'https://services.syncfusion.com/js/production/api/UrlDataSource',
+                        adaptor: new ej.data.UrlAdaptor(),
+                        headers: header,
+                        crossDomain: true
+                    });
+                    grid.query.addParams('dataCount', '1000');
+                }
+                else if (changedAdaptor === 'WebApiAdaptor') {
+                    newDataSource = new ej.data.DataManager({
+                        url: 'https://services.syncfusion.com/js/production/api/Orders',
+                        adaptor: new ej.data.WebApiAdaptor(),
+                        headers: header,
+                        crossDomain: true
+                    });
+                }
+                grid.changeDataSource(newDataSource, col);
+            }
+            var payloadInfo;
+            if (changedAdaptor === 'Custom Binding') {
+                payloadInfo = "<b><u>Payload Information</u></b><br> Custom Binding <br> Service URL: " + selectedService;
+            }
+            else {
+                payloadInfo = "<b><u>Payload Information</u></b><br> Service URL: " + selectedService + " <br> Adaptor Type: " + changedAdaptor + " <br> Additional Parameters: " + defaultParam + " <br> Headers: " + defaultHeader;
+            }
+            document.getElementById('payload-detail').innerHTML = '';
+            document.getElementById('payload-detail').innerHTML += payloadInfo;
+            document.getElementById("addParams").value = '';
+            document.getElementById("hdvalue").value = '';
+        };
+        function httpAdditionalInfo(name, val, btn) {
+            var parameterKey = document.getElementById(name).value;
+            var parameterValue = document.getElementById(val).value;
+            if (parameterKey && parameterValue) {
+                document.getElementById(btn).value += "{\"" + parameterKey + "\": \"" + parameterValue + "\"}\n";
+            }
+            document.getElementById(name).value = '';
+            document.getElementById(val).value = '';
+        };
+    </script>
+}
+
+@section ActionDescription{
+   <div id="action-description">
+       <p>This sample demonstrates how to bind a data from various remote services to the Grid component.
+       </p>
+   </div>
+}
+
+@section Meta{
+                   <meta name="description" content="This example demonstrates the Flexible Data Binding in ASP.NET Core Data Grid control. Explore here for more details."/>
+               }
+
+@section Description{
+    <div id="description">
+        <p>
+            The Grid supports data binding. The <code>dataSource</code> property can be assigned with the instance of <code>DataManager</code> to bind remote data.
+        </p>
+
+        <p>
+            The DataManager, which will act as an interface between the service endpoint and the Grid, will require the below
+            minimal information to interact with service endpoint properly.
+        </p>
+        <ul>
+            <li><code>DataManager->url</code> - Defines the service endpoint to fetch data</li>
+            <li><code>DataManager->adaptor</code> - Defines the adaptor option.</li>
+        </ul>
+        <p>
+            <a target="_blank" href="https://ej2.syncfusion.com/documentation/data/adaptors" aria-label="Navigate to the documentation for Adaptors in EJ2 TypeScript Data control">Adaptor</a> is responsible for
+            processing response and request from/to the service endpoint.
+            <code>syncfusion/ej2-data</code> package provides some predefined adaptors which are designed to interact with
+            particular service endpoints. They are,
+        </p>
+        <ul>
+            <li>
+                <code>UrlAdaptor</code> - Use this to interact any remote services. This is the base adaptor for all remote based adaptors.
+            </li>
+            <li><code>ODataV4Adaptor</code> - Use this to interact with OData V4 endpoints.</li>
+            <li><code>WebApiAdaptor</code> - Use this to interact with Web API created under OData standards.</li>
+            <li>
+                Own Service - Custom databinding is used where data actions like paging, sorting are perfromed in
+                <code>dataStateChange</code> event of grid.
+            </li>
+        </ul>
+        <p>By default ODataV4Adaptor is used in this demo. The adaptor type will be automatically assigned based on the selected data service. </p> <br>
+        <p>
+            The dataSource of grid can be dynamically changed using <code>changeDataSource</code> method by following the below
+            steps
+        </p>
+        <ul>
+            <li>Select any URL from the <b>Service</b> dropdown.</li>
+            <li>To enable or disable the paging feature, check or uncheck the <b>Enable Paging</b> checkbox.</li>
+            <li>Enter the <b>name</b> and <b>value</b> in the respective input boxes, then click the <b>Add</b> button to send
+                extra parameters with the grid query.
+                However, note that this demonstration only covers the <b>skip</b> and <b>take</b> query from the additional
+                parameters, excluding the custom binding feature.</li>
+              <li>In this demo, if you enable pagination by checking the <b>Enable Paging</b> checkbox, the additional parameter of
+              <b>skip</b> and <b>take</b> query will not be processed separately,
+                as it will be processed inbuilt with the pagination feature.</li>
+            <li>
+                To add http request headers enter the <b>key</b> and <b>value</b> in the respective input fields and click the
+                <b>Add</b>
+                button.
+            </li>
+               <li>In this demo, custom headers are not included in the payload information due to the limitations of both
+                the OData service and the custom binding service.
+                These services do not accept any additional headers based on the CORS policy. To send HTTP headers, it
+                is important to ensure the CORS policy in your service.</li>
+            <li>Multiple headers and parameters can be added as well.</li>
+            <li> Press the <b>Connect</b> button to update the grid dataSource.</li>
+            <li>
+                The connected service with the respective adaptor, the parameters and header that passed along with the grid
+                query will be listed under <b>Payload Information.</b>
+            </li>
+        </ul>
+        <p>
+            More information on the data binding can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/grid/data-binding/data-binding" aria-label="Navigate to the documentation for Data Binding in Grid Control">documentation section</a>.
+        </p>
+    </div>
+}
+@section Title{
+                   <title>ASP.NET Core Data Grid Flexible Data Binding Example - Syncfusion Demos </title>
+               }
+@section Header{
+                   <h1 class='sb-sample-text'>Example of Flexible Data Binding in ASP.NET Core Data Grid Control</h1>
+               }

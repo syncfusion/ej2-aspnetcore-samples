@@ -1,0 +1,124 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Schedule.HideWeekend
+
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2
+
+@{
+    var appointments = new ScheduleData().GetEmployeeEventData();
+    var workDays1 = new int[] { 1, 3, 4, 5 };
+    var selectedDays = new string[] { "1", "3", "4", "5" };
+}
+
+@section ControlsSection{
+    <div class="col-lg-9 control-section">
+        <div class="schedule-wrapper">
+            <ejs-schedule id="schedule" height="650" selectedDate="new DateTime(DateTime.Today.Year, 2, 15)" showWeekend="false" eventRendered="onEventRendered" workDays="@workDays1">
+                <e-schedule-workhours start="08:00"></e-schedule-workhours>
+                <e-schedule-views>
+                    <e-schedule-view option="Day"></e-schedule-view>
+                    <e-schedule-view option="Week"></e-schedule-view>
+                    <e-schedule-view option="Month"></e-schedule-view>
+                    <e-schedule-view option="TimelineWeek"></e-schedule-view>
+                    <e-schedule-view option="TimelineMonth"></e-schedule-view>
+                </e-schedule-views>
+                <e-schedule-eventsettings dataSource="@appointments"></e-schedule-eventsettings>
+            </ejs-schedule>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id='property' title='Properties' class='property-panel-table' style="width: 100%;">
+            <tbody>
+                <tr style="height: 50px">
+                    <td style="width: 100%;">
+                        <div class="multi-prop">
+                            <div>
+                                <ejs-multiselect id="workdayscheckbox" dataSource="@Model.workDays" mode="CheckBox" change="onChange" value="@selectedDays" showDropDownIcon="true" showClearButton="false" placeholder="Working days" floatLabelType="Always">
+                                    <e-multiselect-fields text="Name" value="Code"></e-multiselect-fields>
+                                </ejs-multiselect>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td style="width: 100%;">
+                        <div style="font-weight:500">Non-Working days</div>
+                        <div class="evtbtn" title="Show/hide weekend" style="padding-bottom: 10px">
+                            <ejs-button id="showweekendbtn" isToggle="true" content="Show"></ejs-button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <style>
+        .multi-prop div {
+            padding-left: 0;
+            padding-top: 0;
+        }
+    </style>
+    <script src="~/scripts/schedule/applyCategoryColor.js"></script>
+    <script type="text/javascript">
+        function onChange(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            var value = args.value.slice(0).map(Number).sort();
+            scheduleObj.workDays = value.length === 0 ? [0] : value;
+            scheduleObj.dataBind();
+        }
+        document.getElementById("showweekendbtn").addEventListener('click', function () {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            var toggleBtn = document.getElementById('showweekendbtn').ej2_instances[0];
+            if (!toggleBtn.element.classList.contains('e-active')) {
+                toggleBtn.content = 'Hide';
+                scheduleObj.showWeekend = true;
+            } else {
+                toggleBtn.content = 'Show';
+                scheduleObj.showWeekend = false;
+            }
+        });
+        function onEventRendered(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            applyCategoryColor(args, scheduleObj.currentView);
+        }
+    </script>
+}
+
+@*custom code start*@
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Hide Non-Working Days in ASP.NET Core Scheduler control. Explore here for more details."/>
+                }
+@*custom code end*@
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This demo depicts the way to show or hide the weekend days of a week on Schedule. The days whichever not specified in
+            working days collections will be taken into consideration as weekend days.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            In this demo, the
+            <code>showWeekend</code> property is used either to show or hide the weekend days of a week and it is not applicable on
+            <code>WorkWeek</code> view. By default, it is set to
+            <code>true</code>. The days which are not a part of the working days collection of a Scheduler are usually considered as weekend days
+            here.
+        </p>
+        <p>
+            Here, the working days are defined as
+            <code>[1, 3, 4, 5]</code> on Schedule. Therefore, the remaining days (0, 2, 6 - Sunday, Tuesday and Saturday) are considered as weekend days
+            and will be hidden from the views as the
+            <code>showWeekend</code> property is set to false.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Scheduler Hide Non-Working Days Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Hide Non-Working Days in ASP.NET Core Scheduler Control</h1>
+                }

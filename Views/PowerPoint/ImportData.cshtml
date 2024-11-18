@@ -1,0 +1,131 @@
+@using Syncfusion.EJ2
+@{
+    ViewBag.Title = "    Essential Presentation (Presentation) : ImportData : Syncfusion";
+}
+
+@section ControlsSection {
+    @{
+        Html.BeginForm("export", "powerpoint", FormMethod.Post);
+        {
+                <div class="col-lg-9 control-section">
+                    <ejs-grid id="ImportData" toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })" allowPaging="true" actionBegin="actionBegin" cssClass="e-css">
+                    <e-data-manager url="@Url.Action("urldatasource", "powerpoint")" insertUrl="@Url.Action("insert", "powerpoint")" updateUrl="@Url.Action("update", "powerpoint")" removeUrl="@Url.Action("delete", "powerpoint")" adaptor="UrlAdaptor"></e-data-manager>
+                        <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" newRowPosition="Top"></e-grid-editSettings>
+                        <e-grid-pagesettings pageCount="2"></e-grid-pagesettings>
+                        <e-grid-columns>
+                            <e-grid-column field="Year" headerText="Year" isPrimaryKey="true" validationRules="@(new { required=true, number=true})" textAlign="Right" width="50"></e-grid-column>
+                            <e-grid-column field="Jan" headerText="Jan" validationRules="@(new { required=true, number = true})" textAlign="Right" width="75"></e-grid-column>
+                            <e-grid-column field="Feb" headerText="Feb" validationRules="@(new { required=true, number = true})" textAlign="Right" width="75"></e-grid-column>
+                            <e-grid-column field="Mar" headerText="Mar" validationRules="@(new { required=true, number = true})" textAlign="Right" width="75"></e-grid-column>
+                            <e-grid-column field="Apr" headerText="Apr" validationRules="@(new { required=true, number = true})" textAlign="Right" width="75"></e-grid-column>
+                            <e-grid-column field="May" headerText="May" validationRules="@(new { required=true, number = true})" textAlign="Right" width="75"></e-grid-column>
+                        </e-grid-columns>
+                    </ejs-grid> 
+                </div>
+                <div class="col-lg-3 property-section">
+                    <table id="property" title="Properties" style="width: 100%">
+                        <tr>
+                            <td style="width: 100%">
+                                <div style="padding-top: 7px">Add New Row Position</div>
+                            </td>
+                            <td style="width: 50%;padding-right: 10px">
+                                <div id='typeddl'>
+                                <ejs-dropdownlist id="newRowPosition" dataSource="@ViewBag.ddData" value="@("Top")" change="rowPositionChange" popupHeight="220px"></ejs-dropdownlist>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <br />
+                <div class="col-lg-3 property-section">
+                    <table id="property" title="Properties" style="width: 100%">
+                        <tr>
+                            <td>
+                                <div>
+                                    <input type="radio" id="rdButtonChart" name="Group" value="Chart" style="margin-left: 20px; padding-right: 7px" ; checked="checked" />
+                                    <label for="rdButtonChart" style="font-size:13px;font-weight:normal;text-align:center" data-toggle="tooltip" title="Export the data to Chart">Export to Chart</label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="rdButtonTable" name="Group" value="Table" style="margin-left: 20px; padding-right: 7px;" ; checked="checked" />
+                                    <label for="rdButtonTable" style="font-size:13px;font-weight:normal;text-align:center" data-toggle="tooltip" title="Export the data to Table">Export to Table</label>
+                                </div>
+                                <div style="margin-top: 8px">
+                                    <input id="ImportData" class="buttonStyle" type="submit" name="button" value="Export" style="margin-left: 20px; padding-right: 10px;width:150px;text-transform:capitalize;" />
+                                </div>
+
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+            Html.EndForm();
+        }
+      }
+    }
+
+    <style>
+        #typeddl {
+            min-width: 100px;
+        }
+    </style>
+
+    <script>
+        function rowPositionChange(args) {
+            var grid = document.getElementById("ImportData").ej2_instances[0];
+            grid.editSettings.newRowPosition = this.value;
+
+            var ajax = new ej.base.Ajax({
+                type: "POST",
+                url: '@Url.Action("dropdown", "powerpoint")',
+                data: JSON.stringify({ "rowPosition": grid.editSettings.newRowPosition }),
+                dataType: 'json'
+            });
+            ajax.send().then(function (data) {});
+        }
+
+        function actionBegin(args) {
+            var grid = document.getElementById("ImportData").ej2_instances[0];
+            if (args.requestType === 'save') {
+                if (grid.pageSettings.currentPage !== 1 && grid.editSettings.newRowPosition === 'Top') {
+                    args.index = (grid.pageSettings.currentPage * grid.pageSettings.pageSize) - grid.pageSettings.pageSize;
+                } else if (grid.editSettings.newRowPosition === 'Bottom') {
+                    args.index = (grid.pageSettings.currentPage * grid.pageSettings.pageSize) - 1;
+                }
+            }
+        }
+    </script>
+@section ActionDescription {
+    This sample demonstrates how to import data from Grid into a PowerPoint slide as table and chart.
+}
+
+@section Description {
+    <b>Features:</b>
+    <br />
+    <br />
+    <ul>
+        <li>Import the data from Grid as Table into the presentation slide.</li>
+        <li>Add new data into Grid and import to presentation slide either as chart or table.</li>
+        <li>Delete the existing data from Grid and import to presentation slide either as chart or table.</li>
+        <li>Edit the existing data in grid and import to presentation slide either as chart or table.</li>
+    </ul>
+    <br />
+    <b>Grid operations</b>
+    <ul>
+        <li><code>Add</code> -  To add new record, click Add toolbar button </li>
+        <li><code>Edit</code> - To edit record, double click a row or click toolbar Edit button after selected a row </li>
+        <li><code>Delete</code> - To delete record, click toolbar Delete button after selected a row </li>
+        <li><code>Update</code>,<code>Cancel</code> - You can save or discard changes by click toolbar Update and Cancel button respectively</li>
+    </ul>
+    <br />
+}
+@section Meta {
+    <meta name="description" content="This example demonstrates the Import Data in ASP.NET Core PowerPoint (Presentation) library. Explore here for more details." />
+}
+
+
+@section Title {
+    <title>ASP.NET Core PowerPoint (Presentation) Library - Import Data Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Import Data in ASP.NET Core PowerPoint (Presentation) Library</h1>
+}

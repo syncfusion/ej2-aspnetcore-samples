@@ -1,0 +1,75 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Word.WordToHTML
+
+@using Syncfusion.EJ2
+@{var Title = "Essential DocIO (Word) : Word to HTML : Syncfusion";}
+@section ControlsSection{
+    <div class="control-section">
+        @{
+            Html.BeginForm("wordtohtml", "word", FormMethod.Post, new { enctype = "multipart/form-data" });
+            {
+                <div style="margin-top: 10px;font-size:14px">
+                    Click the button to view the generated HTML file converted from a Word document using the .NET Word Library (DocIO).
+                    <div style="margin-top: 10px">
+                        <div>
+                            <input type="button" value="Choose File" onclick="openPage()">
+                            <input type="text" id="fileNameBox" value="WordToHTML.docx" readonly="readonly" style="border:none" />
+                            <input type="file" name="file" id="fileUpload" accept=".doc,.docx,.rtf,.dot,.dotm,.dotx,.docm,.xml" style="display:block;visibility:hidden;width:0;height:0;">
+                            <br />
+                        </div>
+                    </div>
+                    <div style="margin-top: 8px">
+                        <input id="generate" name="Button" class="e-btn" type="submit" value="Convert to HTML" style="width:170px; text-transform:capitalize" />
+                        <div class="text-danger">
+                            @Model.Message
+                        </div>
+                    </div>
+                </div>
+                Html.EndForm();
+            }
+        }
+    </div>
+}
+
+<script>
+    function openPage() {
+        document.getElementById('fileUpload').click();
+        document.getElementById('fileUpload').addEventListener('change', readFile, false);
+    }
+    function readFile(evt) {
+        var upoadedFiles = evt.target.files;
+
+        filename = upoadedFiles[0].name;
+        document.getElementById('fileNameBox').value = filename;
+    }
+</script>
+
+@section ActionDescription{
+    <div>
+        This sample demonstrates how to convert a Word document to HTML using .NET Word Library (DocIO).       
+    </div>
+}
+@section Description{
+    <div>
+        The .NET Word Library (DocIO) supports converting Word documents to HTML and vice versa.
+        <ul>
+            <li>Customize image saving to save locally or upload to cloud storage.</li>
+            <li>Export text form fields as editable fields or plain text.</li>
+            <li>Option to generate HTML with body content only.</li>
+        </ul>
+    </div>
+    <div style="margin-top: 15px">
+        More information about Word to HTML conversion and vice versa can be found in this
+        <a href="https://help.syncfusion.com/document-processing/word/word-library/net/html" aria-label="Documentation">Documentation</a>
+        section.
+    </div>
+}
+@section Meta{
+    <meta name="description" content="This example demonstrates the Word to HTML conversion in ASP.NET Core Word (DocIO) library. Explore here for more details." />
+                }
+@section Title{
+    <title>ASP.NET Core Word (DocIO) library - Word to HTML Example - Syncfusion Demos</title>
+                }
+@section Header{
+    <h1 class='sb-sample-text'>Example of Word to HTML conversion in ASP.NET Core Word (DocIO) Library</h1>
+                }

@@ -1,0 +1,133 @@
+﻿@page
+@using EJ2CoreSampleBrowser.Models;
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+    @*custom code start*@
+    <style>
+    .material-dark img.resources, .material3-dark img.resources, .fabric-dark img.resources, .bootstrap-dark img.resources, .bootstrap4-dark img.resources, .bootstrap5-dark img.resources, .bootstrap5\.3-dark img.resources, .highcontrast img.resources,
+    .tailwind-dark img.resources, .fluent-dark img.resources, .fluent2-dark img.resources, .fluent2-highcontrast img.resources {
+        content: url('../images/treegrid/darkResources.png');
+    }
+
+    .material-dark img.taskname, .material3-dark img.taskname, .fabric-dark img.taskname, .bootstrap-dark img.taskname, .bootstrap4-dark img.taskname, .bootstrap5-dark img.taskname, .bootstrap5\.3-dark img.taskname, .highcontrast img.taskname,
+    .tailwind-dark img.taskname, .fluent-dark img.taskname, .fluent2-dark img.taskname, .fluent2-highcontrast img.taskname {
+        content: url('../images/treegrid/darkTaskname.png');
+    }
+
+    .material-dark img.startdate, .material3-dark img.startdate, .fabric-dark img.startdate, .bootstrap-dark img.startdate, .bootstrap4-dark img.startdate, .bootstrap5-dark img.startdate, .bootstrap5\.3-dark img.startdate, .highcontrast img.startdate,
+    .tailwind-dark img.startdate, .fluent-dark img.startdate, .fluent2-dark img.startdate, .fluent2-highcontrast img.startdate {
+        content: url('../images/treegrid/darkStartname.png');
+    }
+
+    .material-dark img.duration, .material3-dark img.duration, .fabric-dark img.duration, .bootstrap-dark img.duration, .bootstrap4-dark img.duration, .bootstrap5-dark img.duration, .bootstrap5\.3-dark img.duration, .highcontrast img.duration,
+    .tailwind-dark img.duration, .fluent-dark img.duration, .fluent2-dark img.duration, .fluent2-highcontrast img.duration {
+        content: url('../images/treegrid/darkduration.png');
+    }
+
+    .material-dark img.Progress, .material3-dark img.Progress, .fabric-dark img.Progress, .bootstrap-dark img.Progress, .bootstrap4-dark img.Progress, .bootstrap5-dark img.Progress, .bootstrap5\.3-dark img.Progress, .highcontrast img.Progress,
+    .tailwind-dark img.Progress, .fluent-dark img.Progress, .fluent2-dark img.Progress, .fluent2-highcontrast img.Progress {
+        content: url('../images/treegrid/darkprogress.png');
+    }
+
+    .bootstrap5 img.taskname, .bootstrap5 img.duration, .bootstrap5 img.Progress, .bootstrap5\.3 img.taskname, .bootstrap5\.3 img.duration, .bootstrap5\.3 img.Progress, .tailwind img.resources, .tailwind img.taskname, .tailwind img.startdate,
+    .tailwind img.duration, .tailwind img.Progress {
+        padding-bottom: 3px !important;
+    }
+
+    .bootstrap5 img.resources, .bootstrap5 img.startdate, .bootstrap5\.3 img.resources, .bootstrap5\.3 img.startdate {
+        padding-bottom: 2px !important;
+    }
+
+    .bootstrap4 img.startdate, .material img.startdate, .bootstrap img.startdate {
+        padding-bottom: 1px;
+    }
+</style>
+    @*custom code end*@
+
+    <div class="control-section">
+        <ejs-treegrid id="TreeGrid" dataSource="@TreeGridHeader.GetDataSource()" height="410" childMapping="Children" treeColumnIndex="0">
+            <e-treegrid-columns>
+                <e-treegrid-column field="Name" headerText="Task Name" headerTemplate="#projectName" width="200"></e-treegrid-column>
+                <e-treegrid-column field="StartDate" headerText=" Start Date" headerTemplate="#dateTemplate" textAlign="Center" format="yMd" width="140"></e-treegrid-column>
+                <e-treegrid-column field="Resources" headerText="Resource" headerTemplate="#resource" width="130" textAlign="Center"></e-treegrid-column>
+                <e-treegrid-column field="Duration" headerText="Duration" headerTemplate="#durationTemplate" textAlign="Center" width="110"></e-treegrid-column>
+                <e-treegrid-column field="PercentDone" headerText="Progress" headerTemplate="#progressTemplate" textAlign="Center" width="110"></e-treegrid-column>
+            </e-treegrid-columns>
+        </ejs-treegrid>
+    </div>
+
+    <script type="text/x-template" id="resource">
+        <div>
+            <div>
+                <img src="../images/TreeGrid/Resources.png" width="20" height="20" style="padding-bottom: 1px" class="resources" alt="Resources Icon"/>
+                <span>&nbsp;Resources</span>
+            </div>
+        </div>
+    </script>
+    <script type="text/x-template" id="projectName">
+        <div>
+            <div>
+                <img src="../images/TreeGrid/Taskname.png" width="20" height="20" style="padding-bottom: 1px" class="taskname" alt="Task Name"/>
+                <span>&nbsp;Task Name</span>
+            </div>
+        </div>
+    </script>
+    <script type="text/x-template" id="dateTemplate">
+        <div>
+            <div>
+                <img src="../images/TreeGrid/Startname.png" width="20" height="20" class="startdate" alt="Calendar Icon"/>
+                <span>&nbsp;Start Date</span>
+            </div>
+        </div>
+    </script>
+    <script type="text/x-template" id="durationTemplate">
+        <div>
+            <div>
+                <img src="../images/TreeGrid/Duration.png" width="20" height="20" style="padding-bottom: 2px" class="duration" alt="Duration Icon"/>
+                <span>&nbsp;Duration</span>
+            </div>
+        </div>
+    </script>
+    <script type="text/x-template" id="progressTemplate">
+        <div>
+            <div>
+                <img src="../images/TreeGrid/Progress.png" width="20" height="20" style="padding-bottom: 2px" class="Progress" alt="Progress Icon"/>
+                <span>&nbsp;Progress</span>
+            </div>
+        </div>
+    </script>
+
+}
+
+@*custom code start*@
+
+@section Meta{
+    <meta name="description" content="This example demonstrates the HeaderTemplate in ASP.NET Core Tree Grid control. Explore here for more details." />
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This sample demonstrates the TreeGrid header template feature. In this sample, we have shown custom icons in the column headers.</p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            The TreeGrid provides a way to define a custom element in header element. <code>Columns->HeaderTemplate</code> property accepts either string or HTML element`s ID value, which will be used as the template for the header cell.
+        </p>
+        <p>In this demo, we are rendering customized template for all column headers.</p>
+        <p>
+            More information about Header template can be found in this <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/tree-grid/columns/headers#header-template" aria-label="Navigate to the documentation for Header template in ASP.NET Core TreeGrid control">documentation section</a>.
+        </p>
+    </div>
+}
+
+@*custom code end*@
+@section Title{
+    <title>ASP.NET Core Tree Grid HeaderTemplate Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Header Template in ASP.NET Core Tree Grid Control</h1>
+}
+

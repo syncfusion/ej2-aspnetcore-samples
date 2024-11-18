@@ -1,0 +1,109 @@
+﻿@page
+@model EJ2CoreSampleBrowser.Pages.Chart.CornerRadiusModel
+@using Syncfusion.EJ2
+@section ControlsSection {
+
+    <div class="control-section" align='center'>
+        <ejs-accumulationchart id="container" title="Company Budget Distribution" load="load" pointRender="pointRender" enableSmartLabels="true" enableBorderOnMouseMove="false">
+            <e-accumulationchart-tooltipsettings enable="true" format="${point.x}: <b>${point.y}%</b>" header="<b>Budget</b>"></e-accumulationchart-tooltipsettings>
+            <e-accumulationchart-legendsettings visible="false">
+            </e-accumulationchart-legendsettings>
+            <e-accumulation-series-collection>
+                <e-accumulation-series dataSource="@Model.ChartPoints" xName="X" yName="Y" innerRadius="50%" borderRadius="8" type="@Syncfusion.EJ2.Charts.AccumulationType.Pie">
+                    <e-accumulationseries-datalabel visible="true" name="X" position="@Syncfusion.EJ2.Charts.AccumulationLabelPosition.Outside">
+                        <e-connectorstyle width="0"></e-connectorstyle>
+                    </e-accumulationseries-datalabel>
+                    <e-accumulationseries-border width="3">
+                    </e-accumulationseries-border>
+                </e-accumulation-series>
+            </e-accumulation-series-collection>
+        </ejs-accumulationchart>
+    </div>
+
+    <script>
+        var load = function (args) {
+            var selectedTheme = themeName ? themeName : 'Fluent2';
+            args.accumulation.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, "Dark").replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5');
+            args.accumulation.width = ej.base.Browser.isDevice ? "100%" : "75%";
+            args.accumulation.annotations = [
+                { x: "Operations", y: 30.0, content: `<div style=" padding: 5px 5px 5px 5px; font-size: ${ej.base.Browser.isDevice ? '10px' : '14px'}">30%</div>`, region: "Series", coordinateUnits: "Point" },
+                { x: "Miscellaneous", y: 10.0, content: `<div style=" padding: 5px 5px 5px 5px; font-size: ${ej.base.Browser.isDevice ? '10px' : '14px'}">10%</div>`, region: "Series", coordinateUnits: "Point" },
+                { x: "Human Resources", y: 15.0, content: `<div style=" padding: 5px 5px 5px 5px; font-size: ${ej.base.Browser.isDevice ? '10px' : '14px'}">15%</div>`, region: "Series", coordinateUnits: "Point" },
+                { x: "Research and Development", y: 20.0, content: `<div style=" padding: 5px 5px 5px 5px; font-size: ${ej.base.Browser.isDevice ? '10px' : '14px'}">20%</div>`, region: "Series", coordinateUnits: "Point" },
+                { x: "Marketing", y: 25.0, content: `<div style=" padding: 5px 5px 5px 5px; font-size: ${ej.base.Browser.isDevice ? '10px' : '14px'}">25%</div>`, region: "Series", coordinateUnits: "Point" }
+            ];
+        };
+
+        var pointRender = function (args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Fluent2';
+            if (selectedTheme.indexOf('dark') > -1) {
+                if (selectedTheme.indexOf('material') > -1) {
+                    args.border.color = '#303030';
+                }
+                else if (selectedTheme.indexOf('bootstrap5') > -1) {
+                    args.border.color = '#212529';
+                }
+                else if (selectedTheme.indexOf('bootstrap') > -1) {
+                    args.border.color = '#1A1A1A';
+                }
+                else if (selectedTheme.indexOf('fabric') > -1) {
+                    args.border.color = '#201f1f';
+                }
+                else if (selectedTheme.indexOf('fluent') > -1) {
+                    args.border.color = '#252423';
+                }
+                else if (selectedTheme.indexOf('bootstrap') > -1) {
+                    args.border.color = '#1A1A1A';
+                }
+                else if (selectedTheme.indexOf('tailwind') > -1) {
+                    args.border.color = '#1F2937';
+                }
+                else {
+                    args.border.color = '#222222';
+                }
+            }
+            else if (selectedTheme.indexOf('highcontrast') > -1) {
+                args.border.color = '#000000';
+            }
+            else {
+                args.border.color = '#FFFFFF';
+            }
+        };
+    </script>
+}
+
+@*custom code start*@
+@section Meta {
+    <meta name="description" content="This example demonstrates the Corner Radius in ASP.NET Core Chart control. Explore here for more details." />
+}
+@*custom code end*@
+@section ActionDescription {
+
+    <div id="action-description">
+        <p>
+            This sample demonstrates the company's budget distribution over a year using a donut chart with rounded corners.
+        </p>
+    </div>
+}
+@section Description {
+    <div id="description">
+        <p>
+            In this example, you can see how to render and configure a donut chart with customized corners for each slice. By specifying a value for <code>BorderRadius</code>, you can create rounded corners for each slice, giving the chart a modern and polished look.
+        </p>
+        <p>
+            <code>Tooltips</code> are enabled in this example. To see the tooltips in action, hover over a slice or tap on it on touch-enabled devices.
+        </p>
+        <p>
+            More information about the donut series can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/accumulation-chart/pie-dough-nut#doughnut-chart" aria-label="Navigate to the documentation for Donut Chart in ASP.NET Core Accumulation Chart control">documentation section</a>.
+        </p>
+    </div>
+
+}
+@section Title {
+    <title>ASP.NET Core Chart Corner Radius Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Corner Radius in ASP.NET Core Chart Control</h1>
+}

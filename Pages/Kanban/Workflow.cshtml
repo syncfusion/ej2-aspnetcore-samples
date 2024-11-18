@@ -1,0 +1,126 @@
+@page
+
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2
+@{ 
+    string[] orderTransition = { "Ready to Serve", "Ready to Deliver" };
+    string[] serveTransition = { "Served" };
+    string[] deliverTransition = { "Delivered" };
+    var data = new KanbanDataModels().KanbanPizzaData();
+}
+
+@section ControlsSection{
+    <div class="control-section">
+        <div class="control_wrapper">
+            <ejs-kanban id="Kanban" keyField="Category" dataSource="@data">
+                <e-kanban-columns>
+                    <e-kanban-column headerText="Order" keyField="Order" allowToggle="true" allowDrop="false" transitionColumns="@orderTransition"></e-kanban-column>
+                    <e-kanban-column headerText="Ready to Serve" keyField="Ready to Serve" allowToggle="true" transitionColumns="@serveTransition"></e-kanban-column>
+                    <e-kanban-column headerText="Home Delivery" keyField="Ready to Deliver" allowToggle="true" transitionColumns="@deliverTransition"></e-kanban-column>
+                    <e-kanban-column headerText="Delivered" keyField="Delivered, Served" allowToggle="true" allowDrag="false"></e-kanban-column>
+                </e-kanban-columns>
+                <e-kanban-cardsettings headerField="Id" contentField="Description" template="#cardTemplate"></e-kanban-cardsettings>
+            </ejs-kanban>
+        </div>
+    </div>
+    <script id="cardTemplate" type="text/x-jsrender">
+        <div class='card-template'>
+            <div class='card-template-wrap'>
+                <div>
+                    <div class='e-card-header'>
+                        <div class='e-card-header-caption'>
+                            <div class='e-card-header-title e-tooltip-text'>${Title}</div>
+                        </div>
+                    </div>
+                    <div class='e-card-content'>
+                        <div class='e-text'>${Description}</div>
+                        <div class='e-card-kanban-image'><img src='../images/Kanban/${ImageURL}' alt=''></div>
+                    </div>
+                    <div class='e-card-custom-footer'>
+                        ${getTags(data.Tags)}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script>
+        function getTags(data) {
+            var tagDiv = '';
+            var tags = data.split(',');
+            for (var a = 0; a < tags.length; a++) {
+                var tag = tags[a];
+                tagDiv += '<div class="e-card-tag-field">' + tag + '</div>';
+            }
+            return tagDiv;
+        }
+    </script>
+}
+
+<style>
+    .e-kanban .e-card-kanban-image {
+        height: 45px;
+        width: 45px;
+        margin-left: auto;
+    }
+
+        .e-kanban .e-card-kanban-image img {
+            height: inherit;
+            width: inherit;
+            border-radius: 50%;
+        }
+
+    .e-kanban .e-card .e-card-tag-field {
+        background: #ececec;
+        color: #6b6b6b;
+        margin-right: 5px;
+        line-height: 1.1;
+        font-size: 13px;
+        border-radius: 3px;
+        padding: 4px;
+    }
+
+    .e-kanban .e-card-custom-footer {
+        display: flex;
+        padding: 0px 12px 12px;
+        line-height: 1;
+        height: 35px;
+    }
+
+    .e-kanban .e-card td {
+        background-color: #fff;
+    }
+
+    .e-kanban .e-card .e-card-content {
+        display: flex;
+    }
+
+    .e-kanban .e-card .e-text {
+        width: fit-content;
+    }
+</style>
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This example demonstrates the workflow functionalities that defines the flow of transition between the columns. You can drag and drop the cards between Kanban columns to see the workflow restriction.</p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>In this sample, you can drag the cards from the `Order` column and drop them into `Ready to Serve` and `Home Delivery` columns. Also, you couldn't drag the cards from the `Delivered` column and drop the cards in the `Order` column.  The action is controlled using the below properties.</p>
+        <ul>
+            <li>The <code>transitionColumns</code> property is used to allow the card transition to specified columns.</li>
+            <li>The <code>allowDrag</code> property is used to enable/disable the drag action of columns.</li>
+            <li>The <code>allowDrop</code> property is used to enable/disable the drop action of columns.</li>
+        </ul>
+    </div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Workflow in ASP.NET Core Kanban control. Explore here for more details."/>
+                }
+@section Title{
+                    <title>ASP.NET Core Kanban Workflow Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Workflow in ASP.NET Core Kanban Control</h1>
+                }

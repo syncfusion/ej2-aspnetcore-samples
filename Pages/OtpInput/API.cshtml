@@ -1,0 +1,217 @@
+﻿@page
+@model EJ2CoreSampleBrowser.Pages.OtpInput.APIModel
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+    <div class="col-lg-8 control-section sb-property-border otp-wrapper">
+        <div id="otp-container">
+            <div class="form-container">
+                <span class="otp-header"> Enter verification code </span>
+                <ejs-otpinput id="apiOtp" separator="-" placeholder="X" created="created" input="handleOtpChange"></ejs-otpinput>
+                <div class="otp-actions">
+                    <button id="reset-btn" class="e-btn" type="button" disabled> Clear </button>
+                    <button id="verify-btn" class="e-btn e-primary" type="button" disabled> Verify </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 property-section otp-property-panel">
+        <table id="property" title="Properties">
+            <tbody>
+                <tr>
+                    <td> Styling Mode </td>
+                    <td>
+                        <ejs-dropdownlist id="stylingMode" dataSource="@Model.stylingMode" popupHeight="200px" change="stylingModeChange" index="0"></ejs-dropdownlist>
+                    </td>
+                </tr>
+                <tr>
+                    <td> Validation Status </td>
+                    <td>
+                        <ejs-dropdownlist id="validationStatus" dataSource="@Model.validationStatus" popupHeight="200px" change="statusChange" index="0"></ejs-dropdownlist>
+                    </td>
+                </tr>
+                <tr>
+                    <td> Placeholder </td>
+                    <td>
+                        <ejs-textbox id="placeHolder" type="text" value="x" created="placeholderBoxCreated" input="updatePlaceHolder"></ejs-textbox>
+                    </td>
+                </tr>
+                <tr>
+                    <td> Separator </td>
+                    <td>
+                        <ejs-textbox id="separator" type="text" value="-" created="separatorBoxCreated" input="updateSeparator"></ejs-textbox>
+                    </td>
+                </tr>
+                <tr>
+                    <td> Length </td>
+                    <td>
+                        <ejs-numerictextbox id="length" Type="text" value="4" created="lengthBoxCreated" min="1" max="6" format="0" change="updateOtpLength"></ejs-numerictextbox>
+                    </td>
+                </tr>
+                <tr>
+                    <td> Disabled </td>
+                    <td>
+                        <ejs-switch id="disabled" change="handleDisabled"></ejs-switch>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+}
+
+<script>
+    var otpInput;
+    var placeholderBox;
+    var separatorBox;
+    var verifyBtn;
+    var resetBtn;
+    var lengthBox;
+
+    function created() {
+        otpInput = document.getElementById('apiOtp').ej2_instances[0];
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        verifyBtn = document.getElementById('verify-btn');
+        resetBtn = document.getElementById('reset-btn');
+
+        resetBtn.addEventListener('click', function () {
+            otpInput.value = "";
+            verifyBtn.disabled = resetBtn.disabled = true;
+        });
+
+        verifyBtn.addEventListener('click', function () {
+            alert("Entered OTP value is : " + otpInput.value);
+        });
+    });
+
+    function lengthBoxCreated() {
+        lengthBox = document.getElementById('length').ej2_instances[0];
+    }
+
+    function handleOtpChange(event) {
+        var otpLength = event.value.toString().length;
+        verifyBtn.disabled = otpLength !== otpInput.length;
+        resetBtn.disabled = !otpLength;
+    }
+
+    function placeholderBoxCreated() {
+        placeholderBox = document.getElementById('placeHolder').ej2_instances[0];
+        placeholderBox.element.maxLength = otpInput.length;
+    }
+
+    function separatorBoxCreated() {
+        separatorBox = document.getElementById('separator').ej2_instances[0];
+        separatorBox.element.maxLength = 1;
+    }
+
+    function stylingModeChange(e) {
+        otpInput.stylingMode = e.itemData.value;
+    }
+
+    function statusChange(e) {
+        otpInput.cssClass = e.itemData.value;
+    }
+    function updatePlaceHolder(args) {
+        otpInput.placeholder = args.value;
+    }
+    function updateSeparator(args) {
+        otpInput.separator = args.value;
+    }
+    function updateOtpLength(args) {
+        var value = args.value;
+        if (!value) {
+            lengthBox.element.value = 1;
+        }
+        otpInput.length = args.value || 1;
+        placeholderBox.element.maxLength = otpInput.length;
+    }
+    function handleDisabled(args) {
+        otpInput.disabled = args.checked;
+    }
+</script>
+
+<style>
+    .col-lg-8.control-section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .col-lg-4.property-section.otp-property-panel {
+        border-left: 1px solid #D7D7D7;
+    }
+
+    .sb-property-border.otp-wrapper {
+        border: none;
+    }
+
+    #otp-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50%;
+    }
+
+    .form-container {
+        height: 220px;
+        padding: 1rem 3rem;
+        box-shadow: 0 1px 3px #d4d4d5, 0 0 0 1px #d4d4d5;
+        border-radius: 4px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .form-container > div {
+        margin: 17px 0px;
+    }
+
+    .form-container .otp-header {
+        display: inline-block;
+        font-size: 1.4em;
+        font-weight: 500;
+        margin: 10px 0px;
+    }
+
+    .form-container .otp-actions {
+        display: flex;
+        gap: 20px;
+    }
+
+    .otp-actions button {
+        width: 80px;
+    }
+
+    .property-panel-content td {
+        padding: 10px 0px;
+        width: 35%;
+    }
+
+    @@media (max-width: 1200px) {
+        .col-lg-4.property-section.otp-property-panel {
+            border: none;
+        }
+    }
+</style>
+
+@section Meta{
+    <meta name="description" content="This example demonstrates the API's' in ASP.NET Core Otp Input Control. Explore here for more details." />
+}
+@section ActionDescription{
+<div id="action-description">
+    <p>This sample demonstrates the properties available in the the OTP Input control.</p>
+</div>
+}
+@section Description{
+<div id="description">
+        <p>This example showcases the usage of the <code>stylingMode</code>, <code>placeholder</code>, <code>separator</code>, <code>value</code>, <code>cssClass</code>, <code>length</code>, and <code>disabled</code> properties in the OTP Input component.</p>
+</div>
+}
+@section Title{
+    <title>ASP.NET Core Otp Input API Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of API's' in ASP.NET Core Otp Input Control</h1>
+}

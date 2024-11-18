@@ -1,0 +1,155 @@
+@page
+
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2
+
+@{
+    var data = new KanbanDataModels().KanbanTasks();
+    var sortDropDown = new KanbanDataModels().SortDropDowns();
+}
+@section ControlsSection{
+
+    <div class="col-lg-8 control-section">
+        <div class="content-wrapper overflow">
+            <ejs-kanban id="Kanban" keyField="Status" dataSource="@data" created="onCreate" height="500px">
+                <e-kanban-columns>
+                    <e-kanban-column headerText="To Do" keyField="Open"></e-kanban-column>
+                    <e-kanban-column headerText="In Progress" keyField="InProgress"></e-kanban-column>
+                    <e-kanban-column headerText="Done" keyField="Close"></e-kanban-column>
+                </e-kanban-columns>
+                <e-kanban-cardsettings contentField="Summary" headerField="Id"></e-kanban-cardsettings>
+                <e-kanban-swimlanesettings keyField="Assignee"></e-kanban-swimlanesettings>
+            </ejs-kanban>
+        </div>
+    </div>
+    <div class="col-lg-4 property-section">
+        <table id="property" title="Properties">
+            <tr>
+                <td>
+                    <div>Sort Direction</div>
+                </td>
+                <td>
+                    <div>
+                        <ejs-dropdownlist id="sort" dataSource="@sortDropDown" index="0" popupHeight="200px" change="changeSortOrder">
+                            <e-dropdownlist-fields text="Value" value="Value"></e-dropdownlist-fields>
+                        </ejs-dropdownlist>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>Enable Swimlane Drag And Drop</div>
+                </td>
+                <td>
+                    <ejs-checkbox id="acrossDragAndDrop" checked="false" change="onChange"></ejs-checkbox>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>Show Empty Swimlane Row</div>
+                </td>
+                <td>
+                    <ejs-checkbox id="emptyRow" checked="false" change="onChange"></ejs-checkbox>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>Show Swimlane Item Count</div>
+                </td>
+                <td>
+                    <ejs-checkbox id="itemCount" checked="true" change="onChange"></ejs-checkbox>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>Enable Frozen Rows</div>
+                </td>
+                <td>
+                    <ejs-checkbox id="frozenRows" change="onChange"></ejs-checkbox>
+                </td>
+            </tr>
+        </table>
+    </div>
+}
+
+<style>
+    #property tr {
+        height: 50px
+    }
+    .overflow{
+        overflow:hidden;
+    }
+</style>
+
+@section PreScripts {
+    <script>
+        var kanbanObj;
+        function onCreate() {
+            kanbanObj = this;
+        }
+        function onChange(args) {
+            var value = this.element.id;
+            switch (value) {
+                case 'acrossDragAndDrop':
+                    kanbanObj.swimlaneSettings.allowDragAndDrop = args.checked;
+                    break;
+                case 'emptyRow':
+                    kanbanObj.swimlaneSettings.showEmptyRow = args.checked;
+                    break;
+                case 'itemCount':
+                    kanbanObj.swimlaneSettings.showItemCount = args.checked;
+                    break;
+                case 'frozenRows':
+                    kanbanObj.swimlaneSettings.enableFrozenRows = args.checked;
+                    break;
+                default:
+                    break;
+            }
+        }
+        function changeSortOrder(args) {
+            kanbanObj.swimlaneSettings.sortDirection = args.value;
+        }
+    </script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This example demonstrates the swimlane functionalities of Kanban control. Provided options in the property panel
+            to sort
+            the cards, enable drag-and-drop across swimlanes, show or hide the empty row, items count and swimlane frozen rows. Also, you can
+            expand/collapse the swimlane row in the Kanban board.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            This sample renders the assignee field as a swimlane header using the <code>SwimlaneSettings</code> property.
+            The property provides the following options to change its related settings:
+        </p>
+        <ul>
+            <li>Sorting the swimlane cards using the <code>SwimlaneSettings.SortDirection</code> property</li>
+            <li>
+                Control the drag-and-drop of the cards across swimlane using the
+                <code>SwimlaneSettings.AllowDragAndDrop</code> property.
+            </li>
+            <li>Show or hide the empty swimlane row using the <code>SwimlaneSettings.ShowEmptyRow</code> property.</li>
+            <li>
+                Show or hide the items count in the swimlane header using the <code>SwimlaneSettings.ShowItemCount</code>
+                property.
+            </li>
+            <li>Enable or disable the frozen swimlane rows using the <code>SwimlaneSettings.EnableFrozenRows</code> property.</li>
+        </ul>
+    </div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Swimlane in ASP.NET Core Kanban control. Explore here for more details."/>
+                }
+@section Title{
+                    <title>ASP.NET Core Kanban Swimlane Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Swimlane in ASP.NET Core Kanban Control</h1>
+                }

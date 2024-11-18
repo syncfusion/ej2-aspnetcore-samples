@@ -1,0 +1,90 @@
+@page
+
+@using Syncfusion.EJ2
+
+@{
+    var items = new[]
+    {
+        "Bold", "Italic", "Underline",
+        "Formats", "-", "Alignments", "OrderedList", "UnorderedList",
+        "CreateLink"
+    };
+}
+@section ControlsSection{
+    <div class="col-lg-8 control-section">
+        <div class="control-wrapper">
+            <ejs-richtexteditor id="inline" created="created">
+                <e-content-template>
+                    <p>
+                        The sample is configured with the inline mode of the editor. Initially, the editor is rendered without a
+                        <a href='https://ej2.syncfusion.com/aspnetcore/Toolbar/DefaultFunctionalities#/material' aria-label="Navigate to the ASP.NET Core toolbar control Demo">toolbar</a>.
+                        The toolbar becomes visible only when the content is selected.
+                    </p>
+                </e-content-template>
+                <e-richtexteditor-format width="auto"></e-richtexteditor-format>
+                <e-richtexteditor-inlinemode enable="true" onSelection="true"></e-richtexteditor-inlinemode>
+                <e-richtexteditor-fontfamily width="auto"></e-richtexteditor-fontfamily>
+                <e-richtexteditor-toolbarsettings items="@items"></e-richtexteditor-toolbarsettings>
+            </ejs-richtexteditor>
+        </div>
+    </div>
+    <div class="col-lg-4 property-section" id="all-option-table">
+        <table id="property" title="Properties">
+            <tbody>
+                <tr>
+                    <td style="padding-right: 10px">
+                        <div style="padding-left: 0;padding-top: 0">
+                            <ejs-checkbox id="select" label="Show on Selection" checked="true" change="select_onChange"></ejs-checkbox>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <style>
+        .control-section {
+            padding-top: 35px;
+        }
+    </style>
+
+    <script type="text/javascript">
+        var rteObj;
+        function created() {
+            rteObj = this;
+        }
+        function select_onChange(args) {
+            rteObj.inlineMode.onSelection = args.checked;
+        }
+    </script>
+}
+
+@*custom code start*@
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Inline in ASP.NET Core Rich Text Editor control. Explore here for more details."/>
+                }
+
+@*custom code end*@
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the toolbar show on inline mode. Toolbar show while selection on the below editable content and
+            it hide on focus out from edit area.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            The Rich Text Editor provides an option to display toolbar on demand using mode property. Set mode as inline to enable
+            inline editor. The toolbar becomes visible only when the content is selected
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Rich Text Editor Inline Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Inline in ASP.NET Core Rich Text Editor Control</h1>
+                }

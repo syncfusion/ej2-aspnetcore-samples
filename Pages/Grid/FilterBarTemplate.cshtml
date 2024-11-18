@@ -1,0 +1,279 @@
+﻿@page
+@model EJ2CoreSampleBrowser.Pages.Grid.FilterBarTemplateModel
+@{
+    ViewData["Title"] = "Filter Bar Template";
+}
+@section ControlsSection {
+    <div class="control-section">
+
+        <style type="text/css" class="cssStyles">
+            .e-cus-label {
+                font-size: 14px;
+                font-weight: 300;
+                margin-bottom: 5px;
+                text-align: start;
+            }
+
+            .e-flex-layout {
+                display: flex;
+            }
+
+            .e-min-max-separator {
+                margin-right: 5px;
+            }
+
+            .e-grid .e-gridheader tr th:first-child.e-filterbarcell.e-fltrtemp {
+                padding-left: 6px;
+            }
+        </style>
+
+        <script>
+            var numElement;
+            var stringElement;
+            var minElement;
+            var maxElement;
+            var ddElement;
+            var minTextBox;
+            var maxTextBox;
+
+            function numericCreate() {
+                var container = document.createElement('div');
+                var label = document.createElement('div');
+                label.classList.add('e-cus-label');
+                label.innerText = 'Id';
+                numElement = document.createElement('input');
+                numElement.classList.add('e-fltrtemp-focus');
+                container.append(label);
+                container.append(numElement);
+                return container;
+            }
+
+            function numericWrite() {
+                var numericTextBox = new ej.inputs.NumericTextBox({
+                    format: 'n'
+                });
+                numericTextBox.appendTo(numElement);
+            }
+
+            function stringCreate() {
+                var container = document.createElement('div');
+                var label = document.createElement('div');
+                label.classList.add('e-cus-label');
+                label.innerText = 'Name';
+                stringElement = document.createElement('input');
+                stringElement.classList.add('e-fltrtemp-focus');
+                container.append(label);
+                container.append(stringElement);
+                return container;
+            }
+
+            function stringWrite() {
+                var stringTextBox = new ej.inputs.TextBox();
+                stringTextBox.appendTo(stringElement);
+            }
+
+            function minMaxCreate() {
+                var container = document.createElement('div');
+                container.classList.add('e-flex-layout');
+                var minContainer = document.createElement('div');
+                minContainer.classList.add('e-min-max-separator');
+                var minLabel = document.createElement('div');
+                minLabel.classList.add('e-cus-label');
+                minLabel.innerText = 'Min';
+                minElement = document.createElement('input');
+                minElement.classList.add('e-fltrtemp-focus');
+                minContainer.append(minLabel);
+                minContainer.append(minElement);
+                var maxContainer = document.createElement('div');
+                var maxLabel = document.createElement('div');
+                maxLabel.classList.add('e-cus-label');
+                maxLabel.innerText = 'Max';
+                maxElement = document.createElement('input');
+                maxElement.classList.add('e-fltrtemp-focus');
+                maxContainer.append(maxLabel);
+                maxContainer.append(maxElement);
+                container.append(minContainer);
+                container.append(maxContainer);
+                return container;
+            }
+
+            function minMaxWrite() {
+                minTextBox = new ej.inputs.NumericTextBox({
+                    format: 'n'
+                });
+                minTextBox.appendTo(minElement);
+                maxTextBox = new ej.inputs.NumericTextBox({
+                    format: 'n'
+                });
+                maxTextBox.appendTo(maxElement);
+            }
+
+            function dropdownCreate() {
+                var container = document.createElement('div');
+                var label = document.createElement('div');
+                label.classList.add('e-cus-label');
+                label.innerText = 'Status';
+                ddElement = document.createElement('input');
+                container.append(label);
+                container.append(ddElement);
+                return container;
+            }
+
+            function dropdownWrite() {
+                var dropDown = new ej.dropdowns.DropDownList({
+                    cssClass: 'e-fltrtemp-focus',
+                    dataSource: ['Both', 'true', 'false'],
+                    value: 'Both',
+                    change: function (args) {
+                        var grid = document.getElementById("Grid").ej2_instances[0];
+                        if (args.value !== 'Both') {
+                            grid.filterByColumn('Discontinued', 'equal', args.value === 'true' ? true : false);
+                        }
+                        else {
+                            grid.removeFilteredColsByField('Discontinued');
+                        }
+                    }
+                });
+                dropDown.appendTo(ddElement);
+            }
+
+            function gridDataBound() {
+                var grid = document.getElementById("Grid").ej2_instances[0];
+                var filterBarOperatorDiv = grid.getHeaderTable().querySelector('.e-filterdiv.e-fltrinputdiv');
+                if (!filterBarOperatorDiv.querySelector('.e-cus-label')) {
+                    var label = document.createElement('div');
+                    label.classList.add('e-cus-label');
+                    label.innerText = 'Stock';
+                    filterBarOperatorDiv.insertBefore(label, filterBarOperatorDiv.firstChild);
+                }
+            }
+
+            function gridKeyPressed(args) {
+                var grid = document.getElementById("Grid").ej2_instances[0];
+                if (args.keyCode === 13) {
+                    var target = args.target;
+                    var th = ej.base.closest(target, 'th');
+                    if (th && th.classList.contains('e-filterbarcell') && th.hasAttribute('e-mappinguid') && grid.getColumnByUid(th.getAttribute('e-mappinguid')).field === 'UnitPrice') {
+                        args.cancel = true;
+                        if (minTextBox.element.value || maxTextBox.element.value) {
+                            var filterColumns = grid.filterSettings.columns.filter(function (data) { return data.field !== 'UnitPrice'; });
+                            if (minTextBox.element.value) {
+                                filterColumns.push({
+                                    field: 'UnitPrice',
+                                    operator: 'greaterthanorequal',
+                                    predicate: 'and',
+                                    value: parseFloat(minTextBox.element.value),
+                                });
+                            }
+                            if (maxTextBox.element.value) {
+                                filterColumns.push({
+                                    field: 'UnitPrice',
+                                    operator: 'lessthanorequal',
+                                    predicate: 'and',
+                                    value: parseFloat(maxTextBox.element.value),
+                                });
+                            }
+                            setTimeout(function () {
+                                grid.setProperties({ filterSettings: { columns: filterColumns } });
+                            }, 0);
+                        }
+                        else {
+                            var unitPriceColumns = grid.filterSettings.columns.filter(function (data) { return data.field === 'UnitPrice'; });
+                            if (unitPriceColumns.length) {
+                                grid.removeFilteredColsByField('UnitPrice');
+                            }
+                        }
+                    }
+                }
+            }
+        </script>
+
+        @{
+            Object templateOptionsNumericTextBox = new Object();
+            templateOptionsNumericTextBox = (new { create = "numericCreate", write = "numericWrite" });
+
+            Object templateOptionsStringTextBox = new Object();
+            templateOptionsStringTextBox = (new { create = "stringCreate", write = "stringWrite" });
+
+            Object templateOptionsMinMax = new Object();
+            templateOptionsMinMax = (new { create = "minMaxCreate", write = "minMaxWrite" });
+
+            Object templateOptionsDropDown = new Object();
+            templateOptionsDropDown = (new { create = "dropdownCreate", write = "dropdownWrite" });
+        }
+
+        <ejs-grid id="Grid" dataSource="@Model.DataSource" allowPaging="true" allowFiltering="true" allowSorting="true" gridLines="Both" dataBound="gridDataBound" keyPressed="gridKeyPressed">
+            <e-grid-filterSettings showFilterBarOperator="true" showFilterBarStatus="false"></e-grid-filterSettings>
+            <e-grid-pagesettings pageCount="5"></e-grid-pagesettings>
+            <e-grid-columns>
+                <e-grid-column field="ProductID" headerText="Product ID" width="120" textAlign="Right" isPrimaryKey="true" filterBarTemplate="templateOptionsNumericTextBox"></e-grid-column>
+                <e-grid-column field="ProductName" headerText="Product Name" width="220" filterBarTemplate="templateOptionsStringTextBox"></e-grid-column>
+                <e-grid-column field="UnitPrice" headerText="Price" width="200" format="C2" textAlign="Right" filterBarTemplate="templateOptionsMinMax"></e-grid-column>
+                <e-grid-column field="UnitsInStock" headerText="Stock" width="120" format="N" textAlign="Right"></e-grid-column>
+                <e-grid-column field="Discontinued" displayAsCheckBox="true" type="boolean" headerText="Discontinued" width="150" filterBarTemplate="templateOptionsDropDown"></e-grid-column>
+            </e-grid-columns>
+        </ejs-grid>
+    </div>
+}
+@section ActionDescription {
+    <div id="action-description">
+        <p>
+            This sample illustrates the Grid's filtering bar feature, utilizing custom components in the filter cells
+            through the
+            <code>
+                <a target="_blank" class="code"
+                   href="https://ej2.syncfusion.com/aspnetcore/documentation/grid/filtering/filter-bar#filter-bar-template-with-custom-component">filterBarTemplate</a>
+            </code>
+            feature. This functionality allows users to filter records based on specified
+            criteria, displaying a reduced set of data. To enable filtering, set the <code>
+                <a target="_blank" class="code"
+                   href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.grids.grid.html#Syncfusion_EJ2_Grids_Grid_AllowFiltering">allowFiltering</a>
+            </code>
+            property to <code>true</code>,
+            which renders a filter bar row next to the header. Users can then filter data by entering text into the cells of
+            this row.
+        </p>
+    </div>
+}
+
+@section Meta {
+    <meta name="description" content="This example demonstrates the Filter Bar Template in ASP.NET Core Data Grid control. Explore here for more details." />
+}
+
+@section Description {
+    <div id="description">
+        <p>
+            The
+            <code>
+                <a target="_blank" class="code"
+                   href="https://ej2.syncfusion.com/aspnetcore/documentation/grid/filtering/filter-bar#filter-bar-template-with-custom-component">filterBarTemplate</a>
+            </code>
+            feature in the ASP.NET Core Data Grid allows customization of the controls in
+            the filter bar. By default, a text box appears in the filter bar cell. In this demo, the Grid showcases various
+            custom input components: a custom input component for the ID, Name and Price columns, and a Syncfusion
+            DropDownList for the Discontinued column, all achieved through
+            the filter bar template feature. You can customize the filter components in the filter cells by setting the
+            <code>
+                <a target="_blank" class="code"
+                   href="https://ej2.syncfusion.com/aspnetcore/documentation/grid/filtering/filter-bar#filter-bar-template-with-custom-component">filterBarTemplate</a>
+            </code>
+            property for each column. The Unit Stock column uses the default filter bar cell with
+            operator functionality.
+        </p>
+        <p>
+            For more details on configuring filters, refer to the
+            relevant
+            <a target="_blank"
+               href="https://ej2.syncfusion.com/aspnetcore/documentation/grid/filtering/filter-bar#filter-bar-template-with-custom-component">
+                documentation section
+            </a>.
+        </p>
+    </div>
+}
+@section Title {
+    <title>ASP.NET Core Data Grid Filter Bar Template Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Filter Bar Template in ASP.NET Core Data Grid Control</h1>
+}
+

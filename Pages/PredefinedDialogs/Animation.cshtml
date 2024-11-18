@@ -1,0 +1,94 @@
+@page
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+    <div class="col-lg-8 control-section">
+        <div class="control-section" id ="predefinedDialogAnimation">
+          <ejs-button id="confirmBtn" content="Confirm" cssClass="e-success"></ejs-button>
+        </div>
+    </div>
+    <div class="col-lg-4 property-section">
+        <div>
+            <select id="effectDropdown" class="form-control">
+                <option value="FadeZoom">Fade zoom</option>
+                <option value="SlideBottom">Slide bottom</option>
+                <option value="SlideTop">Slide top</option>
+                <option value="Zoom">Zoom</option>
+                <option value="Fade">Fade</option>
+            </select>
+        </div>
+    </div>
+}
+@section PreScripts {
+<script>
+    var dialogArgs = {
+        title: ' Delete Multiple Items',
+        content: "Are you sure you want to permanently delete these items?",
+        animationSettings: { effect: 'Zoom',delay:0,duration: 250},
+        position: { X: 'center', Y: 'center' },
+        width:'420px',
+        closeOnEscape: true
+    };
+    var button = new ej.buttons.Button({});
+    button.appendTo('#confirmBtn');
+    document.getElementById("confirmBtn").onclick = function confirmBtnAction( ) {
+        ej.popups.DialogUtility.confirm(dialogArgs);
+    };
+    var animationObj = new ej.dropdowns.DropDownList({
+        index: 2,
+        placeholder: 'Animation effect',
+        popupHeight: '200px',
+        floatLabelType: 'Always',
+        change: function(){ valueChange();  }
+    });
+    animationObj.appendTo('#effectDropdown');
+    function valueChange() {
+        var effect = animationObj.value;
+        dialogArgs.animationSettings.effect = effect;
+    }
+</script>
+<style>
+ #predefinedDialogAnimation #confirmBtn {
+        margin: 0 0 0 15px;
+    }
+</style>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This example demonstrates how to open or close the dialog with animation effects by selecting the appropriate dropdown item in the dropdown button.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+         <p>
+            The dialog can be opened or closed with an animation effect using the <code>animationSettings</code> property.
+            You can also customize the duration of the animation and delay to begin the animation or disable the dialog's animation by setting the animation effect as none.
+        </p>
+        <p>
+            <b>See also</b>
+        </p>
+        <ul>
+            <li> <a target="_blank"
+                href="https://ej2.syncfusion.com/aspnetcore/documentation/predefined-dialogs/animation" aria-label="Navigate to the documentation for animation in ASP.NET Core Predefined Dialogs control">
+        documentation section</a>.
+            </li>
+        </ul>
+    </div>
+}
+
+@*custom code start*@
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Animation in ASP.NET Core Predefined Dialogs control. Explore here for more details."/>
+                }
+
+@*custom code end*@
+@section Title{
+                    <title>ASP.NET Core Predefined Dialogs Animation Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Animation in ASP.NET Core Predefined Dialogs Control</h1>
+                }

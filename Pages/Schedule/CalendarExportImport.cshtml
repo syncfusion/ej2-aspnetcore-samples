@@ -1,0 +1,111 @@
+@page
+
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2
+
+@{
+    var appointments = new ScheduleData().GetScheduleData();
+}
+
+@section ControlsSection{
+    <div class="col-lg-9 control-section">
+        <div class="schedule-wrapper">
+            <ejs-schedule id="schedule" width="100%" height="650px" selectedDate="new DateTime(DateTime.Today.Year, 1, 10)">
+                <e-schedule-views>
+                    <e-schedule-view option="Day"></e-schedule-view>
+                    <e-schedule-view option="Week"></e-schedule-view>
+                    <e-schedule-view option="WorkWeek"></e-schedule-view>
+                    <e-schedule-view option="Month"></e-schedule-view>
+                    <e-schedule-view option="Agenda"></e-schedule-view>
+                </e-schedule-views>
+                <e-schedule-eventsettings dataSource="@appointments"></e-schedule-eventsettings>
+            </ejs-schedule>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id='property' title='Properties' class='property-panel-table' style="width: 100%;">
+            <tbody>
+                <tr style="height: 50px">
+                    <td style="width: 50%">
+                        <div>Export as iCalendar</div>
+                    </td>
+                    <td style="width: 50%;">
+                        <div width='300px'>
+                            <ejs-button id="ics-export" content="Export"></ejs-button>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td style="width: 50%">
+                        <div>Import iCalendar file</div>
+                    </td>
+                    <td style="width: 50%;">
+                        <div width='300px' class='upload_wrapper'>
+                            <ejs-uploader id="ics-import" allowedExtensions=".ics" cssClass="calendar-import" showFileList="false" selected="onSelected" multiple="false">
+                                <e-uploader-buttons browse="Choose file"></e-uploader-buttons>
+                            </ejs-uploader>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <style>
+        .calendar-import.e-upload {
+            border: 0;
+            padding-left: 0 !important;
+        }
+
+            .calendar-import.e-upload .e-file-select-wrap {
+                padding: 0
+            }
+
+                .calendar-import.e-upload .e-file-select-wrap .e-file-drop {
+                    display: none;
+                }
+    </style>
+
+    <script type="text/javascript">
+        document.getElementById("ics-export").addEventListener('click', function () {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            scheduleObj.exportToICalendar();
+        });
+        function onSelected(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            scheduleObj.importICalendar(args.event.target.files[0]);
+        }
+    </script>
+}
+
+@*custom code start*@
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Export and Import ICS in ASP.NET Core Scheduler control. Explore here for more details."/>
+                }
+@*custom code end*@
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This example showcases how to export the Scheduler events to a calendar (.ics) file, as well as how to import
+            events from an .ics file (downloaded from any of the calendars like Google or Outlook) into our Scheduler.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this example, the Scheduler events can be exported to a calendar (.ics) file by making use of the
+            <code>exportToICalendar</code> public method. By default, the calendar is exported with a file name
+            <code>Calendar.ics</code>. To change this file name on export, pass the custom string value as
+            <code>fileName</code> to get the file downloaded with this provided name. The events from external
+            calendars can also be imported into Scheduler by making use of the <code>importICalendar</code>
+            method. This method accepts the blob object of an .ics file to be imported as a mandatory argument.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Scheduler Export and Import ICS Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Export and Import ICS in ASP.NET Core Scheduler Control</h1>
+                }

@@ -1,0 +1,379 @@
+﻿@page
+@using Syncfusion.EJ2
+@using Syncfusion.EJ2.Lists
+@{
+    var template = "<div class='e-list-wrapper e-list-multi-line e-list-avatar'>" +
+                "${if(avatar!=='')}" +
+                "<span class='e-avatar e-avatar-circle'>${avatar}</span>" +
+                "${else}" +
+                "<span class='${pic} e-avatar e-avatar-circle'> </span>" +
+                "${/if}" +
+                "<span class='e-list-item-header'>${text}</span>" +
+                "<span class='e-list-content'>${contact}</span>" +
+                "</div>";
+}
+@section ControlsSection{
+    <div class="control-section">
+        <div class="row skeleton-animation">
+            <div>
+                <button id="reloadSkeleton" class="e-btn e-primary">Reload</button>
+            </div>
+            <div class="col-sm-6">
+                <h5>Fade Effect</h5>
+                <br />
+                <div id="skeletonCard" class="e-card" style="display: block;">
+                    <div class="cardProfile">
+                        <div class="e-skeleton e-skeleton-circle e-shimmer-fade" style="width: 60px; height: 60px;"></div>
+                    </div>
+                    <div class="cardinfo">
+                        <div class="e-skeleton e-skeleton-text e-shimmer-fade" style="width: 30%; height: 15px;"></div>
+                        <br />
+                        <div class="e-skeleton e-skeleton-text e-shimmer-fade" style="width: 15%; height: 15px;"></div>
+                    </div>
+                    <div class="cardContent">
+                        <div class="e-skeleton e-skeleton-rectangle e-shimmer-fade" style="width: 100%; height: 250px;">
+                        </div>
+                    </div>
+                    <div class="cardoptions">
+                        <div class="e-skeleton e-skeleton-rectangle e-shimmer-fade" style="width: 20%; height: 32px;"></div>
+                        <div class="e-skeleton e-skeleton-rectangle e-shimmer-fade" style="width: 20%; height: 32px;"></div>
+                    </div>
+                </div>
+                <div id="skeletondatacard"  class="e-card" style="display: none;">
+                    <div class="cardProfile">
+                        <div class="image e-avatar"></div>
+                    </div>
+
+                    <div class="cardinfo">
+                        <label id="name" style="font-size: 15px;"></label><br />
+                        <label id="time" style="font-weight:normal;"></label>
+                    </div>
+
+                    <div class="cardContent">
+                        <div class="image"></div>
+                    </div>
+
+                    <div class="cardoptions">
+                        <div id="cardLeftOptn" style="min-width:20%;"></div>
+                        <div id="cardRightOptn" style="min-width:20%;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <h5>Pulse Effect</h5>
+                <br />
+                <div class="skeleton-listcard e-card">
+                <ejs-listview id="skeleton-listview" template="@template" sortOrder="Ascending" height="420px" cssClass="e-list-template">
+                    <e-listview-fieldsettings id="field-id" text="text"></e-listview-fieldsettings>
+                </ejs-listview>
+                <ul id="skeleton-list">
+                    <li>
+                        <div class="listProfile e-skeleton e-skeleton-circle e-shimmer-pulse"></div>
+                        <div>
+                            <div class="listCtn e-skeleton e-skeleton-text e-shimmer-pulse"></div><br />
+                            <div class="distCtn e-skeleton e-skeleton-text e-shimmer-pulse"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="listProfile e-skeleton e-skeleton-circle e-shimmer-pulse"></div>
+                        <div>
+                            <div class="listCtn e-skeleton e-skeleton-text e-shimmer-pulse"></div><br />
+                            <div class="distCtn e-skeleton e-skeleton-text e-shimmer-pulse"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="listProfile e-skeleton e-skeleton-circle e-shimmer-pulse"></div>
+                        <div>
+                            <div class="listCtn e-skeleton e-skeleton-text e-shimmer-pulse"></div><br />
+                            <div class="distCtn e-skeleton e-skeleton-text e-shimmer-pulse"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="listProfile e-skeleton e-skeleton-circle e-shimmer-pulse"></div>
+                        <div>
+                            <div class="listCtn e-skeleton e-skeleton-text e-shimmer-pulse"></div><br />
+                            <div class="distCtn e-skeleton e-skeleton-text e-shimmer-pulse"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="listProfile e-skeleton e-skeleton-circle e-shimmer-pulse"></div>
+                        <div>
+                            <div class="listCtn e-skeleton e-skeleton-text e-shimmer-pulse"></div><br />
+                            <div class="distCtn e-skeleton e-skeleton-text e-shimmer-pulse"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="listProfile e-skeleton e-skeleton-circle e-shimmer-pulse"></div>
+                        <div>
+                            <div class="listCtn e-skeleton e-skeleton-text e-shimmer-pulse"></div><br />
+                            <div class="distCtn e-skeleton e-skeleton-text e-shimmer-pulse"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="listProfile e-skeleton e-skeleton-circle e-shimmer-pulse"></div>
+                        <div>
+                            <div class="listCtn e-skeleton e-skeleton-text e-shimmer-pulse"></div><br />
+                            <div class="distCtn e-skeleton e-skeleton-text e-shimmer-pulse"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="listProfile e-skeleton e-skeleton-circle e-shimmer-pulse"></div>
+                        <div>
+                            <div class="listCtn e-skeleton e-skeleton-text e-shimmer-pulse"></div><br />
+                            <div class="distCtn e-skeleton e-skeleton-text e-shimmer-pulse"></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+}
+@section Scripts{
+<script>
+    var listviewInstance = document.getElementById("skeleton-listview").ej2_instances[0];
+    listviewInstance.element.style.display = 'none';
+    function getData() {
+        return new Promise(resolve => setTimeout(() => {
+            var data = {};
+            data['list-data'] = [
+                { text: "Jenifer", contact: "(206) 555-985774", id: "1", avatar: "", pic: "pic01" },
+                { text: "Amenda", contact: "(206) 555-3412", id: "2", avatar: "A", pic: "" },
+                { text: "Isabella", contact: "(206) 555-8122", id: "4", avatar: "", pic: "pic02" },
+                { text: "William ", contact: "(206) 555-9482", id: "5", avatar: "W", pic: "" },
+                { text: "Jacob", contact: "(71) 555-4848", id: "6", avatar: "", pic: "pic04" },
+                { text: "Matthew", contact: "(71) 555-7773", id: "7", avatar: "M", pic: "" },
+                { text: "Oliver", contact: "(71) 555-5598", id: "8", avatar: "", pic: "pic03" },
+                { text: "Charlotte", contact: "(206) 555-1189", id: "9", avatar: "C", pic: "" }
+            ];
+            data['name'] = 'Laura Callahan';
+            data['time'] = new Date().toLocaleString();
+            resolve(data)
+        }, 3000));
+    }
+    function loadData() {
+        getData().then((data) => {
+            document.querySelector("#skeletonCard").style.display = 'none';
+            document.querySelector(".cardProfile .image").classList.add('profile-image');
+            document.getElementById('name').textContent = data['name'];
+            document.getElementById('time').textContent = data['time'];
+            document.querySelector(".cardContent .image").classList.add('post-image');
+            document.getElementById("cardLeftOptn").innerHTML = '<button class="e-btn e-outline e-primary" style="width: 100%;">Like</button>';
+            document.getElementById("cardRightOptn").innerHTML = '<button class="e-btn e-primary" style="width: 100%;">Share</button>';
+            document.getElementById("skeletondatacard").style.display = 'block';
+            listviewInstance.dataSource = data['list-data'];
+            document.getElementById('skeleton-list').style.display = 'none';
+            listviewInstance.element.style.display = 'block';
+            isDataLoading = false;
+        });
+    }
+    var isDataLoading = true;
+    document.getElementById("reloadSkeleton").addEventListener('click', function () {
+        if (!isDataLoading) {
+            isDataLoading = true;
+            document.getElementById("skeletonCard").style.display = 'block';
+            document.getElementById("skeletondatacard").style.display = 'none';
+            document.getElementById('skeleton-list').style.display = 'block';
+            listviewInstance.element.style.display = 'none';
+            loadData();
+        }
+    });
+    loadData();
+</script>
+}
+<style>
+    .skeleton-animation .col-sm-6 {
+        padding: 30px;
+        min-height: 350px;
+        position: relative;
+    }
+
+    .skeleton-listcard, .e-bigger .skeleton-listcard {
+        line-height: 20px;
+    }
+
+    #skeleton-listview{
+        border:0px;
+    }
+
+    #reloadSkeleton {
+        margin-left: 30px;
+    }
+
+    /* Skeleton customization */
+    #skeletondatacard,
+    #skeletonCard {
+        padding: 10px;
+        line-height: inherit;
+        height: 420px;
+    }
+
+    .skeleton-animation .cardProfile {
+        float: left;
+        margin-right: 15px;
+    }
+
+    .skeleton-animation .cardinfo {
+        margin-top: 10px;
+        overflow: hidden;
+    }
+
+    .skeleton-animation #skeleton-list,
+    .skeleton-animation .cardinfo label {
+        margin: 0;
+        white-space: nowrap;
+    }
+
+    .skeleton-animation .cardContent {
+        margin: 20px 0px 30px;
+    }
+
+    .skeleton-animation .cardoptions {
+        display: flex;
+        justify-content: space-between;
+    }
+   .skeleton-animation .cardoptions>div {
+        min-width: 60px;
+    }
+
+    #skeleton-list {
+        padding-left: 12px;
+        padding-top: 7px;
+        height: 420px;
+        line-height: inherit;
+    }
+
+    #skeleton-list li {
+        list-style: none;
+        display: flow-root;
+        margin-bottom: 9px;
+    }
+
+    .skeleton-animation .listProfile {
+        float: left;
+        margin-right: 15px;
+        width: 40px;
+        height: 40px;
+    }
+
+    .skeleton-animation .listCtn {
+        margin: 5px 0px;
+        width: 80%;
+        height: 14px;
+    }
+
+    .skeleton-animation .distCtn {
+        width: 60%;
+        height: 14px;
+    }
+
+    .fluent-dark #skeletondatacard,
+    .fluent-dark #skeletonCard, .fluent-dark #skeleton-list {
+        background-color: #313131;
+    }
+
+    .fluent2 #skeletonCard,
+    .fluent2 #skeleton-list{
+        background-color: #fff;
+    }
+
+    .skeleton-animation .image.profile-image {
+        background-image: url('./../images/Skeleton/profile.png');
+        background-size: 60px 60px;
+        height: 60px;
+        width: 60px;
+        border-radius: 50%;
+    }
+
+    .skeleton-animation .image.post-image {
+        background: url('./../images/Skeleton/post.jpg');
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        background-position: center;
+        height: 250px;
+        width: 100%;
+    }
+
+    /* List view customization */
+    #skeleton-listview .e-list-item .e-avatar {
+        color: white;
+    }
+
+    #skeleton-listview .e-list-item:nth-child(1) .e-avatar {
+        background-color: #039be5;
+    }
+
+    #skeleton-listview .e-list-item:nth-child(2) .e-avatar {
+        background-color: #e91e63;
+    }
+
+    #skeleton-listview .e-list-item:nth-child(6) .e-avatar {
+        background-color: #009688;
+    }
+
+    #skeleton-listview .e-list-item:nth-child(8) .e-avatar {
+        background-color: #0088;
+    }
+
+    body[class*="material3"] #skeleton-listview {
+        .pic01 {
+            background: url('./../images/Skeleton/1.png') rgba(var(--color-sf-primary)) center;  
+            background-size: cover;
+        }
+        .pic02 {
+            background: url('./../images/Skeleton/3.png') rgba(var(--color-sf-primary)) center;
+            background-size: cover;
+        }
+        .pic03 {
+            background: url('./../images/Skeleton/5.png') rgba(var(--color-sf-primary)) center;
+            background-size: cover;
+        }
+        .pic04 {
+            background: url('./../images/Skeleton/2.png') rgba(var(--color-sf-primary)) center;
+            background-size: cover;
+        }
+    }
+
+    .pic01 {
+        background-image: url("./../images/Skeleton/1.png");
+    }
+
+    .pic02 {
+        background-image: url("./../images/Skeleton/3.png");
+    }
+
+    .pic03 {
+        background-image: url("./../images/Skeleton/5.png");
+    }
+
+    .pic04 {
+        background-image: url("./../images/Skeleton/2.png");
+    }
+</style>
+
+@section Meta{
+<meta name="description" content="This example demonstrates the Animation effects in ASP.NET Core Skeleton control. Explore here for more details." />
+}
+@section ActionDescription{
+<div id="action-description">
+    <p>
+        This sample demonstrates the fade and pulse shimmer effects of the skeleton with a card and a list layout. Click the reload button to load data to the card and list with a skeleton to show loading.
+    </p>
+</div>
+}
+@section Description{
+<div id="description">
+    <p>
+        The default skeleton shimmer effect is wave. This can be changed to fade and pulse shimmer effects using the <code>shimmerEffect</code> property.
+    </p>
+</div>
+}
+@section Title{
+<title>ASP.NET Core Skeleton Animation effects Example - Syncfusion Demos </title>
+}
+@section Header{
+<h1 class='sb-sample-text'>Example of Animation effects in ASP.NET Core Skeleton Control</h1>
+}

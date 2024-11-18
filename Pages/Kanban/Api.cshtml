@@ -1,0 +1,201 @@
+@page
+
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2
+
+@{
+    var data = new KanbanDataModels().KanbanTasks();
+    var apiDropDown = new KanbanDataModels().ApiData();
+    var button = new
+    {
+        content = "OK",
+        isPrimary = true
+    };
+}
+
+@section ControlsSection{
+<div class="col-lg-9 control-section">
+    <div class="control_wrapper">
+        <ejs-kanban id="Kanban" keyField="Status" dataSource="@data" created="onCreate">
+            <e-kanban-columns>
+                <e-kanban-column headerText="To Do" keyField="Open"></e-kanban-column>
+                <e-kanban-column headerText="In Progress" keyField="InProgress"></e-kanban-column>
+                <e-kanban-column headerText="Done" keyField="Close"></e-kanban-column>
+            </e-kanban-columns>
+            <e-kanban-cardsettings contentField="Summary" headerField="Id"></e-kanban-cardsettings>
+            <e-kanban-swimlanesettings keyField="Assignee"></e-kanban-swimlanesettings>
+        </ejs-kanban>
+    </div>
+    <div>
+        <ejs-dialog id="dialog"  width="350px" header="Validation" isModal="true" visible="false" showCloseIcon="true" created="onDialogCreate">
+            <e-dialog-buttons>
+                <e-dialog-dialogbutton buttonModel="@button" click="dlgButtonClick"></e-dialog-dialogbutton>
+            </e-dialog-buttons>
+        </ejs-dialog>
+    </div>
+</div>
+    <div class="col-lg-3 property-section property-customization">
+        <div class="property-panel-section">
+            <p class="property-panel-header">Add Column</p>
+            <div class="property-panel-content">
+                <form id="addForm">
+                    <table>
+                        <tr>
+                            <td><ejs-textbox id="text" placeholder="Text Field" type="text"></ejs-textbox></td>
+                        </tr>
+                        <tr>
+
+                            <td>
+                                <ejs-dropdownlist id="key" placeholder="Key Field" value="0" dataSource="@apiDropDown">
+                                    <e-dropdownlist-fields value="Value"></e-dropdownlist-fields>
+                                </ejs-dropdownlist>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <ejs-numerictextbox id="index" format="###.##" min="0" value="0" placeholder="Index" created="indexCreate"></ejs-numerictextbox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class='e-check'>
+                                <ejs-button id="add" content="Add"></ejs-button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <p class="property-panel-header">Delete Column</p>
+            <div class="property-panel-content">
+                <form id="deleteForm">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <ejs-numerictextbox id="deteteIndex" format="###.##" min="0" placeholder="Index" created="onDeleteIndexCreate"></ejs-numerictextbox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='e-check'>
+                                    <ejs-button id="delete" content="Delete"></ejs-button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+
+<style>
+    .property-panel-content td {
+        padding-top: 10px;
+    }
+
+    .property-panel-header {
+        padding-bottom: 0px;
+    }
+</style>
+
+@section PreScripts {
+    <script>
+        var kanbanObj;
+        var addFormObj = new ej.inputs.FormValidator('#addForm');
+        var deleteFormObj = new ej.inputs.FormValidator('#deleteForm');
+        var dialogObj;
+        var addIndexObj;
+        var deleteIndexObj;
+
+        function onCreate() {
+            kanbanObj = this;
+        }
+
+        function indexCreate() {
+            this.max = kanbanObj.columns.length;
+            addIndexObj = this;
+        }
+        function onDeleteIndexCreate() {
+            this.max = kanbanObj.columns.length - 1;
+            deleteIndexObj = this;
+        }
+        function onDialogCreate() {
+            dialogObj = this;
+        }
+        document.getElementById('add').onclick = function () {
+            var key = (document.getElementById('key')).value;
+            var text = (document.getElementById('text')).value;
+            var index = parseInt((document.getElementById('index')).value, 10);
+            if (kanbanObj.columns.length >= index && key !== '' && text !== '') {
+                kanbanObj.addColumn({ keyField: key, headerText: text, showItemCount: true }, index);
+                addIndexObj.max = kanbanObj.columns.length;
+                deleteIndexObj.max = kanbanObj.columns.length - 1;
+                addFormObj.reset();
+            } else if (text === '') {
+                dialogObj.content = 'Enter Column Header Text';
+                dialogObj.show();
+            } else if (key === '') {
+                dialogObj.content = 'Enter Column Key Field';
+                dialogObj.show();
+            } else if (!index) {
+                dialogObj.content = 'Enter Column Index';
+                dialogObj.show();
+            }
+        };
+        document.getElementById('delete').onclick = function () {
+            var index = parseInt((document.getElementById('deteteIndex')).value, 10);
+            if (kanbanObj.columns.length > 1) {
+                if (kanbanObj.columns.length >= (index + 1)) {
+                    kanbanObj.deleteColumn(index);
+                    addIndexObj.max = kanbanObj.columns.length;
+                    deleteIndexObj.max = kanbanObj.columns.length - 1;
+                    deleteFormObj.reset();
+                } else {
+                    dialogObj.content = 'Provide valid column Index';
+                    dialogObj.show();
+                }
+            } else {
+                dialogObj.content = 'Atleast one column must be displayed in kanban';
+                dialogObj.show();
+            }
+        };
+        function dlgButtonClick() {
+            dialogObj.hide();
+        }
+        document.getElementById('addForm').addEventListener('submit', (e) => e.preventDefault());
+        document.getElementById('deleteForm').addEventListener('submit', (e) => e.preventDefault());
+    </script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the important APIs required to manipulate the Kanban control. Provides necessary
+            details in the
+            property panel to add and remove the columns dynamically.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            The demo explains how to add or remove columns programmatically.
+        </p>
+        <ul>
+            <li><code>AddColumn:</code> The public method used to add a column to the Kanban board dynamically.</li>
+            <li>
+                <code>DeleteColumn:</code> The public method used to remove the existing column from the Kanban board based
+                on an index.
+            </li>
+        </ul>
+    </div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the API in ASP.NET Core Kanban control. Explore here for more details."/>
+                }
+@section Title{
+                    <title>ASP.NET Core Kanban API Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of API in ASP.NET Core Kanban Control</h1>
+                }

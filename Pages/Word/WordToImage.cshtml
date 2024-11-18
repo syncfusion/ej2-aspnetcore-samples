@@ -1,0 +1,111 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Word.WordToImage
+
+@using Syncfusion.EJ2
+@using Syncfusion.EJ2.DropDowns
+@{ var Title = "Essential DocIO (Word) : Word To Image : Syncfusion"; }
+@section ControlsSection{
+    <div class="control-section">
+        @{Html.BeginForm("wordtoimage", "word", FormMethod.Post, new { enctype = "multipart/form-data" });
+            {
+                <div style="margin-top: 10px;font-size:14px">
+                    Click the button to view the resultant image being converted from Word document using the .NET Word Library (DocIO).
+                    <div style="margin-top: 10px">
+                        <div style="margin-top: 10px">
+                            <input type="button" value="Choose File" onclick="openPage()">
+                            <input type="text" id="fileNameBox" value="WordtoImage.docx" readonly="readonly" style="border:none" />
+                            <input type="file" name="file" id="fileUpload" accept=".doc,.docx,.rtf,.dot,.dotm,.dotx,docm,.xml" style="display:block;visibility:hidden;width:0;height:0;">
+                            <br />
+                        </div>
+                        <div>
+                            <input type="radio" id="rdButtonThumbnail" name="option" value="FirstPage" checked="checked" onchange="radioBtnClick()" />
+                            <label for="rdButtonThumbnail" style="font-weight:normal">Generate thumbnail (first page only)</label>
+                            <br />
+                            <input type="radio" id="rdButtonSpecifc" name="option" value="SpecificPages" onchange="radioBtnClick()" />
+                            <label for="rdButtonSpecifc" style="font-weight:normal">
+                                Convert from page No.
+                                &nbsp;
+                                <input type="text" id="txtFrom" name="from" value="2" style="width:40px;" disabled="disabled" onchange="radioBtnClick()" />
+                                to page No.
+                                &nbsp;
+                                <input type="text" id="txtTo" name="to" value="4" style="width:40px;" disabled="disabled" onchange="radioBtnClick()" />
+                            </label>
+                            <br />
+                            <input type="radio" id="rdButtonAll" name="option" value="AllPages" onchange="radioBtnClick()" />
+                            <label for="rdButtonAll" style="font-weight:normal">Convert all pages</label>
+                            <br />
+                        </div>
+                        <div>
+                            <input class="e-btn" type="submit" value="Convert to Image" name="button" style="width:170px; text-transform:capitalize" />
+                            <br />
+                            <div class="text-danger">
+                                @Model.Message
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                Html.EndForm();
+            }
+        }
+    </div>
+
+}
+<script>
+    function openPage() {
+        document.getElementById('fileUpload').click();
+        document.getElementById('fileUpload').addEventListener('change', readFile, false);
+    }
+    function readFile(evt) {
+        var upoadedFiles = evt.target.files;
+
+        filename = upoadedFiles[0].name;
+        document.getElementById('fileNameBox').value = filename;
+    }
+    function radioBtnClick() {
+        var specified = document.getElementById("rdButtonSpecifc").checked;
+        if (specified == true) {
+            document.getElementById("txtFrom").removeAttribute("disabled");
+            document.getElementById("txtTo").removeAttribute("disabled");
+        }
+        else {
+            document.getElementById("txtFrom").setAttribute("disabled", "disabled");
+            document.getElementById("txtTo").setAttribute("disabled", "disabled");
+        }
+    }
+</script>
+
+@section ActionDescription{
+    <div>
+        This sample illustrates how to convert Word document to image using .NET Word Library (DocIO).
+    </div>
+}
+@section Description{
+    <div>
+        DocIO provides support to render Word document from flow to fixed page model and export as Image. With this support to render Word document,
+        <ul>
+            <li>
+                You can generate invoice and other reports in image, starting from Word document.
+            </li>
+            <li>
+                You can view or print the contents of Word document by converting as image.
+            </li>
+            <li>
+                You can save a page of the document as thumbnail image for reference.
+            </li>
+        </ul>
+    </div>
+    <div style="margin-top: 15px">
+        More information about Word to Image conversion can be found in this
+        <a href="https://help.syncfusion.com/file-formats/docio/word-to-image" aria-label="Documentation" >Documentation</a>
+        section.
+    </div>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Word to Image in ASP.NET Core Word (DocIO) library. Explore here for more details."/>
+                }
+@section Title{
+                    <title>ASP.NET Core Word (DocIO) library - Word to Image Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Word to Image in ASP.NET Core Word (DocIO) Library</h1>
+                }

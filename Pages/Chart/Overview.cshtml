@@ -1,0 +1,347 @@
+﻿@page
+@model EJ2CoreSampleBrowser.Pages.Chart.OverviewModel
+
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="control-section">
+        <ejs-dashboardlayout id="editableLayout1" columns="8" cellSpacing="@Model.CellSpacing" cellAspectRatio="0.8" allowDragging="false" allowResizing="false" created="onCreated">
+            <e-dashboardlayout-panels>
+                <e-dashboardlayout-panel sizeX="5" sizeY="2" row="0" col="0">
+                    <e-content-template>
+                        <div>
+                            <div class="e-panel-container" id="chart1">
+                                <div class="e-panel-header">
+                                    <div class="title" id="header1">
+                                        Sales - Yearly Performance
+                                    </div>
+                                </div>
+                                <div class="e-panel-content">
+                                    @*column chart*@
+                                    <ejs-chart style="height: 100%; width: 100%" id="linechart" load="load" width="100%" height="100%">
+                                        <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category" interval=1>
+                                            <e-labelstyle size="11px"></e-labelstyle>
+                                            <e-majorgridlines width="0"></e-majorgridlines>
+                                        </e-chart-primaryxaxis>
+                                        <e-chart-primaryyaxis labelFormat="{value}%" minimum="0" maximum="100">
+                                            <e-majorticklines width="0"></e-majorticklines>
+                                            <e-linestyle width="0"></e-linestyle>
+                                            <e-labelstyle size="11px"></e-labelstyle>
+                                        </e-chart-primaryyaxis>
+                                        <e-chart-chartarea>
+                                            <e-chartarea-border width="0"></e-chartarea-border>
+                                        </e-chart-chartarea>
+                                        <e-series-collection>
+                                            <e-series dataSource="@Model.ColumnChartData" xName='Period' yName='OnlinePercentage' name='Online' width=2 fill="#2485FA" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                                                <e-series-marker>
+                                                    <e-series-datalabel visible="true" position="@Syncfusion.EJ2.Charts.LabelPosition.Middle">
+                                                        <e-font color="white"></e-font>
+                                                    </e-series-datalabel>
+                                                </e-series-marker>
+                                            </e-series>
+                                            <e-series dataSource="@Model.ColumnChartData" xName='Period' yName='RetailPercentage' name='Retail' fill="#FEC200" width=2 type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                                                <e-series-marker>
+                                                    <e-series-datalabel visible="true" position="@Syncfusion.EJ2.Charts.LabelPosition.Middle">
+                                                        <e-font color="white"></e-font>
+                                                    </e-series-datalabel>
+                                                </e-series-marker>
+                                            </e-series>
+                                        </e-series-collection>
+                                        <e-chart-legendsettings padding="5" shapeHeight="8" shapeWidth="8">
+                                        </e-chart-legendsettings>
+                                    </ejs-chart>
+                                </div>
+                            </div>
+                        </div>
+                    </e-content-template>
+                </e-dashboardlayout-panel>
+                <e-dashboardlayout-panel sizeX="3" sizeY="2" row="0" col="5">
+                    <e-content-template>
+                        <div>
+                            <div class="e-panel-container" id="chart2">
+                                <div class="e-panel-header">
+                                    <div class="title" id="header2">Product Wise Sales - 2021</div>
+                                </div>
+                                <div class="e-panel-content">
+                                    @*pie chart*@
+
+                                    <ejs-accumulationchart style="height: 100%; width: 100%" id="pie" load="load" pointRender="onPointRender" enableAnimation="true" enableBorderOnMouseMove="false" enableSmartLabels="false" width="100%" height="100%">
+                                        <e-accumulationchart-tooltipsettings enable="true" format="${point.tooltip}"></e-accumulationchart-tooltipsettings>
+                                        <e-accumulationchart-legendsettings visible="false">
+                                        </e-accumulationchart-legendsettings>
+                                        <e-accumulation-series-collection>
+                                            <e-accumulation-series tooltipMappingName="Product" dataSource="@Model.PieData" xName="Product" yName="Percentage" innerRadius="40%" radius="75%" startAngle="270" endAngle="270" palettes="@Model.Palettes">
+                                                <e-accumulationseries-datalabel name="text" visible="true" position="@Syncfusion.EJ2.Charts.AccumulationLabelPosition.Outside">
+                                                    <e-connectorstyle length="10px" type="@Syncfusion.EJ2.Charts.ConnectorType.Curve"></e-connectorstyle>
+                                                </e-accumulationseries-datalabel>
+                                                <e-accumulationseries-border width="3"></e-accumulationseries-border>
+                                            </e-accumulation-series>
+                                        </e-accumulation-series-collection>
+                                    </ejs-accumulationchart>
+
+                                </div>
+                            </div>
+                        </div>
+                    </e-content-template>
+                </e-dashboardlayout-panel>
+                <e-dashboardlayout-panel sizeX="8" sizeY="3" row="4" col="0">
+                    <e-content-template>
+                        <div>
+                            <div class="e-panel-container" id="chart3">
+                                <div class="e-panel-header">
+                                    <div class="title" id="header3">Monthly Sales for 2021</div>
+                                </div>
+                                <div class="e-panel-content">
+                                    @*spline chart*@
+                                    <ejs-chart id="spline" style="height: 100%; width: 100%" load="load" height="100%" width="100%">
+                                        <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category">
+                                            <e-majorgridlines width="0"></e-majorgridlines>
+                                            <e-majorticklines width="0"></e-majorticklines>
+                                            <e-labelstyle size="11px"></e-labelstyle>
+                                        </e-chart-primaryxaxis>
+                                        <e-chart-primaryyaxis minimum="0" maximum="12000" labelFormat="${value}">
+                                            <e-linestyle width="0"></e-linestyle>
+                                            <e-majorticklines width="0"></e-majorticklines>
+                                            <e-labelstyle size="11px"></e-labelstyle>
+                                        </e-chart-primaryyaxis>
+                                        <e-chart-tooltipsettings enable="true" shared="true" enableMarker="false"></e-chart-tooltipsettings>
+                                        <e-chart-chartarea>
+                                            <e-chartarea-border width="0"></e-chartarea-border>
+                                        </e-chart-chartarea>
+                                        <e-series-collection>
+                                            <e-series dataSource="@Model.SplineChartData" fill="#2485FA" name="Online" xName="Period" opacity=0.3 width=2.5 yName="OnlinePercentage" type="@Syncfusion.EJ2.Charts.ChartSeriesType.SplineArea">
+                                                <e-series-border width="2.75" color="#2485FA"></e-series-border>
+                                            </e-series>
+                                            <e-series dataSource="@Model.SplineChartData" fill="#FEC200" name="Retail" xName="Period" opacity=0.3 width=2.5 yName="RetailPercentage" type="@Syncfusion.EJ2.Charts.ChartSeriesType.SplineArea">
+                                                <e-series-border width="2.75" color="#FEC200"></e-series-border>
+                                            </e-series>
+                                        </e-series-collection>
+                                        <e-chart-legendsettings enableHighlight="true"></e-chart-legendsettings>
+                                    </ejs-chart>
+                                </div>
+                            </div>
+                        </div>
+                    </e-content-template>
+                </e-dashboardlayout-panel>
+            </e-dashboardlayout-panels>
+        </ejs-dashboardlayout>
+    </div>
+
+    <script type="text/javascript">
+        function onCreated(args) {
+            var dashboardObject = document.getElementById("editableLayout1").ej2_instances[0];
+            var panels = [ { "sizeX": 1, "sizeY": 1, "row": 0, "col": 0 },
+                           { "sizeX": 1, "sizeY": 1, "row": 0, "col": 1 },
+                           { "sizeX": 2, "sizeY": 1, "row": 1, "col": 0 }
+                         ]
+            if (ej.base.Browser.isDevice) {
+                  dashboardObject.panels = panels;
+                  dashboardObject.columns = 2;
+                  dashboardObject.cellAspectRatio = 1;
+                  setTimeout(() => {
+                     dashboardObject.refresh();
+                  }, 100);
+            }
+        }
+        var layoutColor;
+        function onPointRender(args){
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Fluent2';
+            if (selectedTheme.indexOf('dark') > -1) {
+                if (selectedTheme.indexOf('material') > -1) {
+                    args.border.color = '#303030';
+                    this.layoutColor = '#303030';
+                }
+                else if (selectedTheme.indexOf('bootstrap5') > -1) {
+                    args.border.color = '#212529';
+                    this.layoutColor = '#212529';
+                }
+                else if (selectedTheme.indexOf('bootstrap') > -1) {
+                    args.border.color = '#1A1A1A';
+                    this.layoutColor = '#1A1A1A';
+                }
+                else if (selectedTheme.indexOf('fabric') > -1) {
+                    args.border.color = '#201f1f';
+                    this.layoutColor = '#201f1f';
+                }
+                else if (selectedTheme.indexOf('fluent') > -1) {
+                    args.border.color = '#252423';
+                    this.layoutColor = '#252423';
+                }
+                else if (selectedTheme.indexOf('bootstrap') > -1) {
+                    args.border.color = '#1A1A1A';
+                    this.layoutColor = '#1A1A1A';
+                }
+                else if (selectedTheme.indexOf('tailwind') > -1) {
+                    args.border.color = '#1F2937';
+                    this.layoutColor = '#1F2937';
+                }
+                else {
+                    args.border.color = '#222222';
+                    this.layoutColor = '#222222';
+                }
+            }
+            else if (selectedTheme.indexOf('highcontrast') > -1) {
+                args.border.color = '#000000';
+                this.layoutColor = '#000000';
+            }
+            else if (selectedTheme.indexOf('fluent2-highcontrast') > -1) {
+                args.border.color = '#000000';
+                this.layoutColor = '#000000';
+            }
+            else {
+                args.border.color = '#FFFFFF';
+                this.layoutColor = '#FFFFFF';
+            }
+            if (selectedTheme.indexOf('highcontrast') > -1 || selectedTheme.indexOf('dark') > -1) {
+                var element = document.querySelector('#header1');
+                element.style.color = '#F3F2F1';
+                var chart1= document.getElementById('chart1');
+                chart1.style.setProperty('background', this.layoutColor);
+                var chart2= document.getElementById('chart2');
+                chart2.style.setProperty('background', this.layoutColor);
+                var chart3= document.getElementById('chart3');
+                chart3.style.setProperty('background', this.layoutColor);
+                var elementBody = document.getElementById('linechart');
+                elementBody.style.setProperty('background', this.layoutColor);
+                var element1 = document.querySelector('#header2');
+                element1.style.color = '#F3F2F1';
+                var element1Body = document.getElementById('pie');
+                element1Body.style.setProperty('background', this.layoutColor);
+                var element2 = document.querySelector('#header3');
+                element2.style.color = '#F3F2F1';
+                var element2Body = document.getElementById('spline');
+                element2Body.style.setProperty('background', this.layoutColor);
+            }
+
+        }
+        function load(args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Fluent2';
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5'));
+
+        };
+        function onPieLoad(args) {
+            var indexedTheme = location.hash.split('/')[1];
+            indexedTheme = indexedTheme ? indexedTheme : 'Fluent2';
+            args.accumulation.theme = (indexedTheme.charAt(0).toUpperCase() + indexedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5'));
+        };
+        document.addEventListener('DOMContentLoaded', function () {
+            var lineObj = document.getElementById('linechart').ej2_instances[0];
+            var pieObj = document.getElementById('pie').ej2_instances[0];
+            var splineObj = document.getElementById('spline').ej2_instances[0];
+            lineObj.refresh(); pieObj.refresh(); splineObj.refresh();
+        });
+    </script>
+}
+@*custom code start*@
+@section Meta{
+    <meta name="description" content="This example demonstrates the Overview in ASP.NET Core Chart control. Explore here for more details." />
+                }
+@*custom code end*@
+<style>
+    .e-dashboardlayout {
+        padding: 20px;
+        z-index: 0;
+        /*background: none;*/
+    }
+
+    .e-panel {
+        cursor: auto !important;
+        /*background: none;*/
+    }
+
+    .e-panel-content {
+        height: calc(100% - 27px) !important;
+        overflow: hidden;
+        width: 100%;
+    }
+    .e-chart, .e-accumulationchart{
+        height: inherit !important;
+        width: inherit !important;
+    }
+    .e-panel-header {
+        background: none;
+        border: none !important;
+        height: 50px !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .template {
+        height: 100%;
+        width: 100%;
+    }
+
+    #control-container {
+        /*background: none;*/
+        padding: 0px !important;
+    }
+
+    #gradient-chart stop {
+        stop-color: #2485FA;
+    }
+
+    #gradient-chart1 stop {
+        stop-color: #FEC200;
+    }
+
+    .ellipse[id*=_Trackball_1] {
+        stroke-width: 1 !important;
+    }
+
+    .e-chart-focused:focus {
+        outline: none !important;
+    }
+
+    .title {
+        font-size: 15px;
+        font-weight: bold;
+        color: #737373;
+    }
+
+</style>
+<svg style={{height:0}}>
+    <defs>
+        <linearGradient id="gradient-chart" style={{opacity:0.75}} className="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0"></stop>
+            <stop offset="1"></stop>
+        </linearGradient>
+        <linearGradient id="gradient-chart1" style={{opacity:0.75}} className="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0"></stop>
+            <stop offset="1"></stop>
+        </linearGradient>
+    </defs>
+</svg>
+
+@section ActionDescription{
+    <div id="action-description">
+        This sample shows an overview of <a target="_blank" href="https://www.syncfusion.com/aspnet-core-ui-controls" aria-label="Navigate to explore the syncfusion ASP.NET Core Charts">ASP.NET Core Charts</a> that allows users to visualize data easily and take decisions based on it. There are different types of charts to create feature rich apps.
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            The ASP.NET Core Chart is a well-crafted charting component to visualize data. In this example, you will see how to render and configure line, column and pie charts with different features such as highlight, legend, tooltip and annotation. The Chart uses <code>SfDataManager</code>, which supports both RESTful JSON data services binding and IEnumerable binding.
+        </p>
+        <p>
+            More information on the ASP.NET Core chart types can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/chart-types/line" aria-label="Navigate to the documentation for Line Chart in ASP.NET Core Chart control">documentation section</a>.
+        </p>
+    </div>
+}
+@section Scripts {
+}
+
+<style>
+
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@section Title{
+    <title>ASP.NET Core Chart Overview Example - Syncfusion Demos </title>
+                }
+@section Header{
+    <h1 class='sb-sample-text'>Example of Overview in ASP.NET Core Chart Control</h1>
+                }

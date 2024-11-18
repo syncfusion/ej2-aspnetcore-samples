@@ -1,0 +1,58 @@
+@page
+
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2
+
+@{
+    var appointments = new ScheduleData().GetFifaEventsData();
+}
+
+@section ControlsSection{
+    <div class="control-section">
+        <div class="content-wrapper">
+            <ejs-schedule id="schedule" width="100%" height="650px" selectedDate="new DateTime(DateTime.Today.Year, 6, 16)" eventRendered="onEventRendered">
+                <e-schedule-views>
+                    <e-schedule-view option="Day" displayName="3 Days" interval="3"></e-schedule-view>
+                    <e-schedule-view option="Week" displayName="2 Weeks" interval="2" isSelected="true"></e-schedule-view>
+                    <e-schedule-view option="Month" displayName="4 Months" interval="4"></e-schedule-view>
+                </e-schedule-views>
+                <e-schedule-eventsettings dataSource="@appointments"></e-schedule-eventsettings>
+            </ejs-schedule>
+        </div>
+    </div>
+    <script src="~/scripts/schedule/applyCategoryColor.js"></script>
+    <script type="text/javascript">
+        function onEventRendered(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            applyCategoryColor(args, scheduleObj.currentView);
+        }
+    </script>
+}
+@*custom code start*@
+@section Meta{
+                    <meta name="description" content="This example demonstrates the View Intervals in ASP.NET Core Scheduler control. Explore here for more details."/>
+                }
+@*custom code end*@
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This demo illustrates how to display n number of days, weeks and months on a single view.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this demo, the
+            <code>interval</code> property has been defined with different values on each view such as 3 on day view, 2 on week view and 4 on month
+            view. so that 3 days, 2 weeks and 4 months displayed on the respective views. This property is not applicable on
+            agenda and month agenda views
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Scheduler View Intervals Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of View Intervals in ASP.NET Core Scheduler Control</h1>
+                }

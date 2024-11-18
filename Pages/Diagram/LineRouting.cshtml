@@ -1,0 +1,62 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Diagram.LineRoutingModel
+@using Syncfusion.EJ2;
+
+@{
+    var getNodeDefaults = "getNodeDefaults";
+    var getConnectorDefaults = "getConnectorDefaults"; 
+}
+@section ControlsSection {
+    <div class="control-section">
+        <ejs-diagram id="diagram" width="100%" height="600px" nodes="@Model.nodes" connectors="@Model.connectors" created="diagramCreated" constraints="Default | (Syncfusion.EJ2.Diagrams.DiagramConstraints.Bridging | Syncfusion.EJ2.Diagrams.DiagramConstraints.LineRouting)" getNodeDefaults="@getNodeDefaults" getConnectorDefaults="@getConnectorDefaults">
+            <e-diagram-snapsettings constraints="None"></e-diagram-snapsettings>
+        </ejs-diagram>
+    </div>
+
+    <script>
+
+        function diagramCreated() {
+            var diagram = document.getElementById('diagram').ej2_instances[0];
+            diagram.fitToPage();
+        }
+
+
+        function getNodeDefaults(node) {
+            node.height = 50;
+            if (node.id === 'decision') {
+                node.height = 70;
+            }
+            node.width = 120;
+
+            node.style = { strokeColor: 'transparent' };
+            return node;
+        }
+
+        function getConnectorDefaults(connector) {
+            connector.type = 'Orthogonal';
+            connector.style = { strokeColor: '#707070 ', strokeWidth: 1.25 };
+            connector.targetDecorator = { style: { fill: '#707070 ', strokeColor: '#707070 ' } };
+            return connector;
+        }
+
+    </script>
+}
+@section ActionDescription{
+    <p>
+        This sample visualizes the connectors that are automatically re-routing or moving away if any shape found on the connectors path.
+    </p>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Line Routing in ASP.NET Core Diagram control. Explore here for more details."/>
+                }
+@section Description{
+    <p>
+        This example shows how the connectors are automatically re-routing or moving away on dragging a shape near it. This can be achieved by the <code>Constraints</code> property of the diagram and connector.
+    </p>
+}
+@section Title{
+                    <title>ASP.NET Core Diagram Line Routing Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Line Routing in ASP.NET Core Diagram Control</h1>
+                }

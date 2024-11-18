@@ -1,0 +1,542 @@
+@using Syncfusion.EJ2
+@using Syncfusion.EJ2.DropDowns
+@{
+    string dropdownMenu = "#e-pv-e-sign-dropdown-menu-mob";
+    List<object> userDetails = new List<object>
+    {
+        new { Name = "Andrew Fuller", Eimg = "profile2", Id = "ff0000", Mail = "andrew@mycompany.com", fieldIds = new List<int>() },
+        new { Name = "Anne Dodsworth", Eimg = "profile1", Id = "00ff00", Mail = "anne@mycompany.com", fieldIds = new List<int>() }
+    };
+}
+@using Syncfusion.EJ2
+@section ControlsSection {
+    <div style="display:flex">
+        <div class="e-pv-e-sign-control control-section" style="width:100%">
+            @{
+                List<object> userDetails = new List<object>
+        {
+        new { Name = "Andrew Fuller", Eimg = "profile2", Id = "ff0000", Mail = "andrew@mycompany.com", fieldIds = new List<int>() },
+        new { Name = "Anne Dodsworth", Eimg = "profile1", Id = "00ff00", Mail = "anne@mycompany.com", fieldIds = new List<int>() }
+        };
+            }
+            <div id="e-pv-e-sign-dropdown-menu-mob" style="position: absolute; left: 0; z-index: 1000;">
+                <ejs-dropdownlist id="e-pv-e-sign-employees-mob" dataSource="@userDetails" index="0" popupHeight="200px" select="userChange"
+                                  itemTemplate="@Html.Raw("<div style='display: flex; height: 50px; width: 200px;'><img class='e-pv-e-sign-empImage' src='../css/pdfviewer/images/employees/${Eimg}.png' style='margin: 10px 6px; border-radius: 50%; border: 1px solid ${getBorderColor(Mail)};' height='30px' width='30px' alt='employee'/><div><div class='e-pv-e-sign-ename'>${Name}</div><div class='e-pv-e-sign-ejob'>${Mail}</div></div></div>")"
+                                  valueTemplate="@Html.Raw("<div style='display: flex;'><img id='user-img' class='valueTemp' src='../css/pdfviewer/images/employees/${Eimg}.png' style='margin: 3px 6px; border-radius: 50%; border: 1px solid ${getBorderColor(Mail)};' height='30px' width='30px' alt='employee'/><div><div class='e-pv-e-sign-name' style='margin-top: 3px;'>${Name}</div><div class='e-pv-e-sign-job'>${Mail}</div></div></div>")">
+                    <e-dropdownlist-fields text="Name" value="Id"></e-dropdownlist-fields>
+                </ejs-dropdownlist>
+            </div>
+            <ejs-toolbar id="e-pv-e-sign-toolbar-section" cssClass="e-pv-e-sign-toolbar-section" created="toolbarCreated">
+                <e-toolbar-items>
+                    <e-toolbar-item id="e-pv-e-sign-dropdown" template="@dropdownMenu" tooltipText="User Dropdown" align="Left"></e-toolbar-item>
+                    <e-toolbar-item id="e-pv-e-sign-download" prefixIcon="e-icons e-download" tooltipText="Download" text="Download" click="downloadFile" showTextOn="Overflow" align="Right"></e-toolbar-item>
+                </e-toolbar-items>
+            </ejs-toolbar>
+            <div id="e-pv-e-sign-layout" style="position:relative;">
+                <ejs-sidebar id="sidebarObj" Width="200px" Position="Left" HtmlAttributes="ViewBag.HtmlAttribute" enableGestures="false">
+                    <e-content-template>
+                        <div style="font-weight: 500; font-size: 16px; width: 43px; height: 24px; margin: 15px 10px 5px;">
+                            Fields
+                        </div>
+                        <div id="e-pv-e-sign-dropdown-menu">
+                            <ejs-dropdownlist id="e-pv-e-sign-employees" dataSource="@userDetails" index="0" popupHeight="200px" select="userChange"
+                                              itemTemplate="@Html.Raw("<div style='display: flex; height: 50px; width: 200px;'><img class='e-pv-e-sign-empImage' src='../css/pdfviewer/images/employees/${Eimg}.png' style='margin: 10px 6px; border-radius: 50%; border: 1px solid ${getBorderColor(Mail)};' height='30px' width='30px' alt='employee'/><div><div class='e-pv-e-sign-ename'>${Name}</div><div class='e-pv-e-sign-ejob'>${Mail}</div></div></div>")"
+                                              valueTemplate="@Html.Raw("<div style='display: flex;'><img id='user-img' class='valueTemp' src='../css/pdfviewer/images/employees/${Eimg}.png' style='margin: 3px 6px; border-radius: 50%; border: 1px solid ${getBorderColor(Mail)};' height='30px' width='30px' alt='employee'/><div><div class='e-pv-e-sign-name' style='margin-top: 3px;'>${Name}</div><div class='e-pv-e-sign-job'>${Mail}</div></div></div>")">
+                                <e-dropdownlist-fields text="Name" value="Id"></e-dropdownlist-fields>
+                            </ejs-dropdownlist>
+                        </div>
+                        <div style="display: flex; margin-left: 6px;">
+                            <ejs-button id="signature-btn" class="e-pv-e-sign-form-field-property" iconCss="e-icons e-signature" onclick="signature(event)" content="Signature" cssClass="e-outline"></ejs-button>
+                            <ejs-button id="initial-btn" class="e-pv-e-sign-form-field-property" iconCss="e-icons e-font-name" onclick="initial(event)" content="Initial" cssClass="e-outline"></ejs-button>
+                        </div>
+                        <div style="display: flex; margin-left: 6px;">
+                            <ejs-button id="textbox-btn" class="e-pv-e-sign-form-field-property" iconCss="e-icons e-text-form" onclick="textBox(event)" content="Textbox" cssClass="e-outline"></ejs-button>
+                            <ejs-button id="password-btn" class="e-pv-e-sign-form-field-property" iconCss="e-icons e-password" onclick="password(event)" content="Password" cssClass="e-outline"></ejs-button>
+                        </div>
+                        <div style="display: flex; margin-left: 6px;">
+                            <ejs-button id="checkbox-btn" class="e-pv-e-sign-form-field-property" iconCss="e-icons e-check-box" onclick="checkBox(event)" content="Checkbox" cssClass="e-outline"></ejs-button>
+                            <ejs-button id="radio-btn" class="e-pv-e-sign-form-field-property" iconCss="e-icons e-radio-button" onclick="radioButton(event)" content="Radio" cssClass="e-outline"></ejs-button>
+                        </div>
+                        <div style="display: flex; margin-left: 6px;">
+                            <ejs-button id="dropdown-btn" class="e-pv-e-sign-form-field-property" iconCss="e-icons e-drop-down" onclick="dropDown(event)" content="Dropdown" cssClass="e-outline"></ejs-button>
+                            <ejs-button id="list-btn" class="e-pv-e-sign-form-field-property" iconCss="e-icons e-list-unordered" onclick="listBox(event)" content="Listbox" cssClass="e-outline"></ejs-button>
+                        </div>
+                    </e-content-template>
+                </ejs-sidebar>
+                <div id="e-pv-e-sign-pdfViewer-div">
+                    <ejs-pdfviewer id="pdfviewer" enableToolbar="false" enableNavigationToolbar="false" enableAnnotationToolbar="false" downloadFileName='eSign_designMode.pdf'
+                                   showNotificationDialog="false"  documentLoad="documentLoad"
+                                   serviceUrl="api/PdfViewer"
+                                   formFieldAdd="addFormField" pageClick="pageClick"
+                                   toolbarSettings='@(new Syncfusion.EJ2.PdfViewer.PdfViewerToolbarSettings {ShowTooltip = true, ToolbarItems = "OpenOption,PageNavigationTool,MagnificationTool,DownloadOption,PrintOption,FormDesignerEditTool"})'>
+                    </ejs-pdfviewer>
+                </div>
+                <ejs-toolbar id="e-pv-e-sign-toolbar-section-mob" cssClass="e-pv-e-sign-toolbar-section-mob">
+                    <e-toolbar-items>
+                        <e-toolbar-item id="signature" prefixIcon="e-icons e-signature" click='signature'></e-toolbar-item>
+                        <e-toolbar-item id="initial" prefixIcon="e-icons e-font-name" click='initial'></e-toolbar-item>
+                        <e-toolbar-item id="textbox" prefixIcon="e-icons e-text-form" click='textBox'></e-toolbar-item>
+                        <e-toolbar-item id="password" prefixIcon="e-icons e-password" click='password'></e-toolbar-item>
+                        <e-toolbar-item id="checkbox" prefixIcon="e-icons e-check-box" click='checkBox'></e-toolbar-item>
+                        <e-toolbar-item id="radio_button" prefixIcon="e-icons e-radio-button" click='radioButton'></e-toolbar-item>
+                        <e-toolbar-item id="drop_down" prefixIcon="e-icons e-drop-down" click='dropDown'></e-toolbar-item>
+                        <e-toolbar-item id="list_box" prefixIcon="e-icons e-list-unordered" click='listBox'></e-toolbar-item>
+                    </e-toolbar-items>
+                </ejs-toolbar>
+            </div>
+        </div>
+    </div>
+}
+
+@section Meta {
+    <meta name="description"
+          content="This example demonstrates the eSigning Form Designer in ASP.NET Core PDF Viewer control. Explore here for more details." />
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>
+            This sample enables the design of a PDF form that accommodates signatures from two different users. The form includes distinct fields for each user: when the first user is selected, specific fields can be added that apply only to that user. Upon switching the user via the dropdown menu, new fields can be added for the second user. The fields for each user are distinguishable by different background colors.
+        </p>
+    </div>
+}
+
+@section Description {
+    <div id="description">
+        <p>
+            More information on the PDF Viewer instantiation can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/pdfviewer/getting-started" aria-label="Navigate to the documentation for getting started with ASP.NET Core PDF Viewer control">
+                documentation section
+            </a>.
+            </a>.
+        </p>
+
+    </div>
+}
+
+<style>
+    .e-pv-e-sign-control {
+        font-family: Roboto;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        letter-spacing: 0.24px;
+    }
+
+    .e-pv-e-sign-form-field-property, .e-pv-e-sign-form-field-property-mob {
+        width: 72px !important;
+        height: 72px !important;
+        margin: 10px;
+        border-radius: 8px;
+        display: grid;
+        place-content: center;
+        line-height: 18px;
+        font-weight: 400;
+        font-family: 'Roboto';
+        font-size: 12px !important;
+        border: 1px solid #C4C7C5 !important;
+    }
+
+    .e-pv-e-sign-form-field-property-mob {
+        border: none !important;
+        box-shadow: none;
+    }
+
+    .e-pv-e-sign-form-field-property .e-btn-icon {
+        font-size: 14px !important;
+        margin: 6px 10px !important;
+     }
+
+    .e-pv-e-sign-toolbar-section, .e-pv-e-sign-toolbar-section-mob {
+        z-index: 1001;
+        width: 100% !important;
+        height: 48px !important;
+        box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.30);
+    }
+
+    .e-pv-e-sign-toolbar-section-mob {
+        z-index: 1 !important;
+    }
+
+    #sidebarObj {
+        position: absolute;
+        border-right: 1px solid #C4C7C5;
+        border-left: 1px solid #C4C7C5;
+    }
+
+    #e-pv-e-sign-download {
+        width: 115px;
+        height: 32px;
+        min-height: 0;
+        flex-shrink: 0;
+        border-radius: 16px;
+        border: 1px solid var(--Color-variables-outline, #79747E);       
+    }
+
+    #e-pv-e-sign-download span:first-child {
+        margin-top: 3px;
+    }
+
+    #e-pv-e-sign-dropdown-menu {
+        width: 190px;
+        margin: 5px 0px 15px 4px;
+        padding-bottom: 3px;
+        border-radius: 4px;
+        border: 1px solid #C4C7C5;
+        z-index: 1000;
+    }
+
+        #e-pv-e-sign-dropdown-menu .e-input-group,
+        #e-pv-e-sign-dropdown-menu-mob .e-input-group {
+            border: none;
+        }
+
+        #e-pv-e-sign-dropdown-menu .e-input-value {
+            width: 84% !important;
+        }
+
+        #e-pv-e-sign-dropdown-menu .e-input-group:not(.e-float-icon-left):not(.e-float-input).e-input-focus::before,
+        #e-pv-e-sign-dropdown-menu .e-input-group:not(.e-float-icon-left):not(.e-float-input).e-input-focus::after,
+        #e-pv-e-sign-dropdown-menu-mob .e-input-group:not(.e-float-icon-left):not(.e-float-input).e-input-focus::before,
+        #e-pv-e-sign-dropdown-menu-mob .e-input-group:not(.e-float-icon-left):not(.e-float-input).e-input-focus::after {
+            width: 0px;
+        }
+
+    .e-pv-e-sign-name,
+    .e-pv-e-sign-ename {
+        margin-top: 10px;
+        font-size: 13px;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 18px;
+    }
+
+    .e-pv-e-sign-job,
+    .e-pv-e-sign-ejob {
+        font-size: 10px;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 12px;
+        letter-spacing: 0.2px;
+    }
+
+    .e-pv-e-sign-ename,
+    .e-pv-e-sign-ejob {
+        position: relative;
+        right: 15px;
+    }
+
+    #e-pv-e-sign-dropdown-menu .e-input-group .e-control-wrapper .e-ddl e-lib .-keyboard .e-valid-input,
+    #e-pv-e-sign-dropdown-menu-mob .e-input-group .e-control-wrapper .e-ddl e-lib .-keyboard .e-valid-input {
+        border: none !important;
+    }
+
+    #e-pv-e-sign-employees_popup {
+        width: 190px !important;
+        z-index: 1000 !important;
+    }
+
+    .e-pv-e-sign-toolbar-section-mob .e-toolbar-items {
+        width: 100%;
+        justify-content: space-between;
+    }
+</style>
+
+<script type="text/javascript">
+    var pdfViewer;
+    var currentUser = "andrew@mycompany.com";
+    var userColor = "#ffefef";
+    var userDetails = [
+        { Name: 'Andrew Fuller', Eimg: 'profile2', Id: "ff0000", Mail: "andrew@mycompany.com", fieldIds: [] },
+        { Name: 'Anne Dodsworth', Eimg: 'profile1', Id: "00ff00", Mail: "anne@mycompany.com", fieldIds: [] }
+    ];
+    var defaultFieldWidth = 200;
+    var defaultFieldHeight = 24;
+    var checkBoxFieldSize = 20;
+    var radioFieldSize = 20;
+    var SignatureFieldSize = 66;
+    var ListFieldSize = 66;
+    var currentFieldType = '';
+    var isDropped = false;
+    var zoomfactor;
+    var defaultZoomFactor = false;
+    var isMobile = ej.base.Browser.isDevice;
+
+    window.onload = function () {
+        pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        pdfViewer.serviceUrl = window.baseurl + 'api/PdfViewer';
+        pdfViewer.load("https://cdn.syncfusion.com/content/PDFViewer/Fill+and+Sign.pdf", null);
+    }
+
+    function initializeDraggable(element, fieldType) {
+        let cloneElement;
+        new ej.base.Draggable(element, {
+            helper: (e) => {
+                if (e.sender.type == "mousemove") {
+                    zoomFactor = pdfViewer.viewerBase.getZoomFactor();
+                    cloneElement = document.createElement('div');
+                    cloneElement.style.width = (defaultFieldWidth * zoomFactor) + 'px';
+                    cloneElement.style.height = (defaultFieldHeight * zoomFactor) + 'px';
+                    cloneElement.style.borderRadius = '0';
+                    cloneElement.style.opacity = '0.5';
+                    switch (fieldType) {
+                        case 'SignatureField':
+                        case 'InitialField':
+                            cloneElement.style.height = (SignatureFieldSize * zoomFactor) + 'px';
+                            break;
+                        case 'CheckBox':
+                            cloneElement.style.height = (checkBoxFieldSize * zoomFactor) + 'px';
+                            cloneElement.style.width = (checkBoxFieldSize * zoomFactor) + 'px';
+                            break;
+                        case 'RadioButton':
+                            cloneElement.style.height = (radioFieldSize * zoomFactor) + 'px';
+                            cloneElement.style.width = (radioFieldSize * zoomFactor) + 'px';
+                            cloneElement.style.borderRadius = '50%';
+                            break;
+                        case 'ListBox':
+                            cloneElement.style.height = (ListFieldSize * zoomFactor) + 'px';
+                            break;
+                    }
+                    cloneElement.style.backgroundColor = currentUser === 'andrew@mycompany.com' ? '#ffefef' : '#eff7ef';
+                    cloneElement.style.zIndex = '10001';
+                    cloneElement.style.position = 'absolute';
+                    cloneElement.style.pointerEvents = 'none';
+                    document.body.appendChild(cloneElement);
+                    return cloneElement;
+                }else{
+                    return null;
+                }
+            },
+            dragStart: (e) => {
+                currentFieldType = fieldType;
+                isDropped = true;
+            },
+            dragStop: (e) => {
+                if (e.helper && e.helper.parentNode) {
+                    e.helper.parentNode.removeChild(e.helper);
+                }
+                isDropped = false;
+            },
+            clone: true,
+            cursorAt: getCursorAtPosition(fieldType),
+            enableTailMode: true,
+        });
+    }
+
+    function getCursorAtPosition(fieldType) {
+        if (defaultZoomFactor) {
+            zoomFactor = 1;
+        } else {
+            zoomFactor = pdfViewer.viewerBase.getZoomFactor();
+        }
+        var left, top;
+        let scaledWidth = defaultFieldWidth * zoomFactor;
+        let scaledHeight = defaultFieldHeight * zoomFactor;
+
+        switch (fieldType) {
+            case 'CheckBox':
+            case 'RadioButton':
+                scaledWidth = checkBoxFieldSize * zoomFactor;
+                scaledHeight = checkBoxFieldSize * zoomFactor;
+                left = 0;
+                top = (checkBoxFieldSize / 2) * zoomFactor - (scaledHeight / 2);
+                break;
+            case 'ListBox':
+                scaledHeight = ListFieldSize * zoomFactor;
+                left = 90;
+                top = (ListFieldSize / 2) * zoomFactor - (scaledHeight / 2);
+                break;
+            case 'SignatureField':
+            case 'InitialField':
+                scaledHeight = SignatureFieldSize * zoomFactor;
+                left = 90;
+                top = (SignatureFieldSize / 2) * zoomFactor - (scaledHeight / 2);
+                break;
+            default:
+                scaledHeight = defaultFieldHeight * zoomFactor;
+                left = 90;
+                top = (defaultFieldHeight / 2) * zoomFactor - (scaledHeight / 2);
+                break;
+        }
+
+        left = left / zoomFactor - (scaledWidth / 2);
+        return { left: left, top: top };
+    }
+
+    function pageClick(args) {
+        if (isDropped) {
+            isDropped = false;
+            let width = defaultFieldWidth;
+            let height = defaultFieldHeight;
+            switch (currentFieldType) {
+                case 'SignatureField':
+                case 'InitialField':
+                    height = SignatureFieldSize;
+                    break;
+                case 'CheckBox':
+                case 'RadioButton':
+                    width = checkBoxFieldSize;
+                    height = checkBoxFieldSize;
+                    break;
+                case 'ListBox':
+                    height = ListFieldSize;
+                    break;
+            }
+            pdfViewer.formDesignerModule.addFormField(currentFieldType, { bounds: { X: args.x, Y: args.y, Width: width, Height: height }});
+        }
+    }
+
+    function userChange(args) {
+        currentUser = args.itemData.Mail;
+        if (args.itemData.Mail === 'andrew@mycompany.com') {
+            document.getElementById('user-img').style.borderColor = 'red';
+        } else {
+            document.getElementById('user-img').style.borderColor = 'green';
+        }
+    }
+
+    function getBorderColor(email) {
+        return email === 'andrew@mycompany.com' ? 'red' : 'green';
+    }
+
+    function downloadFile() {
+        pdfViewer.download();
+    }
+
+    function toolbarCreated() {
+        const layout = document.getElementById('e-pv-e-sign-layout');
+        const dropdown = document.getElementById('e-pv-e-sign-dropdown-menu-mob');
+        const sidebar = document.getElementById('sidebarObj');
+        const viewerDiv = document.getElementById('e-pv-e-sign-pdfViewer-div');
+        const downloadElement = document.getElementById("e-pv-e-sign-download");
+        const toolbarElementMob = document.getElementById("e-pv-e-sign-toolbar-section-mob");
+        if (isMobile) {
+            layout.style.display = 'block';
+            dropdown.style.display = 'block';
+            toolbarElementMob.style.display = 'flex';
+            sidebar.style.display = 'none';
+            viewerDiv.style.width = '100%';
+            downloadElement.style.border = 'none';
+            downloadElement.style.width = '40px';
+            downloadElement.removeChild(downloadElement.lastChild);
+        } else {
+            layout.style.display = 'flex';
+            dropdown.style.display = 'none';
+            toolbarElementMob.style.display = 'none';
+            sidebar.style.display = 'block';
+            viewerDiv.style.width = 'calc(100% - 200px)';
+            downloadElement.style.width = '115px';
+            downloadElement.style.width = '1px solid #C4C7C5';
+        }
+    }
+
+    function signature(e) {
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if (e?.originalEvent?.sourceCapabilities?.firesTouchEvents || e?.sourceCapabilities?.firesTouchEvents) {
+            pdfViewer.formDesignerModule.setFormFieldMode('SignatureField');
+        }
+    }
+
+    function initial(e) {
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if (e?.originalEvent?.sourceCapabilities?.firesTouchEvents || e?.sourceCapabilities?.firesTouchEvents) {
+            pdfViewer.formDesignerModule.setFormFieldMode('InitialField');
+        }
+    }
+
+    function textBox(e) {
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if (e?.originalEvent?.sourceCapabilities?.firesTouchEvents || e?.sourceCapabilities?.firesTouchEvents) {
+            pdfViewer.formDesignerModule.setFormFieldMode('Textbox');
+        }
+    }
+
+    function password(e) {
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if (e?.originalEvent?.sourceCapabilities?.firesTouchEvents || e?.sourceCapabilities?.firesTouchEvents) {
+            pdfViewer.formDesignerModule.setFormFieldMode('Password');
+        }
+    }
+
+    function checkBox(e) {
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if (e?.originalEvent?.sourceCapabilities?.firesTouchEvents || e?.sourceCapabilities?.firesTouchEvents) {
+            pdfViewer.formDesignerModule.setFormFieldMode('CheckBox');
+        }
+    }
+
+    function radioButton(e) {
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if (e?.originalEvent?.sourceCapabilities?.firesTouchEvents || e?.sourceCapabilities?.firesTouchEvents) {
+            pdfViewer.formDesignerModule.setFormFieldMode('RadioButton');
+        }
+    }
+
+    function dropDown(e) {
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if (e?.originalEvent?.sourceCapabilities?.firesTouchEvents || e?.sourceCapabilities?.firesTouchEvents) {
+            pdfViewer.formDesignerModule.setFormFieldMode('DropDown');
+        }
+    }
+
+    function listBox(e) {
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if (e?.originalEvent?.sourceCapabilities?.firesTouchEvents || e?.sourceCapabilities?.firesTouchEvents) {
+            pdfViewer.formDesignerModule.setFormFieldMode('ListBox');
+        }
+    }
+
+    function documentLoad() {
+        pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if (isMobile) {
+            pdfViewer.height = "500px";
+        } else {
+            pdfViewer.height = "640px";
+        }
+        pdfViewer.designerMode = true;
+        defaultZoomFactor = true;
+        initializeDraggable(document.getElementById('signature-btn'), 'SignatureField');
+        initializeDraggable(document.getElementById('textbox-btn'), 'Textbox');
+        initializeDraggable(document.getElementById('password-btn'), 'Password');
+        initializeDraggable(document.getElementById('checkbox-btn'), 'CheckBox');
+        initializeDraggable(document.getElementById('radio-btn'), 'RadioButton');
+        initializeDraggable(document.getElementById('dropdown-btn'), 'DropDown');
+        initializeDraggable(document.getElementById('list-btn'), 'ListBox');
+        initializeDraggable(document.getElementById('initial-btn'), 'InitialField');
+        defaultZoomFactor = false;
+    }
+
+    function addFormField(args) {
+        const signIcons = document.querySelectorAll('[id*="signIcon"]');
+        signIcons.forEach(element => {
+            if (pdfViewer.zoomPercentage < 65) {
+                (element).style.fontSize = '5px'
+            } else if (pdfViewer.zoomPercentage <= 85 && pdfViewer.zoomPercentage > 65) {
+                (element).style.fontSize = "7px";
+            }
+        });
+
+        if (pdfViewer.formFieldCollections.length === pdfViewer.formFieldCollection.length && pdfViewer.retrieveFormFields()[pdfViewer.formFieldCollections.length - 1].customData == "") {
+            userColor = currentUser === 'andrew@mycompany.com' ? '#ffefef' : '#eff7ef';
+            if (currentUser === 'andrew@mycompany.com') {
+                pdfViewer.formDesigner.updateFormField(pdfViewer.retrieveFormFields()[pdfViewer.formFieldCollections.length - 1], { backgroundColor: userColor, customData: { author: 'andrew' } });
+            } else {
+                pdfViewer.formDesigner.updateFormField(pdfViewer.retrieveFormFields()[pdfViewer.formFieldCollections.length - 1], { backgroundColor: userColor, customData: { author: 'anne' } });
+            }
+        }
+
+        var currentUserDetails = userDetails.filter(userDetail => userDetail.Mail === currentUser)[0];
+        var currentFormField = pdfViewer.formFieldCollections.filter(formField => formField.id === args.field.id)[0];
+        currentUserDetails.fieldIds.push(currentFormField);
+    }
+</script>
+
+
+@section Title {
+    <title>ASP.NET Core PDF Viewer eSigning Form Designer Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of eSigning Form Designer in ASP.NET Core PDF Viewer Control</h1>
+}

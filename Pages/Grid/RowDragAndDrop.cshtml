@@ -1,0 +1,76 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Grid.RowDragAndDropModel
+@section ControlsSection{
+<div class="control-section">
+    <div class="col-lg-6">
+        <ejs-grid id="Grid" dataSource="@Model.DataSource"  allowRowDragAndDrop="true" allowSorting="true" allowSelection="true" allowPaging="true" rowDragStart="rowDragStart" allowFiltering="true" toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })">
+            <e-grid-selectionsettings type="Multiple"></e-grid-selectionsettings>
+            <e-grid-pagesettings pageCount="1" pageSize="12"></e-grid-pagesettings>
+            <e-grid-rowdropsettings targetID="DestGrid"></e-grid-rowdropsettings>
+            <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
+            <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true"></e-grid-editSettings>
+            <e-grid-columns>
+                <e-grid-column field="OrderID" headerText="Order ID" textAlign="Right" width="120" isPrimaryKey="true" validationRules="@(new { required=true, number=true})"></e-grid-column>
+                <e-grid-column field="CustomerID" headerText="Customer ID" width="135" validationRules="@(new { required=true, minLength=5})"></e-grid-column>
+                <e-grid-column field="OrderDate" headerText="Order Date" format="yMd" width="130" editType="datepickeredit"></e-grid-column>
+            </e-grid-columns>
+        </ejs-grid>
+    </div>
+    <div class="col-lg-6">
+        <ejs-grid id="DestGrid"  allowRowDragAndDrop="true" allowSelection="true" allowSorting="true" allowPaging="true" allowFiltering="true" toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })">
+            <e-grid-selectionsettings type="Multiple"></e-grid-selectionsettings>
+            <e-grid-pagesettings pageCount="1" ></e-grid-pagesettings>
+            <e-grid-rowdropsettings targetID="Grid"></e-grid-rowdropsettings>
+            <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
+            <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true"></e-grid-editSettings>
+            <e-grid-columns>
+                <e-grid-column field="OrderID" headerText="Order ID" textAlign="Right" width="120" isPrimaryKey="true" validationRules="@(new { required=true, number=true})"></e-grid-column>
+                <e-grid-column field="CustomerID" headerText="Customer ID" width="135" validationRules="@(new { required=true, minLength=5})"></e-grid-column>
+                <e-grid-column field="OrderDate" headerText="Order Date" format="yMd" width="130" editType="datepickeredit"></e-grid-column>
+            </e-grid-columns>
+        </ejs-grid>
+        </div>
+    </div>
+    <script type="text/javascript">
+	function rowDragStart() {
+	    var destGrid = document.getElementById("DestGrid").ej2_instances[0];
+	    if (destGrid.isEdit) {
+		if (destGrid.editModule.formObj.validate()) {
+		    destGrid.endEdit();
+		} else {
+		    destGrid.closeEdit();
+		}
+	    }
+	}
+    </script>
+}
+@section ActionDescription{
+	<div id="action-description">
+		 <p>This sample demonstrates the Grid component with the row drag and drop feature. Drag and drop rows between Grids
+            to move rows.
+        </p>
+	</div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Row Drag and Drop in ASP.NET Core Data Grid control. Explore here for more details."/>
+                }
+
+@section Description{
+    <div id="description">
+		    <p>Grid rows can be dragged and dropped to another Grid or custom controlled by enabling
+				<code>allowRowDragAndDrop</code> Grid property. The target control on which the Grid rows has to be dropped can be set by
+				using <code>rowDropSettings->targetID</code>.</p>
+			<p>The Selection feature should be enabled to select the rows. Multiple rows can be selected by simply clicking and
+				dragging inside the Grid.</p>
+			<p>In this demo, we have demonstrated how to drag and drop the rows between Grids. Row drag and drop feature is enabled
+				in both the Grids. To drag and drop rows between Grids select rows, drag and drop them in the adjacent Grid.
+			</p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Data Grid Row Drag and Drop Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Row Drag and Drop in ASP.NET Core Data Grid Control</h1>
+                }

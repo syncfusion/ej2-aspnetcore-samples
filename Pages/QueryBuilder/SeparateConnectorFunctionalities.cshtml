@@ -1,0 +1,565 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.QueryBuilder.SeparateConnectorFunctionalitiesModel
+@using Syncfusion.EJ2;
+@using Syncfusion.EJ2.Buttons;
+@using Syncfusion.EJ2.SplitButtons
+@using Syncfusion.EJ2.QueryBuilder;
+@using Syncfusion.EJ2.Navigations;
+@using Syncfusion.EJ2.Popups;
+
+@section ControlsSection{
+    <div class="control-pane">
+        <div class="control-section">
+            <div class="top-right-element">
+                <ejs-dropdownbutton cssClass="e-caret-hide" id="element" items="@Model.items" select="onSelect" content="Import"></ejs-dropdownbutton>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 control-section">
+                    <div class="App">
+                        <ejs-dialog id="dialog" width="700px" height="420px" isModal=true header="JSON" visible=false closeOnEscape=false showCloseIcon=true beforeOpen="dialogOpen">
+                            <e-content-template>
+                                <form>
+                                    <textarea class="content-area" id="content-area" aria-label="Content Area"></textarea>
+                                    <span id="dlgSpan" style="visibility: hidden;">Invalid Query</span>
+                                </form>
+                            </e-content-template>
+                            <e-dialog-buttons>
+                                <e-dialog-dialogbutton buttonModel="@Model.CancelBtn" click="cancelClick"></e-dialog-dialogbutton>
+                                <e-dialog-dialogbutton buttonModel="@Model.ImportBtn" click="importClick"></e-dialog-dialogbutton>
+                            </e-dialog-buttons>
+                            <e-dialog-animationsettings effect="Zoom" duration="400" delay="0"></e-dialog-animationsettings>
+                        </ejs-dialog>
+                    </div>
+                    <ejs-querybuilder id="querybuilder" rule="@Model.rule" dataSource="@Model.DataSource" ruleChange="updateRule" enableSeparateConnector=true>
+                        <e-querybuilder-columns>
+                            <e-querybuilder-column field="FirstName" label="First Name" type="string"></e-querybuilder-column>
+                            <e-querybuilder-column field="EmployeeID" label="Employee ID" type="number"></e-querybuilder-column>
+                            <e-querybuilder-column field="FirstName" label="First Name" type="string"></e-querybuilder-column>
+                            <e-querybuilder-column field="LastName" label = "Last Name" type="string"></e-querybuilder-column>
+                            <e-querybuilder-column field="Age" label="Age" type="number"></e-querybuilder-column>
+                            <e-querybuilder-column field="IsDeveloper" label="Is Developer", type="boolean"></e-querybuilder-column>
+                            <e-querybuilder-column field="PrimaryFramework", label= "Primary Framework" type="string"></e-querybuilder-column>
+                            <e-querybuilder-column field="HireDate" label="Hire Date" type="date", format="MM/dd/yyyy"></e-querybuilder-column>
+                            <e-querybuilder-column field="Country", label="Country" type="string"></e-querybuilder-column>
+                        </e-querybuilder-columns>
+                    </ejs-querybuilder>
+                     <div class="e-query-preview">
+                        <ejs-tab id="defaultTab" created="tabCreated" selected="changeTab">
+                            <e-tab-tabitems>
+                                <e-tab-tabitem>
+                                    <e-content-template>
+                                        <div>
+                                            <div class="e-tab-header">
+                                                <div>SQL</div>
+                                                <div>JSON</div>
+                                            </div>
+                                            <div class="e-content">
+                                                <div>
+                                                    <div class="preview-content">
+                                                        <div class="e-preview-options">
+                                                            <label>Format Info:</label>
+                                                            <ejs-radiobutton id="radio1" cssClass="e-radio-option" label="Inline" name="state" checked="true" value="Inline" change="change"></ejs-radiobutton>
+                                                            <ejs-radiobutton id="radio2" cssClass="e-radio-option" label="Parameter" name="state" value="Parameter" change="change"></ejs-radiobutton>
+                                                            <ejs-radiobutton id="radio3" cssClass="e-radio-option" label="Named Parameter" name="state" value="NamedParameter" change="change"></ejs-radiobutton>
+                                                            <div class="copy-tooltip" style="display: none" id="copy-sql">
+                                                                <ejs-tooltip id="Tooltip" opensOn="Click" content="Copied to clipboard">
+                                                                    <e-content-template>
+                                                                        <div class="e-icons e-copy"></div>
+                                                                    </e-content-template>
+                                                                </ejs-tooltip>
+                                                            </div>
+                                                        </div>
+                                                        <div readonly class="e-text-area-content e-sql-content">
+                                                            <pre class="e-pre-content"></pre>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="preview-content">
+                                                        <div class="e-preview-options">
+                                                            <div class="copy-tooltip" style="display: none" id="copy-json">
+                                                                <ejs-tooltip id="JsonTooltip" opensOn="Click" content="Copied to clipboard">
+                                                                    <e-content-template>
+                                                                        <div class="e-icons e-copy"></div>
+                                                                    </e-content-template>
+                                                                </ejs-tooltip>
+                                                            </div>
+                                                        </div>
+                                                        <div readonly class="e-text-area-content e-json-content">
+                                                            <pre class="e-pre-content"></pre>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </e-content-template>
+                                </e-tab-tabitem>
+                            </e-tab-tabitems>
+                        </ejs-tab>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the separate connector Functionalities in ASP.NET Core Query Builder control. Explore here for more details."/>
+                }
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the separate connector support in Query Builder control.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this demo, the Query Builder includes a separate connector feature that displays a combinator between each neighboring pair of rules or groups within a group's rules. You can enable or disable this feature using the 'EnableSeparateConnector' property.
+        </p>
+        <p>In mobile mode, the component is shown vertically.</p>
+        <p>
+            More information about Query Builder can be found in this
+            <a target="_blank" href="http://ej2.syncfusion.com/aspnetcore/documentation/query-builder/getting-started" aria-label="Navigate to the documentation for getting started with ASP.NET Core Query Builder control">
+        documentation section</a>.
+            
+        </p>
+    </div>
+}
+@*custom code start*@
+<style>
+    .e-query-builder {
+        margin: 0 auto;
+    }
+
+    .e-query-preview {
+        margin-top: 20px !important;
+        border: 1px solid #e5e7eb;
+        border-radius: 4px;
+        height: 300px;
+        margin-bottom: 10px;
+    }
+
+        .e-query-preview .e-tab {
+            height: 200px;
+        }
+
+            .e-query-preview .e-tab .e-content {
+                margin: 10px;
+            }
+
+        .e-query-preview .e-preview-options {
+            padding: 10px;
+            height: 54px;
+        }
+
+        .e-query-preview .e-radio-option {
+            margin-left: 20px;
+        }
+
+        .e-query-preview .copy::before {
+            content: '\e77c';
+            font-size: 25px;
+        }
+
+        .e-query-preview .copy-tooltip {
+            height: 32px;
+            width: 32px;
+            position: absolute;
+            cursor: pointer;
+            right: 12px;
+            top: 12px;
+            background: #f4f4f4;
+            border-radius: 2px;
+        }
+
+            .e-query-preview .copy-tooltip.e-control.e-tooltip:hover {
+                background: #D8D8D8;
+            }
+
+        .e-query-preview .e-icons.e-copy {
+            padding-left: 3px;
+            padding-top: 4px;
+            color: rgba(0, 0, 0, .54);
+            float: right;
+            font-size: 25px;
+            padding-right: 5px;
+            padding-top: 4px;
+            color: rgba(0, 0, 0, .54);
+        }
+
+    .e-query-preview .copy-tooltip {
+        position: unset;
+        margin-top: 10px;
+        float: right;
+        height: 32px;
+        width: 32px;
+        cursor: pointer;
+        background: #f4f4f4;
+        border-radius: 2px;
+    }
+
+        .e-query-preview .CodeMirror {
+            height: 180px !important;
+        }
+
+    .e-query-builder .query-template-control .cndtnbtn.e-control.e-dropdownlist.e-lib.e-input {
+        padding-left: 10px;
+    }
+
+    .e-query-builder .query-template-control span.e-custom-group-btn {
+        max-width: 100px;
+        border-radius: 5px !important;
+        border-width: 1px !important;
+    }
+
+    .e-query-preview .preview-content {
+        margin-top: 10px;
+    }
+
+    .e-query-preview .e-sql-content,
+    .e-query-preview .e-json-content,
+    .e-query-preview .e-cel-content,
+    .e-query-preview .e-spel-content {
+        margin: 10px;
+        border: none;
+        height: 180px;
+        width: 98%;
+    }
+
+    .e-query-preview .e-json-content {
+        height: 220px;
+    }
+
+    .e-query-preview .e-text-area-content:focus-visible {
+        outline: none;
+    }
+
+    .e-query-preview .preview {
+        margin-top: 20px;
+    }
+
+    .content-area {
+        height: 240px !important;
+        width: 99% !important;
+        overflow-x: hidden;
+        margin: 10px !important;
+        padding: 10px !important;
+    }
+
+    .e-text-area-content {
+        margin: 10px;
+        overflow: auto;
+        border: none;
+        width: 96%;
+    }
+
+        .e-text-area-content:focus-visible {
+            outline: none;
+        }
+
+    .parent-container {
+        display: flex;
+        outline: none !important;
+    }
+
+    .child {
+        border-radius: 4px;
+        padding: 10px;
+        margin: 5px;
+    }
+
+    .left-content {
+        border: 1px solid #ccc;
+        width: 250px;
+    }
+
+    .right-content {
+        width: 100%;
+    }
+
+    .bottom-right-content {
+        margin-top: 25px;
+    }
+
+    .left-header {
+        font-weight: 700;
+    }
+
+    .property {
+        margin-top: 10px;
+    }
+
+    .e-text-area-content {
+        margin: 10px !important;
+        overflow: auto;
+        border: none;
+        width: 96%;
+    }
+
+        .e-text-area-content:focus-visible {
+            outline: none;
+        }
+
+    .top-right-element {
+        padding-right: 20px;
+        height: 32px;
+    }
+
+        .top-right-element .e-dropdown-btn {
+            float: right;
+        }
+
+    .container-fluid {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    #dlgSpan.error {
+        color: red;
+        padding-left: 20px;
+    }
+
+    .e-pre-content {
+        background: transparent;
+        border: none;
+    }
+
+    @@media only screen and (max-width: 700px) {
+        .e-query-preview .e-sql-content,
+        .e-query-preview .e-json-content {
+            height: 160px;
+        }
+
+        .e-query-preview .copy-tooltip {
+           display: block !important;
+        }
+    }
+
+</style>
+@*custom code end*@
+<script>
+    var content = "";
+    var queryType = "inline";
+    var currentIndex = 0;
+
+    function tabCreated() {
+        setTimeout(function () {
+            updateSQLContentTemplate();
+        }, 100);
+    }
+
+    function changeTab(args) {
+        currentIndex = args.selectedIndex;
+        setTimeout(function () {
+            updateContentTemplate();
+        }, 100);
+    }
+
+    function updateSQLContentTemplate() {
+        content = updateSQLContent();
+        sqlElement.value = content;
+        sqlElement.style.display = 'block';
+    }
+    function updateJsonContentTemplate() {
+        var qbObj = ej.base.getComponent(document.getElementById("querybuilder"), 'query-builder');
+        var validRule = qbObj.getValidRules(qbObj.rule);
+        const jsonValue = JSON.stringify(validRule, null, 4);
+        document.querySelector('.e-json-content .e-pre-content').textContent = jsonValue;
+        hljs.highlightBlock(document.querySelector('.e-json-content'));
+        jsonElement.style.display = 'block';
+    }
+    function updateSQLContent() {
+        var qbObj = ej.base.getComponent(document.getElementById("querybuilder"), 'query-builder');
+        var qbrule = qbObj.getValidRules(qbObj.rule);
+        switch (queryType) {
+            case 'inline':
+                content = qbObj.getSqlFromRules(qbrule);;
+                break;
+            case 'parameter':
+                content = convertParameterSql(qbrule);
+                break;
+            default:
+                content = convertNamedParameterSql(qbrule);
+                break;
+        }
+        document.querySelector('.e-sql-content .e-pre-content').textContent = content;
+        hljs.highlightBlock(document.querySelector('.e-sql-content'));
+        return content;
+    }
+
+    function convertParameterSql(qbrule) {
+        var qbObj = ej.base.getComponent(document.getElementById("querybuilder"), 'query-builder');
+        content = JSON.stringify(qbObj.getParameterizedSql(qbrule), null, 4);
+        return content;
+    }
+    function convertNamedParameterSql(qbrule) {
+        var qbObj = ej.base.getComponent(document.getElementById("querybuilder"), 'query-builder');
+        content = JSON.stringify(qbObj.getParameterizedNamedSql(qbrule), null, 4);
+        return content;
+    }
+
+
+    function updateRule() {
+        updateContentTemplate();
+    }
+
+    function updateContentTemplate() {
+        switch (currentIndex) {
+            case 0:
+                updateSQLContentTemplate();
+                break;
+            case 1:
+                updateJsonContentTemplate();
+                break;
+        }
+    }
+
+
+    function change(args) {
+        queryType = args.value.toLowerCase();
+        updateSQLContentTemplate();
+
+    };
+
+    function onSelect(args) {
+        var dialogObj = ej.base.getComponent(document.getElementById("dialog"), 'dialog');
+        var qbObj = ej.base.getComponent(document.getElementById("querybuilder"), 'query-builder');
+        var validRule = qbObj.getValidRules(qbObj.rule);
+        switch (args.item.text) {
+            case 'Import Inline Sql':
+                currentvalue.value = qbObj.getSqlFromRules(validRule);
+                currentvalue.rule = 'sql';
+                dialogObj.header = "SQL";
+                dialogObj.show();
+                break;
+            case 'Import Parameter Sql':
+                currentvalue.value = JSON.stringify(qbObj.getParameterizedSql(validRule), null, 4);
+                currentvalue.rule = 'parameter';
+                dialogObj.header = "Parameter SQL";
+                dialogObj.show();
+                break;
+            case 'Import Named Parameter Sql':
+                currentvalue.value = JSON.stringify(qbObj.getParameterizedNamedSql(validRule), null, 4);
+                currentvalue.rule = 'namedparameter';
+                dialogObj.header = "NamedParameter SQL";
+                dialogObj.show();
+                break;
+            default:
+                break;
+        }
+    }
+
+    function dialogOpen() {
+        var dlgContentElement = document.getElementById('content-area');
+        var errorElem = document.getElementById('dlgSpan');
+        var qbObj = ej.base.getComponent(document.getElementById("querybuilder"), 'query-builder');
+        if (dlgContentElement) {
+            dlgContentElement.value = currentvalue.value;
+            errorElem.style.visibility = 'hidden';
+            if (errorElem.classList.contains("error")) {
+                errorElem.classList.remove("error");
+            }
+        }
+    }
+
+    function importClick() {
+        try{
+            let textAreacontent = document.getElementById('content-area');
+            if (currentvalue.rule != "sql") {
+                var textAreaValue = JSON.parse(textAreacontent.value);
+            }
+            var qryBldrObj = ej.base.getComponent(document.getElementById("querybuilder"), 'query-builder');
+            switch (currentvalue.rule) {
+                case 'namedparameter':
+                    qryBldrObj.setParameterizedNamedSql(JSON.parse(textAreacontent.value));
+                    break;
+                case 'parameter':
+                    qryBldrObj.setParameterizedSql(JSON.parse(textAreacontent.value));
+                    break;
+                case 'sql':
+                    qryBldrObj.setRulesFromSql(textAreacontent.value, true);
+                    break;
+                default:
+                    break;
+            }
+            updateRule();
+            var dialogObj = ej.base.getComponent(document.getElementById("dialog"), 'dialog');
+            dialogObj.hide();
+        } catch (error) {
+            var errorElem = document.getElementById('dlgSpan');
+            if (!errorElem.classList.contains("error")) {
+                errorElem.style.visibility = 'visible';
+                errorElem.classList.add("error");
+            }
+        }
+    }
+
+    function cancelClick() {
+        var dialogObj = ej.base.getComponent(document.getElementById("dialog"), 'dialog');
+        dialogObj.hide();
+    }
+
+
+</script>
+
+@section Scripts {
+    <script>
+        var previewElement = document.getElementsByClassName("preview-content")[0];
+        var sqlElement = document.getElementsByClassName('e-sql-content')[0];
+        var jsonElement = document.getElementsByClassName('e-json-content')[0];
+        var dlgContentElement = document.getElementById('content-area');
+        var sqlPreviewElement = document.getElementsByClassName("preview-content")[0];
+        var monogPreviewElement = document.getElementsByClassName("preview-content")[1];
+        var copyJsonTooltip = document.getElementById('copy-json');
+        var copySQLTooltip = document.getElementById('copy-sql');
+        var currentvalue = {
+            value: "",
+            rule: ""
+        };
+
+        sqlPreviewElement.addEventListener('mouseenter', function () {
+            var elem = document.getElementsByClassName("copy-tooltip");
+            elem[0].style.display = 'block';
+        });
+
+        sqlPreviewElement.addEventListener('mouseleave', function () {
+            var elem = document.getElementsByClassName("copy-tooltip");
+            elem[0].style.display = 'none';
+        });
+
+        copySQLTooltip.addEventListener('click', function (args) {
+            navigator.clipboard.writeText(content);
+            setTimeout(function () {
+                ej.base.getComponent(args.target.closest('.e-tooltip'), 'tooltip').close();
+            }, 1000);
+        });
+
+        monogPreviewElement.addEventListener('mouseenter', function () {
+            var elem = document.getElementsByClassName("copy-tooltip");
+            elem[1].style.display = 'block';
+        });
+
+        monogPreviewElement.addEventListener('mouseleave', function () {
+            var elem = document.getElementsByClassName("copy-tooltip");
+            elem[1].style.display = 'none';
+        });
+
+        copyJsonTooltip.addEventListener('click', function (args) {
+            navigator.clipboard.writeText(content);
+            setTimeout(function () {
+                ej.base.getComponent(args.target.closest('.e-tooltip'), 'tooltip').close();
+            }, 1000);
+        });
+    </script>
+}
+@section Title{
+                    <title>ASP.NET Core Query Builder Default Functionalities Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Default Functionalities in ASP.NET Core Query Builder Control</h1>
+                }

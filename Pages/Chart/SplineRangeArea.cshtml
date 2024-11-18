@@ -1,0 +1,76 @@
+@page
+@using Syncfusion.EJ2
+@section ControlsSection{
+   <div class="control-section">
+        <div id="container" align='center' style="display:block; width: 92%">
+            <ejs-chart id="lineContainer" load="load" title="Temperature Variation by Month">
+                <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.DateTime" labelFormat="dd MMM">
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                </e-chart-primaryxaxis>
+                <e-chart-primaryyaxis labelFormat="{value}˚C" minimum="-10" maximum="25" interval="5">
+                    <e-linestyle width="0"></e-linestyle>
+                    <e-majorticklines width="0"></e-majorticklines>
+                </e-chart-primaryyaxis>
+                <e-chart-chartarea>
+                    <e-chartarea-border width="0"></e-chartarea-border>
+                </e-chart-chartarea>
+                <e-series-collection>
+                    <e-series xName="x" high="high" low="low" opacity="0.7" type="@Syncfusion.EJ2.Charts.ChartSeriesType.SplineRangeArea">
+                        <e-series-border width="2"></e-series-border>
+                        <e-series-marker visible="false"></e-series-marker>
+                    </e-series>
+                </e-series-collection>
+                <e-chart-tooltipsettings enable="true" shared="false" format="Temperature : <b>${point.low} - ${point.high}</b>" header="<b>${point.x}</b>">
+                </e-chart-tooltipsettings>
+                <e-chart-legendsettings visible="false"></e-chart-legendsettings>
+            </ejs-chart>
+        </div>
+    </div>
+    <script src="~/scripts/chart/stock-chart-data.js"></script>
+    <script type="text/javascript">
+        var ChartPoints = chartDataValues;
+        function load(args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Fluent2';
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5'));
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+            args.chart.primaryXAxis.edgeLabelPlacement = ej.base.Browser.isDevice ? 'Shift' : 'Hide';
+            args.chart.series[0].dataSource = ChartPoints;
+        }
+    </script>
+}
+@*custom code start*@
+@section Scripts {
+
+}
+
+<style>
+
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Spline Range Area in ASP.NET Core Chart control. Explore here for more details."/>
+                }
+@*custom code end*@
+@section ActionDescription{
+    <p>
+        This <a target="_blank" href="https://www.syncfusion.com/aspnet-core-ui-controls/charts/chart-types/spline-range-area-chart" aria-label="Navigate to explore the syncfusion ASP.NET Core Spline Range Area Chart">ASP.NET Core Spline Range Area Chart</a> example visualizes minimum and maximum temperatures of different days with default spline range area series.
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can see how to render and configure the spline range area chart. This chart is used to display continuous data points as a set of curved lines varying between high and low values over a certain time period.
+    </p>
+    <p>
+        More information about the spline range area series can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/chart-types/spline-range-area" aria-label="Navigate to the documentation for Spline Range Area in ASP.NET CORE Charts Component">documentation section</a>.
+    </p>
+}
+@section Title{
+                    <title>ASP.NET Core Chart Spline Range Area Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Spline Range Area in ASP.NET Core Chart Control</h1>
+                }

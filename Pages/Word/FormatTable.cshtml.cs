@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Syncfusion.Drawing;
 using Syncfusion.DocIORenderer;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.Word;
+namespace EJ2CoreSampleBrowser.Pages.Word;
 
 public class FormatTable : PageModel
 {

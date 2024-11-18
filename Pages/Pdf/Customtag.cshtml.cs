@@ -12,7 +12,7 @@ using Syncfusion.Pdf;
 using Syncfusion.Pdf.Graphics;
 using Syncfusion.Pdf.Grid;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.Pdf;
+namespace EJ2CoreSampleBrowser.Pages.Pdf;
 
 public class Customtag : PageModel
 {
@@ -223,12 +223,12 @@ public class Customtag : PageModel
         pdfGridHeader.ApplyStyle(headerStyle);
 
         pdfGridHeader.Cells[0].Value = "Times Roman Family";
-        pdfGridHeader.Cells[0].PdfTag = new PdfStructureElement(PdfTagType.TableHeader);
+        pdfGridHeader.Cells[0].PdfTag = new PdfStructureElement(PdfTagType.TableHeader) { Scope = ScopeType.Column };
 
         pdfGridHeader.Cells[1].Value = "Helvetica Family";
-        pdfGridHeader.Cells[1].PdfTag = new PdfStructureElement(PdfTagType.TableHeader);
+        pdfGridHeader.Cells[1].PdfTag = new PdfStructureElement(PdfTagType.TableHeader) { Scope = ScopeType.Column };
         pdfGridHeader.Cells[2].Value = "Courier Family";
-        pdfGridHeader.Cells[2].PdfTag = new PdfStructureElement(PdfTagType.TableHeader);
+        pdfGridHeader.Cells[2].PdfTag = new PdfStructureElement(PdfTagType.TableHeader) { Scope = ScopeType.Column };
 
         PdfGridRow pdfGridRow1 = pdfGrid.Rows.Add();
         pdfGridRow1.PdfTag = new PdfStructureElement(PdfTagType.TableRow);

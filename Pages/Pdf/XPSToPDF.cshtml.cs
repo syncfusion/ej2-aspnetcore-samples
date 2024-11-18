@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc;
 using Syncfusion.Pdf;
 using Syncfusion.XPS;
-namespace EJ2CoreSampleBrowser_NET8.Pages.Pdf;
+namespace EJ2CoreSampleBrowser.Pages.Pdf;
 
 public class XPSToPDF : PageModel
 {

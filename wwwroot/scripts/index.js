@@ -12,8 +12,8 @@ var settingElement = ej.base.select('.sb-setting-btn');
 var themeList = document.getElementById('themelist');
 var themes = ['material3', 'fluent', 'fluent2', 'bootstrap5.3', 'tailwind', 'highcontrast', 'fluent2-highcontrast'];
 //var themeIndex = { 'material3': 0, 'material3-dark': 1, 'fluent': 2, 'fluent-dark': 3, 'bootstrap5': 4, 'bootstrap5-dark': 5, 'tailwind': 6, 'tailwind-dark': 7, 'material': 8, 'bootstrap4': 9, 'bootstrap': 10, 'bootstrap-dark': 11, 'highcontrast': 12 };
-var themeIndex = { 'material3': 0, 'fluent': 1, 'fluent2': 2, 'bootstrap5.3': 3, 'tailwind': 4, 'highcontrast': 5, 'fluent2-highcontrast' : 6 , };
-var themeMode_Index = { 'material3': 'Material 3', 'fluent': 'Fluent', 'fluent2': 'Fluent 2', 'bootstrap5.3': 'Bootstrap 5', 'tailwind': 'Tailwind CSS', 'highcontrast': 'High Contrast', 'fluent2-highcontrast': 'Fluent 2 High Contrast'  };
+var themeIndex = { 'material3': 0, 'fluent': 1, 'fluent2': 2, 'bootstrap5': 3, 'tailwind': 4, 'highcontrast': 5, 'fluent2-highcontrast' : 6 , };
+var themeMode_Index = { 'material3': 'Material 3', 'fluent': 'Fluent', 'fluent2': 'Fluent 2', 'bootstrap5': 'Bootstrap 5', 'tailwind': 'Tailwind CSS', 'highcontrast': 'High Contrast', 'fluent2-highcontrast': 'Fluent 2 High Contrast'  };
 var cultureData = { "English": "en", "German - Germany*": "de", "French - Switzerland*": "fr-CH", "Arabic*": "ar", "Chinese - China*":"zh" };
 var defaultTheme = 'fluent2';
 var themeDropDown;
@@ -109,25 +109,29 @@ function changeCulture(cul) {
     if (cul === 'ar') {
         changeRtl();
     }  
-    ej.base.setCurrencyCode(sessionStorage.getItem("ej2-currency") || matchedCurrency[cul]);
+    var cur = localStorage.getItem('ej2-currency') ? localStorage.getItem('ej2-currency'): matchedCurrency[cul];
+    localStorage.setItem('dropdownlistsb-setting-currency', '{"value":"' + cur + '"}');
+    ej.base.setCurrencyCode(cur);
+    var culKey = Object.keys(cultureData).find(k => cultureData[k] === cul);
+    localStorage.setItem('dropdownlistsb-setting-culture', '{"value":"' + culKey + '"}');
     ej.base.setCulture(cul);
 }
 
 function loadCulture() {
-    var cul = sessionStorage.getItem('ej2-culture') || 'en';
-	if (cul !== 'en') {
-		var locale = new ej.base.Ajax('../scripts/locale/' + cul + '.json', 'GET', false);
-		locale.send().then(function (value) {
-			ej.base.L10n.load(JSON.parse(value));
-		});
-
-		var ajax = new ej.base.Ajax('../scripts/cldr-data/main/' + cul + '/all.json', 'GET', false);
-		ajax.send().then(function (result) {
-			ej.base.loadCldr(JSON.parse(result));
-			changeCulture(cul);
-		});
-	}
+    var cul = localStorage.getItem('ej2-culture') || 'en';
+    if (cul !== 'en') {
+        var locale = new ej.base.Ajax('../scripts/locale/' + cul + '.json', 'GET', false);
+        locale.send().then(function (value) {
+            ej.base.L10n.load(JSON.parse(value));
+        });
+        var ajax = new ej.base.Ajax('../scripts/cldr-data/main/' + cul + '/all.json', 'GET', false);
+        ajax.send().then(function (result) {
+            ej.base.loadCldr(JSON.parse(result));
+            changeCulture(cul);
+        });
+   }
 }
+
 function settingPopupHide(hideElementID) {
     if (document.querySelector(hideElementID).ej2_instances[0].element.classList.contains("e-popup-open")) {
         document.querySelector(hideElementID).ej2_instances[0].element.classList.remove("e-popup-open");
@@ -136,16 +140,17 @@ function settingPopupHide(hideElementID) {
 }
 
 function sbCulture(e) {
-    sessionStorage.setItem('ej2-culture', cultureData[e.value]);
-    sessionStorage.setItem('ej2-culture-name', e.value);
-    sessionStorage.removeItem('ej2-currency');
+    localStorage.setItem('ej2-culture', cultureData[e.value]);
+    localStorage.setItem('ej2-culture-name', e.value);
+    localStorage.removeItem('ej2-currency');
     settingPopupHide('#sb-setting-culture_popup');
     location.reload();
 }
 
 function sbCurrency(e) {
     ej.base.setCurrencyCode(e.value);
-    sessionStorage.setItem('ej2-currency', e.value);
+    localStorage.setItem('ej2-currency', e.value);
+    localStorage.setItem('dropdownlistsb-setting-currency', '{"value":"'+e.value+'"}');
     settingPopupHide('#sb-setting-currency_popup');
 }
 
@@ -163,7 +168,12 @@ function setIndex() {
             updatedTheme = hashValue.replace("-dark", "");
 
             var dropdownTheme = document.getElementById('sb-setting-theme');
-            dropdownTheme.ej2_instances[0].index = 0;
+            var element = document.getElementById('themeMobile');
+            var mobileModeThemeDropDownStyle = window.getComputedStyle(element);
+
+            if (mobileModeThemeDropDownStyle.display === "block") {
+                dropdownTheme.ej2_instances[0].index = themeIndex[updatedTheme] || 0;
+            }
             dropdownTheme.value = themeMode_Index[updatedTheme];
              //document.getElementById('sb-setting-mode').ej2_instances[0].index = 1
         }
@@ -264,9 +274,7 @@ function renderSbPopups() {
     }
     
     cultureDropDown = document.getElementById("sb-setting-culture");
-    cultureDropDown.value = sessionStorage.getItem('ej2-culture-name') || 'English';
-    currencyDropDown = document.getElementById("sb-setting-currency");
-    currencyDropDown.value = sessionStorage.getItem('ej2-currency') || 'USD';
+    cultureDropDown.value = localStorage.getItem('ej2-culture-name') || 'English';
     contentTab = document.getElementById('sb-content');
     sourceTab = document.getElementById('sb-source-tab');
 }
@@ -805,6 +813,23 @@ function loadTheme(theme) {
     if (theme == 'fluent2-highcontrast') {
         var theamswitchDivDisable = document.getElementById("themeSwitchDiv");
         theamswitchDivDisable.style.display = 'none';
+    }
+
+    var mobileThemeModeElement = document.getElementById('themeSwitchMobile');
+    var mobileThemeModeDropDownstyle = window.getComputedStyle(mobileThemeModeElement);
+    if (mobileThemeModeDropDownstyle.display === "block") {
+        var hashValue = window.location.href.split("#/")[1];
+        if (hashValue !== 'fluent2-highcontrast' && hashValue !== 'highcontrast') {
+            if (hashValue === undefined) {
+                hashValue = '';
+            }
+            if (hashValue.includes('-dark')) {
+                localStorage.setItem('dropdownlistsb-setting-mode', '{"value":"dark"}');
+            }
+            else {
+                localStorage.setItem('dropdownlistsb-setting-mode', '{"value":"light"}');
+            }
+        }
     }
 }
 
@@ -1483,6 +1508,7 @@ function onModeChanges(event) {
             // Remove "-dark" from the current URL
             updatedURL1 = currentURL.replace("-dark", "");
             window.location.href = updatedURL1;
+            location.reload();
         }
         if (event.itemData.ThemeId === "dark") {
             updatedURL1 += "-dark";

@@ -15,7 +15,7 @@ using Syncfusion.Pdf.Grid;
 using System.Xml.Linq;
 using Syncfusion.Zugferd;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.Pdf;
+namespace EJ2CoreSampleBrowser.Pages.Pdf;
 
 public class Zugferd : PageModel
 {

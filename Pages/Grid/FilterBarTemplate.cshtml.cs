@@ -7,7 +7,7 @@
 #endregion
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using EJ2CoreSampleBrowser.Models;
-namespace EJ2CoreSampleBrowser_NET8.Pages.Grid;
+namespace EJ2CoreSampleBrowser.Pages.Grid;
 
 public class FilterBarTemplateModel : PageModel
 {

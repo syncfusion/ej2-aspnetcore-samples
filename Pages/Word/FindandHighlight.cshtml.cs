@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 using Syncfusion.DocIO;
 using Syncfusion.DocIO.DLS;
 using Microsoft.AspNetCore.Mvc;
-namespace EJ2CoreSampleBrowser_NET8.Pages.Word;
+namespace EJ2CoreSampleBrowser.Pages.Word;
 
 public class FindandHighlight : PageModel
 {

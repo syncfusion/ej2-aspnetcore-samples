@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.PivotTable
+namespace EJ2CoreSampleBrowser.Pages.PivotTable
 {
     public class OverviewModel : PageModel
     {

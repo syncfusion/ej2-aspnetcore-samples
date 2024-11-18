@@ -5,7 +5,7 @@
 @section ControlsSection{
     <div class="control-section">
 
-        <ejs-treegrid id="TreeGrid" dataSource="@TreeData.GetDefaultData()" toolbar="@(new List<string>() { "Print"})" height="400" childMapping="Children" treeColumnIndex="1">
+        <ejs-treegrid id="TreeGrid" dataSource="@TreeData.GetDefaultData()" toolbar="@(new List<string>() { "Print"})" height="400" childMapping="Children" treeColumnIndex="1"  load="onLoad">
             <e-treegrid-columns>
                 <e-treegrid-column field="TaskId" headerText="Task ID" textAlign="Right" width="90"></e-treegrid-column>
                 <e-treegrid-column field="TaskName" headerText="Task Name" width="220"></e-treegrid-column>
@@ -17,6 +17,21 @@
         </ejs-treegrid>
 
     </div>
+
+    <script>
+        function onLoad() {
+            var treegrid = document.getElementById("TreeGrid").ej2_instances[0];
+            treegrid.grid.cssClass = document.querySelector('.fluent2-highcontrast') ? 'e-print-fluent2-highcontrast' : '';
+        }
+    </script>
+    
+    <style>
+        .e-print-fluent2-highcontrast.e-treegrid.e-print-grid-layout,
+        .e-print-fluent2-highcontrast.e-treegrid.e-print-grid-layout .e-gridheader,
+        .e-print-fluent2-highcontrast.e-treegrid.e-print-grid-layout .e-rowcell {
+            border-color: gray !important;
+        }
+    </style>
 }
 
 @*custom code start*@

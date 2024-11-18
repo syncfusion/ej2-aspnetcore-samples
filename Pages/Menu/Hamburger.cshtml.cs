@@ -7,7 +7,7 @@
 #endregion
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Syncfusion.EJ2.Navigations;
-namespace EJ2CoreSampleBrowser_NET8.Pages.Menu;
+namespace EJ2CoreSampleBrowser.Pages.Menu;
 
 public class HamburgerModel : PageModel
 {

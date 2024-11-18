@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.Schedule
+namespace EJ2CoreSampleBrowser.Pages.Schedule
 {
     public class GridToSchedule : PageModel
     {

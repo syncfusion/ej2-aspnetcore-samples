@@ -12,7 +12,7 @@ using Syncfusion.XlsIO;
 using System.Globalization;
 using Syncfusion.Drawing;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.Excel
+namespace EJ2CoreSampleBrowser.Pages.Excel
 {
     public class AttendanceTracker : PageModel
     {

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using Syncfusion.EJ2.Layouts;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.Timeline
+namespace EJ2CoreSampleBrowser.Pages.Timeline
 {
     public class DefaultModel : PageModel
     {

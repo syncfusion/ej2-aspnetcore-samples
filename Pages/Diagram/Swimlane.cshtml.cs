@@ -10,7 +10,7 @@ using Syncfusion.EJ2.Diagrams;
 using Syncfusion.EJ2.Navigations;
 using System.ComponentModel;
 using Newtonsoft.Json;
-namespace EJ2CoreSampleBrowser_NET8.Pages.Diagram;
+namespace EJ2CoreSampleBrowser.Pages.Diagram;
 
 public class SwimlaneModel : PageModel
 {

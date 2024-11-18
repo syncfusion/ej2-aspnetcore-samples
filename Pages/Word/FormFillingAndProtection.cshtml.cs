@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Syncfusion.DocIO;
 using Syncfusion.DocIO.DLS;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.Word;
+namespace EJ2CoreSampleBrowser.Pages.Word;
 
 public class FormFillingAndProtection : PageModel
 {

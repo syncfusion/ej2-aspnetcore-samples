@@ -10,7 +10,7 @@ using EJ2CoreSampleBrowser.Models;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
-namespace EJ2CoreSampleBrowser_NET8.Pages.Grid;
+namespace EJ2CoreSampleBrowser.Pages.Grid;
 
 public class DialogTemplateModel : PageModel
 {

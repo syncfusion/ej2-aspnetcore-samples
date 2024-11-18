@@ -11,7 +11,7 @@ using Syncfusion.DocIO.DLS;
 using Microsoft.AspNetCore.Mvc;
 using System.Xml;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.Word;
+namespace EJ2CoreSampleBrowser.Pages.Word;
 
 public class MacroPreservation : PageModel
 {

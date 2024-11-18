@@ -11,7 +11,7 @@ using Syncfusion.Pdf.Parsing;
 using Microsoft.AspNetCore.Mvc;
 using Syncfusion.Compression.Zip;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.Pdf;
+namespace EJ2CoreSampleBrowser.Pages.Pdf;
 
 public class SplitPDF : PageModel
 {

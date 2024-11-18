@@ -12,7 +12,7 @@ using Syncfusion.Pdf;
 using Syncfusion.Pdf.Graphics;
 using System.Text;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.Pdf;
+namespace EJ2CoreSampleBrowser.Pages.Pdf;
 
 public class HeadersandFooters : PageModel
 {

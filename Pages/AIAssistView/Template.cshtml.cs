@@ -8,7 +8,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Syncfusion.EJ2.Navigations;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.AIAssistView
+namespace EJ2CoreSampleBrowser.Pages.AIAssistView
 {
     public class TemplateModel : PageModel
     {

@@ -7,7 +7,7 @@
 #endregion
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
-namespace EJ2CoreSampleBrowser_NET8.Pages.Dialog;
+namespace EJ2CoreSampleBrowser.Pages.Dialog;
 
 public class ComponentsDialog : PageModel
 {

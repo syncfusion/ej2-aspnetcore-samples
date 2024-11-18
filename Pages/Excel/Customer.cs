@@ -8,7 +8,7 @@
 
 using Syncfusion.XlsIO;
 using System.Drawing;
-namespace EJ2CoreSampleBrowser_NET8.Pages.Excel
+namespace EJ2CoreSampleBrowser.Pages.Excel
 {
     #region Hyperlink Class
 

@@ -7,7 +7,7 @@
 #endregion
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.Carousel;
+namespace EJ2CoreSampleBrowser.Pages.Carousel;
 
 public class API : PageModel
 {

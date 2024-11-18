@@ -10,7 +10,7 @@ using Syncfusion.EJ2.Diagrams;
 using System.ComponentModel;
 using Newtonsoft.Json;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.Diagram;
+namespace EJ2CoreSampleBrowser.Pages.Diagram;
 
 public class BpmnEditorModel : PageModel
 {

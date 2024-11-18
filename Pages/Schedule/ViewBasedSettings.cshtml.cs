@@ -7,7 +7,7 @@
 #endregion
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.Schedule;
+namespace EJ2CoreSampleBrowser.Pages.Schedule;
 
 public class ViewBasedSettings : PageModel
 {

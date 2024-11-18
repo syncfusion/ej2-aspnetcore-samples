@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net.Http.Headers;
-namespace EJ2CoreSampleBrowser_NET8.Pages.Uploader;
+namespace EJ2CoreSampleBrowser.Pages.Uploader;
 
 public class DefaultFunctionalities : PageModel
 {

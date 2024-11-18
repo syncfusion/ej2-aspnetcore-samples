@@ -8,7 +8,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.ListView;
+namespace EJ2CoreSampleBrowser.Pages.ListView;
 
 public class virtualization : PageModel
 {

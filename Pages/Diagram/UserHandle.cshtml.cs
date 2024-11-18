@@ -7,7 +7,7 @@
 #endregion
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Syncfusion.EJ2.Diagrams;
-namespace EJ2CoreSampleBrowser_NET8.Pages.Diagram;
+namespace EJ2CoreSampleBrowser.Pages.Diagram;
 
 public class UserHandleModel : PageModel
 {

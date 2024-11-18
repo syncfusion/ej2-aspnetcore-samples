@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Syncfusion.XlsIO;
 using Syncfusion.Drawing;
-namespace EJ2CoreSampleBrowser_NET8.Pages.Excel
+namespace EJ2CoreSampleBrowser.Pages.Excel
 {
     public class FormControls : PageModel
     {

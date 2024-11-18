@@ -7,7 +7,7 @@
 #endregion
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.Timeline;
+namespace EJ2CoreSampleBrowser.Pages.Timeline;
 
 public class APIModel : PageModel
 {

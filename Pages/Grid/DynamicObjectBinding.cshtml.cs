@@ -8,7 +8,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Dynamic;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.Grid;
+namespace EJ2CoreSampleBrowser.Pages.Grid;
 
 public class DynamicObjectBindingModel : PageModel
 {

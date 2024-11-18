@@ -7,7 +7,7 @@
 #endregion
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.HeatMapChart;
+namespace EJ2CoreSampleBrowser.Pages.HeatMapChart;
 
 public class LabelTemplate : PageModel
 {

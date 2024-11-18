@@ -7,7 +7,7 @@
 #endregion
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
-namespace EJ2CoreSampleBrowser_NET8.Pages.Maps;
+namespace EJ2CoreSampleBrowser.Pages.Maps;
 
 public class Default : PageModel
 {

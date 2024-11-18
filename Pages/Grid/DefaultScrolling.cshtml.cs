@@ -7,7 +7,7 @@
 #endregion
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.Grid;
+namespace EJ2CoreSampleBrowser.Pages.Grid;
 using EJ2CoreSampleBrowser.Models;
 
 public class DefaultScrollingModel : PageModel

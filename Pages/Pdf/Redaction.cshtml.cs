@@ -11,7 +11,7 @@ using Syncfusion.Pdf;
 using Syncfusion.Pdf.Parsing;
 using Syncfusion.Pdf.Redaction;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.Pdf;
+namespace EJ2CoreSampleBrowser.Pages.Pdf;
 
 public class Redaction : PageModel
 {

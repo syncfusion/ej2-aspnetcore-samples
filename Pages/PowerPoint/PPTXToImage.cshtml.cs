@@ -12,7 +12,7 @@ using Syncfusion.PresentationRenderer;
 using Syncfusion.Compression.Zip;
 using Syncfusion.Office;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.PowerPoint;
+namespace EJ2CoreSampleBrowser.Pages.PowerPoint;
 
 public class PPTXToImage : PageModel
 {

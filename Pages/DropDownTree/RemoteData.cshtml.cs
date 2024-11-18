@@ -8,7 +8,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Syncfusion.EJ2;
 using Syncfusion.EJ2.DropDowns;
-namespace EJ2CoreSampleBrowser_NET8.Pages.DropDownTree;
+namespace EJ2CoreSampleBrowser.Pages.DropDownTree;
 
 public class RemoteData : PageModel
 {

@@ -8,7 +8,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using EJ2CoreSampleBrowser.Models;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.MultiColumnComboBox;
+namespace EJ2CoreSampleBrowser.Pages.MultiColumnComboBox;
 
 public class GroupingModel : PageModel
 {

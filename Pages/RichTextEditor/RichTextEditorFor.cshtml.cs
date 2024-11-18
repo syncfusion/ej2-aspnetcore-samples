@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.RichTextEditor;
+namespace EJ2CoreSampleBrowser.Pages.RichTextEditor;
 
 public class RichTextEditorModel
 {

@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Syncfusion.EJ2.Navigations;
 using Syncfusion.EJ2;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.TreeView
+namespace EJ2CoreSampleBrowser.Pages.TreeView
 {
     public class RemoteDataModel : PageModel
     {

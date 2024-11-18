@@ -12,7 +12,7 @@ using Syncfusion.Drawing;
 using System.Globalization;
 using Microsoft.Win32.SafeHandles;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.Excel
+namespace EJ2CoreSampleBrowser.Pages.Excel
 {
     public class FormatCells : PageModel
     {

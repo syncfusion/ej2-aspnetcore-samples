@@ -62,7 +62,12 @@
         var themeName = location.hash.split('#/')[1];
         themeName = themeName ? themeName : 'fluent2';
         themeName = themeName === "bootstrap5" ? 'bootstrap5.3' : themeName === "bootstrap5-dark" ? "bootstrap5.3-dark" : themeName;
-            document.write('<link href="' + baseurl + 'styles/' + themeName + '.css" rel="stylesheet" />');
+        if (window.location.href.includes('#/')) {
+            window.addEventListener("hashchange", function () {
+                 location.reload();
+            });
+        }
+        document.write('<link href="' + baseurl + 'styles/' + themeName + '.css" rel="stylesheet" />');
 
         if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
             document.write('<script src="' + baseurl + 'scripts/bluebird.min.js"><\/script>');
@@ -332,7 +337,7 @@
                                     <div id='mouse' role="button" tabindex="0" class="sb-responsive-items set-border-radious-mouse" title="Default control sizes, optimized for use with mouse">Mouse</div>
                                 </div>
                             </div>
-                            <div class='sb-setting-item sb-setting-theme-section'>
+                            <div class='sb-setting-item sb-setting-theme-section' id="themeMobile">
                                 <div class='setting-label'>
                                     <div class='sb-icons sb-setting-icons sb-icon-Palette'></div>
                                     <div class='sb-setting-text'>Theme Selection</div>
@@ -376,7 +381,7 @@
                                     <div class='sb-setting-text'>Currency</div>
                                 </div>
                                 <div class='setting-content'>
-                                    <ejs-dropdownlist id="sb-setting-currency" cssClass="sb-setting-currency-content" dataSource="currencyData" change="sbCurrency"></ejs-dropdownlist>
+                                    <ejs-dropdownlist id="sb-setting-currency" cssClass="sb-setting-currency-content" dataSource="currencyData" change="sbCurrency" enablePersistence=true></ejs-dropdownlist>
                                 </div>
                             </div>
                         </div>

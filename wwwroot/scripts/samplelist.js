@@ -43,6 +43,7 @@ window.samplesList = [
                 "url": "AdaptiveLayout",
                 "name": "Adaptive Layout",
                 "category": "Data Grid",
+                "type": "update",
                 "uid": "00009",
                 "order": 0,
                 "component": "Data Grid",

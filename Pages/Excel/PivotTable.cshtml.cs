@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Syncfusion.XlsIO;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.Excel
+namespace EJ2CoreSampleBrowser.Pages.Excel
 {
     public class PivotTable : PageModel
     {

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Syncfusion.EJ2.Ribbon;
 using Syncfusion.EJ2.Navigations;
 using EJ2CoreSampleBrowser.Models;
-namespace EJ2CoreSampleBrowser_NET8.Pages.Ribbon;
+namespace EJ2CoreSampleBrowser.Pages.Ribbon;
 
 public class RibbonBackstageModel : PageModel
 {

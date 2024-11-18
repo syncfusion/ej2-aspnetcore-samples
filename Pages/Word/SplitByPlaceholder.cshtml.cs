@@ -14,7 +14,7 @@ using Syncfusion.Compression.Zip;
 using Syncfusion.Pdf;
 using System.Text.RegularExpressions;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.Word;
+namespace EJ2CoreSampleBrowser.Pages.Word;
 
 public class SplitByPlaceholder : PageModel
 {

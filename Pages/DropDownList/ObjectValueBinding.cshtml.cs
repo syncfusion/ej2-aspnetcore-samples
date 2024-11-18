@@ -7,7 +7,7 @@
 #endregion
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.DropDownList;
+namespace EJ2CoreSampleBrowser.Pages.DropDownList;
 
 public class ObjectValueBinding : PageModel
 {

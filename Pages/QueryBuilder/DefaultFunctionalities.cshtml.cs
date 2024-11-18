@@ -7,7 +7,7 @@
 #endregion
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Syncfusion.EJ2.QueryBuilder;
-namespace EJ2CoreSampleBrowser_NET8.Pages.QueryBuilder;
+namespace EJ2CoreSampleBrowser.Pages.QueryBuilder;
 using EJ2CoreSampleBrowser.Models;
 
 public class DefaultFunctionalitiesModel : PageModel

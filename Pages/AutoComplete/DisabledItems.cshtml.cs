@@ -7,7 +7,7 @@
 #endregion
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.AutoComplete;
+namespace EJ2CoreSampleBrowser.Pages.AutoComplete;
 
 public class DisabledItems : PageModel
 {

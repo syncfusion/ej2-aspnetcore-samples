@@ -7,7 +7,7 @@
 #endregion
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.ThreeDimensionsChart;
+namespace EJ2CoreSampleBrowser.Pages.ThreeDimensionsChart;
 
 public class EmptyPointModel : PageModel
 {

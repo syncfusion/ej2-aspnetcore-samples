@@ -9,7 +9,7 @@
 // using Syncfusion.EJ2.Navigations;
 // using Syncfusion.EJ2.Base;
 //
-// namespace EJ2CoreSampleBrowser_NET8.Pages.Breadcrumb;
+// namespace EJ2CoreSampleBrowser.Pages.Breadcrumb;
 //
 // public class AddressBarModel : PageModel
 // {

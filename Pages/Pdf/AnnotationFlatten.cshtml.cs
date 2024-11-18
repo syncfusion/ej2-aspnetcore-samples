@@ -12,8 +12,9 @@ using Syncfusion.Pdf;
 using Syncfusion.Pdf.Graphics;
 using Syncfusion.Pdf.Interactive;
 using Syncfusion.Pdf.Parsing;
+using Syncfusion.Pdf.Redaction;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.Pdf;
+namespace EJ2CoreSampleBrowser.Pages.Pdf;
 
 public class AnnotationFlatten : PageModel
 {
@@ -374,23 +375,20 @@ public class AnnotationFlatten : PageModel
 
             PdfPage thirdPage = document.Pages.Add();
 
-            if (checkboxFlatten != "Flatten")
-            {
-                PdfRedactionAnnotation redactionannot = new PdfRedactionAnnotation();
-                redactionannot.Bounds = new RectangleF(40, 610, 100, 50);
-                redactionannot.Text = "Redaction Annotation";
-                redactionannot.InnerColor = Color.Orange;
-                redactionannot.BorderColor = Color.Red;
-                redactionannot.Font = new PdfStandardFont(PdfFontFamily.Helvetica, 13);
-                redactionannot.TextColor = Color.Green;
-                redactionannot.OverlayText = "REDACTED";
-                redactionannot.RepeatText = true;
-                redactionannot.TextAlignment = PdfTextAlignment.Left;
-                redactionannot.SetAppearance(true);
-                secondPage.Graphics.DrawString("Redaction Annotation", font, brush, new PointF(40, 580));
-                redactionannot.AnnotationFlags = PdfAnnotationFlags.Print;
-                secondPage.Annotations.Add(redactionannot);
-            }
+            PdfRedactionAnnotation redactionAnnotation = new PdfRedactionAnnotation();
+            redactionAnnotation.Bounds = new RectangleF(40, 610, 100, 50);
+            redactionAnnotation.Text = "Redaction Annotation";
+            redactionAnnotation.InnerColor = Color.Orange;
+            redactionAnnotation.BorderColor = Color.Red;
+            redactionAnnotation.Font = new PdfStandardFont(PdfFontFamily.Helvetica, 13);
+            redactionAnnotation.TextColor = Color.Green;
+            redactionAnnotation.OverlayText = "REDACTED";
+            redactionAnnotation.RepeatText = true;
+            redactionAnnotation.TextAlignment = PdfTextAlignment.Left;
+            redactionAnnotation.SetAppearance(true);
+            secondPage.Graphics.DrawString("Redaction Annotation", font, brush, new PointF(40, 580));
+            redactionAnnotation.AnnotationFlags = PdfAnnotationFlags.Print;
+            secondPage.Annotations.Add(redactionAnnotation);
 
             //Creates a new RubberStamp annotation
             PdfRubberStampAnnotation rubberStampAnnotation =
@@ -478,6 +476,10 @@ public class AnnotationFlatten : PageModel
                 //Creates a new Loaded document.
                 PdfLoadedDocument lDoc = new PdfLoadedDocument(SourceStream);
 
+                //Flatten the redaction annotation
+                lDoc.Redact();
+
+                //Flatten all the annotations.
                 lDoc.FlattenAnnotations();
 
                 //Save the PDF to the MemoryStream
@@ -494,7 +496,7 @@ public class AnnotationFlatten : PageModel
 
                 //Download the PDF document in the browser.
                 FileStreamResult fileStreamResult = new FileStreamResult(ms, "application/pdf");
-                fileStreamResult.FileDownloadName = "Annotation.pdf";
+                fileStreamResult.FileDownloadName = "AnnotationFaltten.pdf";
                 return fileStreamResult;
             }
             else
@@ -508,6 +510,10 @@ public class AnnotationFlatten : PageModel
         else
         {
             PdfLoadedDocument ldoc = new PdfLoadedDocument(file.OpenReadStream());
+
+            //Flatten the redaction annotation
+            ldoc.Redact();
+
             //Flatten all the annotations.
             ldoc.FlattenAnnotations();
 

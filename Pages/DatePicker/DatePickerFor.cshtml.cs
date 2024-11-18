@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.DatePicker
+namespace EJ2CoreSampleBrowser.Pages.DatePicker
 {
     public class DatePickerForModel : PageModel
     {

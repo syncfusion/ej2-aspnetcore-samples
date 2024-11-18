@@ -8,7 +8,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.ColorPicker;
+namespace EJ2CoreSampleBrowser.Pages.ColorPicker;
 
 public class ColorPickerFor : PageModel
 {

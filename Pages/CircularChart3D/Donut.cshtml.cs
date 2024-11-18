@@ -7,7 +7,7 @@
 #endregion
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.CircularChart3D;
+namespace EJ2CoreSampleBrowser.Pages.CircularChart3D;
 
 public class DonutModel : PageModel
 {

@@ -14,7 +14,7 @@ using Syncfusion.Pdf.Interactive;
 using Syncfusion.Pdf.Tables;
 using System.Xml.Linq;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.Pdf;
+namespace EJ2CoreSampleBrowser.Pages.Pdf;
 
 public class InteractiveFeatures : PageModel
 {

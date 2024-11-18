@@ -7,7 +7,7 @@
 #endregion
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.DropDownTree;
+namespace EJ2CoreSampleBrowser.Pages.DropDownTree;
 
 public class MultipleSelection : PageModel
 {

@@ -8,7 +8,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.DashboardLayout;
+namespace EJ2CoreSampleBrowser.Pages.DashboardLayout;
 
 public class SEOAnalytics : PageModel
 {

@@ -11,7 +11,7 @@ using Syncfusion.DocIO.DLS;
 using System.IO;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.Word;
+namespace EJ2CoreSampleBrowser.Pages.Word;
 public partial class WordToRTF : PageModel
 {
     private readonly IWebHostEnvironment _hostingEnvironment;

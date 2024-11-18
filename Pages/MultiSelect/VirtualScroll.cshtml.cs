@@ -7,7 +7,7 @@
 #endregion
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.MultiSelect;
+namespace EJ2CoreSampleBrowser.Pages.MultiSelect;
 
 public class VirtualScroll : PageModel
 {

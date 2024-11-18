@@ -12,7 +12,7 @@ using Syncfusion.DocIO.DLS;
 using System.Xml;
 using Syncfusion.Drawing;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.Word;
+namespace EJ2CoreSampleBrowser.Pages.Word;
 
 public class TableStyles : PageModel
 {

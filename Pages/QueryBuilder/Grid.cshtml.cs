@@ -8,7 +8,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Syncfusion.EJ2.QueryBuilder;
 using EJ2CoreSampleBrowser.Models;
-namespace EJ2CoreSampleBrowser_NET8.Pages.QueryBuilder;
+namespace EJ2CoreSampleBrowser.Pages.QueryBuilder;
 
 public class GridModel : PageModel
 {

@@ -7,7 +7,7 @@
 #endregion
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Syncfusion.EJ2.Buttons;
-namespace EJ2CoreSampleBrowser_NET8.Pages.SpeedDial;
+namespace EJ2CoreSampleBrowser.Pages.SpeedDial;
 
 public class PositionModel : PageModel
 {

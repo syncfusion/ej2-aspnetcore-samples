@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc;
 using Syncfusion.Presentation;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.PowerPoint;
+namespace EJ2CoreSampleBrowser.Pages.PowerPoint;
 
 public class Slide : PageModel
 {

@@ -8,7 +8,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.Button;
+namespace EJ2CoreSampleBrowser.Pages.Button;
 
 public class CheckBoxFor : PageModel
 {

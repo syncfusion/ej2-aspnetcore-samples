@@ -7,7 +7,7 @@
 #endregion
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Syncfusion.EJ2.Navigations;
-namespace EJ2CoreSampleBrowser_NET8.Pages.ContextMenu;
+namespace EJ2CoreSampleBrowser.Pages.ContextMenu;
 
 public class DefaultFunctionalitiesModel : PageModel
 {

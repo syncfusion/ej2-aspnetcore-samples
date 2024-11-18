@@ -8,7 +8,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.SparkLine;
+namespace EJ2CoreSampleBrowser.Pages.SparkLine;
 
 public class SparkGridModel : PageModel
 {

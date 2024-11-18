@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Syncfusion.EJ2.Diagrams;
 using Syncfusion.EJ2.Navigations;
 using System.ComponentModel;
-namespace EJ2CoreSampleBrowser_NET8.Pages.Diagram;
+namespace EJ2CoreSampleBrowser.Pages.Diagram;
 using Newtonsoft.Json;
 public class FlowChartModel : PageModel
 {

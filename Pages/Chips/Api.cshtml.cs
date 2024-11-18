@@ -7,7 +7,7 @@
 #endregion
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.Chips;
+namespace EJ2CoreSampleBrowser.Pages.Chips;
 
 public class Api : PageModel
 {

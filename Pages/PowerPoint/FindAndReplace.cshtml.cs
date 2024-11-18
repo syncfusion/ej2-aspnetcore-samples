@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Syncfusion.Presentation;
 using System.Text.RegularExpressions;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.PowerPoint;
+namespace EJ2CoreSampleBrowser.Pages.PowerPoint;
 
 public class FindAndReplace : PageModel
 {

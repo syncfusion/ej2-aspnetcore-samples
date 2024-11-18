@@ -12,7 +12,7 @@ using Syncfusion.DocIO;
 using Syncfusion.DocIORenderer;
 using Syncfusion.Pdf;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.Word;
+namespace EJ2CoreSampleBrowser.Pages.Word;
 
 public class WordToPDFUA : PageModel
 {

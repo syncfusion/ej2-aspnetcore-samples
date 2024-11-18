@@ -7,7 +7,7 @@
 #endregion
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.Chart;
+namespace EJ2CoreSampleBrowser.Pages.Chart;
 
 public class SplineUpdate : PageModel
 {

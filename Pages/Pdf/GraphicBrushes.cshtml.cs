@@ -13,7 +13,7 @@ using Syncfusion.Pdf.ColorSpace;
 using Syncfusion.Pdf.Functions;
 using Syncfusion.Pdf.Graphics;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.Pdf;
+namespace EJ2CoreSampleBrowser.Pages.Pdf;
 
 public class GraphicBrushes : PageModel
 {

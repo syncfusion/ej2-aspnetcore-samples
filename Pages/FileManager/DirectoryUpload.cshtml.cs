@@ -7,7 +7,7 @@
 #endregion
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.FileManager;
+namespace EJ2CoreSampleBrowser.Pages.FileManager;
 
 public class DirectoryUpload : PageModel
 {

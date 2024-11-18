@@ -11,7 +11,7 @@ using Syncfusion.Presentation;
 using Syncfusion.OfficeChart;
 using Syncfusion.Drawing;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.PowerPoint;
+namespace EJ2CoreSampleBrowser.Pages.PowerPoint;
 
 public class Chart : PageModel
 {

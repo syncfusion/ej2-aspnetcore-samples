@@ -8,7 +8,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Syncfusion.EJ2;
 using Syncfusion.EJ2.Navigations;
-namespace EJ2CoreSampleBrowser_NET8.Pages.Sidebar;
+namespace EJ2CoreSampleBrowser.Pages.Sidebar;
 
 public class SidebarWithMenu : PageModel
 {

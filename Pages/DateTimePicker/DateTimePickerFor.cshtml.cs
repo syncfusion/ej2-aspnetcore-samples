@@ -8,7 +8,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.DateTimePicker
+namespace EJ2CoreSampleBrowser.Pages.DateTimePicker
 {
     public class DateTimePickerForModel : PageModel
     {

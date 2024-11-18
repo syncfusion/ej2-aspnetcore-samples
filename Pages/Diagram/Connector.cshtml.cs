@@ -8,7 +8,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Syncfusion.EJ2.Diagrams;
 using EJ2CoreSampleBrowser_NET6.Models;
-namespace EJ2CoreSampleBrowser_NET8.Pages.Diagram;
+namespace EJ2CoreSampleBrowser.Pages.Diagram;
 
 public class ConnectorModel : PageModel
 {

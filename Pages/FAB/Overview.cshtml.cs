@@ -7,7 +7,7 @@
 #endregion
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.FAB
+namespace EJ2CoreSampleBrowser.Pages.FAB
 {
     public class OverviewModel : PageModel
     {

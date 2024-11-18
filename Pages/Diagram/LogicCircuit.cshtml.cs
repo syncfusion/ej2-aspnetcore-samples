@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Syncfusion.EJ2.Diagrams;
 using Syncfusion.EJ2.Navigations;
-namespace EJ2CoreSampleBrowser_NET8.Pages.Diagram;
+namespace EJ2CoreSampleBrowser.Pages.Diagram;
 
 public class LogicCircuitModel : PageModel
 {

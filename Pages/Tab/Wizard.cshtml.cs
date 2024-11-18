@@ -8,7 +8,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.Tab
+namespace EJ2CoreSampleBrowser.Pages.Tab
 {
     public class WizardModel : PageModel
     {

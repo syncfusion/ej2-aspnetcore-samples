@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Syncfusion.EJ2.Navigations;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.Toolbar
+namespace EJ2CoreSampleBrowser.Pages.Toolbar
 {
     public class DefaultFunctionalitiesModel : PageModel
     {

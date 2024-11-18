@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Syncfusion.EJ2.Charts;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.Chart
+namespace EJ2CoreSampleBrowser.Pages.Chart
 {
     public class StripLineModel : PageModel
     {

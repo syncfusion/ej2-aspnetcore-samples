@@ -7,7 +7,7 @@
 #endregion
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
-namespace EJ2CoreSampleBrowser_NET8.Pages.TreeMap;
+namespace EJ2CoreSampleBrowser.Pages.TreeMap;
 
 public class ColorMapping : PageModel
 {

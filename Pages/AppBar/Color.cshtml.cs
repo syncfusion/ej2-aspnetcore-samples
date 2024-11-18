@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Syncfusion.EJ2.Navigations;
 
-namespace EJ2CoreSampleBrowser_NET8.Pages.AppBar
+namespace EJ2CoreSampleBrowser.Pages.AppBar
 {
     public class ColorModel : PageModel
     {

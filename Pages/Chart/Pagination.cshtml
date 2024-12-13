@@ -1,0 +1,296 @@
+﻿@page
+@model EJ2CoreSampleBrowser.Pages.Chart.PaginationModel
+@using Syncfusion.EJ2
+
+@section ControlsSection {
+    
+    <div class="control-section" align='center'>
+        <ejs-chart id="container" height="70%" load="load" annotationRender="annotationRender">
+            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category"
+                                  interval="1"  
+                                  zoomFactor="0.175" 
+                                  zoomPosition="0" 
+                                  enableAutoIntervalOnZooming="false"
+                                  isIndexed="true"
+                                  edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift"
+                                  labelPlacement="@Syncfusion.EJ2.Charts.LabelPlacement.OnTicks">
+                <e-majorgridlines width="0"></e-majorgridlines>
+            </e-chart-primaryxaxis>
+            <e-chart-primaryyaxis visible="false" maximum="32">
+                <e-majorgridlines width="0"></e-majorgridlines>
+            </e-chart-primaryyaxis>
+            <e-chart-chartarea>
+                <e-chartarea-border width="0"></e-chartarea-border>
+            </e-chart-chartarea>
+            <e-chart-zoomsettings enableSelectionZooming="true" toolbarItems="new String[] {}" mode="@Syncfusion.EJ2.Charts.ZoomMode.X"></e-chart-zoomsettings>
+            <e-series-collection>
+                <e-series dataSource="@Model.ChartPoints" opacity="0.5" width="2" xName="XValue" yName="Y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.SplineArea">
+                    <e-series-marker visible="false">
+                        <e-series-datalabel visible="true" position="@Syncfusion.EJ2.Charts.LabelPosition.Top" format="{value}°C">
+                        </e-series-datalabel>
+                    </e-series-marker>
+                    <e-series-border width="2"></e-series-border>
+                </e-series>
+            </e-series-collection>
+            <e-chart-annotations>
+                <e-chart-annotation y="9%" content="<div id='chart_image'><img src='./../scripts/chart/images/cloudy.png' alt='Cloud Picture' style='width: 41px; height: 41px'/></div>" coordinateUnits='@Syncfusion.EJ2.Charts.Units.Pixel' region='@Syncfusion.EJ2.Charts.Regions.Chart'></e-chart-annotation>
+                <e-chart-annotation content="<div id='days' style='font-size: 11px;'>Friday, 01:00 am</div>" coordinateUnits='@Syncfusion.EJ2.Charts.Units.Pixel' region='@Syncfusion.EJ2.Charts.Regions.Chart'></e-chart-annotation>
+                <e-chart-annotation content="<div id='title' style='font-size: 20px; font-weight: 600'>USA, Texas</div>" coordinateUnits='@Syncfusion.EJ2.Charts.Units.Pixel' region='@Syncfusion.EJ2.Charts.Regions.Chart'></e-chart-annotation>
+            </e-chart-annotations>
+        </ejs-chart>
+
+        <div id="container" align='center'></div>
+        <div align='center' id="button-container">
+            <button id="friday" class="custom-button active">
+                <div class="day">Fri</div>
+                <img src="./../scripts/chart/images/sunny_image.png" alt="Friday">
+                <div class="temp">24°C - 19°C</div>
+            </button>
+            <button id="saturday" class="custom-button">
+                <div class="day">Sat</div>
+                <img src="./../scripts/chart/images/sunny_image.png" alt="Saturday">
+                <div class="temp">20°C - 25°C</div>
+            </button>
+            <button id="sunday" class="custom-button">
+                <div class="day">Sun</div>
+                <img src="./../scripts/chart/images/cloudy.png" alt="Sunday">
+                <div class="temp">18°C - 24°C</div>
+            </button>
+            <button id="monday" class="custom-button">
+                <div class="day">Mon</div>
+                <img src="./../scripts/chart/images/cloudy.png" alt="Monday">
+                <div class="temp">14°C - 19°C</div>
+            </button>
+            <button id="tuesday" class="custom-button">
+                <div class="day">Tue</div>
+                <img src="./../scripts/chart/images/rainy.png" alt="Tuesday">
+                <div class="temp">14°C - 18°C</div>
+            </button>
+        </div>
+    </div>
+
+    <style>
+        #control-container {
+            padding: 0px !important;
+        }
+
+        #button-container {
+            padding: 5px;
+            /* Remove padding around the container */
+            width: 75%;
+            background-color: rgb(237, 236, 236);
+            /* Same color as the button background */
+            display: flex;
+            justify-content: space-between;
+            /* Ensure buttons take up the full width */
+            align-items: center;
+            /* Align items in the center vertically */
+            border-radius: 10px;
+            /* Optional: for rounded corners */
+        }
+
+        .custom-button {
+            flex-grow: 1;
+            /* Make buttons grow to fill the container */
+            flex-basis: 0;
+            /* Ensure all buttons have the same width */
+            height: 35%;
+            /* Set a fixed height for the buttons */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: none;
+            /* Remove the border for seamless alignment */
+            border-radius: 5px;
+            /* Remove the border-radius for no gaps */
+            justify-content: center;
+            /* Center content within the button */
+            background-color: rgb(237, 236, 236);
+            /* Button background */
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            /* Smooth transition for background color and shadow */
+            position: relative;
+            /* To position the line correctly */
+        }
+
+        /* Add the line after every button except the last one */
+        .custom-button:not(:last-child):not(.active)::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            width: 1px;
+            /* Width of the line */
+            height: 80%;
+            /* Height of the line, adjust as needed */
+            background-color: rgba(0, 0, 0, 0.2);
+            /* Light shadow color */
+        }
+
+        /* Specifically remove the line from the Tuesday button */
+        .custom-button.no-line::after {
+            display: none;
+        }
+
+        .custom-button img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .day,
+        .temp {
+            font-size: 13px;
+        }
+
+        .light-theme-bg {
+            background-color: rgb(237, 236, 236) !important;
+        }
+
+        .light-theme-bg.active {
+            background-color: white !important;
+        }
+
+        .light-theme-bg:hover {
+            background-color: #dbdada !important;
+        }
+
+        .dark-theme-bg {
+            background-color: #333 !important;
+        }
+
+        .dark-theme-bg.active {
+            background-color: #7b7b7b !important;
+            box-shadow: 0 0 0 2px #7b7b7b !important;
+        }
+
+        .dark-theme-bg:hover {
+            background-color: #7b7b7b !important;
+        }
+
+        .custom-button.active {
+            box-shadow: 0 0 0 2px rgb(237, 236, 236);
+            /* Create an outward border effect */
+            z-index: 2;
+            /* Ensure the selected button is above other buttons and lines */
+        }
+    </style>
+
+    <script type="text/javascript">
+        var image = 'sunny_image';
+        var count = 25;
+        var day = 'Friday';
+        var chart;
+        function load(args) {
+            chart = args.chart;
+            var selectedTheme = themeName ? themeName : 'Fluent2';
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, "Dark").replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5');
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+            args.chart.primaryXAxis.labelRotation = ej.base.Browser.isDevice ? -90 : 0;
+            args.chart.annotations[0].x = ej.base.Browser.isDevice ? "6%" : "3%";
+            args.chart.annotations[1].x = ej.base.Browser.isDevice ? "87%" : "94%";
+            args.chart.annotations[1].y = ej.base.Browser.isDevice ? "10%" : "11%";
+            args.chart.annotations[2].x = ej.base.Browser.isDevice ? "88%" : "93%";
+            args.chart.annotations[2].y = ej.base.Browser.isDevice ? "4%" : "3%";
+            var isDarkTheme = /dark/i.test(selectedTheme) || /contrast/i.test(selectedTheme);
+            var buttons = document.querySelectorAll('.custom-button');
+            var buttonContainer = document.getElementById('button-container');
+            buttons.forEach(button => {
+                if (isDarkTheme) {
+                    button.classList.add('dark-theme-bg');
+                    button.classList.remove('light-theme-bg');
+                    buttonContainer.style.backgroundColor = '#333';
+                } else {
+                    button.classList.add('light-theme-bg');
+                    button.classList.remove('dark-theme-bg');
+                    buttonContainer.style.backgroundColor = 'rgb(237, 236, 236)';
+                }
+            });
+            if (ej.base.Browser.isDevice) {
+                buttonContainer.style.width = '97%';
+            } else {
+                buttonContainer.style.width = '75%';
+            }
+        };
+
+        function annotationRender(args) {
+            if (args.content.id === 'container_Annotation_0') {
+                args.content.innerHTML = '<div id="chart_cloud" align="center"><img src="./../scripts/chart/images/' + image + '.png" alt="Cloud Picture" style="width: 41px; height: 41px; margin-right: 10px;"/><b align="center" style="font-size: 23px">' + count + '<span style="font-size: 12px; vertical-align: super;">°C | °F</span>' + '</b></div>';
+            }
+            else if (args.content.id === 'container_Annotation_1') {
+                args.content.innerHTML = '<div id="days" style="font-size: 11px;">' + day + ', 01:00 am</div>';
+                if (day === 'Saturday' || day === 'Tuesday') {
+                    ej.base.Browser.isDevice ? args.location.x -= 8 : args.location.x -= 12;
+                } else if (day === 'Sunday') {
+                    ej.base.Browser.isDevice ? args.location.x -= 5 : args.location.x -= 8;
+                } else if (day === 'Monday') {
+                    args.location.x -= 10
+                }
+            }
+            else {
+                args.content.innerHTML = ej.base.Browser.isDevice ? `<div id="title" style="font-size: 16px; font-weight: 600">USA, Texas</div>` : `<div id="title" style="font-size: 20px; font-weight: 600">USA, Texas</div>`;
+            }
+        };
+
+        function updateChart(buttonId, img, tempCount, chartDay, zoomPos, zoomFactor) {
+            image = img;
+            count = tempCount;
+            day = chartDay;
+            chart.primaryXAxis.zoomPosition = zoomPos;
+            chart.primaryXAxis.zoomFactor = zoomFactor;
+            chart.duration = 600;
+            const buttons = document.querySelectorAll('.custom-button');
+            buttons.forEach(button => button.classList.remove('active'));
+            const selectedButton = document.getElementById(buttonId);
+            selectedButton.classList.add('active');
+        };
+
+        document.getElementById('friday').onclick = () => {
+            updateChart('friday', 'sunny_image', 25, 'Friday', 0, 0.175);
+        };
+        document.getElementById('saturday').onclick = () => {
+            updateChart('saturday', 'sunny_image', 25, 'Saturday', 0.206, 0.175);
+        };
+        document.getElementById('sunday').onclick = () => {
+            updateChart('sunday', 'cloudy', 24, 'Sunday', 0.413, 0.175);
+        };
+        document.getElementById('monday').onclick = () => {
+            updateChart('monday', 'cloudy', 19, 'Monday', 0.620, 0.175);
+        };
+        document.getElementById('tuesday').onclick = () => {
+            updateChart('tuesday', 'rainy', 18, 'Tuesday', 0.827, 0.175);
+        };
+    </script>
+}
+@section Meta {
+    <meta name="description" content="This example demonstrates the Live Data Sorting in ASP.NET Core Chart control. Explore here for more details." />
+}
+@section ActionDescription {
+    <div id="action-description">
+        <p>
+            This sample demonstrates the panning feature of the charts.
+        </p>
+    </div>
+}
+@section Description {
+    <div id="description">
+        <p>
+            This example shows how to view the next set of data through panning. You can swipe from left to right or vice versa, and you can also click on the days at the bottom to view the next set of data.
+        </p>
+        <p>
+            More information on zooming and panning can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/zooming" aria-label="Navigate to the documentation for Zooming in ASP.NET Core Chart control">documentation section<span class="sr-only">opens in a new tab</span></a>.
+        </p>
+    </div>
+}
+@*custom code start*@
+@section Scripts {
+}
+@*custom code end*@
+@section Title {
+    <title>ASP.NET Core Chart Live Data Sorting Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Live Data Sorting in ASP.NET Core Chart Control</h1>
+}

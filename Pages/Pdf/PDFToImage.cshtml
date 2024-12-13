@@ -1,0 +1,64 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Pdf.PDFToImage
+
+@section ControlsSection{
+    <div class="control-section">
+        @{
+            var Title = "    PdfToImageConverter : PDF To Image : Syncfusion";
+        }
+
+        @{
+            Html.BeginForm("pdftoimage", "pdf", FormMethod.Post, new { enctype = "multipart/form-data" });
+
+            {
+
+                <div class="tablediv" style="font-size:14px">
+                    <div class="rowdiv">
+                        <text>
+                            Click the button to view the resultant image converted from the first page of the PDF document using PdfToImageConverter.
+                        </text>
+                        <br />
+                        <br />
+                        <text>Select PDF Document</text>
+                        <br />
+                        @Html.TextBox("file", "", new { type = "file", accept = "application/pdf" }) <br />
+                    </div>
+                    <div class="rowdiv">
+                        <div class="celldiv">
+                            <input class="e-btn" type="submit" value="Convert to Image" name="button" style="width:150px; text-transform:capitalize" id="convertButton" disabled/>
+                        </div>
+                        <br />
+                        <div class="text-danger">
+                            @Model.Message
+                        </div>
+                    </div>
+                </div>
+
+                Html.EndForm();
+            }
+        }
+    </div>
+    <script>
+        document.getElementById("file").onchange = function () {
+            convertButton.disabled = this.files.length === 0 || !this.files[0].name.toLowerCase().endsWith('.pdf');
+        };</script>
+}
+@section ActionDescription{
+    <div id="action-description" style="margin-top: 10px">
+        This sample demonstrates how to convert a PDF document to an image using the PdfToImageConverter. It supports customization in image conversion, such as setting a transparent background and removing annotations for a specific page or range of pages.
+    </div>
+}
+@section Meta{
+    <meta name="description" content="This example demonstrates the PDF To Image conversion in ASP.NET Core platform using PdfToImageConverter. Explore here for more details." />
+                }
+@section Description{
+    <div id="description" style="margin-top: 10px">
+        More information about the PDF to Image conversion using the PdfToImageConverter can be found in this documentation <a href="https://help.syncfusion.com/file-formats/pdf-to-image">section.</a>
+    </div>
+}
+@section Title{
+    <title>ASP.NET Core PdfToImageConverter - PDF To Image Example - Syncfusion Demos </title>
+                }
+@section Header{
+    <h1 class='sb-sample-text'>Example of PDF To Image using ASP.NET Core PdfToImageConverter</h1>
+                }

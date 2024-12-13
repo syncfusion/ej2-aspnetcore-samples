@@ -1,0 +1,205 @@
+﻿@page
+@using EJ2CoreSampleBrowser.Models;
+@using Syncfusion.EJ2
+
+<link href="~/css/grid/adaptive.css" rel="stylesheet" />
+
+@section ControlsSection{
+    <div class="col-lg-8 control-section">
+        <div class="control-wrapper e-bigger e-adaptive-demo">
+            <div class="e-mobile-layout">
+                <div class="e-mobile-content">
+                    <ejs-treegrid id="adaptivebrowser" dataSource="@TreeData.GetDefaultData()" enableAdaptiveUI="true" childMapping="Children" treeColumnIndex="1" height="100%" allowPaging="true" allowFiltering="true" allowSorting="true" toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel", "Search" })" load="onLoad">
+                        <e-treegrid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Dialog"></e-treegrid-editSettings>
+                        <e-treegrid-filterSettings type="Excel"></e-treegrid-filterSettings>
+                        <e-treegrid-columns>
+                            <e-treegrid-column field="TaskId" headerText="Task ID" isPrimaryKey="true" validationRules="@(new { required=true, number=true})" textAlign="Right" width="135"></e-treegrid-column>
+                            <e-treegrid-column field="TaskName" headerText="Task Name" validationRules="@(new { required=true})" width="280"></e-treegrid-column>
+                            <e-treegrid-column field="Duration" headerText="Duration" textAlign="Right" width="140"></e-treegrid-column>
+                            <e-treegrid-column field="Progress" headerText="Progress" textAlign="Right" width="145"></e-treegrid-column>
+                        </e-treegrid-columns>
+                    </ejs-treegrid>
+                </div>
+            </div>
+            <div class="e-desktop-layout">
+                <ejs-treegrid id="adaptivedevice" dataSource="ViewBag.dataSource" enableAdaptiveUI="true" childMapping="Children" treeColumnIndex="1" height="100%" allowPaging="true" allowFiltering="true" allowSorting="true" toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel", "Search" })" load="onLoad">
+                    <e-treegrid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Dialog"></e-treegrid-editSettings>
+                    <e-treegrid-filterSettings type="Excel"></e-treegrid-filterSettings>
+                    <e-treegrid-columns>
+                        <e-treegrid-column field="TaskId" headerText="Task ID" textAlign="Right" validationRules="@(new { required=true, number=true})" width="135"></e-treegrid-column>
+                        <e-treegrid-column field="TaskName" headerText="Task Name" validationRules="@(new { required=true})" width="280"></e-treegrid-column>
+                        <e-treegrid-column field="Duration" headerText="Duration" textAlign="Right" width="140"></e-treegrid-column>
+                        <e-treegrid-column field="Progress" headerText="Progress" textAlign="Right" width="145"></e-treegrid-column>
+                    </e-treegrid-columns>
+                </ejs-treegrid>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (ej.base.Browser.isDevice) {
+                document.getElementsByClassName('e-mobile-layout')[0].style.display = 'none';
+            } else {
+                document.getElementsByClassName('e-desktop-layout')[0].style.display = 'none';
+            }
+        });
+
+        function onLoad() {
+            var treegrid;
+            if (ej.base.Browser.isDevice && document.getElementById("adaptivedevice").classList.contains('e-grid')) {
+                treegrid = document.getElementById("adaptivedevice").ej2_instances[0];
+            } else {
+                treegrid = document.getElementById("adaptivebrowser").ej2_instances[0];
+            }
+            if (!ej.base.Browser.isDevice) {
+                treegrid.grid.adaptiveDlgTarget = document.getElementsByClassName('e-mobile-content')[0];
+            }
+        }
+    </script>
+
+    <style>
+        /* The device with borders */
+        .e-mobile-layout {
+            position: relative;
+            width: 360px;
+            height: 640px;
+            margin: auto;
+            border: 16px #f4f4f4 solid;
+            border-top-width: 60px;
+            border-bottom-width: 60px;
+            border-radius: 36px;
+            box-shadow: 0 0px 2px rgb(144 144 144), 0 0px 10px rgb(0 0 0 / 16%);
+        }
+
+        .tailwind-dark .e-mobile-layout,
+        .material-dark .e-mobile-layout,
+        .fabric-dark .e-mobile-layout,
+        .bootstrap-dark .e-mobile-layout,
+        .bootstrap5-dark .e-mobile-layout {
+            border: 16px rgb(255 255 255 / 10%) solid;
+            border-top-width: 60px;
+            border-bottom-width: 60px;
+        }
+
+        /* The horizontal line on the top of the device */
+        .e-mobile-layout:before {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 5px;
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #ebebeb;
+            border-radius: 10px;
+        }
+
+        .tailwind-dark .e-mobile-layout::before,
+        .tailwind-dark .e-mobile-layout::after,
+        .material-dark .e-mobile-layout::before,
+        .material-dark .e-mobile-layout::after,
+        .fabric-dark .e-mobile-layout::before,
+        .fabric-dark .e-mobile-layout::after,
+        .bootstrap-dark .e-mobile-layout::before,
+        .bootstrap-dark .e-mobile-layout::after,
+        .bootstrap5-dark .e-mobile-layout::before,
+        .bootstrap5-dark .e-mobile-layout::after {
+            background: rgb(255 255 255 / 20%);
+        }
+
+        /* The circle on the bottom of the device */
+        .e-mobile-layout:after {
+            content: '';
+            display: block;
+            width: 35px;
+            height: 35px;
+            position: absolute;
+            left: 50%;
+            bottom: -65px;
+            transform: translate(-50%, -50%);
+            background: #e8e8e8;
+            border-radius: 50%;
+        }
+
+        /* The screen (or content) of the device */
+        .e-mobile-layout .e-mobile-content {
+            overflow: hidden;
+            width: 328px;
+            height: 100%;
+            background: transparent;
+            border: 0px solid #dddddd;
+        }
+
+        .highcontrast .e-mobile-layout {
+            border: 16px #000000 solid;
+            border-top-width: 60px;
+            border-bottom-width: 60px;
+            box-shadow: -1px 2px white, -2px -2px white, 2px -2px white, 2px 1px white;
+        }
+
+        .e-gridpager.e-control.e-pager {
+            display: inline-flex;
+
+            .e-parentmsgbar .e-pagecountmsg,
+            .e-pagercontainer {
+                display: none;
+            }
+
+            .e-mfirst.e-icon-first,
+            .e-mprev.e-icon-prev,
+            .e-mnext.e-icon-next,
+            .e-mlast.e-icon-last {
+                display: block;
+                padding: 3px 6px 3px 6px;
+                margin-right: 9px;
+            }
+
+            .e-mprev.e-icon-prev,
+            .e-mnext.e-icon-next {
+                padding-left: 9px;
+            }
+
+            .e-mlast {
+                display: block;
+            }
+
+            .e-parentmsgbar {
+                display: inline-block;
+                width: 100%;
+                text-align: center;
+                padding-bottom: 0px;
+                padding-top: 0px;
+                margin: -2px;
+            }
+        }
+    </style>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the adaptive rendering behavior of Tree Grid features such as Filtering, Paging, Searching and etc.,
+        </p>
+    </div>
+}
+
+@section Meta{
+    <meta name="description" content="This example demonstrates the Adaptive in ASP.NET Core Tree Grid control. Explore here for more details." />
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            The <code>enableAdaptiveUI</code> property is set to true. The filtering, CRUD actions, paging and other various user interactions in tree grid will be adaptive to the smaller screens. For example, Filtering opens the UI for user in a pop-up occupying the entire screen.
+        </p>
+    </div>
+}
+@section Title{
+    <title>ASP.NET Core Tree Grid Adaptive Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Adaptive Layout in ASP.NET Core Tree Grid Control</h1>
+}
+

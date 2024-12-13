@@ -1,0 +1,163 @@
+﻿@page
+@model EJ2CoreSampleBrowser.Pages.TreeGrid.FreezeDirectionModel
+@{
+    ViewData["Title"] = "FreezeDirection";
+}
+
+@{
+    var defaultanimation = new Syncfusion.EJ2.Popups.DialogAnimationSettings { Effect = Syncfusion.EJ2.Popups.DialogEffect.None };
+    List<object> columns = new List<object>();
+    columns.Add(new { name = "Task ID", id = "TaskId" });
+    columns.Add(new { name = "Task Name", id = "TaskName" });
+    columns.Add(new { name = "Start Date", id = "StartDate" });
+    columns.Add(new { name = "End Date", id = "EndDate" });
+    columns.Add(new { name = "Duration", id = "Duration" });
+    columns.Add(new { name = "Progress", id = "Progress" });
+    columns.Add(new { name = "Priority", id = "Priority" });
+    columns.Add(new { name = "Designation", id = "Designation" });
+    columns.Add(new { name = "Employee ID", id = "EmployeeID" });
+    columns.Add(new { name = "Approved", id = "Approved" });
+
+    List<object> direction = new List<object>();
+    direction.Add(new { name = "Left", id = "Left" });
+    direction.Add(new { name = "Right", id = "Right" });
+    direction.Add(new { name = "Center", id = "Center" });
+
+    var DefaultButtons = new
+    {
+        content = "OK",
+        isPrimary = true
+    };
+}
+
+@section ControlsSection{
+    <div class="control-section">
+        <div class="freezeprop">
+            <div class="freezecol">
+                <div class="freezecol">
+                    <span>
+                        Column
+                    </span>
+                </div>
+                <div class="freezecol">
+                    <ejs-dropdownlist id="column" dataSource="@columns" change="columnChange" index="0">
+                        <e-dropdownlist-fields text="name" value="id"></e-dropdownlist-fields>
+                    </ejs-dropdownlist>
+                </div>
+            </div>
+            <div class="freezecol">
+                <div class="freezecol">
+                    <span>
+                        Freeze Direction
+                    </span>
+                </div>
+                <div class="freezecol">
+                    <ejs-dropdownlist id="FreezeDirection" dataSource="@direction" change="directionChange" index="0">
+                        <e-dropdownlist-fields text="name" value="id"></e-dropdownlist-fields>
+                    </ejs-dropdownlist>
+                </div>
+            </div>
+        </div>
+
+        <ejs-treegrid id="FrozenGrid" dataSource="@FreezeDirectionModel.FreezeDataSource.GetTreeData()" treeColumnIndex="1" childMapping="Children" height="410" enableHover="false">
+            <e-treegrid-columns>
+                <e-treegrid-column field="TaskId" headerText="Task ID" freeze="Left" textAlign="Right" width="100"></e-treegrid-column>
+                <e-treegrid-column field="TaskName" headerText="Task Name" textAlign="Left" width="260"></e-treegrid-column>
+                <e-treegrid-column field="StartDate" headerText="Start Date" width="230" textAlign="Right" format="yMd"></e-treegrid-column>
+                <e-treegrid-column field="EndDate" headerText=" End Date" textAlign="Right" format="yMd" width="230"></e-treegrid-column>
+                <e-treegrid-column field="Duration" headerText="Duration" width="210" textAlign="Right"></e-treegrid-column>
+                <e-treegrid-column field="Progress" headerText="Progress" width="210" textAlign="Right"></e-treegrid-column>
+                <e-treegrid-column field="Priority" headerText="Priority" width="230" textAlign="Left"></e-treegrid-column>
+                <e-treegrid-column field="Designation" headerText="Designation" width="300" textAlign="Left"></e-treegrid-column>
+                <e-treegrid-column field="EmployeeID" headerText="Employee ID" width="130" textAlign="Right"></e-treegrid-column>
+                <e-treegrid-column field="Approved" headerText="Approved" width="140" freeze="Right" textAlign="Left" displayAsCheckBox="true"></e-treegrid-column>
+            </e-treegrid-columns>
+        </ejs-treegrid>
+        <ejs-dialog id="AlertDialog" header="Frozen" content="Atleast one Column should be in movable" showCloseIcon="false" target=".control-section" width="300px" visible="false" animationSettings="defaultanimation">
+            <e-dialog-buttons>
+                <e-dialog-dialogbutton buttonModel="@DefaultButtons" click="alertDlgBtnClick"></e-dialog-dialogbutton>
+            </e-dialog-buttons>
+        </ejs-dialog>
+    </div>
+
+    <style>
+        .freezeprop {
+            padding-bottom: 5px;
+        }
+
+        .freezecol {
+            display: inline-block;
+            padding-right: 10px;
+        }
+    </style>
+
+    <script>
+        var refresh = true;
+        function columnChange(e) {
+            var treegrid = document.getElementById("FrozenGrid").ej2_instances[0];
+            var columnName = e.value;
+            var column = treegrid.grid.getColumnByField(columnName);
+            var directionDropDown = document.getElementById("FreezeDirection").ej2_instances[0];
+            var value = column.freeze === undefined ? 'Center' : column.freeze;
+            refresh = directionDropDown.value === value;
+            directionDropDown.value = value;
+        }
+
+        function directionChange(e) {
+            if (refresh) {
+                var treegrid = document.getElementById("FrozenGrid").ej2_instances[0];
+                var columnName = document.getElementById("column").ej2_instances[0].value;
+                var mvblColumns = treegrid.grid.getMovableColumns();
+                if (mvblColumns.length === 1 && columnName === mvblColumns[0].field && e.value !== mvblColumns[0].freeze) {
+                    document.getElementById("AlertDialog").ej2_instances[0].show();
+                    refresh = false; this.value = "Center"; this.refresh();
+                } else {
+                    treegrid.grid.getColumnByField(columnName).freeze = e.value === 'Center' ? undefined : e.value;
+                    treegrid.grid.refreshColumns();
+                }
+            }
+            refresh = true;
+        }
+        function alertDlgBtnClick() {
+            document.getElementById("AlertDialog").ej2_instances[0].hide();
+        }
+    </script>
+
+}
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the freeze direction feature of the Tree Grid. Scroll the movable content
+            horizontally to view the frozen columns with the content.
+        </p>
+    </div>
+}
+
+@section Meta{
+    <meta name="description" content="This example demonstrates the Freeze Direction in ASP.NET Core Tree Grid control. Explore here for more details." />
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            The freezing feature enables the user to freeze certain rows/columns at both sides to scroll remaining movable
+            content. This can be achieved by setting <code>
+                <a target="_blank" class="code"
+                   href="https://ej2.syncfusion.com/aspnetcore/documentation/tree-grid/frozen#freeze-particular-columns" aria-label="Navigate to the documentation for freeze-particular-columns in ASP.NET Core TreeGrid control">
+                    Freeze
+                </a>
+            </code> property in column settings.
+        </p>
+        <p>
+            In this demo sample, the <b>Task ID</b> column freezed at left side and <b>Approved</b> column freezed at
+            right side using <code>Column->Freeze</code>property.
+        </p>
+
+    </div>
+}
+@section Title{
+    <title>ASP.NET Core Tree Grid Freeze Direction Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Freeze Direction in ASP.NET Core Tree Grid Control</h1>
+}

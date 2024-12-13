@@ -1,0 +1,141 @@
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+    <div class="control-section">
+        <ejs-spreadsheet id="spreadsheet" openUrl="FreezePaneOpen" saveUrl="FreezePaneSave" created="createdHandler">
+            <e-spreadsheet-sheets>
+                <e-spreadsheet-sheet name="Gross Salary" frozenRows="2" frozenColumns="2" selectedRange="C1">
+                    <e-spreadsheet-ranges>
+                        <e-spreadsheet-range dataSource="ViewBag.FreezePaneData" startCell="A2"></e-spreadsheet-range>
+                    </e-spreadsheet-ranges>
+                    <e-spreadsheet-rows>
+                        <e-spreadsheet-row>
+                            <e-spreadsheet-cells>
+                                <e-spreadsheet-cell index=1 value="Period">
+                                    <e-spreadsheet-cellstyle fontSize="12pt" fontWeight="Bold" textAlign="Center" verticalAlign="Middle"></e-spreadsheet-cellstyle>
+                                </e-spreadsheet-cell>
+                                <e-spreadsheet-cell index=3 value="Total Gross Salary">
+                                    <e-spreadsheet-cellstyle fontSize="12pt" fontWeight="Bold" textAlign="Center" verticalAlign="Middle"></e-spreadsheet-cellstyle>
+                                </e-spreadsheet-cell>
+                            </e-spreadsheet-cells>
+                        </e-spreadsheet-row>
+                        <e-spreadsheet-row>
+                            <e-spreadsheet-cells>
+                                <e-spreadsheet-cell index=2 value="Basic Salary"></e-spreadsheet-cell>
+                                <e-spreadsheet-cell value="Revised Basic Salary"></e-spreadsheet-cell>;
+                                <e-spreadsheet-cell value="DA"></e-spreadsheet-cell>;
+                                <e-spreadsheet-cell value="Revised DA"></e-spreadsheet-cell>;
+                                <e-spreadsheet-cell value="HRA"></e-spreadsheet-cell>;
+                                <e-spreadsheet-cell value="Revised HRA"></e-spreadsheet-cell>;
+                                <e-spreadsheet-cell value="Conveyance Allowance"></e-spreadsheet-cell>;
+                                <e-spreadsheet-cell value="Revised Conveyance Allowance"></e-spreadsheet-cell>;
+                                <e-spreadsheet-cell value="Medical Expenses"></e-spreadsheet-cell>;
+                                <e-spreadsheet-cell value="Revised Medical Expenses"></e-spreadsheet-cell>;
+                                <e-spreadsheet-cell value="Special Allowance"></e-spreadsheet-cell>;
+                                <e-spreadsheet-cell value="Revised Spcial Allowance"></e-spreadsheet-cell>;
+                                <e-spreadsheet-cell value="Total Gross Salary"></e-spreadsheet-cell>;
+                                <e-spreadsheet-cell value="Revised Total Gross Salary"></e-spreadsheet-cell>;
+
+                            </e-spreadsheet-cells>
+                        </e-spreadsheet-row>
+                        <e-spreadsheet-row index=26>
+                            <e-spreadsheet-cells>
+                                <e-spreadsheet-cell index=13 value="Total Amount">
+                                    <e-spreadsheet-cellstyle fontSize="12pt" fontWeight="Bold" textAlign="Center" verticalAlign="Middle"></e-spreadsheet-cellstyle>
+                                </e-spreadsheet-cell>
+                                <e-spreadsheet-cell formula="=SUM(O4:O26)">
+                                    <e-spreadsheet-cellstyle fontSize="12pt" fontWeight="Bold" textAlign="Center" verticalAlign="Middle"></e-spreadsheet-cellstyle>
+                                </e-spreadsheet-cell>
+                                <e-spreadsheet-cell formula="=SUM(P4:P26)">
+                                    <e-spreadsheet-cellstyle fontSize="12pt" fontWeight="Bold" textAlign="Center" verticalAlign="Middle"></e-spreadsheet-cellstyle>
+                                </e-spreadsheet-cell>
+                            </e-spreadsheet-cells>
+                        </e-spreadsheet-row>
+                    </e-spreadsheet-rows>
+                    <e-spreadsheet-columns>
+                        <e-spreadsheet-column width="80"></e-spreadsheet-column>
+                        <e-spreadsheet-column width="80"></e-spreadsheet-column>
+                        <e-spreadsheet-column width="100"></e-spreadsheet-column>
+                        <e-spreadsheet-column width="100"></e-spreadsheet-column>
+                        <e-spreadsheet-column width="100"></e-spreadsheet-column>
+                        <e-spreadsheet-column width="100"></e-spreadsheet-column>
+                        <e-spreadsheet-column width="100"></e-spreadsheet-column>
+                        <e-spreadsheet-column width="100"></e-spreadsheet-column>
+                        <e-spreadsheet-column width="100"></e-spreadsheet-column>
+                        <e-spreadsheet-column width="100"></e-spreadsheet-column>
+                        <e-spreadsheet-column width="100"></e-spreadsheet-column>
+                        <e-spreadsheet-column width="100"></e-spreadsheet-column>
+                        <e-spreadsheet-column width="80"></e-spreadsheet-column>
+                        <e-spreadsheet-column width="100"></e-spreadsheet-column>
+                        <e-spreadsheet-column width="100"></e-spreadsheet-column>
+                        <e-spreadsheet-column width="100"></e-spreadsheet-column>
+                    </e-spreadsheet-columns>
+                </e-spreadsheet-sheet>
+            </e-spreadsheet-sheets>
+        </ejs-spreadsheet>
+    </div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Freeze Panes in ASP.NET Core Spreadsheet control. Explore here for more details."/>
+                }
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the <code>Spreadsheet</code> freeze pane feature by applying frozen rows and columns with the Gross Salary scenario as an example. In this sample, you can see the frozen rows/columns that are visible while scrolling the sheet content vertically/horizontally.
+        </p>
+    </div>
+
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            Freeze Panes helps you to keep particular rows or columns visible when scrolling the sheet content in the spreadsheet. You can specify the number of frozen rows and columns using <code>frozenRows</code> and <code>frozenColumns</code> properties inside the `Sheet` property.
+        </p>
+        <p>
+            In this sample, the first 2 rows and columns are frozen using the `frozenRows` and `frozenColumns` properties.
+        </p>
+        <p>
+            More information about <code>freeze pane</code> can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/spreadsheet/getting-started-core" aria-label="documentation section">
+                documentation
+            </a> section.
+        </p>
+    </div>
+}
+
+<script>
+    function createdHandler() {
+        this.wrap("C2:P2");
+        this.merge('A1:B1');
+        this.merge('C1:P1');
+        this.cellFormat({ backgroundColor: '#4e4ee6', color: '#FFFFF4', fontSize: '12pt', fontWeight: 'bold', textAlign: 'center', verticalAlign: 'middle' }, 'A1:P2');
+        this.cellFormat({ backgroundColor: '#4e4ee6', color: '#FFFFF4' }, 'A3:B26');
+        this.numberFormat('$#,##0.00', 'C2:P26');
+        this.numberFormat('$#,##0.00', 'O27:P27');
+    }
+</script>
+
+@*custom code start*@
+
+<style>
+    .control-section {
+        height: 550px;
+    }
+
+    #sb-content .e-spreadsheet .e-tab .e-tab-text {
+        display: inherit;
+    }
+</style>
+
+@*custom code end*@
+
+
+@section Title{
+                    <title>ASP.NET Core Spreadsheet Freeze Panes Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Freeze Panes in ASP.NET Core Spreadsheet Control</h1>
+                }

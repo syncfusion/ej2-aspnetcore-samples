@@ -1,0 +1,164 @@
+﻿@page
+@model EJ2CoreSampleBrowser.Pages.ChatUI.APIModel
+@using Syncfusion.EJ2
+
+@section ControlsSection {
+    <div class="col-lg-8 control-section sb-property-border">
+        <div class="api-chatui">
+            <ejs-chatui id="chatui" headerText="Design Community" headerIconCss="chat_header_icon" showTimeBreak=true
+                timeStampFormat="MM/dd hh:mm a" created="onCreated">
+                <e-chatui-user id="admin" user="Alice"></e-chatui-user>
+            </ejs-chatui>
+        </div>
+    </div>
+    <div class="col-lg-4 property-section chat-property-section">
+        <div class="property-panel-header"> Properties </div>
+        <div class="property-panel-content">
+            <table class="property-panel-table">
+                <tbody>
+                    <tr>
+                        <td> Timestamp format </td>
+                        <td style="padding-right: 10px">
+                            <ejs-dropdownlist id="chat_dateformats" dataSource="@Model.TimeStampFormatOptions" placeholder="Format" width="180px" value="@Model.DDBListValue" change="onTimeStampFormatChange"></ejs-dropdownlist>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> <div>Show timestamp</div> </td>
+                        <td style="padding-right: 10px">
+                            <ejs-switch id="chatTimestamp" checked=true change="onTimeStampSwitchChange"></ejs-switch>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> <div>Show timebreak</div> </td>
+                        <td style="padding-right: 10px">
+                            <ejs-switch id="chatTimebreak" checked=true change="onTimeBreakSwitchChange"></ejs-switch>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> <div>Show header</div> </td>
+                        <td style ="padding-right: 10px">
+                            <ejs-switch id="chatHeader" checked=true change="onHeaderSwitchChange"></ejs-switch>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> <div>Show footer</div> </td>
+                        <td style="padding-right: 10px">
+                            <ejs-switch id="chatFooter" checked=true change="onFooterSwitchChange"></ejs-switch>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> <div>Typing users</div> </td>
+                        <td style="padding-right: 10px">
+                            <ejs-multiselect id="chat_typingUsers" dataSource="@Model.TypingUserOptions" placeholder="Typing users..." select="onTypingUsersSelect" removed="onTypingUsersRemove"></ejs-multiselect>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+@section PreScripts {
+    <script>
+        var chatUIObj;
+        var chatMessages = @Html.Raw(Json.Serialize(Model.CommunityMessagedata));
+        chatMessages.forEach(message => {
+            message.timeStamp = new Date(message.timeStamp);
+        });
+        function onCreated() {
+            var chatUiEle = document.getElementById('chatui');
+            chatUIObj = ej.base.getInstance(chatUiEle, ejs.interactivechat.ChatUI);
+            chatUIObj.messages = chatMessages;
+            chatUIObj.dataBind();
+        }
+
+        function onTimeStampFormatChange(args) {
+            chatUIObj.timeStampFormat = args.value.toString();
+        }
+
+        function onTimeStampSwitchChange(args) {
+            chatUIObj.showTimeStamp = args.checked;
+        }
+
+        function onTimeBreakSwitchChange(args) {
+            chatUIObj.showTimeBreak = args.checked;
+        }
+
+        function onHeaderSwitchChange(args) {
+            chatUIObj.showHeader = args.checked;
+        }
+
+        function onFooterSwitchChange(args) {
+            chatUIObj.showFooter = args.checked;
+        }
+
+        function onTypingUsersSelect(args) {
+            const user = { user: args.itemData.value, avatarBgColor: '#bacbe4' };
+            if (['Laura', 'Charlie'].includes(args.itemData.value)) {
+                user.avatarBgColor = args.itemData.value === 'Charlie' ? '#e6cdde' : '#dec287';
+                user.avatarUrl = `./../css/chatui/images/${args.itemData.value.toLowerCase()}.png`;
+            }
+            chatUIObj.typingUsers = [...chatUIObj.typingUsers, user];
+        }
+
+        function onTypingUsersRemove(args) {
+            chatUIObj.typingUsers = chatUIObj.typingUsers.filter(user => user.user !== args.itemData.value);
+        }
+    </script>
+}
+
+<style>
+    .api-chatui {
+        height: 500px;
+        width: 60%;
+        margin: 0 auto;
+    }
+
+    .api-chatui .chat_header_icon {
+        background-image: url('./../css/chatui/images/public-event.png');
+            background-color: unset;
+    }
+
+    .chat-property-section .property-panel-content td {
+        padding: 10px 0px;
+    }
+
+    .chat-property-section .e-multiselect,
+    .chat-property-section .e-multi-select-wrapper {
+        padding-left: 0;
+        padding-top: 0;
+    }
+
+    @@media only screen and (max-width: 850px) {
+        .api-chatui {
+            width: 80%;
+        }
+    }
+</style>
+
+@section Meta {
+    <meta name="description" content="This example demonstrates the API's' in ASP.NET Core Chat UI control. Explore here for more details." />
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>This sample demonstrates the properties available in the Chat UI control, showcasing how various features can be customized through the property pane. It highlights the flexibility of the control, allowing users to adjust timestamps, headers, footers, time breaks, and more.</p>
+    </div>
+}
+
+@section Description {
+    <div id="description">
+        <p>In this sample, the following APIs and properties are demonstrated for customization:</p>
+        <ul>
+            <li><code>timeStampFormat</code>: Allows users to change the timestamp format by selecting an option from the property pane.</li>
+            <li><code>showTimeStamp</code>: Controls whether the timestamp is displayed in the chat, toggled via the property pane.</li>
+            <li><code>showTimeBreak</code>: Enables or disables the display of time breaks in the chat interface.</li>
+            <li><code>showHeader</code>: Lets users toggle the visibility of the chat header.</li>
+            <li><code>showFooter</code>: Toggles the visibility of the chat footer.</li>
+            <li><code>typingUsers</code>: Allows users to manage the list of users who are typing, updated through the multi-select options in the property pane.</li>
+        </ul>
+        <p>
+            These properties can be adjusted via the property pane for a highly flexible and customizable chat experience.
+        </p>
+    </div>
+}

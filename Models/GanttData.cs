@@ -5577,6 +5577,7 @@ namespace EJ2CoreSampleBrowser.Models
                 StartDate = new DateTime(2024, 04, 01),
                 Duration = 2,
                 Progress = 30,
+                Work = 16,
                 Resources = new List<ResourceModel>
                 {
                     new ResourceModel { ResourceId = 4, ResourceUnit = 100 }
@@ -5588,6 +5589,7 @@ namespace EJ2CoreSampleBrowser.Models
                 TaskName = "Dig Footer",
                 StartDate = new DateTime(2024, 04, 04),
                 Duration = 2,
+                Work = 16,
                 Predecessor = "14FS+1",
                 Resources = new List<ResourceModel>
                 {
@@ -5601,6 +5603,7 @@ namespace EJ2CoreSampleBrowser.Models
                 StartDate = new DateTime(2024, 04, 08),
                 Duration = 2,
                 Progress = 30,
+                Work = 16,
                 Predecessor = "15",
                 Resources = new List<ResourceModel>
                 {
@@ -5625,6 +5628,7 @@ namespace EJ2CoreSampleBrowser.Models
                 TaskName = "Add load-bearing structure",
                 StartDate = new DateTime(2024, 04, 03),
                 Duration = 2,
+                Work = 16,
                 Progress = 30,
                 Resources = new List<ResourceModel>
                 {
@@ -5638,6 +5642,7 @@ namespace EJ2CoreSampleBrowser.Models
                 TaskName = "Natural Gas Utilities",
                 StartDate = new DateTime(2024, 04, 08),
                 Duration = 4,
+                Work = 16,
                 Predecessor = "18",
                 Resources = new List<ResourceModel>
                 {
@@ -5651,6 +5656,7 @@ namespace EJ2CoreSampleBrowser.Models
                 StartDate = new DateTime(2024, 04, 11),
                 Duration = 2,
                 Progress = 30,
+                Work = 16,
                 Predecessor = "19FS+1",
                 Resources = new List<ResourceModel>
                 {

@@ -61,9 +61,8 @@
                 </e-toolbar-items>
             </ejs-toolbar>
         </div>
-        <ejs-pdfviewer id="pdfviewer"                   
+        <ejs-pdfviewer id="pdfviewer"
                        enableToolbar='false'
-                       serviceUrl="api/PdfViewer"
                        enableNavigationToolbar='false'
                        enableAnnotationToolbar='false'
                        pageChange="pageChange"
@@ -71,6 +70,8 @@
                        annotationAdd="annotationAdd"
                        annotationRemove="annotationRemove"
                        enableCommentPanel="false"
+                       documentPath="https://cdn.syncfusion.com/content/pdf/programmatical-annotations.pdf"
+                       resourceUrl="https://cdn.syncfusion.com/ej2/27.2.2/dist/ej2-pdfviewer-lib"
                        style="height:641px;">
         </ejs-pdfviewer>
         <div id='dialog'>
@@ -407,13 +408,12 @@
     var dialogObj;
     var customStampSource;
     var imgSrc;
+    var url = window.baseurl + 'api/PdfViewer/Redaction';
     window.onload = function () {
         currentPageBox = document.getElementById('e-pv-redact-sb-currentPage');
         primaryToolbarObj = document.getElementById('e-pv-redact-sb-toolbar').ej2_instances[0];
         currentPageBox.innerHTML = '1';
-        viewer = document.getElementById('pdfviewer').ej2_instances[0];
-        viewer.serviceUrl = window.baseurl + 'api/PdfViewer';
-        viewer.load("https://cdn.syncfusion.com/content/pdf/programmatical-annotations.pdf", null);
+        viewer = document.getElementById('pdfviewer').ej2_instances[0];    
         document.getElementById('documentUpload').addEventListener('change', readFile, false);
         currentPageBox.addEventListener('keypress', () => {
             var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
@@ -436,19 +436,34 @@
     }
 
     function Redaction() {
-        viewer.serverActionSettings.download = "Redaction";
-        viewer.saveAsBlob().then(function (value) {
-            var data = value;
-            var reader = new FileReader();
-            reader.readAsDataURL(data);
-            reader.onload = (e) => {
-                var base64String = e.target?.result.toString();
-                viewer.load(base64String, null);
-            };
-        });
-        viewer.fileName = fileName;
-        redactionCount = 0;
-        viewer.serverActionSettings.download = "Download";
+        if (redactionCount > 0) {
+            viewer.saveAsBlob().then(function (value) {
+                const data = value;
+                const reader = new FileReader();
+                reader.readAsDataURL(data);
+                reader.onload = function (e) {
+                    const base64String = e.target?.result.toString();
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('POST', url, true);
+                    xhr.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
+                    const requestData = JSON.stringify({ base64String: base64String });
+                    xhr.onload = function () {
+                        if (xhr.status === 200) {
+                            viewer.load(xhr.responseText, null);
+                        }
+                        else {
+                            console.error('Redaction failed:', xhr.statusText);
+                        }
+                    };
+                    xhr.onerror = function () {
+                        console.error('An error occurred during the redaction:', xhr.statusText);
+                    };
+                    xhr.send(requestData);
+                };
+            });
+            redactionCount = 0;
+            updateRedaction();
+        }
     }
 
     function updateRedaction() {
@@ -585,11 +600,85 @@
 
     function downloadClicked() {
         var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
-        pdfViewer.fileName = fileName;
-        pdfViewer.downloadFileName = fileName;
-        pdfViewer.serverActionSettings.download = "Redaction";
-        pdfViewer.download();
-        viewer.serverActionSettings.download = "Download";
+        viewer.saveAsBlob().then(function (value) {
+            var reader = new FileReader();
+            reader.readAsDataURL(value);
+            reader.onload = function (e) {
+                var base64String = e.target?.result;
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', url, true);
+                xhr.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
+                var requestData = JSON.stringify({ base64String: base64String });
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        var blobUrl = createBlobUrl(xhr.responseText.split('base64,')[1], 'application/pdf');
+                        downloadDocument(blobUrl);
+                    }
+                    else {
+                        console.error('Download failed:', xhr.statusText);
+                    }
+                };
+                xhr.onerror = function () {
+                    console.error('An error occurred during the download:', xhr.statusText);
+                };
+                xhr.send(requestData);
+            };
+        }).catch(function (error) {
+            console.error('Error saving Blob:', error);
+        });
+    }
+
+    function createBlobUrl(base64String, contentType) {
+        var sliceSize = 512;
+        var byteCharacters = atob(base64String);
+        var byteArrays = [];
+        for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+            var slice = byteCharacters.slice(offset, offset + sliceSize);
+            var byteNumbers = new Array(slice.length);
+            for (var i = 0; i < slice.length; i++) {
+                byteNumbers[parseInt(i.toString(), 10)] = slice.charCodeAt(i);
+            }
+            var byteArray = new Uint8Array(byteNumbers);
+            byteArrays.push(byteArray);
+        }
+        var blob = new Blob(byteArrays, { type: contentType });
+        return blob;
+    }
+
+    function downloadDocument(blobUrl) {
+        var Url = URL || webkitURL;
+        blobUrl = Url.createObjectURL(blobUrl);
+        viewer.fileName = fileName;
+        var anchorElement = document.createElement('a');
+        if (anchorElement.click) {
+            (anchorElement).href = blobUrl;
+            (anchorElement).target = '_parent';
+            if ('download' in anchorElement) {
+                var downloadFileName = viewer.fileName || 'downloadedFile.pdf';
+                if (downloadFileName) {
+                    if (downloadFileName.endsWith('.pdf')) {
+                        (anchorElement).download = downloadFileName;
+                    }
+                    else {
+                        var splitPdf = downloadFileName.split('.pdf')[0] + '.pdf';
+                        (anchorElement).download = splitPdf;
+                    }
+                }
+                else {
+                    (anchorElement).download = 'Default.pdf';
+                }
+            }
+            (document.body || document.documentElement).appendChild(anchorElement);
+            anchorElement.click();
+        }
+        else {
+            if (window.top === window &&
+                blobUrl.split('#')[0] === window.location.href.split('#')[0]) {
+                var padCharacter = blobUrl.indexOf('?') === -1 ? '?' : '&';
+                blobUrl = blobUrl.replace(/#|$/, padCharacter + '$&');
+            }
+            window.open(blobUrl, '_parent');
+        }
     }
 
     function addText() {

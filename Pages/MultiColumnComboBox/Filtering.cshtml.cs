@@ -12,9 +12,9 @@ namespace EJ2CoreSampleBrowser.Pages.MultiColumnComboBox;
 
 public class FilteringModel : PageModel
 {
-    public List<WorkDetails> work { get; set; }
+    public List<Employee> employee { get; set; }
     public void OnGet()
     {
-        work = new WorkDetails().GetAllRecords();
+        employee = new Employee().GetAllRecords();
     }
 }

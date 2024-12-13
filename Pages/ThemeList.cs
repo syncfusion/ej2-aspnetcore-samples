@@ -25,7 +25,8 @@ namespace CoreDemos
             theme.Add(new ThemeList { Id = "bootstrap5.3", Theme = "Bootstrap 5", Index = 3 });
             // theme.Add(new ThemeList { Id = "bootstrap5-dark", Theme = "Bootstrap v5 Dark", Index = 4 });
            // theme.Add(new ThemeList { Id = "bootstrap5.3", Theme = "Bootstrap 5.3", Index = 4 });
-            theme.Add(new ThemeList { Id = "tailwind", Theme = "Tailwind CSS", Index = 4 });
+            //theme.Add(new ThemeList { Id = "tailwind", Theme = "Tailwind CSS", Index = 4 });
+            theme.Add(new ThemeList { Id = "tailwind3", Theme = "Tailwind CSS", Index = 4 });
             //theme.Add(new ThemeList { Id = "tailwind-dark", Theme = "Tailwind CSS Dark", Index = 6});
             // theme.Add(new ThemeList { Id = "material", Theme = "Material", Index = 7 });
             // theme.Add(new ThemeList { Id = "bootstrap4", Theme = "Bootstrap v4", Index = 8 });

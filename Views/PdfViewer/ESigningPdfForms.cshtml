@@ -40,9 +40,9 @@
             </ejs-toolbar>
             <ejs-pdfviewer id="pdfviewer" enableToolbar="false" enableNavigationToolbar="false" enableAnnotationToolbar="false" downloadFileName='eSign_designMode.pdf'
                            showNotificationDialog="false" documentLoad="documentLoad"
-                           serviceUrl="api/PdfViewer"
                            formFieldPropertiesChange="fieldChange" downloadFileName="fileName"
-                           downloadEnd="downloadEnd"
+                           resourceUrl="https://cdn.syncfusion.com/ej2/27.2.2/dist/ej2-pdfviewer-lib"
+                           documentPath="https://cdn.syncfusion.com/content/pdf/eSign_filling.pdf"
                            toolbarSettings='@(new Syncfusion.EJ2.PdfViewer.PdfViewerToolbarSettings {ShowTooltip = true, ToolbarItems = "OpenOption,PageNavigationTool,MagnificationTool,DownloadOption,PrintOption,FormDesignerEditTool"})'>
             </ejs-pdfviewer>
             <ejs-dialog id="modal_dialog" animationSettings="Modalanimation" width="335px" isModal="true" created="modalCreated" content="content" visible="false">
@@ -83,6 +83,12 @@
 }
 
 <style>
+
+    #pdfviewer{
+        display: block;
+        height: 640px;
+    }
+
     .e-pv-e-sign-control {
         font-family: Roboto;
         font-size: 14px;
@@ -169,7 +175,7 @@
 </style>
 
 <script>
-    var pdfViewer;
+    var pdfViewer; 
     var currentUser = 'andrew@mycompany.com';
     var currentUserBorderColor = 'red';
     var preventChange = false;
@@ -190,9 +196,7 @@
 
     window.onload = function () {
         pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
-        pdfViewer.serviceUrl = window.baseurl + 'api/PdfViewer';
-        pdfViewer.load("https://cdn.syncfusion.com/content/pdf/eSign_filling.pdf", null);
-    }
+     }
 
     function userChange(args) {
         currentUser = args.itemData.Mail;
@@ -376,16 +380,86 @@
         for (const formField of pdfViewer.formFieldCollections) {
             pdfViewer?.formDesignerModule.updateFormField(formField, { backgroundColor: finishedBackground });
         }
-        pdfViewer.serverActionSettings.download = "FlattenDownload";
-        pdfViewer.download();
-        pdfViewer.serverActionSettings.download = "Download";
+        var url = window.baseurl + 'api/PdfViewer/FlattenDownload';
+        pdfViewer.saveAsBlob().then((blob) => {
+            return convertBlobToBase64(blob);
+        }).then((base64String) => {
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', url, true);
+            xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+            const requestData = JSON.stringify({ base64String: base64String });
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    const responseBase64 = xhr.responseText.split('base64,')[1];
+                    if (responseBase64) {
+                        const blob = createBlobFromBase64(responseBase64, 'application/pdf');
+                        const blobUrl = URL.createObjectURL(blob);
+                        downloadDocument(blobUrl);
+                        pdfViewer.load(xhr.responseText, null);
+                        document.getElementById('e-pv-e-sign-finishSigning').disabled = true;
+                        document.getElementById('e-pv-e-sign-employees').ej2_instances[0].enabled = false;
+                    } else {
+                        console.error('Invalid base64 response.');
+                    }
+                } else {
+                    console.error('Download failed:', xhr.statusText);
+                }
+            };
+            xhr.onerror = () => {
+                console.error('An error occurred during the download:', xhr.statusText);
+            };
+            xhr.send(requestData);
+        }).catch((error) => {
+            console.error('Error saving Blob:', error);
+        });
+
     }
 
-    function downloadEnd(args) {
-        pdfViewer.load(args.downloadDocument, null);
-        document.getElementById('e-pv-e-sign-finishSigning').disabled = true;
-        document.getElementById('e-pv-e-sign-employees').ej2_instances[0].enabled = false;
+    function convertBlobToBase64(blob) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(blob);
+            reader.onloadend = () => {
+                if (typeof reader.result === 'string') {
+                    resolve(reader.result);
+                } else {
+                    reject(new Error('Failed to convert Blob to Base64'));
+                }
+            };
+            reader.onerror = (error) => reject(error);
+        });
     }
+
+    function createBlobFromBase64(base64String, contentType) {
+        const sliceSize = 512;
+        const byteCharacters = atob(base64String);
+        const byteArrays = [];
+        for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+            const slice = byteCharacters.slice(offset, offset + sliceSize);
+            const byteNumbers = new Array(slice.length);
+            for (let i = 0; i < slice.length; i++) {
+                byteNumbers[i] = slice.charCodeAt(i);
+            }
+            const byteArray = new Uint8Array(byteNumbers);
+            byteArrays.push(byteArray);
+        }
+        return new Blob(byteArrays, { type: contentType });
+    }
+
+    function downloadDocument(blobUrl) {
+        const anchorElement = document.createElement('a');
+        anchorElement.href = blobUrl;
+        anchorElement.target = '_parent';
+        const downloadFileName = pdfViewer.fileName || 'default.pdf';
+        anchorElement.download = downloadFileName.endsWith('.pdf')
+            ? downloadFileName
+            : `${downloadFileName.split('.pdf')[0]}.pdf`;
+        document.body.appendChild(anchorElement);
+        anchorElement.click();
+        document.body.removeChild(anchorElement);
+        URL.revokeObjectURL(blobUrl);
+    }
+
 </script>
 
 @section Title {

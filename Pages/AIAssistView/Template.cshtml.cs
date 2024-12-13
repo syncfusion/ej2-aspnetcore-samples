@@ -6,6 +6,7 @@
 // applicable laws. 
 #endregion
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using EJ2CoreSampleBrowser.Models;
 using Syncfusion.EJ2.Navigations;
 
 namespace EJ2CoreSampleBrowser.Pages.AIAssistView
@@ -14,6 +15,8 @@ namespace EJ2CoreSampleBrowser.Pages.AIAssistView
     {
         public List<ToolbarItem> Items = new List<ToolbarItem>();
         public List<AIAssitCarouselDataBinding> datasrc = new List<AIAssitCarouselDataBinding>();
+        public List<PromptResponseData> PromptResponseData { get; set; }
+        public string[] PromptSuggestionData { get; set; }
         public void OnGet()
         {
             Items.Add(new ToolbarItem { Type = ItemType.Input, Align = ItemAlign.Right, Template = "<button id=\"ddMenu\"></button>" });
@@ -37,6 +40,9 @@ namespace EJ2CoreSampleBrowser.Pages.AIAssistView
                 ImgPath = "./../css/carousel/images/tokyo.jpg",
                 Suggestion = "What tools or apps can help me prioritize tasks?"
             });
+
+            PromptResponseData = new PromptResponseData().GetTemplatePromptResponseData();
+            PromptSuggestionData = new PromptResponseData().GetAllSuggestionData();
         }
     }
 

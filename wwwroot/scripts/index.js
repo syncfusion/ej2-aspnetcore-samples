@@ -10,12 +10,12 @@ var searchInstance;
 var headerThemeSwitch = document.getElementById('header-theme-switcher');
 var settingElement = ej.base.select('.sb-setting-btn');
 var themeList = document.getElementById('themelist');
-var themes = ['material3', 'fluent', 'fluent2', 'bootstrap5.3', 'tailwind', 'highcontrast', 'fluent2-highcontrast'];
+var themes = ['material3', 'fluent', 'fluent2', 'bootstrap5.3', 'tailwind', 'tailwind3', 'highcontrast', 'fluent2-highcontrast'];
 //var themeIndex = { 'material3': 0, 'material3-dark': 1, 'fluent': 2, 'fluent-dark': 3, 'bootstrap5': 4, 'bootstrap5-dark': 5, 'tailwind': 6, 'tailwind-dark': 7, 'material': 8, 'bootstrap4': 9, 'bootstrap': 10, 'bootstrap-dark': 11, 'highcontrast': 12 };
-var themeIndex = { 'material3': 0, 'fluent': 1, 'fluent2': 2, 'bootstrap5': 3, 'tailwind': 4, 'highcontrast': 5, 'fluent2-highcontrast' : 6 , };
-var themeMode_Index = { 'material3': 'Material 3', 'fluent': 'Fluent', 'fluent2': 'Fluent 2', 'bootstrap5': 'Bootstrap 5', 'tailwind': 'Tailwind CSS', 'highcontrast': 'High Contrast', 'fluent2-highcontrast': 'Fluent 2 High Contrast'  };
+var themeIndex = { 'material3': 0, 'fluent': 1, 'fluent2': 2, 'bootstrap5': 3, 'tailwind3': 4, 'highcontrast': 5, 'fluent2-highcontrast': 6 };
+var themeMode_Index = { 'material3': 'Material 3', 'fluent': 'Fluent', 'fluent2': 'Fluent 2', 'bootstrap5': 'Bootstrap 5', 'highcontrast': 'High Contrast', 'fluent2-highcontrast': 'Fluent 2 High Contrast', 'tailwind3': 'Tailwind CSS'  };
 var cultureData = { "English": "en", "German - Germany*": "de", "French - Switzerland*": "fr-CH", "Arabic*": "ar", "Chinese - China*":"zh" };
-var defaultTheme = 'fluent2';
+var defaultTheme = 'tailwind3';
 var themeDropDown;
 var contentTab;
 var sourceTab;
@@ -81,7 +81,7 @@ var matchedCurrency = {
 };
 var newYear = new Date().getFullYear();
 var copyRight = document.querySelector('.sb-footer-copyright');
-copyRight.innerHTML = "Copyright &copy 2001 - " + newYear + " Syncfusion Inc.";
+copyRight.innerHTML = "Copyright &copy 2001 - " + newYear + " Syncfusion<sup>&reg;</sup> Inc.";
 if(ej.base.registerLicense != undefined){
 	ej.base.registerLicense('');
 }
@@ -124,12 +124,12 @@ function loadCulture() {
         locale.send().then(function (value) {
             ej.base.L10n.load(JSON.parse(value));
         });
-        var ajax = new ej.base.Ajax('../scripts/cldr-data/main/' + cul + '/all.json', 'GET', false);
-        ajax.send().then(function (result) {
-            ej.base.loadCldr(JSON.parse(result));
-            changeCulture(cul);
-        });
-   }
+    }
+    var ajax = new ej.base.Ajax('../scripts/cldr-data/main/' + cul + '/all.json', 'GET', false);
+    ajax.send().then(function (result) {
+        ej.base.loadCldr(JSON.parse(result));
+        changeCulture(cul);
+    });
 }
 
 function settingPopupHide(hideElementID) {
@@ -791,9 +791,10 @@ function loadTheme(theme) {
     themeList.querySelector('.active').classList.remove('active');
    
     var currentUpdatedTheme = theme.replace("-dark", "");
-
-    currentUpdatedTheme == 'bootstrap5.3' ? themeList.querySelector('#bootstrap5\\.3').classList.add('active') : themeList.querySelector('#' + currentUpdatedTheme).classList.add('active');
-
+    if(currentUpdatedTheme != "tailwind")
+    {
+        currentUpdatedTheme == 'bootstrap5.3' ? themeList.querySelector('#bootstrap5\\.3').classList.add('active') : themeList.querySelector('#' + currentUpdatedTheme).classList.add('active');
+    }
     selectedTheme = theme;
     renderLeftPaneComponents();
     renderSbPopups();
@@ -1461,7 +1462,7 @@ function loadJSON() {
     //overlay();
     changeMouseOrTouch(switchText);
     // localStorage.removeItem('ej2-switch');
-    ej.base.enableRipple(selectedTheme === defaultTheme || !selectedTheme);
+    ej.base.enableRipple(selectedTheme?.indexOf('material3') !== -1 || !selectedTheme);
     loadTheme(selectedTheme);
     loadCulture();
 }

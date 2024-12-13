@@ -11,8 +11,7 @@
                     resources="@GanttData.GetResourceAllocation()" taskType="FixedWork"
                     projectStartDate="03/28/2024" projectEndDate="07/28/2024"
                     toolbar="@(new List<string>() { "Add", "Edit", "Update", "Delete", "Cancel", "ExpandAll", "CollapseAll" })"
-                    queryTaskbarInfo="queryTaskbarInfoEvent"
-                    actionBegin="actionBeginEvent">
+                    queryTaskbarInfo="queryTaskbarInfoEvent" actionBegin="actionBeginEvent" actionComplete="actionCompleteEvent" cellEdit="cellEditEvent">
                     <e-gantt-resourcefields id="ResourceId" name="ResourceName" unit="ResourceUnit">
                     </e-gantt-resourcefields>
                     <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate"
@@ -43,32 +42,32 @@
     </div>
     <script id="resTemplate" type="text/x-template">
         ${if(ganttProperties.resourceNames)}
-            ${if(ganttProperties.resourceNames === 'Rose Fuller')}
-                <div style="width: 110px; height: 24px; border-radius: 100px; background-color: #1c5d8e; display: flex; align-items: center; justify-content: center;">
+            ${if(ganttProperties.resourceNames.split('[')[0].includes('Rose Fuller'))}
+                <div style="width: 150px; height: 24px; border-radius: 100px; background-color: #1c5d8e; display: flex; align-items: center; justify-content: center;">
                     <span style="color: white; font-weight: 500;">${ganttProperties.resourceNames}</span>
                 </div>
             ${/if}
 
-            ${if(ganttProperties.resourceNames === 'Fuller King')}
-                <div style="width: 110px; height: 24px; border-radius: 100px; background-color: #4a7537; display: flex; align-items: center; justify-content: center;">
+            ${if(ganttProperties.resourceNames.split('[')[0].includes('Fuller King'))}
+                <div style="width: 150px; height: 24px; border-radius: 100px; background-color: #4a7537; display: flex; align-items: center; justify-content: center;">
                     <span style="color: white; font-weight: 500;">${ganttProperties.resourceNames}</span>
                 </div>
             ${/if}
 
-            ${if(ganttProperties.resourceNames === 'Van Jack')}
-                <div style="width: 110px; height: 24px; border-radius: 100px; background-color: #b24531; display: flex; align-items: center; justify-content: center;">
+            ${if(ganttProperties.resourceNames.split('[')[0].includes('Van Jack'))}
+                <div style="width: 150px; height: 24px; border-radius: 100px; background-color: #b24531; display: flex; align-items: center; justify-content: center;">
                     <span style="color: white; font-weight: 500;">${ganttProperties.resourceNames}</span>
                 </div>
             ${/if}
 
-            ${if(ganttProperties.resourceNames === 'Bergs Anton')}
-                <div style="width: 110px; height: 24px; border-radius: 100px; background-color: #a53576; display: flex; align-items: center; justify-content: center;">
+            ${if(ganttProperties.resourceNames.split('[')[0].includes('Bergs Anton'))}
+                <div style="width: 150px; height: 24px; border-radius: 100px; background-color: #a53576; display: flex; align-items: center; justify-content: center;">
                     <span style="color: white; font-weight: 500;">${ganttProperties.resourceNames}</span>
                 </div>
             ${/if}
 
-            ${if(ganttProperties.resourceNames === 'Tamer Vinet')}
-                <div style="width: 110px; height: 24px; border-radius: 100px; background-color: #635688; display: flex; align-items: center; justify-content: center;">
+            ${if(ganttProperties.resourceNames.split('[')[0].includes('Tamer Vinet'))}
+                <div style="width: 150px; height: 24px; border-radius: 100px; background-color: #635688; display: flex; align-items: center; justify-content: center;">
                     <span style="color: white; font-weight: 500;">${ganttProperties.resourceNames}</span>
                 </div>
             ${/if}
@@ -131,11 +130,15 @@
         var dropdownlistObj;
         function read(args) {
             var gantt = document.getElementsByClassName('e-gantt')[0].ej2_instances[0];
+            // Get the selected value from the dropdown
             var value = dropdownlistObj.value;
             if (value == null) {
-                value = [];
+                // If no value is selected, retain the existing resource(s)
+                value = gantt.treeGridModule.currentEditRow[gantt.taskFields.resourceInfo];
+            } else {
+                // Update the resource info with the selected value
+                gantt.treeGridModule.currentEditRow[gantt.taskFields.resourceInfo] = [value];
             }
-            gantt.treeGridModule.currentEditRow[gantt.taskFields.resourceInfo] = [value];
             return value;
         }
 
@@ -145,21 +148,50 @@
 
         function write(args) {
             var gantt = document.getElementsByClassName('e-gantt')[ 0].ej2_instances[0];
+            // Ensure the currentEditRow object is initialized
             gantt.treeGridModule.currentEditRow = {};
+
+            // Retrieve the existing resource(s) from the row data or set default
+            var existingResourceIds = gantt.treeGridModule.getResourceIds(args.rowData);
+            var selectedValue = (existingResourceIds && existingResourceIds.length > 0) ? existingResourceIds[0] : null;
+
+            // Initialize the DropDownList
             dropdownlistObj = new ej.dropdowns.DropDownList({
                 dataSource: gantt.resources,
                 fields: { text: gantt.resourceFields.name, value: gantt.resourceFields.id },
                 enableRtl: gantt.enableRtl,
                 popupHeight: '350px',
-                value: gantt.treeGridModule.getResourceIds(args.rowData)
+                // Set the existing resource(s) as the selected value
+                value: selectedValue,
             });
+            // Append the dropdown to the element
             dropdownlistObj.appendTo(args.element);
+        }
+
+       function cellEditEvent(args) {
+            // Restrict editing based on row data
+            if (args.rowData.TaskID === 1 || args.rowData.TaskID === 5) { // Example: Prevent editing Task ID 1
+                args.cancel = true; // Cancel editing for this specific cell
+            }
         }
 
         function actionBeginEvent(args) {
             if (args.requestType === 'beforeOpenEditDialog' || args.requestType === 'beforeOpenAddDialog') {
+                // Restrict editing based on row data for dialog
+                if (args.rowData.TaskID === 1 || args.rowData.TaskID === 5) {
+                    args.cancel = true; // Cancel editing for this specific row dialog
+                }
                 args.Resources.selectionSettings = {};
                 args.Resources.columns.splice(0, 1);
+            }
+        }
+
+        function actionCompleteEvent(args) {
+            if (args.requestType === 'add' && !args.data.TaskName) {
+                var taskName = 'Task Name ' + args.data.TaskID;
+                args.data.TaskName = taskName;
+                args.data.ganttProperties.taskName = taskName;
+                args.data.taskData.TaskName = taskName;
             }
         }
 

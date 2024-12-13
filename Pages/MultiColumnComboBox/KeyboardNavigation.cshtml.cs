@@ -12,9 +12,9 @@ namespace EJ2CoreSampleBrowser.Pages.MultiColumnComboBox;
 
 public class KeyboardNavigationModel : PageModel
 {
-    public List<BookDetails> book { get; set; }
+    public List<ProductDetails> product { get; set; }
     public void OnGet()
     {
-        book = new BookDetails().GetAllRecords();
+        product = new ProductDetails().GetAllRecords();
     }
 }

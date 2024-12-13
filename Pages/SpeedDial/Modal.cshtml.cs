@@ -19,22 +19,22 @@ public class ModalModel : PageModel
         Items.Add(new SpeedDialItem
         {
             Title="Home",
-            IconCss = "speeddial-icons speeddial-icon-house"
+            IconCss = "e-icons e-home"
         });
         Items.Add(new SpeedDialItem
         {
             Title="People",
-            IconCss = "speeddial-icons speeddial-icon-people"
+            IconCss = "e-icons e-people"
         });
         Items.Add(new SpeedDialItem
         {
             Title="Search",
-            IconCss = "speeddial-icons speeddial-icon-search"
+            IconCss = "e-icons e-search"
         });
         Items.Add(new SpeedDialItem
         {
             Title="Message",
-            IconCss = "speeddial-icons speeddial-icon-message"
+            IconCss = "e-icons e-comment-show"
         });
     }
 }

@@ -12,9 +12,9 @@ namespace EJ2CoreSampleBrowser.Pages.MultiColumnComboBox;
 
 public class SortingModel : PageModel
 {
-    public List<WorkDetails> work { get; set; }
+    public List<Products> products { get; set; }
     public void OnGet()
     {
-        work = new WorkDetails().GetAllRecords();
+        products = new Products().GetAllRecords();
     }
 }

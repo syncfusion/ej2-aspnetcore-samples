@@ -6,7 +6,6 @@ window.samplesList = [
    {
         "name": "PDF",
         "directory": "Pdf",
-        "type": "update",
         "category": "Document Processing Library",
         "samples": [
             {
@@ -433,7 +432,6 @@ window.samplesList = [
                 "name": "Annotations",
                 "category": "User Interaction",
                 "order": 12,
-                "type": "update",
                 "component": "PDF",
                 "dir": "Pdf",
                 "parentId": "046",

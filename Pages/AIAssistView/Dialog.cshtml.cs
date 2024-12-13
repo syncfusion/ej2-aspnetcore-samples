@@ -7,14 +7,18 @@
 #endregion
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-
+using EJ2CoreSampleBrowser.Models;
 namespace EJ2CoreSampleBrowser.Pages.AIAssistView
 {
     public class DialogModel : PageModel
     {
         public List<ToolbarItemModel> DialogItems = new List<ToolbarItemModel>();
+        public List<PromptResponseData> PromptResponseData { get; set; }
+        public string[] PromptSuggestionData { get; set; }
         public void OnGet()
         {
+            PromptResponseData = new PromptResponseData().GetAllPromptResponseData();
+            PromptSuggestionData = new PromptResponseData().GetAllSuggestionData();
             DialogItems.Add(new ToolbarItemModel { align = "Right", iconCss = "e-icons e-close" });
         }
 

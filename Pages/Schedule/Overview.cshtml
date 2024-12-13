@@ -220,11 +220,17 @@
     </div>
     <style>
 
-        .tailwind .schedule-overview .overview-content .right-panel .control-panel {
+        .tailwind3 .schedule-overview .import-button .e-template-btn {
+            color: #fff;
+        }
+
+        .tailwind .schedule-overview .overview-content .right-panel .control-panel,
+        .tailwind3 .schedule-overview .overview-content .right-panel .control-panel {
             background-color: #f3f4f6;
         }
 
-        .tailwind-dark .schedule-overview .overview-content .right-panel .control-panel {
+        .tailwind-dark .schedule-overview .overview-content .right-panel .control-panel,
+        .tailwind3-dark .schedule-overview .overview-content .right-panel .control-panel {
             background-color: #374151;
             color: #fff;
         }
@@ -643,7 +649,10 @@
                 case 'Add':
                 case 'AddRecurrence':
                     var selectedCells = scheduleObj.getSelectedElements();
-                    var activeCellsData = scheduleObj.getCellDetails(selectedCells.length > 0 ? selectedCells : selectedTarget);
+                    var isRightClickInSelectedCells = selectedCells.some(function (cell) {
+                        return cell === selectedTarget;
+                    });
+                    var activeCellsData = scheduleObj.getCellDetails(isRightClickInSelectedCells ? selectedCells : [selectedTarget]);
                     if (selectedMenuItem === 'Add') {
                         scheduleObj.openEditor(activeCellsData, 'Add');
                     } else {
@@ -882,8 +891,7 @@
             var scheduleObj = document.getElementById('scheduler').ej2_instances[0];
             scheduleObj.timezone = args.value;
             updateLiveTime();
-            document.querySelector('.schedule-overview #timezoneBtn').innerHTML =
-                '<span class="e-btn-icon e-icons e-time-zone e-icon-left"></span>' + args.itemData.text;
+            document.querySelector('.schedule-overview #timezoneBtn').innerHTML = args.itemData.text;
         }
 
         function onDayStartHourChange(args) {

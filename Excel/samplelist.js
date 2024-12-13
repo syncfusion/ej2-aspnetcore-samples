@@ -7,7 +7,6 @@ window.samplesList = [
         "name": "Excel (XlsIO)",
         "directory": "Excel",
         "category": "Document Processing Library",
-        "type": "update",
         "samples": [
             {
                 "url": "Create",
@@ -252,7 +251,6 @@ window.samplesList = [
                 "name": "Excel To PDF/UA",
                 "category": "Conversions",
                 "order": 8,
-                "type": "new",
                 "component": "Excel",
                 "dir": "Excel",
                 "uid": "00444443",

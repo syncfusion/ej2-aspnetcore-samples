@@ -20,29 +20,27 @@ public class VirtualizationModel : PageModel
 }
 public class MultiColumnComboBoxRecord
 {
-    public int TaskID { get; set; }
-    public string Engineer { get; set; }
-    public string Designation { get; set; }
-    public int Estimation { get; set; }
-    public string Status { get; set; }
+    public string Name { get; set; }
+    public string Departments { get; set; }
+    public string Role { get; set; }
+    public string Location { get; set; }
 
 
     public List<MultiColumnComboBoxRecord> GenerateTasks(int count)
     {
-        var names = new List<string> { "John", "Alice", "Bob", "Mario Pontes", "Yang Wang", "Michael", "Nancy", "Robert King" };
-        var hours = new List<int> { 8, 12, 16 };
-        var status = new List<string> { "Pending", "Completed", "In Progress" };
-        var designation = new List<string> { "Engineer", "Manager", "Tester" };
+        var names = new List<string> { "John Doe", "Jane Smith", "Alice Johnson", "Bob Brown", "Emily Davis" };
+        var departments = new List<string> { "HR", "IT", "Finance", "Marketing", "Sales" };
+        var roles = new List<string> { "Manager", "Developer", "Analyst", "Consultant", "Executive" };
+        var locations = new List<string> { "New York", "San Francisco", "London", "Berlin", "Tokyo" };
         var result = new List<MultiColumnComboBoxRecord>();
         for (var i = 0; i < count; i++)
         {
             result.Add(new MultiColumnComboBoxRecord
             {
-                TaskID = i + 1,
-                Engineer = names[new Random().Next(names.Count)],
-                Designation = designation[new Random().Next(designation.Count)],
-                Estimation = hours[new Random().Next(hours.Count)],
-                Status = status[new Random().Next(status.Count)]
+                Name = names[new Random().Next(names.Count)],
+                Departments = departments[new Random().Next(departments.Count)],
+                Role = roles[new Random().Next(roles.Count)],
+                Location = locations[new Random().Next(locations.Count)]
             });
         }
         return result;

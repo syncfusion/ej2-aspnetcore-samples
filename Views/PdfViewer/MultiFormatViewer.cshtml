@@ -47,7 +47,7 @@
                         <ejs-switch cssClass="buttonSwitch" id="checked" change="change" checked="true"></ejs-switch>
                     </div>
                 </div>
-                <ejs-pdfviewer #pdfviewer id="pdfViewer" resourceUrl="https://cdn.syncfusion.com/ej2/23.2.6/dist/ej2-pdfviewer-lib" zoomMode="FitToPage" documentLoad="documentLoaded" ajaxRequestSuccess="ajaxRequestSuccess" toolbarSettings="@(new Syncfusion.EJ2.PdfViewer.PdfViewerToolbarSettings  { ShowTooltip = true, ToolbarItems = ( "UndoRedoTool PageNavigationTool MagnificationTool PanTool SelectionTool CommentTool SubmitForm SearchOption AnnotationEditTool FormDesignerEditTool PrintOption DownloadOption" )  })" style="height:641px;"></ejs-pdfviewer>
+                <ejs-pdfviewer #pdfviewer id="pdfViewer" class="e-pv-multi-format-pdfviewer" resourceUrl="https://cdn.syncfusion.com/ej2/23.2.6/dist/ej2-pdfviewer-lib" zoomMode="FitToPage" documentLoad="documentLoaded" ajaxRequestSuccess="ajaxRequestSuccess" toolbarSettings="@(new Syncfusion.EJ2.PdfViewer.PdfViewerToolbarSettings  { ShowTooltip = true, ToolbarItems = ( "UndoRedoTool PageNavigationTool MagnificationTool PanTool SelectionTool CommentTool SubmitForm SearchOption AnnotationEditTool FormDesignerEditTool PrintOption DownloadOption" )  })" style="height:641px;"></ejs-pdfviewer>
             </div>
         </div>
     </div>
@@ -135,6 +135,14 @@
     .buttonSwitch {
         Width: 40px;
         Height: 24px;
+    }
+
+    .e-pv-multi-format-pdfviewer .e-pv-text-search-bar {
+        top: 40px !important;
+    }
+
+    .e-bigger .e-pv-multi-format-pdfviewer .e-pv-text-search-bar {
+        top: 48px !important;
     }
 </style>
 @section PreScripts{
@@ -236,6 +244,9 @@
             }
             fileDetails.style.display = "block";
             document.getElementById("fileName").innerHTML = args.filesData[0].name;
+            var viewer = document.getElementById('pdfViewer').ej2_instances[0];
+            viewer.downloadFileName = args.filesData[0].name;
+            viewer.exportAnnotationFileName = args.filesData[0].name;
             let size = document.getElementById("fileSize");
             if((args.filesData[0].size.toString()).length <= 6){
                 size.innerHTML = ((args.filesData[0].size/1024).toFixed(1)).toString()+" KB";

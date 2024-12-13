@@ -6,7 +6,6 @@ window.samplesList = [
      {
         "name": "PowerPoint (Presentation)",
         "directory": "PowerPoint",
-        "type": "update",
         "category": "Document Processing Library",
         "samples": [
             {
@@ -38,7 +37,6 @@ window.samplesList = [
                 "name": "PPTX To Image",
                 "category": "Conversions",
                 "order": 2,
-                "type": "update",
                 "component": "PowerPoint",
                 "dir": "PowerPoint",
                 "parentId": "045",

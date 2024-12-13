@@ -4,29 +4,48 @@
 @using Syncfusion.EJ2
 @using Newtonsoft.Json
 
+@{
+    var mccbDropdownListData = new string[] { "StartsWith", "EndsWith", "Contains" };
+}
 @section ControlsSection {
     <div class="control-section">
         <div class='control-wrapper'>
             <div style='padding-top:60px;'>
-                <ejs-multicolumncombobox id="filtering" dataSource="@Model.work" popupHeight="230px"
-                    placeholder="Select a name" allowFiltering=true filtering="onfiltering">
+                <label>Select an employee</label>
+                <ejs-multicolumncombobox id="filtering" dataSource="@Model.employee" popupHeight="230px" popupWidth="585px"
+                    placeholder="e.g. Alice Johnson" allowFiltering="true" >
                     <e-multicolumncombobox-fields text="Name" value="Experience"></e-multicolumncombobox-fields>
                     <e-multicolumncombobox-columns>
                         <e-multicolumncombobox-column field="Name" header="Name" width="100"></e-multicolumncombobox-column>
-                        <e-multicolumncombobox-column field="YearOfJoining" header="Year of Joining" width="120"></e-multicolumncombobox-column>
-                        <e-multicolumncombobox-column field="Status" header="Status" width="90"></e-multicolumncombobox-column>
+                        <e-multicolumncombobox-column field="Department" header="Department" width="110"></e-multicolumncombobox-column>
+                        <e-multicolumncombobox-column field="Role" header="Role" width="140"></e-multicolumncombobox-column>
                         <e-multicolumncombobox-column field="Location" header="Location" width="100"></e-multicolumncombobox-column>
-                        <e-multicolumncombobox-column field="Experience" header="Experience in Year" width="130"></e-multicolumncombobox-column>
+                        <e-multicolumncombobox-column field="Experience" header="Experience in Years" width="150"></e-multicolumncombobox-column>
                     </e-multicolumncombobox-columns>
                 </ejs-multicolumncombobox>
             </div>
         </div>
     </div>
+    <div class="col-lg-4 property-section">
+    <div class="property-panel-header"> Properties </div>
+    <div class="property-panel-content">
+        <table class="property-panel-table">
+            <tbody>
+                <tr>
+                    <td> Choose filter type </td>
+                    <td style="padding-right: 10px">
+                        <ejs-dropdownlist id="filtertype" dataSource="@mccbDropdownListData" index=0 placeholder="Select a filter type" popupHeight="220px" popupWidth="300px" change="onChange" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
     <!-- custom code start -->
     <style>
         .control-wrapper {
             margin: 0 auto;
-            width: 585px;
+            width: 250px;
         }
 
         @@media screen and (max-width: 480px) {
@@ -37,10 +56,10 @@
     </style>
     <!-- custom code end-->
     <script type="text/javascript">
-        function onfiltering(e) {
-            var query = new ej.data.Query();
-            query = (e.text !== '') ? query.where('Name', 'startswith', e.text, true) : query;
-            e.updateData(@Html.Raw(JsonConvert.SerializeObject(Model.work)), query);
+        function onChange(args) {
+               var multicolumnEle = document.getElementById('filtering');
+               var mccbInstance = ej.base.getInstance(multicolumnEle, ejs.multicolumncombobox.MultiColumnComboBox);
+               mccbInstance.filterType = args.value;       
         }
     </script>
 }
@@ -59,8 +78,7 @@
             In this sample, the employee data is filtered based on <code>Location</code> column, which illustrates how employee details are filtered dynamically based on typed characters.
         </p>
         <p>
-            This sample illustrates that, query the data source and pass the resulted data when characters are typed in the search box triggers the <code>filtering</code>
-            event, you can filter down the data source and return the resulted data to MultiColumn ComboBox via <code> updateData</code>method to display its list of employees.
+             <p>The <code>MultiColumn ComboBox</code> supports filtering, which allows users to search for and select items by typing keywords. The available items are dynamically filtered based on the input, ensuring quick access to the desired data.</p>
         </p>
     </div>
 }

@@ -12,9 +12,9 @@ namespace EJ2CoreSampleBrowser.Pages.MultiColumnComboBox;
 
 public class DefaultFunctionalitiesModel : PageModel
 {
-    public List<WorkersDetails> workers { get; set; }
+    public List<Products> products { get; set; }
     public void OnGet()
     {
-        workers = new WorkersDetails().GetAllRecords();
+        products = new Products().GetAllRecords();
     }
 }

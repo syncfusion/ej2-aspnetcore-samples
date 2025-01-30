@@ -1,0 +1,77 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Chart.RangeColumnModel
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="control-section" align="center">
+
+        <ejs-chart id="lineContainer"  load="load" title="Temperature Variation by Week">
+            <e-chart-chartarea>
+                <e-chartarea-border width="0"></e-chartarea-border>
+            </e-chart-chartarea>
+            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category">
+                <e-majorgridlines width="0"></e-majorgridlines>
+                <e-majorticklines width="0"></e-majorticklines>
+            </e-chart-primaryxaxis>
+            <e-chart-primaryyaxis maximum="20" labelFormat="{value}˚C" title="Temperature (In Celsius)" edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift">
+                <e-majorticklines width="0"></e-majorticklines>
+                <e-linestyle width="0"></e-linestyle>
+            </e-chart-primaryyaxis>
+            <e-series-collection>
+                <e-series dataSource="@Model.ChartPoints" xName="Days" high="IND_HighTemp" low="IND_LowTemp" name="India" columnSpacing="0.1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.RangeColumn">
+                    <e-series-marker>
+                        <e-series-datalabel visible="true" position="@Syncfusion.EJ2.Charts.LabelPosition.Outer"></e-series-datalabel>
+                    </e-series-marker>
+                </e-series>
+            </e-series-collection>
+            <e-chart-tooltipsettings enable="true" header="<b>${point.x}</b>" format="Temperature : <b>${point.low} - ${point.high}</b>"></e-chart-tooltipsettings>
+            <e-chart-legendsettings visible="false" enableHighlight="true"></e-chart-legendsettings>
+        </ejs-chart>
+
+    </div>
+    <script>
+        function load(args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Fluent2';
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5'));
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+        }
+    </script>
+}
+@*custom code start*@
+@section Scripts {
+
+}
+
+<style>
+
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Range Column in ASP.NET Core Chart control. Explore here for more details."/>
+                }
+@*custom code end*@
+@section ActionDescription{
+    <p>
+        This <a target="_blank" href="https://www.syncfusion.com/aspnet-core-ui-controls/charts/chart-types/range-column-chart" aria-label="Navigate to explore the syncfusion ASP.NET Core Range Column Chart">ASP.NET Core Range Column Chart</a> example visualizes the maximum and minimum temperatures for a week in different countries with the default range column series.
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can see how to render and configure the range column chart. The range column chart is used to display a range of data by plotting two y-values per data point. The two y-values are used as the upper and lower bounds of a column.
+    </p>
+    <p>
+        <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover over a point or tap on a point in touch-enabled devices.
+    </p>
+    <p>
+        More information about the range column series can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/chart-types/range-column" aria-label="Navigate to the documentation for range-column in ASP.NET Core Chart components">documentation section</a>.
+    </p>
+}
+@section Title{
+                    <title>ASP.NET Core Chart Range Column Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Range Column in ASP.NET Core Chart Control</h1>
+                }

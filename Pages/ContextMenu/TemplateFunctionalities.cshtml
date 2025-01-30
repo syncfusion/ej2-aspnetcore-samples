@@ -1,0 +1,188 @@
+@page
+@using Syncfusion.EJ2;
+@using Syncfusion.EJ2.Navigations;
+
+@{
+    List<object> menuItems = new List<object>
+    {
+        new {
+            answerType = "Selection",
+            description = "Choose from options",
+            iconCss = "e-icons e-list-unordered"
+        },
+        new {
+            answerType = "Yes / No",
+            description = "Select Yes or No",
+            iconCss = "e-icons e-check-box"
+        },
+        new {
+            answerType = "Text",
+            description = "Type own answer",
+            iconCss = "e-icons e-caption",
+            items = new List<object>
+            {
+                new {
+                    answerType = "Single line",
+                    description = "Type answer in a single line",
+                    iconCss = "e-icons e-text-form"
+                },
+                new {
+                    answerType = "Multiple line",
+                    description = "Type answer in multiple lines",
+                    iconCss = "e-icons e-text-wrap"
+                }
+            }
+        },
+        new {
+            answerType = "None",
+            iconCss = "e-icons e-mouse-pointer",
+            description = "No answer required"
+        }
+    };
+}
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuObj = document.getElementById('contextmenu').ej2_instances[0];
+            const contextMenuTarget = document.getElementById('contextmenutarget');
+
+            if (window.browserDetails.isDevice) {
+                contextMenuTarget.textContent = 'Touch hold to open the ContextMenu';
+                menuObj.animationSettings.effect = 'ZoomIn';
+            } else {
+                contextMenuTarget.textContent = 'Right click/Touch hold to open the ContextMenu';
+                menuObj.animationSettings.effect = 'SlideDown';
+            }
+        });
+    </script>
+}
+
+@section ControlsSection{
+    <div class="control-section">
+        <div class="contextmenu-control">
+            <div id="contextmenutarget"></div>
+            <ejs-contextmenu id="contextmenu" cssClass="e-contextMenu-template" target="#contextmenutarget" items="menuItems" itemTemplate="#menuItemTemplate"></ejs-contextmenu>
+        </div>
+    </div>
+}
+
+<!-- Template to render Context Menu -->
+   <script id="menuItemTemplate" type="text/x-template">
+        <div class="menu-wrapper">
+            <span class="${iconCss} icon-right"></span>
+            <div class="text-content">
+                <span class="text">${answerType}</span>
+                <span class="description">${description}</span>
+            </div>
+        </div>
+    </script>
+
+@section Meta{
+                    <meta name="description" content="This sample demonstrates the template support functionalities of the ContextMenu. You can customize the menu items using templates to enhance flexibility and integrate custom content."/>
+                }
+
+@section ActionDescription{
+<div id="action-description">
+    <p>This sample demonstrates the template functionality of the ContextMenu. Right-click or touch and hold the designated rectangular area to open the ContextMenu, which displays customized items using a template.</p>
+</div>
+}
+
+@section Description{
+<div id="description">
+    <p>
+        ContextMenu is a graphical user interface that appears on a right-click or touch-and-hold action. It supports displaying single-level or multi-level menus and allows for customizing the menu items through templates.
+    </p>
+    <p>
+        In this demo, <code><a target="_blank" class="code" href="https://ej2.syncfusion.com/documentation/api/context-menu/#itemtemplate">itemTemplate
+        </a></code> property  is used to enable template support for customizing ContextMenu items. Each menu item is customized using a template to include icons, descriptive text, and additional content, offering a flexible and user-friendly interface.
+    </p>
+    <p>
+        In mobile, the sub menu opens in a single layer with option for switching back to parent menu.
+    </p>
+    <p>
+       More information about ContextMenu can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/documentation/context-menu/getting-started/">
+            documentation section</a>.
+    </p>
+</div>
+}
+@*custom code start*@
+<style>
+    .contextmenu-control {
+        margin: 5% 25%;
+        width: auto;
+        -webkit-touch-callout: none;
+        /* iOS Safari */
+        -webkit-user-select: none;
+        /* Safari */
+    }
+    
+    .e-contextMenu-template .menu-wrapper {
+        display: flex;
+        align-items: center;
+        padding: 2px;
+    }
+
+    .e-contextMenu-template .menu-wrapper .text-content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .e-contextMenu-template .menu-wrapper .text {
+        font-weight: 600;
+    }
+
+    .e-contextMenu-template .menu-wrapper .description {
+        font-size: 0.8em;
+    }
+
+    .e-contextMenu-template .menu-wrapper .icon-right {
+        padding: 8px 8px 8px 0px;
+        font-size: 1.5em;
+    }
+
+    .e-contextMenu-template .e-caret {
+        margin-top: -38px !important;
+    }
+
+    .e-contextMenu-template .e-menu-item {
+        height: auto !important;
+        line-height: unset !important;
+    }
+
+    .e-contextMenu-template .e-menu-item .e-previous {
+        margin-right: 0 !important;
+    }
+
+    #contextmenutarget {
+        border: 1px dashed gray;
+        height: 250px;
+        padding: 10px;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 14px;
+        color: gray;
+    }
+
+    @@media only screen and (max-width: 700px) {
+        .contextmenu-control {
+            margin: 5% 10%;
+            width: auto;
+        }
+
+        #contextmenutarget {
+            font-size: 12px;
+        }
+    }
+</style>
+@*custom code end*@
+
+@section Title{
+                    <title>ASP.NET Core ContextMenu TemplateFunctionalities Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of TemplateFunctionalities in ASP.NET Core ContextMenu Control</h1>
+                }

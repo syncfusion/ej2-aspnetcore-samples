@@ -1,0 +1,481 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.PivotTable.Hyperlink
+
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2.PivotView
+@using Syncfusion.EJ2.DropDowns
+@section Meta{
+<meta name="description"
+    content="This example demonstrates the Hyperlink in ASP.NET Core Pivot Table control. Explore here for more details." />
+}
+
+@{
+    var data = new PivotTableData().GetPivot_Data();
+    var drilledMembers = new string[] { "France", "Germany" };
+    var hyperLinkConditions = new string[] { "Equals", "NotEquals", "GreaterThan", "GreaterThanOrEqualTo", "LessThan", 
+        "LessThanOrEqualTo", "Between", "NotBetween" };
+    var selectedOption = "valuecells";
+    var selectedMeasure = "In_Stock";
+    var selectedCondition = "NotEquals";
+}
+@section ControlsSection{
+<div class="col-lg-8 control-section" style="overflow:auto">
+    <div class="content-wrapper">
+        <ejs-pivotview id="pivotview" width="100%" height="600" hyperlinkCellClick="onCellClick" showTooltip="false">
+            <e-datasourcesettings dataSource="@data" expandAll="true">
+                <e-formatsettings>
+                    <e-field name="Amount" format="C0"></e-field>
+                </e-formatsettings>
+                <e-drilledmembers>
+                    <e-field name="Country" items="@drilledMembers"></e-field>
+                </e-drilledmembers>
+                <e-rows>
+                    <e-field name="Country"></e-field>
+                    <e-field name="Products"></e-field>
+                </e-rows>
+                <e-columns>
+                    <e-field name="Year"></e-field>
+                </e-columns>
+                <e-values>
+                    <e-field name="In_Stock" caption="In Stock"></e-field>
+                    <e-field name="Sold" caption="Units Sold"></e-field>
+                    <e-field name="Amount" caption="Sold Amount"></e-field>
+                </e-values>
+                <e-filters>
+                    <e-field name="Product_Categories" caption="Product Categories"></e-field>
+                </e-filters>
+            </e-datasourcesettings>
+            <e-hyperlinksettings showValueCellHyperlink="true" , cssClass="e-custom-class"></e-hyperlinksettings>
+            <e-gridSettings columnWidth="140"></e-gridSettings>
+        </ejs-pivotview>
+    </div>
+</div>
+<div class="col-lg-4 property-section pivottable-property-section">
+    <table id="property" title="Properties" style="width: 100%;height:100%;">
+        <tbody>
+            <tr style="height: 50px">
+                <td>
+                    <div>
+                        Show Hyperlink:
+                    </div>
+                </td>
+                <td style="padding-bottom: 16px">
+                    <div>
+                        <ejs-dropdownlist id="hyperlinks" dataSource="@Model.hyperOptions" change="optionsdll"
+                            value="@selectedOption" width="100%">
+                            <e-dropdownlist-fields text="text" value="value"></e-dropdownlist-fields>
+                        </ejs-dropdownlist>
+                    </div>
+                </td>
+            </tr>
+            <tr class="text1cls" style="height: 50px; display: none">
+                <td colspan="2">
+                    <div>
+                        Condition based settings:
+                    </div>
+                </td>
+            </tr>
+            <tr class="measurecls" style="height: 50px; display: none">
+                <td>
+                    <div>
+                        Measures:
+                    </div>
+                </td>
+                <td style="padding-bottom: 16px">
+                    <div>
+                        <ejs-dropdownlist id="measures" dataSource="@Model.hyperMeasures"
+                            value="@selectedMeasure" width="100%">
+                            <e-dropdownlist-fields text="text" value="value"></e-dropdownlist-fields>
+                        </ejs-dropdownlist>
+                    </div>
+                </td>
+            </tr>
+            <tr class="conditioncls" style="height: 50px; display: none">
+                <td>
+                    <div>
+                        Condition:
+                    </div>
+                </td>
+                <td style="padding-bottom: 16px">
+                    <div class="conditionscls">
+                        <ejs-dropdownlist id="conditions" dataSource="@hyperLinkConditions"
+                            value="@selectedCondition" change="operatorddl">
+                        </ejs-dropdownlist>
+                    </div>
+                </td>
+            </tr>
+            <tr class="input1cls" style="height: 50px; display: none">
+                <td>
+                    <div>
+                        Value 1:
+                    </div>
+                </td>
+                <td style="padding-bottom: 16px">
+                    <div class="value1cls">
+                        <ejs-numerictextbox id="value1" value="0" width="100%" placeholder="Example: 400">
+                        </ejs-numerictextbox>
+                    </div>
+                </td>
+            </tr>
+            <tr class="input2cls" style="height: 50px; display: none">
+                <td>
+                    <div>
+                        Value 2:
+                    </div>
+                </td>
+                <td style="padding-bottom: 16px">
+                    <div class="value2cls">
+                        <ejs-numerictextbox id="value2" value="0" width="100%" placeholder="Example: 4000">
+                        </ejs-numerictextbox>
+                    </div>
+                </td>
+            </tr>
+            <tr class="text2cls" style="height: 50px; display: none">
+                <td colspan="2">
+                    <div>
+                        Header based settings:
+                    </div>
+                </td>
+            </tr>
+            <tr class="textinputcls" style="height: 50px; display: none">
+                <td>
+                    <div>
+                        Header Text:
+                    </div>
+                </td>
+                <td style="padding-bottom: 16px">
+                    <div class="textcls">
+                        <ejs-maskedtextbox id="text" value="" placeholder="Example: FY 2015.In Stock" width="100%">
+                        </ejs-maskedtextbox>
+                    </div>
+                </td>
+            </tr>
+            <tr class="updatecls" style="height: 50px; display: none">
+                <td colspan="2">
+                    <div style="float:right;margin-right: 4px">
+                        <ejs-button id="apply" isPrimary="true" content="Apply"></ejs-button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div><b>
+                            <hr>Event Trace:
+                        </b>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="eventarea" style="height: 160px;overflow: auto">
+                        <span class="EventLog" id="EventLog" style="word-break: normal;"></span>
+                    </div>
+                </td>
+            </tr>
+            <tr style="height: 50px">
+                <td>
+                <td colspan="2">
+                    <div class="evtbtn" style="float:right;margin-right: 4px;">
+                        <ejs-button id="clear" cssClass="e-small" content="Clear"></ejs-button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<style>
+    #pivotview {
+        width: 100%;
+        height: 100%;
+    }
+
+    .pivottable-property-section table tr td:first-child {
+        width: 25%;
+    }
+
+    .pivottable-property-section .text1cls,
+    .pivottable-property-section .text2cls {
+        font-weight: bold;
+        margin-top: 20px;
+    }
+
+    .pivottable-property-section {
+        overflow: auto;
+    }
+
+    #EventLog b {
+        color: #388e3c;
+    }
+
+    .pivottable-property-section hr {
+        margin: 1px 10px 10px 0px;
+        border-top: 1px solid #eee;
+    }
+
+    #EventLog hr {
+        margin-bottom: 1px;
+    }
+
+    .e-custom-class {
+        text-decoration: underline;
+    }
+
+    .e-custom-class:hover {
+        color: red;
+        text-decoration: none;
+    }
+</style>
+<script>
+    var operators = ['Equals', 'NotEquals', 'GreaterThan', 'GreaterThanOrEqualTo',
+        'LessThan', 'LessThanOrEqualTo', 'Between', 'NotBetween'];
+    var measures = [
+        { value: 'In_Stock', text: 'In Stock' },
+        { value: 'Sold', text: 'Units Sold' },
+        { value: 'Amount', text: 'Sold Amount' }
+    ];
+    var options = [
+        { value: 'allcells', text: 'All cells' },
+        { value: 'rowheader', text: 'Row headers' },
+        { value: 'columnheader', text: 'Column headers' },
+        { value: 'valuecells', text: 'Value cells' },
+        { value: 'summarycells', text: 'Summary cells' },
+        { value: 'conditional', text: 'Condition based option' },
+        { value: 'headertext', text: 'Header based option' }
+    ];
+    function optionsdll(args) {
+        var pivotObj = document.getElementById('pivotview').ej2_instances[0];
+        var operatorddl = document.getElementById('conditions').ej2_instances[0];
+        document.querySelector('.text1cls').style.display = 'none';
+        document.querySelector('.text2cls').style.display = 'none';
+        document.querySelector('.measurecls').style.display = 'none';
+        document.querySelector('.conditioncls').style.display = 'none';
+        document.querySelector('.input1cls').style.display = 'none';
+        document.querySelector('.input2cls').style.display = 'none';
+        document.querySelector('.textinputcls').style.display = 'none';
+        document.querySelector('.updatecls').style.display = 'none';
+        if (args.value == 'allcells') {
+            pivotObj.hyperlinkSettings = {
+                showHyperlink: true,
+                showRowHeaderHyperlink: false,
+                showColumnHeaderHyperlink: false,
+                showValueCellHyperlink: false,
+                showSummaryCellHyperlink: false,
+                headerText: undefined,
+                conditionalSettings: []
+            };
+        } else if (args.value == 'rowheader') {
+            pivotObj.hyperlinkSettings = {
+                showHyperlink: false,
+                showRowHeaderHyperlink: true,
+                showColumnHeaderHyperlink: false,
+                showValueCellHyperlink: false,
+                showSummaryCellHyperlink: false,
+                headerText: undefined,
+                conditionalSettings: []
+            };
+        } else if (args.value == 'columnheader') {
+            pivotObj.hyperlinkSettings = {
+                showHyperlink: false,
+                showRowHeaderHyperlink: false,
+                showColumnHeaderHyperlink: true,
+                showValueCellHyperlink: false,
+                showSummaryCellHyperlink: false,
+                headerText: undefined,
+                conditionalSettings: []
+            };
+        } else if (args.value == 'valuecells') {
+            pivotObj.hyperlinkSettings = {
+                showHyperlink: false,
+                showRowHeaderHyperlink: false,
+                showColumnHeaderHyperlink: false,
+                showValueCellHyperlink: true,
+                showSummaryCellHyperlink: false,
+                headerText: undefined,
+                conditionalSettings: []
+            };
+        } else if (args.value == 'summarycells') {
+            pivotObj.hyperlinkSettings = {
+                showHyperlink: false,
+                showRowHeaderHyperlink: false,
+                showColumnHeaderHyperlink: false,
+                showValueCellHyperlink: false,
+                showSummaryCellHyperlink: true,
+                headerText: undefined,
+                conditionalSettings: []
+            };
+        } else if (args.value == 'conditional') {
+            document.querySelector('.text1cls').style.display = '';
+            document.querySelector('.measurecls').style.display = '';
+            document.querySelector('.conditioncls').style.display = '';
+            document.querySelector('.input1cls').style.display = '';
+            if (operatorddl.value === 'Between' || operatorddl.value === 'NotBetween') {
+                document.querySelector('.input2cls').style.display = '';
+            }
+            document.querySelector('.updatecls').style.display = '';
+        } else if (args.value == 'headertext') {
+            document.querySelector('.text2cls').style.display = '';
+            document.querySelector('.textinputcls').style.display = '';
+            document.querySelector('.updatecls').style.display = '';
+        }
+    }
+
+    function operatorddl(args) {
+        if (args.value === 'Between' || args.value === 'NotBetween') {
+            document.querySelector('.input2cls').style.display = '';
+        } else {
+            document.querySelector('.input2cls').style.display = 'none';
+        }
+    }
+
+    function onCellClick(args) {
+        var cell = '';
+        if (args.currentCell.className.indexOf('e-stot') > -1 || args.currentCell.className.indexOf('e-gtot') > -1 || args.currentCell.className.indexOf('e-summary') > -1) {
+            cell += 'Summary ';
+        }
+        if ((args.currentCell.querySelector('.e-headercelldiv') && !(args.data).indexObject) ||
+            args.currentCell.className.indexOf('e-cellvalue') > -1) {
+            cell += 'Value Header ';
+        } else if (args.currentCell.parentElement.className.indexOf('e-rowsheader') > -1 || args.currentCell.className.indexOf('e-rowsheader') > -1) {
+            cell += 'Row Header ';
+        } else if (args.currentCell.className.indexOf('e-columnsheader') > -1 ||
+            args.currentCell.className.indexOf('e-pivotcell-container') > -1) {
+            cell += 'Column Header ';
+        } else if (args.currentCell.className.indexOf('e-valuescontent') > -1) {
+            cell += 'Value ';
+        }
+        if (args.currentCell.querySelector('a') &&
+            (args.currentCell.querySelector('a').innerText === 'France' || args.currentCell.querySelector('a').innerText === 'Germany')) {
+            var country = args.currentCell.querySelector('a').innerText;
+            args.currentCell.querySelector('a').setAttribute('data-url', (country === 'France' ?
+                'https://en.wikipedia.org/wiki/France' : 'https://en.wikipedia.org/wiki/Germany'));
+            args.cancel = false;
+        } else {
+            appendElement('<b>' + cell + '</b>' + ' cell click event called<hr>');
+        }
+    };
+    document.getElementById('apply').onclick = function () {
+        var pivotObj = document.getElementById('pivotview').ej2_instances[0];
+        var optionsdll = document.getElementById('hyperlinks').ej2_instances[0];
+        var measuresddl = document.getElementById('measures').ej2_instances[0];
+        var operatorddl = document.getElementById('conditions').ej2_instances[0];
+        var valueInput1 = document.getElementById('value1').ej2_instances[0];
+        var valueInput2 = document.getElementById('value2').ej2_instances[0];
+        var textInput = document.getElementById('text').ej2_instances[0];
+        if (optionsdll.value === 'conditional') {
+            pivotObj.hyperlinkSettings = {
+                showHyperlink: false,
+                showRowHeaderHyperlink: false,
+                showColumnHeaderHyperlink: false,
+                showValueCellHyperlink: false,
+                showSummaryCellHyperlink: false,
+                headerText: undefined,
+                conditionalSettings: [
+                    {
+                        measure: measuresddl.value,
+                        conditions: operatorddl.value,
+                        value1: valueInput1.value,
+                        value2: valueInput2.value
+                    }
+                ]
+            };
+        } else if (optionsdll.value === 'headertext') {
+            pivotObj.hyperlinkSettings = {
+                showHyperlink: false,
+                showRowHeaderHyperlink: false,
+                showColumnHeaderHyperlink: false,
+                showValueCellHyperlink: false,
+                showSummaryCellHyperlink: false,
+                headerText: textInput.value,
+                conditionalSettings: []
+            };
+        }
+    };
+
+    document.getElementById('clear').onclick = function () {
+        document.getElementById('EventLog').innerHTML = '';
+    };
+
+    function appendElement(html) {
+        var span = document.createElement('span');
+        span.innerHTML = html;
+        var log = document.getElementById('EventLog');
+        log.insertBefore(span, log.firstChild);
+    }
+</script>
+}
+
+@section PreScripts {
+<script>
+    ej.base.enableRipple(false);
+</script>
+}
+
+@section ActionDescription{
+<div id="action-description">
+    <p>This sample demonstrates showing hyperlink options in row headers, column headers, value cells, and summary cells
+        in the pivot table. Also, hyperlink options can be enabled for specific headers and value cells based on the
+        applied condition.</p>
+</div>
+}
+
+@section Description{
+<div id="description">
+    <p>
+        In this sample, hyperlinks are enabled in cells based on the options selected from the <b>Show Hyperlink</b>
+        drop-down list.
+        The following options are available for setting the hyperlinks:
+    </p>
+    <table>
+        <tr>
+            <td style="vertical-align: top;padding: 10px 0;">
+                <code>All cells :</code>
+            </td>
+            <td>Allows to set the visibility of hyperlink to all cells.</td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top;padding: 4px 0;">
+                <code>Row headers :</code>
+            </td>
+            <td>Allows to set the visibility of hyperlink to row headers.</td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top;padding: 4px 0;">
+                <code>Column headers :</code>
+            </td>
+            <td>Allows to set the visibility of hyperlink to column headers.</td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top;padding: 4px 0;">
+                <code>Value cells :</code>
+            </td>
+            <td>Allows to set the visibility of hyperlink to value cells.</td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top;padding: 4px 0;">
+                <code>Summary cells :</code>
+            </td>
+            <td>Allows to set the visibility of hyperlink to summary cells.</td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top;padding: 4px 0;">
+                <code>Condition based option :</code>
+            </td>
+            <td>Allows to set the visibility of hyperlink to value and summary cells based on the applied condition like
+                less than, greater than, equals, etc.</td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top;padding: 4px 0;">
+                <code>Header based option :</code>
+            </td>
+            <td>Allows to set the visibility of hyperlink to specific row/column based on the given header text.</td>
+        </tr>
+    </table>
+</div>
+}
+@section Title{
+<title>ASP.NET Core Pivot Table Hyperlink Example - Syncfusion Demos </title>
+}
+@section Header{
+<h1 class='sb-sample-text'>Example of Hyperlink in ASP.NET Core Pivot Table Control</h1>
+}

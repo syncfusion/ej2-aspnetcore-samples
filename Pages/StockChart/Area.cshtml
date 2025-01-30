@@ -1,0 +1,69 @@
+@page
+@using Syncfusion.EJ2
+@section ControlsSection{
+    @{
+        var series = new string[0];
+        var indicator = new string[0];
+    }
+
+    <div class="control-section" align="center">
+        <ejs-stockchart id="stockchartarea" load="chartLoad" seriesType="series" indicatorType="indicator" title="AAPL Stock Price">
+            <e-stockchart-border width="0"></e-stockchart-border>
+            <e-stockchart-primaryxaxis>
+                <e-majorgridlines width="0"></e-majorgridlines>
+                <e-crosshairtooltip enable="true"></e-crosshairtooltip>
+            </e-stockchart-primaryxaxis>
+            <e-stockchart-primaryyaxis>
+                <e-linestyle color="transparent"></e-linestyle>
+                <e-majorticklines color="transparent" height="0"></e-majorticklines>
+                <e-crosshairtooltip enable="true"></e-crosshairtooltip>
+            </e-stockchart-primaryyaxis>
+            <e-stockchart-crosshairsettings enable="true"></e-stockchart-crosshairsettings>
+            <e-stockchart-series-collection>
+                <e-stockchart-series xName="x" yName="high" type="Area" name="google" opacity=0.5>
+                </e-stockchart-series>
+            </e-stockchart-series-collection>
+        </ejs-stockchart>
+
+    </div>
+    <script src="~/scripts/StockChartData/aapl.js"></script>
+    <script>
+        var data = aapl;
+        function chartLoad(args) {
+            let selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Fluent2';
+            args.stockChart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5');
+            args.stockChart.series[0].dataSource = data;
+            args.stockChart.crosshair.lineType = 'Both';
+        }
+    </script>
+}
+@*custom code start*@
+@section Scripts {
+
+}
+@*custom code end*@
+@section ActionDescription{
+    <p>This sample uses area series to visualize stock data. Crosshair display information about the data and period.</p>
+}
+@section Description{
+    <p>
+        In this example, you can see how to render and configure stock chart to visualize the stock data with area series. Use series <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.StockChartStockChartSeries.html#Syncfusion_EJ2_Charts_StockChartStockChartSeries_Type" aria-label="Navigate to the Type property reference for ASP.NET Core Stock Chart control">Type</a> as <b>Area</b> to render a area series.
+    </p>
+    <p>
+        <code>Crosshair</code> is enabled in this example. To see the crosshair in action, hover the chart or tap on it in touch enabled devices.
+    </p>
+    <p>
+        More information about the series type can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/stock-chart/series-types" aria-label="Navigate to the documentation for Stock Chart Series Types">documentation section</a>.
+    </p>
+}
+@section Title{
+                    <title>ASP.NET Core StockChart Area Example - Syncfusion Demos </title>
+                }
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Area in ASP.NET Core StockChart control. Explore here for more details."/>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Area in ASP.NET Core StockChart Control</h1>
+                }

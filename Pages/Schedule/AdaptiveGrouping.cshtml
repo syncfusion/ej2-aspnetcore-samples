@@ -1,0 +1,72 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Schedule.AdaptiveGrouping
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2
+
+@{
+    
+    var resourceData = new ScheduleData().GetResourceData();
+    var timelineResourceData = new ScheduleData().GetTimelineResourceData();
+    var adaptiveDataSource = resourceData.Concat(timelineResourceData);
+    var resources = new string[] { "Projects", "Categories" };
+}
+
+@section ControlsSection{
+    <div class="control-section">
+        <div class="schedule-wrapper">
+            <ejs-schedule id="schedule" cssClass='schedule-resource' width='100%' height='650px' selectedDate="new DateTime(DateTime.Today.Year, 4, 4)" enableAdaptiveUI="true">
+                <e-schedule-views>
+                    <e-schedule-view option="Day"></e-schedule-view>
+                    <e-schedule-view option="Week"></e-schedule-view>
+                    <e-schedule-view option="Month" isSelected="true"></e-schedule-view>
+                </e-schedule-views>
+                <e-schedule-group resources="@resources"></e-schedule-group>
+                <e-schedule-resources>
+                    <e-schedule-resource dataSource="@Model.projects" field="ProjectId" title="Choose Project" name="Projects" textField="text" idField="id" colorField="color"></e-schedule-resource>
+                    <e-schedule-resource dataSource="@Model.categories" field="TaskId" title="Category" name="Categories" textField="text" idField="id" groupIDField='groupId' colorField="color" allowMultiple="true"></e-schedule-resource>
+                </e-schedule-resources>
+                <e-schedule-eventsettings dataSource="@adaptiveDataSource">
+                    <e-eventsettings-fields>
+                        <e-field-subject name="Subject" title="Summary"></e-field-subject>
+                        <e-field-description name="Description" title="Comments"></e-field-description>
+                    </e-eventsettings-fields>
+                </e-schedule-eventsettings>
+            </ejs-schedule>
+        </div>
+    </div>
+
+    <style>
+        @@media (min-width: 481px) {
+            .schedule-wrapper {
+                margin: 0 25%;
+            }
+        }
+    </style>
+}
+
+@*custom code start*@
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Adaptive Grouping in ASP.NET Core Scheduler control. Explore here for more details."/>
+                }
+@*custom code end*@
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This demo showcases how multiple resources are grouped in compact view and how events are portrayed in the scheduler view layouts.</p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            In this demo, we have showcased the Schedule views and resource grouping in the compact view mode with the help of the <code>enableAdaptiveUI</code> property.
+            In Scheduler view, only one resource has been shown to enhance the view experience of resource events details clearly.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Scheduler Adaptive Grouping Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Adaptive Grouping in ASP.NET Core Scheduler Control</h1>
+                }

@@ -1,0 +1,132 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Grid.ColumnMenuModel
+@{
+    ViewData["Title"] = "ColumnMenu";
+}
+
+<h2>ColumnMenu</h2>
+@section ControlsSection{
+    <div class="col-lg-9 control-section">
+
+            <ejs-grid id="Grid" dataSource="@Model.datasource" allowGrouping="true" allowSorting="true" allowFiltering="true" allowPaging="true" showColumnMenu="true" toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })">
+               <e-grid-filterSettings type="CheckBox"></e-grid-filterSettings>
+                <e-grid-groupsettings showGroupedColumn="true"></e-grid-groupsettings>
+                <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true"></e-grid-editSettings>
+                <e-grid-selectionSettings allowColumnSelection="true"></e-grid-selectionSettings>
+                <e-grid-columns>
+                    <e-grid-column field="OrderID" headerText="Order ID" textAlign="Right" width="150" isPrimaryKey="true" validationRules="@(new { required=true, number=true})"></e-grid-column>
+                    <e-grid-column field="CustomerID" headerText="Customer Name" width="200" showInColumnChooser="false" validationRules="@(new { required=true, minLength=5})"></e-grid-column>                    
+                    <e-grid-column field="Freight" headerText="Freight" width="150" textAlign="Right" format="C2" editType="numericedit" validationRules="@(new { required=true, min=0})"></e-grid-column>
+                    <e-grid-column field="ShipName" headerText="Ship Name" width="200"></e-grid-column>
+                    <e-grid-column field="ShipCountry" visible="false" headerText="Ship Country"  width="200" editType="dropdownedit"></e-grid-column>
+                    <e-grid-column field="ShipCity" headerText="Ship City" width="160"></e-grid-column>
+                </e-grid-columns>
+
+
+            </ejs-grid>
+        
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties" style="width: 100%">
+            <tr>
+                <td style="width: 40%">
+                    <div style="padding-top: 7px">Column menu</div>
+                </td>
+                <td style="width: 60%;padding-right: 10px">
+                    <div id='typeddl'>
+                        <ejs-dropdownlist id="ColumnMenuDD" dataSource="@Model.ddDataSource" value="@("Default")" change="change" width='120px'></ejs-dropdownlist>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        function columnMenuClick(args) {
+            var grid = document.getElementById("Grid").ej2_instances[0];
+			if (args.item.id === 'select_column') {
+				grid.selectionModule.selectColumn(args.column.index);
+				// custom function
+			} else if (args.item.id === 'clear_column') {
+				// custom function
+				grid.selectionModule.clearColumnSelection();
+			}
+        }
+        function change(args) {
+            var grid = document.getElementById("Grid").ej2_instances[0];
+            var gridMenuOption = args.value;
+			if (gridMenuOption == 'Custom') {
+				let columnMenuItems = [
+					'SortAscending',
+					'SortDescending',
+					'Group',
+					'Ungroup',
+					'Filter',
+					{ text: 'Select Column', id: 'select_column' },
+					{ text: 'Clear column selection', id: 'clear_column' },
+				];
+                grid.columnMenuClick = columnMenuClick;
+				grid.columnMenuItems = columnMenuItems;
+			} else {
+				grid.columnMenuClick = undefined;
+				grid.columnMenuItems = undefined;
+			}
+        }
+    </script>
+
+    <style>
+        #typeddl {
+            min-width: 100px;
+        }
+    </style>
+}
+
+@section ActionDescription{
+	<div id="action-description">
+		<p>This sample demonstrates the default functionalities of the ColumnMenu. Click the icon of each column to open the column menu.</p>
+	</div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Column Menu in ASP.NET Core Data Grid control. Explore here for more details."/>
+                }
+
+@section Description{
+    <div id="description">
+        <p>
+            The grid provides an option to display a column menu when the user clicks the icon on each column. This menu includes integrated features like sorting, 
+            grouping, filtering, column chooser, and auto-fitting. These features can be enabled by setting the <code>showColumnMenu
+            </code> property to `true`. The default menu items include:
+        <br/>
+        </p>
+        <ul>
+                <li><code>SortAscending</code>: Sort the current column in ascending order.</li>
+                <li><code>SortDescending</code>: Sort the current column in descending order.</li>
+                <li><code>Group</code>: Group the current column.</li>
+                <li><code>Ungroup</code>: Ungroup the current column.</li>
+                <li><code>AutoFit</code>: Auto-fit current column.</li>
+                <li><code>AutoFitAll</code>: Auto-fit all columns.</li>
+                <li><code>ColumnChooser</code>:  Toggle column visibility.</li>
+                <li><code>Filter</code>: Display the filter option as specified in the <code>filterSetting-&gt;type</code>.</li>
+        </ul>
+        
+        <br/>
+        <p>
+            The default column menu items are enabled based on the corresponding feature settings. Additionally, the column menu allows users to include  
+            custom menu items with the default ones, or the replacement of the default items entirely with custom options.
+        </p>
+        <p>
+            In this demo, the Column Menu feature is initially enabled by setting <code>showColumnMenu
+            </code> to `true`, with sorting, grouping, filtering, column chooser, 
+            and auto-fit options. Users also have the option to toggle custom column menu items through using the dropdown list in the property panel. In the custom menu, sorting, grouping, 
+            and filtering are enabled, and custom options like column selection and clear selection have been added.
+            
+        </p>
+
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Data Grid Column Menu Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Column Menu in ASP.NET Core Data Grid Control</h1>
+                }

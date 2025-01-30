@@ -1,0 +1,183 @@
+@page
+@using Syncfusion.EJ2
+@section ControlsSection{
+  <div class="control-section">
+    <div id="container" align="center">
+        <ejs-chart id="lineContainer"  load="load"
+                  title="Container freight rate" pointRender="pointRender" tooltipRender="tooltipRender" axisLabelRender="axisLabelRender">
+
+            <e-chart-primaryxaxis rangePadding="@Syncfusion.EJ2.Charts.ChartRangePadding.Additional" valueType="@Syncfusion.EJ2.Charts.ValueType.Category">
+                <e-majorgridlines width="0"></e-majorgridlines>
+                <e-majorticklines width="0"></e-majorticklines>
+            </e-chart-primaryxaxis>
+            <e-chart-primaryyaxis title="Freight rate in U.S. dollars">
+                <e-majorgridlines width="1"></e-majorgridlines>
+                <e-majorticklines width="0"></e-majorticklines>
+                <e-linestyle width="0"></e-linestyle>
+            </e-chart-primaryyaxis>
+            <e-chart-chartarea>
+                <e-chartarea-border width="0"></e-chartarea-border>
+            </e-chart-chartarea>
+            <e-chart-legendsettings visible="false"></e-chart-legendsettings>
+            <e-chart-tooltipsettings enable="true" header="<b>Freight rate</b>"></e-chart-tooltipsettings>
+            <e-series-collection>
+                <e-series xName="CustomerID" yName="Freight" name="Story Point" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column" query="new ej.data.Query().take(5)">
+                    <e-data-manager url='http://localhost:62928/api/orders'></e-data-manager>
+                    <e-series-marker>
+                        <e-series-datalabel visible="true" position="@Syncfusion.EJ2.Charts.LabelPosition.Top" format="{value}K">
+                            <e-font color="#ffffff" fontWeight="600"></e-font>
+                        </e-series-datalabel>
+                    </e-series-marker>
+                </e-series>
+            </e-series-collection>
+        </ejs-chart>
+    </div>
+    <div id="waitingpopup" class="waitingpopup" style="display:none">
+        <span id="gif" class="image"></span>
+    </div>
+</div>
+    <script src="~/scripts/chart/financial-data.js"></script>
+    <script>
+        function load(args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Fluent2';
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5'));
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+            args.chart.primaryXAxis.labelIntersectAction = ej.base.Browser.isDevice?'None':'Rotate45';
+            args.chart.primaryXAxis.labelRotation = ej.base.Browser.isDevice?'-45':'0';
+        }
+
+        function pointRender(args) {
+            var selectedTheme = location.hash.split('/')[1];
+            selectedTheme = selectedTheme ? selectedTheme : 'Fluent2';
+            var materialColors = ["#00bdae", "#404041", "#357cd2", "#e56590", "#f8b883", "#70ad47", "#dd8abd", "#7f84e8", "#7bb4eb",
+                "#ea7a57", "#404041", "#00bdae"];
+            var fabricColors = ["#4472c4", "#ed7d31", "#ffc000", "#70ad47", "#5b9bd5",
+                "#c1c1c1", "#6f6fe2", "#e269ae", "#9e480e", "#997300", "#4472c4", "#70ad47", "#ffc000", "#ed7d31"];
+            var bootstrapColors = ["#a16ee5", "#f7ce69", "#55a5c2", "#7ddf1e", "#ff6ea6",
+                "#7953ac", "#b99b4f", "#407c92", "#5ea716", "#b91c52"];
+            var highContrastColors = ["#79ECE4", "#E98272", "#DFE6B6", "#C6E773", "#BA98FF",
+                "#FA83C3", "#00C27A", "#43ACEF", "#D681EF", "#D8BC6E"];
+            var fluentColors = ['#1AC9E6', '#DA4CB2', '#EDBB40', '#AF4BCF', '#FF7266', '#1BD565', '#EE993D', '#5887FF', '#EC548D',
+                '#7D39C0'];
+            var fluentDarkColors = ['#1AC9E6', '#DA4CB2', '#EDBB40', '#AF4BCF', '#FF7266', '#1BD565', '#EE993D', '#5887FF', '#EC548D',
+                '#7D39C0'];
+            var fluent2Colors = ["#6200EE", "#09AF74", "#0076E5", "#CB3587", "#E7910F", "#0364DE", "#66CD15", "#F3A93C", "#107C10",
+                "#C19C00"];
+            var fluent2HighContrastColors = ["#9BB449", "#2A72D5", "#43B786", "#3F579A", "#584EC6", "#E85F9C", "#6E7A89", "#EA6266",
+                "#0B6A0B", "#C19C00"];
+            var bootstrap5Colors = ['#FD7E14', '#6610F2', '#6F42C1', '#D63384', '#DC3545', '#FFC107', '#198754', '#0DCAF0'];
+            var tailwindColors = ["rgba(90, 97, 246, 0.5)", "rgba(101, 163, 13, 0.5)", "rgba(51, 65, 85, 0.5)", "rgba(20, 184, 166, 0.5)", "rgba(139, 92, 246, 0.5)", "rgba(3, 105, 161, 0.5)", "rgba(249, 115, 22, 0.5)",
+                "rgba(147, 51, 234, 0.5)", "rgba(245, 158, 11, 0.5)", "rgba(21, 128, 61, 0.5)"];
+            var tailwindDarkColors = ["#8B5CF6", "#22D3EE", "#F87171", "#4ADE80", "#E879F9", "#FCD34D", "#F97316", "#2DD4BF", "#F472B6", "#10B981"];
+            var tailwind3Colors = ['#2F4074', '#03B4B4', '#0D72DE', '#FF5733', '#D63384', '#F39C12', '#EF291F', '#91C822', '#2F4074', '#03B4B4'];
+            var tailwind3DarkColors = ['#8029F1', '#1ABC9C', '#0D72DE', '#FF5733', '#D63384', '#F39C12', '#EF291F', '#91C822', '#8029F1', '#1ABC9C'];
+
+            if (selectedTheme && selectedTheme.indexOf('fabric') > -1) {
+                 args.fill = fabricColors[args.point.index % 10];
+            }
+            else if (selectedTheme === 'material') {
+                 args.fill = materialColors[args.point.index % 10];
+            }
+            else if (selectedTheme === 'highcontrast') {
+                 args.fill = highContrastColors[args.point.index % 10];
+            }
+            else if (selectedTheme === 'fluent') {
+                 args.fill = fluentColors[args.point.index % 10];
+            }
+            else if (selectedTheme === 'fluent-dark') {
+                 args.fill = fluentDarkColors[args.point.index % 10];
+            }
+            else if (selectedTheme === 'fluent2') {
+                 args.fill = fluent2Colors[args.point.index % 10];
+            }
+            else if (selectedTheme === 'fluent2-highcontrast' || selectedTheme === 'fluent2-dark') {
+                 args.fill = fluent2HighContrastColors[args.point.index % 10];
+            }
+            else if ((selectedTheme.replace(/5.3/i, '5')) === 'bootstrap5-dark' || (selectedTheme.replace(/5.3/i, '5')) === 'bootstrap5') {
+                args.fill = bootstrap5Colors[args.point.index % 10];
+            } else if (selectedTheme === 'tailwind') {
+                args.fill = tailwindColors[args.point.index % 10];
+            } else if (selectedTheme === 'tailwind-dark') {
+                args.fill = tailwindDarkColors[args.point.index % 10];
+            } else if (selectedTheme === 'tailwind3') {
+                args.fill = tailwind3Colors[args.point.index % 10];
+            } else if (selectedTheme === 'tailwind3-dark') {
+                args.fill = tailwind3DarkColors[args.point.index % 10];
+            }
+            else {
+                 args.fill = bootstrapColors[args.point.index % 10];
+            }
+        };
+
+        var tooltipRender = function (args) {
+            args.text = args.data.pointX + ': ' + '<b>' + '$' + args.data.pointY * 1000 + '</b>';
+        }
+
+        var axisLabelRender = function (args) {
+            if (args.axis.name === 'primaryYAxis') {
+                   args.text =  '' + args.value * 1000;
+            }
+        }
+    </script>
+}
+@*custom code start*@
+@section Scripts {
+
+}
+
+<style>
+
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Remote Data in ASP.NET Core Chart control. Explore here for more details."/>
+                }
+@*custom code end*@
+@section ActionDescription{
+    <p>
+        This sample shows the way in which the Charts component can be bound to a remote service. The data source of the chart is bound to remote data using the DataManager component.
+    </p>
+}
+@section Description{
+    <p>
+        The Charts component supports data binding. The DataManager component can be used to configure the Charts component to bind remote data.
+    </p>
+    <p>
+        The DataManager, which acts as an interface between the service endpoint and the chart, will require the following minimum information to interact properly with the service endpoint:
+    </p>
+    <ul>
+        <li><code>DataManager.Url</code> - Defines the service endpoint to fetch the data.</li>
+        <li>
+            <code>DataManager.Adaptor</code> - Defines the adaptor option. By default, <code>ODataAdaptor</code> is used for remote binding.
+        </li>
+    </ul>
+    <p>
+        The adaptor is responsible for processing the response and request from and to the service endpoint. They are,
+    </p>
+    <ul>
+        <li>
+            <code>UrlAdaptor</code> - Use this to interact with any remote service. This is the base adaptor for all remote based adaptors.
+        </li>
+        <li><code>ODataAdaptor</code> - Use this to interact with OData endpoints.</li>
+        <li><code>ODataV4Adaptor</code> - Use this to interact with OData V4 endpoints.</li>
+        <li><code>WebApiAdaptor</code> - Use this to interact with Web API created under OData standards.</li>
+    </ul>
+    <p>
+        In this demo, remote data is bound by assigning service data as an instance of
+        <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.DataManager.html" aria-label="Navigate to the class reference for DataManager">DataManager
+        </a> component and a query.
+    </p>
+    <p>
+        More information about the remote data binding can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/working-with-data#remote-data" aria-label="Navigate to the documentation for remote data binding in ASP.NET Core Chart control">documentation section</a>.
+    </p>
+}
+@section Title{
+                    <title>ASP.NET Core Chart Remote Data Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Remote Data in ASP.NET Core Chart Control</h1>
+                }

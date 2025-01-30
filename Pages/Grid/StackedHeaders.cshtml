@@ -1,0 +1,61 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Grid.StackedHeadersModel
+@section ControlsSection{
+    <div class="control-section">
+        <ejs-grid id="Grid" dataSource="@Model.DataSource"  allowPaging="true" allowResizing="true" allowSorting="true" allowMultiSorting="true" allowFiltering="true" toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })">
+            <e-grid-pagesettings pageCount="5"></e-grid-pagesettings>
+            <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
+            <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true"></e-grid-editSettings>
+            <e-grid-columns>
+                <e-grid-column field="OrderID" headerText="Order ID" isPrimaryKey="true" textAlign="Right" width="120" minWidth="10" validationRules="@(new { required=true, number=true})"></e-grid-column>
+                <e-grid-column headerText="Order Details" columns="@( new List<Syncfusion.EJ2.Grids.GridColumn>() {
+                new Syncfusion.EJ2.Grids.GridColumn { Field = "CustomerID", Width = "160", HeaderText = "Customer Name", MinWidth="30" },
+                new Syncfusion.EJ2.Grids.GridColumn { Field = "OrderDate", Width = "140", HeaderText = "Order Date", Format="yMd", TextAlign= Syncfusion.EJ2.Grids.TextAlign.Right, MinWidth="10", EditType="datepickeredit" }
+                })">
+                </e-grid-column>
+                <e-grid-column headerText="Shipped Details" columns="@( new List<Syncfusion.EJ2.Grids.GridColumn>() { new Syncfusion.EJ2.Grids.GridColumn { Field = "ShippedDate", Width = "160", HeaderText = "Shipped Date", TextAlign=Syncfusion.EJ2.Grids.TextAlign.Right, Format="yMd",  MinWidth="10", EditType="datepickeredit" },
+                                                                                                                     new Syncfusion.EJ2.Grids.GridColumn { Field = "ShipCountry", Width = "140", HeaderText = "Ship Country", MinWidth="10", EditType="dropdownedit" },
+                                                                                                                     new Syncfusion.EJ2.Grids.GridColumn {Field ="Freight", HeaderText = "Freight Charges($)", TextAlign=Syncfusion.EJ2.Grids.TextAlign.Right, Width = "200", Format = "C2", MinWidth = "40", EditType = "numericedit" } } )">
+                 </e-grid-column> 
+            </e-grid-columns>
+        </ejs-grid>
+    </div>
+}
+@section ActionDescription{
+	<div id="action-description">
+		<p>This sample demonstrates the Grid component with the stacked header and resize feature. In this sample, we have shown multiple level of column headers.
+		</p>
+	</div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Stacked Header in ASP.NET Core Data Grid control. Explore here for more details."/>
+                }
+
+@section Description{
+    <div id="description">
+		<p>The Grid columns can be stacked/grouped in order to show multiple level of column headers.
+        It can be done by setting the <code>columns->columns</code> property.
+		</p>
+         <p>
+            The Grid columns can be resized by clicking and dragging at the right edge of columns header. To enable column, resize behavior, set <code>
+                <a target="_blank" class="code"
+                   href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Grids.Grid.html#Syncfusion_EJ2_Grids_Grid_AllowResizing" aria-label="Navigate to the AllowResizing property reference for ASP.NET Core Grid control">
+                    allowResizing
+                </a>
+            </code> property as true. You can also prevent the resize of the particular column by setting
+            <code> columns->allowResizing </code> as false in columns definition.
+        </p>
+		<p>
+			In this demo, the columns <strong>CustomerName, OrderDate</strong> are grouped under <strong>Order Details</strong>,
+			the columns <strong>ShippedDate, ShipCountry, Freight</strong> are grouped under <strong>Ship Details</strong>.
+		</p>
+
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Data Grid Stacked Header Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Stacked Header in ASP.NET Core Data Grid Control</h1>
+                }

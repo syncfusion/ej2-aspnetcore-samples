@@ -37,6 +37,9 @@
           .prop-name{
             padding-right: 10px;
           }
+          .e-mac-safari .property-section.e-mac .prop-value {
+            width: 100px !important;
+          }
           #payload-detail{
             word-wrap: break-word;
             margin-bottom: 10px;
@@ -53,7 +56,7 @@
     </style>
 <!-- custom code end -->
 
-<div class="col-lg-4 property-section">
+<div class="col-lg-4 property-section e-mac">
         <div>
             <table id="property" title="Properties" style="width: 100%">
                 <tr style="height: 50px">
@@ -180,7 +183,10 @@
             { field: 'Designation', headerText: 'Designation', width: 130 },
             { field: 'CurrentSalary', headerText: 'Current Salary', format: "C2", textAlign: 'Right', width: 140 }
         ];
-        document.getElementById('payload-detail').innerHTML = "<b><u>Payload Information</u></b><br> Service URL: 'https://services.syncfusion.com/aspnet/production/api/Orders' <br> Adaptor Type: ODataV4Adaptor";
+        if (/^((?!chrome|android).)*safari/i.test(navigator.userAgent)) {
+            document.body.classList.add('e-mac-safari');
+        }
+        document.getElementById('payload-detail').innerHTML = "<b><u>Payload Information</u></b><br> Service URL: 'http://localhost:62928/api/Orders' <br> Adaptor Type: ODataV4Adaptor";
         document.getElementById('additionalParams').addEventListener('click', function () {
             httpAdditionalInfo("paramsKey", "paramsValue", "addParams");
         });

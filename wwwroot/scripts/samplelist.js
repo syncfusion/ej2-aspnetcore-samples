@@ -5936,7 +5936,7 @@ window.samplesList = [
                 "dir": "SmithChart",
                 "parentId": "011",
                 "sourceFiles": [
-                    { "displayName": "Animation.cshtml", path: "../Pages/SmithChart/Animation.cshtml" }
+                    { "displayName": "Default.cshtml", path: "../Pages/SmithChart/Default.cshtml" }
                 ]
             },
             {

@@ -263,7 +263,7 @@ function disableCommonItems(args, toolbar){
         let diagram = document.getElementById("diagram").ej2_instances[0]; 
         var selectedObjects = diagram.selectedItems.nodes.concat(diagram.selectedItems.connectors);
         for (i = 0; i < selectedObjects.length; i++) {
-            selectedObjects[i].flip = flipType === 'Flip Horizontal' ? 'Horizontal' : 'Vertical';
+            selectedObjects[i].flip ^= flipType === 'Flip Horizontal' ? ej.diagrams.FlipDirection.Horizontal : ej.diagrams.FlipDirection.Vertical;
         }
         diagram.dataBind();
     }

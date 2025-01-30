@@ -919,6 +919,7 @@ function toggleLeftPane() {
 function toggleRightPane() {
     var toggleAnim = new ej.base.Animation({ duration: 500, timingFunction: 'ease' });
     themeDropDown.index = themes.indexOf(selectedTheme);
+    if(themeDropDown) { themeDropDown.index = themes.indexOf(selectedTheme); }
     var mRightPane = ej.base.select('.sb-mobile-right-pane');
     ej.base.select('.sb-mobile-overlay').classList.toggle('sb-hide');
     var reverse = mRightPane.classList.contains('sb-hide');
@@ -1340,6 +1341,20 @@ function onDataSourceLoad(node, subNode, control, sample, sampleName) {
         var propPanel = ej.base.select('#control-content .property-section');
         if (isMobile) {
             if (propPanel) {
+                viewMobilePropPane();
+                var toggleAnim = new ej.base.Animation({ duration: 500, timingFunction: 'ease' });
+                var mRightPane = ej.base.select('.sb-mobile-right-pane');
+                ej.base.select('.sb-mobile-overlay').classList.toggle('sb-hide');
+                var reverse = mRightPane.classList.contains('sb-hide');
+                mRightPane.classList.remove('sb-hide');
+                toggleAnim.animate(mRightPane, {
+                    name: reverse ? 'SlideRightIn' : 'SlideRightOut',
+                    end: function () {
+                        if (!reverse) {
+                            mRightPane.classList.add('sb-hide');
+                        }
+                    }
+                });
                 ej.base.select('.sb-mobile-setting').classList.remove('sb-hide');
                 document.querySelector('.sb-content-tab-header').style.display = 'block';
                 ej.base.select('.sb-mobile-prop-pane').appendChild(propPanel);

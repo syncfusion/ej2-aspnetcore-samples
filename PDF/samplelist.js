@@ -652,7 +652,6 @@ window.samplesList = [
               "dir": "PdfViewer",
               "parentId": "048",
               "uid": "0048484",
-              "type": "update",
 			  "sourceFiles": [
                     { "displayName": "OrganizePages.cshtml", path: "../Views/PdfViewer/OrganizePages.cshtml" },
                     { "displayName": "OrganizePagesController.cs", path: "../Controllers/PdfViewer/OrganizePagesController.cs" }
@@ -667,7 +666,7 @@ window.samplesList = [
                 "dir": "PdfViewer",
                 "parentId": "048",
                 "uid": "0048485",
-                "type": "new",
+                "type": "update",
                 "sourceFiles": [
                     { "displayName": "Redaction.cshtml", path: "../Views/PdfViewer/Redaction.cshtml" },
                     { "displayName": "RedactionController.cs", path: "../Controllers/PdfViewer/RedactionController.cs" }
@@ -758,7 +757,7 @@ window.samplesList = [
               "component": "PdfViewer",
               "dir": "PdfViewer",
               "parentId": "048",
-              "type": "new",
+              "type": "update",
               "hideOnDevice": true,
 
               "uid": "0048491",
@@ -776,7 +775,7 @@ window.samplesList = [
               "component": "PdfViewer",
               "dir": "PdfViewer",
               "parentId": "048",
-              "type": "new",
+              "type": "update",
 
               "uid": "0048492",
 			  "sourceFiles": [
@@ -793,7 +792,6 @@ window.samplesList = [
               "dir": "PdfViewer",
               "parentId": "048",
               "uid": "0048493",
-              "type": "update",
 			  "sourceFiles": [
                     { "displayName": "Annotations.cshtml", path: "../Views/PdfViewer/Annotations.cshtml" },
                     { "displayName": "AnnotationsController.cs", path: "../Controllers/PdfViewer/AnnotationsController.cs" }

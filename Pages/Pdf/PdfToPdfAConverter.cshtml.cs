@@ -1,5 +1,5 @@
-#region Copyright Syncfusion Inc. 2001-2024.
-// Copyright Syncfusion Inc. 2001-2024. All rights reserved.
+#region Copyright Syncfusion® Inc. 2001-2025.
+// Copyright Syncfusion® Inc. 2001-2025. All rights reserved.
 // Use of this code is subject to the terms of our license.
 // A copy of the current license can be obtained at any time by e-mailing
 // licensing@syncfusion.com. Any infringement will be prosecuted under
@@ -79,21 +79,21 @@ public class PdfToPdfAConverter : PageModel
         //Get the font style
         PdfFontStyle fontStyle = args.FontStyle;
 
-        SKTypefaceStyle sKFontStyle = SKTypefaceStyle.Normal;
+        SKFontStyle sKFontStyle = SKFontStyle.Normal;
 
         if (fontStyle != PdfFontStyle.Regular)
         {
             if (fontStyle == PdfFontStyle.Bold)
             {
-                sKFontStyle = SKTypefaceStyle.Bold;
+                sKFontStyle = SKFontStyle.Bold;
             }
             else if (fontStyle == PdfFontStyle.Italic)
             {
-                sKFontStyle = SKTypefaceStyle.Italic;
+                sKFontStyle = SKFontStyle.Italic;
             }
             else if (fontStyle == (PdfFontStyle.Italic | PdfFontStyle.Bold))
             {
-                sKFontStyle = SKTypefaceStyle.BoldItalic;
+                sKFontStyle = SKFontStyle.BoldItalic;
             }
         }
 
@@ -103,7 +103,7 @@ public class PdfToPdfAConverter : PageModel
         if (typeFaceStream != null && typeFaceStream.Length > 0)
         {
             //Create fontData from type face stream.
-            byte[] fontData = new byte[typeFaceStream.Length - 1];
+            byte[] fontData = new byte[typeFaceStream.Length];
             typeFaceStream.Read(fontData, typeFaceStream.Length);
             typeFaceStream.Dispose();
             //Create the new memory stream from font data.

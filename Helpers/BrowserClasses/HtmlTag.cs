@@ -6,7 +6,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 
-// <copyright file="HtmlTag.cs" company="Syncfusion Inc. 2001 - 2024.">
+// <copyright file="HtmlTag.cs" company="Syncfusion Inc. 2001 - 2010.">
 // All rights reserved.
 // Use of this code is subject to the terms of our license.
 // A copy of the current license can be obtained at any time by e-mailing

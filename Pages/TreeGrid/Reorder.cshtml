@@ -6,7 +6,7 @@
 @section ControlsSection{
     <div class="col-lg-9 control-section">
         <div class="content-wrapper">
-            <ejs-treegrid id="TreeGrid" dataSource="@TreeData.GetDefaultData()" allowReordering="true" allowPaging="true" height="350" childMapping="Children" treeColumnIndex="1">
+            <ejs-treegrid id="TreeGrid" dataSource="@TreeData.GetDefaultData()" allowReordering="true" allowPaging="true" height="350" childMapping="Children" treeColumnIndex="1" actionComplete="actionComplete">
                 <e-treegrid-pagesettings pageSize="10"></e-treegrid-pagesettings>
                 <e-treegrid-columns>
                     <e-treegrid-column field="TaskId" headerText="Task ID" textAlign="Right" width="80"></e-treegrid-column>
@@ -63,6 +63,15 @@
             var treegrid = document.getElementById("TreeGrid").ej2_instances[0];
             var columnName = dropDownColumn.value;
             treegrid.reorderColumns(columnName, treegrid.columns[index].field);
+        }
+        function actionComplete(args) {
+             if (args.requestType === 'reorder') {
+                var dropDownColumn = document.getElementById("Columns").ej2_instances[0];
+                var columnName = dropDownColumn.value;
+                var index = this.getColumnIndexByField(columnName);
+                var dropdown = document.getElementById("Index").ej2_instances[0];
+                dropdown.value = index;
+            }
         }
     </script>
 

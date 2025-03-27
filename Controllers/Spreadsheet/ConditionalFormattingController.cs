@@ -38,7 +38,7 @@ namespace EJ2CoreSampleBrowser.Controllers
                 new { ItemCode="UF162V",  ItemName="Chair",  Quantity="373",  PurchasePrice="104.800",  SellingPrice="108.00", Profit= "=E17-D17", LastUpdated ="04-12-19",  Rating="3.25" },
                 new { ItemCode="UR162C",  ItemName="Welding Gloves",  Quantity="216",  PurchasePrice="19.00",  SellingPrice="21.00", Profit= "=E18-D18", LastUpdated ="11-22-19",  Rating="3.85" },
             };
-            ViewBag.ConditionalFormattingData = data;
+            ViewData["ConditionalFormattingData"] = data;
             return View();
         }
 

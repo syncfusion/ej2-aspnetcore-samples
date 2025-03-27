@@ -30,10 +30,9 @@ public class EncryptAndDecrypt : PageModel
             return null;
             // return View();
         string basePath = _hostingEnvironment.WebRootPath;
-        FileStream fileStreamInput = new FileStream(basePath + @"/PowerPoint/Syncfusion Presentation.pptx", FileMode.Open, FileAccess.Read);
         if (Group1 == "CreateEncryptDoc")
         {
-            IPresentation presentation = Presentation.Open(fileStreamInput);
+            IPresentation presentation = Presentation.Open(basePath + @"/PowerPoint/Syncfusion Presentation.pptx");
             presentation.Encrypt("syncfusion");
             MemoryStream ms = new MemoryStream();
             //Saves the presentation to the memory stream.
@@ -44,7 +43,7 @@ public class EncryptAndDecrypt : PageModel
         }
         else
         {
-            IPresentation presentation = Presentation.Open(fileStreamInput);
+            IPresentation presentation = Presentation.Open(basePath + @"/PowerPoint/Syncfusion Presentation.pptx");
             presentation.RemoveEncryption();
             MemoryStream ms = new MemoryStream();
             //Saves the presentation to the memory stream.

@@ -17,12 +17,12 @@ namespace EJ2CoreSampleBrowser.Pages.Chart
         {
             ChartPoints = new List<FunnelChartData>
             {
-                new FunnelChartData { InterviewProcess = "Hired",                Candidates = 55,  DataLabelMappingName = "Hired: 55" },
-                new FunnelChartData { InterviewProcess = "Personal Interview",   Candidates = 58,  DataLabelMappingName = "Personal Interview: 58" },
-                new FunnelChartData { InterviewProcess = "Telephonic Interview", Candidates = 85,  DataLabelMappingName = "Telephonic Interview: 85" },
-                new FunnelChartData { InterviewProcess = "Screening",            Candidates = 105, DataLabelMappingName = "Screening: 105" },
-                new FunnelChartData { InterviewProcess = "Initial Validation",   Candidates = 145, DataLabelMappingName = "Initial Validation: 145" },
-                new FunnelChartData { InterviewProcess = "Candidates Applied",   Candidates = 250, DataLabelMappingName = "Candidates Applied: 250" }
+                new FunnelChartData { InterviewProcess = "Candidates Applied", Candidates = 170,  DataLabelMappingName = "Applications Received: 170" },
+                new FunnelChartData { InterviewProcess = "Initial Validation", Candidates = 145,  DataLabelMappingName = "Initial Validation: 145" },
+                new FunnelChartData { InterviewProcess = "Screening", Candidates = 105,  DataLabelMappingName = "Screening Completed: 105" },
+                new FunnelChartData { InterviewProcess = "Telephonic Interview", Candidates = 85, DataLabelMappingName = "Phone Interview: 85" },
+                new FunnelChartData { InterviewProcess = "Personal Interview", Candidates = 58, DataLabelMappingName = "Final Interview: 58" },
+                new FunnelChartData { InterviewProcess = "Hired", Candidates = 30, DataLabelMappingName = "Final <br> Selections: 30" }
             };
         }
     }

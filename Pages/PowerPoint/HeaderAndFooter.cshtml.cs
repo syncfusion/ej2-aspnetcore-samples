@@ -31,9 +31,7 @@ public class HeaderAndFooter : PageModel
             // return View();
         //Opens the presentation document as stream
         string basePath = _hostingEnvironment.WebRootPath;
-        FileStream fileStreamInput =
-            new FileStream(basePath + @"/PowerPoint/HeaderFooter.pptx", FileMode.Open, FileAccess.Read);
-        IPresentation presentation = Presentation.Open(fileStreamInput);
+        IPresentation presentation = Presentation.Open(basePath + @"/PowerPoint/HeaderFooter.pptx");
 
         //Add footers into all the PowerPoint slides.
         foreach (ISlide slide in presentation.Slides)

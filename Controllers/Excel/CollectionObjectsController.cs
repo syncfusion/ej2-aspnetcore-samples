@@ -42,7 +42,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Excel
         {            
             string basePath = _hostingEnvironment.WebRootPath;
 
-            ViewBag.exportButtonState = "disabled=\"disabled\"";
+            ViewData["exportButtonState"] = "disabled=\"disabled\"";
 
             ///SaveOption Null
             if (saveOption == null || button == null)
@@ -108,8 +108,8 @@ namespace EJ2CoreSampleBrowser.Controllers.Excel
                 }
                 //Set the grid value to the Session
                 _sales = businessObjects;
-                ViewBag.DataSource = _sales;
-                ViewBag.exportButtonState = "";
+                ViewData["DataSource"] = _sales;
+                ViewData["exportButtonState"] = "";
                 return View();
             }
             else

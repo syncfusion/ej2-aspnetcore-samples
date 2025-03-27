@@ -34,7 +34,7 @@ namespace EJ2CoreSampleBrowser.Controllers
                 new { Tenure= "11",  PaymentDate= "03-02-2021",  EMI= "8698.84",  Prinicpal= "8584.01",  Interest= "114.83",  Balance= "8641.23" },
                 new { Tenure= "12",  PaymentDate= "03-03-2021",  EMI= "8698.84",  Prinicpal= "8641.23",  Interest= "57.61",  Balance= "0.00" },
             };
-            ViewBag.ProtectSheetData = data;
+            ViewData["ProtectSheetData"] = data;
             return View();
         }
 

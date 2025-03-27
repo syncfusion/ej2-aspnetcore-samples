@@ -26,7 +26,7 @@ public class Autotag : PageModel
         _hostingEnvironment = hostingEnvironment;
     }
     [HttpPost]
-    public ActionResult OnPost(string Browser)
+    public ActionResult OnPost(string Browser, string accessibilityLevel)
     {
         string basePath = _hostingEnvironment.WebRootPath;
         string dataPath = string.Empty;
@@ -50,7 +50,16 @@ public class Autotag : PageModel
         //Create a new PDF document.
 
         PdfDocument document = new PdfDocument();
+        if (accessibilityLevel == "WTPDF")
+        {
+            document = new PdfDocument(PdfConformanceLevel.Pdf_A4);
+            document.FileStructure.Version = PdfVersion.Version2_0;
 
+        }
+        else if (accessibilityLevel == "PDF_UA_2")
+        {
+            document.FileStructure.Version = PdfVersion.Version2_0;
+        }
         //Auto Tag the document 
 
         document.AutoTag = true;
@@ -162,7 +171,7 @@ public class Autotag : PageModel
 
         //Download the PDF document in the browser.
         FileStreamResult fileStreamResult = new FileStreamResult(ms, "application/pdf");
-        fileStreamResult.FileDownloadName = "Autotag.pdf";
+        fileStreamResult.FileDownloadName = accessibilityLevel == "WTPDF" ? "WTPDF.pdf" : "Autotag.pdf";
         return fileStreamResult;
     }
 }

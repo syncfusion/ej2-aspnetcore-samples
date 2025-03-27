@@ -44,20 +44,27 @@
                 var carouselEle = document.getElementById('bannerCarousel');
                 carouselObj = ej.base.getInstance(carouselEle, ejs.navigations.Carousel);
                 carouselObj.element.addEventListener('click', function (e) {
-                    var target = e.target;
-                    var prompt = '';
-                    if (target.tagName === 'IMG') {
-                        prompt = e.target.nextElementSibling.textContent;
-                    } else if (target.className === 'e-card-header') {
-                        prompt = e.target.textContent;
-                    }
-                    if (prompt) {
-                        assistObj.executePrompt(prompt);
-                    }
+                    handleAction(e);
+                });
+                carouselObj.element.addEventListener('touchstart', function (e) {
+                    handleAction(e);
                 });
             }, 500);
             splitBtnObj.appendTo('#ddMenu');
         }
+
+        function handleAction(e){
+            var target = e.target;
+            var prompt = '';
+            if (target.tagName === 'IMG') {
+                prompt = e.target.nextElementSibling.textContent;
+            } else if (target.className === 'e-card-header') {
+                prompt = e.target.textContent;
+            }
+            if (prompt) {
+                assistObj.executePrompt(prompt);
+            }
+        };
 
         function onPromptRequest(args) {
             setTimeout(function () {
@@ -124,6 +131,12 @@
     .template-aiassistview .banner-content .e-assistview-icon:before,
     .template-aiassistview .response-header .e-assistview-icon:before {
         margin-right: 10px;
+    }
+
+    .template-aiassistview .e-rtl .banner-content .e-assistview-icon:before,
+    .template-aiassistview .e-rtl .responseItemContent .e-assistview-icon:before
+    {
+        margin-left: 10px;
     }
 
     .template-aiassistview .banner-content {

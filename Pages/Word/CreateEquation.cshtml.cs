@@ -34,15 +34,11 @@ public class CreateEquation : PageModel
 
         string basePath = _hostingEnvironment.WebRootPath;
         string dataPath = basePath + @"/Word/Create Equation.docx";
-        // Load Template document stream.
-        FileStream fileStream = new FileStream(dataPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 
         // Creates an empty Word document instance.
         WordDocument document = new WordDocument();
         // Opens template document.
-        document.Open(fileStream, FormatType.Docx);
-        fileStream.Dispose();
-        fileStream = null;
+        document.Open(dataPath, FormatType.Docx);
         //Gets the last section in the document
         WSection section = document.LastSection;
         //Sets page margins

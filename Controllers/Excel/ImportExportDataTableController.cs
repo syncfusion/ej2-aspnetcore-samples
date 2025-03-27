@@ -26,12 +26,12 @@ namespace EJ2CoreSampleBrowser.Controllers.Excel
         {
             string basePath = _hostingEnvironment.WebRootPath;
 
-            ViewBag.exportButtonState = "disabled=\"disabled\"";
+            ViewData["exportButtonState"] = "disabled=\"disabled\"";
 
             ///SaveOption Null
             if (saveOption == null || button == null)
             {
-                ViewBag.DataSource = null;
+                ViewData["DataSource"] = null;
                 return View();
             }
 
@@ -58,22 +58,22 @@ namespace EJ2CoreSampleBrowser.Controllers.Excel
                 if (importOption == "Skip")
                 {
                     sheet.ExportDataTableEvent += Sheet_ExportDataTableEventSkip;
-                    ViewBag.importOptionSkip = "value=" + importOption + " checked = \"checked\"";
+                    ViewData["importOptionSkip"] = "value=" + importOption + " checked = \"checked\"";
                 }
                 else if (importOption == "Replace")
                 {
                     sheet.ExportDataTableEvent += Sheet_ExportDataTableEventReplace;
-                    ViewBag.importOptionReplace = "value=" + importOption + " checked = \"checked\"";
+                    ViewData["importOptionReplace"] = "value=" + importOption + " checked = \"checked\"";
                 }
                 else if (importOption == "Stop")
                 {
                     sheet.ExportDataTableEvent += Sheet_ExportDataTableEventStop;
-                    ViewBag.importOptionStop = "value=" + importOption + " checked = \"checked\"";
+                    ViewData["importOptionStop"] = "value=" + importOption + " checked = \"checked\"";
                 }
                 else
                 {
                     sheet.ExportDataTableEvent += Sheet_ExportDataTableEventNone;
-                    ViewBag.importOptionNone = "value=" + importOption + " checked = \"checked\"";
+                    ViewData["importOptionNone"] = "value=" + importOption + " checked = \"checked\"";
                 }
 
                 dataTable = sheet.ExportDataTable(sheet.UsedRange, ExcelExportDataTableOptions.ColumnNames);
@@ -82,8 +82,8 @@ namespace EJ2CoreSampleBrowser.Controllers.Excel
                 workbook.Close();
                 excelEngine.Dispose();
 
-                ViewBag.DataSource = dataTable;
-                ViewBag.exportButtonState = "";
+                ViewData["DataSource"] = dataTable;
+                ViewData["exportButtonState"] = "";
 
                 return View();
             }

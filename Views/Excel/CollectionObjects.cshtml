@@ -24,7 +24,7 @@
                 Click the "Export To Excel" button to view the Excel document created by exporting the nested class data from the ListView using Essential XlsIO. 
                 Please note that the Microsoft Excel viewer or Microsoft Excel is required to view the Excel document.
             </p>
-            @Html.EJS().Grid("Export").AllowPaging(true).DataSource((IEnumerable<object>)ViewBag.DataSource).Columns(col =>
+            @Html.EJS().Grid("Export").AllowPaging(true).DataSource((IEnumerable<object>)ViewData["DataSource"]).Columns(col =>
        {
            col.Field("ID").HeaderText("ID").IsPrimaryKey(true).Visible(false).TextAlign(Syncfusion.EJ2.Grids.TextAlign.Left).Width("40").Add();
            col.Field("BrandName").HeaderText("Brand").Width("70").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Left).Add();
@@ -47,7 +47,7 @@
                 <div class="celldiv">
                     <input id="input"  class="e-btn" type="submit" name="button" value="Input Template" style="width:162px; text-transform:capitalize" />
                     <input id="import"  class="e-btn" type="submit" name="button" value="Import From Excel" style="width:162px; text-transform:capitalize" />
-                    <input id="export"  class="e-btn" @ViewBag.exportButtonState type="submit" name="button" value="Export To Excel" style="width:162px; text-transform:capitalize" />
+                    <input id="export"  class="e-btn" @ViewData["exportButtonState"] type="submit" name="button" value="Export To Excel" style="width:162px; text-transform:capitalize" />
                 </div>
             </div>
 

@@ -107,9 +107,9 @@ namespace EJ2CoreSampleBrowser_NET6.Controllers.Spreadsheet
                 new { Model= "XK", Year2018= "0", Year2019= "0", Year2020= "1", Year2021= "4", Year2022= "0", Year2023= "0" }
 
             };
-            ViewBag.PrintData = printData;
-            ViewBag.YearlyReport = yearlyReportDataSource;
-            ViewBag.ImageSource = this.GetImageSource();
+            ViewData["PrintData"] = printData;
+            ViewData["YearlyReport"] = yearlyReportDataSource;
+            ViewData["ImageSource"] = this.GetImageSource();
             return View();
         }
 

@@ -7,9 +7,9 @@
     var items = new object[]{
         "Bold", "Italic", "StrikeThrough", "|", "Formats", "Blockquote", "OrderedList", "UnorderedList", "|", "CreateLink", "Image", "|",
                 new {
-                tooltipText= "Preview",
                 template= "<button id='preview-code' class='e-tbar-btn e-control e-btn e-icon-btn' aria-label='Preview Code'><span class='e-btn-icon e-icons e-md-preview'></span></button>"
-                }, "Undo", "Redo"
+                },
+                "Undo", "Redo"
     };
 }
 
@@ -128,8 +128,14 @@
     var textArea;
     var mdPreview;
     var mdsource;
+    var tooltipObj;
     function created() {
-        defaultRTE = this;
+             defaultRTE = this;
+             tooltipObj = new ej.popups.Tooltip ({
+               content: "Preview",
+                target: "#preview-code"
+             });
+             tooltipObj.appendTo("#preview-code");
             mdPreview = document.getElementById('MD_Preview');
             textArea = defaultRTE.contentModule.getEditPanel();
             textArea.addEventListener('keyup', function (e) {
@@ -141,6 +147,7 @@
             });
     }
     loadExternalFile();
+
     // Dynamically load the marked.js file
     function loadExternalFile() {
         var script = document.createElement('script');
@@ -159,10 +166,11 @@
         var htmlPreview = defaultRTE.element.querySelector('#' + id);
         if (mdsource.classList.contains('e-active')) {
             mdsource.classList.remove('e-active');
-            mdsource.parentElement.title = 'Preview';
             defaultRTE.enableToolbarItem(defaultRTE.toolbarSettings.items);
             textArea.style.display = 'block';
             htmlPreview.style.display = 'none';
+            tooltipObj.content = "Preview";
+
         }
         else {
             mdsource.classList.add('e-active');
@@ -173,9 +181,10 @@
                 textArea.parentNode.appendChild(htmlPreview);
             }
             textArea.style.display = 'none';
+            tooltipObj.content = "Codeview";
             htmlPreview.style.display = 'block';
             htmlPreview.innerHTML = marked(defaultRTE.contentModule.getEditPanel().value);
-            mdsource.parentElement.title = 'Code View';
+
         }
     }
 </script>

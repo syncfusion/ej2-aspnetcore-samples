@@ -46,7 +46,7 @@ namespace EJ2CoreSampleBrowser.Controllers.Spreadsheet
                 new { Month= "November",  Year= "2020",  BasicSalary= 16610,  RevisedBasicSalary= 17380,  DA= 2200,  RevisedDA= 2420, HRA= 5500,  RevisedHRA= 7150,  ConveyanceAllowance= 1650,  RevisedConveyanceAllowance= 1870, MedicalExpenses= 1375, RevisedMedicalExpenses= 1650, SpecialAllowance= 1100, RevisedSpecialAllowance= 1320, TotalGrossSalary= "=SUM(C25,E25,G25,I25,K25,M25)", RevisedTotalGrossSalary= "=SUM(D25,F25,H25,J25,L25,N25)", },
                 new { Month= "December",  Year= "2020",  BasicSalary= 16610,  RevisedBasicSalary= 17380,  DA= 2200,  RevisedDA= 2420, HRA= 5500,  RevisedHRA= 7150,  ConveyanceAllowance= 1650,  RevisedConveyanceAllowance= 1870, MedicalExpenses= 1375, RevisedMedicalExpenses= 1650, SpecialAllowance= 1100, RevisedSpecialAllowance= 1320, TotalGrossSalary= "=SUM(C26,E26,G26,I26,K26,M26)", RevisedTotalGrossSalary= "=SUM(D26,F26,H26,J26,L26,N26)", }
             };
-            ViewBag.FreezePaneData = data;
+            ViewData["FreezePaneData"] = data;
             return View();
         }
 

@@ -41,8 +41,8 @@ namespace EJ2CoreSampleBrowser.Controllers
                 new { ProductId= "AP992Z",  ProductsReceived= "100",  ProductsSold= "=100-Cart!D11",  AvailableQuantity= "=B9-C9" },
                 new { ProductId= "AW920X",  ProductsReceived= "100",  ProductsSold= "=100-Cart!D12",  AvailableQuantity= "=B10-C10" }
             };
-            ViewBag.HyperlinkCart = data;
-            ViewBag.HyperlinkStock = data1;
+            ViewData["HyperlinkCart"] = data;
+            ViewData["HyperlinkStock"] = data1;
             return View();
         }
     }

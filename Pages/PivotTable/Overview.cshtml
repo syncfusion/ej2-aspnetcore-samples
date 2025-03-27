@@ -152,8 +152,8 @@
         };
         function hyperlinkCellClick(args) {
             var pivotObj = document.getElementById('pivotview').ej2_instances[0];
-            var cell = args.target.parentElement;
-            var pivotValue = pivotObj.pivotValues[Number(cell.getAttribute('index'))][Number(cell.getAttribute('data-colindex'))];
+            var cell = args.target.closest('.e-rowsheader');
+            var pivotValue = pivotObj.pivotValues[Number(cell.getAttribute('index'))][Number(cell.getAttribute('aria-colindex')) -1];
             var link = pivotObj.dataSourceSettings.dataSource[pivotValue.index[0]].link;
             window.open(link, '_blank');
         }

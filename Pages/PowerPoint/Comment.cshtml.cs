@@ -31,8 +31,7 @@ public class Comment : PageModel
             return null;
             // return View();
         string basePath = _hostingEnvironment.WebRootPath;
-        FileStream fileStreamInput = new FileStream(basePath + @"/PowerPoint/Images.pptx", FileMode.Open, FileAccess.Read);
-        IPresentation presentation = Presentation.Open(fileStreamInput);
+        IPresentation presentation = Presentation.Open(basePath + @"/PowerPoint/Images.pptx");
         SlideWithComments(presentation);
 
         MemoryStream ms = new MemoryStream();

@@ -44,6 +44,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddHsts(options =>
+{
+    options.MaxAge = TimeSpan.FromDays(730);   // Set max-age to 730 days
+    options.IncludeSubDomains = true;           // Include subdomains
+    options.Preload = true;                     // Enable preload
+});
 builder.Services.AddRazorPages();
 
 builder.Services.AddMvc()

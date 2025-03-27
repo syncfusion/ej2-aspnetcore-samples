@@ -65,6 +65,7 @@
         </div>
     </div>
     <script src="~/scripts/datasource.js"></script>
+    <script src="~/scripts/range-navigator/theme-color.js"></script>
     <script>
         var series1 = [];
         var series2 = [];
@@ -83,11 +84,8 @@
             series2.push({ x: i, y: value1 });
         }
         var zoomFactor, zoomPosition;
-        var selectedTheme = location.hash.split('/')[1];
-        selectedTheme = selectedTheme ? selectedTheme : 'Fluent2';
-        var theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5'));
         window.onChartLoad = function (args) {
-            args.rangeNavigator.theme = theme;
+            loadRangeNavigatorTheme(args);
             args.rangeNavigator.series[0].dataSource = series1;
             args.rangeNavigator.value = [150, 250];
             args.rangeNavigator.areaSeriesModule = new ej.charts.AreaSeries(args.rangeNavigator);
@@ -108,7 +106,7 @@
             }
         }
         window.load = function (args) {
-            args.chart.theme = theme;
+            loadChartTheme(args);
             args.chart.series[0].dataSource = series1;
             args.chart.series[1].dataSource = series2;
             args.chart.zoomFactor = zoomFactor;

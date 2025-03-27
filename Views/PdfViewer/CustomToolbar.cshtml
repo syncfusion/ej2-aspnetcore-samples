@@ -171,8 +171,7 @@
                 <div class="e-pv-search-bar-elements" id="container_search_box_elements" style="width:330px">
                     <div class="e-input-group e-pv-search-input" id="container_search_input_container">
                         <input class="e-input" id="container_search_input" type="text" placeholder="Find in document" onkeypress="searchInputKeypressed(event)" oninput="inputChange()" />
-                        <span class="e-input-group-icon e-input-search-group-icon e-icons e-search" id="container_search_box-icon" onclick="initiateTextSearch()" style="margin: 0px;" ></span>
-                        <span class="e-input-group-icon e-input-search-group-icon e-icons e-close" id="container_close_search_box-icon" style="display: none;" onclick="clearTextSearch()" style="top: 4px;"></span>
+                        <span class="e-input-group-icon e-input-search-group-icon e-icons e-search" id="container_search_box-icon" onclick="searchClickHandler()"></span>
                     </div>
                     <button class=" e-icon-btn e-pv-search-btn e-icons e-chevron-left" id="container_prev_occurrence" type="button" onclick="previousTextSearch()" style="border: none; width: 28px; height: 17px; background: white;" aria-label="Previous Search text">
                     </button>
@@ -941,14 +940,44 @@
             pdfViewer.textSearchModule.clearAllOccurrences();
         }
     }
+    function searchClickHandler() {
+         var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        var searchBtn = document.getElementById('container_search_box-icon');
+        if (searchBtn.classList.contains('e-search')) {
+            pdfViewer.textSearch.cancelTextSearch();
+            initiateTextSearch();
+            updateSearchInputIcon(false);
+            searchText = '';
+        }
+        else if (searchBtn.classList.contains('e-close')) {
+            var searchInput = document.getElementById('container_search_input');
+            updateSearchInputIcon(true);
+            searchInput.value = '';
+            searchInput.focus();
+            pdfViewer.textSearch.cancelTextSearch();
+            searchText = '';
+        }
+    }
+     function updateSearchInputIcon(isEnable) {
+     var searchButton = document.getElementById('container_search_box-icon');
+     if (isEnable) {
+         searchButton.classList.remove('e-close');
+         searchButton.classList.add('e-search');
+        }
+     else {
+         searchButton.classList.add('e-close');
+         searchButton.classList.remove('e-search');
+        }
+    }
     function inputChange() {
         var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
         pdfViewer.textSearchModule.clearAllOccurrences();
         searchActive = false;
-        var textsearchcloseElement = document.getElementById('container_close_search_box-icon');
-        var textsearchElement = document.getElementById('container_search_box-icon');
-        textsearchcloseElement.style.display = 'none';
-        textsearchElement.style.display = 'block';
+        if (document.getElementById('container_search_input').value === '') {
+            updateSearchInputIcon(true);
+            pdfViewer.textSearch.cancelTextSearch();
+            searchText = '';
+        }
     }
 
     var searchText = '';
@@ -959,38 +988,23 @@
         var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
         var textsearchPrevElement = document.getElementById('container_prev_occurrence');
         var textsearchNextElement = document.getElementById('container_next_occurrence');
-        var textsearchcloseElement = document.getElementById('container_close_search_box-icon');
         var textsearchElement = document.getElementById('container_search_box-icon');
-
-        if (textsearchPrevElement && textsearchNextElement && textsearchcloseElement && textsearchElement) {
+        if (textsearchPrevElement && textsearchNextElement && textsearchElement) {
             textsearchPrevElement.disabled = false;
             textsearchNextElement.disabled = false;
-            textsearchcloseElement.style.display = 'block';
-            textsearchElement.style.display = 'none';
-
-            var currentSearchText = document.getElementById('container_search_input').value;
-
-            if (searchText !== (document.getElementById('container_search_input')).value || prevMatchCase !== matchCase) {
-                pdfViewer.textSearchModule.cancelTextSearch();
-                searchText = (document.getElementById('container_search_input')).value;
-                pdfViewer.textSearchModule.searchText(searchText, matchCase);
+            textsearchElement.classList.add('e-close');
+            textsearchElement.classList.remove('e-search');
+            if (searchText !== (document.getElementById('container_search_input').value) || prevMatchCase !== matchCase) {
+                pdfViewer.textSearch.cancelTextSearch();
+                searchText = (document.getElementById('container_search_input').value);
                 searchActive = true;
+                pdfViewer.textSearch.searchText(searchText, matchCase);
                 prevMatchCase = matchCase;
-            } else {
+            }
+            else {
                 nextTextSearch();
             }
         }
-    }
-
-    function clearTextSearch() {
-        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
-        const textsearchcloseElement = document.getElementById('container_close_search_box-icon');
-        const textsearchElement = document.getElementById('container_search_box-icon');
-        textsearchcloseElement.style.display = 'none';
-        textsearchElement.style.display = 'block';
-        pdfViewer.textSearchModule.cancelTextSearch();
-        const searchTextElement = document.getElementById('container_search_input');
-        searchTextElement.value = '';
     }
 
     function previousTextSearch() {

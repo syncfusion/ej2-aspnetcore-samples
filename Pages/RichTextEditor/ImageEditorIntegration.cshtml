@@ -40,7 +40,7 @@
                     </e-content-template>
                 </ejs-richtexteditor>
                 <div id="imageeditorContainer" style="height:400px;">
-                    <ejs-dialog id="default_dialog" visible="false" width="800px" height='550px' open="OnOpen" close="onclose" created="onDialogCreate" target="body" showCloseIcon="true" header="@header">
+                    <ejs-dialog id="default_dialog" visible="false" width="800px" height='550px' (open)="open()" beforeOpen="OnBeforeOpen" close="onclose" created="onDialogCreate" target="body" showCloseIcon="true" header="@header">
                         <e-content-template>
                             <div class="e-img-editor-sample">
                                 <div id="imageeditor"></div>
@@ -87,11 +87,17 @@
                 dialogEle = document.getElementById("default_dialog");
                 dialogObj = dialogEle.ej2_instances[0];
                 dialogObj.show();
+                defaultRTE.ej2_instances[0].quickToolbarModule.imageQTBar.hidePopup();
             }
         };
 
         function onDialogCreate() {
             dialogObj = this;
+        }
+
+        function open() {
+        imageEditorObj.update();
+        imageEditorObj.open(dataURL);
         }
 
         function destroyed() {
@@ -121,20 +127,17 @@
             rteObj.formatter.enableUndo(rteObj);
             dispose();
             dialogObj.hide();
-            imageELement.crossOrigin = null;
         }
 
         function onCancel() {
             dispose();
             dialogObj.hide();
             isLoaded = true;
-            imageELement.crossOrigin = null;
         }
         function onclose() {
             dispose();
             dialogObj.hide();
             isLoaded = true;
-            imageELement.crossOrigin = null;
         }
         function dispose() {
             if (imageEditorObj !== null && imageEditorObj !== undefined) {
@@ -144,7 +147,7 @@
                 }
             }
         }
-        function OnOpen() {
+        function OnBeforeOpen() {
             isLoaded = false;
             rteEle = document.getElementById("defaultRTE");
             rteObj = rteEle.ej2_instances[0];
@@ -159,16 +162,13 @@
                 imageELement.onload = function () {
                     ctx.drawImage(imageELement, 0, 0, canvas.width, canvas.height);
                     dataURL = canvas.toDataURL();
-                    if (!isLoaded) {
-                        imageEditorObj = new ej.imageeditor.ImageEditor({
-                            height: '450px',
-                            created: function () {
-                                imageEditorObj.open(dataURL);
-                            }
-                        });
-                        imageEditorObj.appendTo('#imageeditor')
-                    }
                 };
+                if (!isLoaded) {
+                    imageEditorObj = new ej.imageeditor.ImageEditor({
+                        height: '450px'
+                    });
+                    imageEditorObj.appendTo('#imageeditor')
+                }
             }
         }
 

@@ -20,19 +20,18 @@
                         <e-series-marker visible="false"></e-series-marker>
                     </e-series>
                 </e-series-collection>
-                <e-chart-tooltipsettings enable="true" shared="false" format="Temperature : <b>${point.low} - ${point.high}</b>" header="<b>${point.x}</b>">
+                <e-chart-tooltipsettings enable="true" shared="false" showNearestTooltip="true" format="Temperature : <b>${point.low} - ${point.high}</b>" header="<b>${point.x}</b>">
                 </e-chart-tooltipsettings>
                 <e-chart-legendsettings visible="false"></e-chart-legendsettings>
             </ejs-chart>
         </div>
     </div>
     <script src="~/scripts/chart/stock-chart-data.js"></script>
+    <script src="~/scripts/chart/theme-color.js"></script>
     <script type="text/javascript">
         var ChartPoints = chartDataValues;
         function load(args) {
-            var selectedTheme = location.hash.split('/')[1];
-            selectedTheme = selectedTheme ? selectedTheme : 'Fluent2';
-            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5'));
+            loadChartTheme(args);
             args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
             args.chart.primaryXAxis.edgeLabelPlacement = ej.base.Browser.isDevice ? 'Shift' : 'Hide';
             args.chart.series[0].dataSource = ChartPoints;
@@ -62,6 +61,9 @@
 @section Description{
     <p>
         In this example, you can see how to render and configure the spline range area chart. This chart is used to display continuous data points as a set of curved lines varying between high and low values over a certain time period.
+    </p>
+    <p>
+        <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover over or tap on the chart.
     </p>
     <p>
         More information about the spline range area series can be found in this

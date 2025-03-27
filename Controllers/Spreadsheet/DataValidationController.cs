@@ -30,7 +30,7 @@ namespace EJ2CoreSampleBrowser.Controllers
                 new { EmployeeId= "1009",  EmployeeName= "Bravo",  Date= "04-14-2021",  Weekday= "Wed",  TimeIn= "11:00 AM",  TimeOut= "8:00 PM",  HoursWorked= "9",  Basic= "=G12*30",  GrossPay= "=Sum(H12 + ((G12-8)*15))" },
                 new { EmployeeId= "1002",  EmployeeName= "Steve",  Date= "04-15-2021",  Weekday= "Thu",  TimeIn= "9:00 AM",  TimeOut= "8:00 PM",  HoursWorked= "11",  Basic= "=G13*30",  GrossPay= "=Sum(H13 + ((G13-8)*15))" }
             };
-            ViewBag.GrossPay = data;
+            ViewData["GrossPay"] = data;
             return View();
         }
     }

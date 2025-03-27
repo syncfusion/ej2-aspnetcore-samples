@@ -51,7 +51,7 @@ namespace EJ2CoreSampleBrowser.Controllers
                 new { CustomerName= "Jenine Iglesia",  Model= "Accord",  Color= "Orange",  PaymentMode= "Debit Card",  DeliveryDate= "09-03-2018",  Amount= "14566.08" },
                 new { CustomerName= "Fax Witherspoon",  Model= "Range Rover Sport",  Color= "Orange",  PaymentMode= "Credit Card",  DeliveryDate= "02-22-2018",  Amount= "5284.87" }
             };
-            ViewBag.DefaultData = data;
+            ViewData["DefaultData"] = data;
             return View();
         }
 

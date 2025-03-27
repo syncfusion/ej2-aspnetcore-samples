@@ -4,12 +4,14 @@
     <div class="control-section" align="center">
         <ejs-chart id="container" load="load">
             <e-chart-margin top="20"></e-chart-margin>
+            <e-chart-tooltipsettings enable="true" showNearestTooltip="true" header="<b>${point.x}</b>" format="Temperature: <b>${point.y}</b>">
+            </e-chart-tooltipsettings>
             <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.DateTime">
                 <e-majorgridlines width="0"></e-majorgridlines>
                 <e-majorticklines width="0"></e-majorticklines>
-                <e-scrollbarSettings enableZoom="false"></e-scrollbarSettings>
+                <e-scrollbarSettings enableZoom="false" position="@Syncfusion.EJ2.Charts.ScrollbarPosition.Bottom"></e-scrollbarSettings>
             </e-chart-primaryxaxis>
-            <e-chart-primaryyaxis title="Temperature" labelFormat="{value}°C" intervalType="@Syncfusion.EJ2.Charts.IntervalType.Months" enableScrollbarOnZooming="false">
+            <e-chart-primaryyaxis title="Temperature Anomaly (°C)" labelFormat="{value}°C" intervalType="@Syncfusion.EJ2.Charts.IntervalType.Months" enableScrollbarOnZooming="false">
                 <e-majorticklines width="0"></e-majorticklines>
                 <e-linestyle width="0"></e-linestyle>
             </e-chart-primaryyaxis>
@@ -106,6 +108,7 @@
             </linearGradient>
         </defs>
     </svg>
+    <script src="~/scripts/chart/theme-color.js"></script>
     <script src="~/scripts/chart/financial-data.js"></script>
     <script>
         var data = dataValue;
@@ -118,9 +121,7 @@
         }
 
         function load(args) {
-            var indexedTheme = location.hash.split('/')[1];
-            indexedTheme = indexedTheme ? indexedTheme : 'Fluent2';
-            args.chart.theme = (indexedTheme.charAt(0).toUpperCase() + indexedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5'));
+            loadChartTheme(args, true);
             args.chart.width = ej.base.Browser.isDevice ? "100%" : "80%";
             args.chart.series[0].dataSource = seriesData;
             args.chart.title = ej.base.Browser.isDevice ? "Monthly Temperature Anomalies" : "Global Warming: Monthly Temperature Anomalies";
@@ -257,6 +258,10 @@
             <li><b>Y</b> - Zoom the chart with respect to the vertical axis only.</li>
         </ul>
         <p>The <code>toolbarPosition</code> property is used to adjust the position of the zoom toolbar. In this example, the toolbar is moved 60 pixels upward from its default position. The <code>draggable</code> property is used to drag and drop the zoom toolbar to any position within the chart area.</p>
+        <p>The chart supports different scrollbar positions. By default, it appears next to the axis line, but you can adjust its placement using the <code>position</code> property of <code>scrollbarSettings</code>. This positioning allows better customization and flexibility in the chart's design.</p>
+        <p>
+            <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover over or tap on the chart.
+        </p>
         <p>
             More information on the Zooming can be found in this
             <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/zooming" aria-label="documentation section">documentation section</a>.

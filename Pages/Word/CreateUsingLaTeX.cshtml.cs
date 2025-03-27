@@ -33,15 +33,11 @@ public class CreateUsingLaTeX : PageModel
         string basePath = _hostingEnvironment.WebRootPath;
         string dataPath = basePath + @"/Word/Create Equation.docx";
         string contenttype = "application/vnd.ms-word.document.12";
-        // Load Template document stream.
-        FileStream fileStream = new FileStream(dataPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 
         // Creates an empty Word document instance.          
         WordDocument document = new WordDocument();
         // Opens template document.
-        document.Open(fileStream, FormatType.Docx);
-        fileStream.Dispose();
-        fileStream = null;
+        document.Open(dataPath, FormatType.Docx);
 
         //Get the last section in the document
         WSection section = document.LastSection;

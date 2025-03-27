@@ -37,7 +37,7 @@
                 <p style="font-weight:normal">
                     Note: You need to have a MS Excel Viewer installed in order to view the generated Excel file.
                 </p>
-                @Html.EJS().Grid("Export").AllowPaging(true).DataSource((System.Data.DataTable)ViewBag.dataSource).Columns(col =>
+                @Html.EJS().Grid("Export").AllowPaging(true).DataSource((System.Data.DataTable)ViewData["dataSource"]).Columns(col =>
                 {
                 col.Field("CustomerID").HeaderText("Customer ID").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Left).Width("60").Add();
                 col.Field("CompanyName").HeaderText("Company Name").Width("80").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Left).Add();
@@ -53,16 +53,16 @@
                         <div>
                             Import Options :
                             <br /><br />
-                            <input type="radio" id="rdbtnNone" @ViewBag.importOptionNone name="importOption" value="None" checked="checked" onchange="OptionChanged()" />
+                            <input type="radio" id="rdbtnNone" @ViewData["importOptionNone"] name="importOption" value="None" checked="checked" onchange="OptionChanged()" />
                             <label for="rdbtnNone" style="font-weight:normal">None</label>
                             <br />
-                            <input type="radio" id="rdbtnskip" @ViewBag.importOptionSkip name="importOption" value="Skip" onchange="OptionChanged()" />
+                            <input type="radio" id="rdbtnskip" @ViewData["importOptionSkip"] name="importOption" value="Skip" onchange="OptionChanged()" />
                             <label for="rdbtnskip" style="font-weight:normal">Skip rows if "ContactTitle" is "Owner"</label>
                             <br />
-                            <input type="radio" id="rdbtnreplace" @ViewBag.importOptionReplace name="importOption" value="Replace" onchange="OptionChanged()" />
+                            <input type="radio" id="rdbtnreplace" @ViewData["importOptionReplace"] name="importOption" value="Replace" onchange="OptionChanged()" />
                             <label for="rdbtnreplace" style="font-weight:normal;align-content:center">Replace "México D.F." to "Mexico"</label>
                             <br />
-                            <input type="radio" id="rdbtnstop" @ViewBag.importOptionStop name="importOption" value="Stop" onchange="OptionChanged()" />
+                            <input type="radio" id="rdbtnstop" @ViewData["importOptionStop"] name="importOption" value="Stop" onchange="OptionChanged()" />
                             <label for="rdbtnstop" style="font-weight:normal">Stop importing if "CustomerID" is "BLONP"</label>
                         </div>
                     </div>
@@ -82,7 +82,7 @@
                         <br/>
                             <input id="input" class="e-btn" type="submit" name="button" value="Input Template" style="width:162px; font-size:small; height:30px;text-transform:capitalize" /><br /><br />
                             <input id="import" class="e-btn" type="submit" name="button" value="Import From Excel" style="width:162px; font-size:small; height:30px;text-transform:capitalize" /><br /><br />
-                            <input id="export" class="e-btn" @ViewBag.exportButtonState type="submit" name="button" value="Export To Excel" style="width:162px; font-size:small; height:30px;text-transform:capitalize" />
+                            <input id="export" class="e-btn" @ViewData["exportButtonState"] type="submit" name="button" value="Export To Excel" style="width:162px; font-size:small; height:30px;text-transform:capitalize" />
                             <br /><br />
                         </div>
                     </div>

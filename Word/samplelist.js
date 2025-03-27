@@ -6,6 +6,7 @@ window.samplesList = [
   {
         "name": "Word (DocIO)",
         "directory": "Word",
+        "type": "update",
         "category": "Document Processing Library",
         "samples": [
             {
@@ -326,6 +327,7 @@ window.samplesList = [
                 "url": "WordToPDF",
                 "name": "Word to PDF",
                 "category": "Conversions",
+                "type": "update",
                 "order": 9,
                 "component": "Word",
                 "dir": "Word",
@@ -336,6 +338,7 @@ window.samplesList = [
                 "url": "WordToPDFA",
                 "name": "Word to PDF/A",
                 "category": "Conversions",
+                "type": "update",
                 "order": 9,
                 "component": "Word",
                 "dir": "Word",
@@ -346,6 +349,7 @@ window.samplesList = [
                 "url": "WordToPDFUA",
                 "name": "Word to PDF/UA",
                 "category": "Conversions",
+                "type": "update",
                 "order": 9,
                 "component": "Word",
                 "dir": "Word",
@@ -356,6 +360,7 @@ window.samplesList = [
                 "url": "WordToImage",
                 "name": "Word to Image",
                 "category": "Conversions",
+                "type": "update",
                 "order": 9,
                 "component": "Word",
                 "dir": "Word",
@@ -523,9 +528,10 @@ window.samplesList = [
                 "uid": "00474750"
             },
             {
-                "url": "PieChart",
-                "name": "Pie Chart",
-                "category": "Charts",
+                "url": "CreateSmartArt",
+                "name": "Create SmartArt",
+                "category": "SmartArts",
+                "type": "new",
                 "order": 13,
                 "component": "Word",
                 "dir": "Word",
@@ -533,9 +539,10 @@ window.samplesList = [
                 "uid": "00474751"
             },
             {
-                "url": "BarChart",
-                "name": "Bar Chart",
-                "category": "Charts",
+                "url": "EditSmartArt",
+                "name": "Edit SmartArt",
+                "category": "SmartArts",
+                "type": "new",
                 "order": 13,
                 "component": "Word",
                 "dir": "Word",
@@ -543,9 +550,9 @@ window.samplesList = [
                 "uid": "00474752"
             },
             {
-                "url": "DocumentSettings",
-                "name": "Document Settings",
-                "category": "View",
+                "url": "PieChart",
+                "name": "Pie Chart",
+                "category": "Charts",
                 "order": 14,
                 "component": "Word",
                 "dir": "Word",
@@ -553,9 +560,9 @@ window.samplesList = [
                 "uid": "00474753"
             },
             {
-                "url": "MacroPreservation",
-                "name": "Macro Preservation",
-                "category": "View",
+                "url": "BarChart",
+                "name": "Bar Chart",
+                "category": "Charts",
                 "order": 14,
                 "component": "Word",
                 "dir": "Word",
@@ -563,9 +570,9 @@ window.samplesList = [
                 "uid": "00474754"
             },
             {
-                "url": "DocumentProtection",
-                "name": "Document Protection",
-                "category": "Security",
+                "url": "DocumentSettings",
+                "name": "Document Settings",
+                "category": "View",
                 "order": 15,
                 "component": "Word",
                 "dir": "Word",
@@ -573,9 +580,9 @@ window.samplesList = [
                 "uid": "00474755"
             },
             {
-                "url": "EncryptAndDecrypt",
-                "name": "Encrypt and Decrypt",
-                "category": "Security",
+                "url": "MacroPreservation",
+                "name": "Macro Preservation",
+                "category": "View",
                 "order": 15,
                 "component": "Word",
                 "dir": "Word",
@@ -583,9 +590,9 @@ window.samplesList = [
                 "uid": "00474756"
             },
             {
-                "url": "TrackChanges",
-                "name": "Track Changes",
-                "category": "Review",
+                "url": "DocumentProtection",
+                "name": "Document Protection",
+                "category": "Security",
                 "order": 16,
                 "component": "Word",
                 "dir": "Word",
@@ -593,14 +600,34 @@ window.samplesList = [
                 "uid": "00474757"
             },
             {
-                "url": "CompareDocuments",
-                "name": "Compare Documents",
-                "category": "Review",
+                "url": "EncryptAndDecrypt",
+                "name": "Encrypt and Decrypt",
+                "category": "Security",
                 "order": 16,
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
                 "uid": "00474758"
+            },
+            {
+                "url": "TrackChanges",
+                "name": "Track Changes",
+                "category": "Review",
+                "order": 17,
+                "component": "Word",
+                "dir": "Word",
+                "parentId": "047",
+                "uid": "00474759"
+            },
+            {
+                "url": "CompareDocuments",
+                "name": "Compare Documents",
+                "category": "Review",
+                "order": 17,
+                "component": "Word",
+                "dir": "Word",
+                "parentId": "047",
+                "uid": "00474760"
             }
 
         ],
@@ -608,7 +635,7 @@ window.samplesList = [
         "uid": "047"
     },
      {
-        "name": "DocumentEditor",
+        "name": "Word Processor",
         "directory": "DocumentEditor",
         "category": "Editors",
         "ftName": "document-editor",

@@ -8,6 +8,12 @@
             <ejs-chatui id="chatui" headerText="Design Community" headerIconCss="chat_header_icon" showTimeBreak=true
                 timeStampFormat="MM/dd hh:mm a" created="onCreated">
                 <e-chatui-user id="admin" user="Alice"></e-chatui-user>
+                 <e-chatui-messages>
+                    @foreach (var message in Model.CommunityMessagedata)
+                    {
+                        <e-chatui-message text="@message.Text" author="@message.Author" timeStamp="@message.TimeStamp"></e-chatui-message>
+                    }
+                </e-chatui-messages>
             </ejs-chatui>
         </div>
     </div>
@@ -61,15 +67,8 @@
 @section PreScripts {
     <script>
         var chatUIObj;
-        var chatMessages = @Html.Raw(Json.Serialize(Model.CommunityMessagedata));
-        chatMessages.forEach(message => {
-            message.timeStamp = new Date(message.timeStamp);
-        });
         function onCreated() {
-            var chatUiEle = document.getElementById('chatui');
-            chatUIObj = ej.base.getInstance(chatUiEle, ejs.interactivechat.ChatUI);
-            chatUIObj.messages = chatMessages;
-            chatUIObj.dataBind();
+            chatUIObj = ej.base.getInstance(document.getElementById('chatui'), ejs.interactivechat.ChatUI);
         }
 
         function onTimeStampFormatChange(args) {

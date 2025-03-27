@@ -18,8 +18,12 @@
                 display: flex;
             }
 
-            .e-min-max-separator {
+            .e-grid:not(.e-rtl) .e-min-max-separator {
                 margin-right: 5px;
+            }
+
+            .e-rtl .e-min-max-separator {
+                margin-left: 5px;
             }
 
             .e-grid .e-gridheader tr th:first-child.e-filterbarcell.e-fltrtemp {
@@ -138,6 +142,17 @@
             }
 
             function gridDataBound() {
+                createStock();
+            }
+
+            function gridCreated() {
+                var grid = document.getElementById("Grid").ej2_instances[0];
+                grid.on('header-refreshed', () => {
+                    createStock();
+                });
+            }
+
+            function createStock() {
                 var grid = document.getElementById("Grid").ej2_instances[0];
                 var filterBarOperatorDiv = grid.getHeaderTable().querySelector('.e-filterdiv.e-fltrinputdiv');
                 if (!filterBarOperatorDiv.querySelector('.e-cus-label')) {
@@ -202,7 +217,7 @@
             templateOptionsDropDown = (new { create = "dropdownCreate", write = "dropdownWrite" });
         }
 
-        <ejs-grid id="Grid" dataSource="@Model.DataSource" allowPaging="true" allowFiltering="true" allowSorting="true" gridLines="Both" dataBound="gridDataBound" keyPressed="gridKeyPressed">
+        <ejs-grid id="Grid" dataSource="@Model.DataSource" allowPaging="true" allowFiltering="true" allowSorting="true" gridLines="Both" dataBound="gridDataBound" keyPressed="gridKeyPressed" created="gridCreated">
             <e-grid-filterSettings showFilterBarOperator="true" showFilterBarStatus="false"></e-grid-filterSettings>
             <e-grid-pagesettings pageCount="5"></e-grid-pagesettings>
             <e-grid-columns>

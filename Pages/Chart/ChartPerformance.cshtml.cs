@@ -50,7 +50,7 @@ namespace EJ2CoreSampleBrowser.Pages.Chart
     {
         public DateTime X;
         public double Y;
-        public DateTime Period;
+        public int Period;
         public double Can_Growth;
         public double Viet_Growth;
         public double Mal_Growth;

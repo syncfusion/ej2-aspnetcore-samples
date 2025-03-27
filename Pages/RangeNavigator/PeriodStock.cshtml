@@ -73,16 +73,14 @@
         </ejs-chart>
     </div>
     <script src="~/scripts/chart/stock-chart-data.js"></script>
+    <script src="~/scripts/range-navigator/theme-color.js"></script>
     <script>
         var data = chartData; var initialData;
-        var selectedTheme = location.hash.split('/')[1];
-        selectedTheme = selectedTheme ? selectedTheme : 'Fluent2';
-        var theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5'));
         var pointColors = [];
         rangeLoad = function (args) {
             args.rangeNavigator.periodSelectorSettings.height =
                 document.body.className.indexOf('e-bigger') > -1 ? 56 : 42;
-            args.rangeNavigator.theme = theme;
+            args.rangeNavigator.theme = loadRangeNavigatorTheme(args);
             args.rangeNavigator.width = ej.base.Browser.isDevice ? "100%" : "80%";
             args.rangeNavigator.dataSource = data;                       
         }
@@ -132,8 +130,7 @@
         }
 
         chartLoad = function (args) {
-            var selectedTheme = themeName ? themeName : 'Fluent2';
-            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5'));
+            loadChartTheme(args);
             args.chart.series[0].dataSource = initialData;
             args.chart.series[1].dataSource = initialData;
             args.chart.width = ej.base.Browser.isDevice ? "100%" : "90%";

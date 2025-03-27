@@ -19,6 +19,7 @@
                         </ejs-toolbar>
                     </e-content-template>
                 </ejs-tooltip>
+                <ejs-listview id="listview" showIcon="true"></ejs-listview>
             </div>
         </div>
     </div>
@@ -295,17 +296,8 @@
     ];
 
     var tooltipObj;
-
+    var listviewObj;
     var listObjects = [data1, data2, data3];
-    //beforRender event handler for Tooltip
-
-    //Initialize ListView component
-    var listObj = new ej.lists.ListView({
-        //Map appropriate columns to fields property
-        fields: { text: 'Name', iconCss: 'icon' },
-        //Set true to show icons
-        showIcon: true
-    });
 
     function onCreated() {
         tooltipObj = document.getElementById("tooltip").ej2_instances[0];
@@ -321,12 +313,14 @@
             { title: 'Device' },
             { title: 'Personal' }
         ];
+        listviewObj = document.getElementById("listview").ej2_instances[0];
         for (var i = 0; i < data.length; i++) {
             if (data[i].title === args.target.getAttribute('title')) {
                 var list = document.createElement('div');
                 list.id = 'listview';
-                listObj.dataSource = listObjects[i];
-                listObj.appendTo(list);
+                listviewObj.fields = { text: 'Name', iconCss: 'icon' };
+                listviewObj.dataSource = listObjects[i];
+                listviewObj.appendTo(list);
                 tooltipObj.content = list;
             }
         }

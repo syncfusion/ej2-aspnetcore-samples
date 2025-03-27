@@ -30,9 +30,8 @@ public class WriteProtection : PageModel
             return null;
             // return View();
         string basePath = _hostingEnvironment.WebRootPath;
-        FileStream fileStreamInput = new FileStream(basePath + @"/PowerPoint/Syncfusion Presentation.pptx", FileMode.Open, FileAccess.Read);
         //Open a existing PowerPoint presentation.
-        IPresentation presentation = Presentation.Open(fileStreamInput);
+        IPresentation presentation = Presentation.Open(basePath + @"/PowerPoint/Syncfusion Presentation.pptx");
 
         if (Password == null)
             Password = string.Empty;

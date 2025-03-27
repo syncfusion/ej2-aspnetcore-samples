@@ -495,7 +495,7 @@ public class BpmnEditorModel : PageModel
             EventItem.Add(AddItems("Start", "Start", "e-event e-bpmn-icons e-NoneStart", "", new List<ContextMenuItem>() { }));
             EventItem.Add(AddItems("Intermediate", "NonInterruptingStart", "e-event e-bpmn-icons e-InterruptingNone", "", new List<ContextMenuItem>() { }));
             EventItem.Add(AddItems("NonInterruptingStart", "NonInterruptingStart", "e-event e-bpmn-icons e-Noninterruptingstart", "", new List<ContextMenuItem>() { }));
-            EventItem.Add(AddItems("ThrowingIntermediate", "ThrowingIntermediate", "e-event e-bpmn-icons e-InterruptingNone", "", new List<ContextMenuItem>() { }));
+            EventItem.Add(AddItems("ThrowingIntermediate", "ThrowingIntermediate", "e-event e-bpmn-icons e-ThrowingIntermediate", "", new List<ContextMenuItem>() { }));
             EventItem.Add(AddItems("NonInterruptingIntermediate", "NonInterruptingIntermediate", "e-event e-bpmn-icons e-NoninterruptingIntermediate", "", new List<ContextMenuItem>() { }));
             EventItem.Add(AddItems("End", "End", "e-event e-bpmn-icons e-NoneEnd", "", new List<ContextMenuItem>() { }));
             item.Add(AddItems("Event Type", "EventType", "", "", EventItem));
@@ -507,7 +507,7 @@ public class BpmnEditorModel : PageModel
             taskItem.Add(AddItems("Manual", "Manual", "e-task e-bpmn-icons e-ManualCall", "", new List<ContextMenuItem>() { }));
             taskItem.Add(AddItems("Receive", "Receive", "e-task e-bpmn-icons e-InMessage", "", new List<ContextMenuItem>() { }));
             taskItem.Add(AddItems("Script", "Script", "e-bpmn-icons e-ScriptCall", "", new List<ContextMenuItem>() { }));
-            taskItem.Add(AddItems("Send", "Send", "e-task e-bpmn-icons e-InMessage", "", new List<ContextMenuItem>() { }));
+            taskItem.Add(AddItems("Send", "Send", "e-task e-bpmn-icons e-OutMessage", "", new List<ContextMenuItem>() { }));
             taskItem.Add(AddItems("User", "User", "e-task e-bpmn-icons e-UserCall", "", new List<ContextMenuItem>() { }));
             item.Add(AddItems("Task Type", "TaskType", "", "", taskItem));
             List<ContextMenuItem> gateWayItem = new List<ContextMenuItem>();

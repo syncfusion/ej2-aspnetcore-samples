@@ -38,10 +38,7 @@ public class TableStyles : PageModel
         string dataPath = string.Empty;
         dataPath = basePath + @"/Word/TemplateTableStyle.doc";
         WordDocument document = new WordDocument();
-        FileStream fileStream = new FileStream(dataPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-        document.Open(fileStream, FormatType.Doc);
-        fileStream.Dispose();
-        fileStream = null;
+        document.Open(dataPath, FormatType.Doc);
 
         //Create MailMergeDataTable
         MailMergeDataTable mailMergeDataTable = GetMailMergeDataTable();

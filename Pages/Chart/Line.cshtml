@@ -2,29 +2,19 @@
 @model EJ2CoreSampleBrowser.Pages.Chart.LineModel
 @using Syncfusion.EJ2
 
-@{
-    string Vietnam = "84%";
-    string Canada = "11%";
-    string Malaysia = "73%";
-    string Egypt = "73%";
-    string Indonesia = "10%";
-}
-
 @section ControlsSection{
     <div class="control-section" align="center">
-        <ejs-chart id="container" load="load" title="Crude Steel Production Annual Growth">
-            <e-chart-tooltipsettings enable="true" enableHighlight="true">
+        <ejs-chart id="container" load="load" title="Annual Crude Steel Production by Country (2016–2024)" subTitle="Source: wikipedia.org">
+            <e-chart-tooltipsettings enable="true" enableHighlight="true" showNearestTooltip="true" header="<b>${series.name}</b>" format="${point.x} : <b>${point.y}M</b>">
             </e-chart-tooltipsettings>
-            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.DateTime"
-                                  labelFormat="y"
+            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Double"
                                   edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift">
                 <e-majorgridlines width="0"></e-majorgridlines>
             </e-chart-primaryxaxis>
-            <e-chart-primaryyaxis title="Million Metric Tons"
-                                  labelFormat="{value}"
+            <e-chart-primaryyaxis title="Volume in million metric tons"
                                   minimum="0"
-                                  maximum="20"
-                                  interval="4"
+                                  maximum="25"
+                                  interval="5"
                                   rangePadding="@Syncfusion.EJ2.Charts.ChartRangePadding.None">
                 <e-linestyle width="0"></e-linestyle>
                 <e-majorticklines width="0"></e-majorticklines>
@@ -32,6 +22,7 @@
             </e-chart-primaryyaxis>
             <e-chart-chartarea>
                 <e-chartarea-border width="0"></e-chartarea-border>
+                <e-chartarea-margin bottom=12></e-chartarea-margin>
             </e-chart-chartarea>
             <e-chart-legendsettings visible="true" enableHighlight="true">
             </e-chart-legendsettings>
@@ -39,25 +30,25 @@
                 <e-series dataSource="@Model.ChartData" name="Vietnam" xName="Period" width="2" yName="Viet_Growth" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Line">
                     <e-series-marker visible="true" height="7" width="7" shape="@Syncfusion.EJ2.Charts.ChartShape.Circle" isFilled="true"></e-series-marker>
                 </e-series>
-                <e-series dataSource="@Model.ChartData" name="Canada" xName="Period" width="2" yName="Can_Growth" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Line">
+                <e-series dataSource="@Model.ChartData" name="Indonesia" xName="Period" width="2" yName="Can_Growth" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Line">
                     <e-series-marker visible="true" height="6" width="6" shape="@Syncfusion.EJ2.Charts.ChartShape.Triangle" isFilled="true"></e-series-marker>
                 </e-series>
-                <e-series dataSource="@Model.ChartData" name="Malaysia" xName="Period" width="2" yName="Mal_Growth" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Line">
+                <e-series dataSource="@Model.ChartData" name="France" xName="Period" width="2" yName="Mal_Growth" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Line">
                     <e-series-marker visible="true" height="7" width="7" shape="@Syncfusion.EJ2.Charts.ChartShape.Diamond" isFilled="true"></e-series-marker>
                 </e-series>
-                <e-series dataSource="@Model.ChartData" name="Egypt" xName="Period" width="2" yName="Egy_Growth" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Line">
+                <e-series dataSource="@Model.ChartData" name="Poland" xName="Period" width="2" yName="Egy_Growth" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Line">
                     <e-series-marker visible="true" height="5" width="5" shape="@Syncfusion.EJ2.Charts.ChartShape.Rectangle" isFilled="true"></e-series-marker>
                 </e-series>
-                <e-series dataSource="@Model.ChartData" name="Indonesia" xName="Period" width="2" yName="Ind_Growth" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Line">
+                <e-series dataSource="@Model.ChartData" name="Mexico" xName="Period" width="2" yName="Ind_Growth" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Line">
                     <e-series-marker visible="true" height="7" width="7" shape="@Syncfusion.EJ2.Charts.ChartShape.Pentagon" isFilled="true"></e-series-marker>
                 </e-series>
             </e-series-collection>
         </ejs-chart>
     </div>
+    <script src="~/scripts/chart/theme-color.js"></script>
     <script>
         function load(args) {
-            var selectedTheme = themeName ? themeName : 'Fluent2';
-            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5'));
+            loadChartTheme(args);
             args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
         };
     </script>
@@ -87,7 +78,8 @@
         ASP.NET Core Line Chart represents and visualizes time-dependent data to show the trends at equal intervals. In this example, you can see how to render and configure a line chart. <code>Markers</code> are used to represent individual data and its values.
     </p>
     <p>
-        <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover a point or tap on a point in touch enabled devices. The <code>enableHighlight<code> property in the tooltip allows the corresponding series to be highlighted when a data point is hovered over.
+        <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover over or tap on the chart. The <code>enableHighlight<code> property in the tooltip allows the corresponding series to be highlighted when a data point is hovered over.
+        The <code>showNearestTooltip</code> property displays tooltips for the nearest data point to the cursor.
     </p>        
     <p>
         More information about the line series can be found in this

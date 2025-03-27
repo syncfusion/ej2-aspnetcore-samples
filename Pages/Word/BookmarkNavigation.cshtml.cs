@@ -56,16 +56,10 @@ public class BookmarkNavigation : PageModel
         string dataPathTemp = basePath + @"/Word/BkmkDocumentPart_Template.docx";
         // Open an existing template document with single section to get Northwind.information            
         WordDocument nwdInformation = new WordDocument();
-        fileStream = new FileStream(dataPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-        nwdInformation.Open(fileStream, FormatType.Doc);
-        fileStream.Dispose();
-        fileStream = null;
+        nwdInformation.Open(dataPath, FormatType.Doc);
         // Open an existing template document with multiple section to get Northwind data.
         WordDocument templateDocument = new WordDocument();
-        fileStream = new FileStream(dataPathTemp, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-        templateDocument.Open(fileStream, FormatType.Doc);
-        fileStream.Dispose();
-        fileStream = null;
+        templateDocument.Open(dataPathTemp, FormatType.Doc);
         // Creating a bookmark navigator. Which help us to navigate through the 
         // bookmarks in the template document.
         BookmarksNavigator bk = new BookmarksNavigator(templateDocument);

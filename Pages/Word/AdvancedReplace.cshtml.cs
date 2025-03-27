@@ -51,18 +51,9 @@ public class AdvancedReplace : PageModel
             WordDocument docSource2 = new WordDocument();
             WordDocument docMaster = new WordDocument();
             //Load Templates.
-            fileStream = new FileStream(dataPathTemp, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            docSource1.Open(fileStream, FormatType.Doc);
-            fileStream.Dispose();
-            fileStream = null;
-            fileStream = new FileStream(dataPathTemplate, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            docSource2.Open(fileStream, FormatType.Doc);
-            fileStream.Dispose();
-            fileStream = null;
-            fileStream = new FileStream(dataPathMaster, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            docMaster.Open(fileStream, FormatType.Doc);
-            fileStream.Dispose();
-            fileStream = null;
+            docSource1.Open(dataPathTemp, FormatType.Doc);
+            docSource2.Open(dataPathTemplate, FormatType.Doc);
+            docMaster.Open(dataPathMaster, FormatType.Doc);
             //Search for a string and store in TextSelection
             //The TextSelection copies a text segment with formatting.
             TextSelection selection1 = docSource1.Find("PlaceHolder text is replaced with this formatted animated text",

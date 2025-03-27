@@ -31,13 +31,12 @@
         </div>
      <script src="~/scripts/StockChartData/goog.js"></script>
     <script src="~/scripts/StockChartData/googl.js"></script>
+    <script src="~/scripts/StockChartData/theme-color.js"></script>
     <script>
         var data1 = goog;
         var data2 = googl;
         function chartLoad(args) {
-            let selectedTheme = location.hash.split('/')[1];
-            selectedTheme = selectedTheme ? selectedTheme : 'Fluent2';
-            args.stockChart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5');
+            loadStockChartTheme(args);
             args.stockChart.series[0].dataSource = data1;
             args.stockChart.series[1].dataSource = data2;
             args.stockChart.crosshair.lineType = 'Both';

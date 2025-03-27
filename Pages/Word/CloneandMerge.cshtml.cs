@@ -37,16 +37,10 @@ public class CloneandMerge : PageModel
         string dataPathTemp = basePath + @"/Word/Northwind.docx";
         // Opens a source document.
         WordDocument document = new WordDocument();
-        FileStream fileStream = new FileStream(dataPathTemp, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-        document.Open(fileStream, FormatType.Docx);
-        fileStream.Dispose();
-        fileStream = null;
+        document.Open(dataPathTemp, FormatType.Docx);
         if (Group2 == "UseImportcontents")
         {
-            fileStream = new FileStream(dataPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            document.ImportContent(new WordDocument(fileStream, FormatType.Doc), GetImportOption(ImportOptions));
-            fileStream.Dispose();
-            fileStream = null;
+            document.ImportContent(new WordDocument(dataPath, FormatType.Doc), GetImportOption(ImportOptions));
         }
         else
         {
@@ -54,10 +48,7 @@ public class CloneandMerge : PageModel
             document.ImportOptions = GetImportOption(ImportOptions);
             // Read the source template document
             WordDocument destinationDocument = new WordDocument();
-            fileStream = new FileStream(dataPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            destinationDocument.Open(fileStream, FormatType.Doc);
-            fileStream.Dispose();
-            fileStream = null;
+            destinationDocument.Open(dataPath, FormatType.Doc);
             // Enumerate all the sections from the source document.
             foreach (IWSection sec in destinationDocument.Sections)
             {

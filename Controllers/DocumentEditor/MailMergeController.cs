@@ -20,7 +20,7 @@ namespace EJ2CoreSampleBrowser.Controllers {
             exportItems.Add(new { text = "Word Document (*.docx)", id = "word" });
             exportItems.Add(new { text = "Word Template (*.dotx)", id = "dotx" });
             exportItems.Add(new { text = "Plain Text (*.txt)", id = "txt" });
-            ViewBag.ExportItems = exportItems;
+            ViewData["ExportItems"] = exportItems;
 
            List<object> listdata = new List<object>();
             listdata.Add(new
@@ -100,7 +100,7 @@ namespace EJ2CoreSampleBrowser.Controllers {
                 Category = "Drag or click the field to insert.",
                 htmlAttributes = new { draggable = true }
             });
-            ViewBag.dataSource = listdata;
+            ViewData["dataSource"] = listdata;
             return View();
         }
 

@@ -38,6 +38,39 @@
         padding-top: 50px;
     }
 </style>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+            var labelsByLanguage = {
+
+                'English': ['This Week', 'This Month', 'Last Month', 'Last Year'],
+                'German - Germany*': ['Diese Woche', 'Dieser Monat', 'Letzter Monat', 'Letztes Jahr'],
+                'Arabic*': ['هذا الأسبوع', 'هذا الشهر', 'الشهر الماضي', 'السنة الماضية'],
+                'Chinese - China*': ['本周', '本月', '上个月', '去年'],
+                'French - Switzerland*': ['Cette semaine', 'Ce mois-ci', 'Le mois dernier', "L'année dernière"]
+            };
+
+        var daterangepicker = document.getElementById('presets').ej2_instances[0];
+
+        function updatePresetLabels(languageCode) {
+            var newLabels = labelsByLanguage[languageCode];
+            if (newLabels) {
+                daterangepicker.presets = [
+                    { label: newLabels[0], start: daterangepicker.presets[0].start, end: daterangepicker.presets[0].end },
+                    { label: newLabels[1], start: daterangepicker.presets[1].start, end: daterangepicker.presets[1].end },
+                    { label: newLabels[2], start: daterangepicker.presets[2].start, end: daterangepicker.presets[2].end },
+                    { label: newLabels[3], start: daterangepicker.presets[3].start, end: daterangepicker.presets[3].end }
+                ];
+            }
+        }
+
+        var cultureSelector = document.getElementById("sb-setting-culture_hidden");
+        if (cultureSelector) {
+             var selectedLanguage = cultureSelector.value;
+              updatePresetLabels(selectedLanguage);
+        }
+    });
+</script>
+
 @*custom code end*@
 
 @section ActionDescription{

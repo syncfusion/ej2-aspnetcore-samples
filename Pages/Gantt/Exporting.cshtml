@@ -6,12 +6,6 @@
     <div class="control-section">
         <div class="row">
             <div class="col-md-12">
-                <div style="display: flex;">
-                    <div style="display: flex; align-items: center;">
-                        <label for="unchecked" style="margin-right: 5px;font-size: 15px;"> AutoFit in Pdf Export </label>
-                        <ejs-switch id="unchecked" change="Change" checked="false"></ejs-switch>
-                    </div>
-                </div>
                 <div>
                     <ejs-gantt id='Exporting' dataSource="@GanttData.EditingData()" gridLines="Both"
                                treeColumnIndex="1" height="450px" toolbarClick="toolbarClick"
@@ -64,19 +58,7 @@
                     ganttObj.csvExport();
                 }
                 else if (args.item.id === 'Exporting_pdfexport') {
-                    var exportProperties = {
-                        fitToWidthSettings: {
-                            isFitToWidth: isFitToWidth,
-                        }
-                    };
-                    ganttObj.pdfExport(exportProperties);
-                }
-            }
-            function Change(args) {
-                if (args.checked) {
-                    isFitToWidth = true;
-                } else {
-                    isFitToWidth = false;
+                    ganttObj.pdfExport();
                 }
             }
         </script>

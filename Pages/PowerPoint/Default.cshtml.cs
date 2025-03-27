@@ -49,8 +49,7 @@ public class Default : PageModel
         //Retrieve the current application environment.
         //Open the existing presentation.
         string basePath = _hostingEnvironment.WebRootPath;
-        FileStream fileStreamInput = new FileStream(basePath + @"/PowerPoint/HelloWorld.pptx", FileMode.Open, FileAccess.Read);
-        IPresentation presentation = Presentation.Open(fileStreamInput);
+        IPresentation presentation = Presentation.Open(basePath + @"/PowerPoint/HelloWorld.pptx");
 
         //Method call to create slides
         CreateDefaultSlide(presentation);

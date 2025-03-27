@@ -7,6 +7,7 @@ window.samplesList = [
         "name": "Excel (XlsIO)",
         "directory": "Excel",
         "category": "Document Processing Library",
+        "type": "update",
         "samples": [
             {
                 "url": "Create",
@@ -244,6 +245,7 @@ window.samplesList = [
                 "component": "Excel",
                 "dir": "Excel",
                 "uid": "00444421",
+                "type": "update",
                 "parentId": "044"
             },
             {
@@ -254,6 +256,7 @@ window.samplesList = [
                 "component": "Excel",
                 "dir": "Excel",
                 "uid": "00444443",
+                "type": "update",
                 "parentId": "044"
             },
             {

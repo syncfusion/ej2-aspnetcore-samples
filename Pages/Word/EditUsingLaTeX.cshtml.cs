@@ -41,8 +41,8 @@ public class EditUsingLaTeX : PageModel
         //Creates an empty Word document instance.          
         WordDocument document = new WordDocument();
         //Opens template document.
-        document.Open(fileStream, FormatType.Docx);
-        fileStream.Dispose();
+        document.Open(dataPath, FormatType.Docx);
+		fileStream.Dispose();
         fileStream = null;
 
         //Find all the equations in the Word document.

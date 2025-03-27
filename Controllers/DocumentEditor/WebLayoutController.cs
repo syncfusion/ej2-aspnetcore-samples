@@ -20,7 +20,7 @@ namespace EJ2CoreSampleBrowser.Controllers {
             exportItems.Add(new { text = "Word Document (*.docx)", id = "word" });
             exportItems.Add(new { text = "Word Template (*.dotx)", id = "dotx" });
             exportItems.Add(new { text = "Plain Text (*.txt)", id = "txt" });
-            ViewBag.ExportItems = exportItems;
+            ViewData["ExportItems"] = exportItems;
             return View();
         }        
     }

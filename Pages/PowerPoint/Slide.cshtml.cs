@@ -29,9 +29,7 @@ public class Slide : PageModel
         if (button == null)
             return null;
         string basePath = _hostingEnvironment.WebRootPath;
-        FileStream fileStreamInput =
-            new FileStream(basePath + @"/PowerPoint/Slides.pptx", FileMode.Open, FileAccess.Read);
-        IPresentation presentation = Presentation.Open(fileStreamInput);
+        IPresentation presentation = Presentation.Open(basePath + @"/PowerPoint/Slides.pptx");
         //New Instance of PowerPoint is Created.[Equivalent to launching MS PowerPoint with no slides].
 
         //Method call to create slides

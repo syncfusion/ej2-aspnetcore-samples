@@ -70,7 +70,7 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
                 }
                 else
                 {
-                    ViewBag.Message = "No such word found in in the PDF document";
+                    ViewData["Message"] = "No such word found in in the PDF document";
                 }
 
                 return View("FindText", message);
@@ -95,7 +95,7 @@ namespace EJ2CoreSampleBrowser.Controllers.PDF
                 }
                 else
                 {
-                    ViewBag.Message =  string.Format("Please choose a valid PDF document to find the text");
+                    ViewData["Message"] =  string.Format("Please choose a valid PDF document to find the text");
                     return null;
                 }
             }

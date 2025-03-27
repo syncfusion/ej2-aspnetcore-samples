@@ -1,6 +1,9 @@
 @page
 @using Syncfusion.EJ2
-
+@using EJ2CoreSampleBrowser.Models
+@{
+    var data = new Animation().AnimationOptions();
+}
 @section ControlsSection{
     <div class="col-lg-8 control-section">
         <div class="control-section" id ="predefinedDialogAnimation">
@@ -8,43 +11,30 @@
         </div>
     </div>
     <div class="col-lg-4 property-section">
-        <div>
-            <select id="effectDropdown" class="form-control">
-                <option value="FadeZoom">Fade zoom</option>
-                <option value="SlideBottom">Slide bottom</option>
-                <option value="SlideTop">Slide top</option>
-                <option value="Zoom">Zoom</option>
-                <option value="Fade">Fade</option>
-            </select>
+        <div style='padding-top:40px;'>
+            <ejs-dropdownlist  id="effectDropdown" dataSource="@data" change="valueChange" floatLabelType="Auto" index="2" placeholder="Animation effect" popupHeight="220px">
+                <e-dropdownlist-fields text="Name" value="Value"></e-dropdownlist-fields>
+            </ejs-dropdownlist>
         </div>
     </div>
 }
+
 @section PreScripts {
-<script>
+    <script type="text/javascript">
     var dialogArgs = {
         title: ' Delete Multiple Items',
         content: "Are you sure you want to permanently delete these items?",
-        animationSettings: { effect: 'Zoom',delay:0,duration: 250},
+             animationSettings: { effect: 'SlideTop',delay:0,duration: 250},
         position: { X: 'center', Y: 'center' },
         width:'420px',
         closeOnEscape: true
     };
-    var button = new ej.buttons.Button({});
-    button.appendTo('#confirmBtn');
     document.getElementById("confirmBtn").onclick = function confirmBtnAction( ) {
         ej.popups.DialogUtility.confirm(dialogArgs);
     };
-    var animationObj = new ej.dropdowns.DropDownList({
-        index: 2,
-        placeholder: 'Animation effect',
-        popupHeight: '200px',
-        floatLabelType: 'Always',
-        change: function(){ valueChange();  }
-    });
-    animationObj.appendTo('#effectDropdown');
     function valueChange() {
-        var effect = animationObj.value;
-        dialogArgs.animationSettings.effect = effect;
+        var listObj = document.getElementById('effectDropdown').ej2_instances[0];
+        dialogArgs.animationSettings.effect = listObj.value;
     }
 </script>
 <style>

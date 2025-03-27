@@ -254,9 +254,12 @@ function changeRtl() {
 		var elementlist = ej.base.selectAll('.e-control', document.getElementById('control-content'));
 		var propertylist =[].concat(ej.base.selectAll('.property-section .e-control', document.getElementById('control-content')));
 		for (var i = 0; i < elementlist.length; i++) {
-			var control = elementlist[i];
-			if (propertylist.indexOf(control) === -1) {
-				if (control.ej2_instances) {
+            var control = elementlist[i];
+            if (propertylist.indexOf(control) === -1) {
+                if (control.classList.contains('e-richtexteditor')) {
+                    control.ej2_instances = control.getElementsByTagName("textArea")[0].ej2_instances;
+                }
+                if (control.ej2_instances) {
 					for (var a = 0; a < control.ej2_instances.length; a++) {
 						var instance = control.ej2_instances[a];
 						instance.enableRtl = true;
@@ -918,7 +921,6 @@ function toggleLeftPane() {
 
 function toggleRightPane() {
     var toggleAnim = new ej.base.Animation({ duration: 500, timingFunction: 'ease' });
-    themeDropDown.index = themes.indexOf(selectedTheme);
     if(themeDropDown) { themeDropDown.index = themes.indexOf(selectedTheme); }
     var mRightPane = ej.base.select('.sb-mobile-right-pane');
     ej.base.select('.sb-mobile-overlay').classList.toggle('sb-hide');
@@ -1039,12 +1041,12 @@ function controlSelect(arg) {
         controlListRefresh(arg.node || arg.item);
     }
     if (location.pathname.slice(- 1) !== '/' && location.hash !== '#/' + theme) {
-        var count;
-        if ((location.origin.indexOf('ej2npmci.azurewebsites') !== -1) && location.pathname.split('/').length >= 5) {
-            count = 5;
+        var count; 
+        if ((location.origin.indexOf('ej2npmci.azurewebsites') !== -1) && location.pathname.split('/').length >= 6) {
+            count = 6;
         }
-        else if ((location.origin.indexOf('ej2.syncfusion') !== -1) && location.pathname.split('/').length >= 4) {
-            count = 4;
+        else if ((location.origin.indexOf('ej2.syncfusion') !== -1) && location.pathname.split('/').length >= 5) {
+            count = 5; 
         }
         else if ((location.origin.indexOf('localhost') !== -1) && location.pathname.split('/').length >= 3) {
             count = 3;
@@ -1341,7 +1343,7 @@ function onDataSourceLoad(node, subNode, control, sample, sampleName) {
         var propPanel = ej.base.select('#control-content .property-section');
         if (isMobile) {
             if (propPanel) {
-                viewMobilePropPane();
+                viewMobilePropPane(); 
                 var toggleAnim = new ej.base.Animation({ duration: 500, timingFunction: 'ease' });
                 var mRightPane = ej.base.select('.sb-mobile-right-pane');
                 ej.base.select('.sb-mobile-overlay').classList.toggle('sb-hide');

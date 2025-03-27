@@ -43,8 +43,8 @@ public class FindAndHighlight : PageModel
 
         try
         {
-            IPresentation presentation = Presentation.Open(fileStreamInput);
-            fileStreamInput.Dispose();
+            IPresentation presentation = Presentation.Open(dataPath);
+			fileStreamInput.Dispose();
             fileStreamInput = null;
             //Highlight only the first occurrence of the text
             if (highlightFirst == "HighlightFirst")

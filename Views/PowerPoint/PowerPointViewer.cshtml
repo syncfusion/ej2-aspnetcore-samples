@@ -1,5 +1,5 @@
 @using Syncfusion.EJ2
-@{ViewBag.Title = "    Essential Presentation (Presentation) : PowerPointViewer : Syncfusion";}
+@{ViewData["Title"] = "    Essential Presentation (Presentation) : PowerPointViewer : Syncfusion";}
 
 @section ControlsSection{
     <div id='waiting-popup' style="display: block;">
@@ -18,7 +18,7 @@
                         <e-toolbar-item prefixIcon="e-pv-download-document-icon" tooltipText="Download" align="Right" click="downloadClicked"></e-toolbar-item>
                     </e-toolbar-items>
                 </ejs-toolbar>
-                <ejs-pdfviewer id="pdfviewer" style="height:500px;" enableToolbar="false" serviceUrl="api/PowerPoint" downloadFileName="Sample.pdf" enableNavigationToolbar="false" documentLoad="documentLoaded" zoomMode="FitToPage"></ejs-pdfviewer>
+                <ejs-pdfviewer id="pdfviewer" style="height:500px;" enableToolbar="false" resourceUrl="https://cdn.syncfusion.com/ej2/28.2.6/dist/ej2-pdfviewer-lib" downloadFileName="Sample.pdf" enableNavigationToolbar="false" documentLoad="documentLoaded" zoomMode="FitToPage"></ejs-pdfviewer>
                 <input type="file" id="fileUpload" accept=".pptx" style="display:block;visibility:hidden;width:0;height:0;">
                 Html.EndForm();
             }
@@ -128,28 +128,52 @@
     var matchCase = false;
     var filename;
     window.onload = function () {
+        loadPDF("Template.pptx");
+    }
+    function loadPDF(filename) {
         enableSpinner();
         var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
-        pdfViewer.serviceUrl = window.baseurl + 'api/PowerPoint';
-        pdfViewer.load("Template.pptx", null);
-        document.getElementById('fileUpload').addEventListener('change', readFile, false);
+        pdfViewer.resourceUrl = "https://cdn.syncfusion.com/ej2/28.2.6/dist/ej2-pdfviewer-lib";
+        var xhr = new XMLHttpRequest();
+        const url = window.baseurl + 'api/PowerPoint/ConvertPPTXToPDF?fileName=' + filename;
+        xhr.open('GET', url, true);
+        xhr.responseType = "arraybuffer";
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var blob = new Blob([xhr.response], { type: 'application/pdf' });
+                var reader = new FileReader();
+                reader.onload = function () {
+                    var base64String = reader.result;
+                    pdfViewer.load(base64String);
+                };
+                reader.readAsDataURL(blob);
+            }
+            document.getElementById('fileUpload').addEventListener('change', readFile, false);
+        }
+        xhr.send();
     }
     function openPage() {
         document.getElementById('fileUpload').click();
     }
     function readFile(evt) {
         var upoadedFiles = evt.target.files;
-        var uploadedFile = upoadedFiles[0];
-        filename = upoadedFiles[0].name;
+        var file = upoadedFiles[0];
         var reader = new FileReader();
-        reader.readAsDataURL(uploadedFile);
-        reader.onload = function () {
-            enableSpinner();
-            var obj = document.getElementById('pdfviewer').ej2_instances[0];
-            var uploadedFileUrl = this.result;
-            obj.load(uploadedFileUrl, null);
-            obj.fileName = filename;
-        }
+        reader.addEventListener('load', function () {
+            let post = JSON.stringify({
+                'data': reader.result,
+            });
+            const url = window.baseurl + 'api/PowerPoint/ConvertPPTXToPDFCustomer';
+            let xhr = new XMLHttpRequest();
+            xhr.open('Post', url, true);
+            xhr.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
+            xhr.onload = function (args) {
+                var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+                pdfViewer.load(this.responseText);
+            }
+            xhr.send(post);
+        }, false);
+        reader.readAsDataURL(file);
     }
 
     function documentLoaded() {

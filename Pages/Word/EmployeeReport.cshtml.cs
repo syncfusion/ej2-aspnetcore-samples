@@ -42,10 +42,7 @@ public class EmployeeReport : PageModel
         // Creating a new document.
         WordDocument document = new WordDocument();
         // Load template          
-        fileStream = new FileStream(dataPathEmployee, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-        document.Open(fileStream, FormatType.Doc);
-        fileStream.Dispose();
-        fileStream = null;
+        document.Open(dataPathEmployee, FormatType.Doc);
         document.MailMerge.MergeImageField += new MergeImageFieldEventHandler(MergeField_EmployeeImage);
         //Create MailMergeDataTable
         MailMergeDataTable mailMergeDataTable = GetMailMergeDataTableEmployee();

@@ -41,16 +41,14 @@
         </ejs-chart>
     </div>
     <script src="~/scripts/chart/hilo-data.js"></script>
+    <script src="~/scripts/chart/theme-color.js"></script>
     <script type="text/javascript">
         var ChartPoints = hiloData;
         var zoomFactor, zoomPosition;
         var pointColors = [];
-        var selectedTheme = location.hash.split('/')[1];
-        selectedTheme = selectedTheme ? selectedTheme : 'Fluent2';
-        var theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5'));
 
         function load(args) {
-            args.chart.theme = theme;
+            loadChartTheme(args);
             args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
             args.chart.series[0].dataSource = ChartPoints;
             args.chart.series[1].dataSource = ChartPoints;

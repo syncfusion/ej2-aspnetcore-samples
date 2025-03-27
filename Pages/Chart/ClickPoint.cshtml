@@ -25,14 +25,12 @@
             </e-series-collection>
         </ejs-chart>
     </div>
-
+    <script src="~/scripts/chart/theme-color.js"></script>
     <script>
         var chart;
         function load(args) {
             chart = args.chart;
-            var selectedTheme = location.hash.split('/')[1];
-            selectedTheme = selectedTheme ? selectedTheme : 'Fluent2';
-            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5'));
+            loadChartTheme(args);
             args.chart.width = ej.base.Browser.isDevice ? "100%" : "70%";
             args.chart.series[0].marker.border.width = 2;
             args.chart.series[0].marker.border.color = "white";

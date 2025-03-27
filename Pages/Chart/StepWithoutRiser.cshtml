@@ -30,8 +30,6 @@
             <e-chart-tooltipsettings enable="true" shared="true"></e-chart-tooltipsettings>
             <e-series-collection>
                 <e-series dataSource="@Model.ChartPoints" opacity="0.1" name="Product Sales" xName="X" yName="Y" noRisers="true" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StepArea" step="@Syncfusion.EJ2.Charts.StepPosition.Center">
-                    <e-series-marker allowHighlight="false">
-                    </e-series-marker>
                     <e-series-border width="2.5"></e-series-border>
                 </e-series>
             </e-series-collection>
@@ -43,11 +41,10 @@
             padding: 0px !important;
         }
     </style>
-
+    <script src="~/scripts/chart/theme-color.js"></script>
     <script type="text/javascript">
         var load = function (args) {
-            var selectedTheme = themeName ? themeName : 'Fluent2';
-            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, "Dark").replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5');
+            loadChartTheme(args);
             args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
             args.chart.primaryXAxis.labelIntersectAction = ej.base.Browser.isDevice ? "Rotate90" : "Rotate45";
         };

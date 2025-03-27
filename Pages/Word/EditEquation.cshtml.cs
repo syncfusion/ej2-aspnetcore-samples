@@ -42,9 +42,7 @@ public class EditEquation : PageModel
         // Creates an empty Word document instance.          
         WordDocument document = new WordDocument();
         // Opens template document.
-        document.Open(fileStream, FormatType.Docx);
-        fileStream.Dispose();
-        fileStream = null;
+        document.Open(dataPath, FormatType.Docx);
         //Gets the last section in the document
         WSection section = document.LastSection;
         //Gets paragraph from Word document

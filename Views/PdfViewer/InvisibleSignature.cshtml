@@ -20,8 +20,8 @@
 		<ejs-message id="msg_success" visible="false" severity="Success"></ejs-message>
 		<ejs-message id="msg_warning" visible="false" severity="Warning"></ejs-message>
 		<ejs-message id="msg_error" visible="false" severity="Error"></ejs-message>
-		<ejs-pdfviewer id="pdfviewer" serviceUrl="api/PdfViewer" enableToolbar="false" enableThumbnail="false" enableNavigationToolbar="false"
-				   addSignature="addSignature" documentLoad="documentLoaded" style="height:641px;"></ejs-pdfviewer>
+		<ejs-pdfviewer id="pdfviewer" documentPath="https://cdn.syncfusion.com/content/pdf/InvisibleDigitalSignature.pdf" resourceUrl="https://cdn.syncfusion.com/ej2/27.2.2/dist/ej2-pdfviewer-lib" enableToolbar="false" enableThumbnail="false" enableNavigationToolbar="false"
+				   enableAnnotationToolbar="false" enableTextSelection="false" addSignature="addSignature" documentLoad="documentLoaded" style="height:641px;"></ejs-pdfviewer>
 		<input type="file" id="fileUpload" accept=".pdf" style="display:block;visibility:hidden;width:0;height:0;">
 	</div>
 }
@@ -98,14 +98,13 @@
 	var openDocument;
 	var fileName;
 	var treeObj;
+	var addSignatureUrl = window.baseurl + "api/PdfViewer/AddSignature";
 	window.onload = function () {
 		viewer = document.getElementById('pdfviewer').ej2_instances[0];
 		toolbarObj = document.getElementById('topToolbar').ej2_instances[0];
 		msgSuccess = document.getElementById('msg_success').ej2_instances[0];
 		msgWarning = document.getElementById('msg_warning').ej2_instances[0];
 		msgError = document.getElementById('msg_error').ej2_instances[0];
-		viewer.serviceUrl = window.baseurl + 'api/PdfViewer';
-		viewer.load("InvisibleDigitalSignature.pdf", null);
 		document.getElementById('fileUpload').addEventListener('change', readFile, false);
 	}
 
@@ -133,24 +132,36 @@
 	}
 
 	function signDocument(args) {
-		viewer.serverActionSettings.download = 'AddSignature';
-		var data;
-		var base64data;
 		viewer.saveAsBlob().then(function (value) {
-			data = value;
 			var reader = new FileReader();
-			reader.readAsDataURL(data);
-			reader.onload = function () {
-				base64data = reader.result;
-				documentData = base64data;
-				viewer.load(base64data, null);
-				viewer.fileName = fileName;
-				viewer.downloadFileName = fileName;
-				toolbarObj.items[1].disabled = true;
-				toolbarObj.items[2].disabled = false;
+			reader.readAsDataURL(value);
+			reader.onload = function (e) {
+				var base64String = e.target ? e.target.result : null;
+				var xhr = new XMLHttpRequest();
+				xhr.open('POST', addSignatureUrl, true);
+				xhr.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
+				var requestData = JSON.stringify({ base64String: base64String });
+				xhr.onload = function () {
+					if (xhr.status === 200) {
+					documentData = xhr.responseText;
+					viewer.load(xhr.responseText, null);
+					toolbarObj.items[1].disabled = true;
+					toolbarObj.items[2].disabled = false;
+					viewer.fileName = fileName;
+					viewer.downloadFileName = fileName;
+					}
+					else {
+						console.error('Error in AddSignature API:', xhr.statusText);
+					}
+				};
+				xhr.onerror = function () {
+					console.error('Error reading Blob as Base64.', xhr.statusText);
+				};
+				xhr.send(requestData);
 			};
+		}).catch(function (error) {
+			console.error('Error saving Blob:', error);
 		});
-		viewer.serverActionSettings.download = 'Download';
 	}
 	function documentLoaded(args) {
 		fileName = args.documentName;
@@ -162,8 +173,8 @@
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(postData)
 		};
-		var apiUrl = window.baseurl + 'api/PdfViewer/ValidateSignature';
-		fetch(apiUrl, options)
+		var validateSignatureUrl = window.baseurl + 'api/PdfViewer/ValidateSignature';
+		fetch(validateSignatureUrl, options)
 			.then(function (response) { return response.json(); })
 			.then(function (body) {
 				if (body.successVisible || body.warningVisible || body.errorVisible)
@@ -193,7 +204,6 @@
 	function downloadClicked(args) {
 		viewer.download();
 	}
-
 
 	function readFile(args) {
 		var upoadedFiles = args.target.files;

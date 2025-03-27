@@ -34,6 +34,7 @@
         </div>
     </div>
     <script src="~/scripts/datasource.js"></script>
+    <script src="~/scripts/range-navigator/theme-color.js"></script>
     <script>
         var employeeData = employeeData;
         var start, end;
@@ -41,12 +42,10 @@
             return (data.HireDate >= new Date(1992, 5, 1) && data.HireDate <= new Date(1993, 4, 1));
         });
         window.onChartLoad = function (args) {
-            var selectedTheme = location.hash.split('/')[1];
-            selectedTheme = selectedTheme ? selectedTheme : 'Fluent2';
-            args.rangeNavigator.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5'));
+            loadRangeNavigatorTheme(args);
             args.rangeNavigator.width = ej.base.Browser.isDevice ? "100%" : "80%";
             args.rangeNavigator.dataSource = employeeData;
-            args.rangeNavigator.value = [new Date(1992, 5, 1), new Date(1993, 4, 1)];            
+            args.rangeNavigator.value = [new Date(1992, 5, 1), new Date(1993, 4, 1)];  
         }
         window.changed = function (args) {
             if ((document.getElementById('Grid').childNodes.length > 1)) {

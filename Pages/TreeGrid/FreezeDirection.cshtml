@@ -96,7 +96,7 @@
         function columnChange(e) {
             var treegrid = document.getElementById("FrozenGrid").ej2_instances[0];
             var columnName = e.value;
-            var column = treegrid.grid.getColumnByField(columnName);
+            var column = treegrid.getColumnByField(columnName);
             var directionDropDown = document.getElementById("FreezeDirection").ej2_instances[0];
             var value = column.freeze === undefined ? 'Center' : column.freeze;
             refresh = directionDropDown.value === value;
@@ -107,13 +107,17 @@
             if (refresh) {
                 var treegrid = document.getElementById("FrozenGrid").ej2_instances[0];
                 var columnName = document.getElementById("column").ej2_instances[0].value;
-                var mvblColumns = treegrid.grid.getMovableColumns();
+                var mvblColumns = treegrid.getMovableColumns();
                 if (mvblColumns.length === 1 && columnName === mvblColumns[0].field && e.value !== mvblColumns[0].freeze) {
                     document.getElementById("AlertDialog").ej2_instances[0].show();
                     refresh = false; this.value = "Center"; this.refresh();
                 } else {
-                    treegrid.grid.getColumnByField(columnName).freeze = e.value === 'Center' ? undefined : e.value;
-                    treegrid.grid.refreshColumns();
+                    let columns = treegrid.getColumns();
+                    let column = columns.find(col => col.field === columnName);
+                    if (column) {
+                        column.freeze = e.value === 'Center' ? undefined : e.value;
+                    }
+                    treegrid.columns = columns;
                 }
             }
             refresh = true;

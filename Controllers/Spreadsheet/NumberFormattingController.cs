@@ -31,7 +31,7 @@ namespace EJ2CoreSampleBrowser.Controllers
                 new { ItemCode= "I229", ItemName= "Manchow Soup", Quantity= 2, Rate= 125, Amount= "=PRODUCT(C13,D13)" },
                 new { ItemCode= "I239", ItemName= "Jw Black Lable", Quantity= 2, Rate= 175, Amount= "=PRODUCT(C14,D14)" }
             };
-            ViewBag.numberFormatData = numberFormatData;
+            ViewData["numberFormatData"] = numberFormatData;
             return View();
         }
     }

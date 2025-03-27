@@ -17,7 +17,7 @@ namespace EJ2CoreSampleBrowser_NET6.Controllers.TreeGrid
         public IActionResult ServerSideExporting()
         {
             var order = TreeData.GetDefaultData();
-            ViewBag.dataSource = order;
+            ViewData["dataSource"] = order;
             return View();
         }
         public IActionResult ExcelExport(string treeGridModel)

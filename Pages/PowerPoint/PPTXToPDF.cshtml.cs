@@ -30,7 +30,7 @@ public class PPTXToPDF : PageModel
     }
 
     [HttpPost]
-    public ActionResult OnPost(string button, string view)
+    public ActionResult OnPost(string button, string renderingMode1, string view)
     {
         if (button == null)
             return null;
@@ -49,7 +49,9 @@ public class PPTXToPDF : PageModel
 
                 // Create new instance for PresentationToPdfConverterSettings
                 PresentationToPdfConverterSettings settings = new PresentationToPdfConverterSettings();
-
+                //Enables a flag to preserve form fields by converting shapes with names starting with 'FormField_' into editable text form fields in the PDF.
+                if (renderingMode1 == "PreserveFormFields")
+                    settings.PreserveFormFields = true;
                 //Convert the PowerPoint document to PDF document.
                 PdfDocument pdfDocument = PresentationToPdfConverter.Convert(presentation, settings);
 

@@ -36,12 +36,11 @@
         </div>
     </div>
     <script src="~/scripts/chart/financial-data.js"></script>
+    <script src="~/scripts/StockChartData/theme-color.js"></script>
     <script>
         var data = chartData;
         function stockload(args) {
-            let selectedTheme = location.hash.split('/')[1];
-            selectedTheme = selectedTheme ? selectedTheme : 'Fluent2';
-            args.stockChart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5');
+            loadStockChartTheme(args);
             args.stockChart.series[0].dataSource = data;
             args.stockChart.series[1].dataSource = data;
         }

@@ -44,7 +44,20 @@
     ${/if}
 
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        if (document.getElementById('right-pane')) {
+            document.getElementById('right-pane').addEventListener('scroll', hideTooltipOnScroll);
+        }
 
+        function hideTooltipOnScroll() {
+            var tooltipElement = document.querySelector('.e-rating-tooltip');
+            if (tooltipElement && ej.base.Browser.isDevice) {
+                tooltipElement.style.display = 'none';
+            }
+        }
+    });
+</script>
 <style>
     .rating-control .rating-content {
         width: 240px;

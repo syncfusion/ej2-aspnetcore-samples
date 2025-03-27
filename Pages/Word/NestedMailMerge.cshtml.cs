@@ -59,11 +59,7 @@ public class NestedMailMerge : PageModel
         fileStream2 = null;
         // Creating a new document.
         WordDocument document = new WordDocument();
-        // Load template
-        FileStream fileStream = new FileStream(dataPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-        document.Open(fileStream, FormatType.Doc);
-        fileStream.Dispose();
-        fileStream = null;
+        document.Open(dataPath, FormatType.Doc);
 
         #region Execute Mail merge
 

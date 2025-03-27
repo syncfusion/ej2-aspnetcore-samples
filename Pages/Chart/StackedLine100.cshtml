@@ -4,7 +4,7 @@
 @section ControlsSection{
     <div class="control-section" align="center">
         <ejs-chart id="container" load="load" title="Family Expenses for Year">
-            <e-chart-tooltipsettings enable="true" format="${point.x} : <b>${point.y} (${point.percentage}%)</b>">
+            <e-chart-tooltipsettings enable="true" showNearestTooltip="true" enableHighlight="true" format="${point.x} : <b>${point.y} (${point.percentage}%)</b>">
             </e-chart-tooltipsettings>
             <e-chart-legendsettings enableHighlight="true"></e-chart-legendsettings>
             <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category" interval="1">
@@ -40,11 +40,10 @@
             </e-series-collection>
         </ejs-chart>
     </div>
+    <script src="~/scripts/chart/theme-color.js"></script>
     <script>
         function load(args) {
-            var selectedTheme = location.hash.split('/')[1];
-            selectedTheme = selectedTheme ? selectedTheme : 'Fluent2';
-            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5'));
+            loadChartTheme(args);
             args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
             args.chart.primaryXAxis.labelIntersectAction = ej.base.Browser.isDevice?'None':'Trim';
             args.chart.primaryXAxis.labelRotation = ej.base.Browser.isDevice?'-45':'0';

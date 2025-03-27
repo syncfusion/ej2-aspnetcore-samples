@@ -31,8 +31,7 @@ public class ModifyAnimation : PageModel
         if (button.Trim() == "Input Template")
         {
 		    
-            FileStream fileStreamInput = new FileStream(basePath + @"/PowerPoint/ShapeWithAnimation.pptx", FileMode.Open, FileAccess.Read);
-            IPresentation presentation = Presentation.Open(fileStreamInput);
+            IPresentation presentation = Presentation.Open(basePath + @"/PowerPoint/ShapeWithAnimation.pptx");
             MemoryStream ms = new MemoryStream();
 
             //Saves the presentation to the memory stream.
@@ -43,8 +42,7 @@ public class ModifyAnimation : PageModel
         }
         else
         {
-            FileStream fileStreamInput = new FileStream(basePath + @"/PowerPoint/ShapeWithAnimation.pptx", FileMode.Open, FileAccess.Read);
-            IPresentation presentation = Presentation.Open(fileStreamInput);
+            IPresentation presentation = Presentation.Open(basePath + @"/PowerPoint/ShapeWithAnimation.pptx");
             //New Instance of PowerPoint is Created.[Equivalent to launching MS PowerPoint with no slides].
 
             //Modify the existing animation

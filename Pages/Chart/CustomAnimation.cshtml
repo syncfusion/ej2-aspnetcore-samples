@@ -5,7 +5,7 @@
 
     <div class="control-section" align="center">
         <ejs-chart id="container" load="load" title="Almond Yield">
-            <e-chart-tooltipsettings enable="true" shared="true" header="<b>Almond Yield - ${point.x}</b>" format="${series.name}: <b>${point.y}</b>">
+            <e-chart-tooltipsettings enable="true" showNearestTooltip="true" enableHighlight="true" header="<b>Almond Yield - ${point.x}</b>" format="${series.name}: <b>${point.y}</b>">
             </e-chart-tooltipsettings>
             <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.DateTime"
                                   labelFormat="y"
@@ -43,10 +43,10 @@
             </e-series-collection>
         </ejs-chart>
     </div>
+    <script src="~/scripts/chart/theme-color.js"></script>
     <script>
         function load(args) {
-            var selectedTheme = themeName ? themeName : 'Fluent2';
-            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, "Dark").replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5');
+            loadChartTheme(args);
             args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
         };
     </script>
@@ -76,7 +76,7 @@
         In this example, you can see how to render and configure a spline chart with multiple series representing almond yield across different countries over time. Spline charts are ideal for visualizing smooth trends in data over equal intervals, particularly time-dependent data. The <code>Width</code> and <code>Animation</code> properties are used to customize the appearance and behavior of the spline. The staggered animations enhance the visual experience by introducing each spline in sequence.
     </p>
     <p>
-        Tooltip is enabled in this example, to see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+        <code>Tooltip</code> is enabled in this example, to see the tooltip in action, hover over or tap on the chart.
     </p>
     <p>
         More information on the spline series can be found in this

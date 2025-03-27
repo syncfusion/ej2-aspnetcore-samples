@@ -17,15 +17,15 @@ namespace EJ2CoreSampleBrowser.Pages.Chart
         {
             ChartData = new List<LineChartData>
             {
-                new LineChartData { Period = new DateTime(2012, 07, 11), Can_Growth = 13.5, Viet_Growth = 5.3,  Mal_Growth = 5.6, Egy_Growth = 6.6, Ind_Growth = 2.3 },
-                new LineChartData { Period = new DateTime(2013, 07, 11), Can_Growth = 12.4, Viet_Growth = 5.6,  Mal_Growth = 4.7, Egy_Growth = 6.8, Ind_Growth = 2.6 },
-                new LineChartData { Period = new DateTime(2014, 07, 11), Can_Growth = 12.7, Viet_Growth = 5.9,  Mal_Growth = 4.3, Egy_Growth = 6.5, Ind_Growth = 4.4  },
-                new LineChartData { Period = new DateTime(2015, 07, 11), Can_Growth = 12.5, Viet_Growth = 5.7,  Mal_Growth = 3.8, Egy_Growth = 5.5, Ind_Growth = 4.9 },
-                new LineChartData { Period = new DateTime(2016, 07, 11), Can_Growth = 12.7, Viet_Growth = 7.8,  Mal_Growth = 2.8, Egy_Growth = 5.0, Ind_Growth = 4.8 },
-                new LineChartData { Period = new DateTime(2017, 07, 11), Can_Growth = 13.7, Viet_Growth = 10.3, Mal_Growth = 2.8, Egy_Growth = 6.8, Ind_Growth = 5.3 },
-                new LineChartData { Period = new DateTime(2018, 07, 11), Can_Growth = 13.4, Viet_Growth = 15.5, Mal_Growth = 4.1, Egy_Growth = 7.8, Ind_Growth = 6.2 },
-                new LineChartData { Period = new DateTime(2019, 07, 11), Can_Growth = 12.9, Viet_Growth = 17.5, Mal_Growth = 6.8, Egy_Growth = 7.3, Ind_Growth = 7.8 },
-                new LineChartData { Period = new DateTime(2020, 07, 11), Can_Growth = 11.0, Viet_Growth = 19.5, Mal_Growth = 7.1, Egy_Growth = 8.2, Ind_Growth = 9.3 }
+                new LineChartData { Period = 2016, Can_Growth = 4.8 , Viet_Growth = 7.8 , Mal_Growth = 14.6, Egy_Growth = 8.9 , Ind_Growth = 19.0 },
+                new LineChartData { Period = 2017, Can_Growth = 5.2 , Viet_Growth = 10.3, Mal_Growth = 15.5, Egy_Growth = 10.3, Ind_Growth = 20.0 },
+                new LineChartData { Period = 2018, Can_Growth = 6.2 , Viet_Growth = 15.5, Mal_Growth = 15.4, Egy_Growth = 10.8, Ind_Growth = 20.2  },
+                new LineChartData { Period = 2019, Can_Growth = 7.8 , Viet_Growth = 17.5, Mal_Growth = 14.4, Egy_Growth = 9.0 , Ind_Growth = 18.4 },
+                new LineChartData { Period = 2020, Can_Growth = 9.3 , Viet_Growth = 19.5, Mal_Growth = 11.6, Egy_Growth = 7.9 , Ind_Growth = 16.8 },
+                new LineChartData { Period = 2021, Can_Growth = 14.3, Viet_Growth = 23.0, Mal_Growth = 13.9, Egy_Growth = 8.5 , Ind_Growth = 18.5 },
+                new LineChartData { Period = 2022, Can_Growth = 15.6, Viet_Growth = 20.0, Mal_Growth = 12.1, Egy_Growth = 7.4 , Ind_Growth = 18.4 },
+                new LineChartData { Period = 2023, Can_Growth = 16.0, Viet_Growth = 19.0, Mal_Growth = 10.0, Egy_Growth = 6.4 , Ind_Growth = 16.3 },
+                new LineChartData { Period = 2024, Can_Growth = 17.0, Viet_Growth = 22.1, Mal_Growth = 10.8, Egy_Growth = 7.1 , Ind_Growth = 13.7 }
             };
         }
         

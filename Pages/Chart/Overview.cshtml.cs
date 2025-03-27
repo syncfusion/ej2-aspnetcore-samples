@@ -24,11 +24,11 @@ namespace EJ2CoreSampleBrowser.Pages.Chart
         {
              ColumnChartData = new List<LayoutData>
             {
-                new LayoutData {Period = "2017", OnlinePercentage = 60, RetailPercentage = 40 },
-                new LayoutData {Period = "2018", OnlinePercentage = 56, RetailPercentage = 44 },
-                new LayoutData {Period = "2019", OnlinePercentage = 71, RetailPercentage = 29 },
-                new LayoutData {Period = "2020", OnlinePercentage = 85, RetailPercentage = 15 },
-                new LayoutData {Period = "2021", OnlinePercentage = 73, RetailPercentage = 27 }
+                new LayoutData {Period = "2020", OnlinePercentage = 60, RetailPercentage = 40 },
+                new LayoutData {Period = "2021", OnlinePercentage = 56, RetailPercentage = 44 },
+                new LayoutData {Period = "2022", OnlinePercentage = 71, RetailPercentage = 29 },
+                new LayoutData {Period = "2023", OnlinePercentage = 85, RetailPercentage = 15 },
+                new LayoutData {Period = "2024", OnlinePercentage = 73, RetailPercentage = 27 }
             };
             PieData = new List<LayoutPieData>
             {

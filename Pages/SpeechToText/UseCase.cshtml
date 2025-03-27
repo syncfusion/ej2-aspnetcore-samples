@@ -1,0 +1,236 @@
+﻿@page
+@using Syncfusion.EJ2
+
+@section ControlsSection {
+    <div class="control-section">
+        <div class="usecase-speechToText-section e-message">
+            <div class="stt-container">
+                <!-- Microphone button for Speech-to-Text -->
+                <button id="speechToText"></button>
+                <span class="speech-recognition-status">Click the mic button to start speaking...</span>
+            </div>
+            <div class="transcript-container">
+                <!-- Transcription output -->
+                <ejs-chatui id="transcript-content" showHeader=false showFooter=false autoScrollToBottom=true created="onCreate" emptyChatTemplate="#emptyChatTemplate" typingUsersTemplate="#typingIndicatorTemplate" timeStampFormat="MMM d, h:mm a"></ejs-chatui>
+            </div>
+        </div>
+    </div>
+}
+
+<style>
+    .usecase-speechToText-section,
+    .e-bigger .usecase-speechToText-section {
+        width: 90%;
+        height: 55vh;
+        margin: 0 auto;
+        padding: 0;
+        display: flex;
+    }
+    .usecase-speechToText-section #transcript-content {
+        border: none;
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+    }
+    .usecase-speechToText-section .stt-container {
+        width: 70%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+    }
+    .usecase-speechToText-section .e-speech-to-text.usecase-stt-btn {
+        width: 100px;
+        height: 100px;
+        position: relative;
+    }
+    .usecase-speechToText-section .usecase-stt-btn .e-btn-icon,
+    .e-bigger .usecase-speechToText-section .usecase-stt-btn .e-btn-icon {
+        font-size: 50px;
+    }
+    .usecase-speechToText-section .transcript-container {
+        width: 30%;
+        height: 100%;
+    }
+    /* Create wave effect using pseudo-elements */
+    .usecase-stt-btn::before,
+    .usecase-stt-btn::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: #9b9b9b;
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0;
+        pointer-events: none;
+    }
+    .usecase-speechToText-section .stt-listening-state::before {
+        animation: stt-wave-ring 1.5s infinite ease-out;
+    }
+    .usecase-speechToText-section .stt-listening-state::after {
+        animation: stt-wave-ring 1.5s 0.75s infinite ease-out; /* Slight delay for second wave */
+    }
+    @@keyframes stt-wave-ring {
+        0% {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 0.8;
+        }
+        100% {
+            transform: translate(-50%, -50%) scale(2);
+            opacity: 0;
+        }
+    }
+    .usecase-speechToText-section .empty-chat {
+        width: 90%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 15px;
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+        margin: auto;
+    }
+    .usecase-speechToText-section .empty-chat .e-multiple-comment {
+        font-size: 50px;
+    }
+    .usecase-speechToText-section #transcript-content.e-chat-ui .e-message-group {
+        max-width: 95%;
+    }
+    @@media only screen and (max-width: 850px) {
+        .usecase-speechToText-section,
+        .e-bigger .usecase-speechToText-section {
+            flex-direction: column;
+            height: 70vh;
+        }
+        .usecase-speechToText-section .transcript-container {
+            width: 100%;
+            height: 70vh;
+            overflow: scroll;
+        }
+        .usecase-speechToText-section .stt-container {
+            width: 100%;
+            height: 55%;
+        }
+    }
+</style>
+
+@section PreScripts {
+    <script>
+        var user = { id: 'testing-user', user: 'Testing User' };
+        var msgIdx = -1;
+        var isIndicatorVisible = false;
+        var chatUIObj;
+        var speechToTextObj;
+
+        function onCreate() {
+            chatUIObj = ej.base.getComponent(document.getElementById("transcript-content"), "chat-ui");
+            speechToTextObj = new ej.inputs.SpeechToText({
+                buttonSettings: {
+                    stopIconCss: 'e-icons e-listen-icon'
+                },
+                transcriptChanged: onTranscriptChange,
+                onStart: onListeningStart,
+                onStop: onListeningStop,
+                onError: onErrorHandler,
+                cssClass: 'usecase-stt-btn'
+            });
+            speechToTextObj.appendTo('#speechToText');
+        }
+        function onTranscriptChange(args) {
+            var existingMsg = chatUIObj.messages[msgIdx];
+            if (existingMsg) {
+                chatUIObj.updateMessage({ text: args.transcript }, existingMsg.id);
+                chatUIObj.scrollToBottom();
+            } else {
+                var newMsg = { id: 'msg-' + (msgIdx + 1), text: args.transcript, author: user };
+                chatUIObj.addMessage(newMsg);
+            }
+            // Show typing indicator only if it’s not visible
+            if (!isIndicatorVisible) {
+                chatUIObj.typingUsers = [user];
+                isIndicatorVisible = true;
+            }
+            // Final transcript
+            if (!args.isInterimResult) {
+                msgIdx++;
+                speechToTextObj.transcript = '';
+                chatUIObj.typingUsers = [];
+                isIndicatorVisible = false;
+            }
+        }
+        // Event handler for listening start
+        function onListeningStart() {
+            msgIdx = chatUIObj.messages.length;
+            this.element.classList.add('stt-listening-state');
+            updateStatus('Listening... Speak now...');
+        }
+        // Event handler for listening stop
+        function onListeningStop(args) {
+            this.element.classList.remove('stt-listening-state');
+            chatUIObj.typingUsers = [];
+            if (args.isInteracted)
+                updateStatus('Click the mic button to start speaking...');
+        }
+        // Event handler for errors
+        function onErrorHandler(args) {
+            updateStatus(args.errorMessage);
+            if (args.error === 'unsupported-browser') {
+                speechToTextObj.disabled = true;
+            }
+        }
+        // Function to updates the speech recognition status message
+        function updateStatus(status) {
+            document.querySelector('.speech-recognition-status').innerText = status;
+        }
+    </script>
+
+    <script id="emptyChatTemplate" type="text/x-jsrender">
+        <div class="empty-chat">
+            <span class="e-icons e-multiple-comment"></span>
+            No transcript available. Start speaking to generate a transcript.
+        </div>
+    </script>
+
+    <script id="typingIndicatorTemplate" type="text/x-jsrender">
+        <div class="e-typing-indicator ">
+            <span class="e-user-text">Transcripting</span>
+            <div class="e-indicator-wrapper">
+                <span class="e-indicator"></span>
+                <span class="e-indicator">
+                </span><span class="e-indicator">
+                </span>
+            </div>
+        </div>
+    </script>
+}
+@section Meta {
+    <meta name="description" content="This example demonstrates the Use case in ASP.NET Core Speech To Text control. Explore here for more details." />
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>This sample demonstrates a live transcription feature that converts spoken words into text in real-time. Click the microphone button to start speaking, and the transcribed text will appear in the ChatUI control as a conversation with timestamps.</p>
+    </div>
+}
+@section Description {
+    <div id="description">
+        <p>
+            The Speech-to-Text control captures audio input and transcribes it dynamically, updating the transcript in the <code>ChatUI</code> control. Each spoken segment is displayed as an individual message with a timestamp, ensuring a structured conversation format.
+        </p>
+        <p>
+            The integration with <code>ChatUI</code> allows real-time updates, maintaining the natural flow of conversation. This setup enhances readability and interaction, making it easier to follow and review the transcription.
+        </p>
+    </div>
+}
+
+@section Title {
+    <title>ASP.NET Core Speech To Text Use case Example - Syncfusion Demos</title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Use case in ASP.NET Core Speech To Text Control</h1>
+}

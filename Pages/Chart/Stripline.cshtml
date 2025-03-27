@@ -20,7 +20,7 @@
                 <e-chartarea-border width="0"></e-chartarea-border>
             </e-chart-chartarea>
             <e-chart-legendsettings visible="true" enableHighlight="true" shapeHeight="12" shapeWidth="15"></e-chart-legendsettings>
-            <e-chart-tooltipsettings enable="true" header="" format="<b>${point.x}</b> <br> ${series.name} : <b>${point.y}</b>" enableMarker="false"></e-chart-tooltipsettings>
+            <e-chart-tooltipsettings enable="true" header="" format="<b>${point.x}</b> <br> ${series.name} : <b>${point.y}</b>" enableMarker="false" enableHighlight="true" showNearestTooltip="true"></e-chart-tooltipsettings>
             <e-chart-titlestyle position="@Syncfusion.EJ2.Charts.TitlePosition.Bottom" textAlignment="@Syncfusion.EJ2.Charts.Alignment.Far"></e-chart-titlestyle>
             <e-series-collection>
                 <e-series xName="X" yName="Wind" name="Wind Speed (km/h)" width="4" dataSource="@Model.WeatherReportsA" legendShape="@Syncfusion.EJ2.Charts.LegendShape.HorizontalLine" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline">
@@ -30,12 +30,10 @@
             </e-series-collection>
         </ejs-chart>
     </div>
-
+    <script src="~/scripts/chart/theme-color.js"></script>
     <script>
         function load(args) {
-            var selectedTheme = location.hash.split('/')[1];
-            selectedTheme = selectedTheme ? selectedTheme : 'Fluent2';
-            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5'));
+            loadChartTheme(args);
             args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
             args.chart.primaryXAxis.labelIntersectAction = ej.base.Browser.isDevice ? 'Rotate90' : 'None';
         }

@@ -30,7 +30,7 @@ namespace EJ2CoreSampleBrowser.Controllers
                 new { Date= "08-09-2019", Open= "2800.67", Close= "2840.80", High= "2838.78", Low= "2827.78", Profit= "=C10-B10" },
                 new { Date= "08-10-2019", Open= "2840.80", Close= "2865.35", High= "2863.30", Low= "2850.20", Profit= "=C11-B11" }
             };
-            ViewBag.formulaData = formulaData;
+            ViewData["formulaData"] = formulaData;
             return View();
         }
     }

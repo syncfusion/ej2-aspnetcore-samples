@@ -34,16 +34,14 @@ public class TrackChanges : PageModel
             // return View();
         string basePath = _hostingEnvironment.WebRootPath;
         string dataPath = basePath + @"/Word/TrackChangesTemplate.docx";
-        FileStream fileStream = new FileStream(dataPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
         string contenttype1 = "application/vnd.ms-word.document.12";
+        FileStream fileStream = new FileStream(dataPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
         if (Button == "View Template")
             return File(fileStream, contenttype1, "TrackChangesTemplate.docx");
 
         // Opens a source document.
         WordDocument document = new WordDocument();
-        document.Open(fileStream, FormatType.Docx);
-        fileStream.Dispose();
-        fileStream = null;
+        document.Open(dataPath, FormatType.Docx);
 
         string author = GetAuthorName(AuthorName);
 

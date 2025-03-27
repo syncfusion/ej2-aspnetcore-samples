@@ -82,6 +82,7 @@
                 }
             </style>
             @*custom code end*@
+            <script src="~/scripts/SparkLine/theme-color.js"></script>
             <script type="text/javascript">
                 var spark1, spark2, spark3, spark4;
                 var time1, time2, time3, time4;
@@ -139,9 +140,7 @@
 
 
                 function sparkLoad(args) {
-                    var theme = location.hash.split('/')[1];
-                    theme = theme ? theme : 'Fluent2';
-                    args.sparkline.theme = (theme.charAt(0).toUpperCase() + theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5');
+                    loadSparkLineTheme(args);
                     if (!args.sparkline.refreshing) {                       
                         if (args.sparkline.element.id === "spark-container1") {
                             spark1 = args.sparkline;

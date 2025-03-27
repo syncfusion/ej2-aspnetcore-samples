@@ -76,6 +76,7 @@
         </div>
     </div>
     <script src="~/scripts/range-navigator/period-data.js"></script>
+    <script src="~/scripts/range-navigator/theme-color.js"></script>
     <script>
         var periodData = periodData;
         var data = [];
@@ -95,15 +96,12 @@
             chart.annotations[0].content = '';
             chart.refresh();
         }
-        
-        var selectedTheme = location.hash.split('/')[1];
-        selectedTheme = selectedTheme ? selectedTheme : 'Fluent2';
-        var theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5'));
+
         switchChange = function (args) {
             console.log(("123"))
         }
         rangeTopLoad = function (args) {
-            args.rangeNavigator.theme = theme;
+            loadRangeNavigatorTheme(args);
             args.rangeNavigator.width = ej.base.Browser.isDevice ? "100%" : "80%";
             args.rangeNavigator.dataSource = data;
         }
@@ -131,7 +129,7 @@
         }
 
         chartLoad = function (args) {
-            args.chart.theme = theme;
+            loadChartTheme(args);
             args.chart.series[0].dataSource = data;
             args.chart.width = ej.base.Browser.isDevice ? "100%" : "80%";
             args.chart.tooltip.format = args.chart.series[0].type === 'Candle' ?
@@ -148,7 +146,7 @@
         }
 
         rangeBottomLoad = function (args) {
-            args.rangeNavigator.theme = theme;
+            loadRangeNavigatorTheme(args);
             args.rangeNavigator.width = ej.base.Browser.isDevice ? "100%" : "80%";
             args.rangeNavigator.series[0].dataSource = data;
             args.value = [new Date('2016-05-15'), new Date('2018-05-15')];

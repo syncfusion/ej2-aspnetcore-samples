@@ -264,7 +264,7 @@ const LOCAL_SITE_URL = `
 gulp.task('sitemap-generate', function (done) {
     let siteMapFile = SITEMAP_TEMPLATE;
     let date = new Date().toISOString().substring(0, 10);
-    let link = 'https://ej2.syncfusion.com/aspnetcore';
+    let link = 'https://ej2.syncfusion.com/aspnetcore/demos';
     let xmlstring = '';
     let components = config.window.samplesList.map(com => { return { directory: com.directory, type: com.samples.map(list => { return list.type; }), sampleUrls: com.samples.map(samp => { return samp.url; }) }; });
     for (let component of components ? components : []) {
@@ -278,14 +278,14 @@ gulp.task('sitemap-generate', function (done) {
                 urls = LOCAL_SITE_URL;
                 urls = urls.replace(/{{:Type}}/g, 'new');
             }
-            urls = urls.replace(/{{:DemoPath}}/g, `${link}/${component.directory}/${sampleUrls[i]}`);
+            urls = urls.replace(/{{:DemoPath}}/g, `${link}/${component.directory.toLowerCase()}/${sampleUrls[i].toLowerCase()}`);
             urls = urls.replace(/{{:Date}}/g, date);
             xmlstring += urls;
         }
     }
     siteMapFile = siteMapFile.replace(/{{:URLS}}/g, xmlstring);
     if (process.argv[4] === 'local-sitemap') {
-        fs.writeFileSync('./' + configJson.appName + '-net6/wwwroot/sitemap-demos.xml', siteMapFile, 'utf-8');
+        fs.writeFileSync('./' + configJson.appName + '-net9/wwwroot/sitemap-demos.xml', siteMapFile, 'utf-8');
     } else {
         fs.writeFileSync('./sitemap-demos.xml', siteMapFile, 'utf-8');
     }

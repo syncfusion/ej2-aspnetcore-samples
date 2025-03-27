@@ -42,8 +42,8 @@ public class FindAndReplace : PageModel
 
         try
         {
-            IPresentation presentation = Presentation.Open(fileStreamInput);
-            fileStreamInput.Dispose();
+            IPresentation presentation = Presentation.Open(dataPath);
+			fileStreamInput.Dispose();
             fileStreamInput = null;
             //Replaces only the first occurrence of the text
             if (replaceFirst == "ReplaceFirst")

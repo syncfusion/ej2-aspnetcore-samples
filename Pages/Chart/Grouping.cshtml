@@ -59,6 +59,7 @@
             </tbody>
         </table>
     </div>
+    <script src="~/scripts/chart/theme-color.js"></script>
     <script>
         function changedata(args) {
             var currentValue = args.value === 'Point' ? 9 : 8;
@@ -68,9 +69,7 @@
             clubchange(currentValue);
         }
         function load(args) {
-            var indexedTheme = location.hash.split('/')[1];
-            indexedTheme = indexedTheme ? indexedTheme : 'Fluent2';
-            args.accumulation.theme = (indexedTheme.charAt(0).toUpperCase() + indexedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5'));
+            loadAccumulationChartTheme(args);
             args.accumulation.series[0].radius = ej.base.Browser.isDevice ? "40%" : "70%";
             args.accumulation.series[0].dataLabel.font.size = ej.base.Browser.isDevice ? "9px" : "13px";
             args.accumulation.series[0].dataSource[1].DataLabelMappingName = ej.base.Browser.isDevice ? "Russia: <br> 19" : "Russia: 19";

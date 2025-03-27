@@ -54,7 +54,7 @@
         function created(args) {
             var gantt = document.getElementsByClassName('e-gantt')[0].ej2_instances[0];
             gantt.treeGrid.grid.columns[1].validationRules = { required: true, minLength: [5, 'Task name should have a minimum length of 5 characters'] };
-            gantt.treeGrid.grid.columns[3].validationRules = { date: true, required: [customFn, 'Please enter a value greater than the start date.'] }; 
+            gantt.treeGrid.grid.columns[3].validationRules = { required: [customFn, 'Please enter a value greater than the start date.'] }; 
             gantt.treeGrid.grid.columns[4].validationRules = { required: true };
             gantt.treeGrid.grid.columns[5].validationRules = { required: true, min: 0, max: 100 };
         }
@@ -71,7 +71,8 @@
             var endDate;
             var gantt = (document.getElementsByClassName('e-gantt')[0]).ej2_instances[0];
             if (args.element && args.value) {
-                endDate = new Date(args.value);
+                var dateOptions = { format: gantt.dateFormat, type: 'dateTime', skeleton: 'yMd' };
+                endDate =  gantt.globalize.parseDate(args.value, dateOptions);
                 if (!startDate && gantt.editModule.dialogModule['beforeOpenArgs']) {
                     startDate = gantt.editModule.dialogModule['beforeOpenArgs'].rowData['ganttProperties'].startDate;
                     endDate = gantt.editModule.dialogModule['beforeOpenArgs'].rowData['ganttProperties'].endDate;

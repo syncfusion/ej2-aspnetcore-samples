@@ -35,7 +35,7 @@ namespace EJ2CoreSampleBrowser.Controllers
                 new { OrderID= 10261, CustomerName= "Bernardo Batista", OrderDate= "07-15-1996", Address= "Rua da Panificadora,  12", City= "Rio de Janeiro", PostalCode= "02389673", Country= "Brazil", Status= "Shipped", Freight= "3.05"},
                 new { OrderID= 10262, CustomerName= "Paula Wilson", OrderDate= "07-08-1996", Address= "2817 Milton Dr.", City= "Albuquerque", PostalCode= "87110", Country= "USA", Status= "Delivered", Freight= "48.29"}
             };
-            ViewBag.orderDetails = orderDetails;
+            ViewData["orderDetails"] = orderDetails;
             return View();
         }
     }

@@ -19,7 +19,7 @@
                 <e-chart-chartarea>
                     <e-chartarea-border width="0"></e-chartarea-border>
                 </e-chart-chartarea>
-            <e-chart-tooltipsettings enable="true" header="" shared="true" format="<b>${point.x}</b> <br>Stock Price : <b>${point.y}</b>" enableMarker="false">
+            <e-chart-tooltipsettings enable="true" header="" showNearestTooltip="true" format="<b>${point.x}</b> <br>Stock Price : <b>${point.y}</b>" enableMarker="false">
                 </e-chart-tooltipsettings>
                 <e-chart-crosshairsettings enable=true dashArray="5,5" snapToData="true"></e-chart-crosshairsettings>
                 <e-series-collection>
@@ -30,18 +30,15 @@
                 </e-series-collection>
             </ejs-chart>
         </div>
-
+    <script src="~/scripts/chart/theme-color.js"></script>
         <script type="text/javascript">
-        var themes = ['bootstrap5', 'bootstrap5dark', 'tailwind', 'tailwinddark', 'material', 'materialdark', 'bootstrap4', 'bootstrap', 'bootstrapdark', 'fabric', 'fabricdark', 'highcontrast', 'fluent', 'fluentdark', 'material3', 'material3dark', 'fluent2', 'fluent2highcontrast', 'fluent2dark', 'tailwind3', 'tailwind3dark'];
-        var borderColor = ['#FD7E14', '#FD7E14', '#5A61F6', '#8B5CF6', '#00bdae', '#9ECB08', '#a16ee5', '#a16ee5', '#a16ee5', '#4472c4', '#4472c4', '#79ECE4', '#1AC9E6', '#1AC9E6', '#6355C7', '#4EAAFF', '#6200EE', '#9BB449', '#9BB449', '#2F4074', '#8029F1'];
+        
             function load(args) {
-                var selectedTheme = location.hash.split('/')[1];
-                selectedTheme = selectedTheme ? selectedTheme : 'Fluent2';
+                var selectedTheme = loadChartTheme(args);
                 args.chart.tooltip.location.x = 70;
                 args.chart.tooltip.location.y = 52;
-                args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5'));
                 args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
-                args.chart.series[0].fill = 'url(#' + (selectedTheme.replace(/5.3/i, '5')) + '-gradient-chart)';
+                args.chart.series[0].fill = 'url(#' + (selectedTheme.replace(/5.3/i, '5')).toLowerCase() + '-gradient-chart)';
                 if (args.chart.theme === 'Material3') {
                     args.chart.series[0].border.color = '#6355C7';
                 }
@@ -100,6 +97,9 @@
                 <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.ChartCrosshairSettings.html" aria-label="Navigate to the class reference for ChartCrosshairSettings">ChartCrosshairSettings</a> class and customize its tooltip by using the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.ChartAxis.html#Syncfusion_EJ2_Charts_ChartAxis_CrosshairTooltip" aria-label="Navigate to the ChartAxisCrosshairTooltip property reference for ASP.NET Core Chart Axis">ChartAxisCrosshairTooltip</a> in the axis.
             </p>
         <p>The <code>snapToData</code> property snaps the crosshair to the nearest data point instead of following the exact mouse position, providing a more precise focus on data points.</p>
+        <p>
+            <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover over or tap on the chart.
+        </p>
             <p>
                 More information about the crosshair can be found in this
                 <a target="_blank" href="https://ej2.syncfusion.com/aspnetmvc/documentation/chart/cross-hair-and-track-ball" aria-label="documentation section">documentation section<span class="sr-only">opens in a new tab</span></a>.

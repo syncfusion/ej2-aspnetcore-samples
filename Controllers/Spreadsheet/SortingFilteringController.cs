@@ -71,7 +71,7 @@ namespace EJ2CoreSampleBrowser.Controllers
                 new { EmployeeID= "7466629",  EmployeeName= "Harman Free",  Gender= "Male",  Department= "Human Resources",  DateOfJoining= "07-15-2012",  Salary= "35939.87", City= "Watodei" },
                 new { EmployeeID= "2963633",  EmployeeName= "Kylie Phettis",  Gender= "Female",  Department= "Marketing",  DateOfJoining= "03-18-2011",  Salary= "26038.56", City= "Huangzhai" },
             };
-            ViewBag.FilteringData = data;
+            ViewData["FilteringData"] = data;
             return View();
         }
 

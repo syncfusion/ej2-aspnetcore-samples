@@ -11,6 +11,7 @@
             </ejs-rangenavigator>
         </div>
     </div>
+    <script src="~/scripts/range-navigator/theme-color.js"></script>
     <script>
         var data = [];
         var value = 0; var point = {};
@@ -21,9 +22,7 @@
             data.push(point);
         }
         window.onChartLoad = function (args) {
-            var selectedTheme = location.hash.split('/')[1];
-            selectedTheme = selectedTheme ? selectedTheme : 'Fluent2';
-            args.rangeNavigator.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5'));
+            loadRangeNavigatorTheme(args);
             args.rangeNavigator.width = ej.base.Browser.isDevice ? "100%" : "80%";
             args.rangeNavigator.dataSource = data;
             args.rangeNavigator.value = [new Date('2001-01-01'), new Date('2002-01-01')];      

@@ -53,6 +53,7 @@
             </tbody>
         </table>
     </div>
+    <script src="~/scripts/chart/theme-color.js"></script>
     <script>
         var mode = null;
         var dataValues = [
@@ -64,9 +65,7 @@
             { x: 'US', car: 140, trucks: 90, bike: 75, cycle: 70 }
         ];
         function load(args) {
-            var selectedTheme = location.hash.split('/')[1];
-            selectedTheme = selectedTheme ? selectedTheme : 'Fluent2';
-            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5'));
+            loadChartTheme(args);
         }
         document.getElementById('decending').onchange = () => {
             sortDataSource( mode + '');

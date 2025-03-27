@@ -45,19 +45,18 @@
     </ejs-chart>
 </div>    
     <script src="~/scripts/range-navigator/double_data.js"></script>
+    <script src="~/scripts/range-navigator/theme-color.js"></script>
     <script>          
         rangeLoad = function (args) {
             args.rangeNavigator.series[0].dataSource = aus;
             args.rangeNavigator.series[1].dataSource = sl;
             args.rangeNavigator.value = [31, 50];
-            var selectedTheme = themeName ? themeName : 'Fluent2';
-            args.rangeNavigator.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5'));
+            loadRangeNavigatorTheme(args);
             args.rangeNavigator.width = ej.base.Browser.isDevice ? "100%" : "80%";
         }
 
         chartLoad = function (args) {
-            var selectedTheme = themeName ? themeName : 'Fluent2';
-            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5'));
+            loadChartTheme(args);
             args.chart.width = ej.base.Browser.isDevice ? "100%" : "80%";
             args.chart.series[0].dataSource = aus;
             args.chart.series[1].dataSource = sl;

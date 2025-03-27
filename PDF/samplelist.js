@@ -7,6 +7,7 @@ window.samplesList = [
         "name": "PDF",
         "directory": "Pdf",
         "category": "Document Processing Library",
+        "type": "update",
         "samples": [
             {
                 "url": "Default",
@@ -126,6 +127,7 @@ window.samplesList = [
                 "url": "GraphicBrushes",
                 "name": "Graphic Brushes",
                 "category": "Graphics",
+                "type": "update",
                 "order": 5,
                 "component": "PDF",
                 "dir": "Pdf",
@@ -561,6 +563,7 @@ window.samplesList = [
                 "url": "Autotag",
                 "name": "Autotag",
                 "category": "Accessibility",
+                "type": "update",
                 "order": 15,
                 "component": "PDF",
                 "dir": "Pdf",
@@ -666,7 +669,6 @@ window.samplesList = [
                 "dir": "PdfViewer",
                 "parentId": "048",
                 "uid": "0048485",
-                "type": "update",
                 "sourceFiles": [
                     { "displayName": "Redaction.cshtml", path: "../Views/PdfViewer/Redaction.cshtml" },
                     { "displayName": "RedactionController.cs", path: "../Controllers/PdfViewer/RedactionController.cs" }
@@ -757,7 +759,6 @@ window.samplesList = [
               "component": "PdfViewer",
               "dir": "PdfViewer",
               "parentId": "048",
-              "type": "update",
               "hideOnDevice": true,
 
               "uid": "0048491",
@@ -775,7 +776,6 @@ window.samplesList = [
               "component": "PdfViewer",
               "dir": "PdfViewer",
               "parentId": "048",
-              "type": "update",
 
               "uid": "0048492",
 			  "sourceFiles": [
@@ -797,6 +797,21 @@ window.samplesList = [
                     { "displayName": "AnnotationsController.cs", path: "../Controllers/PdfViewer/AnnotationsController.cs" }
                 ]
           },
+	  {
+    		"url": "ProgrammaticOperations",
+    		"name": "Programmatic Operations",
+    		"category": "Annotation",
+    		"order": 7,
+    		"component": "PdfViewer",
+    		"dir": "PdfViewer",
+    		"parentId": "048",
+    		"type": "new",
+    		"uid": "0048494",
+    		"sourceFiles": [
+        		{ "displayName": "ProgrammaticOperations.cshtml", path: "../Views/PdfViewer/ProgrammaticOperations.cshtml" },
+        		{ "displayName": "ProgrammaticOperationsController.cs", path: "../Controllers/PdfViewer/ProgrammaticOperationsController.cs" }
+    		]
+          },
           {
               "url": "HandwrittenSignature",
               "name": "Handwritten Signature",
@@ -807,7 +822,7 @@ window.samplesList = [
               "dir": "PdfViewer",
               "parentId": "048",
 
-              "uid": "0048494",
+              "uid": "0048495",
 			  "sourceFiles": [
                     { "displayName": "HandwrittenSignature.cshtml", path: "../Views/PdfViewer/HandwrittenSignature.cshtml" },
                     { "displayName": "HandwrittenSignatureController.cs", path: "../Controllers/PdfViewer/HandwrittenSignatureController.cs" }
@@ -821,7 +836,7 @@ window.samplesList = [
               "component": "PdfViewer",
               "dir": "PdfViewer",
               "parentId": "048",
-              "uid": "0048495",
+              "uid": "0048496",
 			  "sourceFiles": [
                     { "displayName": "InvisibleSignature.cshtml", path: "../Views/PdfViewer/InvisibleSignature.cshtml" },
                     { "displayName": "InvisibleSignatureController.cs", path: "../Controllers/PdfViewer/InvisibleSignatureController.cs" }

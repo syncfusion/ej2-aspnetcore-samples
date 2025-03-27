@@ -103,7 +103,7 @@ public class PdfToPdfAConverter : PageModel
         if (typeFaceStream != null && typeFaceStream.Length > 0)
         {
             //Create fontData from type face stream.
-            byte[] fontData = new byte[typeFaceStream.Length];
+            byte[] fontData = new byte[typeFaceStream.Length - 1];
             typeFaceStream.Read(fontData, typeFaceStream.Length);
             typeFaceStream.Dispose();
             //Create the new memory stream from font data.

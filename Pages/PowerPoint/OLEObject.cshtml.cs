@@ -84,9 +84,7 @@ public class OLEObject : PageModel
         }
         else
         {
-            FileStream fileStreamInput = new FileStream(basePath + @"/PowerPoint/EmbeddedOleObject.pptx", FileMode.Open,
-                FileAccess.Read);
-            IPresentation pptxDoc = Presentation.Open(fileStreamInput);
+            IPresentation pptxDoc = Presentation.Open(basePath + @"/PowerPoint/EmbeddedOleObject.pptx");
             //New Instance of PowerPoint is Created.[Equivalent to launching MS PowerPoint with no slides].
 
             //Gets the first slide of the Presentation

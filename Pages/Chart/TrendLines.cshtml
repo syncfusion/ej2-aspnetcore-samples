@@ -31,16 +31,14 @@
                     </e-series-trendlines>
                 </e-series>
             </e-series-collection>
-            <e-chart-tooltipsettings enable="true"></e-chart-tooltipsettings>
+            <e-chart-tooltipsettings enable="true" showNearestTooltip="true" enableHighlight="true"></e-chart-tooltipsettings>
             <e-chart-legendsettings visible="true" shapeHeight="15" shapeWidth="15"></e-chart-legendsettings>
         </ejs-chart>
     </div>
-
+    <script src="~/scripts/chart/theme-color.js"></script>
     <script>
         function load(args) {
-            var selectedTheme = location.hash.split("/")[1];
-            selectedTheme = selectedTheme ? selectedTheme : "Material";
-            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5'));
+            loadChartTheme(args);
             args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
         }
     </script>

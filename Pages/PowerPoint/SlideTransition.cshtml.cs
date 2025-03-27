@@ -30,9 +30,7 @@ public class SlideTransition : PageModel
             // return View();
         //Opens the presentation document as stream
         string basePath = _hostingEnvironment.WebRootPath;
-        FileStream fileStreamInput =
-            new FileStream(basePath + @"/PowerPoint/Transition.pptx", FileMode.Open, FileAccess.Read);
-        IPresentation presentation = Presentation.Open(fileStreamInput);
+        IPresentation presentation = Presentation.Open(basePath + @"/PowerPoint/Transition.pptx");
         //PowerPoint instance is Created.
 
         //Method call to create transition in slides

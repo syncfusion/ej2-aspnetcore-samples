@@ -30,9 +30,7 @@ public class CreateAnimation : PageModel
             // return View();
         //Opens the presentation document as stream
         string basePath = _hostingEnvironment.WebRootPath;
-        FileStream fileStreamInput =
-            new FileStream(basePath + @"/PowerPoint/Animation.pptx", FileMode.Open, FileAccess.Read);
-        IPresentation presentation = Presentation.Open(fileStreamInput);
+        IPresentation presentation = Presentation.Open(basePath + @"/PowerPoint/Animation.pptx");
         //PowerPoint instance is Created.
 
         //Method call to create animation

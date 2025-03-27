@@ -78,6 +78,7 @@
             cursor: pointer !important;
         }
     </style>
+    <script src="~/scripts/chart/theme-color.js"></script>
     <script>
         document.getElementById('isClosed').onchange = () => {
             var chart = document.getElementById('container').ej2_instances[0];
@@ -106,8 +107,7 @@
             chart.refresh();
         }
         function load(args) {
-            var selectedTheme = themeName ? themeName : 'Fluent2';
-            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast').replace(/5.3/i, '5'));
+            loadChartTheme(args);
             args.chart.primaryXAxis.coefficient = ej.base.Browser.isDevice ? 80 : 100;
         }
 

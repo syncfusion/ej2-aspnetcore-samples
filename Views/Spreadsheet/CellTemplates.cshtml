@@ -2,7 +2,7 @@
 
 @section ControlsSection{
     <div class="control-section">
-        <ejs-spreadsheet id="spreadsheet" showRibbon="false" showFormulaBar="false" allowEditing="false" created="createdHandler" beforeSelect="beforeSelectHandler" beforeCellRender="beforeCellRenderHandler">
+        <ejs-spreadsheet id="spreadsheet" showRibbon="false" enableContextMenu="false" showFormulaBar="false" allowEditing="false" created="createdHandler" beforeSelect="beforeSelectHandler" beforeCellRender="beforeCellRenderHandler" contextMenuBeforeOpen="contextMenuBeforeOpenHandler">
             <e-spreadsheet-scrollsettings enableVirtualization="false" isFinite="true"></e-spreadsheet-scrollsettings>
             <e-spreadsheet-selectionsettings mode="None"></e-spreadsheet-selectionsettings>
             <e-spreadsheet-sheets>
@@ -70,7 +70,8 @@
                     </e-spreadsheet-columns>
                     <e-spreadsheet-ranges>
                         <e-spreadsheet-range template="<input />" address="C2:C3"></e-spreadsheet-range>
-                        <e-spreadsheet-range template='<div><input type="radio" name="gender" value="male" /><input type="radio" name="gender" value="female"/></div>' address="C4"></e-spreadsheet-range>
+                        <e-spreadsheet-range template='<div style="padding-left: 2px"><input type="radio" name="gender" value="male" /><input type="radio" name="gender" value="female" />
+    </div>' address="C4"></e-spreadsheet-range>
                         <e-spreadsheet-range template="<input />" address="C5:C8"></e-spreadsheet-range>
                         <e-spreadsheet-range template='<textarea rows="3"/>' address="C9"></e-spreadsheet-range>
                         <e-spreadsheet-range template='<button class="e-btn e-flat" style="float:right">Add</button>' address="C11"></e-spreadsheet-range>
@@ -113,6 +114,7 @@
     function createdHandler() {
         //Applies format to specified range
         this.cellFormat({ fontWeight: 'bold' }, 'B2:B9');
+        this.cellFormat({ verticalAlign: 'middle' }, 'B2:C9');
     }
     function beforeSelectHandler(args) {
         //Prevents selection
@@ -167,6 +169,9 @@
             }
         }
     }
+    function contextMenuBeforeOpenHandler() {
+        this.enableContextMenuItems(['Duplicate'], false, false);
+    }
 </script>
 
 @*custom code start*@
@@ -199,6 +204,10 @@
 
     .tailwind3-dark .e-custom-spreadsheet.e-spreadsheet .e-sheet .e-sheet-content .e-cell-template .e-btn.e-flat {
         background-color: #111827;
+    }
+
+    .e-spreadsheet .e-row-header .e-table .e-header-cell {
+        vertical-align: middle;
     }
 
 </style>

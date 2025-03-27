@@ -173,37 +173,40 @@ namespace EJ2CoreSampleBrowser.Controllers.PdfViewer
 		[Route("api/[controller]/AddSignature")]
 		public IActionResult AddSignature([FromBody] Dictionary<string, string> jsonObject)
 		{
-#if REDIS
-            PdfRenderer pdfviewer = new PdfRenderer(_cache,_distributedCache);
-#else
-			PdfRenderer pdfviewer = new PdfRenderer(_cache);
-#endif
-			string documentBase = pdfviewer.GetDocumentAsBase64(jsonObject);
-			byte[] documentBytes = Convert.FromBase64String(documentBase.Split(",")[1]);
-			PdfLoadedDocument loadedDocument = new PdfLoadedDocument(documentBytes);
-            loadedDocument.Pages[0].Annotations.Flatten = true;
-            loadedDocument.Form.Flatten = true;
-            MemoryStream stream = new MemoryStream();
-            loadedDocument.Save(stream);
-            loadedDocument.Close(true);
-            loadedDocument = new PdfLoadedDocument(stream);
-			//Get the first page of the document.
-			PdfPageBase loadedPage = loadedDocument.Pages[0];
-			//Create new X509Certificate2 with the root certificate.
-			X509Certificate2 certificate = new X509Certificate2(GetDocumentPath("localhost.pfx"), "Syncfusion@123");
-			PdfCertificate pdfCertificate = new PdfCertificate(certificate);
-			//Creates a digital signature.
-			PdfSignature signature = new PdfSignature(loadedDocument, loadedPage, pdfCertificate, "Signature");
-			signature.Certificated = true;
-			MemoryStream str = new MemoryStream();
-			//Saves the document.
-			loadedDocument.Save(str);
-            loadedDocument.Close(true);
-            stream.Dispose();
-			byte[] docBytes = str.ToArray();
-			string docBase64 = "data:application/pdf;base64," + Convert.ToBase64String(docBytes);
-			return Content(docBase64);
-		}
+            if (jsonObject != null && jsonObject.ContainsKey("base64String"))
+            {
+                string base64 = jsonObject["base64String"];
+                string base64String = base64.Split(new string[] { "data:application/pdf;base64," }, StringSplitOptions.None)[1];
+                if (base64String != null || base64String != string.Empty)
+                {
+                    byte[] documentBytes = Convert.FromBase64String(base64String);
+                    PdfLoadedDocument loadedDocument = new PdfLoadedDocument(documentBytes);
+                    loadedDocument.Pages[0].Annotations.Flatten = true;
+                    loadedDocument.Form.Flatten = true;
+                    MemoryStream stream = new MemoryStream();
+                    loadedDocument.Save(stream);
+                    loadedDocument.Close(true);
+                    loadedDocument = new PdfLoadedDocument(stream);
+                    //Get the first page of the document.
+                    PdfPageBase loadedPage = loadedDocument.Pages[0];
+                    //Create new X509Certificate2 with the root certificate.
+                    X509Certificate2 certificate = new X509Certificate2(GetDocumentPath("localhost.pfx"), "Syncfusion@123");
+                    PdfCertificate pdfCertificate = new PdfCertificate(certificate);
+                    //Creates a digital signature.
+                    PdfSignature signature = new PdfSignature(loadedDocument, loadedPage, pdfCertificate, "Signature");
+                    signature.Certificated = true;
+                    MemoryStream str = new MemoryStream();
+                    //Saves the document.
+                    loadedDocument.Save(str);
+                    loadedDocument.Close(true);
+                    stream.Dispose();
+                    byte[] docBytes = str.ToArray();
+                    string docBase64 = "data:application/pdf;base64," + Convert.ToBase64String(docBytes);
+                    return Content(docBase64);
+                }
+            }
+            return Content("data:application/pdf;base64," + "");
+        }
 
 		[HttpPost]
 		[Route("api/[controller]/ValidateSignature")]

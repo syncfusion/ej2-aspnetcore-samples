@@ -1,0 +1,94 @@
+﻿@page
+@model EJ2CoreSampleBrowser.Pages.Excel.ExcelToPDF
+@section ActionDescription {
+    This sample demonstrates how to convert Excel documents to PDF documents using XlsIO.
+}
+
+@section Meta {
+    <meta name="description" content="This example demonstrates the conversion of Excel To PDF in ASP.NET Core Excel (XlsIO) library. Explore here for more details." />
+}
+
+@section Description {
+    <br />Essential XlsIO allows to export Excel document to PDF by using the <i>Convert</i> method of <i>ExcelToPDFConverter</i> class. It supports customizing layout options, page orientation, paper size, and margins for the converted PDF document.
+    <br />
+    <br /><b>Features:</b>
+    <br />
+    <br />
+    <ul>
+        <li>Supports conversion of Excel document to PDF document with cell values, cell styles, tables, charts, autoshapes, pictures, conditional formatting, etc.</li>
+    </ul>
+    <br />
+    <b>Note:</b> Installation of Essential PDF is necessary to run this sample.
+    <br />
+}
+@section ControlsSection {
+    <div class="control-section">
+        @{
+            Html.BeginForm("exceltopdf", "excel", FormMethod.Post, new { enctype = "multipart/form-data" });
+            {
+                <div>
+                    <p style="font-weight:normal">
+                        Select the Excel document to be converted to PDF, set the layout options, and click the "ConvertToPDF" button. Please note that a PDF Viewer is required to view the resulting PDF document.
+                    </p>
+                </div>
+                <br />
+                <div style="display:flex">
+                    <label style="font-weight:normal;margin-right: 1rem;">Select document</label>
+                    <input type="button" value="Browse" onclick="openPage()">
+                    <input type="text" id="fileNameBox" value="ExcelToPDF.xlsx" readonly="readonly" style="border:none;margin-left:1rem;" />
+                    <input type="file" name="file" id="fileUpload" accept=".xlsx,.xls,.xlsm,.xltm,.xltx,.csv,.tsv,.xml" style="display:block;visibility:hidden;width:0;height:0;">
+                </div>
+                <br />
+                <div style="display:flex;">
+                    <div class="rowdiv" style="margin-right: 2.4rem">
+                        <label style="font-weight:normal">
+                            Layout options
+                        </label>
+                    </div>
+                    <div class="rowdiv">
+                        <select name="layoutOptions" id="layoutList" style="width:auto;" class="e-dropdown-popup">
+                            <option>No scaling</option>
+                            <option>Fit all rows on one page</option>
+                            <option>Fit all columns on one page</option>
+                            <option selected>Fit sheet on one page</option>
+                        </select>
+                    </div>
+                </div>
+                <br />
+                <div class="celldiv">
+                    <input type="checkbox" id="checkfontStream" name="checkboxStream" value="Font Stream" />
+                    <label for="checkfontStream" style="font-weight:normal">
+                        Substitute missing fonts
+                    </label>
+                </div>
+                <br />
+                <div style="margin-top: 8px">
+                    <input id="generate" name="Button" class="e-btn" type="submit" value="Convert to PDF" style="width:170px; text-transform:capitalize" />
+                    <br />
+                    <div class="text-danger">
+                        @ViewData["Message"]
+                    </div>
+                </div>
+                Html.EndForm();
+            }
+        }
+    </div>
+    <script>
+        function openPage() {
+            document.getElementById('fileUpload').click();
+            document.getElementById('fileUpload').addEventListener('change', readFile, false);
+        }
+        function readFile(evt) {
+            var upoadedFiles = evt.target.files;
+
+            filename = upoadedFiles[0].name;
+            document.getElementById('fileNameBox').value = filename;
+        }
+    </script>
+}
+@section Title {
+    <title>ASP.NET Core Excel (XlsIO) library - Excel To PDF Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Excel To PDF conversion in ASP.NET Core Excel (XlsIO) Library</h1>
+}

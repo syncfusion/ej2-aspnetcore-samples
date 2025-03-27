@@ -1,0 +1,67 @@
+﻿@page
+@model EJ2CoreSampleBrowser.Pages.TreeView.RemoteDataModel
+@using Syncfusion.EJ2;
+@using Syncfusion.EJ2.Navigations;
+
+@section ControlsSection {
+
+    <div class="col-lg-12 control-section">
+        <div class="control_wrapper">
+            <ejs-treeview id="tree">
+                <e-treeview-fields child="@Model.ChildData" query="new ej.data.Query().from('Employees').select('EmployeeID,FirstName,Title').take(5)" id="EmployeeID" text="FirstName" hasChildren="EmployeeID">
+                    <e-data-manager url="https://services.odata.org/V4/Northwind/Northwind.svc" adaptor="ODataV4Adaptor" crossDomain="true"></e-data-manager>
+                </e-treeview-fields>
+            </ejs-treeview>
+        </div>
+    </div>
+    @*custom code start*@
+    <style>
+        .control_wrapper {
+            max-width: 500px;
+            min-height: 50px;
+            margin: auto;
+            border: 1px solid #dddddd;
+            border-radius: 3px;
+        }
+    </style>
+    @*custom code end*@
+}
+@section Meta{
+    <meta name="description" content="This example demonstrates the Remote Data in ASP.NET Core TreeView control. Explore here for more details." />
+}
+@section ActionDescription{
+    <div id="action-description">
+        <p>This <a href="https://www.syncfusion.com/aspnet-core-ui-controls/treeview" target="_blank" aria-label="Navigate to explore the syncfusion ASP.NET Core TreeView example">ASP.NET Core TreeView example</a> demonstrates the binding data to the TreeView from remote data source. On expanding the parent node, the spinner icon will be displayed until the child nodes will be loaded into parent node. Click on node to select it, and click on icon or double click on node to expand/collapse it.</p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            The TreeView component loads the data through the dataSource property, where the data can be either local data or remote data. In case of remote data, the data can be loaded from any remote services though the DataManager.
+        </p>
+        <p>
+            The DataManager will act as an interface between the service endpoint and the TreeView, that requires the below minimal information to interact with the service endpoint.
+        </p>
+        <p>
+            DataManager->url - Defines the service endpoint to fetch data.
+            DataManager->adaptor - Defines the adaptor option. By default, ODataV4Adaptor is used for remote binding.
+        </p>
+        <p>
+            In this demo, the TreeView is bound with the dataSource from the Northwind remote service by using the DataManager instance.
+        </p>
+        <p>
+            More information about Treeview can be found in this
+            <a target="_blank"
+               href="https://ej2.syncfusion.com/aspnetcore/documentation/treeview/data-binding/#remote-data" aria-label="Navigate to the documentation for Remote data binding in ASP.NET Core TreeView control">
+                documentation section
+            </a>.
+        </p>
+    </div>
+}
+@section Title{
+    <title>ASP.NET Core TreeView Remote Data Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Remote Data in ASP.NET Core TreeView Control</h1>
+}

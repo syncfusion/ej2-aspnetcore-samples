@@ -1,0 +1,48 @@
+@page
+
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2
+
+@{
+    var appointments = new ScheduleEvents().GetOverlappingData();
+}
+@section ControlsSection{
+    <div class="control-section">
+        <div class="schedule-wrapper">
+            <ejs-schedule id="schedule" width="100%" height="550px" selectedDate="new DateTime(DateTime.Today.Year, 2, 12)" allowOverlap="false">
+                <e-schedule-eventsettings dataSource="@appointments"></e-schedule-eventsettings>
+            </ejs-schedule>
+        </div>
+    </div>
+}
+
+@*custom code start*@
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Overlap Events in ASP.NET Core Scheduler control. Explore here for more details."/>
+                }
+@*custom code end*@
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+           This demo explains how to restrict overlapping appointments within the same time range.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+           In this example, the Scheduler's <code>allowOverlap</code> API is used to restrict overlapping events, preventing one events
+      from being scheduled within the time range of another event. By default, the <code>allowOverlap</code> value is set to <code>true</code>.
+      When <code>allowOverlap</code> is set to <code>false</code>, unable to add or edit events dynamically within the time range of other events,
+      and cannot drag or resize events to overlap with other event time ranges.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Scheduler Overlap Events Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Prevent Overlapping Events in ASP.NET Core Scheduler Control</h1>
+                }

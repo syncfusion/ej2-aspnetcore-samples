@@ -1,0 +1,91 @@
+﻿@page
+@model EJ2CoreSampleBrowser.Pages.Chart.CustomAnimationModel
+@using Syncfusion.EJ2
+@section ControlsSection {
+
+    <div class="control-section" align="center">
+        <ejs-chart id="container" load="load" title="Almond Yield">
+            <e-chart-tooltipsettings enable="true" showNearestTooltip="true" enableHighlight="true" header="<b>Almond Yield - ${point.x}</b>" format="${series.name}: <b>${point.y}</b>">
+            </e-chart-tooltipsettings>
+            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.DateTime"
+                                  labelFormat="y"
+                                  edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift">
+                <e-majorgridlines width="0"></e-majorgridlines>
+            </e-chart-primaryxaxis>
+            <e-chart-primaryyaxis title="Yield (In Tons per Hectare)"
+                                  maximum="8"
+                                  interval="2">
+                <e-linestyle width="0"></e-linestyle>
+                <e-majorticklines width="0"></e-majorticklines>
+                <e-minorticklines width="0"></e-minorticklines>
+            </e-chart-primaryyaxis>
+            <e-chart-chartarea>
+                <e-chartarea-border width="0"></e-chartarea-border>
+            </e-chart-chartarea>
+            <e-chart-legendsettings visible="true" enableHighlight="true">
+            </e-chart-legendsettings>
+            <e-series-collection>
+                <e-series dataSource="@Model.ChartPoints" name="United States" xName="X" width="3" yName="Y1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline">
+                    <e-series-animation enable="true" duration="1500"></e-series-animation>
+                </e-series>
+                <e-series dataSource="@Model.ChartPoints" name="China" xName="X" width="3" yName="Y2" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline">
+                    <e-series-animation enable="true" duration="1500" delay="2300"></e-series-animation>
+                </e-series>
+                <e-series dataSource="@Model.ChartPoints" name="Afghanistan" xName="X" width="3" yName="Y3" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline">
+                    <e-series-animation enable="true" duration="1500" delay="3400"></e-series-animation>
+                </e-series>
+                <e-series dataSource="@Model.ChartPoints" name="Yemen" xName="X" width="3" yName="Y4" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline">
+                    <e-series-animation enable="true" duration="1500" delay="4800"></e-series-animation>
+                </e-series>
+                <e-series dataSource="@Model.ChartPoints" name="Australia" xName="X" width="3" yName="Y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline">
+                    <e-series-animation enable="true" duration="1500" delay="6200"></e-series-animation>
+                </e-series>
+            </e-series-collection>
+        </ejs-chart>
+    </div>
+    <script src="~/scripts/chart/theme-color.js"></script>
+    <script>
+        function load(args) {
+            loadChartTheme(args);
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+        };
+    </script>
+}
+@*custom code start*@
+@section Scripts {
+
+}
+
+<style>
+
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@section Meta {
+    <meta name="description" content="This example demonstrates the Custom Animation in ASP.NET Core Chart control. Explore here for more details." />
+}
+@*custom code end*@
+@section ActionDescription {
+    <p>
+        This sample visualizes the almond yield per hectare data for different countries using a spline series in the chart. The data points are enhanced with tooltip and the animation delay is configured to provide a smooth, staggered effect.
+    </p>
+}
+@section Description {
+    <p>
+        In this example, you can see how to render and configure a spline chart with multiple series representing almond yield across different countries over time. Spline charts are ideal for visualizing smooth trends in data over equal intervals, particularly time-dependent data. The <code>Width</code> and <code>Animation</code> properties are used to customize the appearance and behavior of the spline. The staggered animations enhance the visual experience by introducing each spline in sequence.
+    </p>
+    <p>
+        <code>Tooltip</code> is enabled in this example, to see the tooltip in action, hover over or tap on the chart.
+    </p>
+    <p>
+        More information on the spline series can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/chart-types/spline" aria-label="Navigate to the documentation for Spline Chart in ASP.NET Core Chart control">documentation section<span class="sr-only">opens in a new tab</span></a>.
+    </p>
+}
+@section Title {
+    <title>ASP.NET Core Chart Custom Animation Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Custom Animation in ASP.NET Core Chart Control</h1>
+}

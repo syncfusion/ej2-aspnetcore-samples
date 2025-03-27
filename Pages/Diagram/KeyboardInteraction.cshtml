@@ -1,0 +1,310 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Diagram.KeyboardInteractionModel
+@using Syncfusion.EJ2;
+@{
+    var getNodeDefaults = "getNodeDefaults";
+
+}
+@section ControlsSection{
+    <div class="col-lg-8 control-section">
+        <ejs-diagram id="diagram" width="100%" height="645px" getNodeDefaults="@getNodeDefaults">
+            <e-diagram-commandmanager commands="@Model.commands"></e-diagram-commandmanager>
+            <e-diagram-snapsettings constraints="None"></e-diagram-snapsettings>
+            <e-diagram-contextmenusettings show="true"></e-diagram-contextmenusettings>
+            <e-diagram-datasourcesettings id="id" parentId="ancestor" dataSource="new DataManager(){ Data = new List<KeyboardInformation>(@Model.Nodes) }"></e-diagram-datasourcesettings>
+            <e-diagram-layout type="HierarchicalTree"></e-diagram-layout>
+        </ejs-diagram>
+    </div>
+    <div class="col-lg-3 property-section">
+        <div>
+            <h4 class="property-panel-header">Built-In Commands</h4>
+            <div class="property-panel-content">
+                <table id="property1" style="font-size: 12px;">
+                    <tbody>
+                        <tr>
+                            <td style="width:60%;">
+                                <h5>Command</h5>
+                            </td>
+                            <td style="width:40%;">
+                                <h5>Gesture</h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:61%;">Select All </td>
+                            <td style="width:39%;">Ctrl + A</td>
+                        </tr>
+                        <tr>
+                            <td style="width:60%;">Cut</td>
+                            <td style="width:40%;">Ctrl + X</td>
+                        </tr>
+                        <tr>
+                            <td style="width:60%;">Copy</td>
+                            <td style="width:40%;">Ctrl + C</td>
+                        </tr>
+                        <tr>
+                            <td style="width:60%;">Paste</td>
+                            <td style="width:40%;">Ctrl + V</td>
+                        </tr>
+                        <tr>
+                            <td style="width:60%;">Undo</td>
+                            <td style="width:40%;">Ctrl + Z</td>
+                        </tr>
+                        <tr>
+                            <td style="width:60%;">Redo</td>
+                            <td style="width:40%;">Ctrl + Y</td>
+                        </tr>
+                        <tr>
+                            <td style="width:60%;">Delete</td>
+                            <td style="width:40%;">Delete</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div>
+            <h4 class="property-panel-header">Custom Commands</h4>
+            <div class="property-panel-content">
+                <table id="property2" style="font-size: 12px;">
+                    <tbody>
+                        <tr>
+                            <td style="width:60%;">
+                                <h5>
+                                    Command
+                                </h5>
+                            </td>
+                            <td style="width:40%;">
+                                <h5>Gesture</h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:60%;">Group</td>
+                            <td style="width:40%;">Ctrl + G</td>
+                        </tr>
+                        <tr>
+                            <td style="width:60%;">Ungroup</td>
+                            <td style="width:40%;">Ctrl + U</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div>
+            <h4 class="property-panel-header">Modified Commands</h4>
+            <div class="property-panel-content">
+                <table id="property3" style="font-size: 12px;">
+                    <tbody>
+                        <tr>
+                            <td style="width:70%;">
+                                <h5>
+                                    Command
+                                </h5>
+                            </td>
+                            <td style="width:30%;">
+                                <h5>Gesture</h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:60%;">Navigate to Parent Node </td>
+                            <td style="width:40%;">Up Arrow</td>
+                        </tr>
+                        <tr>
+                            <td style="width:60%;">Navigate to Child Node </td>
+                            <td style="width:40%;">Down Arrow</td>
+                        </tr>
+                        <tr>
+                            <td style="width:60%;">Navigate to Previous Child </td>
+                            <td style="width:40%;">Left Arrow</td>
+                        </tr>
+                        <tr>
+                            <td style="width:60%;">Navigate to Next Child </td>
+                            <td style="width:40%;">Right Arrow</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+
+        function getNodeDefaults(obj) {
+            if (!obj.children) {
+                obj.shape = { type: 'Basic', shape: 'Ellipse', cornerRadius: 10 };
+                obj.width = 70;
+                obj.height = 70;
+            }
+            if (obj.data) {
+                obj.annotations = [{
+                    /* tslint:disable:no-string-literal */
+                    content: obj.data.id,
+                    style: { color: 'white' }
+                }
+                ];
+
+                obj.style = {
+                    strokeColor: 'transparent',
+                    /* tslint:disable:no-string-literal */
+                    fill: obj.data.fillcolor
+                };
+            }
+            return obj;
+        }
+
+        function canExecuteGrouping() {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            if (diagram.selectedItems.nodes.length > 0 || diagram.selectedItems.connectors.length > 0) {
+                return true;
+            }
+            return false;
+        }
+
+        function canExecuteUngrouping() {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            if (diagram.selectedItems.nodes[0].children) {
+                return true;
+            }
+            return false;
+        }
+
+        function canExecuteNavigation() {
+            return true;
+        }
+
+        function executeGrouping() {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            diagram.group();
+        }
+
+        function executeUngrouping() {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            diagram.unGroup();
+        }
+
+        function executeNavigationDown() {
+            navigateLevels(true);
+        }
+
+        function executeNavigationUp() {
+            navigateLevels(false);
+        }
+
+        function executeNavigationLeft() {
+            navigateToSiblings(false);
+        }
+
+        function executeNavigationRight() {
+            navigateToSiblings(true);
+        }
+
+        function navigateLevels(isParent) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            var node = diagram.selectedItems.nodes[0];
+            if (node) {
+                var connectorId = isParent ? node.outEdges[0] : node.inEdges[0];
+                var altNode = isParent ? getNode(connectorId, false) : getNode(connectorId, true);
+                selectNode(altNode);
+            }
+        }
+        function navigateToSiblings(isRightSibling) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            var child = diagram.selectedItems.nodes[0];
+            if (child) {
+                var connectorId = child.inEdges[0];
+                var altConnectorId = '';
+                var parent = getNode(connectorId, true);
+                if (parent && parent.length > 0) {
+                    for (var i = 0; i < parent[0].outEdges.length; i++) {
+                        if (parent[0].outEdges[i] === connectorId) {
+                            altConnectorId = isRightSibling ? parent[0].outEdges[i + 1] : parent[0].outEdges[i - 1];
+                        }
+                    }
+                    var sibling = getNode(altConnectorId, false);
+                    selectNode(sibling);
+                }
+            }
+        }
+        function getNode(name, isParent) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            var node = [];
+            var connector = diagram.getObject(name);
+            if (connector) {
+                node.push(diagram.getObject(isParent ? (connector.sourceID) : (connector.targetID)));
+            }
+            return node;
+        }
+
+        function selectNode(node) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            if (node && node.length > 0) {
+                diagram.clearSelection();
+                diagram.select(node);
+            }
+        }
+    </script>
+
+
+
+    @*.DoBinding("doBinding")*@
+
+    <style>
+       
+        /* Diagram Div CSS */
+        .control-section {
+            padding-top: 0px;
+            padding-bottom: 0px;
+            padding-right: 0px;
+            padding-left: 0px;
+        }
+        /* Overall div */
+        .container-fluid {
+            padding-left: 0px;
+        }
+        /* Property panel CSS */
+        .property-panel-header {
+            padding-bottom: 0px;
+        }
+
+        .property-panel-content {
+            padding-top: 0px !important;
+        }
+
+        @@media (max-width: 550px) {
+            .property-panel-content {
+                padding-top: 0px !important;
+            }
+        }
+    </style>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample illustrates interaction with diagram control using shortcut keys. Command Manager support is used to manage keyboard
+            interactions.
+        </p>
+    </div>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Keyboard Interaction in ASP.NET Core Diagram control. Explore here for more details."/>
+                }
+@section Description{
+    <div id="description">
+        <p>
+            In this example, you can see how to interact with the diagram control using shortcut keys.
+            You can use the <code>commandManager</code> property to map the commands with key gestures.
+
+            In this example, along with the built-in commands, few custom commands are added. Few built-in commands(nudge) are overridden.
+            That is, when the arrow keys are pressed, selection will be navigated instead of moving the selected objects.
+
+            The different kind of interactions and the corresponding key gestures are listed in the property panel.
+        </p>
+        <br>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Diagram Keyboard Interaction Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Keyboard Interaction in ASP.NET Core Diagram Control</h1>
+                }

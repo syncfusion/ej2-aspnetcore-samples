@@ -1,0 +1,138 @@
+﻿@page
+@model EJ2CoreSampleBrowser.Pages.Chart.GroupingModel
+@using Syncfusion.EJ2
+
+@{
+
+    var Point = "Point";
+    
+    var data = new string[] { "Point", "Value" };
+}
+
+@section ControlsSection{
+
+    <div class="col-lg-8 control-section sb-property-border">
+        <ejs-accumulationchart id="container" title="Rio Olympic Gold Medals" load="load" enableSmartLabels="true" enableBorderOnMouseMove="false" textRender="textRender" pointRender="pointRender">
+            <e-accumulationchart-tooltipsettings enableHighlight="true" enable="true" header="" format="<b>${point.x}</b><br> Gold Medals: <b>${point.y}</b>"></e-accumulationchart-tooltipsettings>
+            <e-accumulationchart-legendsettings visible="false">
+            </e-accumulationchart-legendsettings>
+            <e-accumulation-series-collection>
+                <e-accumulation-series dataSource="@Model.ChartPoints" explode="true" xName="Country" yName="Medal" name="RIO" groupTo="9" groupMode="@Syncfusion.EJ2.Charts.GroupModes.Point" startAngle="0" endAngle="360" innerRadius="0%">
+                    <e-accumulationseries-datalabel visible="true" name="DataLabelMappingName" position="@Syncfusion.EJ2.Charts.AccumulationLabelPosition.Outside">
+                        <e-connectorstyle type="@Syncfusion.EJ2.Charts.ConnectorType.Curve" length="20px"></e-connectorstyle>
+                        <e-font fontWeight="600"></e-font>
+                    </e-accumulationseries-datalabel>
+                </e-accumulation-series>
+            </e-accumulation-series-collection>
+        </ejs-accumulationchart>
+    </div>
+    <div class="col-lg-4 property-section">
+        <table id="property" title="Properties" style="width: 100%">
+            <tbody>
+                <tr>
+                    <td style="width: 50%">
+                        <div>
+                            Group Modes:
+                        </div>
+                    </td>
+                    <td style="width: 50%;">
+                        <div>
+                            <ejs-dropdownlist id="data" dataSource="@data" value="Point" popupHeight="220px" change="changedata"></ejs-dropdownlist>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td style="width: 40%">
+                        <div>
+                            Group To:
+                        </div>
+                    </td>
+                    <td style="width: 40%;">
+                        <div data-role="rangeslider">
+                            <input type="range" name="range-min" id="clubpoint" value="9" min="0" max="27" style="width:100%">
+                        </div>
+                    </td>
+                    <td style="width: 30%;">
+                        <p id="clubvalue" style="font-weight: normal;padding-top:10px">9</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="~/scripts/chart/theme-color.js"></script>
+    <script>
+        function changedata(args) {
+            var currentValue = args.value === 'Point' ? 9 : 8;
+            document.getElementById('clubpoint').value = currentValue.toString();
+            var pie = document.getElementById('container').ej2_instances[0];
+            pie.series[0].groupMode = args.value;
+            clubchange(currentValue);
+        }
+        function load(args) {
+            loadAccumulationChartTheme(args);
+            args.accumulation.series[0].radius = ej.base.Browser.isDevice ? "40%" : "70%";
+            args.accumulation.series[0].dataLabel.font.size = ej.base.Browser.isDevice ? "9px" : "13px";
+            args.accumulation.series[0].dataSource[1].DataLabelMappingName = ej.base.Browser.isDevice ? "Russia: <br> 19" : "Russia: 19";
+            args.accumulation.series[0].dataSource[2].DataLabelMappingName = ej.base.Browser.isDevice ? "Germany: <br>17" : "Germany: 17";
+            args.accumulation.series[0].dataSource[7].DataLabelMappingName = ej.base.Browser.isDevice ? "Italy: <br> 8" : "Italy: 8";
+            args.accumulation.series[0].dataSource[8].DataLabelMappingName = ej.base.Browser.isDevice ? "Australia: <br> 8" : "Australia: 8";
+        }
+        function pointRender(args) {
+            if (args.point.isClubbed || args.point.isSliced) {
+                args.fill = '#D3D3D3';
+            }
+        }
+        function textRender(args) {
+            args.text = args.point.x + ' ' + args.point.y;
+        }
+        function clubchange(value) {
+            var pie = document.getElementById('container').ej2_instances[0];
+            pie.series[0].groupTo = value.toString();
+            pie.series[0].animation.enable = false;
+            document.getElementById('clubvalue').innerHTML = value.toString();
+            pie.removeSvg();
+            pie.refreshSeries();
+            pie.refreshChart();
+        }
+        document.getElementById('clubpoint').onchange = () => {
+            clubchange(+(document.getElementById('clubpoint')).value);
+        };
+    </script>
+}
+
+@*custom code start*@
+@section Meta{
+    <meta name="description" content="This example demonstrates the Grouping in ASP.NET Core Chart control. Explore here for more details." />
+}
+@section ActionDescription{
+
+    <div id="action-description">
+        <p>
+            This sample shows the gold medal count scored by each country at the Rio Olympic Games, along with the pie series grouping functionality.
+        </p>
+    </div>
+}
+
+@*custom code end*@
+@section Description{
+    <div id="description">
+        <p>
+            In this example, you can see how to group points based on count and values. The slice can be grouped based on the number of points by specifying the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.AccumulationSeries.html#Syncfusion_EJ2_Charts_AccumulationSeries_GroupMode" aria-label="Navigate to the GroupMode property reference for ASP.NET Core AccumulationSeries">GroupMode</a> to <b>Point</b>. For example, if the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.AccumulationSeries.html#Syncfusion_EJ2_Charts_AccumulationSeries_GroupTo" aria-label="GroupTo">GroupTo</a>
+            property is set to 10, the chart will display the first 10 points and the remaining entries from the collection will be grouped as a single point. The slice can also be grouped based on values by specifying the <code>GroupMode</code> to <b>Value</b>. For example, if the <code>GroupTo</code> is set to 10, the first 10 points with a lower value will be grouped together and shown as a single point while the others as a slice.
+        </p>
+        <p>
+            <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover over a point or tap on a point in touch-enabled devices.
+        </p>
+        <p>
+            More information on the grouping can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/accumulation-chart/grouping" aria-label="Navigate to the documentation for grouping in ASP.NET Core accumulation-chart">documentation section</a>.
+        </p>
+    </div>
+
+}
+@section Title{
+    <title>ASP.NET Core Chart Grouping Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Grouping in ASP.NET Core Chart Control</h1>
+}

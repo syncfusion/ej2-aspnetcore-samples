@@ -1,0 +1,367 @@
+﻿@page
+@model EJ2CoreSampleBrowser.Pages.Chart.ColumnDrilldownModel
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+    <div class="control-section">
+        <div id="link">
+            <a id="category" onclick="mouseClick()" style="visibility:hidden; display:inline-block">
+                Population
+                <span class="sr-only">opens in a new tab</span>
+            </a>
+            <p id="symbol" style="visibility:hidden; display:inline-block">&nbsp;&gt;&gt;&nbsp;</p>
+            <p id="text" style="visibility:hidden; display:inline-block"></p>
+        </div>
+        <div id="drilldown" align="center">
+            <ejs-chart id="drilldownContainer" title="Top Populated Continents of 2023" load="load" loaded="loaded" pointRender="pointRender" chartMouseClick="chartMouseClick" axisLabelClick="axisLabelClick" pointClick="pointClick">
+                <e-chart-tooltipsettings enable="true" header="<b>Population - 2023</b>" format="${point.x}: ${point.y}M"></e-chart-tooltipsettings>
+                <e-chart-legendSettings visible="false"></e-chart-legendSettings>
+                <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category" interval=1>
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                    <e-majorticklines width="0"></e-majorticklines>
+                    <e-minorticklines width="0"></e-minorticklines>
+                    <e-labelstyle color="blue"></e-labelstyle>
+                </e-chart-primaryxaxis>
+                <e-chart-primaryyaxis title="Population (in Millions)" interval="1000">
+                    <e-majorticklines width="0"></e-majorticklines>
+                    <e-linestyle width="0"></e-linestyle>
+                </e-chart-primaryyaxis>
+                <e-chart-chartarea>
+                    <e-chartarea-border width="0"></e-chartarea-border>
+                </e-chart-chartarea>
+                <e-series-collection>
+                    <e-series xName="drilldown" yName="y" name="Population" width=2 type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                        <e-series-marker>
+                            <e-series-datalabel visible="true" position="@Syncfusion.EJ2.Charts.LabelPosition.Outer"></e-series-datalabel>
+                        </e-series-marker>
+                    </e-series>
+                </e-series-collection>
+            </ejs-chart>
+    </div>
+</div>
+<style>
+    #control-container {
+        padding: 0px !important;
+    }
+    .no-underline {
+        text-decoration: none !important;
+        cursor: auto !important;
+    }
+    #drilldownContainer0_AxisLabel_0,
+    #drilldownContainer0_AxisLabel_1,
+    #drilldownContainer0_AxisLabel_2,
+    #drilldownContainer0_AxisLabel_3,
+    #drilldownContainer0_AxisLabel_4,
+    #drilldownContainer_Series_0_Point_0,
+    #drilldownContainer_Series_0_Point_1,
+    #drilldownContainer_Series_0_Point_2,
+    #drilldownContainer_Series_0_Point_3,
+    #drilldownContainer_Series_0_Point_4,
+    #drilldownContainer0_AxisLabel_5 {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+    #category:hover {
+        cursor: pointer;
+    }
+</style>
+    <script src="~/scripts/chart/theme-color.js"></script>
+<script>
+        var clicked = false;
+        var data = [
+            { drilldown: "Asia",          y: 4778 },
+            { drilldown: "Africa",        y: 1481 },
+            { drilldown: "Europe",        y: 746  },
+            { drilldown: "North America", y: 379  },
+            { drilldown: "Oceania",       y: 46   }
+        ];
+        var asia = [
+            { drilldown: 'China', y: 1422 },
+            { drilldown: 'India', y: 1438 },
+            { drilldown: 'Indonesia', y: 278 },
+            { drilldown: 'Pakistan', y: 240 },
+            { drilldown: 'Bangladesh', y: 173 },
+            { drilldown: 'Japan', y: 125 },
+            { drilldown: 'Philippines', y: 117 },
+            { drilldown: 'Vietnam', y: 99 }
+        ];
+        var africa = [
+            { drilldown: 'Nigeria', y: 223 },
+            { drilldown: 'Ethiopia', y: 126 },
+            { drilldown: 'Egypt', y: 113 },
+            { drilldown: 'Tanzania', y: 68 },
+            { drilldown: 'South Africa', y: 60 },
+            { drilldown: 'Kenya', y: 55 },
+            { drilldown: 'Uganda', y: 48 }
+        ];
+        var europe = [
+            { drilldown: 'Russia', y: 143 },
+            { drilldown: 'Germany', y: 84 },
+            { drilldown: 'United Kingdom', y: 67 },
+            { drilldown: 'France', y: 65 },
+            { drilldown: 'Italy', y: 59 },
+            { drilldown: 'Spain', y: 47 }
+        ];
+        var america = [
+            { drilldown: 'United States', y: 339 },
+            { drilldown: 'Mexico', y: 127 },
+            { drilldown: 'Canada', y: 39 },
+            { drilldown: 'Guatemala', y: 19 },
+            { drilldown: 'Honduras', y: 10 },
+            { drilldown: 'El Salvador', y: 6 },
+            { drilldown: 'Nicaragua', y: 6 },
+            { drilldown: 'Costa Rica', y: 5 }
+        ];
+        var oceania = [
+            { drilldown: 'Australia', y: 26 },
+            { drilldown: 'Papua New Guinea', y: 9 },
+            { drilldown: 'New Zealand', y: 5 }
+        ];
+        var load = function (args) {
+            loadChartTheme(args);
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+            args.chart.series[0].cornerRadius.topLeft = 5;
+            args.chart.series[0].dataSource = data;
+            args.chart.series[0].cornerRadius.topRight = 5;
+            args.chart.primaryXAxis.labelIntersectAction = ej.base.Browser.isDevice ? 'None' : 'Rotate90';
+            args.chart.primaryXAxis.labelRotation = ej.base.Browser.isDevice ? -45 : 0;
+        };
+        var loaded = function (args) {
+            if (clicked) {
+                for (let i = 0; i <= 6; i++) {
+                    var axisLabel = document.getElementById(`drilldownContainer0_AxisLabel_${i}`);
+                    if (axisLabel) {
+                        axisLabel.classList.add('no-underline');
+                    }
+                    var seriesElement = document.getElementById(`drilldownContainer_Series_0_Point_${i}`);
+                    if (seriesElement) {
+                        seriesElement.classList.add('no-underline');
+                    }
+                }
+            }
+        };
+        var pointRender = function (args) {
+            if (!clicked) {
+                var selectedTheme = location.hash.split('/')[1];
+                selectedTheme = selectedTheme ? selectedTheme : 'Tailwind3';
+                if (selectedTheme && selectedTheme.indexOf('fabric') > -1) {
+                    args.fill = pointFabricColors[args.point.index % 10];
+                } else if (selectedTheme === 'material-dark') {
+                    args.fill = pointMaterialDarkColors[args.point.index % 10];
+                } else if (selectedTheme === 'material') {
+                    args.fill = pointMaterialColors[args.point.index % 10];
+                } else if (selectedTheme === 'bootstrap5-dark') {
+                    args.fill = pointBootstrap5DarkColors[args.point.index % 10];
+                } else if (selectedTheme === 'bootstrap5') {
+                    args.fill = pointBootstrap5Colors[args.point.index % 10];
+                } else if (selectedTheme === 'bootstrap') {
+                    args.fill = pointBootstrapColors[args.point.index % 10];
+                } else if (selectedTheme === 'bootstrap4') {
+                    args.fill = pointBootstrapColors[args.point.index % 10];
+                } else if (selectedTheme === 'bootstrap-dark') {
+                    args.fill = pointBootstrapColors[args.point.index % 10];
+                } else if (selectedTheme === 'highcontrast') {
+                    args.fill = pointHighContrastColors[args.point.index % 10];
+                } else if (selectedTheme === 'fluent-dark') {
+                    args.fill = pointFluentDarkColors[args.point.index % 10];
+                } else if (selectedTheme === 'fluent') {
+                    args.fill = pointFluentColors[args.point.index % 10];
+                } else if (selectedTheme === 'tailwind-dark') {
+                    args.fill = pointTailwindDarkColors[args.point.index % 10];
+                } else if (selectedTheme === 'tailwind') {
+                    args.fill = pointTailwindColors[args.point.index % 10];
+                } else if (selectedTheme === 'material3') {
+                    args.fill = pointMaterial3Colors[args.point.index % 10];
+                } else if (selectedTheme === 'material3-dark') {
+                    args.fill = pointMaterial3DarkColors[args.point.index % 10];
+                } else if (selectedTheme === 'fluent2') {
+                    args.fill = pointFluent2Colors[args.point.index % 10];
+                } else if (selectedTheme === 'fluent2-highcontrast') {
+                    args.fill = pointFluent2HighContrastColors[args.point.index % 10];
+                } else if (selectedTheme === 'fluent2-dark') {
+                    args.fill = pointFluent2DarkColors[args.point.index % 10];
+                } else if (selectedTheme === 'tailwind3-dark') {
+                    args.fill = pointTailwind3DarkColors[args.point.index % 10];
+                }
+                else if (selectedTheme === 'tailwind3') {
+                    args.fill = pointTailwind3Colors[args.point.index % 10];
+                }
+            }
+        };
+        var pointClick = function (args) {
+            args.series.fill = args.point.color;
+            if (args.point.index !== 6) {
+                args.series.yAxis.interval = null;
+                if (!args.series.chart.theme.includes('Dark') && args.series.chart.theme !== 'HighContrast' && args.series.chart.theme !== 'Fluent2HighContrast') {
+                    args.series.chart.primaryXAxis.labelStyle.color = "black";
+                }
+                else if (args.series.chart.theme === 'Material3Dark') {
+                    args.series.chart.primaryXAxis.labelStyle.color = "#CAC4D0";
+                }
+                else if (args.series.chart.theme === 'FluentDark') {
+                    args.series.chart.primaryXAxis.labelStyle.color = "#C8C6C4";
+                }
+                else if (args.series.chart.theme === 'Fluent2Dark') {
+                    args.series.chart.primaryXAxis.labelStyle.color = "#ADADAD";
+                }
+                else if (args.series.chart.theme === 'Bootstrap5Dark') {
+                    args.series.chart.primaryXAxis.labelStyle.color = "#DEE2E6";
+                }
+                else if (args.series.chart.theme === 'TailwindDark') {
+                    args.series.chart.primaryXAxis.labelStyle.color = "#9CA3AF";
+                }
+                else if (args.series.chart.theme === 'Tailwind3Dark') {
+                    args.series.chart.primaryXAxis.labelStyle.color = "#D1D5DB";
+                }
+                else if (args.series.chart.theme === 'HighContrast') {
+                    args.series.chart.primaryXAxis.labelStyle.color = "#969696";
+                }
+                else if (args.series.chart.theme === 'Fluent2HighContrast') {
+                    args.series.chart.primaryXAxis.labelStyle.color = "#FFFFFF";
+                }
+                if (!clicked) {
+                    document.getElementById("text").innerHTML = args.point.x.toString();
+                    document.getElementById("category").style.visibility = "visible";
+                    document.getElementById("symbol").style.visibility = "visible";
+                    document.getElementById("text").style.visibility = "visible";
+                    if (args.point.index === 0) {
+                        args.series.chart.title = "Top Populated Countries of Asia - 2023";
+                        clicked = true;
+                        args.series.chart.series[0].dataSource = asia;
+                    }
+                    if (args.point.index === 1) {
+                        args.series.chart.title = "Top Populated Countries of Africa - 2023";
+                        clicked = true;
+                        args.series.chart.series[0].dataSource = africa;
+                    }
+                    if (args.point.index === 2) {
+                        args.series.chart.title = "Top Populated Countries of Europe - 2023";
+                        clicked = true;
+                        args.series.chart.series[0].dataSource = europe;
+                    }
+                    if (args.point.index === 3) {
+                        args.series.chart.title = "Top Populated Countries of North America - 2023";
+                        clicked = true;
+                        args.series.chart.series[0].dataSource = america;
+                    }
+                    if (args.point.index === 4) {
+                        args.series.chart.title = "Top Populated Countries of Oceania - 2023";
+                        clicked = true;
+                        args.series.chart.series[0].dataSource = oceania;
+                    }
+                }
+            }
+        };
+        var chartMouseClick = function (args) {
+            if (args.target.indexOf('category') > -1) {
+                args.chart.series[0].dataSource = data;
+            }
+        };
+        var axisLabelClick = function (args) {
+            if (args.axis.name === "primaryXAxis") {
+                args.chart.series[0].fill = (args.chart.series[0]).points[args.index].color;
+                if (args.index !== 6) {
+                    args.chart.primaryYAxis.interval = null;
+                    if (!args.chart.theme.includes('Dark') && args.chart.theme !== 'HighContrast' && args.chart.theme !== 'Fluent2HighContrast') {
+                        args.chart.primaryXAxis.labelStyle.color = "black";
+                    }
+                    else if (args.chart.theme === 'Material3Dark') {
+                        args.chart.primaryXAxis.labelStyle.color = "#CAC4D0";
+                    }
+                    else if (args.chart.theme === 'FluentDark') {
+                        args.chart.primaryXAxis.labelStyle.color = "#C8C6C4";
+                    }
+                    else if (args.chart.theme === 'Fluent2Dark') {
+                        args.chart.primaryXAxis.labelStyle.color = "#ADADAD";
+                    }
+                    else if (args.chart.theme === 'Bootstrap5Dark') {
+                        args.chart.primaryXAxis.labelStyle.color = "#DEE2E6";
+                    }
+                    else if (args.chart.theme === 'TailwindDark') {
+                        args.chart.primaryXAxis.labelStyle.color = "#9CA3AF";
+                    }
+                    else if (args.chart.theme === 'Tailwind3Dark') {
+                        args.chart.primaryXAxis.labelStyle.color = "#D1D5DB";
+                    }
+                    else if (args.chart.theme === 'HighContrast') {
+                        args.chart.primaryXAxis.labelStyle.color = "#969696";
+                    }
+                    else if (args.chart.theme === 'Fluent2HighContrast') {
+                        args.chart.primaryXAxis.labelStyle.color = "#FFFFFF";
+                    }
+                    if (!clicked) {
+                        document.getElementById("text").innerHTML = args.text;
+                        document.getElementById("category").style.visibility = "visible";
+                        document.getElementById("symbol").style.visibility = "visible";
+                        document.getElementById("text").style.visibility = "visible";
+                        if (args.index === 0) {
+                            args.chart.title = "Top Populated Countries of Asia - 2023";
+                            clicked = true;
+                            args.chart.series[0].dataSource = asia;
+                        }
+                        if (args.index === 1) {
+                            args.chart.title = "Top Populated Countries of Africa - 2023";
+                            clicked = true;
+                            args.chart.series[0].dataSource = africa;
+                        }
+                        if (args.index === 2) {
+                            args.chart.title = "Top Populated Countries of Europe - 2023";
+                            clicked = true;
+                            args.chart.series[0].dataSource = europe;
+                        }
+                        if (args.index === 3) {
+                            args.chart.title = "Top Populated Countries of North America - 2023";
+                            clicked = true;
+                            args.chart.series[0].dataSource = america;
+                        }
+                        if (args.index === 4) {
+                            args.chart.title = "Top Populated Countries of Oceania - 2023";
+                            clicked = true;
+                            args.chart.series[0].dataSource = oceania;
+                        }
+                    }
+                }
+            }
+        };
+        var mouseClick = function (args) {
+            var chart = document.getElementById("drilldownContainer").ej2_instances[0];
+            chart.title = "Top Populated Continents of 2023";
+            chart.primaryXAxis.labelStyle.color = "blue";
+            chart.primaryYAxis.interval = 1000;
+            chart.series[0].dataSource = data;
+            clicked = false;
+            document.getElementById('category').style.visibility = 'hidden';
+            document.getElementById('symbol').style.visibility = 'hidden';
+            document.getElementById('text').style.visibility = 'hidden';
+        };
+    </script>
+}
+
+@section ActionDescription{
+    <p>
+        This drilldown column chart example visualizes the population distribution across different continents. Users can click on the columns to explore further details, allowing for an interactive analysis of population
+        statistics by country within each continent.
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can see how to render and configure a drilldown column chart. Each column represents a continent, and users can drill down to view detailed population statistics by country upon selection.
+        This functionality enhances data exploration and provides a clearer understanding of demographic distributions.
+    </p>
+    <p>
+        Tooltip is enabled in this example. To see the tooltip in action, hover over a point or tap on a point in touch-enabled devices.
+    </p>
+    <p>
+        More information on the column series can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetmvc/documentation/chart/chart-types/column" aria-label="Navigate to the documentation for Column Chart in ASP.NET MVC Chart control">documentation section<span class="sr-only">opens in a new tab</span></a>.
+    </p>
+}
+@section Title{
+    <title>ASP.NET MVC Chart Column Drilldown Example - Syncfusion Demos </title>
+}
+@section Meta{
+    <meta name="description" content="This example demonstrates the Column Drilldown in ASP.NET MVC Chart control. Explore here for more details." />
+}
+@section Header{
+   <h1 class='sb-sample-text'>Example of Column Drilldown in ASP.NET MVC Chart Control</h1>   
+}

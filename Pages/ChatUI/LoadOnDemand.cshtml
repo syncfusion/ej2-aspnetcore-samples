@@ -1,0 +1,89 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.ChatUI.LoadOnDemandModel
+@using Syncfusion.EJ2
+@using Newtonsoft.Json
+
+@section ControlsSection {
+    <div class="control-section chat-ui">
+        <div class="loadonDemand-chatui">
+            <ejs-chatui id="loadonDemand" headerIconCss="chat_user2_avatar" headerText="Michale Suyama" created="onCreated" showTimeBreak=true loadOnDemand=true>
+            <e-chatui-user id="user1" user="Albert"></e-chatui-user>
+        </ejs-chatui>
+        </div>
+    </div>
+}
+
+@section PreScripts {
+    <script>
+        var chatUIObj;
+        var chatMessages = [];
+        var baseDate = new Date();
+        baseDate.setDate(baseDate.getDate() - 3);
+        var dayIncrement = 24 * 60 * 60 * 1000;
+        var authorNames = ["Albert", "Michale"];
+        for (let i = 1; i <= 200; i++) {
+            if (i % 50 === 1 && i !== 1) {
+                // Increment the day only every 50 messages except the very first one
+                baseDate = new Date(baseDate.getTime() + dayIncrement);
+            }
+            var authorIndex = i % 2;
+
+            chatMessages.push({
+                text: 'Message ' + i + ' from ' + authorNames[authorIndex],
+                author: authorIndex === 0 ? @Html.Raw(JsonConvert.SerializeObject(Model.CurrentUserModel)) : @Html.Raw(JsonConvert.SerializeObject(Model.MichaleUserModel)),
+                timeStamp: new Date((baseDate.getTime() - ((200 * 60 * 1000)) + ((60 * 1000) * i)))
+            });
+        }
+        function onCreated() {
+            chatUIObj = ej.base.getInstance(document.getElementById('loadonDemand'), ejs.interactivechat.ChatUI);
+            chatUIObj.messages = chatMessages;
+            chatUIObj.dataBind();
+        }
+    </script>
+}
+
+<style>
+    .loadonDemand-chatui {
+        height: 500px;
+        width: 40%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: row;
+        gap: 50px;
+    }
+
+    .loadonDemand-chatui .chat_user2_avatar {
+        background-image: url('./../css/chatui/images/andrew.png');
+        background-color: unset;
+    }
+
+    @@media only screen and (max-width: 850px) {
+        .loadonDemand-chatui {
+            flex-direction: column;
+            height: 500px;
+            width: 80%;
+        }
+
+        .chat-ui.control-section {
+            height: 1050px;
+        }
+    }
+</style>
+
+@section Meta {
+    <meta name="description" content="This example demonstrates the DefaultFunctionalities in ASP.NET Core Chat UI control. Explore here for more details." />
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>This sample demonstrates the load on-demand feature of the Chat UI control to render a large number of data's.</p>
+    </div>
+}
+
+@section Description {
+    <div id="description">
+        <p> 
+            In this example, the chat <code>messages</code> are the list of conversations between two users allowing to scroll through their conversation history. The <code>loadOnDemand</code> property allows you to load more messages on demand, improving the performance and reducing load times, particularly in long conversations. Only the visible conversations are render, reducing the amount of DOM elements and improving the overall performance.
+        </p>
+    </div>
+}

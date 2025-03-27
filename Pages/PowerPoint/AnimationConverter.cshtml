@@ -1,0 +1,370 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.PowerPoint.AnimationConverter
+
+@using Syncfusion.EJ2
+@{
+    var Title = "Essential Presentation (Presentation) : AnimationConverter : Syncfusion";
+}
+
+@section ControlsSection{
+    
+    <div class="control-section">
+        @{
+            Html.BeginForm("animationconverter", "powerpoint", FormMethod.Post, new { enctype = "multipart/form-data" });
+            {
+                <div class="rowdiv" style="margin-top: 10px;font-size:14px">
+                    <div class="celldiv">
+                        <p style="font-weight:normal">
+                            Click the button to convert PowerPoint slides to images based on the sequence of entrance animations using .NET PowerPoint library. You can then view the converted images as slideshow below.
+                        </p>
+                    </div>
+                </div>
+                <div class="rowdiv" style="margin-top: 10px">
+                    <div class="celldiv">
+                        <input type="button" value="Choose File" onclick="openPage()">
+                        <input type="text" id="fileNameBox" readonly="readonly" value="@Model.FileName" style="border:none; width:70%" />
+                        <input type="file" name="file" id="fileUpload" accept=".pptx" style="display:block;visibility:hidden;width:0;height:0;">
+                    </div>
+                </div>
+                <div class="rowdiv">
+                    <div>
+                        <br/>
+                    </div>
+                </div>
+                <div class="rowdiv">
+                    <div class="celldiv">
+                        <table width="100%">
+                            <tr>
+                                <td>
+                                    <input class="e-btn" type="submit" onclick="convertClicked()" value="Convert to Image" name="button" style="width:170px; text-transform:capitalize" />
+                                </td>
+                                <td>
+                                    <div class="flex-container" id="autoplayswitch">
+                                        <label class="switchLabel" for="autoplay">Autoplay</label>
+                                        <div class="e-message render-mode-info">
+                                            <span class="e-msg-icon render-mode-info-icon"
+                                          title="Turn OFF to stop autoplay images"></span>
+                                        </div>
+                                        <div>
+                                            <ejs-switch cssClass="buttonSwitch" id="autoplay" change="autoplayChange" checked="true"></ejs-switch>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        <tr>
+                        <td>
+                        <br/>
+                            <div class="text-danger">
+                                @Model.Message
+                            </div>
+                        </td>
+                        </tr>
+                            </table>
+                    </div>
+                </div>
+                <div class="rowdiv" id="slideshow">
+                    <div class="celldiv">
+                        <div style="border-width:1px; border-style: solid; border-color:#D7D7D7; height:525px; background: linear-gradient(0deg, rgba(var(--color-sf-primary), 0.05), rgba(var(--color-sf-primary), 0.05)),rgba(var(--color-sf-surface));">
+                            <ejs-toolbar id="topToolbar" height="10px">
+                                <e-toolbar-items>
+                                    <e-toolbar-item template=@Model.FileName align="Left" tooltipText="File Name" id="fileName"></e-toolbar-item>
+                                    <e-toolbar-item prefixIcon="e-pv-previous-image-navigation-icon" tooltipText="Previous Image" align="Center" click="previousClicked" id="previousImage"></e-toolbar-item>
+                                    <e-toolbar-item prefixIcon="e-pv-next-image-navigation-icon" tooltipText="Next Image" align="Center" click="nextClicked" id="nextImage"></e-toolbar-item>
+                                </e-toolbar-items>
+                            </ejs-toolbar>
+
+                            <div align="center" style="padding-top:15px; padding-right:15px; padding-left:15px;padding-bottom:5px;">
+                                <div id='waiting-popup' style="display: block;">
+                                    <svg class="circular" height="40" width="40" role="presentation">
+                                        <circle class="circle-path" cx="25" cy="25" r="20" fill="none" stroke-width="6" stroke-miterlimit="10" />
+                                    </svg>
+                                </div>
+                                <img id="image" style="object-fit:scale-down; height:450px ; width:100%;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                
+                Html.EndForm();
+            }
+        }
+    </div>
+}
+
+@*custom code start*@
+<style>
+
+    #waiting-popup {
+        width: 56px;
+        height: 56px;
+        position: absolute;
+        top: calc(65% - 28px);
+        left: calc(50% - 28px);
+        border-radius: 50%;
+        padding: 3px;
+        box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+        overflow: hidden;
+        background-color: white;
+        z-index: 2001;
+        display: none;
+    }
+
+    .circular {
+        animation: rotate 2s linear infinite;
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+    }
+
+    .circle-path {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+        animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+        stroke-linecap: round;
+        stroke: #2B3481;
+    }
+    
+    #topToolbar {
+        top: 0px;
+        z-index: 1001;
+    }
+    .e-icons {
+        font-family: "e-icons";
+        font-style: normal;
+        font-variant: normal;
+        font-weight: normal;
+        line-height: 1;
+        text-transform: none;
+    }
+    .e-pv-previous-image-navigation-icon::before {
+        content: '\e765';
+    }
+
+    .e-pv-next-image-navigation-icon::before {
+        content: '\e748';
+    }
+
+    .content-wrapper {
+        margin-top: 47px;
+    }
+    .switch-control div {
+        display: flex;
+        align-items: center;
+    }
+
+    .switch-control {
+        margin: 0 auto;
+        
+    }
+
+    .switch-control label {
+        -webkit-tap-highlight-color: transparent;
+        cursor: pointer;
+        user-select: none;
+        font-weight: 400;
+        font-size: 13px;
+    }
+
+    .switch-control .e-disabled {
+        pointer-events: none;
+    }
+
+    .flex-container {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .control-section {
+        height: 716px;
+        width: 100%;
+    }
+
+    .render-mode-info {
+        background: none;
+        border: none;
+        padding-left: 0px;
+    }
+
+    .render-mode-info .render-mode-info-icon {
+        height: 16px;
+        width: 16px;
+    }
+
+    .switchLabel {
+        font-family: "Segoe UI", "GeezaPro", "DejaVu Serif", sans-serif;
+        font-weight: 400;
+        width: 151px;
+        height: 20px;
+        line-height: 20px;
+        letter-spacing: 0.24px;
+        text-align: right;
+        font-size: 14px;
+    }
+
+    .render-mode-info .render-mode-info-icon::before {
+        line-height: 0.5rem;
+    }
+
+    .buttonSwitch {
+        Width: 40px;
+        Height: 24px;
+    }
+</style>
+@*custom code end*@
+
+<script type="text/javascript">
+    
+    var currentPos = 0;
+    var count = 0;
+    var bool = true;
+    var interval;
+    window.onload = function () 
+    {
+        enableSpinner();
+        count = @Model.ImagesCount;
+        if (count > 0) {
+            disablePrevNext();
+            interval = setInterval(changeimage, 2000);
+        }
+        else {
+            disableSlideShow();
+        }
+    }
+    function changeimage() {
+        if (currentPos == 0)
+            disableSpinner();
+        currentPos++;            
+        if (currentPos > count)
+            currentPos = 1;
+        changeImgSrc();
+    }
+    function convertClicked(){
+        clearInterval(interval);
+        var img = document.getElementById("image");
+        img.style.display = 'none';
+        enableSpinner();
+    }
+    function enablePrevNext() {
+        var toolbarObj = document.getElementById('topToolbar').ej2_instances[0];
+        toolbarObj.enableItems(document.getElementById('previousImage'), true);
+        toolbarObj.enableItems(document.getElementById('nextImage'), true);
+    }
+    function disablePrevNext() {
+        var toolbarObj = document.getElementById('topToolbar').ej2_instances[0];
+        toolbarObj.enableItems(document.getElementById('previousImage'), false);
+        toolbarObj.enableItems(document.getElementById('nextImage'), false);
+    }
+    
+    function autoplayChange(args) {
+        if (!args.checked)
+        {
+            clearInterval(interval);
+            changeImgSrc();
+            enablePrevNext();
+        }
+        else {
+            disablePrevNext();
+            interval = setInterval(changeimage, 2000);
+        }
+
+    }
+    function enableSpinner() {
+        var waitingPopUp = document.getElementById('waiting-popup')
+        waitingPopUp.style.display = 'block';
+    }
+    function disableSpinner() {
+        var waitingPopUp = document.getElementById('waiting-popup')
+        waitingPopUp.style.display = 'none';
+    }
+    function disableSlideShow() {
+        var slideShow = document.getElementById('slideshow');
+        slideShow.style.display = 'none';
+        disableSpinner();
+        hideAutoplayswitch();
+    }
+    function hideAutoplayswitch() {
+        var autoplayswitch = document.getElementById('autoplayswitch');
+        autoplayswitch.style.display = 'none';
+    }
+    function openPage() {
+        document.getElementById('fileUpload').click();
+        document.getElementById('fileUpload').addEventListener('change', readFile, false);
+            
+    }
+    function readFile(evt) {
+        var upoadedFiles = evt.target.files;
+        filename = upoadedFiles[0].name;
+        document.getElementById('fileNameBox').value = filename;
+    }
+
+    function updatePageNavigation() {
+        var toolbarObj = document.getElementById('topToolbar').ej2_instances[0];
+        if (currentPos === 1) {
+            toolbarObj.enableItems(document.getElementById('previousImage'), false);
+            toolbarObj.enableItems(document.getElementById('nextImage'), true);
+        } else if (currentPos === count) {
+            toolbarObj.enableItems(document.getElementById('previousImage'), true);
+            toolbarObj.enableItems(document.getElementById('nextImage'), false);
+        } else {
+            enablePrevNext();
+        }
+    }
+
+    function previousClicked() {
+        if (currentPos === 1)
+            changeImgSrc();
+        else 
+        {
+            currentPos--;
+            changeImgSrc();
+        }
+        updatePageNavigation();
+    }
+
+    function nextClicked() {
+        if(currentPos === count)
+            changeImgSrc();
+        else
+        {
+            currentPos++;
+            changeImgSrc();
+        }
+        updatePageNavigation();
+    }
+
+    function changeImgSrc(){
+        var img = document.getElementById("image");
+        img.src = "../PowerPoint/images/image" + currentPos + ".jpg";
+    }
+    
+</script>
+
+@section ActionDescription{
+    This sample demonstrates how to convert the PowerPoint slides to images based on the sequence of entrance animations using .NET PowerPoint library. With this, you can showcase the converted images as a slideshow in your custom PowerPoint Viewer.
+}
+
+@section Description{
+    <div id="action-description">
+        <p>
+            The .NET PowerPoint Library allows you to convert PowerPoint slides into images based on the sequence of entrance animations.
+            With this, you can showcase these images as a slideshow in your custom PowerPoint Viewer.
+        </p>
+    </div>
+    <div id="description">
+        <p>
+            More information about converting PowerPoint slides to images based on animations can be found in 
+            <a target="_blank" href="https://help.syncfusion.com/file-formats/presentation/presentation-to-image#Convert-powerpoint-animations-to-image" aria-label="Documentation" >Documentation</a> section.
+        </p>
+    </div>
+}
+
+@section Title{
+    <title>ASP.NET Core PowerPoint (Presentation) Library – Animation Converter example – Syncfusion Demos </title>
+}
+@section Meta{
+    <meta name="description" content="This example demonstrates the PPTX to images based on animations in ASP.NET Core PowerPoint (Presentation) library. Explore here for more details." />
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Animation Converter in ASP.NET Core PowerPoint (Presentation) Library </h1>
+}

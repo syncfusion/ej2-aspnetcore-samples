@@ -17,18 +17,18 @@ The following topics can help you to use the Syncfusion ASP.NET Core Components 
 
 ## How to run the demo
 
-Clone the repository. This repository contains the .NET 6 and .NET 8 project and solution files.
+Clone the repository. This repository contains the .NET 8 and .NET 9 project and solution files.
 
 ### Run the demo using .NET CLI
 
 * Open the command prompt from the demos directory.
 * Run the demo using the following command.
    
-   To run .NET 6 ASP.NET Core project
-   > `dotnet run --project EJ2CoreSampleBrowser_NET6.csproj`
-
    To run .NET 8 ASP.NET Core project
    > `dotnet run --project EJ2CoreSampleBrowser_NET8.csproj`
+
+   To run .NET 9 ASP.NET Core project
+   > `dotnet run --project EJ2CoreSampleBrowser_NET9.csproj`
 
 ### Run the demo using Visual Studio
 

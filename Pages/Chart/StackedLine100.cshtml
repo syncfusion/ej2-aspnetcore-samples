@@ -1,0 +1,157 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Chart.StackedLine100Model
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="control-section" align="center">
+        <ejs-chart id="container" load="load" title="Blood Type Distribution by Country" subTitle="Source: wikipedia.org" legendClick="legendClick">
+            <e-chart-tooltipsettings enable="true" showNearestTooltip="true" enableHighlight="true" format="${point.x} : <b>${point.y}% (${point.percentage}%)</b>">
+            </e-chart-tooltipsettings>
+            <e-chart-legendsettings enableHighlight="true"></e-chart-legendsettings>
+            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category">
+                <e-linestyle width="0"></e-linestyle>
+                <e-majorgridlines width="0"></e-majorgridlines>
+                <e-minorgridlines width="0"></e-minorgridlines>
+                <e-majorticklines width="0"></e-majorticklines>
+                <e-minorticklines width="0"></e-minorticklines>
+            </e-chart-primaryxaxis>
+            <e-chart-primaryyaxis interval="20" title="Population Share (%)">
+                <e-linestyle width="0"></e-linestyle>
+                <e-majorgridlines width="1"></e-majorgridlines>
+                <e-minorgridlines width="1"></e-minorgridlines>
+                <e-majorticklines width="0"></e-majorticklines>
+                <e-minorticklines width="0"></e-minorticklines>
+            </e-chart-primaryyaxis>
+            <e-chart-chartarea>
+                <e-chartarea-border width="0"></e-chartarea-border>
+                <e-chartarea-margin bottom=12></e-chartarea-margin>
+            </e-chart-chartarea>
+            <e-series-collection>
+                <e-series dataSource="@Model.ChartPoints" name="Canada" xName="X" width="2" opacity="1" yName="Y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StackingLine100">
+                    <e-series-marker visible="true" width="7" height="7" shape="@Syncfusion.EJ2.Charts.ChartShape.Circle" isFilled="true"></e-series-marker>
+                </e-series>
+                <e-series dataSource="@Model.ChartPoints" name="Algeria" xName="X" width="2" opacity="1" yName="Y1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StackingLine100">
+                    <e-series-marker visible="true" width="7" height="7" shape="@Syncfusion.EJ2.Charts.ChartShape.Diamond" isFilled="true"></e-series-marker>
+                </e-series>
+                <e-series dataSource="@Model.ChartPoints" name="Ireland" xName="X" width="2" opacity="1" yName="Y2" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StackingLine100">
+                    <e-series-marker visible="true" width="5" height="5" shape="@Syncfusion.EJ2.Charts.ChartShape.Rectangle" isFilled="true"></e-series-marker>
+                </e-series>
+                <e-series dataSource="@Model.ChartPoints" name="Armenia" xName="X" width="2" opacity="1" yName="Y3" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StackingLine100">
+                    <e-series-marker visible="true" width="6" height="6" shape="@Syncfusion.EJ2.Charts.ChartShape.Triangle" isFilled="true"></e-series-marker>
+                </e-series>
+            </e-series-collection>
+        </ejs-chart>
+    </div>
+    <script src="~/scripts/chart/theme-color.js"></script>
+    <script>
+        function load(args) {
+            loadChartTheme(args);
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+            args.chart.primaryXAxis.labelIntersectAction = ej.base.Browser.isDevice?'None':'Trim';
+            args.chart.primaryXAxis.labelRotation = ej.base.Browser.isDevice?'-45':'0';
+        }
+
+        var legendClick = function (args) {
+            if (args.series.index === 0) {
+                if (args.chart.series[3].visible) {
+                    args.chart.series[3].width = 3;
+                    args.chart.series[0].width = 2;
+                } else if (args.chart.series[2].visible) {
+                    args.chart.series[2].width = 3;
+                    args.chart.series[0].width = 2;
+                } else if (args.chart.series[1].visible) {
+                    args.chart.series[1].width = 3;
+                    args.chart.series[0].width = 2;
+                } else {
+                    args.chart.series[0].width = 3;
+                }
+            }
+            if (args.series.index === 1) {
+                if (args.chart.series[3].visible) {
+                    args.chart.series[3].width = 3;
+                    args.chart.series[1].width = 2;
+                } else if (args.chart.series[2].visible) {
+                    args.chart.series[2].width = 3;
+                    args.chart.series[1].width = 2;
+                } else if (args.series.visible && args.chart.series[0].visible) {
+                    args.chart.series[0].width = 3;
+                    args.chart.series[1].width = 2;
+                } else {
+                    args.chart.series[1].width = 3;
+                    args.chart.series[0].width = 2;
+                }
+            }
+            if (args.series.index === 2) {
+                if (args.chart.series[3].visible) {
+                    args.chart.series[3].width = 3;
+                    args.chart.series[2].width = 2;
+                } else if (!args.series.visible) {
+                    args.chart.series[2].width = 3;
+                    args.chart.series[1].width = 2;
+                    args.chart.series[0].width = 2;
+                } else if (args.chart.series[1].visible) {
+                    args.chart.series[1].width = 3;
+                    args.chart.series[2].width = 2;
+                } else if (args.series.visible && args.chart.series[0].visible) {
+                    args.chart.series[0].width = 3;
+                    args.chart.series[2].width = 2;
+                }
+            }
+            if (args.series.index === 3) {
+                if (!args.series.visible) {
+                    args.chart.series[3].width = 3;
+                    args.chart.series[2].width = 2;
+                    args.chart.series[1].width = 2;
+                    args.chart.series[0].width = 2;
+                } else if (args.chart.series[2].visible) {
+                    args.chart.series[2].width = 3;
+                    args.chart.series[3].width = 2;
+                } else if (args.chart.series[1].visible) {
+                    args.chart.series[1].width = 3;
+                    args.chart.series[3].width = 2;
+                } else if (args.series.visible && args.chart.series[0].visible) {
+                    args.chart.series[0].width = 3;
+                    args.chart.series[3].width = 2;
+                }
+            }
+        }
+
+    </script>
+}
+@*custom code start*@
+@section Scripts {
+
+}
+
+<style>
+
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@section Meta{
+                    <meta name="description" content="This example demonstrates the 100% Stacked Line in ASP.NET Core Chart control. Explore here for more details."/>
+                }
+@*custom code end*@
+@section ActionDescription{
+    <p>
+        This <a target="_blank" href="https://www.syncfusion.com/aspnet-core-ui-controls/charts/chart-types/100-stacked-line-chart" aria-label="Navigate to explore the syncfusion ASP.NET Core 100% Stacked Line Chart">ASP.NET Core 100% Stacked Line Chart</a> example visualizes the blood type distribution across different countries.
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can see how to render and configure the 100% stacked line chart. This chart displays multiple series of data as stacked lines, ensuring that the cumulative proportion of each stacked element always totals 100%. <code>Markers</code> are used to represent individual data and its values.
+    </p>
+    <p>
+        <code>Tooltip</code> is enabled in this example. To see a tooltip in action, hover over or tap on the chart.
+    </p>
+    <p>
+        More information about the 100% stacked line series can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/chart-types/stack-line100" aria-label="Navigate to the documentation for 100% Stacked Line in ASP.NET CORE Charts Component">documentation section</a>.
+    </p>
+}
+@section Title{
+                    <title>ASP.NET Core Chart 100% Stacked Line Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of 100% Stacked Line in ASP.NET Core Chart Control</h1>
+                }

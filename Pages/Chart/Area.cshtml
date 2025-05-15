@@ -1,0 +1,113 @@
+﻿@page
+@model EJ2CoreSampleBrowser.Pages.Chart.AreaModel
+@using Syncfusion.EJ2
+
+@{
+    string valueX1 = "8%";
+    string valueX2 = "12%";
+    string valueX3 = "35%";
+    string valueX4 = "63%";
+    string valueX5 = "75%";
+    string valueX6 = "85%";
+    string valueX7 = "93%";
+}
+
+@section ControlsSection{
+
+    <div class="control-section" align="center">
+        <ejs-chart id="lineContainer" load="load" title="US Music Sales By Format">
+            <e-chart-chartarea>
+                <e-chartarea-border width="0"></e-chartarea-border>
+            </e-chart-chartarea>
+            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.DateTime" minimum="new DateTime(1973, 1, 1)" maximum="new DateTime(2018, 1, 1)" labelFormat="yyyy" intervalType="@Syncfusion.EJ2.Charts.IntervalType.Years" edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift">
+                <e-majorgridlines width="0"></e-majorgridlines>
+                <e-majorticklines width="0"></e-majorticklines>
+            </e-chart-primaryxaxis>
+            <e-chart-primaryyaxis title="In Billions (USD)" minimum="0" maximum="25" interval=5>
+                <e-linestyle width="0"></e-linestyle>
+                <e-majorticklines width="0"></e-majorticklines>
+            </e-chart-primaryyaxis>
+            <e-series-collection>
+                <e-series dataSource="@Model.Compact" xName="Period" yName="USD" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Area">
+                    <e-series-border width="1.5" color="white"></e-series-border>
+                </e-series>
+                <e-series dataSource="@Model.Download" xName="Period" yName="USD" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Area">
+                    <e-series-border width="1.5" color="white"></e-series-border>
+                </e-series>
+                <e-series dataSource="@Model.Streaming" xName="Period" yName="USD" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Area">
+                    <e-series-border width="1.5" color="white"></e-series-border>
+                </e-series>
+                <e-series dataSource="@Model.Casette" xName="Period" yName="USD" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Area">
+                    <e-series-border width="1.5" color="white"></e-series-border>
+                </e-series>
+                <e-series dataSource="@Model.Vinyl" xName="Period" yName="USD" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Area">
+                    <e-series-border width="1.5" color="white"></e-series-border>
+                </e-series>
+                <e-series dataSource="@Model.Track" xName="Period" yName="USD" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Area">
+                    <e-series-border width="1.5" color="white"></e-series-border>
+                </e-series>
+                <e-series dataSource="@Model.Other" xName="Period" yName="USD" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Area">
+                    <e-series-border width="1.5" color="white"></e-series-border>
+                </e-series>
+            </e-series-collection>
+            <e-chart-annotations>
+                <e-chart-annotation region="@Syncfusion.EJ2.Charts.Regions.Series" x="valueX1" y="95%"></e-chart-annotation>
+                <e-chart-annotation region="@Syncfusion.EJ2.Charts.Regions.Series" x="valueX2" y="80%"></e-chart-annotation>
+                <e-chart-annotation region="@Syncfusion.EJ2.Charts.Regions.Series" x="valueX3" y="87%"></e-chart-annotation>
+                <e-chart-annotation region="@Syncfusion.EJ2.Charts.Regions.Series" x="valueX4" y="70%"></e-chart-annotation>
+                <e-chart-annotation region="@Syncfusion.EJ2.Charts.Regions.Series" x="valueX5" y="98%"></e-chart-annotation>
+                <e-chart-annotation region="@Syncfusion.EJ2.Charts.Regions.Series" x="valueX6" y="93%"></e-chart-annotation>
+                <e-chart-annotation region="@Syncfusion.EJ2.Charts.Regions.Series" x="valueX7" y="96%"></e-chart-annotation>
+            </e-chart-annotations>
+        </ejs-chart>
+    </div>
+    <script src="~/scripts/chart/theme-color.js"></script>
+    <script>
+        function load(args) {
+            loadChartTheme(args);
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+            args.chart.annotations[0].content = ej.base.Browser.isDevice ? '<div style="font-weight: bold; color: white; font-size: 7px;">8-TRACK</div>' : '<div style="font-weight: bold; color: white; font-size: 11px;">8-TRACK</div>';
+            args.chart.annotations[1].content = ej.base.Browser.isDevice ? '<div style="font-weight: bold; color: white; font-size: 7px;">VINYL</div>' : '<div style="font-weight: bold; color: white;font-size: 11px;">VINYL</div>';
+            args.chart.annotations[2].content = ej.base.Browser.isDevice ? '<div style="font-weight: bold; color: white; font-size: 7px;">CASSETTE</div>' : '<div style="font-weight: bold; color: white;font-size: 11px;">CASSETTE</div>';
+            args.chart.annotations[3].content = ej.base.Browser.isDevice ? '<div style="font-weight: bold; color: white; font-size: 7px;">COMPACT DISC</div>' : '<div style="font-weight: bold; color: white;font-size: 11px;">COMPACT DISC</div>';
+            args.chart.annotations[4].content = ej.base.Browser.isDevice ? '<div style="font-weight: bold; color: white; font-size: 7px;">OTHERS</div>' : '<div style="font-weight: bold; color: white;font-size: 11px;">OTHERS</div>';
+            args.chart.annotations[5].content = ej.base.Browser.isDevice ? '<div style="font-weight: bold; color: white; font-size: 7px;">DOWNLOAD</div>' : '<div style="font-weight: bold; color: white; font-size: 11px;">DOWNLOAD</div>';
+            args.chart.annotations[6].content = ej.base.Browser.isDevice ? '<div style="font-weight: bold; color: white; font-size: 7px;">STREAMING</div>' : '<div style="font-weight: bold; color: white;font-size: 11px;">STREAMING</div>';
+        }
+    </script>
+}
+@*custom code start*@
+@section Scripts{
+
+}
+
+<style>
+
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@section Meta{
+    <meta name="description" content="This example demonstrates the Area in ASP.NET Core Chart control. Explore here for more details." />
+}
+@*custom code end*@
+@section ActionDescription{
+    <p>
+        This <a target="_blank" href="https://www.syncfusion.com/aspnet-core-ui-controls/charts/chart-types/area-chart" aria-label="Navigate to explore the syncfusion ASP.NET Core Area Chart">ASP.NET Core Area Chart</a> example visualizes music sales data by format in US by using a default area series in the chart.
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can see how the area type chart can be rendered and configured. It is like the line chart, which represents time-dependent data and shows trends at equal intervals, but the area is closed and filled with the color of the series.
+    </p>
+    <p>
+        More information about the area series can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/chart-types/area" aria-label="Navigate to the documentation for area in ASP.NET Core Chart component">documentation section</a>.
+    </p>
+}
+@section Title{
+    <title>ASP.NET Core Chart Area Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Area in ASP.NET Core Chart Control</h1>
+}

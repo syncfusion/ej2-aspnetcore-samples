@@ -3,29 +3,27 @@
 @using Syncfusion.EJ2
 @section ControlsSection{
     <div class="control-section" align="center">
-        <ejs-chart id="container" load="load" title="Music Album Sales" isTransposed="true">
-            <e-chart-tooltipsettings enable="true" showNearestTooltip="true" enableHighlight="true" format="${point.x}: <b>${point.y}</b>" header="<b>Album Sale</b>">
+        <ejs-chart id="container" load="load" title="Stock Market Capitalization as a Percentage of GDP by Country" subTitle="Source: wikipedia.org" isTransposed="true">
+            <e-chart-tooltipsettings enable="true" showNearestTooltip="true" enableHighlight="true" format="${point.x}: <b>${point.y}</b>" header="<b>Stock Market Cap</b>">
             </e-chart-tooltipsettings>
-            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Double"
-                                  interval="4"
-                                  title="Years"
-                                  edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift"
-                                  minimum="2000"
-                                  maximum="2016">
+            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category" labelPlacement="OnTicks">
                 <e-minorticklines width="0"></e-minorticklines>
+                <e-majorticklines width="0"></e-majorticklines>
+                <e-linestyle width="0"></e-linestyle>
             </e-chart-primaryxaxis>
-            <e-chart-primaryyaxis labelFormat="{value}M"
+            <e-chart-primaryyaxis labelFormat="{value}%"
                                   edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift"
-                                  title="Sales (In Millions)"
-                                  minimum="0"
-                                  maximum="25"
-                                  interval="5">
+                                  title="Capitalization Ratio (% of GDP)"
+                                  interval="40">
+                <e-majorgridlines width="0"></e-majorgridlines>
+                <e-majorticklines width="0"></e-majorticklines>
+                <e-linestyle width="0"></e-linestyle>
             </e-chart-primaryyaxis>
             <e-chart-chartarea>
-                <e-chartarea-border width="1"></e-chartarea-border>
+                <e-chartarea-border width="0"></e-chartarea-border>
             </e-chart-chartarea>
             <e-series-collection>
-                <e-series dataSource="@Model.ChartPoints" xName="Month" width="2" yName="FR_Temperature" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline">
+                <e-series dataSource="@Model.ChartPoints" xName="Country" width="2" yName="Y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline">
                     <e-series-marker visible="true" height="7" width="7" isFilled="true"></e-series-marker>
                 </e-series>
             </e-series-collection>
@@ -36,6 +34,7 @@
         function load(args) {
            loadChartTheme(args);
             args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+            args.chart.primaryYAxis.labelRotation = ej.base.Browser.isDevice ? -45 : 0;
         }
     </script>
 }
@@ -56,12 +55,13 @@
 @*custom code end*@
 @section ActionDescription{
     <p>
-        This sample shows the music album sales with the spline series by inverting X and Y axes. Data points are enhanced by a marker and tooltip.
+        This sample showcases an inversed spline chart depicting stock market capitalization as a percentage of GDP by country, with enhanced interactivity through markers and tooltips.
     </p>
 }
 @section Description{
     <p>
-        In this example, you can see how to render and configure the spline type charts. A Spline chart uses a curved line to connect points in a data series. <code>Markers</code> are used to represent individual data and its values.
+        In this example, you can see how to render and configure inversed spline type charts using the <code>isTransposed</code> property. A spline chart uses a curved line to connect points in a data series.
+        <code>Markers</code> are used to represent individual data points and their values.
     </p>
     <p>
         <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover over or tap on the chart.

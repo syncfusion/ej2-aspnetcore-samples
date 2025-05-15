@@ -18,17 +18,17 @@ namespace EJ2CoreSampleBrowser.Pages.Chart
         {
             Segments = new List<ChartSegment>();
             ChartSegment segment1 = new ChartSegment();
-            segment1.Value = 450;
-            segment1.Color = "red";
+            segment1.Value = 50;
+            segment1.Color = "#D32F2F";
             Segments.Add(segment1);
 
             ChartSegment segment2 = new ChartSegment();
-            segment2.Value = 500;
-            segment2.Color = "green";
+            segment2.Value = 65;
+            segment2.Color = "#228B22";
             Segments.Add(segment2);
 
             ChartSegment segment3 = new ChartSegment();
-            segment3.Color = "blue";
+            segment3.Color = "#0047AB";
             Segments.Add(segment3);
         }
     }

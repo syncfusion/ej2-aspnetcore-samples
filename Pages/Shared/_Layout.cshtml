@@ -1,6 +1,9 @@
 ﻿@using EJ2CoreSampleBrowser.Helpers;
 @using Microsoft.AspNetCore;
 @using CoreDemos;
+@using System.IO;
+@using System.Text.Encodings.Web
+@using System.Text.Json
 @{
     var nodeTemplate = "<div><span class=\"tree-text\">${name}</span>" +
             "${if(type === \"update\")}<span class=\"e-badge sb-badge e-samplestatus ${type} tree tree-badge\">Updated</span>" +
@@ -24,6 +27,18 @@
         new { ThemeId = "light", Mode = "Light Mode", ThemeIndex=0 },
         new { ThemeId = "dark", Mode = "Dark Mode",ThemeIndex=1 }
     };
+
+    String licenseKey = "";
+    var path = Directory.GetCurrentDirectory() + "/SyncfusionLicense.txt";
+    if (File.Exists(path) && File.ReadAllText(path).Trim().Length > 0)
+    {
+        licenseKey = File.ReadAllText(path).Trim();
+        var options = new JsonSerializerOptions
+        {
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+        };
+        licenseKey = JsonSerializer.Serialize(licenseKey, options);
+    }
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -97,6 +112,9 @@
     <script crossorigin="anonymous" integrity="sha384-83KFdJ/lJGxIW+p+cbX3MI8vwU/s+pQbv42uek9/nt283oRLzP8YJ2J7uSBgoRuw" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.js" type="text/javascript"></script>
     <script crossorigin="anonymous" integrity="sha384-yUJOFmuHndKeGdERelLizdhzB2ghbvBSFWMcE7z3t5kOERXoOwvNQhYTAvjiZV80" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/htmlmixed/htmlmixed.js" type="text/javascript"></script>
 	<script>
+        if (@Html.Raw(licenseKey) != "") {
+            ej.base.registerLicense(@Html.Raw(licenseKey));
+        }
         function updateButtonTheme() {
             var currentURL = window.location.href;
             if (currentURL.includes("-dark")) {

@@ -18,22 +18,33 @@ namespace EJ2CoreSampleBrowser.Pages.Chart
         {
             ChartPoints = new List<RoundedColumnChartData>
             {
-                new RoundedColumnChartData { Country = "Sierra Leone", Rate = 100, Literacy_Rate = 48.1, Text = "48.1%" },
-                new RoundedColumnChartData { Country = "South Sudan", Rate = 100, Literacy_Rate = 26.8, Text = "26.8%" },
-                new RoundedColumnChartData { Country = "Nepal", Rate = 100, Literacy_Rate = 64.7, Text = "64.7%" },
-                new RoundedColumnChartData { Country = "Gambia", Rate = 100, Literacy_Rate = 55.5, Text = "55.5%" },
-                new RoundedColumnChartData { Country = "Gyana", Rate = 100, Literacy_Rate = 88.5, Text = "88.5%" },
-                new RoundedColumnChartData { Country = "Kenya", Rate = 100, Literacy_Rate = 78.0, Text = "78.0%" },
-                new RoundedColumnChartData { Country = "Singapore", Rate = 100, Literacy_Rate = 96.8, Text = "96.8%" },
-                new RoundedColumnChartData { Country = "Niger", Rate = 100, Literacy_Rate = 19.1, Text = "19.1%" },
+                new RoundedColumnChartData { X = "Healthcare", Y = 0.9, TooltipText = "0.9%" },
+                new RoundedColumnChartData { X = "Real Estate", Y = 1.3, TooltipText = "1.3%" },
+                new RoundedColumnChartData { X = "Energy", Y = 2.3, TooltipText = "2.3%" },
+                new RoundedColumnChartData { X = "Consumer Staples", Y = 12.0, TooltipText = "12.0%" },
+                new RoundedColumnChartData { X = "Industrials", Y = 15.6, TooltipText = "15.6%" },
+                new RoundedColumnChartData { X = "Utilities", Y = 19.6, TooltipText = "19.6%" },
+                new RoundedColumnChartData { X = "S&P 500 Average", Y = 23.3, TooltipText = "23.3%" },
+                new RoundedColumnChartData { X = "Financials", Y = 28.4, TooltipText = "28.4%" },
+                new RoundedColumnChartData { X = "Consumer Discretionary", Y = 29.1, TooltipText = "29.1%" },
+                new RoundedColumnChartData { X = "Information Technology", Y = 35.7, TooltipText = "35.7%" },
+                new RoundedColumnChartData { X = "Communication Services", Y = 38.9, TooltipText = "38.9%" }
+            };
+            bool isMobile = Request.Headers["User-Agent"].ToString().Contains("Mobi");
+            if (isMobile)
+            {
+                ChartPoints[3].X = "Consumer <br> Staples";
+                ChartPoints[6].X = "S&P <br> 500 Average";
+                ChartPoints[8].X = "Consumer <br> Discretionary";
+                ChartPoints[9].X = "Information <br> Technology";
+                ChartPoints[10].X = "Communication <br> Services";
             };
         }
     }
     public class RoundedColumnChartData
     {
-        public string Country;
-        public double Rate;
-        public double Literacy_Rate;
-        public string Text;
+        public string X;
+        public double Y;
+        public string TooltipText;
     }
 }

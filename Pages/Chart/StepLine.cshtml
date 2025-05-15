@@ -4,11 +4,11 @@
 @section ControlsSection{
     <div class="control-section" align="center">
 
-        <ejs-chart id="lineContainer" load="load" title="Fruit Production Statistics">
-            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.DateTime" minimum="new DateTime(1971, 01, 1)" maximum="new DateTime(2012, 01, 1)" edgelabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift">
+        <ejs-chart id="lineContainer" load="load" title="Worldwide Best-Selling Albums by Year" subTitle="Source: wikipedia.org" tooltipRender="tooltipRender">
+            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Double" minimum="2006" maximum="2025" interval=3 edgelabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift">
                 <e-majorgridlines width="0"></e-majorgridlines>
             </e-chart-primaryxaxis>
-            <e-chart-primaryyaxis interval="10" labelFormat="{value}%" title="Production (In Percentage)">
+            <e-chart-primaryyaxis interval="4" labelFormat="{value}" title="Sales in million" minimum=0 maximum=20>
                 <e-majorticklines width="0"></e-majorticklines>
                 <e-linestyle width="0"></e-linestyle>
             </e-chart-primaryyaxis>
@@ -16,11 +16,15 @@
                 <e-chartarea-border width="0"></e-chartarea-border>
             </e-chart-chartarea>
             <e-series-collection>
-                <e-series dataSource="@Model.StepLineData" xName="Period" width="5" opacity="1" yName="AUS_UnemploymentRate" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StepLine">
-                    <e-series-marker visible="true" height="7" width="7"></e-series-marker>
+                <e-series dataSource="@Model.StepLineData" xName="X" width="3" opacity="1" yName="Y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StepLine">
+                    <e-series-marker visible="false">
+                        <e-series-datalabel visible=true>
+                            <e-font fontWeight="600"></e-font>
+                        </e-series-datalabel>
+                    </e-series-marker>
                 </e-series>
             </e-series-collection>
-            <e-chart-tooltipsettings enable="true" showNearestTooltip="true" enableHighlight="true" header="<b>Fruit Production</b>" format="${point.x} : <b>${point.y}</b>"></e-chart-tooltipsettings>
+            <e-chart-tooltipsettings enable="true" showNearestTooltip="true" enableHighlight="true" header="<b>${point.x}</b>" enableMarker=false></e-chart-tooltipsettings>
         </ejs-chart>
     </div>
     <script src="~/scripts/chart/theme-color.js"></script>
@@ -28,6 +32,11 @@
         function load(args) {
             loadChartTheme(args);
             args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+        }
+
+        var tooltipRender = function (args) {
+            var data = args.series.dataSource[args.point.index];
+            args.text = `Sales: <b>${data.Y}M</b><br/>Album: <b>${data.Album}</b><br/>Artist: <b>${data.Artist}</b>`;
         }
     </script>
 }
@@ -48,12 +57,12 @@
 @*custom code end*@
 @section ActionDescription{
     <p>
-        This <a target="_blank" href="https://www.syncfusion.com/aspnet-core-ui-controls/charts/chart-types/stepline-chart" aria-label="Navigate to explore the syncfusion ASP.NET MVC Step Line Chart">ASP.NET MVC Step Line Chart</a> example visualizes the fruit production statistics with default step line series in the chart.
+        This <a target="_blank" href="https://www.syncfusion.com/aspnet-core-ui-controls/charts/chart-types/stepline-chart" aria-label="Navigate to explore the syncfusion ASP.NET MVC Step Line Chart">ASP.NET MVC Step Line Chart</a> example visualizes the global best-selling albums by year from 2001 to 2024.
     </p>
 }
 @section Description{
     <p>
-        In this example, you can see how to render and configure a step line chart. This chart forms the step line progress by connecting points using vertical and horizontal lines. <code>Markers</code> are used to represent individual data and its values.
+        In this example, you can see how to render and configure a step line type chart. This chart forms a step-like progression by connecting points using vertical and horizontal lines. <code>Markers</code> are used to represent individual data points and their values.
     </p>
     <p>
         <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover over or tap on the chart.

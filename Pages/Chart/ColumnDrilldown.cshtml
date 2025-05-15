@@ -13,7 +13,7 @@
             <p id="text" style="visibility:hidden; display:inline-block"></p>
         </div>
         <div id="drilldown" align="center">
-            <ejs-chart id="drilldownContainer" title="Top Populated Continents of 2023" load="load" loaded="loaded" pointRender="pointRender" chartMouseClick="chartMouseClick" axisLabelClick="axisLabelClick" pointClick="pointClick">
+            <ejs-chart id="drilldownContainer" title="Top Populated Continents of 2023" subTitle="A Look at Population Rankings and Trends in 2023" load="load" loaded="loaded" pointRender="pointRender" tooltipRender="tooltipRender" chartMouseClick="chartMouseClick" axisLabelClick="axisLabelClick" pointClick="pointClick">
                 <e-chart-tooltipsettings enable="true" header="<b>Population - 2023</b>" format="${point.x}: ${point.y}M"></e-chart-tooltipsettings>
                 <e-chart-legendSettings visible="false"></e-chart-legendSettings>
                 <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category" interval=1>
@@ -187,6 +187,11 @@
                     args.fill = pointTailwind3Colors[args.point.index % 10];
                 }
             }
+        };
+        var tooltipRender = function (args) {
+            args.text = args.text.replace(/\d+/g, function (num) {
+                return Number(num).toLocaleString('en-US');
+            });
         };
         var pointClick = function (args) {
             args.series.fill = args.point.color;

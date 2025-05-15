@@ -5,66 +5,193 @@
 
 
 @{
-    string valueX = "95%";
+    string valueX = "49%";
+    string valueX1 = "16%";
+    string valueX2 = "66%";
+    var markerBorder = new ChartTrendLineMarkerBorder { Width=2, Color="white" };
 }
 
 @section ControlsSection {
 
     <div class="control-section" align="center">
-        <ejs-chart id="lineContainer" load="load" title="Annual Mean Rainfall in Australia">
-            <e-chart-tooltipsettings enable="true" showNearestTooltip="true" enableHighlight="true" shared="true" header="<b>Rainfall</b>" format="${point.x} : <b>${point.y}</b>" enableMarker="true">
+        <ejs-chart id="lineContainer" load="load" title="Annual Mean Precipitation in the United States (1895-2025)" subTitle="Source: ncei.noaa.gov">
+            <e-chart-tooltipsettings enable="true" showNearestTooltip="true" enableHighlight="true" header="<b>Rainfall</b>" format="${point.x} : <b>${point.y}</b>" enableMarker="false">
             </e-chart-tooltipsettings>
             <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.DateTime"
-                                  labelFormat="yyyy"
-                                  minimum="new DateTime(1910, 1, 1)"
-                                  maximum="new DateTime(2010, 1, 1)"
-                                  intervalType="@Syncfusion.EJ2.Charts.IntervalType.Years"
                                   edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift">
                 <e-majorgridlines width="0"></e-majorgridlines>
             </e-chart-primaryxaxis>
-            <e-chart-primaryyaxis labelFormat="{value}mm"
-                                  rangePadding="@Syncfusion.EJ2.Charts.ChartRangePadding.None"
-                                  minimum="200"
-                                  maximum="800"
-                                  interval="100">
+            <e-chart-primaryyaxis labelFormat="{value}mm" title="Precipitation (mm)"
+                                  minimum="10"
+                                  maximum="100"
+                                  interval="20">
                 <e-linestyle width="0"></e-linestyle>
                 <e-majorticklines width="0"></e-majorticklines>
+                <e-minorticklines width="0"></e-minorticklines>
             </e-chart-primaryyaxis>
             <e-chart-chartarea>
                 <e-chartarea-border width="0"></e-chartarea-border>
             </e-chart-chartarea>
             <e-chart-annotations>
-                <e-chart-annotation content="<div style='color:green;font-weight:bold;font-size:14px'>Medium</div>" region="@Syncfusion.EJ2.Charts.Regions.Series"></e-chart-annotation>
-                <e-chart-annotation content="<div style='color:blue;font-weight:bold;font-size:14px'>High</div>" region="@Syncfusion.EJ2.Charts.Regions.Series" y="10%"></e-chart-annotation>
-                <e-chart-annotation content="<div style='color:red;font-weight:bold;font-size:14px'>Low</div>" region="@Syncfusion.EJ2.Charts.Regions.Series" x="valueX" y="84%"></e-chart-annotation>
+                <e-chart-annotation content="<div style='color:#228B22;font-weight:bold;font-size:14px'>Medium</div>" region="@Syncfusion.EJ2.Charts.Regions.Series" x="valueX" y="45%"></e-chart-annotation>
+                <e-chart-annotation content="<div style='color:#0047AB;font-weight:bold;font-size:14px'>High</div>" region="@Syncfusion.EJ2.Charts.Regions.Series" x="valueX1" y="10%"></e-chart-annotation>
+                <e-chart-annotation content="<div style='color:#D32F2F;font-weight:bold;font-size:14px'>Low</div>" region="@Syncfusion.EJ2.Charts.Regions.Series" x="valueX2" y="89%"></e-chart-annotation>
             </e-chart-annotations>
             <e-series-collection>
-                <e-series segmentAxis="@Syncfusion.EJ2.Charts.Segment.Y" xName="XValue" width="2" yName="YValue" type="@Syncfusion.EJ2.Charts.ChartSeriesType.MultiColoredLine" segments="@Model.Segments">
+                <e-series segmentAxis="@Syncfusion.EJ2.Charts.Segment.Y" xName="X" width="2" yName="Y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.MultiColoredLine" segments="@Model.Segments">
+                    <e-series-marker visible=true isFilled=true border="markerBorder">
+                    </e-series-marker>
                 </e-series>
             </e-series-collection>
+            <e-chart-legendsettings visible="false"></e-chart-legendsettings>
         </ejs-chart>
     </div>
     <script src="~/scripts/chart/theme-color.js"></script>
     <script>
         function load(args) {
-            var selectedTheme = location.hash.split("/")[1];
-            var annualMean = [];
-            [
-                380, 410, 310, 540, 510, 330, 490, 470, 472, 460, 550, 420, 380, 430, 385, 520, 580, 420, 350, 505,
-                535, 410, 204, 400, 415, 408, 415, 350, 375, 500, 390, 450, 440, 350, 400, 365, 490, 400, 520, 510,
-                395, 380, 404, 400, 500, 390, 610, 380, 390, 420, 440, 570, 600, 380, 410, 405, 480, 320, 420, 440,
-                320, 280, 320, 400, 390, 460, 470, 490, 420, 480, 410, 420, 580, 410, 380, 480, 360, 650, 680, 720,
-                580, 480, 520, 440, 420, 430, 380, 520, 410, 540, 400, 390, 460, 470, 490, 420, 480, 470, 490, 330,
-                520, 480, 580, 590, 600, 310, 480, 500, 400, 508, 480, 460, 700, 705, 480, 410, 480
-            ].map(function (value, index) {
-                annualMean.push({ XValue: new Date(1900 + index, 1, 1), YValue: value });
-            });
+            var annualMean = [
+            { X: new Date(1895, 0, 1), Y: 84.07 },
+            { X: new Date(1896, 0, 1), Y: 60.96 },
+            { X: new Date(1897, 0, 1), Y: 60.71 },
+            { X: new Date(1898, 0, 1), Y: 61.72 },
+            { X: new Date(1899, 0, 1), Y: 66.04 },
+            { X: new Date(1900, 0, 1), Y: 44.2 },
+            { X: new Date(1901, 0, 1), Y: 50.55 },
+            { X: new Date(1902, 0, 1), Y: 36.83 },
+            { X: new Date(1903, 0, 1), Y: 57.66 },
+            { X: new Date(1904, 0, 1), Y: 45.97 },
+            { X: new Date(1905, 0, 1), Y: 55.37 },
+            { X: new Date(1906, 0, 1), Y: 64.26 },
+            { X: new Date(1907, 0, 1), Y: 69.85 },
+            { X: new Date(1908, 0, 1), Y: 46.23 },
+            { X: new Date(1909, 0, 1), Y: 69.6 },
+            { X: new Date(1910, 0, 1), Y: 54.61 },
+            { X: new Date(1911, 0, 1), Y: 62 },
+            { X: new Date(1912, 0, 1), Y: 49.53 },
+            { X: new Date(1913, 0, 1), Y: 72.9 },
+            { X: new Date(1914, 0, 1), Y: 63.5 },
+            { X: new Date(1915, 0, 1), Y: 69.85 },
+            { X: new Date(1916, 0, 1), Y: 96.27 },
+            { X: new Date(1917, 0, 1), Y: 55.63 },
+            { X: new Date(1918, 0, 1), Y: 61.21 },
+            { X: new Date(1919, 0, 1), Y: 48.51 },
+            { X: new Date(1920, 0, 1), Y: 56.13 },
+            { X: new Date(1921, 0, 1), Y: 53.34 },
+            { X: new Date(1922, 0, 1), Y: 51.56 },
+            { X: new Date(1923, 0, 1), Y: 62 },
+            { X: new Date(1924, 0, 1), Y: 50.8 },
+            { X: new Date(1925, 0, 1), Y: 58.17 },
+            { X: new Date(1926, 0, 1), Y: 59.94 },
+            { X: new Date(1927, 0, 1), Y: 44.96 },
+            { X: new Date(1928, 0, 1), Y: 32.51 },
+            { X: new Date(1929, 0, 1), Y: 59.94 },
+            { X: new Date(1930, 0, 1), Y: 65.53 },
+            { X: new Date(1931, 0, 1), Y: 39.62 },
+            { X: new Date(1932, 0, 1), Y: 82.55 },
+            { X: new Date(1933, 0, 1), Y: 57.15 },
+            { X: new Date(1934, 0, 1), Y: 46.23 },
+            { X: new Date(1935, 0, 1), Y: 60.96 },
+            { X: new Date(1936, 0, 1), Y: 73.15 },
+            { X: new Date(1937, 0, 1), Y: 92.71 },
+            { X: new Date(1938, 0, 1), Y: 53.59 },
+            { X: new Date(1939, 0, 1), Y: 62.99 },
+            { X: new Date(1940, 0, 1), Y: 49.02 },
+            { X: new Date(1941, 0, 1), Y: 52.58 },
+            { X: new Date(1942, 0, 1), Y: 40.13 },
+            { X: new Date(1943, 0, 1), Y: 56.64 },
+            { X: new Date(1944, 0, 1), Y: 47.75 },
+            { X: new Date(1945, 0, 1), Y: 45.72 },
+            { X: new Date(1946, 0, 1), Y: 64.26 },
+            { X: new Date(1947, 0, 1), Y: 61.72 },
+            { X: new Date(1948, 0, 1), Y: 50.29 },
+            { X: new Date(1949, 0, 1), Y: 80.26 },
+            { X: new Date(1950, 0, 1), Y: 85.34 },
+            { X: new Date(1951, 0, 1), Y: 59.44 },
+            { X: new Date(1952, 0, 1), Y: 62 },
+            { X: new Date(1953, 0, 1), Y: 66.8 },
+            { X: new Date(1954, 0, 1), Y: 64.52 },
+            { X: new Date(1955, 0, 1), Y: 42.67 },
+            { X: new Date(1956, 0, 1), Y: 57.66 },
+            { X: new Date(1957, 0, 1), Y: 53.85 },
+            { X: new Date(1958, 0, 1), Y: 58.17 },
+            { X: new Date(1959, 0, 1), Y: 55.63 },
+            { X: new Date(1960, 0, 1), Y: 57.4 },
+            { X: new Date(1961, 0, 1), Y: 37.59 },
+            { X: new Date(1962, 0, 1), Y: 56.13 },
+            { X: new Date(1963, 0, 1), Y: 39.88 },
+            { X: new Date(1964, 0, 1), Y: 61.72 },
+            { X: new Date(1965, 0, 1), Y: 59.44 },
+            { X: new Date(1966, 0, 1), Y: 59.94 },
+            { X: new Date(1967, 0, 1), Y: 54.36 },
+            { X: new Date(1968, 0, 1), Y: 55.12 },
+            { X: new Date(1969, 0, 1), Y: 76.45 },
+            { X: new Date(1970, 0, 1), Y: 53.09 },
+            { X: new Date(1971, 0, 1), Y: 51.56 },
+            { X: new Date(1972, 0, 1), Y: 59.18 },
+            { X: new Date(1973, 0, 1), Y: 62.99 },
+            { X: new Date(1974, 0, 1), Y: 80.01 },
+            { X: new Date(1975, 0, 1), Y: 66.29 },
+            { X: new Date(1976, 0, 1), Y: 44.7 },
+            { X: new Date(1977, 0, 1), Y: 40.13 },
+            { X: new Date(1978, 0, 1), Y: 80.52 },
+            { X: new Date(1979, 0, 1), Y: 84.07 },
+            { X: new Date(1980, 0, 1), Y: 67.06 },
+            { X: new Date(1981, 0, 1), Y: 24.89 },
+            { X: new Date(1982, 0, 1), Y: 72.14 },
+            { X: new Date(1983, 0, 1), Y: 52.83 },
+            { X: new Date(1984, 0, 1), Y: 34.29 },
+            { X: new Date(1985, 0, 1), Y: 36.07 },
+            { X: new Date(1986, 0, 1), Y: 36.83 },
+            { X: new Date(1987, 0, 1), Y: 55.12 },
+            { X: new Date(1988, 0, 1), Y: 50.04 },
+            { X: new Date(1989, 0, 1), Y: 52.07 },
+            { X: new Date(1990, 0, 1), Y: 70.61 },
+            { X: new Date(1991, 0, 1), Y: 60.2 },
+            { X: new Date(1992, 0, 1), Y: 52.83 },
+            { X: new Date(1993, 0, 1), Y: 81.28 },
+            { X: new Date(1994, 0, 1), Y: 56.9 },
+            { X: new Date(1995, 0, 1), Y: 80.77 },
+            { X: new Date(1996, 0, 1), Y: 71.63 },
+            { X: new Date(1997, 0, 1), Y: 71.37 },
+            { X: new Date(1998, 0, 1), Y: 85.09 },
+            { X: new Date(1999, 0, 1), Y: 79.5 },
+            { X: new Date(2000, 0, 1), Y: 54.36 },
+            { X: new Date(2001, 0, 1), Y: 46.99 },
+            { X: new Date(2002, 0, 1), Y: 51.05 },
+            { X: new Date(2003, 0, 1), Y: 33.78 },
+            { X: new Date(2004, 0, 1), Y: 50.04 },
+            { X: new Date(2005, 0, 1), Y: 68.58 },
+            { X: new Date(2006, 0, 1), Y: 66.29 },
+            { X: new Date(2007, 0, 1), Y: 56.39 },
+            { X: new Date(2008, 0, 1), Y: 56.13 },
+            { X: new Date(2009, 0, 1), Y: 40.64 },
+            { X: new Date(2010, 0, 1), Y: 66.55 },
+            { X: new Date(2011, 0, 1), Y: 41.91 },
+            { X: new Date(2012, 0, 1), Y: 53.09 },
+            { X: new Date(2013, 0, 1), Y: 60.2 },
+            { X: new Date(2014, 0, 1), Y: 34.8 },
+            { X: new Date(2015, 0, 1), Y: 46.48 },
+            { X: new Date(2016, 0, 1), Y: 51.82 },
+            { X: new Date(2017, 0, 1), Y: 82.04 },
+            { X: new Date(2018, 0, 1), Y: 46.99 },
+            { X: new Date(2019, 0, 1), Y: 65.02 },
+            { X: new Date(2020, 0, 1), Y: 70.1 },
+            { X: new Date(2021, 0, 1), Y: 53.09 },
+            { X: new Date(2022, 0, 1), Y: 41.66 },
+            { X: new Date(2023, 0, 1), Y: 74.68 },
+            { X: new Date(2024, 0, 1), Y: 82.8 },
+            { X: new Date(2025, 0, 1), Y: 35.31 }
+        ];
             args.chart.series[0].dataSource = annualMean;
-            loadChartTheme(args);
+            var selectedTheme = loadChartTheme(args);
             args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
-            args.chart.annotations[0].x = ej.base.Browser.isDevice ? "21%" : "19%";
-            args.chart.annotations[0].y = ej.base.Browser.isDevice ? "42%" : "47%";
-            args.chart.annotations[1].x = ej.base.Browser.isDevice ? "68%" : "69%";
+            args.chart.primaryXAxis.minimum = new Date(1895, 0, 1);
+            args.chart.primaryXAxis.maximum = new Date(2025, 0, 1);
+            if (selectedTheme === 'HighContrast') {
+                args.chart.series[0].segments[0].color = 'red';
+                args.chart.series[0].segments[1].color = 'green';
+                args.chart.series[0].segments[2].color = 'blue';
+            }
         }
     </script>
 }
@@ -94,7 +221,7 @@
         <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.ChartSegment.html#Syncfusion_EJ2_Charts_ChartSegment_DashArray" aria-label="Navigate to the DashArray property reference for ASP.NET Core ChartSegment">DashArray</a> properties in <code>ChartSegment</code>.
     </p>
     <p>
-        <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+        <code>Tooltip</code> is enabled in this example. To see a tooltip in action, hover over or tap on the chart.
     </p>
     <p>
         More information about the line series can be found in this

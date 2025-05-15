@@ -17,23 +17,22 @@ namespace EJ2CoreSampleBrowser.Pages.Chart
         }
         public List<InversedLineChartData> ChartPoints = new List<InversedLineChartData>
             {
-                new InversedLineChartData { Month = 2000, LDN_Temperature = -1, FR_Temperature = 10 },
-                new InversedLineChartData { Month = 2002, LDN_Temperature = -1, FR_Temperature = 7 },
-                new InversedLineChartData { Month = 2004, LDN_Temperature = 25, FR_Temperature = 13 },
-                new InversedLineChartData { Month = 2005, LDN_Temperature = 31, FR_Temperature = 16 },
-                new InversedLineChartData { Month = 2007, LDN_Temperature = 14, FR_Temperature = 11 },
-                new InversedLineChartData { Month = 2010, LDN_Temperature = 8, FR_Temperature = 10 },
-                new InversedLineChartData { Month = 2011, LDN_Temperature = 8, FR_Temperature = 15 },
-                new InversedLineChartData { Month = 2013, LDN_Temperature = 8, FR_Temperature = 20 },
-                new InversedLineChartData { Month = 2014, LDN_Temperature = 8, FR_Temperature = 17 },
-                new InversedLineChartData { Month = 2015, LDN_Temperature = 8, FR_Temperature = 5 }
+                new InversedLineChartData { Country = "United States", Y = 194.55 },
+                new InversedLineChartData { Country = "Japan", Y = 146.2 },
+                new InversedLineChartData { Country = "China", Y = 65.1 },
+                new InversedLineChartData { Country = "France", Y = 84.9 },
+                new InversedLineChartData { Country = "India", Y = 140.1 },
+                new InversedLineChartData { Country = "Canada", Y = 160.7 },
+                new InversedLineChartData { Country = "Brazil", Y = 68.4 },
+                new InversedLineChartData { Country = "United Kingdom", Y = 100.2 },
+                new InversedLineChartData { Country = "Sweden", Y = 162 },
+                new InversedLineChartData { Country = "Netherlands", Y = 132.3 },
+                new InversedLineChartData { Country = "Bangladesh", Y = 27.7 }
             };
     }
     public class InversedLineChartData
     {
-        public double Month;
-        public double LDN_Temperature;
-        public double FR_Temperature;
-        
+        public string Country;
+        public double Y;
     }
 }

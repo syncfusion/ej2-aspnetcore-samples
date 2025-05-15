@@ -11,7 +11,7 @@
     }
 <div class="control-section" align="center">
 
-        <ejs-chart id="lineContainer"  load="load" title="Temperature Variation"
+        <ejs-chart id="lineContainer" load="load" title="Global Passport Rankings: Growth in Visa-Free Access (2006–2024)" subTitle="Source: wikipedia.org"
                   isTransposed="true">
             <e-chart-chartarea>
                 <e-chartarea-border width="0"></e-chartarea-border>
@@ -19,20 +19,22 @@
             <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category">
                 <e-majorgridlines width="0"></e-majorgridlines>
                 <e-majorticklines width="0"></e-majorticklines>
+                <e-linestyle width="0"></e-linestyle>
             </e-chart-primaryxaxis>
-            <e-chart-primaryyaxis edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift" labelFormat = "{value}˚F" title="Temperature (In Fahrenheit)">
+            <e-chart-primaryyaxis edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift" minimum=0 maximum=200 interval=20 labelFormat="{value}" title="Growth in Visa-Free Destinations">
                 <e-majorticklines width="0"></e-majorticklines>
                 <e-linestyle width="0"></e-linestyle>
             </e-chart-primaryyaxis>
             <e-series-collection>
-                <e-series dataSource="@Model.ChartPoints" xName="Month" high="CA_HighTemp" low="CA_LowTemp" columnSpacing="0.1" tooltipMappingName="Text" type="@Syncfusion.EJ2.Charts.ChartSeriesType.RangeColumn">
+                <e-series dataSource="@Model.ChartPoints" xName="Country" high="High" low="Low" columnSpacing="0.4" type="@Syncfusion.EJ2.Charts.ChartSeriesType.RangeColumn">
                     <e-series-marker>
                         <e-series-datalabel visible="true" position="@Syncfusion.EJ2.Charts.LabelPosition.Outer">
                         </e-series-datalabel>
                     </e-series-marker>
+                    <e-series-cornerradius topRight=4 topLeft=4 bottomRight=4 bottomLeft=4></e-series-cornerradius>
                 </e-series>
             </e-series-collection>
-            <e-chart-tooltipsettings enable="true" header="<b>${point.tooltip}</b>" enableMarker="false" format="Temperature : <b>${point.low} - ${point.high}</b>"></e-chart-tooltipsettings>
+            <e-chart-tooltipsettings enable="true" enableMarker="true" format="${point.x}: <b>${point.low} - ${point.high}</b>"></e-chart-tooltipsettings>
         </ejs-chart>
     </div>
     <script src="~/scripts/chart/theme-color.js"></script>
@@ -60,7 +62,7 @@
 @*custom code end*@
 @section ActionDescription{
     <p>
-        This sample shows the maximum and minimum temperatures for several months with the default range column series inverted. The tooltip shows the information for each data point.
+        This sample visually represents changes in visa-free access for various countries using an inverted Range Column chart. It highlights the countries that have experienced the most significant increases and decreases over the past decade.
     </p>
 }
 @section Description{

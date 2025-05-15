@@ -10,13 +10,10 @@
             this.dataSource.dataSource.headers = [{ 'XSRF-TOKEN': document.querySelector('input[type="hidden"][name="__RequestVerificationToken"]').value }];
         }
     </script>
-    @{
-        string fullUrl = $"{Request.Scheme}://{"ej2.syncfusion.com/aspnetcore"}{Request.PathBase}{Request.Path}";
-    }
     @Html.AntiForgeryToken()
     <div class="control-section">
         <ejs-grid id="Grid" allowPaging="true" allowSorting="true" allowFiltering="true" toolbar="@(new List<string>() {"Search" })" load="gridload">
-            <e-data-manager url="@fullUrl?handler=UrlDatasource" adaptor="UrlAdaptor"></e-data-manager>
+            <e-data-manager url="UrlAdaptor?handler=UrlDatasource" adaptor="UrlAdaptor"></e-data-manager>
             <e-grid-columns>
                 <e-grid-column field="OrderID" headerText="Order ID" isPrimaryKey="true" textAlign="Right" width="120"></e-grid-column>
                 <e-grid-column field="CustomerID" headerText="Customer ID" width="150"></e-grid-column>

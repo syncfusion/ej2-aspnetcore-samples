@@ -4,8 +4,8 @@
 @section ControlsSection{
     <div class="control-section" align="center">
 
-        <ejs-chart id="splineContainer" load="load" title="Motor Vehicle Production by Manufacturer">
-            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category" labelIntersectAction="@Syncfusion.EJ2.Charts.LabelIntersectAction.Rotate45">
+        <ejs-chart id="splineContainer" load="load" subTitle="Source: fas.usda.gov" legendClick="legendClick" tooltipRender="tooltipRender">
+            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category" labelIntersectAction="@Syncfusion.EJ2.Charts.LabelIntersectAction.Rotate45" interval=1>
                 <e-majorgridlines width="0"></e-majorgridlines>
                 <e-minorgridlines width="0"></e-minorgridlines>
                 <e-majorticklines width="0"></e-majorticklines>
@@ -18,22 +18,24 @@
                 <e-linestyle width="0"></e-linestyle>
             </e-chart-primaryyaxis>
             <e-series-collection>
-                <e-series dataSource="@Model.ChartPoints" xName="Year" yName="General" name="General Motors" width="2" columnWidth="0.5" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StackingColumn100">
+                <e-series dataSource="@Model.ChartPoints" xName="X" yName="Y1" name="India" legendShape="Rectangle" columnWidth="0.4" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StackingColumn100">
                     <e-series-border width="1" color="#ffffff"></e-series-border>
                 </e-series>
-                <e-series dataSource="@Model.ChartPoints" xName="Year" yName="Honda" name="Honda" width="2" columnWidth="0.5" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StackingColumn100">
+                <e-series dataSource="@Model.ChartPoints" xName="X" yName="Y2" name="China" legendShape="Rectangle" columnWidth="0.4" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StackingColumn100">
                     <e-series-border width="1" color="#ffffff"></e-series-border>
                 </e-series>
-                <e-series dataSource="@Model.ChartPoints" xName="Year" yName="Suzuki" name="Suzuki" width="2" columnWidth="0.5" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StackingColumn100">
+                <e-series dataSource="@Model.ChartPoints" xName="X" yName="Y3" name="United States" legendShape="Rectangle" columnWidth="0.4" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StackingColumn100">
                     <e-series-border width="1" color="#ffffff"></e-series-border>
                 </e-series>
-                <e-series dataSource="@Model.ChartPoints" xName="Year" yName="BMW" name="BMW" width="2" columnWidth="0.5" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StackingColumn100">
+                <e-series dataSource="@Model.ChartPoints" xName="X" yName="Y4" name="Brazil" legendShape="Rectangle" columnWidth="0.4" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StackingColumn100">
                     <e-series-border width="1" color="#ffffff"></e-series-border>
+                    <e-series-cornerradius topLeft="4" topRight="4"></e-series-cornerradius>
                 </e-series>
             </e-series-collection>
-            <e-chart-tooltipsettings enable="true" format="${point.x} : <b>${point.y} (${point.percentage}%)</b>"></e-chart-tooltipsettings>
+            <e-chart-tooltipsettings enable="true" enableHighlight=true header="<b>${point.x}</b>"></e-chart-tooltipsettings>
             <e-chart-chartarea>
                 <e-chartarea-border width="0"></e-chartarea-border>
+                <e-chartarea-margin bottom="12"></e-chartarea-margin>
             </e-chart-chartarea>
             <e-chart-legendsettings visible="true" enableHighlight="true"></e-chart-legendsettings>
         </ejs-chart>
@@ -43,7 +45,114 @@
         function load(args) {
             loadChartTheme(args);
             args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+            args.chart.title = ej.base.Browser.isDevice ? "Global Cotton Production by Country (2021-2024)" : "Global Cotton Production by Country (2019-2024)" ;
         }
+
+        var legendClick = function (args) {
+            if (args.series.index === 0) {
+                if (args.chart.series[3].visible) {
+                    args.chart.series[3].cornerRadius.topLeft = 4;
+                    args.chart.series[3].cornerRadius.topRight = 4;
+                    args.chart.series[0].cornerRadius.topLeft = 0;
+                    args.chart.series[0].cornerRadius.topRight = 0;
+                } else if (args.chart.series[2].visible) {
+                    args.chart.series[2].cornerRadius.topLeft = 4;
+                    args.chart.series[2].cornerRadius.topRight = 4;
+                    args.chart.series[0].cornerRadius.topLeft = 0;
+                    args.chart.series[0].cornerRadius.topRight = 0;
+                } else if (args.chart.series[1].visible) {
+                    args.chart.series[1].cornerRadius.topLeft = 4;
+                    args.chart.series[1].cornerRadius.topRight = 4;
+                    args.chart.series[0].cornerRadius.topLeft = 0;
+                    args.chart.series[0].cornerRadius.topRight = 0;
+                } else {
+                    args.chart.series[0].cornerRadius.topLeft = 4;
+                    args.chart.series[0].cornerRadius.topRight = 4;
+                }
+            }
+            if (args.series.index === 1) {
+                if (args.chart.series[3].visible) {
+                    args.chart.series[3].cornerRadius.topLeft = 4;
+                    args.chart.series[3].cornerRadius.topRight = 4;
+                    args.chart.series[1].cornerRadius.topLeft = 0;
+                    args.chart.series[1].cornerRadius.topRight = 0;
+                } else if (args.chart.series[2].visible) {
+                    args.chart.series[2].cornerRadius.topLeft = 4;
+                    args.chart.series[2].cornerRadius.topRight = 4;
+                    args.chart.series[1].cornerRadius.topLeft = 0;
+                    args.chart.series[1].cornerRadius.topRight = 0;
+                } else if (args.series.visible && args.chart.series[0].visible) {
+                    args.chart.series[0].cornerRadius.topLeft = 4;
+                    args.chart.series[0].cornerRadius.topRight = 4;
+                    args.chart.series[1].cornerRadius.topLeft = 0;
+                    args.chart.series[1].cornerRadius.topRight = 0;
+                } else {
+                    args.chart.series[1].cornerRadius.topLeft = 4;
+                    args.chart.series[1].cornerRadius.topRight = 4;
+                    args.chart.series[0].cornerRadius.topLeft = 0;
+                    args.chart.series[0].cornerRadius.topRight = 0;
+                }
+            }
+            if (args.series.index === 2) {
+                if (args.chart.series[3].visible) {
+                    args.chart.series[3].cornerRadius.topLeft = 4;
+                    args.chart.series[3].cornerRadius.topRight = 4;
+                    args.chart.series[2].cornerRadius.topLeft = 0;
+                    args.chart.series[2].cornerRadius.topRight = 0;
+                } else if (!args.series.visible) {
+                    args.chart.series[2].cornerRadius.topLeft = 4;
+                    args.chart.series[2].cornerRadius.topRight = 4;
+                    args.chart.series[1].cornerRadius.topLeft = 0;
+                    args.chart.series[1].cornerRadius.topRight = 0;
+                    args.chart.series[0].cornerRadius.topLeft = 0;
+                    args.chart.series[0].cornerRadius.topRight = 0;
+                } else if (args.chart.series[1].visible) {
+                    args.chart.series[1].cornerRadius.topLeft = 4;
+                    args.chart.series[1].cornerRadius.topRight = 4;
+                    args.chart.series[2].cornerRadius.topLeft = 0;
+                    args.chart.series[2].cornerRadius.topRight = 0;
+                } else if (args.series.visible && args.chart.series[0].visible) {
+                    args.chart.series[0].cornerRadius.topLeft = 4;
+                    args.chart.series[0].cornerRadius.topRight = 4;
+                    args.chart.series[2].cornerRadius.topLeft = 0;
+                    args.chart.series[2].cornerRadius.topRight = 0;
+                }
+            }
+            if (args.series.index === 3) {
+                if (!args.series.visible) {
+                    args.chart.series[3].cornerRadius.topLeft = 4;
+                    args.chart.series[3].cornerRadius.topRight = 4;
+                    args.chart.series[2].cornerRadius.topLeft = 0;
+                    args.chart.series[2].cornerRadius.topRight = 0;
+                    args.chart.series[1].cornerRadius.topLeft = 0;
+                    args.chart.series[1].cornerRadius.topRight = 0;
+                    args.chart.series[0].cornerRadius.topLeft = 0;
+                    args.chart.series[0].cornerRadius.topRight = 0;
+                } else if (args.chart.series[2].visible) {
+                    args.chart.series[2].cornerRadius.topLeft = 4;
+                    args.chart.series[2].cornerRadius.topRight = 4;
+                    args.chart.series[3].cornerRadius.topLeft = 0;
+                    args.chart.series[3].cornerRadius.topRight = 0;
+                } else if (args.chart.series[1].visible) {
+                    args.chart.series[1].cornerRadius.topLeft = 4;
+                    args.chart.series[1].cornerRadius.topRight = 4;
+                    args.chart.series[3].cornerRadius.topLeft = 0;
+                    args.chart.series[3].cornerRadius.topRight = 0;
+                } else if (args.series.visible && args.chart.series[0].visible) {
+                    args.chart.series[0].cornerRadius.topLeft = 4;
+                    args.chart.series[0].cornerRadius.topRight = 4;
+                    args.chart.series[3].cornerRadius.topLeft = 0;
+                    args.chart.series[3].cornerRadius.topRight = 0;
+                }
+            }
+        }
+        var tooltipRender = function (args) {
+            if (args.text) {
+                var value = args.point.y.toLocaleString('en-US');
+                args.text = args.series.name + ': <b>' + value + 'M (' + args.point.percentage + '%)</b>';
+            }
+        }
+
     </script>
 }
 @*custom code start*@

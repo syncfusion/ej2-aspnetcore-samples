@@ -1,5 +1,5 @@
-#region Copyright Syncfusion® Inc. 2001-2025.
-// Copyright Syncfusion® Inc. 2001-2025. All rights reserved.
+#region Copyright SyncfusionÂ® Inc. 2001-2025.
+// Copyright SyncfusionÂ® Inc. 2001-2025. All rights reserved.
 // Use of this code is subject to the terms of our license.
 // A copy of the current license can be obtained at any time by e-mailing
 // licensing@syncfusion.com. Any infringement will be prosecuted under
@@ -66,10 +66,6 @@ builder.Services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
 builder.Services.AddMemoryCache();
 builder.Services.AddDistributedRedisCache(option => { option.Configuration = builder.Configuration["ConnectionStrings:Redis"]; });
 #endif
-builder.Services.Configure<CookiePolicyOptions>(options =>
-{
-    options.MinimumSameSitePolicy = SameSiteMode.Strict;
-});
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
@@ -78,13 +74,6 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
-app.UseCookiePolicy(new CookiePolicyOptions
-{
-    HttpOnly = Microsoft.AspNetCore.CookiePolicy.HttpOnlyPolicy.Always,  // Always make cookies HttpOnly
-    Secure = Microsoft.AspNetCore.Http.CookieSecurePolicy.Always,
-    MinimumSameSitePolicy = SameSiteMode.Strict  // SameSiteStrict to prevent cross-site requests
-});
 
 app.UseRouting();
 app.UseAuthorization();

@@ -18,20 +18,18 @@ namespace EJ2CoreSampleBrowser.Pages.Chart
         {
             ChartPoints = new List<StackedBar100ChartData>
             {
-                new StackedBar100ChartData { Month = "Jan", AppleSales = 6, OrangeSales = 6, Wasteage = 1 },
-                new StackedBar100ChartData { Month = "Feb", AppleSales = 8, OrangeSales = 8, Wasteage = 1.5 },
-                new StackedBar100ChartData { Month = "Mar", AppleSales = 12, OrangeSales = 11, Wasteage = 2 },
-                new StackedBar100ChartData { Month = "Apr", AppleSales = 15, OrangeSales = 16, Wasteage = 2.5 },
-                new StackedBar100ChartData { Month = "May", AppleSales = 20, OrangeSales = 21, Wasteage = 3 },
-                new StackedBar100ChartData { Month = "Jun", AppleSales = 24, OrangeSales = 25, Wasteage = 3.5 }
+                new StackedBar100ChartData { X = "2020", Y1 = 466, Y2 = 261, Y3 = 1355 },
+                new StackedBar100ChartData { X = "2021", Y1 = 656, Y2 = 327, Y3 = 1340 },
+                new StackedBar100ChartData { X = "2022", Y1 = 763, Y2 = 427, Y3 = 1352 },
+                new StackedBar100ChartData { X = "2023", Y1 = 886, Y2 = 584, Y3 = 1286 }
             };
         }
     }
     public class StackedBar100ChartData
     {
-        public string Month;
-        public double AppleSales;
-        public double OrangeSales;
-        public double Wasteage;
+        public string X;
+        public double Y1;
+        public double Y2;
+        public double Y3;
     }
 }

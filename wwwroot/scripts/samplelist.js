@@ -9310,6 +9310,7 @@ window.samplesList = [
             {
                 "url": "WorkWeek",
                 "name": "Workweek",
+                "type": "update",
                 "category": "Scheduling Concepts",
                 "uid": "00759",
                 "order": 3,
@@ -9914,7 +9915,6 @@ window.samplesList = [
                 "name": "Format",
                 "type": "update",
                 "category": "DatePicker",
-                "type": "update",
                 "uid": "0017173",
                 "order": 0,
                 "component": "DatePicker",
@@ -10126,7 +10126,6 @@ window.samplesList = [
                 "category": "DateTimePicker",
                  "type": "update",
                 "uid": "0019193",
-                "type": "update",
                 "order": 0,
                 "component": "DateTimePicker",
                 "dir": "DateTimePicker",

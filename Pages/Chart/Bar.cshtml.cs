@@ -17,19 +17,17 @@ namespace EJ2CoreSampleBrowser.Pages.Chart
         {
             ChartPoints = new List<BarChartData>
             {
-                new BarChartData { Country = "Canada",  GDP = 3.05 , WorldShare = 2.04 },
-                new BarChartData { Country = "Italy", GDP = 1.50 , WorldShare = 2.40 },
-                new BarChartData { Country = "Germany",  GDP = 2.22, WorldShare = 4.56 },
-                new BarChartData { Country = "India", GDP = 6.68 , WorldShare = 3.28  },
-                new BarChartData { Country = "France",  GDP = 1.82, WorldShare = 3.19 },
-                new BarChartData { Country = "Japan",  GDP = 1.71, WorldShare = 6.02 }
+                new BarChartData { Year = "2021",  Count1 = 237, Count2 = 190, Count3 = 143 },
+                new BarChartData { Year = "2022",  Count1 = 226.4, Count2 = 153.1, Count3 = 103.3 },
+                new BarChartData { Year = "2023",  Count1 = 234.6, Count2 = 145.9, Count3 = 103.1 },
             };
         }
     }
     public class BarChartData
     {
-        public string Country;
-        public double GDP;
-        public double WorldShare;
+        public string Year;
+        public double Count1;
+        public double Count2;
+        public double Count3;
     }
 }

@@ -17,19 +17,18 @@ namespace EJ2CoreSampleBrowser.Pages.Chart
         {
             ChartPoints = new List<CylindricalColumnChartData>
             {
-                new CylindricalColumnChartData { Country = "China", GoldMedal = 26, MappingName = "China" },
-                new CylindricalColumnChartData { Country = "Australia", GoldMedal = 8, MappingName = "Australia" },
-                new CylindricalColumnChartData { Country = "Germany", GoldMedal = 17, MappingName = "Germany" },
-                new CylindricalColumnChartData { Country = "Spain", GoldMedal = 7, MappingName = "Spain" },
-                new CylindricalColumnChartData { Country = "Japan", GoldMedal = 12, MappingName = "Japan" },
-                new CylindricalColumnChartData { Country = "USA", GoldMedal = 46, MappingName = "United States" }
+                new CylindricalColumnChartData { Year = "2017 - 18", Energy = 228.0 },
+                new CylindricalColumnChartData { Year = "2018 - 19", Energy = 261.8 },
+                new CylindricalColumnChartData { Year = "2019 - 20", Energy = 294.3 },
+                new CylindricalColumnChartData { Year = "2020 - 21", Energy = 297.5 },
+                new CylindricalColumnChartData { Year = "2021 - 22", Energy = 322.6 },
+                new CylindricalColumnChartData { Year = "2022 - 23", Energy = 365.59 },
             };
         }
     }
     public class CylindricalColumnChartData
     {
-        public string Country;
-        public double GoldMedal;
-        public string MappingName;
+        public string Year;
+        public double Energy;
     }
 }

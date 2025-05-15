@@ -18,25 +18,33 @@ namespace EJ2CoreSampleBrowser.Pages.Chart
         {
             StepLineData = new List<StepLineChartData>
             {
-                new StepLineChartData { Period = new DateTime(1975, 01, 01), CHN_UnemploymentRate = 16, AUS_UnemploymentRate = 35, ITA_UnemploymentRate = 3.4 },
-                new StepLineChartData { Period = new DateTime(1978, 01, 01), CHN_UnemploymentRate = 12.5, AUS_UnemploymentRate = 45, ITA_UnemploymentRate = 4.4 },
-                new StepLineChartData { Period = new DateTime(1981, 01, 01), CHN_UnemploymentRate = 19, AUS_UnemploymentRate = 55, ITA_UnemploymentRate = 6 },
-                new StepLineChartData { Period = new DateTime(1984, 01, 01), CHN_UnemploymentRate = 14.4, AUS_UnemploymentRate = 20, ITA_UnemploymentRate = 7 },
-                new StepLineChartData { Period = new DateTime(1987, 01, 01), CHN_UnemploymentRate = 11.5, AUS_UnemploymentRate = 10, ITA_UnemploymentRate = 11.3 },
-                new StepLineChartData { Period = new DateTime(1990, 01, 01), CHN_UnemploymentRate = 14, AUS_UnemploymentRate = 42, ITA_UnemploymentRate = 10.1 },
-                new StepLineChartData { Period = new DateTime(1993, 01, 01), CHN_UnemploymentRate = 10, AUS_UnemploymentRate = 35, ITA_UnemploymentRate = 7.8 },
-                new StepLineChartData { Period = new DateTime(1996, 01, 01), CHN_UnemploymentRate = 16, AUS_UnemploymentRate = 22, ITA_UnemploymentRate = 8.5 },
-                new StepLineChartData { Period = new DateTime(2000, 01, 01), CHN_UnemploymentRate = 16, AUS_UnemploymentRate = 65, ITA_UnemploymentRate = 8.5 },
-                new StepLineChartData { Period = new DateTime(2005, 01, 01), CHN_UnemploymentRate = 16, AUS_UnemploymentRate = 65, ITA_UnemploymentRate = 8.5 },
-                new StepLineChartData { Period = new DateTime(2010, 01, 01), CHN_UnemploymentRate = 16, AUS_UnemploymentRate = 58, ITA_UnemploymentRate = 8.5 }
+                new StepLineChartData { X = 2007, Y = 6.0, Album = "High School Musical 2", Artist = "Various Artists" },
+                new StepLineChartData { X = 2007, Y = 6.0, Album = "High School Musical 2", Artist = "Various Artists" },
+                new StepLineChartData { X = 2008, Y = 6.8, Album = "Viva la Vida or Death and All His Friends", Artist = "Coldplay" },
+                new StepLineChartData { X = 2009, Y = 8.3, Album = "I Dreamed a Dream", Artist = "Susan Boyle" },
+                new StepLineChartData { X = 2010, Y = 5.7, Album = "Recovery", Artist = "Eminem" },
+                new StepLineChartData { X = 2011, Y = 18.1, Album = "21", Artist = "Adele" },
+                new StepLineChartData { X = 2012, Y = 8.3, Album = "21", Artist = "Adele" },
+                new StepLineChartData { X = 2013, Y = 4.0, Album = "Midnight Memories", Artist = "One Direction" },
+                new StepLineChartData { X = 2014, Y = 10.0, Album = "Frozen", Artist = "Various Artists" },
+                new StepLineChartData { X = 2015, Y = 17.4, Album = "25", Artist = "Adele" },
+                new StepLineChartData { X = 2016, Y = 2.5, Album = "Lemonade", Artist = "Beyoncé" },
+                new StepLineChartData { X = 2017, Y = 6.1, Album = "÷", Artist = "Ed Sheeran" },
+                new StepLineChartData { X = 2018, Y = 3.5, Album = "The Greatest Showman", Artist = "Hugh Jackman & Various Artists" },
+                new StepLineChartData { X = 2019, Y = 3.3, Album = "5x20 All the Best!! 1999–2019", Artist = "Arashi" },
+                new StepLineChartData { X = 2020, Y = 4.8, Album = "Map of the Soul: 7", Artist = "BTS" },
+                new StepLineChartData { X = 2021, Y = 4.68, Album = "30", Artist = "Adele" },
+                new StepLineChartData { X = 2022, Y = 7.2, Album = "Greatest Works of Art", Artist = "Jay Chou" },
+                new StepLineChartData { X = 2023, Y = 6.4, Album = "FML", Artist = "Seventeen" },
+                new StepLineChartData { X = 2024, Y = 5.6, Album = "The Tortured Poets Department", Artist = "Taylor Swift" }
             };   
         }
     }
     public class StepLineChartData
     {
-        public DateTime Period;
-        public double CHN_UnemploymentRate;
-        public double AUS_UnemploymentRate;
-        public double ITA_UnemploymentRate;
+        public double X;
+        public double Y;
+        public string Artist;
+        public string Album;
     }
 }

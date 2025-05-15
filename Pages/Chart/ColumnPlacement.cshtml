@@ -5,50 +5,33 @@
 @section ControlsSection{
     <div class="control-section" align="center">
 
-        <ejs-chart id="lineContainer" load="load" title="Fruit Consumption" enableSideBySidePlacement="false">
+        <ejs-chart id="lineContainer" load="load" axisLabelRender="onAxisLabelRender" sharedTooltipRender="onSharedTooltiptipRender" resized="onResized" title="Population Distribution of the Top 5 Most Populous Countries (2024)" subTitle="Source: statisticstimes.com" enableSideBySidePlacement="false">
             <e-chart-tooltipsettings enable="true" shared="true">
             </e-chart-tooltipsettings>
-            <e-chart-legendsettings visible="true">
+            <e-chart-legendsettings visible="true" shapeWidth=9 shapeHeight=9 maximumColumns="1" position=Custom>
+                <e-legendSettings-location x="750" y="80"></e-legendSettings-location>
             </e-chart-legendsettings>
             <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category" interval=1>
                 <e-majorgridlines width="0"></e-majorgridlines>
                 <e-majorticklines width="0"></e-majorticklines>
             </e-chart-primaryxaxis>
-            <e-chart-primaryyaxis title="Fruits Count">
+            <e-chart-primaryyaxis title="Inhabitants (Millions)" interval=300000000>
                 <e-majorticklines width="0"></e-majorticklines>
                 <e-linestyle width="0"></e-linestyle>
             </e-chart-primaryyaxis>
             <e-chart-chartarea>
                 <e-chartarea-border width="0"></e-chartarea-border>
+                <e-chartarea-margin bottom="12"></e-chartarea-margin>
             </e-chart-chartarea>
             <e-series-collection>
-                <e-series dataSource="@Model.ChartPoints" xName="ConsumerName" yName="TotalCount" name="Total" width=2 columnWidth=0.5 type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
-                    <e-series-marker>
-                        <e-series-datalabel visible="true" name="DataLabelMappingName" position="@Syncfusion.EJ2.Charts.LabelPosition.Top">
-                            <e-font fontWeight="600" color="#ffffff"></e-font>
-                        </e-series-datalabel>
-                    </e-series-marker>
+                <e-series dataSource="@Model.ChartPoints" xName="Country" yName="Population" name="Total" width=2 columnWidth=0.5 type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column" legendShape=Rectangle>
+                    <e-series-cornerradius topLeft=4 topRight=4></e-series-cornerradius>
                 </e-series>
-                <e-series dataSource="@Model.ChartPoints" xName="ConsumerName" yName="AppleCount" name="Apple" width=2 columnWidth=0.4 type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
-                    <e-series-marker>
-                        <e-series-datalabel visible="true" position="@Syncfusion.EJ2.Charts.LabelPosition.Top">
-                            <e-font fontWeight="600" color="#ffffff"></e-font>
-                        </e-series-datalabel>
-                    </e-series-marker>
+                <e-series dataSource="@Model.ChartPoints" xName="Country" yName="Male" name="Male" width=2 columnWidth=0.4 type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column" legendShape=Rectangle>
+                    <e-series-cornerradius topLeft=4 topRight=4></e-series-cornerradius>
                 </e-series>
-                <e-series dataSource="@Model.ChartPoints" xName="ConsumerName" yName="OrangeCount" name="Orange" width=2 columnWidth=0.3 type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
-                    <e-series-marker>
-                        <e-series-datalabel visible="true" position="@Syncfusion.EJ2.Charts.LabelPosition.Top">
-                            <e-font fontWeight="600" color="#ffffff"></e-font>
-                        </e-series-datalabel>
-                    </e-series-marker>
-                </e-series>
-                <e-series dataSource="@Model.ChartPoints" xName="ConsumerName" yName="GrapesCount" name="Grapes" width=2 columnWidth=0.2 type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
-                    <e-series-marker>
-                        <e-series-datalabel visible="true" position="@Syncfusion.EJ2.Charts.LabelPosition.Top">
-                            <e-font fontWeight="600" color="#ffffff"></e-font>
-                        </e-series-datalabel>
-                    </e-series-marker>
+                <e-series dataSource="@Model.ChartPoints" xName="Country" yName="Female" name="Female" width=2 columnWidth=0.3 type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column" legendShape=Rectangle>
+                    <e-series-cornerradius topLeft=4 topRight=4></e-series-cornerradius>
                 </e-series>
             </e-series-collection>
         </ejs-chart>
@@ -56,11 +39,38 @@
     <script src="~/scripts/chart/theme-color.js"></script>
     <script>
         function load(args) {
-            loadChartTheme(args);
+            var selectedTheme = loadChartTheme(args);
             args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
             args.chart.series[0].marker.dataLabel.alignment = ej.base.Browser.isDevice ? "Top" : "Top";
             args.chart.series[0].marker.dataLabel.enableRotation = ej.base.Browser.isDevice ? "true" : "false";
             args.chart.series[0].marker.dataLabel.angle = ej.base.Browser.isDevice ? -90 : 0;
+            if (selectedTheme.indexOf('Dark') !== -1 || selectedTheme.indexOf('HighContrast') !== -1) {
+                args.chart.legendSettings.border = { width: 1, color: '#FFFFFF' };
+            } else {
+                args.chart.legendSettings.border = { width: 1, color: '#777777' };
+            }
+        }
+
+        function onAxisLabelRender(args) {
+            var value = parseInt(args.text.replace(/,/g, ''), 10);
+            if (value >= 1000000) {
+                args.text = (value / 1000000).toFixed(0) + 'M';
+            }
+        }
+        function onSharedTooltiptipRender(args) {
+            if (args.text && args.point && args.series) {
+                for (var i = 0; i < args.point.length; i++) {
+                    if (args.point[i] && args.point[i].y !== undefined) {
+                        var formattedValue = args.point[i].y.toLocaleString('en-US');
+                        var seriesName = args.series[i] ? args.series[i].name : 'Series ' + (i + 1);
+                        args.text[i] = seriesName + ': <b>' + formattedValue + '</b>';
+                    }
+                }
+            }
+        }
+        function onResized(args) {
+            var maxWidth = args.chart.availableSize.width;
+            args.chart.legendSettings.location.x = maxWidth - 115;
         }
     </script>
 }

@@ -18,27 +18,23 @@ namespace EJ2CoreSampleBrowser.Pages.Chart
         {
             ChartPoints = new List<StackedLineChartData100>
             {
-                new StackedLineChartData100 { ExpensesCategory= "Jan", JohnExpenses= 90, PeterExpenses= 40, SteveExpenses= 70,  CharleExpenses= 120 },
-                new StackedLineChartData100 { ExpensesCategory= "Feb", JohnExpenses= 80, PeterExpenses= 90, SteveExpenses= 110, CharleExpenses= 70  },
-                new StackedLineChartData100 { ExpensesCategory= "Mar", JohnExpenses= 50, PeterExpenses= 80, SteveExpenses= 120, CharleExpenses= 50  },
-                new StackedLineChartData100 { ExpensesCategory= "Apr", JohnExpenses= 70, PeterExpenses= 30, SteveExpenses= 60,  CharleExpenses= 180 },
-                new StackedLineChartData100 { ExpensesCategory= "May", JohnExpenses= 30, PeterExpenses= 80, SteveExpenses= 80,  CharleExpenses= 30  },
-                new StackedLineChartData100 { ExpensesCategory= "Jun", JohnExpenses= 10, PeterExpenses= 110,SteveExpenses= 100, CharleExpenses= 270 },
-                new StackedLineChartData100 { ExpensesCategory= "Jul", JohnExpenses= 100,PeterExpenses= 30, SteveExpenses= 70,  CharleExpenses= 40  },
-                new StackedLineChartData100 { ExpensesCategory= "Aug", JohnExpenses= 55, PeterExpenses= 95, SteveExpenses= 55,  CharleExpenses= 75  },
-                new StackedLineChartData100 { ExpensesCategory= "Sep", JohnExpenses= 20, PeterExpenses= 50, SteveExpenses= 40,  CharleExpenses= 65  },
-                new StackedLineChartData100 { ExpensesCategory= "Oct", JohnExpenses= 40, PeterExpenses= 20, SteveExpenses= 80,  CharleExpenses= 95  },
-                new StackedLineChartData100 { ExpensesCategory= "Nov", JohnExpenses= 45, PeterExpenses= 15, SteveExpenses= 45,  CharleExpenses= 195 },
-                new StackedLineChartData100 { ExpensesCategory= "Dec", JohnExpenses= 75, PeterExpenses= 45, SteveExpenses= 65,  CharleExpenses= 115 }
+                new StackedLineChartData100 { X= "O+ve",  Y= 39.0, Y1= 40.0, Y2= 47.0, Y3= 29.0 },
+                new StackedLineChartData100 { X= "A+ve",  Y= 36.0, Y1= 30.0, Y2= 26.0, Y3= 46.3 },
+                new StackedLineChartData100 { X= "B+ve",  Y= 7.6 , Y1= 15.0, Y2= 9.0 , Y3= 12.0 },
+                new StackedLineChartData100 { X= "AB+ve", Y= 2.5 , Y1= 4.25, Y2= 2.0 , Y3= 5.6  },
+                new StackedLineChartData100 { X= "O-ve",  Y= 7.0 , Y1= 6.6 , Y2= 8.0 , Y3= 2.0  },
+                new StackedLineChartData100 { X= "A-ve",  Y= 6.0 , Y1= 2.3 , Y2= 5.0 , Y3= 3.7  },
+                new StackedLineChartData100 { X= "B-ve",  Y= 1.4 , Y1= 1.1 , Y2= 2.0 , Y3= 1.0  },
+                new StackedLineChartData100 { X= "AB-ve", Y= 0.5 , Y1= 0.75, Y2= 1.0 , Y3= 0.4  },
             };
         }
     }
     public class StackedLineChartData100
     {
-        public string ExpensesCategory;
-        public double JohnExpenses;
-        public double PeterExpenses;
-        public double SteveExpenses;
-        public double CharleExpenses;
+        public string X;
+        public double Y;
+        public double Y1;
+        public double Y2;
+        public double Y3;
     }
 }

@@ -4,15 +4,16 @@
 
 @section ControlsSection{
     <div class="control-section" align="center">
-        <ejs-chart id="lineContainer" load="load" title="Olympic Gold Medal Counts - RIO">
-            <e-chart-tooltipsettings enable="true" header="<b>${point.tooltip}</b>" format="Gold Medal: <b>${point.y}</b>">
+        <ejs-chart id="lineContainer" load="load" title="Year-wise Renewable Energy Generation Trends in India" subTitle="Source: wikipedia.org">
+            <e-chart-tooltipsettings enable="true" header="<b>${point.x}</b>" format="${series.name}: <b>${point.y}</b>">
             </e-chart-tooltipsettings>
+            <e-chart-legendsettings visible=false></e-chart-legendsettings>
             <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category" interval="1">
                 <e-majorgridlines width="0"></e-majorgridlines>
                 <e-majorticklines width="0"></e-majorticklines>
                 <e-minorticklines width="0"></e-minorticklines>
             </e-chart-primaryxaxis>
-            <e-chart-primaryyaxis title="Medal Count" maximum="50" interval="10">
+            <e-chart-primaryyaxis title="Total Renewable Power (TWh)" labelFormat="{value}TWh" minimum=150 maximum="400" interval="50">
                 <e-majorticklines width="0"></e-majorticklines>
                 <e-linestyle width="0"></e-linestyle>
             </e-chart-primaryyaxis>
@@ -20,7 +21,7 @@
                 <e-chartarea-border width="0"></e-chartarea-border>
             </e-chart-chartarea>
             <e-series-collection>
-                <e-series dataSource="@Model.ChartPoints" columnFacet="@Syncfusion.EJ2.Charts.ShapeType.Cylinder" width="2" xName="Country" yName="GoldMedal" tooltipMappingName="MappingName" columnSpacing="0.1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                <e-series dataSource="@Model.ChartPoints" columnFacet="@Syncfusion.EJ2.Charts.ShapeType.Cylinder" width="2" xName="Year" yName="Energy" name="India" columnSpacing="0.3" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
                 </e-series>
             </e-series-collection>
         </ejs-chart>
@@ -50,7 +51,7 @@
 @*custom code end*@
 @section ActionDescription{
     <p>
-        This sample visualizes the gold medal count from the Rio Olympics using a cylindrical column chart.
+        This sample visualizes the year-wise renewable energy generation trends in India using a cylindrical column chart. The chart displays the total renewable energy generation in terawatt-hours (TWh) for each year from 2017 to 2023.
     </p>
 }
 @section Description{

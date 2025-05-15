@@ -17,26 +17,18 @@ namespace EJ2CoreSampleBrowser.Pages.Chart
         {
             ChartPoints = new List<ColumnChartData>
             {
-                new ColumnChartData { Country = "GBR", GoldMedal = 27, SilverMedal = 23, BronzeMedal = 17, MappingName = "Great Britain" },
-                new ColumnChartData { Country = "CHN", GoldMedal = 26, SilverMedal = 18, BronzeMedal = 26, MappingName = "China" },
-                new ColumnChartData { Country = "AUS", GoldMedal = 8, SilverMedal = 11, BronzeMedal = 10, MappingName = "Australia" },
-                new ColumnChartData { Country = "RUS", GoldMedal = 19, SilverMedal = 17, BronzeMedal = 20, MappingName = "Russia" },
-                new ColumnChartData { Country = "GER", GoldMedal = 17, SilverMedal = 10, BronzeMedal = 15, MappingName = "Germany" },
-                new ColumnChartData { Country = "UA", GoldMedal = 2, SilverMedal = 5, BronzeMedal = 24, MappingName = "Ukraine" },
-                new ColumnChartData { Country = "ES", GoldMedal = 7, SilverMedal = 4, BronzeMedal = 6, MappingName = "Spain" },
-                new ColumnChartData { Country = "UZB", GoldMedal = 4, SilverMedal = 2, BronzeMedal = 7, MappingName = "Uzbekistan" },
-                new ColumnChartData { Country = "JPN", GoldMedal = 12, SilverMedal = 8, BronzeMedal = 21, MappingName = "Japan" },
-                new ColumnChartData { Country = "NL", GoldMedal = 8, SilverMedal = 7, BronzeMedal = 4, MappingName = "NetherLand" },
-                new ColumnChartData { Country = "USA", GoldMedal = 46, SilverMedal = 37, BronzeMedal = 38, MappingName = "United States" },
+                new ColumnChartData { Country = "Chile", Walnuts = 175000, Almonds = 11300 },
+                new ColumnChartData { Country = "European Union", Walnuts = 140000, Almonds = 135000 },
+                new ColumnChartData {Country = "Turkey", Walnuts = 67000, Almonds = 24000 },
+                new ColumnChartData {Country = "India", Walnuts = 33000, Almonds = 4200 },
+                new ColumnChartData {Country = "Australia", Walnuts = 12000, Almonds = 154000 }
             };
         }
     }
     public class ColumnChartData
     {
         public string Country;
-        public double GoldMedal;
-        public double SilverMedal;
-        public double BronzeMedal;
-        public string MappingName;
+        public double Walnuts;
+        public double Almonds;
     }
 }

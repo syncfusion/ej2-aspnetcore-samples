@@ -46,6 +46,26 @@
                     </div>
                 </td>
             </tr>
+             <tr>
+                <td style="width: 30%">
+                    <div>Show Weekends</div>
+                </td>
+                <td style="width: 70%">
+                    <div>
+                        <ejs-checkbox id="showWeekendsCheck" change="showWeekendsChange" checked="true"></ejs-checkbox>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 30%">
+                    <div>Highlight Weekends</div>
+                </td>
+                <td style="width: 70%">
+                    <div>
+                        <ejs-checkbox id="highlightWeekendsCheck" change="highlightWeekendsChange" checked="true"></ejs-checkbox>
+                    </div>
+                </td>
+            </tr>
         </table>
     </div>
     <style>
@@ -54,6 +74,24 @@
         }
     </style>
     <script>
+       function showWeekendsChange() {
+            var checkBox = document.getElementById("showWeekendsCheck").ej2_instances[0];
+            var gantt = document.getElementById("WorkWeek").ej2_instances[0];
+            if (checkBox.checked) {
+                gantt.timelineSettings.showWeekend = true;
+            } else {
+                gantt.timelineSettings.showWeekend = false;
+            }
+        }
+         function highlightWeekendsChange() {
+            var checkBox = document.getElementById("highlightWeekendsCheck").ej2_instances[0];
+            var gantt = document.getElementById("WorkWeek").ej2_instances[0];
+            if (checkBox.checked) {
+                gantt.highlightWeekends = true;
+            } else {
+                gantt.highlightWeekends = false;
+            }
+        }
         function SelectedDay(args) {
             var gantt = document.getElementById("WorkWeek").ej2_instances[0];
             var workingDays = ej.base.extend([], this.value, [], true);
@@ -73,20 +111,19 @@
 
 @section ActionDescription{
     <div id="action-description">
-        <p>
-            This sample visualizes the support for changing different set of working days in a week. The selected working days in drop down list will be applied to Gantt chart.
-        </p>
+        <p>This sample demonstrates how to adjust the working days within a week and manage the visibility of non-working days in the timeline, enabling customized project scheduling.</p>
     </div>
 }
 @section Description{
 
     <div id="description">
-        <p>
-            In this example, you can see how to render a Gantt chart with the provided data source and customizable array of working days. These working days alone will be considered for taskbar rendering and duration calculations.
-        </p>
-        <p>
-            The working days in your project can be customized using the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.gantt.gantt.html#Syncfusion_EJ2_Gantt_Gantt_WorkWeek">workWeek</a> property and the selected days in the dropdown list available in the property panel will be applied to Gantt chart. You can get to know the working days in the Gantt chart timeline by the highlighted weekend days. This can be enabled by using the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.gantt.gantt.html#Syncfusion_EJ2_Gantt_Gantt_HighlightWeekends">highlightWeekends</a> property
-        </p>
+      <p>
+        In this example, you can customize which days of the week are considered working days using the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.gantt.gantt.html#Syncfusion_EJ2_Gantt_Gantt_WorkWeek">workWeek</a> property. 
+        Simply select your preferred working days from the dropdown list in the property panel, and they will be applied to the Gantt chart. Weekends can be highlighted using the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Gantt.Gantt.html#Syncfusion_EJ2_Gantt_Gantt_HighlightWeekends">highlightweekends</a> property for easy identification.     
+    </p>        
+    <p>
+        Non-working days are visible by default in the Gantt chart timeline, their visibility can be customized using the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Gantt.GanttTimelineSettings.html#Syncfusion_EJ2_Gantt_GanttTimelineSettings_ShowWeekend">timelineSettings.showWeekend</a> property. Setting this to false will hide non-working days from the timeline.
+    </p>
         <br />
     </div>
 }

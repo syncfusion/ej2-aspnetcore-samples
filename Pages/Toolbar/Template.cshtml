@@ -9,7 +9,7 @@
 @section ControlsSection {
     <div class="col-lg-12 control-section">
         <div class="e-sample-resize-container">
-            <ejs-toolbar id="template-toolbar" overflowMode="Popup" cssClass="template" style="margin-top: 100px; width: 100%; max-width: 100%">
+            <ejs-toolbar id="template-toolbar" overflowMode="Popup" cssClass="template" keyDown="onKeyDown" style="margin-top: 100px; width: 100%; max-width: 100%">
                 <e-toolbar-items>
                     <e-toolbar-item prefixIcon="e-icons e-folder" tooltipText="Open File" text="Open" showTextOn="Overflow" align="Left"></e-toolbar-item>
                     <e-toolbar-item type="Separator"></e-toolbar-item>
@@ -19,19 +19,19 @@
                     <e-toolbar-item prefixIcon="e-icons e-last-page" tooltipText="Show last page" text="Last" showTextOn="Overflow" align="Left"></e-toolbar-item>
                     <e-toolbar-item template="#count-textbox" type=Input align="Left" cssClass="page-count"></e-toolbar-item>
                     <e-toolbar-item type="Separator"></e-toolbar-item>
-                    <e-toolbar-item prefixIcon="e-icons e-zoom-out" tooltipText="zoom-out" text="zoom-out" showTextOn="Overflow" align="Left"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-icons e-zoom-out" tooltipText="zoom-out" text="zoom-out" showTextOn="Overflow" align="Left" tabIndex='0'></e-toolbar-item>
                     <e-toolbar-item prefixIcon="e-icons e-zoom-in" tooltipText="zoom-in" text="zoom-in" showTextOn="Overflow" align="Left"></e-toolbar-item>
                     <e-toolbar-item template="#combo-content" type=Input align=Left overflow="Show" cssClass="percentage"></e-toolbar-item>
                     <e-toolbar-item type="Separator"></e-toolbar-item>
-                    <e-toolbar-item prefixIcon="e-icons e-mouse-pointer" tooltipText="Text Selection Tool" text="Selection" showTextOn="Overflow" align="Left"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-icons e-mouse-pointer" tooltipText="Text Selection Tool" text="Selection" showTextOn="Overflow" align="Left" tabIndex='0'></e-toolbar-item>
                     <e-toolbar-item prefixIcon="e-icons e-pan" tooltipText="Pan Mode" text="Pan Mode" showTextOn="Overflow" align="Left"></e-toolbar-item>
                     <e-toolbar-item type="Separator"></e-toolbar-item>
                     <e-toolbar-item prefixIcon="e-icons e-undo" tooltipText="Undo" text="Undo" showTextOn="Overflow" align="Left"></e-toolbar-item>
                     <e-toolbar-item prefixIcon="e-icons e-redo" tooltipText="Redo" text="Redo" showTextOn="Overflow" align="Left"></e-toolbar-item>
                     <e-toolbar-item type="Separator"></e-toolbar-item>
-                    <e-toolbar-item prefixIcon="e-pv-comment-icon" tooltipText="Add Comments" text="Add Comments" showTextOn="Overflow" align="Left"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-pv-comment-icon" tooltipText="Add Comments" text="Add Comments" showTextOn="Overflow" align="Left" tabIndex='0'></e-toolbar-item>
                     <e-toolbar-item type="Separator"></e-toolbar-item>
-                    <e-toolbar-item text="Submit Form" align="Left"></e-toolbar-item>
+                    <e-toolbar-item text="Submit Form" align="Left" tabIndex='0'></e-toolbar-item>
                     <e-toolbar-item template="#list-content" type=Input align=Right overflow="Show"></e-toolbar-item>
                     <e-toolbar-item prefixIcon="e-icons e-annotation-edit" tooltipText="Edit Annotations" text="Edit" align="Right" showTextOn="Overflow"></e-toolbar-item>
                     <e-toolbar-item prefixIcon="e-icons e-print" tooltipText="Print File" text="Print" align="Right" showTextOn="Overflow"></e-toolbar-item>
@@ -98,6 +98,26 @@
     function onCreate() {
         this.addIcon('prepend', 'e-icons e-search');
     }
+
+    function onKeyDown(args) {
+        if (args.originalEvent.action === 'moveRight') {
+            focusInputElement(args.nextItem, args);
+        }
+        else if (args.originalEvent.action === 'moveLeft') {
+            focusInputElement(args.nextItem, args);
+        }
+    }
+
+    function focusInputElement(item, args) {
+        if (item && item.classList.contains('e-template')) {
+            var inputElement = item.querySelector('input');
+            if (inputElement) {
+                inputElement.focus();
+                args.cancel = true;
+            }
+        }
+    }
+
 </script>
 
 @section Title{

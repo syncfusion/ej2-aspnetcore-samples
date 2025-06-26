@@ -4,52 +4,72 @@
 
 @{
     var getConnectorDefaults = "getConnectorDefaults";
+    var getNodeDefaults = "getNodeDefaults";
+    var created = "created";
 }
-@section ControlsSection{
-<div class="control-section">
-    <ejs-diagram id="diagram" width="100%" height="700" getConnectorDefaults="@getConnectorDefaults" nodes="@Model.nodes" connectors="@Model.Connectors" created = "created">
-           <e-diagram-snapsettings constraints="None"></e-diagram-snapsettings>
-    </ejs-diagram>
-</div>
-<script>
+@section ControlsSection {
+    <div class="control-section">
+        <ejs-diagram id="diagram" width="100%" height="700" getConnectorDefaults="@getConnectorDefaults"
+            getNodeDefaults="@getNodeDefaults" model="@Model.DiagramModel" created="@created">
+            <e-diagram-snapsettings constraints="None"></e-diagram-snapsettings>
+        </ejs-diagram>
+    </div>
+    <script>
 
-    //Set connector default properties.
-    function getConnectorDefaults(obj, diagram) {
-        obj.targetDecorator.style = {fill:'#489ECC',strokeColor:'#489ECC'};
-        if(obj.targetDecorator.shape === 'Arrow'){
-        obj.style = {strokeColor:'#489ECC',strokeWidth:2};
+        //Set connector default properties.
+        function getConnectorDefaults(connector, diagram) {
+            var message = diagram.model.messages.find(function (message) {
+                return message.id === connector.id;
+            });
+            // Style the connector if it corresponds to a message
+            if (message) {
+                connector.targetDecorator.style = { fill: '#489ECC', strokeColor: '#489ECC' };
+                connector.style = { strokeColor: '#489ECC', strokeWidth: 2 };
+            }
         }
-        return obj;
-    }
-    function created(args){
-        var diagram = document.getElementById("diagram").ej2_instances[0];
-        diagram.tool = ej.diagrams.DiagramTools.ZoomPan;
-        diagram.fitToPage();
-        diagram.dataBind();
-    }
+        function getNodeDefaults(node, diagram) {
+            if (node.data instanceof ej.diagrams.UmlSequenceParticipant) {
+                if (!node.data.isActor && node.annotations) {
+                    node.annotations[0].style.color = 'white';
+                }
+            } else if (node.data instanceof ej.diagrams.UmlSequenceActivationBox) {
+                node.style = { fill: 'orange', strokeColor: 'orange' };
+            }
+        }
+        function created(args) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            diagram.tool = ej.diagrams.DiagramTools.ZoomPan;
+            diagram.fitToPage();
+            diagram.dataBind();
+        }
 
-</script>
+    </script>
 }
-@section ActionDescription{
-<div id="action-description">
-    <p>
-     This sample illustrates an employee’s leave request sequence using a UML sequence diagram. The shapes for the sequence were designed with the port feature for Diagram's nodes.
-  </p>
-</div>
+@section ActionDescription {
+    <div id="action-description">
+        <p>
+            This sample presents a UML sequence diagram created with the Syncfusion<sup>®</sup> EJ2 Diagram component to visualize
+            interactions in a secure transaction process involving a user, transaction system, and fraud detection system.
+        </p>
+    </div>
 }
-@section Meta{
-                    <meta name="description" content="This example demonstrates the UML Sequence Diagram in ASP.NET Core Diagram control. Explore here for more details."/>
-                }
-@section Description{
-<div id="description">
-<p>This example shows how to create a UML sequence diagram using the port feature for nodes. The <code>type</code> property allows you to define the type of shape. The basic shape property allows you to define the shape of a node.
-    </p>
-  <br />
-</div>
+@section Meta {
+    <meta name="description"
+        content="This example demonstrates the UML Sequence Diagram in ASP.NET Core Diagram control. Explore here for more details." />
 }
-@section Title{
-                    <title>ASP.NET Core Diagram UML Sequence Diagram Example - Syncfusion Demos </title> 
-                }
-@section Header{
-                    <h1 class='sb-sample-text'>Example of UML Sequence Diagram in ASP.NET Core Diagram Control</h1>
-                }
+@section Description {
+    <div id="description">
+        <p>This sample demonstrates how to build a UML sequence diagram using the diagram's <code>model</code> property. The
+            <code>UmlSequenceDiagramModel</code> type provides a structured approach to defining key elements such as
+            participants, messages, activation boxes, and interaction fragments. This approach enables the clear
+            visualization of sequential interactions within complex systems, such as secure transaction workflows.
+        </p>
+        <br />
+    </div>
+}
+@section Title {
+    <title>ASP.NET Core Diagram UML Sequence Diagram Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of UML Sequence Diagram in ASP.NET Core Diagram Control</h1>
+}

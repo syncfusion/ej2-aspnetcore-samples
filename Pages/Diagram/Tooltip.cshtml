@@ -11,7 +11,7 @@
         <div id="tooltipDiagramSection" class="content-wrapper" style="width: 100%">
             <ejs-diagram id="diagram" width="100%" height="645px" connectors="@Model.connectors" nodes="@Model.nodes" getNodeDefaults="@getNodeDefaults" getConnectorDefaults="@getConnectorDefaults" created="created">
                 <e-diagram-snapsettings constraints="None"></e-diagram-snapsettings>
-                <e-diagram-tooltip relativeMode="Object" animation="@Model.tooltipAnimation" position="@Model.position"></e-diagram-tooltip>
+                <e-diagram-tooltip relativeMode="Object" content="getcontent" animation="@Model.tooltipAnimation" position="@Model.position"></e-diagram-tooltip>
             </ejs-diagram>
         </div>
     </div>
@@ -120,7 +120,12 @@
             }
             diagram.dataBind();
         }
-
+        function getcontent() {
+            let tooltipContent = document.createElement('div');
+            tooltipContent.innerHTML =
+                '<div style="border-width:1px;"><span> Tooltip !!! </span> </div>';
+            return tooltipContent;
+        }
         function positionChange(args) {
             var diagram = document.getElementById("diagram").ej2_instances[0];
             var nodes = diagram.nodes;

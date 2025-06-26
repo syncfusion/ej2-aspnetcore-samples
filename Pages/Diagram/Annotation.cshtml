@@ -6,96 +6,114 @@
     var getNodeDefaults = "getNodeDefaults";
     var getConnectorDefaults = "getConnectorDefaults";
 } 
-@section ControlsSection{
-    <div class="col-lg-8 control-section">
-        <div class="content-wrapper">
-            <ejs-diagram id="container" width="100%" height="645px" nodes="@Model.nodes" connectors="@Model.Connectors" getNodeDefaults="@getNodeDefaults" getConnectorDefaults="@getConnectorDefaults" selectionChange="selectionChange">
-                <e-diagram-snapsettings constraints="None"></e-diagram-snapsettings>
-            </ejs-diagram>
-        </div>
-    </div>
-    <div class="col-lg-4 property-section">
-        <div class="property-panel-header">
-            Properties
-        </div>
-        <div class="row property-panel-content" id="appearance">
-            <div class="row row-header" style="padding-top: 10px">
-                Alignment
+@section ControlsSection {
+    <div id="diagram-Annotation-container">
+        <div class="col-lg-8 control-section">
+            <div class="content-wrapper">
+                <ejs-diagram id="container" width="100%" height="645px" nodes="@Model.nodes" connectors="@Model.Connectors"
+                    getNodeDefaults="@getNodeDefaults" getConnectorDefaults="@getConnectorDefaults"
+                    selectionChange="selectionChange">
+                    <e-diagram-snapsettings constraints="None"></e-diagram-snapsettings>
+                </ejs-diagram>
             </div>
-            <div class="row">
+        </div>
+        <div class="col-lg-4 property-section">
+            <div class="property-panel-header">
+                Properties
+            </div>
+            <div class="row property-panel-content" id="appearance">
+                <div class="row row-header" style="padding-top: 10px">
+                    Alignment
+                </div>
+                <div class="row">
+                    <div class="row" style="padding-top: 8px">
+                        <div class="diagram-image-pattern-style" id="left"
+                            style="background-image: url('@Url.Content("~/images//Diagram/annotation/Annotation_1.png")'); margin-right: 4px">
+                        </div>
+                        <div class="diagram-image-pattern-style" id="right"
+                            style="background-image: url('@Url.Content("~/images//Diagram/annotation/Annotation_2.png")'); margin: 0px 4px">
+                        </div>
+                        <div class="diagram-image-pattern-style" id="bottoml"
+                            style="background-image: url('@Url.Content("~/images//Diagram/annotation/Annotation_3.png")');margin-left: 4px">
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top: 8px">
+                        <div class="diagram-image-pattern-style" id="bottomr"
+                            style="background-image: url('@Url.Content("~/images//Diagram/annotation/Annotation_4.png")'); margin-right: 4px">
+                        </div>
+                        <div class="diagram-image-pattern-style" id="center"
+                            style="background-image: url('@Url.Content("~/images//Diagram/annotation/Annotation_5.png")'); margin: 0px 4px">
+                        </div>
+                        <div class="diagram-image-pattern-style" id="bottomcenter_top"
+                            style="background-image: url('@Url.Content("~/images//Diagram/annotation/Annotation_6.png")');margin-left: 4px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row property-panel-content" style="padding-top: 10px">
+                <div class="row row-header" style="padding-top: 10px">
+                    Appearance
+                </div>
                 <div class="row" style="padding-top: 8px">
-                    <div class="image-pattern-style" id="left" style="background-image: url('@Url.Content("~/images//Diagram/annotation/Annotation_1.png")'); margin-right: 4px">
+                    <div class="col-xs-4 column-style">
+                        <ejs-button id="bold" disabled="false" cssClass="boldwidth"
+                            iconCss="e-ddb-icons e-bold"></ejs-button>
                     </div>
-                    <div class="image-pattern-style" id="right" style="background-image: url('@Url.Content("~/images//Diagram/annotation/Annotation_2.png")'); margin: 0px 4px">
+                    <div class="col-xs-4 column-style">
+                        <ejs-button id="italic" disabled="false" cssClass="italicwidth"
+                            iconCss="e-ddb-icons e-italic"></ejs-button>
                     </div>
-                    <div class="image-pattern-style" id="bottoml" style="background-image: url('@Url.Content("~/images//Diagram/annotation/Annotation_3.png")');margin-left: 4px">
+                    <div class="col-xs-4 column-style">
+                        <ejs-button id="underline" disabled="false" cssClass="underlinewidth"
+                            iconCss="e-ddb-icons e-underline"></ejs-button>
                     </div>
                 </div>
                 <div class="row" style="padding-top: 8px">
-                    <div class="image-pattern-style" id="bottomr" style="background-image: url('@Url.Content("~/images//Diagram/annotation/Annotation_4.png")'); margin-right: 4px">
+                    <div class="col-xs-4 column-style">
+                        <ejs-colorpicker id="fontColor" value="#000" change="fontColorChange"></ejs-colorpicker>
                     </div>
-                    <div class="image-pattern-style" id="center" style="background-image: url('@Url.Content("~/images//Diagram/annotation/Annotation_5.png")'); margin: 0px 4px">
+                    <div class="col-xs-4 column-style">
+                        <ejs-numerictextbox id="fontSize" value="12" min="1" max="50" enabled="true" format="##.##" step="1"
+                            width="100%" change="textBoxChanged"></ejs-numerictextbox>
                     </div>
-                    <div class="image-pattern-style" id="bottomcenter_top" style="background-image: url('@Url.Content("~/images//Diagram/annotation/Annotation_6.png")');margin-left: 4px">
+                    <div class="col-xs-4 column-style">
+                        <ejs-dropdownlist id="fontFamily" enabled="true" created="Create" placeholder="Select a font type"
+                            index="0" popupWidth="150" dataSource="@Model.font" change="fontChange">
+                            <e-dropdownlist-fields text="Name" value="Name"></e-dropdownlist-fields>
+                        </ejs-dropdownlist>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row property-panel-content" style="padding-top: 10px">
-            <div class="row row-header" style="padding-top: 10px">
-                Appearance
-            </div>
-            <div class="row" style="padding-top: 8px">
-                <div class="col-xs-4 column-style">
-                    <ejs-button id="bold" disabled="false" cssClass="boldwidth" iconCss="e-ddb-icons e-bold"></ejs-button>
+            <div class="row property-panel-content" style="padding-top: 10px">
+                <div class="row row-header">
+                    Templates
                 </div>
-                <div class="col-xs-4 column-style">
-                    <ejs-button id="italic" disabled="false" cssClass="italicwidth" iconCss="e-ddb-icons e-italic"></ejs-button>
-                </div>
-                <div class="col-xs-4 column-style">
-                    <ejs-button id="underline" disabled="false" cssClass="underlinewidth" iconCss="e-ddb-icons e-underline"></ejs-button>
-                </div>
-            </div>
-            <div class="row" style="padding-top: 8px">
-                <div class="col-xs-4 column-style">
-                    <ejs-colorpicker id="fontColor" value="#000" change="fontColorChange"></ejs-colorpicker>
-                </div>
-                <div class="col-xs-4 column-style">
-                    <ejs-numerictextbox id="fontSize" value="12" min="1" max="50" enabled="true" format="##.##" step="1" width="100%" change="textBoxChanged"></ejs-numerictextbox>
-                </div>
-                <div class="col-xs-4 column-style">
-                    <ejs-dropdownlist id="fontFamily" enabled="true" created="Create" placeholder="Select a font type" index="0" popupWidth="150" dataSource="@Model.font" change="fontChange">
-                        <e-dropdownlist-fields text="Name" value="Name"></e-dropdownlist-fields>
+                <div class="row col-xs-8" style="padding-left: 0px; padding-top: 8px">
+                    <ejs-dropdownlist id="template" dataSource="@Model.templateList" popupWidth="200" width="100%"
+                        placeholder="select a template" change="onLabelTemplateChange">
+                        <e-dropdownlist-fields text="Text" value="Value"></e-dropdownlist-fields>
                     </ejs-dropdownlist>
                 </div>
             </div>
-        </div>
-        <div class="row property-panel-content" style="padding-top: 10px">
-            <div class="row row-header">
-                Templates
-            </div>
-            <div class="row col-xs-8" style="padding-left: 0px; padding-top: 8px">
-                <ejs-dropdownlist id="template" dataSource="@Model.templateList" popupWidth="200" width="100%" placeholder="select a template" change="onLabelTemplateChange">
-                    <e-dropdownlist-fields text="Text" value="Value"></e-dropdownlist-fields>
-                </ejs-dropdownlist>
-            </div>
-        </div>
-        <div class="row" style="padding-top: 10px">
-            <div class="row row-header">
-                Behaviour
-            </div>
-            <div class="row" style="padding-top: 8px">
-                <ejs-checkbox id="labelConstraints" label="Label interaction" checked="false" change="onLabelInteractionChange"></ejs-checkbox>
+            <div class="row" style="padding-top: 10px">
+                <div class="row row-header">
+                    Behaviour
+                </div>
+                <div class="row" style="padding-top: 8px">
+                    <ejs-checkbox id="labelConstraints" label="Label interaction" checked="false"
+                        change="onLabelInteractionChange"></ejs-checkbox>
+                </div>
             </div>
         </div>
     </div>
+
 
     <style>
         #container {
             display: block;
         }
         /* Css for images in property panel  */
-        .image-pattern-style {
+        .diagram-image-pattern-style {
             background-color: white;
             background-size: contain;
             background-repeat: no-repeat;
@@ -106,6 +124,7 @@
             background-position: center;
             float: left;
         }
+
         /* To aligh the div of bold,italic and underline properly*/
         .boldwidth {
             width: 100%
@@ -120,15 +139,17 @@
         }
 
         /* Selection indicator */
-        .e-selected-style {
+        #diagram-Annotation-container .diagram-panel-selected-style {
             border-color: #006CE6;
             border-width: 2px;
         }
-        .property-section .e-remove-selection {
+
+        #diagram-Annotation-container .property-section .e-remove-selection {
             cursor: not-allowed;
         }
+
         /* To align propery panel items */
-        .column-style {
+        #diagram-Annotation-container .column-style {
             display: table;
             height: 35px;
             padding-right: 4px;
@@ -136,25 +157,17 @@
             width: calc((100% - 12px) / 3);
         }
 
-        .row {
+        #diagram-Annotation-container .row {
             margin-left: 0px;
             margin-right: 0px;
+            display: block;
         }
 
-        .row-header {
+        #diagram-Annotation-container .row-header {
             font-size: 15px;
             font-weight: 500;
         }
 
-        .e-checkbox-wrapper .e-label {
-            font-size: 12px;
-        }
-        
-        .col-xs-6 {
-            padding-left: 0px;
-            padding-right: 0px;
-            padding-top: 5px;
-        }
         /* To disable pointer events when there is no selection in diagram */
         .e-remove-selection .property-section-content {
             pointer-events: none;
@@ -192,38 +205,48 @@
         .e-underline::before {
             content: "\e716";
         }
-
-
-        .row {
-            display: block;
-        }
     </style>
     <script>
         function selectionChange(arg) {
             if (arg.state === 'Changed') {
-                var selectedElement = document.getElementsByClassName('e-selected-style');
+                var selectedElement = document.getElementsByClassName('diagram-panel-selected-style');
                 if (selectedElement.length) {
-                    selectedElement[0].classList.remove('e-selected-style');
+                    selectedElement[0].classList.remove('diagram-panel-selected-style');
+                }
+                var labelConstraintsCheckbox= document.getElementById('labelConstraints');
+                if(labelConstraintsCheckbox && labelConstraintsCheckbox.ej2_instances){
+                    labelConstraintsCheckbox = labelConstraintsCheckbox.ej2_instances[0];
                 }
                 if (arg.newValue[0]) {
                     var node = arg.newValue[0];
-                    var offset = node.annotations[0].offset;
-                    if (offset.x === 0 && offset.y === 0) {
-                        updatePosition('left');
-                    } else if (offset.x === 1 && offset.y === 0) {
-                        updatePosition('right');
-                    } else if (offset.x === 1 && offset.y === 0) {
-                        updatePosition('right');
-                    } else if (offset.x === 0 && offset.y === 1) {
-                        updatePosition('bottoml');
-                    } else if (offset.x === 1 && offset.y === 1) {
-                        updatePosition('bottomr');
-                    } else if (offset.x === 0.5 && offset.y === 0.5) {
-                        updatePosition('center');
-                    } else if (offset.x === 0.5 && offset.y === 1) {
-                        updatePosition('bottomcenter_top');
+                    if (node.annotations) {
+                        var offset = node.annotations[0].offset;
+                        if (offset.x === 0 && offset.y === 0) {
+                            updatePosition('left');
+                        } else if (offset.x === 1 && offset.y === 0) {
+                            updatePosition('right');
+                        } else if (offset.x === 1 && offset.y === 0) {
+                            updatePosition('right');
+                        } else if (offset.x === 0 && offset.y === 1) {
+                            updatePosition('bottoml');
+                        } else if (offset.x === 1 && offset.y === 1) {
+                            updatePosition('bottomr');
+                        } else if (offset.x === 0.5 && offset.y === 0.5) {
+                            updatePosition('center');
+                        } else if (offset.x === 0.5 && offset.y === 1) {
+                            updatePosition('bottomcenter_top');
+                        }
+                        const hasInteraction = (node.annotations[0].constraints & ej.diagrams.AnnotationConstraints.Interaction) === ej.diagrams.AnnotationConstraints.Interaction;
+                        labelConstraintsCheckbox.disabled = false;
+                        labelConstraintsCheckbox.checked = hasInteraction;
+                    } else {
+                        labelConstraintsCheckbox.disabled = true;
+                        labelConstraintsCheckbox.checked = false;
                     }
-
+                } else {
+                    // No node selected - disable checkbox
+                    labelConstraintsCheckbox.disabled = true;
+                    labelConstraintsCheckbox.checked = false;
                 }
                 enableOptions(arg);
             }
@@ -277,6 +300,7 @@
         function Create() {
             var diagram = document.getElementById("container").ej2_instances[0];
             diagram.select([diagram.nodes[0]]);
+            diagram.fitToPage();
         }
 
         function fontColorChange(args) {
@@ -309,9 +333,9 @@
                     } else if (name === 'fontfamily') {
                         annotationStyle.fontFamily = value;
                     } else if (name === 'bold') {
-                        annotationStyle.bold = true;
+                        annotationStyle.bold = !annotationStyle.bold;
                     } else if (name === 'italic') {
-                        annotationStyle.italic = true;
+                        annotationStyle.italic = !annotationStyle.italic;
                     } else if (name === 'fontcolor') {
                         annotationStyle.color = value;
                     } else if (name === 'template') {
@@ -332,15 +356,15 @@
                 }
             }
         }
-        
+
         document.getElementById('appearance').onclick = function (args) {
             var target = args.target;
             @*custom code start*@
-            var selectedElement = document.getElementsByClassName('e-selected-style');
+            var selectedElement = document.getElementsByClassName('diagram-panel-selected-style');
             if (selectedElement.length) {
-                selectedElement[0].classList.remove('e-selected-style');
+                selectedElement[0].classList.remove('diagram-panel-selected-style');
             }
-            if (target.className === 'image-pattern-style') {
+            if (target.className === 'diagram-image-pattern-style') {
                 updatePosition(target.id);
             }
         };
@@ -396,7 +420,7 @@
                             break;
                     }
                     @*custom code start*@
-                    target.classList.add('e-selected-style');
+                    target.classList.add('diagram-panel-selected-style');
                     @*custom code end*@
                 }
             }

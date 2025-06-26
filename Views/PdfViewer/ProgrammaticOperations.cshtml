@@ -17,6 +17,7 @@
         new { Text = "Highlight", Value = "Highlight"},
         new { Text = "Underline", Value = "Underline"},
         new { Text = "Strikethrough", Value = "Strikethrough"},
+        new { Text = "Squiggly", Value = "Squiggly"},
         new { Text = "Line", Value = "Line"},
         new { Text = "Arrow", Value = "Arrow"},
         new { Text = "Rectangle", Value = "Rectangle"},
@@ -132,7 +133,7 @@
         @Html.Partial("_SwitchPartial")
         <ejs-pdfviewer  
             id="pdfviewer"
-            documentPath="https://cdn.syncfusion.com/content/pdf/annotations.pdf"
+            documentPath="https://cdn.syncfusion.com/content/pdf/annotations-v3.pdf"
             resourceUrl="https://cdn.syncfusion.com/ej2/23.2.6/dist/ej2-pdfviewer-lib"
             documentLoad="documentLoaded"
             annotationSelect="onAnnotationSelected"
@@ -1382,7 +1383,8 @@
             switch (selectedAnnotation.annotationType) {
                 case "Highlight":
                 case "Underline":
-                case "Strikethrough": {
+                case "Strikethrough":
+                case "Squiggly": {
                     viewer.annotation.addAnnotation(selectedAnnotation.annotationType, currentAnnotationSettings);
                     break;
                 }
@@ -1588,6 +1590,7 @@
             case 'Highlight':
             case 'Underline':
             case 'Strikethrough':
+            case 'Squiggly':
                 {
                     boundsButtons.hidden = false;
                     fillColor.hidden = false;
@@ -1742,7 +1745,7 @@
                 updateButton.disabled = true;
             }
             let shapeAnnotation = selectedAnnotation.annotationType;
-            if (((property === "x") || (property === "y") || (property === "height") || (property === "width")) && ((shapeAnnotation === "Underline") || (shapeAnnotation === "Strikethrough") || (shapeAnnotation === "Highlight"))) {
+            if (((property === "x") || (property === "y") || (property === "height") || (property === "width")) && ((shapeAnnotation === "Underline") || (shapeAnnotation === "Strikethrough") || (shapeAnnotation === "Highlight") || (shapeAnnotation === "Squiggly"))) {
                 updateButton.disabled = true;
             }
             if (((property === "x") || (property === "y")) && ((shapeAnnotation === "Polygon") || (shapeAnnotation === "Area") || (shapeAnnotation === "Perimeter") || (shapeAnnotation === "Volume"))) {
@@ -1840,7 +1843,7 @@
         selectedAnnotation.fillColor = currentAnnotation.fillColor;
         selectedAnnotation.strokeColor = currentAnnotation.strokeColor;
 
-        if (currentAnnotation.textMarkupAnnotationType === "Highlight" || currentAnnotation.textMarkupAnnotationType === "Underline" || currentAnnotation.textMarkupAnnotationType === "Strikethrough" ) {
+        if (currentAnnotation.textMarkupAnnotationType === "Highlight" || currentAnnotation.textMarkupAnnotationType === "Underline" || currentAnnotation.textMarkupAnnotationType === "Strikethrough" || currentAnnotation.textMarkupAnnotationType === "Squiggly") {
             selectedAnnotation.annotationType = currentAnnotation.textMarkupAnnotationType;
         }
         else if (currentAnnotation.shapeAnnotationType === "Square" && currentAnnotation.subject === "Rectangle") {
@@ -1908,7 +1911,7 @@
             selectedAnnotation.fillColor = currentAnnotation.fillColor;
         }
         // showInkAnnotationType = false;
-        if (selectedAnnotation.annotationType === "Highlight" || selectedAnnotation.annotationType === "Underline" || selectedAnnotation.annotationType === "Strikethrough") {
+        if (selectedAnnotation.annotationType === "Highlight" || selectedAnnotation.annotationType === "Underline" || selectedAnnotation.annotationType === "Strikethrough" || selectedAnnotation.annotationType === "Squiggly") {
             if (currentAnnotation.bounds[0] && currentAnnotation.bounds[0].X && currentAnnotation.bounds[0].Y && currentAnnotation.bounds[0].Width && currentAnnotation.bounds[0].Height) {
                 selectedAnnotation.bounds = currentAnnotation.bounds;
                 selectedAnnotation.width = currentAnnotation.bounds[0].Width;
@@ -2140,7 +2143,7 @@
         currentAnnotation.thickness = selectedAnnotation.thickness;
         currentAnnotation.strokeColor = selectedAnnotation.strokeColor;
         currentAnnotation.fillColor = selectedAnnotation.fillColor;
-        if (selectedAnnotation.annotationType === "Highlight" || selectedAnnotation.annotationType === "Underline" || selectedAnnotation.annotationType === "Strikethrough") {
+        if (selectedAnnotation.annotationType === "Highlight" || selectedAnnotation.annotationType === "Underline" || selectedAnnotation.annotationType === "Strikethrough" || selectedAnnotation.annotationType === "Squiggly") {
             currentAnnotation.bounds = [];
             currentAnnotation.color = selectedAnnotation.fillColor;
             if (selectedAnnotation.bounds.length === 0) {
@@ -2577,7 +2580,7 @@
         } else if (shapeAnnotation === "CustomStamp") {
             selectedAnnotation.width = 100;
             selectedAnnotation.height = 100;
-        } else if (shapeAnnotation === "Highlight" || shapeAnnotation === "Underline" || shapeAnnotation === "Strikethrough") {
+        } else if (shapeAnnotation === "Highlight" || shapeAnnotation === "Underline" || shapeAnnotation === "Strikethrough" || shapeAnnotation === "Squiggly") {
             selectedAnnotation.width = 100;
             selectedAnnotation.height = 14;
         } else {
@@ -2589,7 +2592,7 @@
         selectedAnnotation.y = 100;
         selectedAnnotation.fillColor = "#FFFFFF00";
         selectedAnnotation.strokeColor = "#FF0000FF";
-        if (shapeAnnotation === "Highlight" || shapeAnnotation === "Underline" || shapeAnnotation === "Strikethrough" || shapeAnnotation === "FreeText") {
+        if (shapeAnnotation === "Highlight" || shapeAnnotation === "Underline" || shapeAnnotation === "Strikethrough" || shapeAnnotation === "Squiggly" || shapeAnnotation === "FreeText") {
             selectedAnnotation.x = 10;
             selectedAnnotation.y = 10;
             if (shapeAnnotation === "Highlight") {
@@ -2599,6 +2602,9 @@
                 selectedAnnotation.fillColor = "#00FF00FF";
             }
             else if (shapeAnnotation === "Strikethrough") {
+                selectedAnnotation.fillColor = "#FF0000FF";
+            }
+            else if (shapeAnnotation === "Squiggly") {
                 selectedAnnotation.fillColor = "#FF0000FF";
             }
             else {
@@ -2865,17 +2871,21 @@
         viewer.pageCount = JSON.parse(e.pageData).pageCount;
         pageNumberObj.max = viewer.pageCount;
         pageNumberObj.dataBind();
-        if (e.documentName === 'annotations.pdf') {
+        if (e.documentName === 'annotations-v3.pdf') {
             viewer.annotation.addAnnotation("Highlight", {
-                bounds: [{ x: 97, y: 610, width: 350, height: 14 }],
+                bounds: [{ x: 97, y: 610, width: 340, height: 14 }],
                 pageNumber: 1
             });
             viewer.annotation.addAnnotation("Underline", {
-                bounds: [{ x: 97, y: 723, width: 353.5, height: 14 }],
+                bounds: [{ x: 97, y: 705, width: 346, height: 14 }],
                 pageNumber: 1
             });
             viewer.annotation.addAnnotation("Strikethrough", {
-                bounds: [{ x: 97, y: 836, width: 376.5, height: 14 }],
+                bounds: [{ x: 97, y: 800, width: 367, height: 14 }],
+                pageNumber: 1
+            });
+            viewer.annotation.addAnnotation("Squiggly", {
+                bounds: [{ x: 97, y: 895.5, width: 336, height: 14 }],
                 pageNumber: 1
             });
             viewer.annotation.addAnnotation("Line", {

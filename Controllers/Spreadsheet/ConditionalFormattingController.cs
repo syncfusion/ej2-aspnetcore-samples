@@ -34,7 +34,7 @@ namespace EJ2CoreSampleBrowser.Controllers
                 new { ItemCode="AE940X",  ItemName="Electric Mop",  Quantity="47",  PurchasePrice="153.50",  SellingPrice="155.00", Profit= "=E13-D13", LastUpdated ="12-18-19",  Rating="3.9" },
                 new { ItemCode="UI152C",  ItemName="Smart LED TV",  Quantity="232",  PurchasePrice="201.25",  SellingPrice="204.00", Profit= "=E14-D14", LastUpdated ="03-13-20",  Rating="4.35" },
                 new { ItemCode="UD152V",  ItemName="Robotic Vacuum Cleaner",  Quantity="210",  PurchasePrice="182.25",  SellingPrice="185.00", Profit= "=E15-D15", LastUpdated ="08-26-19",  Rating="4.0" },
-                new { ItemCode="BK120L",  ItemName="Gaming Mouse",  Quantity="225",  PurchasePrice="34.80",  SellingPrice="38.00", Profit= "=E16-D16", LastUpdated ="01-12-20",  Rating="4.2" },
+                new { ItemCode="BK120L",  ItemName="Gaming Mouse",  Quantity="225",  PurchasePrice="34.8",  SellingPrice="38", Profit= "=E16-D16", LastUpdated ="01-12-20",  Rating="4.2" },
                 new { ItemCode="UF162V",  ItemName="Chair",  Quantity="373",  PurchasePrice="104.800",  SellingPrice="108.00", Profit= "=E17-D17", LastUpdated ="04-12-19",  Rating="3.25" },
                 new { ItemCode="UR162C",  ItemName="Welding Gloves",  Quantity="216",  PurchasePrice="19.00",  SellingPrice="21.00", Profit= "=E18-D18", LastUpdated ="11-22-19",  Rating="3.85" },
             };

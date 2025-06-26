@@ -49,10 +49,9 @@ public class ComplexHierarchicalDataDetails
             multiParents.Add(new ComplexHierarchicalDataDetails("node14", "#58b087", new string[] { "node12" }, "#16955e"));
             multiParents.Add(new ComplexHierarchicalDataDetails("node15", "#58b087", new string[] { "node12" }, "#16955e"));
             multiParents.Add(new ComplexHierarchicalDataDetails("node116", "#58b087", new string[] { "node22", "node12" }, "#d3722e"));
-            multiParents.Add(new ComplexHierarchicalDataDetails("node16", "#14ad85", new string[] { }, ""));
 
             multiParents.Add(new ComplexHierarchicalDataDetails("node17", "#659be5", new string[] { "node13", "node14", "node15" }, "#3a6eb5"));
-            multiParents.Add(new ComplexHierarchicalDataDetails("node18", "#14ad85", new string[] { }, ""));
+
             multiParents.Add(new ComplexHierarchicalDataDetails("node19", "#8dbe6c", new string[] { "node16", "node17", "node18" }, "#489911"));
 
             multiParents.Add(new ComplexHierarchicalDataDetails("node110", "#8dbe6c", new string[] { "node16", "node17", "node18" }, "#489911"));
@@ -65,11 +64,10 @@ public class ComplexHierarchicalDataDetails
             multiParents.Add(new ComplexHierarchicalDataDetails("node24", "#58b087", new string[] { "node22" }, "#16955e"));
             multiParents.Add(new ComplexHierarchicalDataDetails("node25", "#58b087", new string[] { "node22" }, "#16955e"));
 
-            multiParents.Add(new ComplexHierarchicalDataDetails("node26", "#14ad85", new string[] { }, "#14ad85"));
 
             multiParents.Add(new ComplexHierarchicalDataDetails("node27", "#659be5", new string[] { "node23", "node24", "node25" }, "#3a6eb5"));
 
-            multiParents.Add(new ComplexHierarchicalDataDetails("node28", "#14ad85", new string[] { }, ""));
+
 
             multiParents.Add(new ComplexHierarchicalDataDetails("node29", "#8dbe6c", new string[] { "node26", "node27", "node28", "node116" }, "#489911"));
             multiParents.Add(new ComplexHierarchicalDataDetails("node210", "#8dbe6c", new string[] { "node26", "node27", "node28" }, "#489911"));

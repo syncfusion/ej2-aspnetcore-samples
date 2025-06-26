@@ -53,13 +53,13 @@ namespace EJ2CoreSampleBrowser.Pages.TreeView
             {
                 id = 8,
                 pid = 7,
-                name = "Paran�"
+                name = "Paraná"
             });
             TreeData.Add(new
             {
                 id = 9,
                 pid = 7,
-                name = "Cear�"
+                name = "Ceará"
             });
             TreeData.Add(new
             {

@@ -60,8 +60,8 @@ public class TooltipModel : PageModel
 
              tooltipAnimation = new Animation()
             {
-                open = new Open() { effect = "FadeZoomIn", delay = 0 },
-                close = new Open() { effect = "FadeZoomOut", delay = 0 },
+                open = new Open() { effect = "FadeZoomIn", delay = 100 },
+                close = new Open() { effect = "FadeZoomOut", delay = 100 },
             };
             
             position = Position.TopLeft;
@@ -138,7 +138,9 @@ public class TooltipModel : PageModel
                     {
                         Type = "Bpmn",
                         Shape = "Gateway",
-                        gateWay = new DiagramBpmnGateway() { Type = BpmnGateways.Exclusive }
+                        Gateway = new DiagramBpmnGateway() {
+                            Type = BpmnGateways.Exclusive
+                        }
                     },
                     Tooltip = new DiagramDiagramTooltip() { Content = "proceed to validate?" }
                 });
@@ -155,8 +157,7 @@ public class TooltipModel : PageModel
                     Shape = new BpmnShapes()
                     {
                         Type = "Bpmn",
-                        Shape = "Gateway",
-                        gateWay = new DiagramBpmnGateway() { Type = BpmnGateways.Exclusive }
+                        Shape = "Gateway"
                     },
                     Tooltip = new DiagramDiagramTooltip() { Content = "Whether the reported/requested bug/feature is valid?" }
                 });
@@ -300,7 +301,7 @@ public class TooltipModel : PageModel
                     {
                         Type = "Bpmn",
                         Shape = "Gateway",
-                        gateWay = new DiagramBpmnGateway() { Type = BpmnGateways.Parallel }
+                        Gateway = new DiagramBpmnGateway() { Type = BpmnGateways.Parallel }
                     },
                     Tooltip = new DiagramDiagramTooltip() { Content = "can log?" }
                 });

@@ -1,4 +1,5 @@
 @page
+@model EJ2CoreSampleBrowser.Pages.Chart.PieEmptyModel
 @using Syncfusion.EJ2
 @section ControlsSection{
     @{
@@ -6,15 +7,16 @@
         var data = new string[] { "Drop", "Average", "Zero" };
     }
     <div class="col-lg-8 control-section">
-        <ejs-accumulationchart id="container" title="Annual Product-Wise Profit Analysis" load="load" enableSmartLabels="false" enableBorderOnMouseMove="false" textRender="textRender">
+        <ejs-accumulationchart id="container" title="Movie Genre Revenue Share" load="load" enableSmartLabels="false" enableAnimation=false enableBorderOnMouseMove="false" textRender="textRender">
             <e-accumulationchart-tooltipsettings enable="true" enableHighlight="true" header="" format="<b>${point.x}</b><br> Profit: <b>$${point.y}K</b>"></e-accumulationchart-tooltipsettings>
             <e-accumulationchart-legendsettings visible="false">
             </e-accumulationchart-legendsettings>
             <e-accumulation-series-collection>
-                <e-accumulation-series xName="Product" yName="ProfitPercentage" name="Profit" radius="80%">
+                <e-accumulation-series dataSource="@Model.ChartPoints" xName="Product" yName="ProfitPercentage" name="Profit" radius="80%" borderRadius=3>
                     <e-accumulationseries-datalabel position="@Syncfusion.EJ2.Charts.AccumulationLabelPosition.Inside" enableRotation="true" visible="true">
                         <e-font fontWeight="600"></e-font>
                     </e-accumulationseries-datalabel>
+                    <e-accumulationseries-border width=1 color="#ffffff"></e-accumulationseries-border>
                     <e-accumulationseries-emptypointsettings fill="#e6e6e6"></e-accumulationseries-emptypointsettings>
                 </e-accumulation-series>
             </e-accumulation-series-collection>
@@ -40,25 +42,16 @@
     <script>
         function load(args) {
             var indexedTheme = loadAccumulationChartTheme(args);
-            args.accumulation.dataSource = [
-                { Product : "Rice",  ProfitPercentage : 80 },
-                { Product : "Wheat", ProfitPercentage : null },
-                { Product : "Oil",   ProfitPercentage : 70 },
-                { Product : "Corn",  ProfitPercentage : 60 },
-                { Product : "Gram",  ProfitPercentage : null },
-                { Product : "Milk",  ProfitPercentage : 70 },
-                { Product : "Peas",  ProfitPercentage : 80 },
-                { Product : "Fruit", ProfitPercentage : 60 },
-                { Product : "Butter",ProfitPercentage : null }
-            ];
             if ((indexedTheme.replace(/5.3/i, '5')) === 'bootstrap5-dark') {
                 args.chart.series[0].emptyPointSettings.fill = '#FF7F7F';
             }
+            args.accumulation.series[0].dataLabel.font.size = ej.base.Browser.isDevice ? '8px' : '12px';
         }
 
         function onChange(args) {
             var pie = document.getElementById("container").ej2_instances[0];
             pie.series[0].emptyPointSettings.mode = this.value;
+            pie.series[0].animation.enable = false;
             pie.refresh();
         }
 
@@ -80,7 +73,7 @@
 
     <div id="action-description">
         <p>
-            This sample illustrates the annual product-wise profit analysis of an organization with empty point functionality in the pie series.
+            This sample illustrates the movie genre revenue share with empty point functionality in the pie series. The Mode of empty point can be changed by using <code>Empty Point Mode</code> in property panel.
         </p>
     </div>
 }

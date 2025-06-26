@@ -16,21 +16,23 @@
     var tools = new object[]
     {
         "Undo", "Redo", "|", "ImportWord", "ExportWord", "ExportPdf", "|",
-        "Bold", "Italic", "Underline", "StrikeThrough", "InlineCode", "SuperScript", "SubScript", "|",
-        "FontName", "FontSize", "FontColor", "BackgroundColor", "|",
-        "LowerCase", "UpperCase", "|",
-        "Formats", "Alignments", "Blockquote", "|", "NumberFormatList", "BulletFormatList", "|",
-        "Outdent", "Indent", "|", "CreateLink", "Image", "FileManager", "Video", "Audio", "CreateTable", "|", "FormatPainter", "ClearFormat",
-        "|", "EmojiPicker", "Print", "|",
-        "SourceCode", "FullScreen"
+        "Bold", "Italic", "Underline", "StrikeThrough", "InlineCode", "|", "CreateLink", "Image", "CreateTable", "CodeBlock",
+        "HorizontalLine", "Blockquote", "|", "BulletFormatList", "NumberFormatList", "|", "Formats", "Alignments", "|", "Outdent", "Indent", "|",
+        "FontColor", "BackgroundColor", "FontName", "FontSize", "|", "LowerCase", "UpperCase", "|", "SuperScript", "SubScript", "|",
+        "EmojiPicker", "FileManager", "Video", "Audio", "|", "FormatPainter", "ClearFormat",
+        "|", "Print", "FullScreen", "|", "SourceCode"
     };
     var saveUrl = hostUrl + "api/RichTextEditor/SaveFile";
     var removeUrl = hostUrl + "api/RichTextEditor/DeleteFile";
     var path = hostUrl + "RichTextEditor/";
     var mentionData = new EditorMentionUser().GetUserData();
+    var text = new[]
+    {
+        "Formats", "|", "Bold", "Italic", "Fontcolor", "BackgroundColor", "|", "CreateLink", "Image", "CreateTable", "Blockquote", "|", "Unorderedlist", "Orderedlist", "Indent", "Outdent"
+    };
     var table = new[]
     {
-        "TableHeader", "TableRows", "TableColumns", "TableCell", "-", "BackgroundColor", "TableRemove", "TableCellVerticalAlign", "Styles"
+        "Tableheader", "TableRemove", "|", "TableRows", "TableColumns", "TableCell", "|" , "Styles", "BackgroundColor", "Alignments", "TableCellVerticalAlign"
     };
     RichTextEditorImportWord ImportWord = new RichTextEditorImportWord
         {
@@ -65,7 +67,7 @@
             <ejs-richtexteditor id="allToolsRTE" value="@rteValue" showCharCount="true" actionBegin="actionBeginHandler" actionComplete="actionCompleteHandler" created="created" enableTabKey="true" enableXhtml="true"
                 placeholder="Type something or use @@ to tag a user..." >
                 <e-richtexteditor-toolbarsettings items="@tools" ></e-richtexteditor-toolbarsettings>
-                <e-richtexteditor-quicktoolbarsettings table="@table" showOnRightClick="true"></e-richtexteditor-quicktoolbarsettings>
+                <e-richtexteditor-quicktoolbarsettings table="@table" text="@text" showOnRightClick="true"></e-richtexteditor-quicktoolbarsettings>
                 <e-richtexteditor-filemanagersettings enable="true" path="/Pictures/Food" ajaxSettings="@ajaxSettings"></e-richtexteditor-filemanagersettings>
                 <e-richtexteditor-insertimagesettings saveUrl="@saveUrl" removeUrl="@removeUrl" path="@path"></e-richtexteditor-insertimagesettings>
                 <e-richtexteditor-importword serviceUrl="@ImportWord.ServiceUrl"></e-richtexteditor-importword>
@@ -324,6 +326,8 @@
             <li><code>Import / Export</code> - The Import/Export feature enables users to import content from Word documents
                 into the editor and export the editor's content into Word and PDF files.</li>
             <li><code>InlineCode</code> - Formats selected text as inline code, highlighting code snippets within the text.</li>
+            <li><code>Code Block</code> - The Code Block feature allows you to insert and display blocks of code with preserved formatting and syntax highlighting, making it ideal for sharing code snippets clearly and accurately.</li>
+            <li><code>HorizontalLine</code> - A horizontal line can be inserted into the editor to visually separate sections of content.</li>
         </ul>
     </div>
 }

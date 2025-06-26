@@ -4,52 +4,30 @@
 
 @section ControlsSection{
   <div class="control-section" align='center'>
-        <ejs-accumulationchart id="container" load="load" pointRender="labelRender" enableBorderOnMouseMove="false">
+        <ejs-accumulationchart id="container" load="load" enableBorderOnMouseMove="false" selectionMode="@Syncfusion.EJ2.Charts.AccumulationSelectionMode.Point">
             <e-accumulationchart-center x="50%" y="50%"></e-accumulationchart-center>
-            <e-accumulationchart-tooltipsettings enableHighlight="true" enable="true" format="<b>${point.x}</b><br>Browser Share: <b>${point.y}%</b>" header=""></e-accumulationchart-tooltipsettings>
-            <e-accumulationchart-legendsettings visible="true" toggleVisibility="false" position="@Syncfusion.EJ2.Charts.LegendPosition.Bottom" fixedWidth="true">
+            <e-accumulationchart-tooltipsettings enable="true" format="<b>${point.x}</b><br>Percentage: <b>${point.y}%</b>" header=""></e-accumulationchart-tooltipsettings>
+            <e-accumulationchart-legendsettings visible="true" toggleVisibility="false" textWrap=Wrap position="@Syncfusion.EJ2.Charts.LegendPosition.Bottom">
             </e-accumulationchart-legendsettings>
             <e-accumulation-series-collection>
-                <e-accumulation-series dataSource="@Model.PieChartPoints" xName="ExpenseCategory" yName="ExpensePercentage" name="legendName" innerRadius="50%" explode="false" explodeOffset="10%" explodeIndex="0" startAngle="30">
-                    <e-accumulationseries-datalabel name="DataLabelMappingName" visible="true" position="@Syncfusion.EJ2.Charts.AccumulationLabelPosition.Inside">
-                        <e-font fontWeight="600" color="#ffffff"></e-font>
-                        <e-connectorstyle type="@Syncfusion.EJ2.Charts.ConnectorType.Curve" length="20px"></e-connectorstyle>
+                <e-accumulation-series dataSource="@Model.PieChartPoints" xName="X" yName="Y" borderRadius=3 innerRadius="50%" explode="false" explodeOffset="10%" explodeIndex="0">
+                    <e-accumulationseries-datalabel visible="false">
                     </e-accumulationseries-datalabel>
+                    <e-accumulationseries-border width=1 color="#ffffff"></e-accumulationseries-border>
                 </e-accumulation-series>
             </e-accumulation-series-collection>
             <e-accumulationchart-accumulationannotations>
-                <e-accumulationchart-accumulationannotation X="52%" Y="50%" region="@Syncfusion.EJ2.Charts.Regions.Series"></e-accumulationchart-accumulationannotation>
+                <e-accumulationchart-accumulationannotation X="50%" Y="50%" region="@Syncfusion.EJ2.Charts.Regions.Series"></e-accumulationchart-accumulationannotation>
             </e-accumulationchart-accumulationannotations>
         </ejs-accumulationchart>
     </div>
     <script src="~/scripts/chart/theme-color.js"></script>
     <script>
-        var fluent2Colors = ["#6200EE", "#09AF74", "#0076E5", "#CB3587", "#E7910F", "#66CD15", "#F3A93C", "#107C10",
-            "#C19C00"];
-        var count = 0;
         function load(args) {
             loadAccumulationChartTheme(args);
-            args.accumulation.title = ej.base.Browser.isDevice ?  "Browser Market Shares" : '';
             args.accumulation.legendSettings.position = 'Bottom';
-            args.accumulation.legendSettings.maximumColumns = ej.base.Browser.isDevice ? 2 : 3;
-            args.accumulation.annotations[0].content = ej.base.Browser.isDevice ? " " : "<div style='font-Weight:600;font-size:14px'>Browser <br> Market <br> Shares</div>";
+            args.accumulation.annotations[0].content = ej.base.Browser.isDevice ? " " : "<div style='font-Weight:600;font-size:14px'>Internet Users <br> by Country<br>2025</div>";
             args.accumulation.series[0].radius = ej.base.Browser.isDevice ? "80%" : "85%";
-        }
-        function labelRender(args) {
-            var selectedTheme = location.hash.split('/')[1];
-            selectedTheme = selectedTheme ? selectedTheme : 'Tailwind3';
-            if (selectedTheme === 'fluent2') {
-                args.fill = fluent2Colors[args.point.index % 10];
-            }
-        }
-        function getFontSize(width) {
-            if (width > 300) {
-                return '13px';
-            } else if (width > 250) {
-                return '8px';
-            } else {
-                return '6px';
-            }
         }
     </script>
 }
@@ -63,14 +41,14 @@
 
     <div id="action-description">
         <p>
-            This sample demonstrates a donut chart showcasing mobile browser usage statistics, with legends displayed at the bottom of the chart.
+            This sample shows statistics on internet usage by country using the donut chart with legends shown at the bottom of the chart.
         </p>
     </div>
 }
 @section Description {
     <div id="description">
-        <p> 
-            This example demonstrates how to render a donut chart with legends positioned at the bottom. The legend can be arranged in horizontal, vertical, or auto layout modes. Using the <code>MaximumColumns</code> property, you can define the maximum number of columns in auto layout. Additionally, a fixed width option ensures uniform legend sizes for a polished appearance.
+        <p>
+            In this example, you can see how to render a donut chart with legends. You can use <code>radius</code> and <code>innerRadius</code> properties to render the donut.
         </p>
         <p>
             More information about the legend feature can be found in this

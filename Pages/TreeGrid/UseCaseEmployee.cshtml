@@ -1,0 +1,512 @@
+﻿@page
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2
+@model EJ2CoreSampleBrowser.Pages.TreeGrid.UseCaseEmployee
+
+@section ControlsSection {
+    <div class="control-section">
+        <div class="viewer-container">
+            <div class="viewer-row">
+                <label for="viewer" class="viewer-label">Select Viewer Role:</label>
+                <div id="role-selection" class="dropdown-container">
+                    <ejs-dropdownlist id="RoleSelect"
+                                      dataSource="@(new List<object> {
+                              new { id = "hr", text = "HR" },
+                              new { id = "employee", text = "Employee" },
+                              new { id = "helpdesk", text = "Helpdesk" },
+                              new { id = "pm", text = "Project Management" }
+                          })"
+                                      width="165px"
+                                      value="@("hr")"
+                                      change="valueChange">
+                        <e-dropdownlist-fields text="text" value="id"></e-dropdownlist-fields>
+                    </ejs-dropdownlist>
+                </div>
+            </div>
+        </div>
+
+        <ejs-treegrid id="EmployeeTreeGrid" dataSource="@UseCaseEmployee.GetData()" childMapping="Children" gridLines="Both" treeColumnIndex="0" allowSorting="true" allowFiltering="true" height="400" queryCellInfo="onQueryCellInfo">
+            <e-treegrid-filtersettings type="Excel" hierarchyMode="None"></e-treegrid-filtersettings>
+            <e-treegrid-pageSettings pageSize="10"></e-treegrid-pageSettings>
+            <e-treegrid-columns>
+                <e-treegrid-column field="ID" headerText="ID" width="200" textAlign="Left"></e-treegrid-column>
+                <e-treegrid-column field="EmployeeName" template="#employeeTemplate" headerTemplate="#employeeHeaderTemplate" headerText="Name" width="290" textAlign="Left" clipMode="EllipsisWithTooltip"></e-treegrid-column>
+                <e-treegrid-column field="Location" template="#flagTemplate" headerText="Location" width="200" textAlign="Left"></e-treegrid-column>
+                <e-treegrid-column field="JoinDate" headerText="Date Joined" width="180" textAlign="Right" format="yMd" type="date"></e-treegrid-column>
+                <e-treegrid-column field="Salary" headerText="Salary Per Month" width="210" textAlign="Right" format="C0" clipMode="EllipsisWithTooltip"></e-treegrid-column>
+                <e-treegrid-column field="Email" headerText="Email" template="#emailTemplate" headerTemplate="#emailHeaderTemplate" width="200" textAlign="Center"></e-treegrid-column>
+            </e-treegrid-columns>
+        </ejs-treegrid>
+    </div>
+
+    <script type="text/javascript">
+        function valueChange(args) {
+            var treegridObj = document.getElementById('EmployeeTreeGrid').ej2_instances[0];
+            var role = args.value;
+            var columns = [
+                { field: "ID", headerText: "ID", width: 200, textAlign: "Left" },
+                {
+                    field: "EmployeeName",
+                    headerText: "Name",
+                    width: 290,
+                    template: "#employeeTemplate",
+                    headerTemplate: "#employeeHeaderTemplate",
+                    textAlign: "Left"
+                }
+            ];
+            switch (role) {
+                case "hr":
+                    columns.push(
+                        { field: "Location", headerText: "Location", width: 200, template: "#flagTemplate", textAlign: "Left" },
+                        { field: "JoinDate", headerText: "Join Date", width: 180, format: { skeleton: 'yMd', type: 'date' }, textAlign: "Center" },
+                        { field: "Salary", headerText: "Salary", width: 210, format: "C0", textAlign: "Center" },
+                        { field: "Email", headerText: "Email", width: 200, template: "#emailTemplate", headerTemplate: "#emailHeaderTemplate", textAlign: "Center" }
+                    );
+                    break;
+                case "employee":
+                    columns.push(
+                        { field: "Status", headerText: "Presence", width: 200, template: "#statusTemplate", textAlign: "Center" },
+                        { field: "WorkMode", headerText: "Work Mode", width: 230, textAlign: "Left" },
+                        { field: "Email", headerText: "Email", width: 200, template: "#emailTemplate", headerTemplate: "#emailHeaderTemplate", textAlign: "Center" }
+                    );
+                    break;
+                case "helpdesk":
+                    columns.push(
+                        { field: "Status", headerText: "Presence", width: 200, template: "#statusTemplate", textAlign: "Center" },
+                        { field: "LeaveAvailability", headerText: "Leave Availability", allowFiltering: false, width: 400, template: "#leaveAvailabilityTemplate", textAlign: "Center" },
+                        { field: "LeaveCount", headerText: `Leave Taken in ${new Date().getFullYear()}`, width: 230, textAlign: "Center" }
+                    );
+                    break;
+                case "pm":
+                    columns.push(
+                        { field: "Department", headerText: "Department", width: 200, textAlign: "Left" },
+                        { field: "ProjectDetails", headerText: "Project Details", width: 230, textAlign: "Left" },
+                        { field: "ProjectStatus", headerText: "Project Status", width: 200, textAlign: "Left" },
+                        { field: "Email", headerText: "Email", width: 200, template: "#emailTemplate", headerTemplate: "#emailHeaderTemplate", textAlign: "Center" }
+                    );
+                    break;
+            }
+            treegridObj.clearFiltering();
+            treegridObj.clearSorting();
+            treegridObj.columns = columns;
+            treegridObj.refreshColumns();
+        }
+
+        function onQueryCellInfo(args) {
+            if (args.column.field === "Status") {
+                var status = args.data.Status;
+                var cell = args.cell;
+                const bgColor = status === 'Available' ? '#ccffcc' : status === 'Busy' ? '#ffd09d' : '#ffd7cc';
+                const color = status === 'Available' ? '#00cc00' : status === 'Busy' ? '#ff8707' : '#e60000';
+                args.cell.querySelector('.statustxt').style.backgroundColor = bgColor;
+                args.cell.querySelector('.statustxt').style.color = color;
+                args.cell.querySelector('.statustxt').style.borderRadius = "4px";
+                args.cell.querySelector('.statustxt').style.padding = "0 4px";
+                args.cell.querySelector('.statustxt').style.fontSize = "12px";
+                args.cell.querySelector('.statustxt').style.textAlign = "center";
+            }
+            else if (args.column.field === 'LeaveAvailability') {
+                var data = args.data;
+                var casual = data.LeaveAvailability.Casual;
+                var earned = data.LeaveAvailability.Earned;
+                var sick = data.LeaveAvailability.Sick;
+
+                var casualEl = args.cell.querySelector('.bar.casual');
+                var earnedEl = args.cell.querySelector('.bar.earned');
+                var sickEl = args.cell.querySelector('.bar.sick');
+
+                if (casualEl) updateBar(casualEl, casual);
+                if (earnedEl) updateBar(earnedEl, earned);
+                if (sickEl) updateBar(sickEl, sick);
+            }
+        }
+
+        function updateBar(barEl, value) {
+            var percent = (value / 12) * 100;
+
+            barEl.innerHTML = `
+                                        <div class="bar-fill" style="width:${percent}%;"></div>
+                                        <div class="barlabel">${value}</div>
+                                    `;
+
+            var fillEl = barEl.querySelector('.bar-fill');
+            fillEl.classList.remove('low', 'medium', 'high');
+
+            if (value > 8) fillEl.classList.add('high');
+            else if (value > 4) fillEl.classList.add('medium');
+            else fillEl.classList.add('low');
+        }
+    </script>
+
+    <style>
+        .viewer-container {
+            margin: 10px;
+        }
+
+        .viewer-row {
+            display: flex;
+            align-items: center;
+        }
+
+        .viewer-label {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .dropdown-container {
+            width: 300px;
+        }
+
+        #EmployeeTreeGrid .e-mail,
+        #EmployeeTreeGrid .e-icon-userlogin,
+        #EmployeeTreeGrid .e-location,
+        #EmployeeTreeGrid .e-icon-calender {
+            margin-right: 5px;
+            font-size: 12px !important;
+        }
+
+        /* Light Themes */
+        .tailwind #EmployeeTreeGrid .email-link,
+        .tailwind3 #EmployeeTreeGrid .email-link,
+        .bootstrap #EmployeeTreeGrid .email-link,
+        .bootstrap4 #EmployeeTreeGrid .email-link,
+        .bootstrap5 #EmployeeTreeGrid .email-link,
+        .fluent #EmployeeTreeGrid .email-link,
+        .fluent2 #EmployeeTreeGrid .email-link,
+        .fluent2-highcontrast #EmployeeTreeGrid .email-link,
+        .highcontrast #EmployeeTreeGrid .email-link,
+        .material #EmployeeTreeGrid .email-link,
+        .material3 #EmployeeTreeGrid .email-link,
+        .fabric #EmployeeTreeGrid .email-link {
+            background-color: #ebf1ff;
+            font-size: xx-small;
+        }
+
+        .tailwind #EmployeeTreeGrid .employee-title,
+        .tailwind3 #EmployeeTreeGrid .employee-title,
+        .bootstrap #EmployeeTreeGrid .employee-title,
+        .bootstrap4 #EmployeeTreeGrid .employee-title,
+        .bootstrap5 #EmployeeTreeGrid .employee-title,
+        .fluent #EmployeeTreeGrid .employee-title,
+        .fluent2 #EmployeeTreeGrid .employee-title,
+        .fluent2-highcontrast #EmployeeTreeGrid .employee-title,
+        .highcontrast #EmployeeTreeGrid .employee-title,
+        .material #EmployeeTreeGrid .employee-title,
+        .material3 #EmployeeTreeGrid .employee-title,
+        .fabric #EmployeeTreeGrid .employee-title {
+            color: gray;
+        }
+
+        /* Dark Themes */
+        .tailwind-dark #EmployeeTreeGrid .email-link,
+        .tailwind3-dark #EmployeeTreeGrid .email-link,
+        .bootstrap-dark #EmployeeTreeGrid .email-link,
+        .bootstrap5-dark #EmployeeTreeGrid .email-link,
+        .fluent-dark #EmployeeTreeGrid .email-link,
+        .fluent2-dark #EmployeeTreeGrid .email-link,
+        .material-dark #EmployeeTreeGrid .email-link,
+        .material3-dark #EmployeeTreeGrid .email-link,
+        .fabric-dark #EmployeeTreeGrid .email-link {
+            background-color: #000000aa;
+            color: #6179ff;
+            font-size: xx-small;
+        }
+
+        .tailwind-dark #EmployeeTreeGrid .employee-title,
+        .tailwind3-dark #EmployeeTreeGrid .employee-title,
+        .bootstrap-dark #EmployeeTreeGrid .employee-title,
+        .bootstrap5-dark #EmployeeTreeGrid .employee-title,
+        .fluent-dark #EmployeeTreeGrid .employee-title,
+        .fluent2-dark #EmployeeTreeGrid .employee-title,
+        .material-dark #EmployeeTreeGrid .employee-title,
+        .material3-dark #EmployeeTreeGrid .employee-title,
+        .fabric-dark #EmployeeTreeGrid .employee-title {
+            color: lightgray;
+        }
+
+        #EmployeeTreeGrid .e-headertext,
+        #EmployeeTreeGrid .e-headercelldiv {
+        font-size: medium;
+        }
+
+        #EmployeeTreeGrid .employee-cell {
+            padding: 8px 10px;
+        }
+
+        #EmployeeTreeGrid .employee-content {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        #EmployeeTreeGrid .employee-img {
+            border-radius: 50%;
+            margin: 0 10px;
+            width: 30px;
+            height: 30px;
+        }
+
+        #EmployeeTreeGrid .employee-info {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        #EmployeeTreeGrid .employee-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        #EmployeeTreeGrid .employee-title {
+            font-size: 10px;
+        }
+
+        /* #EmployeeTreeGrid .flag-container {
+                             display: inline-block;
+                             padding:6px;
+                         }
+
+                         #EmployeeTreeGrid .flag-img {
+                             width: 20px;
+                             height: 15px;
+                             vertical-align: middle;
+                         }
+
+                         #EmployeeTreeGrid .flag-text {
+                             display: inline-block;
+                             text-align:left;
+                             padding-left: 4px;
+                             vertical-align: middle;
+                         } */
+        #EmployeeTreeGrid .flag-container {
+            display: inline-block;
+        }
+
+        #EmployeeTreeGrid .flag-img {
+            width: 20px;
+            height: 15px;
+            vertical-align: middle;
+        }
+
+        #EmployeeTreeGrid .flag-text {
+            display: inline-block;
+            padding-left: 4px;
+            vertical-align: middle;
+        }
+
+        #EmployeeTreeGrid .email-cell {
+            padding: 8px 10px;
+        }
+
+        #EmployeeTreeGrid .email-link {
+            font-size: 13px;
+            padding: 4px 8px;
+        }
+
+        .fluent2,
+        .fluent2-dark,
+        .fluent2-highcontrast {
+            #EmployeeTreeGrid #columnddl .e-input-group
+
+        {
+            width: 140px !important;
+        }
+
+        }
+
+        #EmployeeTreeGrid .leave-bar-container {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 2px 0;
+        }
+
+        #EmployeeTreeGrid .leave-bar {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        #EmployeeTreeGrid .leave-label {
+            text-align: right;
+        }
+
+        #EmployeeTreeGrid .bar {
+            width: 50px;
+            height: 15px;
+            background-color: #eee;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 500;
+            color: #000000;
+            padding: 6px 4px;
+        }
+
+        #EmployeeTreeGrid .barlabel {
+            position: absolute;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        #EmployeeTreeGrid .bar-fill {
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+            #EmployeeTreeGrid .bar-fill.low {
+                background-color: #df2222;
+            }
+
+            #EmployeeTreeGrid .bar-fill.medium {
+                background-color: #ffc400;
+            }
+
+            #EmployeeTreeGrid .bar-fill.high {
+                background-color: #00b300;
+            }
+
+        #EmployeeTreeGrid .separator {
+            width: 1px;
+            background-color: #ccc;
+            margin: 0 8px;
+        }
+
+        #EmployeeTreeGrid .status-container {
+            text-align: center;
+        }
+
+        #EmployeeTreeGrid .statustxt {
+            padding: 5px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        .material3-dark [class*="veg-icon"] {
+            margin: 0 0 3px 2px;
+        }
+
+        .material3 #search-autocomplete,
+        .material3-dark #search-autocomplete {
+            padding-top : 15px !important;
+            padding-bottom : 15px !important;
+        }
+    </style>
+
+    <script id="employeeHeaderTemplate" type="text/x-template">
+        <img src="../images/TreeGrid/Resources.png" width="20" height="20" style="padding-bottom: 1px" class="resources" alt="Resources Icon"/>
+        <span> Name</span>
+    </script>
+
+    <script id="emailHeaderTemplate" type="text/x-template">
+        <span class="e-mail e-icons mail"></span>
+        Email ID
+    </script>
+
+    <script id="leaveCountHeaderTemplate" type="text/x-template">
+        Leave Taken (<span id="leaveYear"></span>)
+    </script>
+
+    <script id="employeeTemplate" type="text/x-template">
+        <td class="employee-cell">
+            <div class="employee-content">
+                <img src="@Url.Content("../images/TreeGrid/${FullName}.png")" alt="${FullName}" class="employee-img" />
+                <div class="employee-info">
+                    <span class="employee-name">${EmployeeName}</span>
+                    <span class="employee-title">${JobTitle}</span>
+                </div>
+            </div>
+        </td>
+    </script>
+
+    <script id="flagTemplate" type="text/x-template">
+        ${if(name != 'Select All')}
+          <div class="flag-container">
+            <img src="@Url.Content("../images/TreeGrid/${Location}.png")" class="flag-img" alt="${Location}" />
+            <div class="flag-text">${Location}</div>
+          </div>
+        ${else}
+          ${Location}
+        ${/if}
+    </script>
+
+    <script id="emailTemplate" type="text/x-template">
+        <td class="email-cell">
+            <a href="mailto:${Email}" class="email-link">${Email}</a>
+        </td>
+    </script>
+
+    <script id="leaveAvailabilityTemplate" type="text/x-template">
+        ${if(LeaveAvailability && LeaveAvailability.Casual != null && LeaveAvailability.Earned != null && LeaveAvailability.Sick != null)}
+        <div class="leave-bar-container">
+            <div class="leave-bar">
+                <span class="leave-label">Casual</span>
+                <div class="bar casual"></div>
+            </div>
+            <div class="separator"></div>
+            <div class="leave-bar">
+                <span class="leave-label">Earned</span>
+                <div class="bar earned"></div>
+            </div>
+            <div class="separator"></div>
+            <div class="leave-bar">
+                <span class="leave-label">Sick</span>
+                <div class="bar sick"></div>
+            </div>
+        </div>
+        ${else}
+        <span>N/A</span>
+        ${/if}
+    </script>
+
+    <script id="statusTemplate" type="text/x-template">
+        <div class="status-container">
+            <span class="statustxt">${Status}</span>
+        </div>
+    </script>
+}
+
+@section Meta {
+    <meta name="description" content="This example demonstrates displaying hierarchical employee data in a tree grid using ASP.NET Core and Syncfusion TreeGrid control." />
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>
+            This demo showcases the Syncfusion® Tree Grid. It presents comprehensive employee information customized for various viewer roles: HR, employee, help desk, and project management. The application uses a structured employee dataset with profiles, work modes, leave balances, and other relevant data.
+        </p>
+    </div>
+}
+
+@section Description {
+    <div id="description">
+        <p>
+            This section highlights dynamic column generation and custom templates to present data that is specific and
+            relevant to each viewer role. Features such as <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/tree-grid/sorting">Sorting</a>,
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/tree-grid/filtering/filtering">Filtering with hierarchical support</a> and
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/tree-grid/columns/columns-core">Column formatting</a> are seamlessly integrated. The Tree Grid
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/tree-grid/columns/column-template">Column template</a> is utilized to render visual elements like progress bars within cells, further
+            enhancing the user experience. The Tree Grid flexibility and customization capabilities make it a powerful tool for organizational data representation.
+        </p>
+
+        <p>
+            <br /> More information about Tree Grid instantiation can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/tree-grid/getting-started-core">
+                documentation section
+            </a>.
+        </p>
+    </div>
+}
+
+@section Title {
+    <title>ASP.NET Core TreeGrid Employee Management Example - Syncfusion Demos</title>
+}
+
+@section Header {
+    <h1 class='sb-sample-text'>Example of Employee Management in ASP.NET Core TreeGrid Control</h1>
+}

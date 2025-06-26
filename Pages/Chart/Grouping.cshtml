@@ -12,16 +12,17 @@
 @section ControlsSection{
 
     <div class="col-lg-8 control-section sb-property-border">
-        <ejs-accumulationchart id="container" title="Rio Olympic Gold Medals" load="load" enableSmartLabels="true" enableBorderOnMouseMove="false" textRender="textRender" pointRender="pointRender">
+        <ejs-accumulationchart id="container" title="Summer Olympic 2024 - Gold Medals" subTitle="Source: wikipedia.org" load="load" enableSmartLabels="true" enableBorderOnMouseMove="false">
             <e-accumulationchart-tooltipsettings enableHighlight="true" enable="true" header="" format="<b>${point.x}</b><br> Gold Medals: <b>${point.y}</b>"></e-accumulationchart-tooltipsettings>
             <e-accumulationchart-legendsettings visible="false">
             </e-accumulationchart-legendsettings>
             <e-accumulation-series-collection>
-                <e-accumulation-series dataSource="@Model.ChartPoints" explode="true" xName="Country" yName="Medal" name="RIO" groupTo="9" groupMode="@Syncfusion.EJ2.Charts.GroupModes.Point" startAngle="0" endAngle="360" innerRadius="0%">
+                <e-accumulation-series dataSource="@Model.ChartPoints" explode="true" xName="Country" yName="Medal" name="Summer Olympics" groupTo="9" groupMode="@Syncfusion.EJ2.Charts.GroupModes.Point" startAngle="-20" endAngle="340" innerRadius="0%">
                     <e-accumulationseries-datalabel visible="true" name="DataLabelMappingName" position="@Syncfusion.EJ2.Charts.AccumulationLabelPosition.Outside">
                         <e-connectorstyle type="@Syncfusion.EJ2.Charts.ConnectorType.Curve" length="20px"></e-connectorstyle>
                         <e-font fontWeight="600"></e-font>
                     </e-accumulationseries-datalabel>
+                    <e-accumulationseries-border width="1" color="#ffffff"></e-accumulationseries-border>
                 </e-accumulation-series>
             </e-accumulation-series-collection>
         </ejs-accumulationchart>
@@ -70,12 +71,9 @@
         }
         function load(args) {
             loadAccumulationChartTheme(args);
-            args.accumulation.series[0].radius = ej.base.Browser.isDevice ? "40%" : "70%";
-            args.accumulation.series[0].dataLabel.font.size = ej.base.Browser.isDevice ? "9px" : "13px";
-            args.accumulation.series[0].dataSource[1].DataLabelMappingName = ej.base.Browser.isDevice ? "Russia: <br> 19" : "Russia: 19";
-            args.accumulation.series[0].dataSource[2].DataLabelMappingName = ej.base.Browser.isDevice ? "Germany: <br>17" : "Germany: 17";
-            args.accumulation.series[0].dataSource[7].DataLabelMappingName = ej.base.Browser.isDevice ? "Italy: <br> 8" : "Italy: 8";
-            args.accumulation.series[0].dataSource[8].DataLabelMappingName = ej.base.Browser.isDevice ? "Australia: <br> 8" : "Australia: 8";
+            args.accumulation.series[0].radius = ej.base.Browser.isDevice ? "40%" : "55%";
+            args.accumulation.series[0].dataLabel.font.size = ej.base.Browser.isDevice ? "8px" : "13px";
+            args.accumulation.series[0].dataLabel.connectorStyle.length = ej.base.Browser.isDevice ? '10px' : '20px';
         }
         function pointRender(args) {
             if (args.point.isClubbed || args.point.isSliced) {
@@ -108,7 +106,7 @@
 
     <div id="action-description">
         <p>
-            This sample shows the gold medal count scored by each country at the Rio Olympic Games, along with the pie series grouping functionality.
+            This sample shows the gold medal count scored by each country at the summer olympic 2024 games, along with the pie series grouping functionality.
         </p>
     </div>
 }

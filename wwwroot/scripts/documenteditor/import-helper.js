@@ -40,6 +40,26 @@ function initComponentAndWireEvent(isRtl) {
     initializeTitleBar(true, isRtl);
     wireEventsInTitleBar();
 }
+function showButtons(show) {
+    var displayStyle = show ? 'block' : 'none';
+
+    if (print) {
+        print.element.style.display = displayStyle;
+    }
+    if (download) {
+        download.element.style.display = displayStyle;
+    }
+}
+function onSwitchChange(args) {
+    var documentContainer = document.getElementById("container").ej2_instances[0];
+    if (args.checked) {
+        documentContainer.toolbarMode = 'Ribbon';
+    }
+    else {
+        documentContainer.toolbarMode = 'Toolbar';
+    }
+    showButtons(documentContainer.toolbarMode !== 'Ribbon');
+};
 //Documentloader implementation ends
 
 

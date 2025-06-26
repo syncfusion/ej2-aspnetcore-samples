@@ -12,27 +12,22 @@
                     <div style="margin-top: 10px">
                         <div>
                             Protection Type :
-                            <select class="e-dropdown-btn" id="ProtectionType" name="Protection_Type" style="width:150px;">
+                            <select class="e-dropdown-btn" id="ProtectionType" name="Protection_Type" style="width:165px;" onchange="isDocumentProtection(this)">
                                 <option value="AllowOnlyFormFields">AllowOnlyFormFields</option>
                                 <option value="AllowOnlyComments">AllowOnlyComments</option>
                                 <option value="AllowOnlyRevisions">AllowOnlyRevisions</option>
                                 <option value="AllowOnlyReading">AllowOnlyReading</option>
                             </select>
                         </div>
+						<div id="editableRangeSection" style="margin-top: 10px">
+                        <input type="checkbox" name="EditableRangeOption" value="EditableRange" disabled="true" id="editableRange" />
+                        <label for="editableRange" style="font-size:13px; font-weight:normal;">
+                            Make part of the document editable for everyone
+                        </label>
+                        </div>
                         <div style="margin-top: 10px">
                             Password :
                             <input type="password" class="e-input" id="Pwd1" name="Password1" style="width:150px;" />
-                        </div>
-                        <div style="margin-top: 10px">
-                            Save As :
-                            <input type="radio" id="rdButtonDoc" name="Group2" value="WordDoc" style="margin-left: 7px" />
-                            <label for="rdButtonDoc" style="font-size:13px;font-weight:normal;text-align:match-parent" data-toggle="tooltip" title="Saves the resultant document as Word Doc format">DOC</label>
-                            &nbsp;
-                            <input type="radio" id="rdButtonDocx" name="Group2" value="WordDocx" style="margin-left: 7px" checked="checked" />
-                            <label for="rdButtonDocx" style="font-size:13px;font-weight:normal;text-align:match-parent" data-toggle="tooltip" title="Saves the resultant document as Word Docx format">DOCX</label>
-                            &nbsp;
-                            <input type="radio" id="rdButtonWordML" name="Group2" value="WordML" style="margin-left: 7px" />
-                            <label for="rdButtonWordML" style="font-size:13px;font-weight:normal;text-align:match-parent" data-toggle="tooltip" title="Saves the resultant document as WordML format">WordML</label>
                         </div>
                     </div>
                     <div style="margin-top: 8px">
@@ -43,6 +38,20 @@
             }
         }
     </div>
+	
+	<script type="text/javascript">
+        function isDocumentProtection(element) {
+            var selectedValue = element.options[element.selectedIndex].value;
+
+            if (selectedValue === "AllowOnlyReading" || selectedValue === "AllowOnlyComments") {
+                document.getElementById("editableRange").checked = true;
+                document.getElementById("editableRange").disabled = false;
+            } else {
+                document.getElementById("editableRange").checked = false;
+                document.getElementById("editableRange").disabled = true;
+            }
+        }
+    </script>
 }
 @section ActionDescription{
     <div>
@@ -51,19 +60,22 @@
 }
 @section Description{
     <div>
-        DocIO supports all the protection types of Microsoft Word and allows you to stop protecting the document.
+        The .NET Word Library (DocIO) supports all Microsoft Word protection types and enables disabling document protection.
         <ul>
             <li>
-                You can generate forms with editing restriction that allow the users to fill the form fields alone.
+                Generate forms restricted to filling form fields only.
             </li>
             <li>
-                You can generate Word documents that allow the users only to add or modify comments.
+                Generate documents allowing only adding or modifying comments.
             </li>
             <li>
-                You can generate Word documents that allow the users only to accept or reject the revisions.
+                Generate documents allowing only accepting or rejecting revisions.
             </li>
             <li>
-                You can generate Word documents with complete editing restriction that allow the users only to view the contents.
+                Generate documents with full editing restriction, permitting only content viewing.
+            </li>
+            <li>
+                Add editable ranges to allow everyone to edit specific parts, even in protected documents.
             </li>
         </ul>
     </div>

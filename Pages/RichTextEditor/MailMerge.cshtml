@@ -113,6 +113,12 @@
         }
     }
 
+    function onDropDownClose() {
+        if (mailMergeEditor) {
+            mailMergeEditor.focusIn();
+        }
+    }
+
     function onItemSelect(args) {
         if (args.item.text != null) {
             const value = textToValueMap[args.item.text];
@@ -162,7 +168,7 @@
                     <e-richtexteditor-toolbarsettings items="@tools"></e-richtexteditor-toolbarsettings>                    
                 </ejs-richtexteditor>
                 <ejs-button id="merge_data" content="Merge Data" onclick="onClickHandler()" cssClass="e-tbar-btn e-btn" tabindex="-1" style="width: 100%"></ejs-button>
-                <ejs-dropdownbutton id="insert_Field" select="onItemSelect" content="Insert Field" items="items" cssClass="e-rte-dropdown-btn e-rte-dropdown-popup e-rte-dropdown-items e-rte-elements e-tbar-btn"></ejs-dropdownbutton>
+                <ejs-dropdownbutton id="insert_Field" select="onItemSelect" close="onDropDownClose" content="Insert Field" items="items" cssClass="e-rte-dropdown-btn e-rte-dropdown-popup e-rte-dropdown-items e-rte-elements e-rte-dropdown-menu"></ejs-dropdownbutton>
                 <ejs-mention id="mentionField" target="#mailMergeEditor_rte-edit-view" mentionChar="@mentionChar" created="onMentionCreate" dataSource="@mergeData" popupHeight="200px" popupWidth="250px" allowSpaces="true" displayTemplate="<span> {{${value}}} </span>">
                     <e-mention-fields text="text"></e-mention-fields>
                 </ejs-mention>

@@ -17,10 +17,11 @@ namespace EJ2CoreSampleBrowser.Pages.Chart
         {
             ChartData = new List<CategoryData>
             {
-                new CategoryData { x = "SUV", y = 25 },
-                new CategoryData { x = "Car", y = 37 },
-                new CategoryData { x = "Pickup", y = 15 },
-                new CategoryData { x = "Minivan", y = 23 }
+                new CategoryData { x = "Asia-Pacific", y = 45 },
+                new CategoryData { x = "Europe", y = 25 },
+                new CategoryData { x = "North America", y = 25 },
+                new CategoryData { x = "Latin America", y = 7 },
+                new CategoryData { x = "Middle East & Africa", y = 3 }
             };
         }
     }

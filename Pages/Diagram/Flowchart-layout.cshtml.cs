@@ -16,7 +16,7 @@ public class FlowchartLayoutModel : PageModel
 {
     public List<BranchDirectionList> branchDirectionList { get; set; }
     public List<BranchDirectionList> orientationList { get; set; }
-
+    public DiagramMargin DiagramScrollPadding { get; set; } = new DiagramMargin{ Bottom = 30, Top = 30, Left = 30, Right = 30 }; // sets the default padding to 30
     public List<FlowchartDetails> Data { get; set; }
     public void OnGet()
     {

@@ -57,7 +57,7 @@ public class SnappingModel : PageModel
                 Visibility = PortVisibility.Visible,
                 Constraints = PortConstraints.Default | PortConstraints.Draw
             });
-            ports1.Add(new CustomPort() {
+            ports2.Add(new CustomPort() {
                 Id = "port2",
                 Offset = new DiagramPoint() {X = 0, Y = 0.5},
                 Style = new DiagramShapeStyle() { Fill = "Black"}, 

@@ -17,12 +17,13 @@ namespace EJ2CoreSampleBrowser.Pages.Chart
         {
             ChartPoints = new List<DoughnutChartData>
             {
-                new DoughnutChartData { Browser= "Chrome", Users= 61.3, DataLabelMappingName= "Chrome: 61.3%" },
-                new DoughnutChartData { Browser= "Safari", Users= 24.6, DataLabelMappingName= "Safari: 24.6%" },
-                new DoughnutChartData { Browser= "Edge", Users= 5.0, DataLabelMappingName= "Edge: 5.0%" },
-                new DoughnutChartData { Browser= "Samsung Internet", Users= 2.7, DataLabelMappingName= "Samsung Internet: 2.7%" },
-                new DoughnutChartData { Browser= "Firefox", Users= 2.6, DataLabelMappingName= "Firefox: 2.6%" },
-                new DoughnutChartData { Browser= "Others", Users= 3.6, DataLabelMappingName= "Others: 3.6%" }
+                new DoughnutChartData { Browser = "Chrome", Users = 63.5, DataLabelMappingName = "Chrome: 63.5%" },
+                new DoughnutChartData { Browser = "Safari", Users = 25.0, DataLabelMappingName = "Safari: 25.0%" },
+                new DoughnutChartData { Browser = "Samsung Internet", Users = 6.0, DataLabelMappingName = "Samsung Internet: 6.0%" },
+                new DoughnutChartData { Browser = "UC Browser", Users = 2.5, DataLabelMappingName = "UC Browser: 2.5%" },
+                new DoughnutChartData { Browser = "Opera", Users = 1.5, DataLabelMappingName = "Opera: 1.5%" },
+                new DoughnutChartData { Browser = "Others", Users = 1.5, DataLabelMappingName = "Others: 1.5%" }
+
             };
         }
     }

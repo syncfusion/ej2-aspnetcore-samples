@@ -17,13 +17,14 @@ namespace EJ2CoreSampleBrowser.Pages.Chart
         {
             ChartPoints = new List<PieRadiusChartData>
             {
-                new PieRadiusChartData { Country = "Argentina",          Population = 505370,  Radius = "100",   text = "Argentina" },
-                new PieRadiusChartData { Country = "Belgium",            Population = 551500,  Radius = "118.7", text = "Belgium" },
-                new PieRadiusChartData { Country = "Dominican Republic", Population = 312685 , Radius = "137.5", text = "Dominican Republic" },
-                new PieRadiusChartData { Country = "Cuba",               Population = 350000 , Radius = "124.6", text = "Cuba" },
-                new PieRadiusChartData { Country = "Egypt",              Population = 301000 , Radius = "150.8", text = "Egypt" },
-                new PieRadiusChartData { Country = "Kazakhstan",         Population = 300000,  Radius = "155.5", text = "Kazakhstan" },
-                new PieRadiusChartData { Country = "Somalia",            Population = 357022,  Radius = "160.6", text = "Somalia" }
+                new PieRadiusChartData { Country = "Cuba",       Population = 103800, Radius = "106", text = "CUB" },
+                new PieRadiusChartData { Country = "Syria",      Population = 185178, Radius = "133", text = "SYR" },
+                new PieRadiusChartData { Country = "Benin",      Population = 112760, Radius = "128", text = "BEN" },
+                new PieRadiusChartData { Country = "Portugal",   Population = 91606,  Radius = "114", text = "POR" },
+                new PieRadiusChartData { Country = "Austria",    Population = 82520,  Radius = "111", text = "AUS" },
+                new PieRadiusChartData { Country = "Honduras",   Population = 111890, Radius = "97",  text = "HON" },
+                new PieRadiusChartData { Country = "Azerbaijan", Population = 82650,  Radius = "125", text = "AZE" }
+
             };
         }
     }

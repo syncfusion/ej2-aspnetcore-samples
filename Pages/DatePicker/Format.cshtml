@@ -4,12 +4,12 @@
 @{
     var formatData = new DateFormats().GetDateFormatsWithId();
     var inputformatsData = new DateFormats().GetInputFormats();
-    var fortmatValue = "dd-MMM-yy";
+    var formatValue = "dd-MMM-yy";
 }
 
 @section ControlsSection {
     <div class=" col-lg-8 control-section sb-property-border">
-        <div id="wrapper" class="datepicker-section">
+        <div id="wrapper-datepicker" class="datepicker-section">
             <div id="datepicker-control">
                 <label class="example-label">Select Date</label>
                 <ejs-datepicker id="datepicker" format="dd-MMM-yy" inputFormats="@(new string[] {"dd/MM/yyyy", "yyyyMMdd"})" value=DateTime.Now></ejs-datepicker>
@@ -21,7 +21,7 @@
             <div class="property-panel-header">Properties</div>
             <div class="property-panel-content">
                 <label class="example-label">Choose a display format</label>
-                <ejs-dropdownlist id="displayFormatDatePicker" value="@fortmatValue" placeholder="Select a format" change="onFormatChange" dataSource="@formatData">
+                <ejs-dropdownlist id="displayFormatDatePicker" value="@formatValue" placeholder="Select a format" change="onFormatChange" dataSource="@formatData">
                 </ejs-dropdownlist>
             </div>
             <div class="property-panel-content">
@@ -36,29 +36,38 @@
 <script>
     function onFormatChange(args) {
         var datepickerOBJ = document.getElementById('datepicker').ej2_instances[0];
-        datepickerOBJ.format = args.itemData.Text;
+        datepickerOBJ.format = args.value;
+        datepickerOBJ.dataBind();
     }
 
     function onInputFormatChange(args) {
         var datepickerOBJ = document.getElementById('datepicker').ej2_instances[0];
         datepickerOBJ.inputFormats = args.value;
+        datepickerOBJ.dataBind();
     }
 </script>
 
 @*custom code start*@
 <style>
-    #wrapper {
-        max-width: 246px;
-        margin: 30px auto;
-        padding-top: 20px;
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        margin-left: 300px;
     }
 
-    .property-section {
-        width: 250px;
+    .property-panel {
+        padding: 20px;
+        width: 500px;
     }
 
     .multi-label {
         margin-top: 45px;
+    }
+
+    #wrapper-datepicker {
+        max-width: 246px;
+        margin: 30px auto;
+        padding-top: 20px;
     }
 </style>
 @*custom code end*@
@@ -69,6 +78,10 @@
             In this sample, the DatePicker has been configured with the <code>dd-MMM-yy</code> date format.
             To change this current date format, go to the properties panel at the right side and select a date format from the available options.
             For mobile mode touch the icon at the right side and select a date format from the available options.
+        </p>
+        <p>
+            Furthermore, this example showcases the flexible date value parsing functionality available in DatePicker component. 
+            By utilizing the <code>InputFormats</code> property, users can enter dates in various formats, which will be automatically parsed and formatted according to the chosen date format.
         </p>
     </div>
 

@@ -326,8 +326,10 @@ function dataBound(args) {
             var desDiv = tr1.querySelector('.sb-sample-description');
             var tag = ej.base.createElement('a', { id: 'showtag', innerHTML: ' show more...' });
             tag.addEventListener('click', tagShowmore.bind(this, desDiv));
-            desDiv.classList.add('e-custDesription');
-            desDiv.appendChild(tag);
+            if(desDiv != null){
+                desDiv.classList.add('e-custDesription');
+                desDiv.appendChild(tag);
+            }  
         }
     }
 }
@@ -1366,7 +1368,18 @@ function onDataSourceLoad(node, subNode, control, sample, sampleName) {
             }
         }
 }
-
+function initializeGTM() {
+    setTimeout(function () {
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-W8WD8WN');
+    }, 500);
+}
 function removeOverlay() {
     setTimeout(function () {
         document.body.setAttribute('aria-busy', 'false');
@@ -1376,6 +1389,7 @@ function removeOverlay() {
         mobNavOverlay(false);
         if (!sbBodyOverlay.classList.contains('sb-hide')) {
             sbBodyOverlay.classList.add('sb-hide');
+            initializeGTM();
         }
         sbRightPane.scrollTop = 0;
     }, 400)

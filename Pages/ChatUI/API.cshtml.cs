@@ -20,9 +20,18 @@ namespace EJ2CoreSampleBrowser.Pages.ChatUI
         public List<object> TypingUserOptions { get; set; }
         public object DDBListValue = "MM/dd hh:mm a";
         public List<ChatUIMessage> CommunityMessagedata { get; set; }
+        public List<ToolbarItemModel> MessageToolbarItems { get; set; }
 
         public void OnGet()
-        {   
+        {
+            MessageToolbarItems = new List<ToolbarItemModel>()
+            {
+                new ToolbarItemModel { iconCss = "e-icons e-chat-forward", tooltipText = "Forward" },
+                new ToolbarItemModel { iconCss = "e-icons e-chat-copy", tooltipText = "Copy" },
+                new ToolbarItemModel { iconCss = "e-icons e-chat-reply", tooltipText = "Reply" },
+                new ToolbarItemModel { iconCss = "e-icons e-chat-pin", tooltipText = "Pin" },
+                new ToolbarItemModel { iconCss = "e-icons e-chat-trash", tooltipText = "Delete" }
+            };
             CommunityMessagedata = new ChatMessagesData().GetCommunityMessageData();
             TimeStampFormatOptions = new List<object>
             {
@@ -35,8 +44,18 @@ namespace EJ2CoreSampleBrowser.Pages.ChatUI
             {
                 new { text = "Michale", value = "Michale" },
                 new { text = "Laura", value = "Laura" },
-                new { text = "Charlie", value = "Charlie" }
+                new { text = "Charlie", value = "Charlie" },
+                new { text = "Jordan", value = "Jordan"}
             };
+        }
+
+        public class ToolbarItemModel
+        {
+            public string type { get; set; }
+            public string template { get; set; }
+            public string align { get; set; }
+            public string tooltipText { get; set; }
+            public string iconCss { get; set; }
         }
     }
 }

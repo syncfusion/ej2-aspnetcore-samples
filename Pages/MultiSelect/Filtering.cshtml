@@ -9,15 +9,24 @@
 }
 
 @section ControlsSection{
-<div class="col-lg-12 control-section" style="height: 400px;">
+    <div class="col-lg-8 control-section" style="height: 400px;">
     <div class='control-wrapper'>
         <h4>Filtering</h4>
         <ejs-multiselect id="list" placeholder="Select countries" query="@query" dataSource="@data"
-                         allowFiltering="true" filtering="onFiltering">
+                             allowFiltering="true" filtering="onFiltering" debounceDelay="300">
             <e-multiselect-fields text="Name" value="Code"></e-multiselect-fields>
         </ejs-multiselect>
     </div>
 </div>
+    <div class="col-lg-4 property-section" style="padding-bottom:15px">
+      <div class="property-panel-section">
+            <div class="property-panel-header">Properties</div>
+            <div class="property-panel-content">
+                <label class="example-label">Debounce Delay</label>
+                <ejs-numerictextbox id="numeric" format="n0" value="300" min="0" change="change"></ejs-numerictextbox>
+            </div>
+       </div>
+ </div>
 <style>
     .control-fluid, .container-fluid {
         padding-right: 15px;
@@ -25,7 +34,7 @@
     }
 
     .control-content .control-section{
-        border-width: 0px !important;
+       border-width: 0px !important;
     }
 
     .control-section .control-wrapper {
@@ -53,6 +62,10 @@
         // pass the filter data source, filter query to updateData method.
         e.updateData(@Html.Raw(JsonConvert.SerializeObject(data)), query);
     }
+    function change(args) {
+        var multiselectObj = document.getElementById('list').ej2_instances[0];
+        multiselectObj.debounceDelay = args.value;
+     }
 </script>
 
 
@@ -77,6 +90,7 @@
         <code>allowFiltering</code> is enabled. It performs when characters are typed in the component. In
         <code>filtering</code> event, you can filter down the data source and return the resulted data to MultiSelect via
         <code>updateData</code> method to display its list items.
+            The debounce delay, in milliseconds, for filtering the items in the MultiSelect component can be set by using the <code>debounceDelay</code> property.
     </p>
     <p>
         This sample illustrates that, query the data source and pass the resulted data to MultiSelect through the

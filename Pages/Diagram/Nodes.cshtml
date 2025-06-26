@@ -13,7 +13,7 @@
             </ejs-diagram>
         </div>
     </div>
-    <div class="col-lg-4 property-section">
+    <div class="col-lg-4 property-section" id="diagram-appearance-panel">
         <div class="property-panel-header">
             Properties
         </div>
@@ -62,18 +62,18 @@
             float: left;
         }
 
-        .row {
+        #diagram-appearance-panel .row {
             margin-left: 0px;
             margin-right: 0px;
         }
 
-        .row-header {
+        #diagram-appearance-panel .row-header {
             font-size: 13px;
             font-weight: 500;
         }
 
         /* Selection indicator */
-        .e-selected-style {
+        .diagram-panel-selected-style {
             border-color: #6c6c6c;
             border-width: 2px;
         }
@@ -95,9 +95,9 @@
             var target = args.target;
             var diagram = document.getElementById("container").ej2_instances[0];
             @*custom code start*@
-            var selectedElement = document.getElementsByClassName('e-selected-style');
+            var selectedElement = document.getElementsByClassName('diagram-panel-selected-style');
             if (selectedElement.length) {
-                selectedElement[0].classList.remove('e-selected-style');
+                selectedElement[0].classList.remove('diagram-panel-selected-style');
             }
             @*custom code end*@
             if (target.className === 'image-pattern-style') {
@@ -121,7 +121,7 @@
                             break;
                     }
                     @*custom code start*@
-                    target.classList.add('e-selected-style');
+                    target.classList.add('diagram-panel-selected-style');
                     @*custom code end*@
                 }
             }
@@ -148,14 +148,13 @@
             for (var i = 0; i < diagram.nodes.length; i++) {
                 node = diagram.nodes[i];
                 if (args.checked) {
-                    node.constraints &= ~(ej.diagrams.NodeConstraints.Resize | ej.diagrams.NodeConstraints.Rotate | ej.diagrams.NodeConstraints.Drag);
+                    node.constraints &= ~(ej.diagrams.NodeConstraints.Resize | ej.diagrams.NodeConstraints.Rotate | ej.diagrams.NodeConstraints.Drag | ej.diagrams.NodeConstraints.Delete);
                     node.constraints |= ej.diagrams.NodeConstraints.ReadOnly;
                 } else {
-                    node.constraints |= ej.diagrams.NodeConstraints.Default & ~(ej.diagrams.NodeConstraints.ReadOnly);
+                    node.constraints = ej.diagrams.NodeConstraints.Default;
                 }
                 diagram.dataBind();
             }
-
         }
 
         function applyStyle(node, width, array, con, type) {

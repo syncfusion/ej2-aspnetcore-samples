@@ -1,4 +1,4 @@
-# Syncfusion ASP.NET Core Component Examples  
+﻿# Syncfusion ASP.NET Core Component Examples  
 
 This repository contains the demos of [Syncfusion ASP.NET Core Components](https://www.syncfusion.com/aspnet-core-ui-controls/). This is the best place to check the controls to get more insight into the usage of APIs.
 
@@ -242,4 +242,4 @@ The Syncfusion license that contains the terms and conditions can be found at
 * [ASP.NET Core Components](https://www.syncfusion.com/aspnet-core-ui-controls/)
 * [ASP.NET Core Live Demos](https://ej2.syncfusion.com/aspnetcore/) 
 
-<p>Copyright © 2001-2025 Syncfusion®, Inc. Updated on 2025-05-15 at precisely 05:57:55 EST.</p> 
+<p>Copyright © 2001-2025 Syncfusion®, Inc. Updated on 2025-06-26 at precisely 11:23:15 EST.</p> 

@@ -1,6 +1,7 @@
 @page
 
 @using Syncfusion.EJ2
+@using Syncfusion.EJ2.RichTextEditor
 
 @{
     string hostUrl = "https://ej2-aspcore-service.azurewebsites.net/";
@@ -13,14 +14,30 @@
     };
     var items = new[]
     {
-        "Bold", "Italic", "Underline", "StrikeThrough", "SuperScript", "SubScript", "|",
-        "FontName", "FontSize", "FontColor", "BackgroundColor", "|",
-        "LowerCase", "UpperCase",
-        "Formats", "Alignments", "|", "NumberFormatList", "BulletFormatList", "|",
-        "Outdent", "Indent", "|",
-        "CreateLink", "Image", "FileManager", "Video", "Audio", "CreateTable", "|", "ClearFormat", "|", "EmojiPicker", "Print", "|",
-        "SourceCode", "FullScreen", "|", "Undo", "Redo"
+        "Undo", "Redo", "|", "ImportWord", "ExportWord", "ExportPdf", "|",
+        "Bold", "Italic", "Underline", "StrikeThrough", "InlineCode", "|", "CreateLink", "Image", "CreateTable", "CodeBlock",
+        "HorizontalLine", "Blockquote", "|", "BulletFormatList", "NumberFormatList", "|", "Formats", "Alignments", "|", "Outdent", "Indent", "|",
+        "FontColor", "BackgroundColor", "FontName", "FontSize", "|", "LowerCase", "UpperCase", "|", "SuperScript", "SubScript", "|",
+        "EmojiPicker", "FileManager", "Video", "Audio", "|", "FormatPainter", "ClearFormat",
+        "|", "Print", "FullScreen", "|", "SourceCode"
     };
+    RichTextEditorExportWord ExportWord = new RichTextEditorExportWord
+      {
+        ServiceUrl = "http://localhost:62928/api/RichTextEditor/ExportToDocx",
+        FileName = "RichTextEditor.docx",
+        Stylesheet = ".e-rte-content{ font-size: 1em; font-weight: 400; margin: 0; }"
+      };
+ 
+      RichTextEditorExportPdf ExportPdf = new RichTextEditorExportPdf
+      {
+        ServiceUrl = "http://localhost:62928/api/RichTextEditor/ExportToPdf",
+        FileName = "RichTextEditor.pdf",
+        Stylesheet = ".e-rte-content{ font-size: 1em; font-weight: 400; margin: 0; }"
+      };
+      RichTextEditorImportWord ImportWord = new RichTextEditorImportWord
+        {
+            ServiceUrl = "http://localhost:62928/api/RichTextEditor/ImportFromWord",
+        };
 }
 @section ControlsSection{
     <div class="control-section">
@@ -47,6 +64,14 @@
                 </e-content-template>
                 <e-richtexteditor-iframesettings enable="true"></e-richtexteditor-iframesettings>
                 <e-richtexteditor-toolbarsettings items="@items"></e-richtexteditor-toolbarsettings>
+                <e-richtexteditor-exportword serviceUrl="@ExportWord.ServiceUrl"
+                    fileName="@ExportWord.FileName" stylesheet="@ExportWord.Stylesheet">
+                </e-richtexteditor-exportword>
+                <e-richtexteditor-exportpdf serviceUrl="@ExportPdf.ServiceUrl"
+                    fileName="@ExportPdf.FileName" stylesheet="@ExportPdf.Stylesheet">
+                </e-richtexteditor-exportpdf>
+                <e-richtexteditor-importword serviceUrl="@ImportWord.ServiceUrl">
+                </e-richtexteditor-importword>
                 <e-richtexteditor-filemanagersettings enable="true" path="/Pictures/Food" ajaxSettings="@ajaxSettings"></e-richtexteditor-filemanagersettings>
             </ejs-richtexteditor>
         </div>

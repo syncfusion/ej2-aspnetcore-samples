@@ -10,7 +10,7 @@
 
 @section ControlsSection {
     <div class=" col-lg-8 control-section sb-property-border">
-        <div id="wrapper" class="datetimepicker-section">
+        <div id="wrapper-datetimepicker" class="datetimepicker-section">
             <div id="datetimepicker-control">
                 <label class="example-label">Select Date and Time</label>
                 <ejs-datetimepicker id="datetimepicker" format="dd-MMM-yy hh:mm a" showClearButton="true" inputFormats="@(new string[] {"MM.dd.yyyy hh:mm a", "yyyy-MM-dd HH:mm"})" value=DateTime.Now></ejs-datetimepicker>
@@ -40,29 +40,37 @@
 <script>
     function onDateTimeFormatChange(args) {
         var datetimepickerOBJ = document.getElementById('datetimepicker').ej2_instances[0];
-        datetimepickerOBJ.format = args.itemData.Text;
+        datetimepickerOBJ.format = args.value;
+        datetimepickerOBJ.dataBind();
     }
-
     function onDateTimeInputFormatChange(args) {
         var datetimepickerOBJ = document.getElementById('datetimepicker').ej2_instances[0];
         datetimepickerOBJ.inputFormats = args.value;
+        datetimepickerOBJ.dataBind();
     }
 </script>
 
 @*custom code start*@
 <style>
-    #wrapper {
-        max-width: 246px;
-        margin: 30px auto;
-        padding-top: 50px;
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        margin-left: 300px;
     }
 
-    #propertySection {
-        width: 250px;
+    .property-panel {
+        padding: 20px;
+        width: 500px;
     }
 
     .multi-label {
         margin-top: 45px;
+    }
+
+    #wrapper-datetimepicker {
+        max-width: 246px;
+        margin: 30px auto;
+        padding-top: 20px;
     }
 </style>
 @*custom code end*@
@@ -75,6 +83,10 @@
             <code>dd-MMM-yy hh:mm a</code> date time format.
             To change this current date time format, go to the properties panel at the right side and select a date format from the available options.
             For mobile mode touch the icon at the right side and select a date time format from the available options.
+        </p> 
+        <p>
+            Furthermore, this example showcases the flexible date value parsing functionality available in DateTimePicker component. 
+            By utilizing the <code>InputFormats</code> property, users can enter dates in various formats, which will be automatically parsed and formatted according to the chosen date format. 
         </p>
         
     </div>

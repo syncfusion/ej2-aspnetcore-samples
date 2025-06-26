@@ -5,31 +5,31 @@
 @section ControlsSection{
     <div class="control-section" align="center">
 
-        <ejs-accumulationchart id="container" load="load" enableBorderOnMouseMove="false" resized="onChartResized">
+        <ejs-accumulationchart id="container" load="load" enableBorderOnMouseMove="false" enableAnimation="false" resized="onChartResized">
             <e-accumulation-series-collection>
-                <e-accumulation-series dataSource="@Model.PieChartPoints" xName="Browser" yName="Users" startAngle="270" endAngle="90" innerRadius="40%" tooltipMappingName="tooltipMappingName">
+                <e-accumulation-series dataSource="@Model.PieChartPoints" xName="Browser" yName="Users" startAngle="270" radius="100%" endAngle="90" innerRadius="50%" borderRadius=3>
                     <e-accumulationseries-datalabel enableRotation="true" visible="true" name="DataLabelMappingName" position="@Syncfusion.EJ2.Charts.AccumulationLabelPosition.Inside">
                         <e-connectorstyle length="10%"></e-connectorstyle>
                         <e-font fontWeight="600" color="#ffffff"></e-font>
                     </e-accumulationseries-datalabel>
+                    <e-accumulationseries-border width=1 color="#ffffff"></e-accumulationseries-border>
                 </e-accumulation-series>
             </e-accumulation-series-collection>
             <e-accumulationchart-accumulationannotations>
                 <e-accumulationchart-accumulationannotation region="@Syncfusion.EJ2.Charts.Regions.Series"></e-accumulationchart-accumulationannotation>
             </e-accumulationchart-accumulationannotations>
             <e-accumulationchart-legendsettings visible="false"></e-accumulationchart-legendsettings>
-            <e-accumulationchart-tooltipsettings enableHighlight="true" enable="true" format="<b>${point.x}</b><br>Browser Share: <b>${point.tooltip}</b>" header=""></e-accumulationchart-tooltipsettings>
+            <e-accumulationchart-tooltipsettings enable="false"></e-accumulationchart-tooltipsettings>
         </ejs-accumulationchart>
     </div>
     <script src="~/scripts/chart/theme-color.js"></script>
     <script>
         function load(args) {
             loadAccumulationChartTheme(args);
-            args.accumulation.annotations[0].content = ej.base.Browser.isDevice ? "<div style='font-Weight:700; font-size:11px;'>Browser<br>Market<br>Shares</div>" : "<div style='font-Weight:600; font-size:14px;'>Browser<br>Market<br>Shares</div>";
-            args.accumulation.series[0].radius = ej.base.Browser.isDevice ? '85%' : '100%';
-            args.accumulation.series[0].dataLabel.font.size = ej.base.Browser.isDevice ? '8px' : '11px';
-            args.accumulation.annotations[0].properties.x = ej.base.Browser.isDevice ? "52%" : "50%";
-            args.accumulation.annotations[0].properties.y = ej.base.Browser.isDevice ? "82%" : "85%";
+            args.accumulation.annotations[0].content = ej.base.Browser.isDevice ? "<div style='font-Weight:600; font-size:10px;'>Browser<br>Market<br>Shares</div>" : "<div style='font-Weight:600; font-size:14px;'>Browser<br>Market<br>Shares</div>";
+            args.accumulation.series[0].dataLabel.font.size = ej.base.Browser.isDevice ? '7px' : '11px';
+            args.accumulation.annotations[0].properties.x = "50%";
+            args.accumulation.annotations[0].properties.y = "85%";
         }
         function onChartResized(args)
         {
@@ -62,7 +62,7 @@
 @section Description {
     <p>
         In this example, you can see how to render a semi pie chart using <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.AccumulationSeries.html#Syncfusion_EJ2_Charts_AccumulationSeries_StartAngle" aria-label="Navigate to the StartAngle property reference for ASP.NET Core AccumulationSeries">StartAngle</a> and <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.AccumulationSeries.html#Syncfusion_EJ2_Charts_AccumulationSeries_EndAngle" aria-label="Navigate to the EndAngle property reference for ASP.NET Core AccumulationSeries">EndAngle</a> properties.
-        Data labels are wrapped to fit inside the pie slice. To enable the datalabel wrap feature, use the <a target="blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.AccumulationDataLabelSettings.html#Syncfusion_EJ2_Charts_AccumulationDataLabelSettings_TextWrap" aria-label="Navigate to the TextWrap property reference for ASP.NET Core AccumulationDataLabelSettings">TextWrap</a> datalabel property.
+         Data labels are wrapped to fit inside the pie slice. To enable the datalabel wrap feature, use the <code>TextWrap</code> datalabel property.
     </p>
     <p>
         <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover a point or tap on a point in touch enabled devices.

@@ -17,25 +17,43 @@ namespace EJ2CoreSampleBrowser.Pages.Chart
         {
             ChartPoints = new List<SmartLabelsChartData>
             {
-                new SmartLabelsChartData { Country =  "USA",           Medal = 46, DataLabelMappingName = "United States of America: 46" },
-                new SmartLabelsChartData { Country =  "China",         Medal = 26, DataLabelMappingName = "China: 26" },
-                new SmartLabelsChartData { Country =  "Russia",        Medal = 19, DataLabelMappingName = "Russia: 19" },
-                new SmartLabelsChartData { Country =  "Germany",       Medal = 17, DataLabelMappingName = "Germany: 17" },
-                new SmartLabelsChartData { Country =  "Kazhakastan",   Medal = 3,  DataLabelMappingName = "Kazhakastan: 3" },
-                new SmartLabelsChartData { Country =  "New Zealand",   Medal = 4,  DataLabelMappingName = "New Zealand: 4" },
-                new SmartLabelsChartData { Country =  "South Korea",   Medal = 9,  DataLabelMappingName = "South Korea: 9" },
-                new SmartLabelsChartData { Country =  "Great Britain", Medal = 27, DataLabelMappingName = "Great Britain: 27" },
-                new SmartLabelsChartData { Country =  "Switzerland",   Medal = 3,  DataLabelMappingName = "Switzerland: 3" },
-                new SmartLabelsChartData { Country =  "Australia",     Medal = 8,  DataLabelMappingName = "Australia: 8" },
-                new SmartLabelsChartData { Country =  "Netherlands",   Medal = 8,  DataLabelMappingName = "Netherlands: 8" },
-                new SmartLabelsChartData { Country =  "Columbia",      Medal = 3,  DataLabelMappingName = "Columbia: 3" },
-                new SmartLabelsChartData { Country =  "Uzebekistan",   Medal = 4,  DataLabelMappingName = "Uzebekistan: 4" },
-                new SmartLabelsChartData { Country =  "Japan",         Medal = 12, DataLabelMappingName = "Japan: 12" },
-                new SmartLabelsChartData { Country =  "France",        Medal = 10, DataLabelMappingName = "France: 10" },                                            
-                new SmartLabelsChartData { Country =  "Italy",         Medal = 8,  DataLabelMappingName = "Italy: 8" },                                                                                                             
-                new SmartLabelsChartData { Country =  "Argentina",     Medal = 3,  DataLabelMappingName = "Argentina: 3" },
-                new SmartLabelsChartData { Country =  "South Africa",  Medal = 2,  DataLabelMappingName = "South Africa: 2" },
-                new SmartLabelsChartData { Country =  "North Korea",   Medal = 2,  DataLabelMappingName = "North Korea: 2" }
+                new SmartLabelsChartData { Country = "USA",           Medal = 40, DataLabelMappingName = "United States of America: 40" },
+                new SmartLabelsChartData { Country = "China",         Medal = 40, DataLabelMappingName = "China: 40" },
+                new SmartLabelsChartData { Country = "Japan",         Medal = 20, DataLabelMappingName = "Japan: 20" },
+                new SmartLabelsChartData { Country = "Australia",     Medal = 18, DataLabelMappingName = "Australia: 18" },
+                new SmartLabelsChartData { Country = "France",        Medal = 16, DataLabelMappingName = "France: 16" },
+                new SmartLabelsChartData { Country = "Netherlands",   Medal = 15, DataLabelMappingName = "Netherlands: 15" },
+                new SmartLabelsChartData { Country = "Great Britain", Medal = 14, DataLabelMappingName = "Great Britain: 14" },
+                new SmartLabelsChartData { Country = "South Korea",   Medal = 13, DataLabelMappingName = "South Korea: 13" },
+                new SmartLabelsChartData { Country = "Germany",       Medal = 12, DataLabelMappingName = "Germany: 12" },
+                new SmartLabelsChartData { Country = "Italy",         Medal = 12, DataLabelMappingName = "Italy: 12" },
+                new SmartLabelsChartData { Country = "NewZealand",    Medal = 10, DataLabelMappingName = "New Zealand: 10" },
+                new SmartLabelsChartData { Country = "Canada",        Medal =  9, DataLabelMappingName = "Canada: 9" },
+                new SmartLabelsChartData { Country = "Uzbekistan",    Medal =  8, DataLabelMappingName = "Uzbekistan: 8" },
+                new SmartLabelsChartData { Country = "Hungary",       Medal =  6, DataLabelMappingName = "Hungary: 6" },
+                new SmartLabelsChartData { Country = "Kenya",         Medal =  4, DataLabelMappingName = "Kenya: 4" },
+                new SmartLabelsChartData { Country = "Georgia",       Medal =  3, DataLabelMappingName = "Georgia: 3" },
+                new SmartLabelsChartData { Country = "North Korea",   Medal =  2, DataLabelMappingName = "North Korea: 2" },
+                new SmartLabelsChartData { Country = "Hong Kong",     Medal =  2, DataLabelMappingName = "South Africa: 2" }
+            };
+
+            bool isMobile = Request.Headers["User-Agent"].ToString().Contains("Mobi");
+            if (isMobile)
+            {
+                ChartPoints[0].DataLabelMappingName = "USA: 40";
+                ChartPoints[3].DataLabelMappingName = "AU: 18";
+                ChartPoints[5].DataLabelMappingName = "NL: 15";
+                ChartPoints[6].DataLabelMappingName = "GB: 14";
+                ChartPoints[7].DataLabelMappingName = "SK: 13";
+                ChartPoints[8].DataLabelMappingName = "GE: 12";
+                ChartPoints[10].DataLabelMappingName = "NZ: 10";
+                ChartPoints[11].DataLabelMappingName = "CA: 9";
+                ChartPoints[12].DataLabelMappingName = "UZB: 8";
+                ChartPoints[13].DataLabelMappingName = "HU: 6";
+                ChartPoints[14].DataLabelMappingName = "KE: 4";
+                ChartPoints[15].DataLabelMappingName = "GE: 3";
+                ChartPoints[16].DataLabelMappingName = "NK: 2";
+                ChartPoints[17].DataLabelMappingName = "HK: 2";
             };
         }
     }

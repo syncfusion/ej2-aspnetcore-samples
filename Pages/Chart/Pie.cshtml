@@ -11,17 +11,18 @@
 
     }
     <div class="control-section" align='center'>
-        <ejs-accumulationchart id="container" title="Browser Market Share" load="load" enableAnimation="true" enableBorderOnMouseMove="false">
+        <ejs-accumulationchart id="container" title="Global Electricity Generation by Source - 2024" subTitle="Source: wikipedia.org" load="load" enableAnimation="true" enableBorderOnMouseMove="false">
             <e-accumulationchart-center x="50%" y="50%"></e-accumulationchart-center>
-            <e-accumulationchart-tooltipsettings enable="true" format="<b>${point.x}</b><br>Browser Share: <b>${point.y}%</b>" header="" enableHighlight="true"></e-accumulationchart-tooltipsettings>
+            <e-accumulationchart-tooltipsettings enable="true" format="<b>${point.x}</b><br>Percentage: <b>${point.y}%</b>" header="" enableHighlight="true"></e-accumulationchart-tooltipsettings>
             <e-accumulationchart-legendsettings visible="false">
             </e-accumulationchart-legendsettings>
             <e-accumulation-series-collection>
-                <e-accumulation-series dataSource="@Model.ChartPoints" xName="Browser" yName="Users" name="Browser" innerRadius="0%" explodeIndex="0" explode="true" explodeOffset="10%">
+                <e-accumulation-series dataSource="@Model.ChartPoints" xName="Browser" yName="Users" name="Browser" borderRadius="3" innerRadius="0%" explode="true" explodeOffset="10%">
                     <e-accumulationseries-datalabel name="DataLabelMappingName" visible="true" position="@Syncfusion.EJ2.Charts.AccumulationLabelPosition.Outside">
                         <e-font fontWeight="600"></e-font>
-                        <e-connectorstyle length="20px" type="@Syncfusion.EJ2.Charts.ConnectorType.Curve"></e-connectorstyle>
+                        <e-connectorstyle type="@Syncfusion.EJ2.Charts.ConnectorType.Curve"></e-connectorstyle>
                     </e-accumulationseries-datalabel>
+                    <e-accumulationseries-border width=1 color="#ffffff"></e-accumulationseries-border>
                 </e-accumulation-series>
             </e-accumulation-series-collection>
         </ejs-accumulationchart>
@@ -32,6 +33,9 @@
             loadAccumulationChartTheme(args);
             args.accumulation.series[0].startAngle = ej.base.Browser.isDevice ? 70 : 30;
             args.accumulation.series[0].radius = ej.base.Browser.isDevice ? "40%" : "60%";
+            args.accumulation.series[0].dataLabel.connectorStyle.length = ej.base.Browser.isDevice ? '10px' : '20px';
+            args.accumulation.series[0].dataLabel.font.size = ej.base.Browser.isDevice ? '8px' : '12px';
+            args.accumulation.series[0].explodeIndex = 0;
         }
     </script>
 }
@@ -45,7 +49,7 @@
 
     <div id="action-description">
         <p>
-            This <a target="_blank" href="https://www.syncfusion.com/aspnet-core-ui-controls/charts/chart-types/pie-chart" aria-label="Navigate to explore the syncfusion ASP.NET Core Pie Chart">ASP.NET Core Pie Chart</a> example demonstrates a pie chart for mobile browsers usage statistics. Datalabels show information about the points.
+            This <a target="_blank" href="https://www.syncfusion.com/aspnet-core-ui-controls/charts/chart-types/pie-chart" aria-label="Navigate to explore the syncfusion ASP.NET Core Pie Chart">ASP.NET Core Pie Chart</a> example demonstrates a pie chart for global electricity generation. Datalabels show information about the points.
         </p>
     </div>
 }

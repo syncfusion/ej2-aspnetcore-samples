@@ -18,11 +18,13 @@ namespace EJ2CoreSampleBrowser.Pages.Chart
         {
             ChartPoints = new List<PyramidChartData>
             {
-                new PyramidChartData { Foods =  "Milk, Youghnut, Cheese", Calories = 435, DataLabelMappingName = "Milk, Youghnut, Cheese: 435 cal" },
-                new PyramidChartData { Foods =  "Vegetables",             Calories = 470, DataLabelMappingName = "Vegetables: 470 cal" },
-                new PyramidChartData { Foods =  "Meat, Poultry, Fish",    Calories = 475, DataLabelMappingName = "Meat, Poultry, Fish: 475 cal" },                
-                new PyramidChartData { Foods =  "Fruits",                 Calories = 520, DataLabelMappingName = "Fruits: 520 cal" },
-                new PyramidChartData { Foods =  "Bread, Rice, Pasta",     Calories = 930, DataLabelMappingName = "Bread, Rice, Pasta: 930 cal" }
+                new PyramidChartData { Foods = "Oils",        Calories = 2,  DataLabelMappingName = "Oils: 2%" },
+                new PyramidChartData { Foods = "Protein",     Calories = 10, DataLabelMappingName = "Protein: 4710%" },
+                new PyramidChartData { Foods = "Fruits",      Calories = 15, DataLabelMappingName = "Fruits: 15%" },
+                new PyramidChartData { Foods = "Dairy",       Calories = 23, DataLabelMappingName = "Dairy: 23%" },
+                new PyramidChartData { Foods = "Vegetables",  Calories = 23, DataLabelMappingName = "Vegetables: 23%" },
+                new PyramidChartData { Foods = "Grains",      Calories = 27, DataLabelMappingName = "Grains: 27%" }
+
             };
         }
     }

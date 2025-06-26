@@ -245,7 +245,6 @@ window.samplesList = [
                 "component": "Excel",
                 "dir": "Excel",
                 "uid": "00444421",
-                "type": "update",
                 "parentId": "044"
             },
             {
@@ -256,7 +255,6 @@ window.samplesList = [
                 "component": "Excel",
                 "dir": "Excel",
                 "uid": "00444443",
-                "type": "update",
                 "parentId": "044"
             },
             {
@@ -448,7 +446,18 @@ window.samplesList = [
                 "dir": "Excel",
                 "uid": "00444440",
                 "parentId": "044"
-            }
+            },
+            {
+                "url": "AutoFillOption",
+                "name": "Auto Fill & Fill Series",
+                "category": "Data Management",
+                "order": 6,
+                "component": "Excel",
+                "type": "new",
+                "dir": "Excel",
+                "uid": "0044450",
+                "parentId": "044"
+            },
         ],
         "order": 7,
         "uid": "044"

@@ -17,11 +17,13 @@ namespace EJ2CoreSampleBrowser.Pages.Chart
         {
             ChartPoints = new List<CornerRadiusChartData>
             {
-                new CornerRadiusChartData { X = "Operations",                Y = 30.0,  Text = "30.0%" },
-                new CornerRadiusChartData { X = "Miscellaneous",             Y = 10.0,  Text = "10.0%" },
-                new CornerRadiusChartData { X = "Human Resources",           Y = 15.0,  Text = "15.0%" },
-                new CornerRadiusChartData { X = "Research and Development",  Y = 20.0,  Text = "20.0%" },
-                new CornerRadiusChartData { X = "Marketing",                 Y = 25.0,  Text = "25.0%" }
+                new CornerRadiusChartData { X = "Android",  Y = 45.49, Text = "Android: 45.49%" },
+                new CornerRadiusChartData { X = "Windows",  Y = 25.35, Text = "Windows: 25.35%" },
+                new CornerRadiusChartData { X = "iOS",      Y = 18.26, Text = "iOS: 18.26%" },
+                new CornerRadiusChartData { X = "macOS",    Y = 5.06,  Text = "macOS: 5.06%" },
+                new CornerRadiusChartData { X = "Linux",    Y = 1.48,  Text = "Linux: 1.48%" },
+                new CornerRadiusChartData { X = "Others",   Y = 4.36,  Text = "Others: 4.36%" }
+
             };
         }
     }

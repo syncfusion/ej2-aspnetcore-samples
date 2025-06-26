@@ -447,6 +447,28 @@ window.samplesList = [
                 "parentId": "047",
                 "uid": "00474742"
             },
+			{
+                "url": "WordToTXT",
+                "name": "Word to TXT",
+                "category": "Conversions",
+				"type": "update",
+                "order": 9,
+                "component": "Word",
+                "dir": "Word",
+                "parentId": "047",
+                "uid": "00474743"
+            },
+			{
+                "url": "TXTtoWord",
+                "name": "TXT to Word",
+                "category": "Conversions",
+				"type": "update",
+                "order": 9,
+                "component": "Word",
+                "dir": "Word",
+                "parentId": "047",
+                "uid": "00474744"
+            },
             {
                 "url": "DOCtoODT",
                 "name": "Word to ODT",
@@ -455,7 +477,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474743"
+                "uid": "00474745"
             },
             {
                 "url": "InsertBreak",
@@ -465,7 +487,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474744"
+                "uid": "00474746"
             },
             {
                 "url": "Watermark",
@@ -475,7 +497,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474745"
+                "uid": "00474747"
             },
             {
                 "url": "TableOfContents",
@@ -485,7 +507,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474746"
+                "uid": "00474748"
             },
             {
                 "url": "TableOfFigures",
@@ -495,7 +517,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474747"
+                "uid": "00474749"
             },
             {
                 "url": "FootnotesandEndnotes",
@@ -505,7 +527,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474748"
+                "uid": "00474750"
             },
             {
                 "url": "AutoShapes",
@@ -515,7 +537,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474749"
+                "uid": "00474751"
             },
             {
                 "url": "GroupShapes",
@@ -525,29 +547,27 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474750"
+                "uid": "00474752"
             },
             {
                 "url": "CreateSmartArt",
                 "name": "Create SmartArt",
                 "category": "SmartArts",
-                "type": "new",
                 "order": 13,
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474751"
+                "uid": "00474753"
             },
             {
                 "url": "EditSmartArt",
                 "name": "Edit SmartArt",
                 "category": "SmartArts",
-                "type": "new",
                 "order": 13,
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474752"
+                "uid": "00474754"
             },
             {
                 "url": "PieChart",
@@ -557,7 +577,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474753"
+                "uid": "00474755"
             },
             {
                 "url": "BarChart",
@@ -567,7 +587,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474754"
+                "uid": "00474756"
             },
             {
                 "url": "DocumentSettings",
@@ -577,7 +597,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474755"
+                "uid": "00474757"
             },
             {
                 "url": "MacroPreservation",
@@ -587,17 +607,18 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474756"
+                "uid": "00474758"
             },
             {
                 "url": "DocumentProtection",
                 "name": "Document Protection",
                 "category": "Security",
+				"type": "update",
                 "order": 16,
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474757"
+                "uid": "00474759"
             },
             {
                 "url": "EncryptAndDecrypt",
@@ -607,7 +628,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474758"
+                "uid": "00474760"
             },
             {
                 "url": "TrackChanges",
@@ -617,7 +638,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474759"
+                "uid": "00474761"
             },
             {
                 "url": "CompareDocuments",
@@ -627,7 +648,7 @@ window.samplesList = [
                 "component": "Word",
                 "dir": "Word",
                 "parentId": "047",
-                "uid": "00474760"
+                "uid": "00474762"
             }
 
         ],
@@ -703,7 +724,6 @@ window.samplesList = [
                 "url": "Comments",
                 "name": "Comments",
                 "category": "Review",
-                "type": "update",
                 "order": 3,
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
@@ -740,6 +760,21 @@ window.samplesList = [
                 "sourceFiles": [
                     { "displayName": "DocumentProtection.cshtml", path: "../Views/DocumentEditor/DocumentProtection.cshtml" },
                     { "displayName": "DocumentProtectionController.cs", path: "../Controllers/DocumentEditor/DocumentProtectionController.cs" }
+                ]
+            },
+            {
+                "url": "RibbonCustomization",
+                "name": "Ribbon Customization",
+                "category": "Customization",
+                "type": "new",
+                "order": 5,
+                "component": "DocumentEditor",
+                "dir": "DocumentEditor",
+                "parentId": "035",
+                "uid": "0036373",
+                "sourceFiles": [
+                    { "displayName": "RibbonCustomization.cshtml", path: "../Views/DocumentEditor/RibbonCustomization.cshtml" },
+                    { "displayName": "RibbonCustomizationController.cs", path: "../Controllers/DocumentEditor/RibbonCustomizationController.cs" }
                 ]
             },
             {
@@ -788,7 +823,6 @@ window.samplesList = [
                 "url": "ColorpickerCustomization",
                 "name": "Colorpicker Customization",
                 "category": "Customization",
-                "type": "new",
                 "order": 5,
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
@@ -831,7 +865,6 @@ window.samplesList = [
                 "url": "Export",
                 "name": "Advanced Exporting",
                 "category": "Exporting",
-                "type": "new",
                 "order": 7,
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
@@ -874,9 +907,9 @@ window.samplesList = [
                 "url": "AutoShapes",
                 "name": "Auto Shapes",
                 "category": "Shapes",
+                "type": "update",
                 "order": 9,
                 "component": "DocumentEditor",
-                "type":"new",
                 "dir": "DocumentEditor",
                 "parentId": "035",
                 "uid": "0036372",
@@ -917,9 +950,7 @@ window.samplesList = [
                 "url": "HeadingNavigation",
                 "name": "Heading Navigation",
                 "category": "View",
-                "type": "new",
                 "order": 9,
-                "type": "new",
                 "component": "DocumentEditor",
                 "dir": "DocumentEditor",
                 "parentId": "035",

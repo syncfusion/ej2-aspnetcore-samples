@@ -8,6 +8,7 @@
     var getConnectorDefaults = "getConnectorDefaults";
 }
 @section ControlsSection{
+    <div id="diagram-constraints-container">
     <div class="col-lg-9 control-section">
         <div class="content-wrapper" style="width:100%;background: white">
             <ejs-diagram id="diagram" selectedItems="@Model.selectedItems" width="100%" height="580px"  getNodeDefaults="@getNodeDefaults" getConnectorDefaults="@getConnectorDefaults" nodes="@Model.nodes" connectors="@Model.Connectors" getCustomTool="@getTool" selectedItems="@selector" selectionChange="selectionChange">
@@ -41,12 +42,19 @@
             </div>
         </div>
     </div>
+    </div>
     <style>
         /* Property panel CSS */
 
-        .row {
+        #diagram-constraints-container .row {
             margin-left: 0px;
             margin-right: 0px;
+        }
+        #diagram-constraints-container .control-section {
+            padding-left: 0px;
+            padding-top: 0px;
+            padding-right: 0px;
+            padding-bottom: 0px;
         }
 
     </style>
@@ -62,7 +70,13 @@
             diagram.constraints = diagram.constraints ^ ej.diagrams.DiagramConstraints.UndoRedo;
             diagram.dataBind();
         }
-
+        function getNodeDefaults(obj) {
+            if (obj.id !== "textNode1" && obj.id !== "textNode2") {
+                obj.width = 80;
+                obj.style.fill = '#C7E6FF';
+                obj.style.strokeColor = '#1587FF';
+            }
+        }
         function editing(args) {
             var diagram = document.getElementById("diagram").ej2_instances[0];
             for (var i = 0; i < diagram.nodes.length; i++) {

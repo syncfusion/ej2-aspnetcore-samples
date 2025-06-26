@@ -24,14 +24,15 @@
             <p style="visibility:hidden; display:inline-block" id="symbol">&nbsp;&gt;&gt;&nbsp;</p>
             <p id="text" style="display:inline-block;"></p>
         </div>
-        <ejs-accumulationchart id="container" textRender="textRender" pointClick="pointClick" title="Automobile Sales by Category" load="load" enableBorderOnMouseMove="false" enableSmartLabels="true">
+        <ejs-accumulationchart id="container" textRender="textRender" pointClick="pointClick" title="Automobile Sales by Region - 2023" subTitle="Source: wikipedia.org" load="load" enableBorderOnMouseMove="false" enableSmartLabels="true">
             <e-accumulationchart-legendsettings visible="false">
             </e-accumulationchart-legendsettings>
             <e-accumulation-series-collection>
-                <e-accumulation-series explode="false" type="Pie" xName="x" yName="y" dataSource="@Model.ChartData" name="Project" radius="70%">
-                    <e-accumulationseries-datalabel visible="true" name="text">
-                        <e-font fontWeight="600" color="#ffffff"></e-font>
+                <e-accumulation-series explode="false" type="Pie" xName="x" yName="y" startAngle=-30 endAngle=330 dataSource="@Model.ChartData" name="Automobile Sales" borderRadius=3 radius="70%">
+                    <e-accumulationseries-datalabel visible="true" position=Outside>
+                        <e-font fontWeight="600"></e-font>
                     </e-accumulationseries-datalabel>
+                    <e-accumulationseries-border width=1 color="#ffffff"></e-accumulationseries-border>
                 </e-accumulation-series>
             </e-accumulation-series-collection>
         </ejs-accumulationchart>
@@ -47,31 +48,28 @@
     </style>
     <script src="~/scripts/chart/theme-color.js"></script>
     <script>
-        var suvs = [{ x: 'Toyota', y: 8 }, { x: 'Ford', y: 12 }, { x: 'GM', y: 17 }, { x: 'Renault', y: 6 }, { x: 'Fiat', y: 3 },
-        { x: 'Hyundai', y: 16 }, { x: 'Honda', y: 8 }, { x: 'Maruthi', y: 10 }, { x: 'BMW', y: 20 }];
-        var cars = [{ x: 'Toyota', y: 7 }, { x: 'Chrysler', y: 12 }, { x: 'Nissan', y: 9 }, { x: 'Ford', y: 15 }, { x: 'Tata', y: 10 },
-        { x: 'Mahindra', y: 7 }, { x: 'Renault', y: 8 }, { x: 'Skoda', y: 5 }, { x: 'Volkswagen', y: 15 }, { x: 'Fiat', y: 3 }];
-        var pickups = [{ x: 'Nissan', y: 9 }, { x: 'Chrysler', y: 4 }, { x: 'Ford', y: 7 }, { x: 'Toyota', y: 20 },
-        { x: 'Suzuki', y: 13 }, { x: 'Lada', y: 12 }, { x: 'Bentley', y: 6 }, { x: 'Volvo', y: 10 }, { x: 'Audi', y: 19 }];
-        var minivans = [{ x: 'Hummer', y: 11 }, { x: 'Ford', y: 5 }, { x: 'GM', y: 12 }, { x: 'Chrysler', y: 3 }, { x: 'Jaguar', y: 9 },
-        { x: 'Fiat', y: 8 }, { x: 'Honda', y: 15 }, { x: 'Hyundai', y: 4 }, { x: 'Scion', y: 11 }, { x: 'Toyota', y: 17 }];
+        var asiaPacific = [{ x: 'China', y: 66.7 }, { x: 'Japan', y: 17.8 }, { x: 'India', y: 11.1 }, { x: 'South Korea', y: 3.3 }, { x: 'Others', y: 1.1 }];
+        var europe = [{ x: 'Germany', y: 32 }, { x: 'UK', y: 20 }, { x: 'France', y: 16 }, { x: 'Italy', y: 12 }, { x: 'Spain', y: 8 }, { x: 'Others', y: 12 }];
+        var northAmerica = [{ x: 'USA', y: 75 }, { x: 'Canada', y: 15 }, { x: 'Mexico', y: 10 }];
+        var latinAmerica = [{ x: 'Brazil', y: 57.1 }, { x: 'Argentina', y: 21.4 }, { x: 'Chile', y: 14.3 }, { x: 'Others', y: 7.1 }];
+        var middleEastAfrica = [{ x: 'South Africa', y: 33.3 }, { x: 'Egypt', y: 26.7 }, { x: 'UAE', y: 23.3 }, { x: 'Others', y: 16.7 }];
         var textRender = function (args) {
-            args.text = args.point.x + ' ' + args.point.y + ' %';
+            args.text = args.point.x + ' ' + args.point.y + '%';
         };
 
         var mouseClick = function (args) {
             var pie = document.getElementById("drilledContainer").ej2_instances[0];
             pie.series = [
                 {
-                    dataSource: [{ x: 'SUV', y: 25 }, { x: 'Car', y: 37 }, { x: 'Pickup', y: 15 }, { x: 'Minivan', y: 23 }],
+                    dataSource: [{ x: 'Asia-Pacific', y: 45 }, { x: 'Europe', y: 25 }, { x: 'North America', y: 25 }, {x: 'Latin America', y: 7}, { x: 'Middle East & Africa', y: 3 }],
                     dataLabel: {
-                        visible: true, position: 'Inside', connectorStyle: { type: 'Curve', length: '5%' },
-                        font: { fontWeight: '600', color: 'white' }, enableRotation: false
+                        visible: true, position: 'Outside', enableRotation: false, connectorStyle: { type: 'Curve' }, font: { fontWeight: '600', color: 'black' }
                     },
-                    radius: '70%', name: 'Project', xName: 'x', yName: 'y', startAngle: 0, endAngle: 360, innerRadius: '0%',
+                    radius: '70%', name: 'Automobile Sales', xName: 'x', yName: 'y', startAngle: -30, endAngle: 330, innerRadius: '0%',
                     explode: false
                 }
             ];
+            pie.series[0].animation.enable = false;
             pie.textRender = function (args) { args.text = args.point.x + ' ' + args.point.y + '%'; }
             pie.title = 'Automobile Sales by Category';
             pie.element.id = "container";
@@ -88,37 +86,43 @@
         var textRender = function (args) { args.text = args.point.x + ' ' + args.point.y + '%'; };
         function load(args) {
             loadAccumulationChartTheme(args);
-            args.accumulation.series[0].dataLabel.font.size = ej.base.Browser.isDevice ? '10px' : '12px';
+            args.accumulation.series[0].dataLabel.font.size = ej.base.Browser.isDevice ? '8px' : '12px';
+            args.accumulation.series[0].dataLabel.connectorStyle.type = 'Curve';
         };
         var pointClick = function (args) {
-            if (args.series.name !== 'Project') {
+            if (args.series.name !== 'Automobile Sales') {
                 return null;
             }
             pie = document.getElementById("container").ej2_instances[0];
             switch (args.pointIndex) {
                 case 0:
-                    pie.series[0].dataSource = suvs;
                     pie.series[0].name = '';
-                    document.getElementById('text').innerHTML = 'SUV';
-                    pie.title = 'Automobile Sales in the SUV Segment';
+                    pie.series[0].dataSource = asiaPacific;
+                    pie.title = 'Automobile Sales in the Asia-Pacific region';
+                    document.getElementById('text').innerHTML = 'Asia-Pacific';
                     break;
                 case 1:
-                    pie.series[0].dataSource = cars;
                     pie.series[0].name = '';
-                    document.getElementById('text').innerHTML = 'Car';
-                    pie.title = 'Automobile Sales in the Car Segment';
+                    pie.series[0].dataSource = europe;
+                    pie.title = 'Automobile Sales in the Europe region';
+                    document.getElementById('text').innerHTML = 'Europe';
                     break;
                 case 2:
-                    pie.series[0].dataSource = pickups;
                     pie.series[0].name = '';
-                    document.getElementById('text').innerHTML = 'Pickup';
-                    pie.title = 'Automobile Sales in the Pickup Segment';
+                    pie.series[0].dataSource = northAmerica;
+                    pie.title = 'Automobile Sales in the North America region';
+                    document.getElementById('text').innerHTML = 'North America';
                     break;
                 case 3:
-                    pie.series[0].dataSource = minivans;
                     pie.series[0].name = '';
-                    document.getElementById('text').innerHTML = 'Minivan';
-                    pie.title = 'Automobile Sales in the Minivan Segment';
+                    pie.series[0].dataSource = latinAmerica;
+                    pie.title = 'Automobile Sales in the Latin America region';
+                    document.getElementById('text').innerHTML = 'Latin America';
+                    break;
+                case 4:
+                    pie.series[0].dataSource = middleEastAfrica;
+                    pie.title = 'Automobile Sales in the Middle East & Africa region';
+                    document.getElementById('text').innerHTML = 'Middle East & Africa';
                     break;
             }
 
@@ -127,13 +131,13 @@
                 content: '<div id="back" onclick="mouseClick()" style="visibility:visible; cursor:pointer; padding: 3px; width: 30px; height: 30px;">' +
                     '<img src="./../scripts/chart/images/back.png" ' + (themeName === 'highcontrast' || themeName === 'fluent2-highcontrast' || themeName.indexOf('dark') > -1 ? 'style="filter: invert(100%);"' : '') + ' /></div>', region: 'Series', x: '50%', y: '50%'
             }];
-            pie.series[0].innerRadius = '30%';
-            pie.series[0].radius = ej.base.Browser.isDevice ? '90%' : '80%';
+            pie.series[0].innerRadius = '40%';
+            pie.series[0].radius = '80%';
             pie.series[0].explode = false;
-            pie.series[0].dataLabel.connectorStyle.length = '20px'
+            pie.series[0].animation.enable = false;
+            pie.series[0].dataLabel.connectorStyle.length = ej.base.Browser.isDevice ? '5%' : '10%';
             pie.series[0].dataLabel.position = ej.base.Browser.isDevice ? 'Inside' : 'Outside';
-            pie.series[0].dataLabel.position = ej.base.Browser.isDevice ? 'Inside' : 'Outside';
-            pie.series[0].dataLabel.enableRotation = true;
+            pie.series[0].dataLabel.enableRotation = ej.base.Browser.isDevice ? true : false;
             pie.series[0].dataLabel.font.color = '';
             pie.legendSettings.visible = false;
             pie.visibleSeries[0].explodeIndex = null;
@@ -152,7 +156,7 @@
 @section ActionDescription{
     <div id="action-description">
         <p>
-            This sample demonstrates a drill down chart with a pie for automobiles sales by category. By clicking one category, you can navigate to other sub-categories where companies are differentiated.
+            This sample demonstrates a drill down chart with a pie for automobiles sales by region. By clicking one category, you can navigate to other sub-categories where countries are differentiated.
         </p>
     </div>
 }

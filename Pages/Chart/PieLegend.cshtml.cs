@@ -18,21 +18,21 @@ namespace EJ2CoreSampleBrowser.Pages.Chart
         {
             PieChartPoints = new List<PieDataPoints>  
             {
-                new PieDataPoints { ExpenseCategory =  "Chrome", ExpensePercentage = 57.28, LegendName="Chrome", DataLabelMappingName = "57.28%" },
-                new PieDataPoints { ExpenseCategory =  "UC Browser", ExpensePercentage = 4.37, LegendName="UC Browser", DataLabelMappingName = "4.37%" },
-                new PieDataPoints { ExpenseCategory =  "Internet Explorer", ExpensePercentage = 6.12, LegendName="Internet <br> Explorer", DataLabelMappingName = "6.12%" },
-                new PieDataPoints { ExpenseCategory =  "QQ", ExpensePercentage = 5.96, LegendName="QQ", DataLabelMappingName = "5.96%" },
-                new PieDataPoints { ExpenseCategory =  "Edge", ExpensePercentage = 7.48, LegendName="Edge", DataLabelMappingName = "7.48%" },
-                new PieDataPoints { ExpenseCategory =  "Others", ExpensePercentage = 14.06, LegendName="Others", DataLabelMappingName = "18.76%" }
+                new PieDataPoints { X = "China",     Y = 35,   Text = "35%" },
+                new PieDataPoints { X = "India",     Y = 30,   Text = "30%" },
+                new PieDataPoints { X = "USA",       Y = 10.7, Text = "10.7%" },
+                new PieDataPoints { X = "Indonesia", Y = 7,    Text = "7%" },
+                new PieDataPoints { X = "Brazil",    Y = 5.3,  Text = "5.3%" },
+                new PieDataPoints { X = "Others",    Y = 12,   Text = "12%" }
+
             };
         }
     }
     public class PieDataPoints
     {
-        public string ExpenseCategory;
-        public double ExpensePercentage;
-        public string LegendName;
-        public string DataLabelMappingName;
+        public string X;
+        public double Y;
+        public string Text;
     }
     
 }

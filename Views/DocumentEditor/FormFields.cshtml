@@ -1,9 +1,51 @@
 @section ControlsSection{
     <div class="control-section">
+<div class="flex-container">
+                <label class="switchLabel" for="checked">Ribbon UI</label>
+                <div class="e-message render-mode-info">
+                    <span class="e-msg-icon render-mode-info-icon" title="Turn OFF to switch from Ribbon to toolbar UI"></span>
+                </div>
+                <ejs-switch cssClass="buttonSwitch" id="toolbarSwitch" change="onSwitchChange" checked="true"></ejs-switch>
+            </div>
         <div id='documenteditor_titlebar' class="e-de-ctn-title"></div>
         <ejs-documenteditorcontainer id="container" enableToolbar=true showPropertiesPane=false></ejs-documenteditorcontainer>
     </div>
     <style>
+        .flex-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.render-mode-info {
+    background: none;
+    border: none;
+    padding-left: 0px;
+}
+
+.render-mode-info .render-mode-info-icon {
+    height: 16px;
+    width: 16px;
+}
+
+.switchLabel {
+    font-family: "Segoe UI", "GeezaPro", "DejaVu Serif", sans-serif;        
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0.24px;
+    text-align: right;
+    font-size: 14px;
+    margin-bottom: 0px;
+}
+
+.render-mode-info .render-mode-info-icon::before {
+    line-height: normal;
+}
+
+.buttonSwitch {
+    Width: 40px;
+    Height: 24px;
+}
         #documenteditor_titlebar {
             height: 36px;
             line-height: 26px;
@@ -96,11 +138,13 @@
 @section Scripts{
     <script>
     var documenteditor;
+    ej.documenteditor.DocumentEditorContainer.Inject(ej.documenteditor.Toolbar, ej.documenteditor.Ribbon);
     document.addEventListener('DOMContentLoaded', function () {
         var documenteditorElement = document.getElementById("container");
         documenteditorElement.style.height = "590px";
         documenteditorElement.style.width = "100%";
         var container = documenteditorElement.ej2_instances[0];
+        container.toolbarMode = 'Ribbon';
         documenteditor = container.documentEditor;
         container.documentEditorSettings.showRuler = true;
         documenteditorElement.ej2_instances[0].serviceUrl = window.baseurl + 'api/documenteditor/';
@@ -116,7 +160,8 @@
             updateDocumentTitle();
         };
         titleBarDiv = document.getElementById('documenteditor_titlebar');
-        initComponentAndWireEvent();
+initComponentAndWireEvent();
+        showButtons(false);
     });
     </script>
 }

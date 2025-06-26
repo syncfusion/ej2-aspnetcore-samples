@@ -4,16 +4,17 @@
 @section ControlsSection{
 
     <div class="control-section" align='center'>
-        <ejs-accumulationchart id="container" title="Pie with different Radius" enableBorderOnMouseMove="false" enableAnimation="true" enableSmartLabels="true" load="load" tooltipRender="TooltipRender">
+        <ejs-accumulationchart id="container" title="Global Distribution of Population and Land Area by Country - 2025" subTitle="Source: wikipedia.org" enableBorderOnMouseMove="false" enableAnimation="true" enableSmartLabels="true" load="load" tooltipRender="TooltipRender">
             <e-accumulationchart-tooltipsettings enableHighlight="true" enable="true" header="" format="<b>${point.x}</b><br>Area in square km: <b>${point.y}</b><br>Population density per square km: <b>${point.tooltip}</b>"></e-accumulationchart-tooltipsettings>
-            <e-accumulationchart-legendsettings visible="true" reverse="true">
+            <e-accumulationchart-legendsettings visible="false">
             </e-accumulationchart-legendsettings>
             <e-accumulation-series-collection>
-                <e-accumulation-series dataSource="@Model.ChartPoints" xName="Country" yName="Population" innerRadius="20%" radius="Radius" tooltipMappingName="Radius">
+                <e-accumulation-series dataSource="@Model.ChartPoints" xName="Country" yName="Population" borderRadius=3 innerRadius="20%" radius="Radius" tooltipMappingName="Radius">
                     <e-accumulationseries-datalabel name="text" visible="true">
                         <e-font fontWeight="600"></e-font>
                         <e-connectorstyle length="20px" type="@Syncfusion.EJ2.Charts.ConnectorType.Curve"></e-connectorstyle>
                     </e-accumulationseries-datalabel>
+                    <e-accumulationseries-border width=1 color="#ffffff"></e-accumulationseries-border>
                 </e-accumulation-series>
             </e-accumulation-series-collection>
         </ejs-accumulationchart>
@@ -23,10 +24,13 @@
         function load(args) {
             loadAccumulationChartTheme(args);
             args.accumulation.series[0].dataLabel.position = ej.base.Browser.isDevice ? "Inside" : "Outside";
-            args.accumulation.series[0].dataLabel.font.size = ej.base.Browser.isDevice ? "10px" : "12px";
+            args.accumulation.series[0].dataLabel.font.size = ej.base.Browser.isDevice ? "7px" : "12px";
+            args.accumulation.series[0].dataLabel.name = ej.base.Browser.isDevice ? "text" : "Country";
+            args.accumulation.series[0].dataLabel.connectorStyle.length = ej.base.Browser.isDevice ? '10px' : '20px';
+            args.accumulation.series[0].dataLabel.textWrap = ej.base.Browser.isDevice ? 'Wrap' : 'Normal';
+
             args.accumulation.series[0].dataSource[0].Radius = ej.base.Browser.isDevice ? "110" : "100";
             args.accumulation.series[0].dataSource[1].Radius = ej.base.Browser.isDevice ? "120" : "118.7";
-            args.accumulation.series[0].dataSource[2].text = ej.base.Browser.isDevice ? "Dominican <br> Republic" : "Dominican Republic";
         }
         function TooltipRender(args) {
             args.text = args.text.replace(args.data.pointY.toString(), args.data.pointY.toLocaleString());
@@ -50,8 +54,8 @@
 @section Description {
     <div id="description">
         <p>
-            In this example, you can see how to render a doughnut chart with different radius. You can use the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.AccumulationSeries.html#Syncfusion_EJ2_Charts_AccumulationSeries_Radius" aria-label="Navigate to the Radius property reference for ASP.NET Core AccumulationSeries">Radius</a> mapping property to achieve this feature.
-            <code>DataLabel</code>  are used to represent individual data and its values. In addition, the sample shows how to change the order of legends for the doughnut chart by using the <code>Reverse</code> property.
+            In this example, you can see how to render a donut chart with different radius. You can use the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.AccumulationSeries.html#Syncfusion_EJ2_Charts_AccumulationSeries_Radius" aria-label="Navigate to the Radius property reference for ASP.NET Core AccumulationSeries">Radius</a> mapping property to achieve this feature.
+            <code>DataLabel</code>  are used to represent individual data and its values.
         </p>
         <p>
             <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover a point or tap on a point in touch enabled devices.

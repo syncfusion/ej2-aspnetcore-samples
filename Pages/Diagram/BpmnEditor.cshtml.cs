@@ -335,7 +335,7 @@ public class BpmnEditorModel : PageModel
                 {
                     Type = "Bpmn",
                     Shape = "Gateway",
-                    gateWay = new DiagramBpmnGateway()
+                    Gateway = new DiagramBpmnGateway()
                     {
                         Type = BpmnGateways.Exclusive
                     }
@@ -603,9 +603,9 @@ public class ContextMenuItem
             set;
         }
         [DefaultValue(null)]
-        [Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeName("gateWay")]
-        [JsonProperty("gateWay")]
-        public DiagramBpmnGateway gateWay
+        [Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeName("gateway")]
+        [JsonProperty("gateway")]
+        public DiagramBpmnGateway Gateway
         {
             get;
             set;

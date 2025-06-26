@@ -1,10 +1,11 @@
 @page
 @using Syncfusion.EJ2
+@using System.Text.Json
 
 @{
     int minFileSize = 1;
     int maxFileSize = 100;
-    string[] allowedExtensions = new string[5] { ".jpeg", ".jpg", ".png", ".svg", ".webp" };
+    string[] allowedExtensions = new string[6] { ".jpeg", ".jpg", ".png", ".svg", ".webp", ".bmp" };
     List<object> units = new List<object>
     {
         new { text = "KB" },
@@ -16,13 +17,14 @@
         new { Name = "JPG", Value = ".jpg" },
         new { Name = "PNG", Value = ".png" },
         new { Name = "SVG", Value = ".svg" },
-        new { Name = "WebP", Value = ".webp" }
+        new { Name = "WebP", Value = ".webp" },
+        new { Name = "BMP", Value = ".bmp" }
     };
     Syncfusion.EJ2.ImageEditor.ImageEditorUploadSettings uploadSettings = new Syncfusion.EJ2.ImageEditor.ImageEditorUploadSettings
     {
         MinFileSize = minFileSize,
         MaxFileSize = maxFileSize,
-        AllowedExtensions = ".jpeg, .jpg, .png, .svg, .webp"
+        AllowedExtensions = ".jpeg, .jpg, .png, .svg, .webp, .bmp"
     };
 }
 
@@ -58,7 +60,7 @@
         let defaultUnit = 'KB';
         let minFileSize = @minFileSize;
         let maxFileSize = @maxFileSize;
-        let allowedExtensions = "@allowedExtensions".split(', ');
+        let allowedExtensions = @Html.Raw(JsonSerializer.Serialize(allowedExtensions));
 
         function selectValue(args) {
             var dropdownObj = ej.base.getComponent(document.getElementById('dropdownbtn'), 'dropdown-btn');
@@ -85,7 +87,7 @@
 
         function changeMultiselect(args) {
             if (args.value.length === 0) {
-                allowedExtensions = [".jpeg", ".jpg", ".png", ".svg", ".webp"];
+                allowedExtensions = [".jpeg", ".jpg", ".png", ".svg", ".webp", ".bmp"];
             } else {
                 allowedExtensions = args.value;
             }
@@ -128,12 +130,12 @@
             This sample highlights the enhanced configuration capabilities of the Image Editor component through the <b>uploadSettings</b> property. The following features are included:
         </p>
         <ul>
-            <li><b>File Extensions</b>: Use a multi-select dropdown with checkboxes to dynamically choose the allowed file extensions. Supported values include <code>jpeg</code>, <code>jpg</code>, <code>png</code>, <code>svg</code>, and <code>webp</code>.</li>
+            <li><b>File Extensions</b>: Use a multi-select dropdown with checkboxes to dynamically choose the allowed file extensions. Supported values include <code>jpeg</code>, <code>jpg</code>, <code>png</code>, <code>svg</code>, <code>webp</code>, and <code>bmp</code>.</li>
             <li><b>File Size</b>: Two numeric textboxes are provided at the top of the page to set the minimum and maximum file sizes (in bytes). These values dynamically update the <code>uploadSettings</code> property.</li>
             <li><b>Dynamic Updates</b>: Changes made to the numeric textboxes or the dropdown options immediately reflect in the component's <code>uploadSettings</code>.</li>
             <li><b>Upload Settings</b>: Predefined settings include:
                 <ul>
-                    <li><b>Allowed Extensions</b>: <code>.jpeg</code>, <code>.png</code>, <code>.svg</code>, <code>.webp</code></li>
+                    <li><b>Allowed Extensions</b>: <code>.jpeg</code>, <code>.png</code>, <code>.svg</code>, <code>.webp</code>, <code>.bmp</code></li>
                     <li><b>Minimum File Size</b>: 1 KB</li>
                     <li><b>Maximum File Size</b>: 100 KB</li>
                 </ul>

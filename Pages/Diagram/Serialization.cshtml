@@ -30,13 +30,15 @@
                 <e-diagram-snapsettings horizontalGridlines="@Model.gridLines" verticalGridlines="@Model.gridLines"></e-diagram-snapsettings>
             </ejs-diagram>
         </div>
-        <ejs-uploader id="fileupload" success="onUploadSuccess" showFileList="false">
-            <e-uploader-asyncsettings saveUrl="http://localhost:62928/api/FileUploader/Save" removeUrl="http://localhost:62928/api/FileUploader/Remove">
-            </e-uploader-asyncsettings>
-        </ejs-uploader>
+        <div id="diagram-fileupload">
+            <ejs-uploader id="fileupload" success="onUploadSuccess" showFileList="false">
+                <e-uploader-asyncsettings saveUrl="http://localhost:62928/api/FileUploader/Save"             removeUrl="http://localhost:62928/api/FileUploader/Remove">
+                </e-uploader-asyncsettings>
+            </ejs-uploader>
+        </div>
     </div>
     <style>
-        .e-file-select-wrap {
+        #diagram-fileupload .e-file-select-wrap {
             display: none;
         }
 
@@ -195,8 +197,10 @@
         }
 
         function loaded(args) {
-            var diagram = document.getElementById("container").ej2_instances[0];
-            diagram.select([diagram.nodes[0]]);
+            setTimeout(()=>{
+                var diagram = document.getElementById("container").ej2_instances[0];
+                diagram.select([diagram.nodes[0]]);
+            },100)
         }
 
         function fitToPage() {

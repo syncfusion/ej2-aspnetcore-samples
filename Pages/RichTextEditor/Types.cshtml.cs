@@ -17,6 +17,7 @@ public class Types : PageModel
         datasource.Add(new Data() { text = "Expand", value = 1 });
         datasource.Add(new Data() { text = "MultiRow", value = 2 });
         datasource.Add(new Data() { text = "Scrollable", value = 3 });
+        datasource.Add(new Data() { text = "Popup", value = 4 });
     }
 }
 

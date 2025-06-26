@@ -1,0 +1,199 @@
+﻿@page
+@using EJ2CoreSampleBrowser.Controllers
+@using Syncfusion.EJ2
+@using Syncfusion.EJ2.InteractiveChat;
+
+@functions {
+    public class ToolbarItemModel
+    {
+        public string tooltipText { get; set; }
+        public string iconCss { get; set; }
+    }
+}
+
+@{
+    var tools = new object[]
+    {
+        "Bold", "Italic", "Underline", "InlineCode", "|", "FontColor", "BackgroundColor", "|", "Alignments", "Blockquote", "|", "Orderedlist", "UnOrderedlist", "|", "CreateLink", "Image", "CreateTable", "EmojiPicker"
+    };
+    var currentUserModel = new ChatUIUser() { Id = "user1", User = "Albert" };
+    var michaleUserModel = new ChatUIUser() { Id = "user2", User = "Michale Suyama", AvatarUrl = "../css/chatui/images/andrew.png" };
+    var chatMessages = new List<ChatUIMessage>()
+    {
+        new ChatUIMessage() { Author = currentUserModel, Text = "Hi Michale, are we on track for the deadline?" },
+        new ChatUIMessage() { Author = michaleUserModel, Text = "Yes, the design phase is complete." },
+        new ChatUIMessage() { Author = currentUserModel, Text = "I will review it and send feedback by today." },
+        new ChatUIMessage() { Author = michaleUserModel, Text = "Okay." }
+    };
+    var messageToolbarItems = new List<ToolbarItemModel>()
+    {
+        new ToolbarItemModel { iconCss = "e-icons e-chat-copy", tooltipText = "Copy" },
+        new ToolbarItemModel { iconCss = "e-icons e-chat-trash", tooltipText = "Delete" }
+    };
+
+}
+@section ControlsSection {
+    <div class="control-section">
+        <div class="sample-container">
+            <div class="chat-section">
+                <div id="chatContainer" style="height: 100%; width: 100%; border: 1px solid #ccc;">
+                    <ejs-chatui id="chat" headerText="Michale Suyama" headerIconCss="chat_user2_avatar" showTimeBreak=true loadOnDemand=true messages=chatMessages user=currentUserModel created="onCreated" footerTemplate="#footerContent">
+                        <e-chatui-messagetoolbarsettings items="messageToolbarItems"></e-chatui-messagetoolbarsettings>
+                    </ejs-chatui>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>This sample demonstrates the Bottom Toolbar of the Rich Text Editor with minimum configuration and includes a Chat UI interface.</p>
+    </div>
+}
+@section Description {
+    <p>In this example, the toolbar is positioned at the bottom of the editor. The position of the toolbar can be customized by using the <code>toolbarSettings.position </code>property.</p>
+    <p>Additionally, this sample includes a Chat UI interface that allows users to communicate using a rich text editor for message composition.</p>
+}
+@section Title {
+    <title>ASP.NET MVC Rich Text Editor Bottom Toolbar Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Bottom Toolbar in ASP.NET MVC Rich Text Editor Control</h1>
+}
+<style>
+    #chatContainer.e-chat-ui .e-footer {
+        margin: unset;
+        align-self: auto;
+        padding: 10px;
+    }
+
+    .custom-footer {
+        position: relative;
+    }
+
+    #editor {
+        position: relative;
+    }
+
+    #sendMessage,
+    #cancelMessage {
+        position: absolute !important;
+        bottom: 40px;
+        z-index: 100;
+    }
+
+    .tailwind3 .custom-footer > #sendMessage,
+    .tailwind3 .custom-footer > #cancelMessage {
+        bottom: 50px;
+    }
+
+    .material3 .custom-footer > #sendMessage,
+    .material3 .custom-footer > #cancelMessage {
+        bottom: 50px;
+    }
+
+    #sendMessage {
+        right: 20px;
+    }
+
+    #cancelMessage {
+        right: 50px;
+    }
+
+    .chat_user2_avatar {
+        background-image: url('../css/chatui/images/andrew.png');
+        background-color: unset;
+    }
+
+    .e-chat-ui .e-text p {
+        margin-bottom: 4px;
+    }
+
+    .custom-footer .e-richtexteditor .e-rte-content .e-content, 
+	.custom-footer.e-richtexteditor .e-source-content .e-content {
+        overflow-y: auto;
+        max-height: 300px;
+    }
+
+    .e-bigger .custom-footer > #sendMessage {
+        bottom: 46px;
+        right: 20px;
+    }
+
+    .e-bigger .custom-footer > #cancelMessage {
+        bottom: 46px;
+        right: 65px;
+    }
+
+    .tailwind3.e-bigger .custom-footer > #sendMessage,
+    .material3.e-bigger .custom-footer > #sendMessage {
+        bottom: 57px;
+        right: 20px;
+    }
+
+    .tailwind3.e-bigger .custom-footer > #cancelMessage {
+        bottom: 57px;
+        right: 68px;
+    }
+
+    .material3.e-bigger .custom-footer > #cancelMessage {
+        bottom: 57px;
+        right: 60px;
+    }
+
+</style>
+
+@section PreScripts {
+    <script>
+        var chatRTE;
+
+        function onCreated() {
+             chatRTE = new ej.richtexteditor.RichTextEditor({
+                    toolbarSettings: {
+                        position: "Bottom",
+                        items: @Html.Raw(Json.Serialize(tools))
+                    },
+                    placeholder: 'Type something...',
+                    created: function() {
+                        chatRTE.focusIn();
+                    }
+                });
+                chatRTE.appendTo('#editor');
+        }
+
+        document.addEventListener('click', function (event) {
+            if (event.target && event.target.id === 'sendMessage') {
+                if (chatRTE && chatRTE.value && chatRTE.value.length > 0) {
+                    var value = chatRTE.value;
+                    chatRTE.value = null;
+                    chatRTE.dataBind();
+                    var chat = document.getElementById('chat').ej2_instances[0];
+                    if (chat) {
+                        chat.addMessage({
+                            author: { id: 'user1', user: 'Albert' },
+                            text: value
+                        });
+                        chatRTE.clearUndoRedo();
+                        chatRTE.dataBind();
+                        chatRTE.focusIn();
+                    }
+                }
+            } else if (event.target && event.target.id === 'cancelMessage') {
+                if (chatRTE) {
+                    chatRTE.value = null;
+                    chatRTE.dataBind();
+                    chatRTE.clearUndoRedo();
+                    chatRTE.focusIn();
+                }
+            }
+        });
+    </script>
+}
+<script id="footerContent" type="text/x-jsrender">
+    <div class='custom-footer'>
+        <div id='editor'></div>
+        <button id='sendMessage' class='e-btn e-primary e-icons e-send e-send-1 e-icon-btn e-small' style='float: right; margin: 4px;'></button>
+        <button id='cancelMessage' class='e-trash e-btn e-secondary e-icons e-delete-3 e-icon-btn e-small' style='float: right; margin: 4px;'></button>
+    </div>
+</script>

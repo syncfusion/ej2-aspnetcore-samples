@@ -47,14 +47,16 @@ namespace EJ2CoreSampleBrowser.Models
             var GetCommunityMessageUser1 = new UserModel
             {
                 id = "admin",
-                user = "Alice"
+                user = "Alice Brown",
+                statusIconCss = "e-icons e-user-busy"
             };
 
             var GetCommunityMessageUser2 = new UserModel
             {
                 id = "user1",
                 user = "Michale Suyama",
-                avatarBgColor = "#87cefa"
+                avatarBgColor = "#87cefa",
+                statusIconCss = "e-icons e-user-online"
             };
 
             var GetCommunityMessageUser3 = new UserModel
@@ -62,7 +64,8 @@ namespace EJ2CoreSampleBrowser.Models
                 id = "user2",
                 user = "Charlie",
                 avatarUrl = "../css/chatui/images/charlie.png",
-                avatarBgColor = "#e6cdde"
+                avatarBgColor = "#e6cdde",
+                statusIconCss = "e-icons e-user-away"
             };
 
             var GetCommunityMessageUser4 = new UserModel
@@ -70,7 +73,15 @@ namespace EJ2CoreSampleBrowser.Models
                 id = "user3",
                 user = "Janet",
                 avatarUrl = "../css/chatui/images/janet.png",
-                avatarBgColor = "#dec287"
+                avatarBgColor = "#dec287",
+                statusIconCss = "e-icons e-user-offline"
+            };
+
+            var GetCommunityMessageUser5 = new UserModel
+            {
+                id = "user4",
+                user = "Jordan Peele",
+                statusIconCss = "e-icons e-user-busy"
             };
 
             List<ChatUIMessage> CommunityMessages = new List<ChatUIMessage>()
@@ -89,6 +100,11 @@ namespace EJ2CoreSampleBrowser.Models
                     Text = "Hey! I loved Dana’s use of color. Frank’s typography guide was great too.",
                     Author = GetCommunityMessageUser3,
                     TimeStamp = new DateTime(2024, 10, 25, 11, 0, 0)
+                },
+                new ChatUIMessage() {
+                    Text = "Dana’s work is so inspiring!",
+                    Author = GetCommunityMessageUser5,
+                    TimeStamp = new DateTime(2024, 10, 25, 11, 30, 0)
                 },
                 new ChatUIMessage() {
                     Text = "Absolutely! Any new community events planned?",
@@ -136,6 +152,7 @@ namespace EJ2CoreSampleBrowser.Models
         public string user { get; set; }
         public string avatarUrl { get; set; }
         public string avatarBgColor { get; set; }
+        public string statusIconCss { get; set; }
     }
    }
 }

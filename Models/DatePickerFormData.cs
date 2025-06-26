@@ -26,6 +26,14 @@ namespace EJ2CoreSampleBrowser.Models
             };
         }
 
+        public List<string> GetDateRangeFormatsWithId()
+        {
+            return new List<string>
+            {
+                "dd-MMM-yy", "yyyy-MM-dd", "dd-MMMM-yyyy" , "dd/MMM/yy hh:mm a"
+            };
+        }
+
         public List<string> GetInputFormats()
         {
             return new List<string>

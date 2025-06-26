@@ -24,6 +24,11 @@
             padding: 8px 18px;
         }
 
+        .quick-info-header .e-close {
+            position: relative;
+            right: -90%;
+        }
+
         .quick-info-header-content {
             justify-content: flex-end;
             display: flex;
@@ -178,6 +183,7 @@
 
     <script id="header-template" type="text/x-template">
         <div class="quick-info-header">
+            <button class="e-icons e-close" type="button" onclick="popupClose"></button>
             <div class="quick-info-header-content" style='${getHeaderStyles(data)}'>
                 <div class="quick-info-title">${if (elementType == "cell")}Add Appointment${else}Appointment Details${/if}</div>
                 <div class="duration-text">${getHeaderDetails(data)}</div>
@@ -257,6 +263,11 @@
                 return 'background:' + resourceData.Color + '; color: #FFFFFF;';
             }
         };
+        
+        var popupClose = function () {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            scheduleObj.closeQuickInfoPopup();
+        }
 
         var buttonClickActions = function (e) {
             var scheduleObj = document.getElementById('schedule').ej2_instances[0];

@@ -3,7 +3,7 @@
 @using Syncfusion.EJ2
 @section ControlsSection{
     <div class="control-section" align="center">
-        <ejs-chart id="container" load="load" title="Blood Type Distribution by Country" subTitle="Source: wikipedia.org" legendClick="legendClick">
+        <ejs-chart id="container" load="load" title="Blood Type Distribution by Country" subTitle="Source: wikipedia.org">
             <e-chart-tooltipsettings enable="true" showNearestTooltip="true" enableHighlight="true" format="${point.x} : <b>${point.y}% (${point.percentage}%)</b>">
             </e-chart-tooltipsettings>
             <e-chart-legendsettings enableHighlight="true"></e-chart-legendsettings>
@@ -48,71 +48,6 @@
             args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
             args.chart.primaryXAxis.labelIntersectAction = ej.base.Browser.isDevice?'None':'Trim';
             args.chart.primaryXAxis.labelRotation = ej.base.Browser.isDevice?'-45':'0';
-        }
-
-        var legendClick = function (args) {
-            if (args.series.index === 0) {
-                if (args.chart.series[3].visible) {
-                    args.chart.series[3].width = 3;
-                    args.chart.series[0].width = 2;
-                } else if (args.chart.series[2].visible) {
-                    args.chart.series[2].width = 3;
-                    args.chart.series[0].width = 2;
-                } else if (args.chart.series[1].visible) {
-                    args.chart.series[1].width = 3;
-                    args.chart.series[0].width = 2;
-                } else {
-                    args.chart.series[0].width = 3;
-                }
-            }
-            if (args.series.index === 1) {
-                if (args.chart.series[3].visible) {
-                    args.chart.series[3].width = 3;
-                    args.chart.series[1].width = 2;
-                } else if (args.chart.series[2].visible) {
-                    args.chart.series[2].width = 3;
-                    args.chart.series[1].width = 2;
-                } else if (args.series.visible && args.chart.series[0].visible) {
-                    args.chart.series[0].width = 3;
-                    args.chart.series[1].width = 2;
-                } else {
-                    args.chart.series[1].width = 3;
-                    args.chart.series[0].width = 2;
-                }
-            }
-            if (args.series.index === 2) {
-                if (args.chart.series[3].visible) {
-                    args.chart.series[3].width = 3;
-                    args.chart.series[2].width = 2;
-                } else if (!args.series.visible) {
-                    args.chart.series[2].width = 3;
-                    args.chart.series[1].width = 2;
-                    args.chart.series[0].width = 2;
-                } else if (args.chart.series[1].visible) {
-                    args.chart.series[1].width = 3;
-                    args.chart.series[2].width = 2;
-                } else if (args.series.visible && args.chart.series[0].visible) {
-                    args.chart.series[0].width = 3;
-                    args.chart.series[2].width = 2;
-                }
-            }
-            if (args.series.index === 3) {
-                if (!args.series.visible) {
-                    args.chart.series[3].width = 3;
-                    args.chart.series[2].width = 2;
-                    args.chart.series[1].width = 2;
-                    args.chart.series[0].width = 2;
-                } else if (args.chart.series[2].visible) {
-                    args.chart.series[2].width = 3;
-                    args.chart.series[3].width = 2;
-                } else if (args.chart.series[1].visible) {
-                    args.chart.series[1].width = 3;
-                    args.chart.series[3].width = 2;
-                } else if (args.series.visible && args.chart.series[0].visible) {
-                    args.chart.series[0].width = 3;
-                    args.chart.series[3].width = 2;
-                }
-            }
         }
 
     </script>

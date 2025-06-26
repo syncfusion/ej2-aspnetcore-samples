@@ -21,7 +21,7 @@ public class Encryption : PageModel
     public void OnGet()
     {
         List<string> styleList = new List<string>();
-        data = new string[] { "Encrypt all contents", "Encrypt all contents except metadata", "Encrypt only attachments [For AES only]" };
+        data = new string[] { "Encrypt all contents", "Encrypt all contents except metadata", "Encrypt only attachments [For AES and AES-GCM only]" };
     }
     private readonly IWebHostEnvironment _hostingEnvironment;
     public Encryption(IWebHostEnvironment hostingEnvironment)
@@ -70,9 +70,15 @@ public class Encryption : PageModel
             security.KeySize = PdfEncryptionKeySize.Key256BitRevision6;
             security.Algorithm = PdfEncryptionAlgorithm.AES;
         }
+        else if (encryptionType == "256_AES_GCM")
+        {
+            security.KeySize = PdfEncryptionKeySize.Key256Bit;
+            security.Algorithm = PdfEncryptionAlgorithm.AESGCM;
+            document.FileStructure.Version = PdfVersion.Version2_0;
+        }
 
         //set Encryption options
-        if (encryptOption == "Encrypt only attachments [For AES only]")
+        if (encryptOption == "Encrypt only attachments [For AES and AES-GCM only]")
         {
             string basePath = _hostingEnvironment.WebRootPath;
             string dataPath = basePath + @"/PDF/";
@@ -116,7 +122,10 @@ public class Encryption : PageModel
         {
             text += String.Format("\n\nRevision: {0}", "Revision 5");
         }
-
+        else if (encryptionType == "256_AES_GCM")
+        {
+            text += String.Format("\n\nRevision: {0}", "Revision 7");
+        }
         graphics.DrawString("Document is Encrypted with following settings", font, brush, PointF.Empty);
         font = new PdfStandardFont(PdfFontFamily.TimesRoman, 11f, PdfFontStyle.Bold);
         graphics.DrawString(text, font, brush, new PointF(0, 40));

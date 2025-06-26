@@ -6,118 +6,143 @@
     var getConnectorDefaults = "getConnectorDefaults";
     var setNodeTemplate = "setNodeTemplate";
 }
-@section ControlsSection{
-    <div class="col-lg-8 control-section">
-        <div class="content-wrapper" style="width:100%;background: white">
-            <ejs-diagram id="container" selectedItems="@Model.selectedItems" width="100%" height="580px"  getNodeDefaults="@getNodeDefaults" getConnectorDefaults="@getConnectorDefaults" nodes="@Model.nodes" connectors="@Model.connectors" selectionChange="selectionChange" setNodeTemplate="@setNodeTemplate">
-                <e-diagram-snapsettings constraints="None"></e-diagram-snapsettings>
-                <e-diagram-layout type="HierarchicalTree" orientation="LeftToRight" verticalSpacing="75" margin="new Syncfusion.EJ2.Diagrams.DiagramMargin() { Left = 40, Right = 0, Bottom = 0, Top = 0 }"></e-diagram-layout>
-            </ejs-diagram>
+@section ControlsSection {
+    <div id="diagram-connector-container">
+        <div class="col-lg-8 control-section">
+            <div class="content-wrapper" style="width:100%;background: white">
+                <ejs-diagram id="container" selectedItems="@Model.selectedItems" width="100%" height="580px"
+                    getNodeDefaults="@getNodeDefaults" getConnectorDefaults="@getConnectorDefaults" nodes="@Model.nodes"
+                    connectors="@Model.connectors" selectionChange="selectionChange" setNodeTemplate="@setNodeTemplate">
+                    <e-diagram-snapsettings constraints="None"></e-diagram-snapsettings>
+                    <e-diagram-layout type="HierarchicalTree" orientation="LeftToRight" verticalSpacing="75"
+                        margin="new Syncfusion.EJ2.Diagrams.DiagramMargin() { Left = 40, Right = 0, Bottom = 0, Top = 0 }"></e-diagram-layout>
+                </ejs-diagram>
+            </div>
+        </div>
+        <div class="col-lg-4 property-section">
+            <div class="property-panel-header">
+                Properties
+            </div>
+            <div class="row property-panel-content" id="appearance">
+                <div class="row row-header">
+                    <b>Connector types</b>
+                </div>
+                <div class="row" style="padding-top: 8px">
+                    <div class="diagram-image-pattern-style" id="straightConnector"
+                        style="background-image: url('@Url.Content("~/images/Diagram/connector/Connectors_1.png")'); margin-right: 3px">
+                    </div>
+                    <div class="diagram-image-pattern-style" id="orthogonalConnector"
+                        style="background-image: url('@Url.Content("~/images/Diagram/connector/Connectors_2.png")'); margin: 0px 3px">
+                    </div>
+                    <div class="diagram-image-pattern-style" id="bezierConnector"
+                        style="background-image: url('@Url.Content("~/images/Diagram/connector/Connectors_3.png")'); margin-left: 3px">
+                    </div>
+                </div>
+                <div class="row" style="padding-top: 8px">
+                    <div class="diagram-image-pattern-style" id="straightConnectorWithStroke"
+                        style="background-image: url('@Url.Content("~/images/Diagram/connector/Connectors_4.png")'); margin-right: 3px">
+                    </div>
+                    <div class="diagram-image-pattern-style" id="orthogonalConnectorWithStroke"
+                        style="background-image: url('@Url.Content("~/images/Diagram/connector/Connectors_5.png")'); margin: 0px 3px">
+                    </div>
+                    <div class="diagram-image-pattern-style" id="bezierConnectorWithStroke"
+                        style="background-image: url('@Url.Content("~/images/Diagram/connector/Connectors_6.png")'); margin-left: 3px">
+                    </div>
+                </div>
+                <div class="row" style="padding-top: 8px">
+                    <div class="diagram-image-pattern-style" id="straightConnectorWithDasharray"
+                        style="background-image: url('@Url.Content("~/images/Diagram/connector/Connectors_7.png")'); margin-right: 3px">
+                    </div>
+                    <div class="diagram-image-pattern-style" id="orthogonalConnectorWithDasharray"
+                        style="background-image: url('@Url.Content("~/images/Diagram/connector/Connectors_8.png")'); margin: 0px 3px">
+                    </div>
+                    <div class="diagram-image-pattern-style" id="bezierConnectorWithDasharray"
+                        style="background-image: url('@Url.Content("~/images/Diagram/connector/Connectors_9.png")'); margin-left: 3px">
+                    </div>
+                </div>
+                <div class="row" style="padding-top: 8px">
+                    <div class="diagram-image-pattern-style" id="cornerRadious"
+                        style="background-image: url('@Url.Content("~/images/Diagram/connector/Connectors_10.png")'); margin-right: 3px">
+                    </div>
+                    <div class="diagram-image-pattern-style" id="sourceDecorator"
+                        style="background-image: url('@Url.Content("~/images/Diagram/connector/Connectors_11.png")'); margin: 0px 3px">
+                    </div>
+                    <div class="diagram-image-pattern-style" id="sourceDecoratorWithDasharray"
+                        style="background-image: url('@Url.Content("~/images/Diagram/connector/Connectors_12.png")'); margin-left: 3px">
+                    </div>
+                </div>
+            </div>
+            <div class="row property-panel-content" id="decorators" style="padding-top: 10px">
+                <div class="row row-header" style="padding-top: 8px">
+                    <b>Decorators</b>
+                </div>
+                <div class="row" style="padding-top: 8px; display: flex;">
+                    <label>Source Decorators</label>
+                    <div>
+                        <ejs-dropdownlist id="sourceDecorator2" dataSource="@Model.decoratorShape" index="0"
+                            change="srcDecShapeChange"></ejs-dropdownlist>
+                        <e-dropdownlist-fields value="text" text="value"></e-dropdownlist-fields>
+                    </div>
+                </div>
+                <div class="row" style="padding-top: 8px; display: flex;">
+                    <label>Target Decorators</label>
+                    <div>
+                        <ejs-dropdownlist id="targetDecorator" dataSource="@Model.decoratorShape" index="4"
+                            change="tarDecShapeChange"></ejs-dropdownlist>
+                        <e-dropdownlist-fields value="text" text="value"></e-dropdownlist-fields>
+                    </div>
+                </div>
+                <div class="row" style="padding-top: 8px; display: flex;">
+                    <label>Segment Decorators</label>
+                    <div>
+                        <ejs-dropdownlist id="segmentDecorator" dataSource="@Model.decoratorShape" index="2"
+                            change="segDecShapeChange"></ejs-dropdownlist>
+                        <e-dropdownlist-fields value="text" text="value"></e-dropdownlist-fields>
+                    </div>
+                </div>
+            </div>
+            <div class="row property-panel-content" id="decorators" style="padding-top: 10px">
+                <div class="row row-header" style="padding-top: 8px">
+                    <b>Decorators Size</b>
+                </div>
+                <div class="row" style="padding-top: 8px; display: flex;">
+                    <label>Source Decorators Size</label>
+                    <div>
+                        <ejs-numerictextbox id="sourceDecoratorSize" value="12" min="10" max="20" enabled="true"
+                            format="##.##" step="1" width="100%" change="sourceDecoratorSizeChange"></ejs-numerictextbox>
+                    </div>
+                </div>
+                <div class="row" style="padding-top: 8px; display: flex;">
+                    <label>Target Decorators Size</label>
+                    <div>
+                        <ejs-numerictextbox id="targetDecoratorSize" value="12" min="10" max="20" enabled="true"
+                            format="##.##" step="1" width="100%" change="targetDecoratorSizeChange"></ejs-numerictextbox>
+                    </div>
+                </div>
+                <div class="row" style="padding-top: 8px; display: flex;">
+                    <label>Segment Decorators Size</label>
+                    <div>
+                        <ejs-numerictextbox id="segmentDecoratorSize" value="12" min="10" max="20" enabled="false"
+                            format="##.##" step="1" width="100%" change="segmentDecoratorSizeChange"></ejs-numerictextbox>
+                    </div>
+                </div>
+            </div>
+            <div class="row property-panel-content" id="color-tab" style="padding-top: 10px">
+                <div class="row row-header">
+                    <b>Appearance</b>
+                </div>
+                <div class="row" style="padding-top: 8px;display: flex;margin-right:50px;">
+                    <label>Line Color</label>
+                    <ejs-colorpicker id="color" value='#6f409f' mode="Palette" modeSwitcher="false" showButtons="false"
+                        type='color' change='colorChange' />
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col-lg-4 property-section">
-        <div class="property-panel-header">
-            Properties
-        </div>
-        <div class="row property-panel-content" id="appearance">
-            <div class="row row-header">
-                <b>Connector types</b>
-            </div>
-            <div class="row" style="padding-top: 8px">
-                <div class="image-pattern-style" id="straightConnector" style="background-image: url('@Url.Content("~/images/Diagram/connector/Connectors_1.png")'); margin-right: 3px">
-                </div>
-                <div class="image-pattern-style" id="orthogonalConnector" style="background-image: url('@Url.Content("~/images/Diagram/connector/Connectors_2.png")'); margin: 0px 3px">
-                </div>
-                <div class="image-pattern-style" id="bezierConnector" style="background-image: url('@Url.Content("~/images/Diagram/connector/Connectors_3.png")'); margin-left: 3px">
-                </div>
-            </div>
-            <div class="row" style="padding-top: 8px">
-                <div class="image-pattern-style" id="straightConnectorWithStroke" style="background-image: url('@Url.Content("~/images/Diagram/connector/Connectors_4.png")'); margin-right: 3px">
-                </div>
-                <div class="image-pattern-style" id="orthogonalConnectorWithStroke" style="background-image: url('@Url.Content("~/images/Diagram/connector/Connectors_5.png")'); margin: 0px 3px">
-                </div>
-                <div class="image-pattern-style" id="bezierConnectorWithStroke" style="background-image: url('@Url.Content("~/images/Diagram/connector/Connectors_6.png")'); margin-left: 3px">
-                </div>
-            </div>
-            <div class="row" style="padding-top: 8px">
-                <div class="image-pattern-style" id="straightConnectorWithDasharray" style="background-image: url('@Url.Content("~/images/Diagram/connector/Connectors_7.png")'); margin-right: 3px">
-                </div>
-                <div class="image-pattern-style" id="orthogonalConnectorWithDasharray" style="background-image: url('@Url.Content("~/images/Diagram/connector/Connectors_8.png")'); margin: 0px 3px">
-                </div>
-                <div class="image-pattern-style" id="bezierConnectorWithDasharray" style="background-image: url('@Url.Content("~/images/Diagram/connector/Connectors_9.png")'); margin-left: 3px">
-                </div>
-            </div>
-            <div class="row" style="padding-top: 8px">
-                <div class="image-pattern-style" id="cornerRadious" style="background-image: url('@Url.Content("~/images/Diagram/connector/Connectors_10.png")'); margin-right: 3px">
-                </div>
-                <div class="image-pattern-style" id="sourceDecorator" style="background-image: url('@Url.Content("~/images/Diagram/connector/Connectors_11.png")'); margin: 0px 3px">
-                </div>
-                <div class="image-pattern-style" id="sourceDecoratorWithDasharray" style="background-image: url('@Url.Content("~/images/Diagram/connector/Connectors_12.png")'); margin-left: 3px">
-                </div>
-            </div>
-        </div>
-        <div class="row property-panel-content" id="decorators" style="padding-top: 10px">
-            <div class="row row-header" style="padding-top: 8px">
-                <b>Decorators</b>
-            </div>
-            <div class="row" style="padding-top: 8px; display: flex;">
-                <label>Source Decorators</label>
-                <div>
-                    <ejs-dropdownlist id="sourceDecorator2" dataSource="@Model.decoratorShape" index="0" change="srcDecShapeChange"></ejs-dropdownlist>
-                      <e-dropdownlist-fields value="text" text="value"></e-dropdownlist-fields>
-                </div>
-            </div>
-            <div class="row" style="padding-top: 8px; display: flex;">
-                <label>Target Decorators</label>
-                <div>
-                    <ejs-dropdownlist id="targetDecorator" dataSource="@Model.decoratorShape" index="4" change="tarDecShapeChange"></ejs-dropdownlist>
-                    <e-dropdownlist-fields value="text" text="value"></e-dropdownlist-fields>
-                </div>
-            </div>
-            <div class="row" style="padding-top: 8px; display: flex;">
-                <label>Segment Decorators</label>
-                <div>
-                    <ejs-dropdownlist id="segmentDecorator" dataSource="@Model.decoratorShape" index="2" change="segDecShapeChange"></ejs-dropdownlist>
-                    <e-dropdownlist-fields value="text" text="value"></e-dropdownlist-fields>
-                </div>
-            </div>
-        </div>
-        <div class="row property-panel-content" id="decorators" style="padding-top: 10px">
-            <div class="row row-header" style="padding-top: 8px">
-                <b>Decorators Size</b>
-            </div>
-            <div class="row" style="padding-top: 8px; display: flex;">
-                <label>Source Decorators Size</label>
-                <div>
-                    <ejs-numerictextbox id="sourceDecoratorSize" value="12" min="10" max="20" enabled="true" format="##.##" step="1" width="100%" change="sourceDecoratorSizeChange"></ejs-numerictextbox>
-                </div>
-            </div>
-            <div class="row" style="padding-top: 8px; display: flex;">
-                <label>Target Decorators Size</label>
-                <div>
-                    <ejs-numerictextbox id="targetDecoratorSize" value="12" min="10" max="20" enabled="true" format="##.##" step="1" width="100%" change="targetDecoratorSizeChange"></ejs-numerictextbox>
-                </div>
-            </div>
-            <div class="row" style="padding-top: 8px; display: flex;">
-                <label>Segment Decorators Size</label>
-                <div>
-                    <ejs-numerictextbox id="segmentDecoratorSize" value="12" min="10" max="20" enabled="false" format="##.##" step="1" width="100%" change="segmentDecoratorSizeChange"></ejs-numerictextbox>
-                </div>
-            </div>
-        </div>
-        <div class="row property-panel-content" id="color-tab" style="padding-top: 10px">
-            <div class="row row-header">
-                <b>Appearance</b>
-            </div>
-            <div class="row" style="padding-top: 8px;display: flex;margin-right:50px;">
-                <label>Line Color</label>
-                <ejs-colorpicker id="color" value='#6f409f' mode="Palette" modeSwitcher="false" showButtons="false" type='color' change='colorChange'/>
-            </div>
-        </div>
-    </div>
+
     <style>
         /* Css for images in property panel  */
-        .image-pattern-style {
+        .diagram-image-pattern-style {
             background-color: white;
             background-size: contain;
             background-repeat: no-repeat;
@@ -129,33 +154,33 @@
             float: left;
         }
 
-        .row {
+        #diagram-connector-container .row {
             margin-left: 0px;
             margin-right: 0px;
         }
 
-        .row-header {
+        #diagram-connector-container .row-header {
             font-size: 13px;
             font-weight: 500;
         }
 
-        .col-xs-6 {
+        #diagram-connector-container .col-xs-6 {
             padding-left: 0px;
             padding-right: 0px;
         }
 
         /* Selection indicator */
-        .e-selected-style {
+        .diagram-panel-selected-style {
             border-color: #6c6c6c;
             border-width: 2px;
         }
 
-        .row {
+        #diagram-connector-container .row {
             display: block;
         }
-       
+
         /* Align the names in property panel */
-        label {
+        #diagram-connector-container label {
             display: inline-block;
             font-size: 13px;
             font-weight: 400;
@@ -204,10 +229,10 @@
             if (diagram.selectedItems.connectors.length > 0) {
                 document.getElementById("segmentDecoratorSize").ej2_instances[0].enabled = true;
             }
-            else{
+            else {
                 document.getElementById("segmentDecoratorSize").ej2_instances[0].enabled = false;
             }
-        }           
+        }
 
         function setNodeTemplate(obj, diagram) {
             if (obj.id === 'node6') {
@@ -270,12 +295,12 @@
             let target = args.target;
             var diagram = document.getElementById("container").ej2_instances[0];
             @*custom code start*@
-            let selectedElement = document.getElementsByClassName('e-selected-style');
+            let selectedElement = document.getElementsByClassName('diagram-panel-selected-style');
             if (selectedElement.length) {
-                selectedElement[0].classList.remove('e-selected-style');
+                selectedElement[0].classList.remove('diagram-panel-selected-style');
             }
             @*custom code end*@
-            if (target.className === 'image-pattern-style') {
+            if (target.className === 'diagram-image-pattern-style') {
                 switch (target.id) {
                     case 'straightConnector':
                         applyConnectorStyle(false, false, false, 'Straight', target, 1);
@@ -315,7 +340,7 @@
                         break;
                 }
                 @*custom code start*@
-                target.classList.add('e-selected-style');
+                target.classList.add('diagram-panel-selected-style');
                 @*custom code end*@
             }
         };
@@ -334,10 +359,10 @@
                             fill: connector.style.strokeColor, strokeWidth: 2
                         }, shape: 'Circle'
                     };
-                    document.getElementById("sourceDecorator2").value='Circle';
+                    document.getElementById("sourceDecorator2").value = 'Circle';
                 } else {
                     connector.sourceDecorator = { shape: 'None' };
-                    document.getElementById("sourceDecorator2").value='None'
+                    document.getElementById("sourceDecorator2").value = 'None'
                 }
                 connector.targetDecorator = {
                     style: {
@@ -345,58 +370,54 @@
                         fill: connector.style.strokeColor, strokeWidth: 2
                     }, shape: 'Arrow'
                 };
-                document.getElementById("targetDecorator").value='Arrow'
+                document.getElementById("targetDecorator").value = 'Arrow'
                 diagram.dataBind();
             }
         };
         function colorChange(args) {
             var diagram = document.getElementById("container").ej2_instances[0];
-            for(var i=0;i<diagram.connectors.length;i++)
-            {
-                diagram.connectors[i].style.strokeColor=args.currentValue.hex;
-                diagram.connectors[i].targetDecorator.style.strokeColor= args.currentValue.hex;
-                diagram.connectors[i].targetDecorator.style.fill= args.currentValue.hex;
-                diagram.connectors[i].sourceDecorator.style.strokeColor= args.currentValue.hex;
-                diagram.connectors[i].sourceDecorator.style.fill= args.currentValue.hex;
+            for (var i = 0; i < diagram.connectors.length; i++) {
+                diagram.connectors[i].style.strokeColor = args.currentValue.hex;
+                diagram.connectors[i].targetDecorator.style.strokeColor = args.currentValue.hex;
+                diagram.connectors[i].targetDecorator.style.fill = args.currentValue.hex;
+                diagram.connectors[i].sourceDecorator.style.strokeColor = args.currentValue.hex;
+                diagram.connectors[i].sourceDecorator.style.fill = args.currentValue.hex;
             }
             diagram.dataBind();
         };
-        function srcDecShapeChange(args)
-        {
+        function srcDecShapeChange(args) {
             var diagram = document.getElementById("container").ej2_instances[0];
             for (var i = 0; i < diagram.connectors.length; i++) {
                 diagram.connectors[i].sourceDecorator = {
-                 shape: args.itemData.value,
-                 style:{
-                        strokeColor:  diagram.connectors[i].style.strokeColor,
-                        fill:  diagram.connectors[i].style.strokeColor,
-                 }
+                    shape: args.itemData.value,
+                    style: {
+                        strokeColor: diagram.connectors[i].style.strokeColor,
+                        fill: diagram.connectors[i].style.strokeColor,
+                    }
                 };
             }
             diagram.dataBind();
-   
+
         };
-        function tarDecShapeChange(args)
-        {
+        function tarDecShapeChange(args) {
             var diagram = document.getElementById("container").ej2_instances[0];
             for (var i = 0; i < diagram.connectors.length; i++) {
                 diagram.connectors[i].targetDecorator = {
                     shape: args.itemData.value,
                     style: {
                         strokeColor: diagram.connectors[i].style.strokeColor,
-                        fill:  diagram.connectors[i].style.strokeColor,
+                        fill: diagram.connectors[i].style.strokeColor,
                     }
                 };
                 diagram.dataBind();
-            }   
+            }
         };
-        function segDecShapeChange(args)
-        {
+        function segDecShapeChange(args) {
             var diagram = document.getElementById("container").ej2_instances[0];
             for (var i = 0; i < diagram.connectors.length; i++) {
                 diagram.segmentThumbShape = args.itemData.value;
-            } 
-            diagram.dataBind();  
+            }
+            diagram.dataBind();
         };
 
         //Change source decorator size
@@ -420,7 +441,7 @@
         //Change segment decorator size
         function segmentDecoratorSizeChange(args) {
             var diagram = document.getElementById("container").ej2_instances[0];
-            var connector=diagram.selectedItems.connectors[0];
+            var connector = diagram.selectedItems.connectors[0];
             diagram.segmentThumbSize = args.value;
             diagram.clearSelection();
             diagram.select([diagram.nameTable[connector.id]]);
@@ -429,36 +450,45 @@
 
     </script>
 }
-@section ActionDescription{
+@section ActionDescription {
     <p>
-        This sample visualizes the data flow in a marketing process using predefined shapes and connectors. Different types of connectors and decorators are used to customize the appearance, path, and direction of the data flow.
+        This sample visualizes the data flow in a marketing process using predefined shapes and connectors. Different types
+        of connectors and decorators are used to customize the appearance, path, and direction of the data flow.
     </p>
 }
-@section Meta{
-                    <meta name="description" content="This example demonstrates the Connectors in ASP.NET Core Diagram control. Explore here for more details."/>
-                }
-@section Description{
+@section Meta {
+    <meta name="description"
+        content="This example demonstrates the Connectors in ASP.NET Core Diagram control. Explore here for more details." />
+}
+@section Description {
     <p>
-    In this example, you can see how to add connectors to connect the shapes and how to customize the appearance of the connectors.
-    You can use the <code>style</code> property of the connector to customize its stroke style. You can use the
-    <code>cornerRadius</code> property to add connectors with rounded corners.
-</p>
+        In this example, you can see how to add connectors to connect the shapes and how to customize the appearance of the
+        connectors.
+        You can use the <code>style</code> property of the connector to customize its stroke style. You can use the
+        <code>cornerRadius</code> property to add connectors with rounded corners.
+    </p>
     <p>
-        To change the appearance, click on different styles in the property panel to modify the connector type, decorator shapes, and decorator sizes.
-        The <code>type</code> property of the connector defines its segment type. The <code>shape</code> property specifies the shapes for the source, target, and segment decorators. You can adjust the size of the source and target decorators by setting their
-        <code>width</code>and <code>height</code>. Additionally, the<code>segmentThumbSize</code>property allows you to modify the size of the segment decorator when the connector is selected.
+        To change the appearance, click on different styles in the property panel to modify the connector type, decorator
+        shapes, and decorator sizes.
+        The <code>type</code> property of the connector defines its segment type. The <code>shape</code> property specifies
+        the shapes for the source, target, and segment decorators. You can adjust the size of the source and target
+        decorators by setting their
+        <code>width</code>and <code>height</code>. Additionally, the<code>segmentThumbSize</code>property allows you to
+        modify the size of the segment decorator when the connector is selected.
     </p>
 
     <p>
         In this example, the shapes are automatically arranged using hierarchical tree layout.
 
     </p>
-<p style="font-weight: 500">Injecting Module</p>
-    <p> Diagram component's features are segregated into individual feature-wise modules. To automatically arrange the shapes, we need to Inject <code>HierarchicalTree</code> module using <code>Diagram.Inject(HierarchicalTree)</code> method.</p>
+    <p style="font-weight: 500">Injecting Module</p>
+    <p> Diagram component's features are segregated into individual feature-wise modules. To automatically arrange the
+        shapes, we need to Inject <code>HierarchicalTree</code> module using <code>Diagram.Inject(HierarchicalTree)</code>
+        method.</p>
 }
-@section Title{
-                    <title>ASP.NET Core Diagram Connectors Example - Syncfusion Demos </title> 
-                }
-@section Header{
-                    <h1 class='sb-sample-text'>Example of Connectors in ASP.NET Core Diagram Control</h1>
-                }
+@section Title {
+    <title>ASP.NET Core Diagram Connectors Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Connectors in ASP.NET Core Diagram Control</h1>
+}

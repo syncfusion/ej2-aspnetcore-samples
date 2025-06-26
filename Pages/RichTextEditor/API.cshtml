@@ -1,0 +1,197 @@
+@page
+
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="col-lg-8 control-section">
+        <div class="content-wrapper" id="all-option-sample">
+            <ejs-richtexteditor id="api" created="created" showCharCount="true" maxLength="1000">
+                <e-content-template>
+                    <p>Rich Text Editor is a WYSIWYG editing control that will reduce the effort for users while trying to express their formatting word content as HTML or Markdown format.</p>
+                    <p><b>API’s:</b></p>
+                    <ul>
+                        <li><p>maxLength - allows restricting the maximum length to be entered.</p></li>
+                        <li><p>readOnly - allows to change it as a non-editable state.</p></li>
+                        <li><p>enabled - enable or disable the RTE component.</p></li>
+                        <li><p>enableHtmlEncode - Get the encoded string value through value property and source code panel</p></li>
+                        <li><p>getValue - get the value of RTE.</p></li>
+                        <li><p>getSelection - get the selected text of RTE.</p></li>
+                        <li><p>selectAll - select all content in RTE.</p></li>
+                    </ul>
+                </e-content-template>
+            </ejs-richtexteditor>
+        </div>
+    </div>
+
+    <div class="col-lg-4 property-section" id="all-option-table">
+        <table id="property" title="Properties">
+            <tbody>
+                <tr>
+                    <td style="width: 50%">
+                        <div class="userselect">Max Length </div>
+                    </td>
+                    <td style="width: 50%;padding-right: 10px">
+                        <div>
+                            <ejs-numerictextbox id="maxlength" min="555" max="2000" format="n0" value="1000" change="maxlength_onChange" placeholder="Maximum Length"></ejs-numerictextbox>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 50%">
+                        <div class="userselect">Readonly </div>
+                    </td>
+                    <td style="width: 50%;padding-right: 10px">
+                        <div style="padding-left: 0;padding-top: 0">
+                            <ejs-checkbox id="readonly" checked="false" change="readOnly_onChange"></ejs-checkbox>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 50%">
+                        <div class="userselect">Enable </div>
+                    </td>
+                    <td style="width: 50%;padding-right: 10px">
+                        <div style="padding-left: 0;padding-top: 0">
+                            <ejs-checkbox id="enable" checked="true" change="enabled_onChange"></ejs-checkbox>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 50%">
+                        <div class="userselect">Enable HTML Encode </div>
+                    </td>
+                    <td style="width: 50%;padding-right: 10px">
+                        <div style="padding-left: 0;padding-top: 0">
+                            <ejs-checkbox id="enablehtml" checked="false" change="enablehtml_onChange"></ejs-checkbox>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <div>
+                            <ejs-button id="getVal" cssClass="btn btn-default" content="Get Value"></ejs-button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <div>
+                            <ejs-button id="selectHtml" cssClass="btn btn-default" content="Get Selection"></ejs-button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <div>
+                            <ejs-button id="selectall" cssClass="btn btn-default" content="Select All"></ejs-button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script type="text/javascript">
+        var rteObj;
+        document.getElementById('getVal').onclick = function () {
+            alert(rteObj.value);
+        };
+        document.getElementById('selectHtml').onclick = function () {
+            alert(rteObj.getSelection());
+        };
+        document.getElementById('selectall').onclick = function () {
+            rteObj.selectAll();
+        };
+        function created() {
+            rteObj = this;
+        }
+
+        function maxlength_onChange(args) {
+            rteObj.maxLength = args.value;
+        }
+
+        function readOnly_onChange(args) {
+            rteObj.readonly = args.checked;
+        }
+
+        function enabled_onChange(args) {
+            rteObj.enabled = args.checked;
+        }
+
+        function enablehtml_onChange(args) {
+            rteObj.enableHtmlEncode = args.checked;
+        }
+    </script>
+    <style>
+        .bootstrap-dark button#getVal,
+        .fluent-dark button#getVal,
+        .bootstrap5-dark button#getVal,
+        .tailwind-dark button#getVal,
+        .tailwind3-dark button#getVal,
+        .highcontrast button#getVal,
+        .material3-dark button#getVal {
+            color: #FFFFFF;
+            background: #000000;
+        }
+        .bootstrap-dark button#selectHtml,
+        .fluent-dark button#selectHtml,
+        .bootstrap5-dark button#selectHtml,
+        .tailwind-dark button#selectHtml,
+        .tailwind3-dark button#selectHtml,
+        .highcontrast button#selectHtml,
+        .material3-dark button#selectHtml {
+            color: #FFFFFF;
+            background: #000000;
+        }
+
+        .bootstrap-dark button#selectall,
+        .fluent-dark button#selectall,
+        .bootstrap5-dark button#selectall,
+        .tailwind-dark button#selectall,
+        .tailwind3-dark button#selectall,
+        .highcontrast button#selectall,
+        .material3-dark button#selectall {
+            color: #FFFFFF;
+            background: #000000;
+        }
+    </style>
+}
+
+@*custom code start*@
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the API in ASP.NET Core Rich Text Editor control. Explore here for more details."/>
+                }
+
+@*custom code end*@
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrate the usage of API in Rich Text Editor, use the properties panel to change the maximum length, read
+            only mode, disable status, to get value, enable HTML encode, select all content and get selected HTML from the Rich Text Editor.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>In this demos, Ensuring the API'S behavious by doing</p>
+        <ul>
+            <li>Change the value of <code>maxLength</code> textbox to change maximum Length of character.</li>
+            <li>Click the <code>readOnly</code> check box to enable/disable editable and non-editable mode of the RTE.</li>
+            <li>Click the <code>enabled</code> check box to enable/disable the RTE component.</li>
+            <li>Click the <code>enableHtmlEncode</code> check box to enableHtmlEncode/disableHtmlEncode the RTE component.</li>
+            <li>Click the <code>getValue</code> button which shows the RTE values in the alert window.</li>
+            <li>Click the <code>getSelection</code> button which shows the selectedText in the alert window.</li>
+            <li>Click the <code>selectAll</code> button selecting all text content in the RTE.</li>
+        </ul>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Rich Text Editor API Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of API in ASP.NET Core Rich Text Editor Control</h1>
+                }

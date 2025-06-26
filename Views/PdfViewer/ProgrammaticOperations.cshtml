@@ -1,0 +1,3004 @@
+@using Syncfusion.EJ2
+@using Newtonsoft.Json;
+@{
+    string syncfusionLogo = "data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAMwAAADJCAMAAABYMS1zAAAAllBMVEX///8rNXz2kh7b3OXQ0d8jLnlMU4wfK3hYXpH5+fvz8/bv7/SRlbYAAGyLj7GMkLBGToqdoLt4fKS1t8vIydoAGHEXJXUMHnP1hAD1jAD9483+9u7707L4sXSDh6s0PoL3oE76xpr4qV/97d/5vov96NYADW/2m0b7zaX2mTv4t3v5uYT83cL4rms+R4YAAGX2kjBubpsmc7m7AAAEKUlEQVR4nO3c6VbiQBAF4Dai7AiikCbIjuyK7/9ykziTCJLuVLUcu5O5938d8x2kUr0chEAQBEEQpBgJbD/A9RLMVnPbz3C1LHw5Gdh+iCtl7Xue3AxtP8ZVMpReGOlNC/DF2Xt/I+U295rlRHoxZ5ZzzXyWWELNZGn7eX6SYHdiidrA3vYT/SBT3zuPXNt+JOOsv1tCzSKnX5y9vLB4nr/N5TQw8NIwnjzksA3MV6mWqKnlrg0EM4UlmgbyNtu8KC2fs43tx2NlobFEnDzNNmst5bMN5EYzzLKEmlVOmtpgo/8n+/fFyUVTW6ob2ZlG5qCpBbpGdhbf/QXbjmoJNTvHZ5sp3ZI521S7oxY93biqwSga3Wr+/ppjyZptaq3XMjm9Rox569Or3p/Ufz51UtZqdPs2tYf+DTl3CaZdplc11Zj5kWnxtAs2q5hANSlr4+9UTc0mRjMp6zWqfRubmK2ZJdRs0lu0RQyrKX/TTBzDEKZLVeQxfWPdGoY0XSosqpnTFka55KdgVK8aSxizpvzPolxEW8LMLvf7qPHVS2hrn4ypRreAttYADF8y2qMBe615aoTRHgxYfGkOjwYfjnbpbHOc2U/YCwD9EYfVqZm4lZHE32ktttczW05T818yNjTsYkRwcVim+R+bZG1nWMakHpcpLJvMPU3rGLGXtC+OzL6CYh8jlqT5mbKf6QDm/PRfFcq5swsYEewyLaRTZycwYVPLOGyiHc+4gYkW0bpzwMym7BZG7DUaSdwvdwYTzjaqN45PvRfoDkbMD+kan3zI5BBGBIs0jU8/N3cJk3rqLDMmZXcxlws21pm5Y5jvCzY54xz8uYYRy8PpzcbsSdlpjAhO9m2OvLN/9zDRbBNzmLcaHcQks41cMOucxIh91NTkjFvmJkYMVlJKdpWjmOi8k3+3xFWMCAxuljiLMUmxMKP3Z3JeWzFm3KRX6a6bXDfVpw4jyWNxihq6i0BX1rBiVPVrFgRBkIKkVmekZlSV9OaAEwNLtfvxSE9ye7bFKPpIXpovjBxMBs1Ws0dOPxln3p7pVV/jjGSEvCd7ivnNQZNzUA4MMMAAAwwwwAADDDDAAAMMMMAAAwwwwAADDDDAAAMMMMAAAwwwwPzvmOcCYVoFwlRLXUZKcRmnqJtcBBoysnb+lxkRBEEQSuq3jNTjKk6RYVUt/Xl1qXbuK/R04qpHRlE7mQAYRZV2SfHEmtQajN+e7T/GmArnt2fjC8TipnedX6xVYxhTc3mUYIxms/GdSRUHwxg0gQEGGGCAAQYYYIABBhhggAEGGGCAAQYYYIABBhhggAEGGGCAAaaImELdA3i9I6f3henTq5pfNzTK9CqjGxqdt3ty2g8x5qNNrxonmAq96H5sgBH1EiPJPdhbTlVyq4lTVDK41YQgCIIgCIIgSFr+AKg+KPUzaG6DAAAAAElFTkSuQmCC";
+    var asyncSettings = new Syncfusion.EJ2.Inputs.UploaderAsyncSettings { SaveUrl = @Url.Content("https://ej2services.syncfusion.com/production/web-services/api/FileUploader/Save"), RemoveUrl = @Url.Content("https://ej2services.syncfusion.com/production/web-services/api/FileUploader/Remove") };
+    var intractionsList = new []
+    {
+        new { Type = "None", Value = "None" },
+        new { Type = "Delete", Value = "Delete" },
+        new { Type = "Property Change", Value = "PropertyChange" },
+        new { Type = "Move", Value = "Move" },
+        new { Type = "Select", Value = "Select" },
+        new { Type = "Resize", Value = "Resize" }
+    };
+    var annotationList = new []
+    {
+        new { Text = "Highlight", Value = "Highlight"},
+        new { Text = "Underline", Value = "Underline"},
+        new { Text = "Strikethrough", Value = "Strikethrough"},
+        new { Text = "Squiggly", Value = "Squiggly"},
+        new { Text = "Line", Value = "Line"},
+        new { Text = "Arrow", Value = "Arrow"},
+        new { Text = "Rectangle", Value = "Rectangle"},
+        new { Text = "Circle", Value = "Circle"},
+        new { Text = "Polygon", Value = "Polygon"},
+        new { Text = "Distance", Value = "Distance"},
+        new { Text = "Perimeter", Value = "Perimeter"},
+        new { Text = "Area", Value = "Area"},
+        new { Text = "Radius", Value = "Radius"},
+        new { Text = "Volume", Value = "Volume"},
+        new { Text = "Sticky Notes", Value = "StickyNotes"},
+        new { Text = "Ink", Value = "Ink"},
+        new { Text = "Stamp", Value = "Stamp"},
+        new { Text = "Custom Stamp", Value = "CustomStamp"},
+        new { Text = "Free Text", Value = "FreeText"}
+    };
+    var lineHeadStylesList = new []
+    {
+        new { Value = "None", Text = "None" },
+        new { Value = "Arrow", Text = "Closed Arrow" },
+        new { Value = "OpenArrow", Text = "Open Arrow" },
+        new { Value = "Square", Text = "Square" },
+        new { Value = "Diamond", Text = "Diamond" },
+        new { Value = "Circle", Text = "Round" }
+    };
+    string[] commentStatusList = new string[] { "None", "Accepted", "Cancelled", "Completed", "Rejected" };
+    var stampTypesList = new []
+    {
+        new { Value = "Dynamic", Text = "Dynamic" },
+        new { Value = "SignHere", Text = "Sign Here" },
+        new { Value = "StandardBusiness", Text = "Standard Business" }
+    };
+    var dynamicStampList = new []
+    {
+        new { value = "Approved", text = "Approved" },
+        new { value = "Confidential", text = "Confidential" },
+        new { value = "NotApproved", text = "Not Approved" },
+        new { value = "Received", text = "Received" },
+        new { value = "Reviewed", text = "Reviewed" },
+        new { value = "Revised", text = "Revised" }
+    };
+    var menuItems = new [] 
+    { 
+        new { text = "Edit" }, 
+        new { text = "Delete" }
+    };
+    var inkAnnotationChoices = new []
+    {
+        new { Text = "Syncfusion" },
+        new { Text = "PdfViewer" },
+        new { Text = "Star" }
+    };
+    var fontFamilyChoices = new []
+    {
+        new { Text = "Helvetica" },
+        new { Text = "Courier" },
+        new { Text = "Symbol" },
+        new { Text = "Times New Roman" }
+    };
+    var textAlignmentChoices = new []
+    {
+        new { Text = "Center" },
+        new { Text = "Right" },
+        new { Text = "Left" },
+        new { Text = "Justify" }
+    };
+    var fontStyleChoices = new []
+    {
+        new { Text = "None" },
+        new { Text = "Bold" },
+        new { Text = "Underline" },
+        new { Text = "Italic" },
+        new { Text = "Strikethrough" }
+    };
+    var toolbarSettings = new Syncfusion.EJ2.PdfViewer.PdfViewerToolbarSettings
+    {
+        ShowTooltip = true,
+        ToolbarItems = new String[] {
+            "OpenOption",
+            "UndoRedoTool",
+            "PageNavigationTool",
+            "MagnificationTool",
+            "PanTool",
+            "SelectionTool",
+            "CommentTool",
+            "SubmitForm",
+            "FormDesignerEditTool",
+            "FreeTextAnnotationOption",
+            "InkAnnotationOption",
+            "ShapeAnnotationOption",
+            "StampAnnotation",
+            "SignatureOption",
+            "SearchOption",
+            "PrintOption",
+            "DownloadOption"
+        },
+        FormDesignerToolbarItems = new String[] {
+            "TextboxTool",
+            "PasswordTool",
+            "CheckBoxTool",
+            "RadioButtonTool",
+            "DropdownTool",
+            "ListboxTool",
+            "DrawSignatureTool",
+            "DeleteTool"
+        }
+    };
+}
+
+
+@section ControlsSection{
+    <div class="col-lg-9 control-section">
+        @Html.Partial("_SwitchPartial")
+        <ejs-pdfviewer  
+            id="pdfviewer"
+            documentPath="https://cdn.syncfusion.com/content/pdf/annotations-v3.pdf"
+            resourceUrl="https://cdn.syncfusion.com/ej2/23.2.6/dist/ej2-pdfviewer-lib"
+            documentLoad="documentLoaded"
+            annotationSelect="onAnnotationSelected"
+            annotationUnSelect="onAnnotationUnselected"
+            annotationRemove="onAnnotationUnselected"
+            annotationResize="onAnnotationResized"
+            annotationMove="onAnnotationMoved"
+            toolbarSettings="toolbarSettings"
+            enableAnnotationToolbar="false"
+            style="height:640px; display: block">
+        </ejs-pdfviewer>
+    </div>
+    <div class="col-lg-3 e-pv-property-section e-pv-main-panel">
+        <div class="property-panel-header header-panel">
+            Properties
+            <ejs-button 
+                id="resetbutton"
+                cssClass="e-btn e-bigger e-lib e-flat e-icon-btn" 
+                onclick="reset()" 
+                iconCss="e-icons e-refresh e-btn-icon" >
+            </ejs-button>
+        </div>
+        <!-- property panel staring here -->
+        <div class="e-pv-property-panel-content">
+            <div class="pdfviewer-text-content"><span>Annotation Type</span></div>
+            <div class="e-pv-input-item">
+                <ejs-dropdownlist
+                    id="annotationsList"
+                    dataSource="annotationList"
+                    index=5
+                    change="function(event) { onAnnotationChange(event) }">
+                        <e-dropdownlist-fields value="Value" text="Text"></e-dropdownlist-fields>
+                </ejs-dropdownlist>
+            </div>
+            <!-- this is for selection of stamp type annotatoion -->
+            <div class="e-pv-annot-inner-container" id="e-pv-stampType" hidden>
+                <div class="pdfviewer-input-title" style="margin-top: 0%;"><span>Stamp Type</span></div>
+                <div class="e-pv-input-item">
+                    <ejs-dropdownlist
+                        id="stampTypeList"
+                        dataSource="stampTypesList"
+                        change="function(args) { onStampValueChange(args) }">
+                            <e-dropdownlist-fields text="Text" value="Value"></e-dropdownlist-fields>
+                    </ejs-dropdownlist>
+                </div>
+                <!-- for selecting stamp comments -->
+                <div class="input-title">
+                    <div class="pdfviewer-input-title"><span>Comments</span></div>
+                    <div class="e-pv-input-item" id="e-pv-stampComment">
+                        <ejs-dropdownlist
+                            id="stampCommentList"
+                            dataSource="dynamicStampList"
+                            change="function(args) { onPropertiesValueChange('stampComment', args) }">
+                                <e-dropdownlist-fields text="text" value="value"></e-dropdownlist-fields>
+                        </ejs-dropdownlist>
+                    </div>
+                </div>
+            </div>
+            <!-- ends here -->
+            <!-- uploader need to here -->
+            <div class="pdfviewer-input-title" id="e-pv-fileUploader" hidden>
+                <div class="control_wrapper">
+                    <div id="dropArea" style="height: auto; overflow: auto">
+                        <ejs-uploader
+                            id = "fileupload"
+                            asyncSettings = "asyncSettings"
+                            success = "onFileSuccess"
+                            allowedExtensions = ".png, .jpg, .jpeg"
+                            multiple = "false"
+                            template = "<div><span class='wrapper'>
+                                <img class='upload-image' alt='image' src='@syncfusionLogo' />
+                                <span class='name file-name'>${name}</span>
+                                <span class='e-icons e-file-remove-btn' onclick='removeFile()' title='Remove'/>
+                                </span></div>"
+                        ></ejs-uploader>
+                    </div>
+                </div>
+            </div>
+            <!--  -->
+            <div class="pdfviewer-input-title"><span>Page Number</span></div>
+            <div class="e-pv-input-item">
+                <ejs-numerictextbox
+                    id="pageNumber"
+                    min="1"
+                    max="1"
+                    change="function(event) { onPropertiesValueChange('pageNumber', event) }"
+                    format="n0"
+                ></ejs-numerictextbox>
+            </div>
+            <!--  -->
+            <div class="pdfviewer-input-title"><span>Settings:</span></div>
+            <div class="e-pv-annot-inner-container" style="padding: 0 0 12px 0px;">
+                <table class="e-pv-annot-inner-table">
+                    <tr id="e-pv-XYRow">
+                        <td class="left-item">
+                            <div class="pdfviewer-text-content">
+                                <span>X Position</span>
+                                <div class="e-pv-input-item">
+                                    <ejs-numerictextbox
+                                        id="Xposition"
+                                        min="1"
+                                        change="function(event) { onPropertiesValueChange('x', event) }"
+                                        format="###.##"
+                                        showSpinButton="false"
+                                    ></ejs-numerictextbox>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="right-item">
+                            <div class="pdfviewer-text-content">
+                                <span>Y Position</span>
+                                <div class="e-pv-input-item">
+                                    <ejs-numerictextbox
+                                        id="Yposition"
+                                        min="1"
+                                        change="function(event) { onPropertiesValueChange('y', event) }"
+                                        format="###.##"
+                                        showSpinButton="false"
+                                    ></ejs-numerictextbox>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr id="e-pv-heightWidthRow">
+                        <td class="left-item">
+                            <div class="pdfviewer-text-content">
+                                <span>Width</span>
+                                <div class="e-pv-input-item">
+                                    <ejs-numerictextbox
+                                        id="width"
+                                        min="1"
+                                        change="function(event) { onPropertiesValueChange('width', event) }"
+                                        format="###.##"
+                                        showSpinButton="false"
+                                    ></ejs-numerictextbox>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="right-item">
+                            <div class="pdfviewer-text-content">
+                                <span>Height</span>
+                                <div class="e-pv-input-item">
+                                    <ejs-numerictextbox
+                                        id="height"
+                                        min="1"
+                                        change="function(event) { onPropertiesValueChange('height', event) }"
+                                        format="###.##"
+                                        showSpinButton="false"
+                                    ></ejs-numerictextbox>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr id="e-pv-X1Y1Row" hidden>
+                        <td class="left-item">
+                            <div class="pdfviewer-text-content">
+                                <span>X1 Position</span>
+                                <div class="e-pv-input-item">
+                                    <ejs-numerictextbox
+                                        id="X1position"
+                                        min="1"
+                                        change="function(event) { onPropertiesValueChange('vertexX1', event) }"
+                                        format="###.##"
+                                        showSpinButton="false"
+                                    ></ejs-numerictextbox>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="right-item">
+                            <div class="pdfviewer-text-content">
+                                <span>Y1 Position</span>
+                                <div class="e-pv-input-item">
+                                    <ejs-numerictextbox
+                                        id="Y1position"
+                                        min="1"
+                                        change="function(event) { onPropertiesValueChange('vertexY1', event) }"
+                                        format="###.##"
+                                        showSpinButton="false"
+                                    ></ejs-numerictextbox>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr id="e-pv-X2Y2Row" hidden>
+                        <td class="left-item">
+                            <div class="pdfviewer-text-content">
+                                <span>X2 Position</span>
+                                <div class="e-pv-input-item">
+                                    <ejs-numerictextbox
+                                        id="X2position"
+                                        min="1"
+                                        change="function(event) { onPropertiesValueChange('vertexX2', event) }"
+                                        format="###.##"
+                                        showSpinButton="false"
+                                    ></ejs-numerictextbox>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="right-item">
+                            <div class="pdfviewer-text-content">
+                                <span>Y2 Position</span>
+                                <div class="e-pv-input-item">
+                                    <ejs-numerictextbox
+                                        id="Y2position"
+                                        min="1"
+                                        change="function(event) { onPropertiesValueChange('vertexY2', event) }"
+                                        format="###.##"
+                                        showSpinButton="false"
+                                    ></ejs-numerictextbox>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="left-item">
+                            <div class="pdfviewer-text-content">
+                                <span>Shape Opacity</span>
+                                <div class="e-pv-input-item">
+                                    <ejs-numerictextbox
+                                        id="shapeOpacity"
+                                        min="1"
+                                        change="function(event) { onPropertiesValueChange('opacity', event) }"
+                                        format="n0"
+                                        showSpinButton="false"
+                                    ></ejs-numerictextbox>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="right-item" id="e-pv-fillColor">
+                            <div class="pdfviewer-text-content">
+                                <span>Fill Color</span>
+                                <div class="e-pv-input-item">
+                                    <ejs-colorpicker 
+                                        id="fillColorinput"
+                                        showButtons="true"
+                                        mode="Palette"
+                                        change="function(event) { onPropertiesValueChange('fillColor', event) }"
+                                    ></ejs-colorpicker>
+                                </div>
+
+                            </div>
+                        </td>
+                    </tr>
+                    <tr id="e-pv-strokeProps">
+                        <td class="left-item">
+                            <div class="pdfviewer-text-content">
+                                <span>Stroke Thickness</span>
+                                <div class="e-pv-input-item">
+                                    <ejs-numerictextbox
+                                        id="strokeThickenss"
+                                        min="1"
+                                        change="function(event) { onPropertiesValueChange('thickness', event) }"
+                                        format="n0"
+                                        showSpinButton="false"
+                                    ></ejs-numerictextbox>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="right-item">
+                            <div class="pdfviewer-text-content">
+                                <span>Stroke Color</span>
+                                <div class="e-pv-input-item">
+                                    <ejs-colorpicker 
+                                        id="strokeColorinput"
+                                        showButtons="true"
+                                        mode="Palette"
+                                        change="function(event) { onPropertiesValueChange('strokeColor', event) }"
+                                    ></ejs-colorpicker>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- Container for the table and buttons -->
+                <div style="padding: 12px 12px 0 12px;">
+                    <!-- Table to display the vertex Points -->
+                    <table class="e-pv-pdfViewer-coordinate-table" style="border-collapse: collapse;">
+                    </table>
+                    <!-- Table to display the bounds -->
+                    <table class="e-pv-annot-bounds-list" style="border-collapse: collapse;">
+                    </table>
+                </div>
+
+                <!-- Section for the buttons -->
+                <div id="e-pv-boundsButtons" hidden>
+                    <div class="e-pv-annot-button-section" style="padding: 12px 12px 0px 0; border: 0px;">
+                        <ejs-button id="outlinebtn" onclick="deleteBounds()" isPrimary="true" content="Delete"></ejs-button>
+                        <ejs-button id="primarybtn" onclick="addBounds()" isPrimary="true" content="Add Bounds"></ejs-button>
+                    </div>
+                </div>
+                <div style="padding: 0px 12px 12px 12px;" id="e-pv-lineProps" hidden>
+                    <div class="pdfviewer-input-title"><span>Line Head Start</span></div>
+                    <div class="e-pv-input-item">
+                        <ejs-dropdownlist
+                            id="lineHeadStartList"
+                            dataSource="lineHeadStylesList"
+                            change="function(event) { onPropertiesValueChange('lineHeadStartStyle', event) }">
+                                <e-dropdownlist-fields value="Value" text="Text"></e-dropdownlist-fields>
+                        </ejs-dropdownlist>
+                    </div>
+
+                    <div class="pdfviewer-input-title"><span>Line Head End</span></div>
+                    <div class="e-pv-input-item">
+                        <ejs-dropdownlist
+                            id="lineHeadEndList"
+                            dataSource="lineHeadStylesList"
+                            change="function(event) { onPropertiesValueChange('lineHeadEndStyle', event) }">
+                                <e-dropdownlist-fields value="Value" text="Text"></e-dropdownlist-fields>
+                        </ejs-dropdownlist>
+                    </div>
+                    <div class="pdfviewer-input-title" id="e-pv-leaderLength">
+                        <span>Leader Length</span>
+                        <div class="e-pv-input-item">
+                            <ejs-numerictextbox
+                                id="leaderLength"
+                                min="1"
+                                change="function(event) { onPropertiesValueChange('leaderLength', event) }"
+                                format="###.##"
+                                showSpinButton="false"
+                            ></ejs-numerictextbox>
+                        </div>
+                    </div>
+                </div>
+                <div id="e-pv-vertexButtons" hidden>
+                    <div class="e-pv-annot-button-section" style="padding: 12px 12px 0px 0; border: 0px; ">
+                        <ejs-button id="deleteVertexButton" onclick="deleteVertex()" isPrimary="true" content="Delete"></ejs-button>
+                        <ejs-button id="addVertexButton" onclick="addVertex()" isPrimary="true" content="Add Vertex"></ejs-button>
+                    </div>
+                </div>
+                <!--  -->
+            </div>
+            <!-- ink doprdown -->
+            <div style="padding: 0 0 12px 0px;" id="e-pv-inkAnnotType" hidden>
+                <div class="pdfviewer-input-title"><span>Ink Annoatation</span></div>
+                <div class="e-pv-input-item">
+                    <ejs-dropdownlist 
+                        id="inkAnnoatationList" 
+                        dataSource="inkAnnotationChoices"
+                        change="function(event) { onPropertiesValueChange('inkAnnotationType', event) }">
+                            <e-dropdownlist-fields value="Text" text="Text"></e-dropdownlist-fields>
+                    </ejs-dropdownlist>
+                </div>
+            </div>
+            <!-- strt -->
+            <div id="e-pv-freeTextProps" hidden>
+                <div class="pdfviewer-input-title">
+                    <span>Text Properties:</span>
+                </div>
+                <div class="e-pv-annot-inner-container">
+                    <div class="pdfviewer-text-content" style="margin-top: 0%;"><span>Default Text</span></div>
+                    <div class="e-pv-input-item">
+                        <ejs-textbox
+                            id="defaultText"
+                            change="function(args) { onPropertiesValueChange('defaultText', args) }"
+                        ></ejs-textbox>
+                    </div>
+                    <div class="pdfviewer-input-title"><span>Font Family</span></div>
+                    <div class="e-pv-input-item">
+                        <ejs-dropdownlist
+                            id="fontFamilyList"
+                            dataSource="fontFamilyChoices"
+                            change="function(event) { onPropertiesValueChange('fontFamily', event) }">
+                                <e-dropdownlist-fields value="Text" text="Text"></e-dropdownlist-fields>
+                        </ejs-dropdownlist>
+                    </div>
+                    <div class="pdfviewer-input-title"><span>Alignment</span></div>
+                    <div class="e-pv-input-item">
+                        <ejs-dropdownlist
+                            id="textAlignmentList"
+                            dataSource="textAlignmentChoices"
+                            change="function(event) { onPropertiesValueChange('alignment', event) }">
+                                <e-dropdownlist-fields value="Text" text="Text"></e-dropdownlist-fields>
+                        </ejs-dropdownlist>
+                    </div>
+                    <div class="pdfviewer-input-title"><span>Font Style</span></div>
+                    <div class="e-pv-input-item">
+                        <ejs-dropdownlist
+                            id="fontStyleList"
+                            dataSource="fontStyleChoices"
+                            change="function(event) { onPropertiesValueChange('fontStyle', event) }">
+                                <e-dropdownlist-fields value="Text" text="Text"></e-dropdownlist-fields>
+                        </ejs-dropdownlist>
+                    </div>
+                    <div class="pdfviewer-input-title">
+                        <table class="e-pv-annot-inner-table">
+                            <tr>
+                                <td style="width:50%;padding:0;">
+                                    <span>Font Size</span>
+                                    <div class="e-pv-input-item">
+                                        <ejs-numerictextbox
+                                            id="fontSize"
+                                            min="1"
+                                            change="function(event) { onPropertiesValueChange('fontSize', event) }"
+                                            format="n0"
+                                            showSpinButton="false"
+                                        ></ejs-numerictextbox>
+                                    </div>
+                                </td>
+                                <td style="padding:0;">
+                                    <div style="margin-left: 12px;" class="text-content">
+                                        <span>Font Color</span>
+                                        <div class="e-pv-input-item">
+                                            <ejs-colorpicker 
+                                                id="fontColorInput"
+                                                showButtons="true"
+                                                mode="Palette"
+                                                change="function(event) { onPropertiesValueChange('fontColor', event) }"
+                                            ></ejs-colorpicker>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- end -->
+            <!-- sytrta0 -->
+            <div class="pdfviewer-input-title">
+                <table>
+                    <tr>
+                        <td class="e-pv-check-box-row">
+                            <ejs-checkbox 
+                                id="printAnnotationCheckBox"
+                                change = "onPrintAnnotationChecked", 
+                                checked = "true" 
+                            ></ejs-checkbox>
+                        </td>
+                        <td class="e-pv-check-box-row"><span>Print Annotation</span></td>
+                    </tr>
+                    <tr>
+                        <td class="e-pv-check-box-row">
+                            <ejs-checkbox
+                                id = "lockAnnotationCheckBox"
+                                change = "onLockAnnotationChecked",
+                                checked = "false">
+                            </ejs-checkbox>
+                        </td>
+                        <td class="e-pv-check-box-row"><span>Lock Annotation</span></td>
+                    </tr>
+                </table>
+            </div>
+            <!-- end -->
+            <!-- strt -->
+            <div id="e-pv-allowedInteractions" hidden>
+                <div class="pdfviewer-input-title pdfviewer-text-content"><span>Allow Interactions</span></div>
+                <div class="e-pv-input-item">
+                    <ejs-dropdowntree 
+                        id="interactionsDropDownTree" 
+                        showCheckBox="true"
+                        change="onInteractionListChange"
+                        mode="Delimiter"
+                        >
+                            <e-dropdowntree-fields
+                                dataSource="intractionsList"
+                                value="Value"
+                                text="Type"
+                            ></e-dropdowntree-fields>
+                    </ejs-dropdowntree>
+                </div>
+            </div>
+            <!--  -->
+            <!-- strat -->
+            <div class="pdfviewer-input-title"><span>Add Comments</span></div>
+            <div class="pdfviewer-input-title"><span>Author</span></div>
+            <div class="e-pv-input-item">
+                <ejs-textbox
+                    id="authorName"
+                    change="function(args) { onPropertiesValueChange('author', args) }"
+                ></ejs-textbox>
+            </div>
+            <div class="pdfviewer-input-title"><span>Content</span></div>
+            <div class="e-pv-input-item">
+                <ejs-textbox
+                    id="comment"
+                    change="function(args) { onPropertiesValueChange('comment', args) }"
+                    placeholder="New Comment"
+                ></ejs-textbox>
+            </div>
+            <div class="pdfviewer-input-title"><span>Status</span></div>
+            <div class="e-pv-input-item">
+                <ejs-dropdownlist
+                    id="status"
+                    dataSource="commentStatusList"
+                    change="function(event) { onPropertiesValueChange('state', event) }"
+                ></ejs-dropdownlist>
+            </div>
+            <div class="pdfviewer-input-title">
+                <table>
+                    <tr>
+                        <td class="e-pv-check-box-row">
+                            <ejs-checkbox
+                                id="replyCheckbox-isTrue"
+                                checked="false"
+                                change="function(args) { onreplyCheckboxChecked(args) }"
+                            ></ejs-checkbox>
+                        </td>
+                        <td class="e-pv-check-box-row"><span>Reply</span></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div id="ischeckedReplybox" hidden>
+                <div id="repliesList" hidden></div>
+                <ejs-contextmenu 
+                    id="contextMenu"
+                    items="menuItems"
+                    select="contextMenuItemSelected"
+                ></ejs-contextmenu>
+
+                <div class="e-pv-annot-inner-container pdfViewer-checked-Content" style="padding: 10px;">
+                    <div class="pdfviewer-input-title"><span>Author</span></div>
+                    <div class="e-pv-input-item">
+                        <ejs-textbox
+                            id="replyAuthorName"
+                            change="function(args) { onPropertiesValueChange('replyAuthor', args) }"
+                        ></ejs-textbox>
+                    </div>
+                    <div class="pdfviewer-input-title"><span>Content</span></div>
+                    <div class="e-pv-input-item">
+                        <ejs-textbox
+                            id="replyComment"
+                            change="function(args) { onPropertiesValueChange('replyComment', args) }"
+                            placeholder="Reply Comment"
+                        ></ejs-textbox>
+                    </div>
+                    <div class="pdfviewer-input-title"><span>Status</span></div>
+                    <div class="e-pv-input-item">
+                        <ejs-dropdownlist
+                            id="replyStatus"
+                            dataSource="commentStatusList"
+                            change="function(event) { onPropertiesValueChange('replyState', event) }"
+                        ></ejs-dropdownlist>
+                    </div>
+                    <div class="e-pv-annot-button-section" style="padding: 12px 12px 0px 0; border: 0px;">
+                        <div id="addReplyDiv">
+                            <ejs-button id="addReplybutton" onclick="addReply()" isPrimary="true" content="Add Reply"></ejs-button>
+                        </div>
+                        <div id="editReplyDiv" hidden>
+                            <ejs-button id="editReplyButton" onclick="editReply()" isPrimary="true" content="Edit Reply"></ejs-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="e-pv-property-panel-footer">
+                <div class="e-pv-annot-button-section">
+                    <ejs-button id="updateAnnotationButton" isPrimary="true" content="Update"></ejs-button>
+                    <ejs-button id="addAnnotationButton" isPrimary="true" content="Add Annotation"></ejs-button>
+                </div>
+            </div>
+            <!-- end -->
+
+
+        </div>
+        <!-- property panel ending here -->
+    </div>
+}
+
+@section Meta{
+    <meta name="description"
+          content="This example demonstrates the Default Functionalities in ASP.NET Core PDF Viewer control. Explore here for more details." />
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the creation of various types of annotations in the PDF viewer, including text markup, shapes, measurements, free text, stamps, handwritten signatures, ink, and sticky notes. Additionally, we can customize existing annotations or add new annotations programmatically in the PDF viewer using the provided options.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="action-description">
+        <p>The PDF Viewer component allows the process of programmatically adding or modifying annotations within a PDF document. With the ability to programmatically add any type of annotation using the <a target='_blank' href='https://helpej2.syncfusion.com/javascript/documentation/api/pdfviewer/annotation/#addannotation' aria-label="Navigate to the documentation for Add Annotation API in Javascript">addAnnotation</a> API and edit existing annotations using the editAnnotation API, users can seamlessly enhance their PDF Viewing experience.</p>
+        <br />
+        <p>The creation of an annotation when clicking the 'Add annotation' button depends on the selected properties from the Property panel. To update an existing annotation, users can select the desired annotation, modify its properties, and then click the 'Update' button.</p>
+        <br />
+        <p>We can programmatically add or update the following types of annotations in the PDF viewer:</p>
+        <ul>
+            <li><a target='_blank' href='https://ej2.syncfusion.com/aspnetcore/documentation/pdfviewer/annotation/text-markup-annotation' aria-label="Navigate to the documentation for Text markup annotations in ASP.NET Core PDF Viewer component"> Text markup annotations </a></li>
+            <li><a target='_blank' href='https://ej2.syncfusion.com/aspnetcore/documentation/pdfviewer/annotation/shape-annotation' aria-label="Navigate to the documentation for Shape annotations in ASP.NET Core PDF Viewer component"> Shape annotations </a></li>
+            <li><a target='_blank' href='https://ej2.syncfusion.com/aspnetcore/documentation/pdfviewer/annotation/measurement-annotation' aria-label="Navigate to the documentation for Measurements annotation in ASP.NET Core PDF Viewer component"> Measurements annotation </a></li>
+            <li><a target='_blank' href='https://ej2.syncfusion.com/aspnetcore/documentation/pdfviewer/annotation/free-text-annotation' aria-label="Navigate to the documentation for Free text annotation in ASP.NET Core PDF Viewer component"> Free text annotation </a></li>
+            <li><a target='_blank' href='https://ej2.syncfusion.com/aspnetcore/documentation/pdfviewer/annotation/stamp-annotation' aria-label="Navigate to the documentation Stamp annotation in ASP.NET Core PDF Viewer component"> Stamp annotation </a></li>
+            <li><a target='_blank' href='https://ej2.syncfusion.com/aspnetcore/documentation/pdfviewer/annotation/ink-annotation' aria-label="Navigate to the documentation for Ink annotation in ASP.NET Core PDF Viewer component"> Ink annotation </a></li>
+            <li><a target='_blank' href='https://ej2.syncfusion.com/aspnetcore/documentation/pdfviewer/annotation/sticky-notes-annotation' aria-label="Navigate to the documentation for Sticky notes annotation in ASP.NET Core PDF Viewer component"> Sticky notes annotation </a></li>
+        </ul>
+    </div>
+    <div id="description">
+        <p>
+            More information on the PDF Viewer instantiation can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/pdfviewer/getting-started" aria-label="Navigate to the documentation for getting started with ASP.NET Core PDF Viewer control">
+        documentation section</a>.
+            
+        </p>
+
+    </div>
+}
+
+<style>
+    .header-panel {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0px;
+        z-index: 2;
+        background-color: white;
+        border-bottom: 1px solid #D7D7D7;
+        padding-bottom: 5px;
+        margin-bottom: 16px;
+    }
+
+    .e-pv-annot-inner-table td {
+        text-wrap: nowrap;
+        padding: 12px 12px 0 12px;
+        width: 50%;
+    }
+
+    .e-pv-main-panel {
+        border-left: 1px solid #D7D7D7;
+        height: 700px;
+        overflow-y: scroll;
+        padding-bottom: 0px;
+    }
+
+    .e-pv-input-item {
+        margin-top: 0px;
+    }
+
+    .e-pv-annot-inner-container {
+        margin-top: 15px;
+        border: 1px solid rgba(196, 199, 197, 1);
+        padding: 12px;
+    }
+
+    .e-pv-annot-inner-table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+    }
+
+    .e-pv-pdfViewer-coordinate-table {
+        border-spacing: 0px;
+        width: 100%;
+    }
+
+    .e-pv-pdfViewer-coordinate-table td {
+        border: 1px solid rgba(196, 199, 197, 1);
+        font-size: 11px;
+        text-align: center;
+        width: 50%;
+        padding: 4px 0px;
+    }
+
+    .e-pv-annot-bounds-list {
+        border: 1px solid rgba(196, 199, 197, 1);
+        border-spacing: 0px;
+        width: 100%;
+    }
+
+    .e-pv-annot-bounds-list td {
+        border-bottom: 1px solid rgba(196, 199, 197, 1);
+        font-size: 11px;
+        text-align: center;
+        padding: 4px 0px;
+    }
+
+    .e-pv-property-panel-footer {
+        padding: 16px 0;
+        position: sticky;
+        bottom: 0;
+        background-color: white;
+        z-index: 1;
+        border-top: 1px solid #D7D7D7;
+        margin-top: 16px;
+    }
+
+    .highcontrast .e-pv-property-panel-footer .e-pv-annot-button-section button {
+        padding: 2px 16px;
+    }
+
+    .e-pv-annot-button-section {
+        text-align: center;
+        display: flex;
+        justify-content: end;
+        gap: 12px;
+        flex-wrap: wrap-reverse;
+    }
+
+    .fileuploader {
+        margin-top: 5px;
+    }
+
+    .e-pv-table-items {
+        display: flex;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+        gap: 2px;
+        font-size: 10px;
+    }
+
+    .pdfviewer-input-title { 
+        margin-top: 12px;
+        font-size: 12px;
+     }
+
+    .pdfviewer-input-title .e-pv-check-box-row {
+        padding: 5px;
+        margin-top: 16px;
+    }
+
+    .fluent2 .pdfviewer-input-title .e-pv-check-box-row,
+    .fluent2-dark .pdfviewer-input-title .e-pv-check-box-row,
+    .fluent2-highcontrast .pdfviewer-input-title .e-pv-check-box-row {
+        padding: 0;
+        margin-top: 16px;
+    }
+
+    .pdfviewer-text-content {
+        /* margin-top: 6px; */
+        font-size: 12px;
+    }
+
+    .pdfviewer-table-input-title {
+        margin-top: 6px;
+        font-size: 11px;
+    }
+
+    .reply-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        justify-content: space-between;
+        padding: 12px;
+    }
+
+    .replies {
+        overflow-y: auto;
+        max-height: 180px;
+        padding: 0px !important;
+    }
+
+    .reply-main-container {
+        flex-grow: 1;
+    }
+
+    .reply-text {
+        width: 100%;
+        font-size: 12px;
+        word-break: break-word;
+    }
+
+    .more-container {
+        width: min-content;
+    }
+
+    #contextmenutarget {
+        padding: 10px;
+        position: relative;
+        text-align: justify;
+        color: gray;
+        user-select: none;
+    }
+
+    .upload-image {
+        width: 80px;
+        height: 80px;
+        margin: 12px;
+        border-radius: 5px;
+        border: 1px solid rgba(196, 199, 197, 1);
+        padding: 4px;
+    }
+
+    div .file-name {
+        font-size: 14px;
+        padding: 0px 5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-weight: 500;
+        width: 90px;
+        white-space: nowrap;
+    }
+    .wrapper {
+        display: flex;
+        align-items: center;
+    }
+
+    .fluent-dark .e-pv-property-panel-footer, .fluent-dark .header-panel {
+        background-color: #1B1A19;
+    }
+
+    .bootstrap5\.3-dark .e-pv-property-panel-footer, .bootstrap5\.3-dark .header-panel{
+        background-color: #212529;
+    }
+
+    .highcontrast .e-pv-property-panel-footer, .highcontrast .header-panel {
+        background-color: #000000;
+    }
+
+    .fluent2-highcontrast .e-pv-property-panel-footer, .fluent2-highcontrast .header-panel, 
+    .material3-dark .e-pv-property-panel-footer, .material3-dark .header-panel, 
+    .fluent2-dark .e-pv-property-panel-footer, .fluent2-dark .header-panel {
+        background-color: #1C1B1F;
+    }
+
+    .tailwind3-dark .e-pv-property-panel-footer, .tailwind3-dark .header-panel {
+        background: #111827;
+    }
+
+    .tailwind3-dark .header-panel #resetbutton .e-btn-icon,
+    .tailwind3 .header-panel #resetbutton .e-btn-icon{
+        font-size: 18px;
+    }
+
+</style>
+
+<script type="text/javascript">
+    var viewer;
+    var selectedAnnotation;
+    var annotationListObj;
+    var lineHeadStartListObj;
+    var lineHeadEndListObj;
+    var inkAnnoatationListObj;
+    var fontFamilyListObj;
+    var textAlignmentListObj;
+    var fontStyleListObj;
+    var statusListObj;
+    var replyStatusObj;
+    var stampTypeListObj;
+    var stampCommentListObj;
+    var dynamicstampListObj;
+    var signHerestampListObj;
+    var pageNumberObj;
+    var standardBusinessStampListObj;
+    var XpositionObj;
+    var YpositionObj;
+    var widthObj;
+    var heightObj;
+    var shapeOpacityObj;
+    var FillcolorpickerObj;
+    var strokeColorObj;
+    var fontColorpickerObj;
+    var strokeThickenssObj;
+    var X1positionObj;
+    var X2positionObj;
+    var Y1positionObj;
+    var Y2positionObj;
+    var leaderLengthObj;
+    var defaultTextObj;
+    var fontSizeObj;
+    var printAnnotationCheckBoxObj;
+    var lockAnnotationCheckBoxObj;
+    var authorNameObj;
+    var commentObj;
+    var replyCheckBoxObj;
+    var replyAuthorNameObj;
+    var replyCommentObj;
+    var checkList;
+    var checkObj;
+    var addVertexButtonObj;
+    var deleteVertexButtonObj;
+    var addBoundsButtonobj;
+    var deletebutton;
+    var addreplyButtonObj;
+    var editReplyButtonObj;
+    var annotationSettings;
+    var updateButton;
+    var addbutton;
+    var uploadObj;
+    var currentUpdateAnnotationId;
+    var currentEditCommentId;
+    var dropElement;
+    var dropArea;
+    var dynamicStampsList;
+    var signHereStampsList;
+    var standardBusinessStampsList;
+    var currentCommentsList;
+    var indexValue;
+    var contextMenuObj;
+    var dynamicStampMap;
+    var signHereStampMap;
+    var standardBusinessStampMap;
+    var vertexTableNumberFormat;
+    window.onload = function () {
+        // VertexPoint Interface
+        class VertexPoint {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+            }
+        }
+
+        // Comment Class
+        class Comment {
+            constructor(id, author, note, modifiedDate, state) {
+                this.id = id;
+                this.author = author;
+                this.note = note;
+                this.modifiedDate = modifiedDate;
+                this.state = state;
+            }
+        }
+
+        class AnnotationBase {
+            constructor() {
+                this.annotationType = "Rectangle";
+                this.pageNumber = 1;
+                this.annotationSelected = false;
+                this.x = 100;
+                this.y = 100;
+                this.width = 100;
+                this.height = 100;
+                this.opacity = 100;
+                this.thickness = 1;
+                this.fillColor = "#FFFFFF00";
+                this.strokeColor = "#FF0000FF";
+                this.isPrint = true;
+                this.isLocked = false;
+                this.allowedInteractions = ["None"];
+                this.author = "Guest";
+                this.state = "None";
+                this.comment = "";
+                this.replies = []; // Assume Comment class is already defined
+                this.replyAuthor = "Guest";
+                this.replyState = "None";
+                this.replyComment = "";
+                this.stampsType = "Dynamic";
+                this.stampComment = "Approved";
+                this.dynamicStamp = "Approved";
+                this.signHereStamp = "Accepted";
+                this.standardBusinessStamp = "Approved";
+                this.modifiedDate = new Date().toDateString();
+                this.replyModifiedDate = new Date().toDateString();
+                this.bounds = [];
+                this.fillColor = "#FFFFFF00";
+                this.strokeColor = "#FF0000FF";
+                this.vertexX1 = 100;
+                this.vertexY1 = 100;
+                this.vertexX2 = 200;
+                this.vertexY2 = 100;
+                this.lineHeadStartStyle = "None";
+                this.lineHeadEndStyle = "None";
+                this.leaderLength = 0;
+                this.vertexPoints = []; // Assume VertexPoint class is already defined
+                this.inkAnnotationType = "Syncfusion";
+                this.fontFamily = "Helvetica";
+                this.fontStyle = "None";
+                this.alignment = "Left";
+                this.defaultText = "Free text";
+                this.fontSize = 16;
+                this.fontColor = "#000000FF";
+                this.signHereStampList = ["Accepted", "InitialHere", "Rejected", "SignHere", "Witness"];
+                this.path = "";
+                this.customStampName = "Image";
+                this.customStampImageSource = "@Html.Raw(syncfusionLogo)";
+                this.showStampType = true;
+                this.showFileUploader = true;
+                this.disableInkAnnotField = true;
+            }
+        }
+
+        dynamicStampsList = [
+            {text: "Approved", value: "Approved"},
+            {text: "Confidential", value: "Confidential"},
+            {text: "Not Approved", value: "NotApproved"},
+            {text: "Received", value: "Received"},
+            {text: "Reviewed", value: "Reviewed"},
+            {text: "Revised", value: "Revised"}
+        ];
+
+        signHereStampsList = [
+            {text: "Accepted", value: "Accepted"},
+            {text: "Initial Here", value: "InitialHere"},
+            {text: "Rejected", value: "Rejected"},
+            {text: "Sign Here", value: "SignHere"},
+            {text: "Witness", value: "Witness"}
+        ];
+
+        standardBusinessStampsList = [
+            {text: "Approved", value: "Approved"},
+            {text: "Not Approved", value: "NotApproved"},
+            {text: "Completed", value: "Completed"},
+            {text: "Confidential", value: "Confidential"},
+            {text: "Draft", value: "Draft"},
+            {text: "For Public Release", value: "ForPublicRelease"},
+            {text: "Information Only", value: "InformationOnly"},
+            {text: "Not For Public Release", value: "NotForPublicRelease"},
+            {text: "Preliminary Results", value: "PreliminaryResults"},
+            {text: "Void", value: "Void"},
+            {text: "For Comment", value: "ForComment"}
+        ];
+
+        dynamicStampMap = {
+            'Approved': ej.pdfviewer.DynamicStampItem.Approved,
+            'Confidential': ej.pdfviewer.DynamicStampItem.Confidential,
+            'NotApproved': ej.pdfviewer.DynamicStampItem.NotApproved,
+            'Received': ej.pdfviewer.DynamicStampItem.Received,
+            'Reviewed': ej.pdfviewer.DynamicStampItem.Reviewed,
+            'Revised': ej.pdfviewer.DynamicStampItem.Revised
+        };
+
+        signHereStampMap = {
+            'Accepted': ej.pdfviewer.SignStampItem.Accepted,
+            'InitialHere': ej.pdfviewer.SignStampItem.InitialHere,
+            'Rejected': ej.pdfviewer.SignStampItem.Rejected,
+            'SignHere': ej.pdfviewer.SignStampItem.SignHere,
+            'Witness': ej.pdfviewer.SignStampItem.Witness
+        };
+
+        standardBusinessStampMap = {
+            'Approved': ej.pdfviewer.StandardBusinessStampItem.Approved,
+            'Completed': ej.pdfviewer.StandardBusinessStampItem.Completed,
+            'Confidential': ej.pdfviewer.StandardBusinessStampItem.Confidential,
+            'Draft': ej.pdfviewer.StandardBusinessStampItem.Draft,
+            'Final': ej.pdfviewer.StandardBusinessStampItem.Final,
+            'ForComment': ej.pdfviewer.StandardBusinessStampItem.ForComment,
+            'NotForPublicRelease': ej.pdfviewer.StandardBusinessStampItem.NotForPublicRelease,
+            'InformationOnly': ej.pdfviewer.StandardBusinessStampItem.InformationOnly,
+            'NotApproved': ej.pdfviewer.StandardBusinessStampItem.NotApproved,
+            'ForPublicRelease': ej.pdfviewer.StandardBusinessStampItem.ForPublicRelease,
+            'PreliminaryResults': ej.pdfviewer.StandardBusinessStampItem.PreliminaryResults,
+            'Void': ej.pdfviewer.StandardBusinessStampItem.Void
+        };
+
+        currentCommentsList = dynamicStampsList;
+        vertexTableNumberFormat = new Intl.NumberFormat(navigator.language, {maximumFractionDigits: 0}).format;
+
+        viewer = document.getElementById('pdfviewer').ej2_instances[0];
+
+        selectedAnnotation = new AnnotationBase();
+        annotationListObj = document.getElementById("annotationsList").ej2_instances[0];
+
+        dropElement = document.getElementsByClassName('control-fluid')[0];
+        uploadObj = document.getElementById("fileupload").ej2_instances[0];
+        uploadObj.dropArea = dropElement;
+        uploadObj.dataBind();
+
+        lineHeadStartListObj = document.getElementById("lineHeadStartList").ej2_instances[0];
+        lineHeadStartListObj.value = selectedAnnotation.lineHeadStartStyle;
+        lineHeadStartListObj.dataBind();
+
+        lineHeadEndListObj = document.getElementById("lineHeadEndList").ej2_instances[0];
+        lineHeadEndListObj.value = selectedAnnotation.lineHeadEndStyle;
+        lineHeadEndListObj.dataBind();
+
+        inkAnnoatationListObj = document.getElementById("inkAnnoatationList").ej2_instances[0];
+        inkAnnoatationListObj.value = selectedAnnotation.inkAnnotationType;
+        inkAnnoatationListObj.dataBind();
+
+        fontFamilyListObj = document.getElementById("fontFamilyList").ej2_instances[0];
+        fontFamilyListObj.value = selectedAnnotation.fontFamily;
+        fontFamilyListObj.dataBind();
+
+        textAlignmentListObj = document.getElementById("textAlignmentList").ej2_instances[0];
+        textAlignmentListObj.value = selectedAnnotation.alignment;
+        textAlignmentListObj.dataBind();
+
+        fontStyleListObj = document.getElementById("fontStyleList").ej2_instances[0];
+        fontStyleListObj.value = selectedAnnotation.fontStyle;
+        fontStyleListObj.dataBind();
+
+        statusListObj = document.getElementById("status").ej2_instances[0];
+        statusListObj.value = selectedAnnotation.state;
+        statusListObj.dataBind();
+
+        replyStatusObj = document.getElementById("replyStatus").ej2_instances[0];
+        replyStatusObj.value = selectedAnnotation.replyState;
+        replyStatusObj.dataBind();
+
+        stampTypeListObj = document.getElementById("stampTypeList").ej2_instances[0];
+        stampTypeListObj.value = selectedAnnotation.stampsType;
+        stampTypeListObj.dataBind();
+
+        stampCommentListObj = document.getElementById("stampCommentList").ej2_instances[0];
+        stampCommentListObj.value = selectedAnnotation.stampComment;
+        stampCommentListObj.dataBind();
+
+        pageNumberObj = document.getElementById("pageNumber").ej2_instances[0];
+        pageNumberObj.value = selectedAnnotation.pageNumber;
+        pageNumberObj.dataBind();
+
+        XpositionObj = document.getElementById("Xposition").ej2_instances[0];
+        XpositionObj.value = selectedAnnotation.x;
+        XpositionObj.dataBind();
+
+        YpositionObj = document.getElementById("Yposition").ej2_instances[0];
+        YpositionObj.value = selectedAnnotation.y;
+        YpositionObj.dataBind();
+
+        widthObj = document.getElementById("width").ej2_instances[0];
+        widthObj.value = selectedAnnotation.width;
+        widthObj.dataBind();
+
+        heightObj = document.getElementById("height").ej2_instances[0];
+        heightObj.value = selectedAnnotation.height;
+        heightObj.dataBind();
+
+        shapeOpacityObj = document.getElementById("shapeOpacity").ej2_instances[0];
+        shapeOpacityObj.value = selectedAnnotation.opacity;
+        shapeOpacityObj.dataBind();
+
+        FillcolorpickerObj = document.getElementById("fillColorinput").ej2_instances[0];
+        FillcolorpickerObj.value = selectedAnnotation.fillColor;
+        FillcolorpickerObj.dataBind();
+
+        strokeColorObj = document.getElementById("strokeColorinput").ej2_instances[0];
+        strokeColorObj.value = selectedAnnotation.strokeColor;
+        strokeColorObj.dataBind();
+
+        fontColorpickerObj = document.getElementById("fontColorInput").ej2_instances[0];
+        fontColorpickerObj.value = selectedAnnotation.fontColor;
+        fontColorpickerObj.dataBind();
+
+        strokeThickenssObj = document.getElementById("strokeThickenss").ej2_instances[0];
+        strokeThickenssObj.value = selectedAnnotation.thickness;
+        strokeThickenssObj.dataBind();
+
+        X1positionObj = document.getElementById("X1position").ej2_instances[0];
+        X1positionObj.value = selectedAnnotation.vertexX1;
+        X1positionObj.dataBind();
+
+        X2positionObj = document.getElementById("X2position").ej2_instances[0];
+        X2positionObj.value = selectedAnnotation.vertexX2;
+        X2positionObj.dataBind();
+
+        Y1positionObj = document.getElementById("Y1position").ej2_instances[0];
+        Y1positionObj.value = selectedAnnotation.vertexY1;
+        Y1positionObj.dataBind();
+
+        Y2positionObj = document.getElementById("Y2position").ej2_instances[0];
+        Y2positionObj.value = selectedAnnotation.vertexY2;
+        Y2positionObj.dataBind();
+
+        leaderLengthObj = document.getElementById("leaderLength").ej2_instances[0];
+        leaderLengthObj.value = selectedAnnotation.leaderLength;
+        leaderLengthObj.dataBind();
+
+        defaultTextObj = document.getElementById("defaultText").ej2_instances[0];
+        defaultTextObj.value = selectedAnnotation.defaultText;
+        defaultTextObj.dataBind();
+
+        fontSizeObj = document.getElementById("fontSize").ej2_instances[0];
+        fontSizeObj.value = selectedAnnotation.fontSize;
+        fontSizeObj.dataBind();
+
+        printAnnotationCheckBoxObj = document.getElementById("printAnnotationCheckBox").ej2_instances[0];
+        lockAnnotationCheckBoxObj = document.getElementById("lockAnnotationCheckBox").ej2_instances[0];
+
+        authorNameObj = document.getElementById("authorName").ej2_instances[0];
+        authorNameObj.value = selectedAnnotation.author;
+        authorNameObj.dataBind();
+
+        commentObj = document.getElementById("comment").ej2_instances[0];
+        commentObj.value = selectedAnnotation.comment;
+        commentObj.dataBind();
+
+        replyCheckBoxObj = document.getElementById("replyCheckbox-isTrue").ej2_instances[0];
+
+        replyAuthorNameObj = document.getElementById("replyAuthorName").ej2_instances[0];
+        replyAuthorNameObj.value = selectedAnnotation.replyAuthor;
+        replyAuthorNameObj.dataBind();
+
+        replyCommentObj = document.getElementById("replyComment").ej2_instances[0];
+        replyCommentObj.value = selectedAnnotation.replyComment;
+        replyCommentObj.dataBind();
+
+        checkList = document.getElementById("interactionsDropDownTree").ej2_instances[0];
+        checkList.value = selectedAnnotation.allowedInteractions;
+        checkList.dataBind();
+
+        addVertexButtonObj = document.getElementById("addVertexButton").ej2_instances[0];
+        deleteVertexButtonObj = document.getElementById("deleteVertexButton").ej2_instances[0];
+
+        addBoundsButtonobj = document.getElementById("primarybtn").ej2_instances[0];
+        deletebutton = document.getElementById("outlinebtn").ej2_instances[0];
+
+        addreplyButtonObj = document.getElementById("addReplybutton").ej2_instances[0];
+        editReplyButtonObj = document.getElementById("editReplyButton").ej2_instances[0];
+
+        contextMenuObj = document.getElementById("contextMenu").ej2_instances[0];
+
+        annotationSettings = () => {
+            var viewer = document.getElementById('pdfviewer').ej2_instances[0];
+            return {
+                offset: { x: selectedAnnotation.x, y: selectedAnnotation.y },
+                isPrint: selectedAnnotation.isPrint,
+                isLock: selectedAnnotation.isLocked,
+                pageNumber: selectedAnnotation.pageNumber,
+                width: selectedAnnotation.width,
+                height: selectedAnnotation.height,
+                opacity: selectedAnnotation.opacity / 100,
+                thickness: selectedAnnotation.thickness,
+                strokeColor: selectedAnnotation.strokeColor,
+                fillColor: selectedAnnotation.fillColor,
+                bounds: (selectedAnnotation.bounds && selectedAnnotation.bounds.length > 0) ? selectedAnnotation.bounds.map((item) => ({x: item.X, y: item.Y, width: item.Width, height: item.Height})) : 
+                    [{ 
+                        x: selectedAnnotation.x, 
+                        y: selectedAnnotation.y, 
+                        width: selectedAnnotation.width, 
+                        height: selectedAnnotation.height 
+                    }],
+                vertexPoints: selectedAnnotation.vertexPoints,
+                fontFamily: selectedAnnotation.fontFamily,
+                fontStyle: selectedAnnotation.fontStyle,
+                fontSize: selectedAnnotation.fontSize,
+                defaultText: selectedAnnotation.defaultText,
+                alignment: selectedAnnotation.alignment,
+                author: selectedAnnotation.author,
+                setState: selectedAnnotation.state,
+                note: selectedAnnotation.comment,
+                replyAuthor: selectedAnnotation.replyAuthor,
+                replyState: selectedAnnotation.replyState,
+                replyComment: selectedAnnotation.replyComment,
+                modifiedDate: selectedAnnotation.modifiedDate,
+                replyModifiedDate: selectedAnnotation.replyModifiedDate,
+                lineHeadEndStyle: viewer.annotation.getArrowString(selectedAnnotation.lineHeadEndStyle),
+                lineHeadStartStyle: viewer.annotation.getArrowString(selectedAnnotation.lineHeadStartStyle),
+                leaderLength: selectedAnnotation.leaderLength,
+                inkAnnotationType: selectedAnnotation.inkAnnotationType,
+                color: selectedAnnotation.fillColor,
+                allowedInteractions: selectedAnnotation.allowedInteractions,
+                dynamicStamps: dynamicStampsList,
+                signStamps: signHereStampsList,
+                standardBusinessStamps: standardBusinessStampsList,
+                path: selectedAnnotation.path,
+                fontColor: selectedAnnotation.fontColor,
+                borderColor: selectedAnnotation.strokeColor,
+                customStamps: [{
+                    customStampImageSource: selectedAnnotation.customStampImageSource,
+                    customStampName: selectedAnnotation.customStampName
+                }]
+            }
+        };
+        addbutton = document.getElementById("addAnnotationButton").ej2_instances[0];
+
+        updateButton = document.getElementById("updateAnnotationButton").ej2_instances[0];
+
+        updateButton.element.onclick = updateChangesAnnotation;
+        updateButton.disabled = true;
+        addbutton.element.onclick = function () {
+            var viewer = document.getElementById('pdfviewer').ej2_instances[0];
+            let currentAnnotationSettings = annotationSettings();
+            switch (selectedAnnotation.annotationType) {
+                case "Highlight":
+                case "Underline":
+                case "Strikethrough":
+                case "Squiggly": {
+                    viewer.annotation.addAnnotation(selectedAnnotation.annotationType, currentAnnotationSettings);
+                    break;
+                }
+                case "Rectangle":
+                case "Circle":
+                case "Radius":
+                case "StickyNotes":
+                case "FreeText": {
+                    viewer.annotation.addAnnotation(selectedAnnotation.annotationType, currentAnnotationSettings);
+                    break;
+                }
+                case "Line":
+                case "Distance":
+                case "Arrow": {
+                    selectedAnnotation.vertexPoints = [{ x: selectedAnnotation.vertexX1, y: selectedAnnotation.vertexY1 },
+                        { x: selectedAnnotation.vertexX2, y: selectedAnnotation.vertexY2 }];
+                    selectedAnnotation.offset = {x: selectedAnnotation.vertexX1, y: selectedAnnotation.vertexY1};
+                    currentAnnotationSettings = annotationSettings();
+                    viewer.annotation.addAnnotation(selectedAnnotation.annotationType, currentAnnotationSettings);
+                    selectedAnnotation.vertexPoints = [];
+                    break;
+                }
+                case "Polygon":
+                case "Perimeter":
+                case "Area":
+                case "Volume": {
+                    if (selectedAnnotation.vertexPoints.length === 0) {
+                        if (selectedAnnotation.annotationType === "Polygon") {
+                            selectedAnnotation.vertexPoints = [{ x: 100, y: 39 }, { x: 142, y: 10 }, { x: 189, y: 38 }, { x: 178, y: 81 }, { x: 111, y: 81 }, { x: 100, y: 39 }];
+                        }
+                        else if (selectedAnnotation.annotationType === "Perimeter") {
+                            selectedAnnotation.vertexPoints = [{ x: 100, y: 100 }, { x: 185, y: 100 }, { x: 186, y: 162 }];
+                        }
+                        else if (selectedAnnotation.annotationType === "Area") {
+                            selectedAnnotation.vertexPoints = [{ x: 100, y: 100 }, { x: 188, y: 99 }, { x: 189, y: 153 }, { x: 100, y: 100 }];
+                        }
+                        else if (selectedAnnotation.annotationType === "Volume") {
+                            selectedAnnotation.vertexPoints = [{ x: 100, y: 100 }, { x: 100, y: 209 }, { x: 220, y: 209 }, { x: 220, y: 99 }, { x: 100, y: 100 }];
+                        }
+                        currentAnnotationSettings = annotationSettings();
+                    }
+                    viewer.annotation.addAnnotation(selectedAnnotation.annotationType, currentAnnotationSettings);
+                    break;
+                }
+                case "Ink": {
+                    if (selectedAnnotation.inkAnnotationType === "Syncfusion") {
+                        selectedAnnotation.path = '[{\"command\":\"M\",\"x\":244.83334350585938,\"y\":982.0000305175781},{\"command\":\"L\",\"x\":244.83334350585938,\"y\":982.0000305175781},{\"command\":\"L\",\"x\":250.83334350585938,\"y\":953.3333435058594},{\"command\":\"L\",\"x\":252.83334350585938,\"y\":946.0000305175781},{\"command\":\"L\",\"x\":254.16668701171875,\"y\":940.6667175292969},{\"command\":\"L\",\"x\":256.8333435058594,\"y\":931.3333435058594},{\"command\":\"L\",\"x\":257.5,\"y\":929.3333435058594},{\"command\":\"L\",\"x\":258.8333435058594,\"y\":926.6667175292969},{\"command\":\"L\",\"x\":259.5,\"y\":924.0000305175781},{\"command\":\"L\",\"x\":259.5,\"y\":922.6667175292969},{\"command\":\"L\",\"x\":258.8333435058594,\"y\":922.0000305175781},{\"command\":\"L\",\"x\":258.16668701171875,\"y\":922.0000305175781},{\"command\":\"L\",\"x\":256.8333435058594,\"y\":922.0000305175781},{\"command\":\"L\",\"x\":256.16668701171875,\"y\":922.6667175292969},{\"command\":\"L\",\"x\":254.83334350585938,\"y\":923.3333435058594},{\"command\":\"L\",\"x\":254.16668701171875,\"y\":923.3333435058594},{\"command\":\"L\",\"x\":253.5,\"y\":923.3333435058594},{\"command\":\"L\",\"x\":252.83334350585938,\"y\":925.3333435058594},{\"command\":\"L\",\"x\":252.83334350585938,\"y\":927.3333435058594},{\"command\":\"L\",\"x\":252.83334350585938,\"y\":936.0000305175781},{\"command\":\"L\",\"x\":253.5,\"y\":940.6667175292969},{\"command\":\"L\",\"x\":254.83334350585938,\"y\":944.6667175292969},{\"command\":\"L\",\"x\":260.16668701171875,\"y\":952.0000305175781},{\"command\":\"L\",\"x\":264.16668701171875,\"y\":954.0000305175781},{\"command\":\"L\",\"x\":274.16668701171875,\"y\":958.6667175292969},{\"command\":\"L\",\"x\":278.16668701171875,\"y\":960.0000305175781},{\"command\":\"L\",\"x\":281.5,\"y\":961.3333435058594},{\"command\":\"L\",\"x\":285.5,\"y\":964.6667175292969},{\"command\":\"L\",\"x\":286.8333740234375,\"y\":967.3333435058594},{\"command\":\"L\",\"x\":286.8333740234375,\"y\":970.0000305175781},{\"command\":\"L\",\"x\":282.8333740234375,\"y\":978.6667175292969},{\"command\":\"L\",\"x\":278.16668701171875,\"y\":983.3333435058594},{\"command\":\"L\",\"x\":266.16668701171875,\"y\":991.3333435058594},{\"command\":\"L\",\"x\":259.5,\"y\":993.3333435058594},{\"command\":\"L\",\"x\":252.16668701171875,\"y\":994.0000305175781},{\"command\":\"L\",\"x\":240.83334350585938,\"y\":991.3333435058594},{\"command\":\"L\",\"x\":236.16668701171875,\"y\":988.6667175292969},{\"command\":\"L\",\"x\":230.16668701171875,\"y\":982.6667175292969},{\"command\":\"L\",\"x\":228.83334350585938,\"y\":980.6667175292969},{\"command\":\"L\",\"x\":228.16668701171875,\"y\":978.6667175292969},{\"command\":\"L\",\"x\":228.83334350585938,\"y\":974.6667175292969},{\"command\":\"L\",\"x\":230.16668701171875,\"y\":973.3333435058594},{\"command\":\"L\",\"x\":236.16668701171875,\"y\":971.3333435058594},{\"command\":\"L\",\"x\":240.83334350585938,\"y\":971.3333435058594},{\"command\":\"L\",\"x\":246.16668701171875,\"y\":972.0000305175781},{\"command\":\"L\",\"x\":257.5,\"y\":974.6667175292969},{\"command\":\"L\",\"x\":262.8333435058594,\"y\":976.0000305175781},{\"command\":\"L\",\"x\":269.5,\"y\":977.3333435058594},{\"command\":\"L\",\"x\":276.16668701171875,\"y\":978.6667175292969},{\"command\":\"L\",\"x\":279.5,\"y\":978.0000305175781},{\"command\":\"L\",\"x\":285.5,\"y\":976.6667175292969},{\"command\":\"L\",\"x\":288.16668701171875,\"y\":974.6667175292969},{\"command\":\"L\",\"x\":292.8333740234375,\"y\":969.3333435058594},{\"command\":\"L\",\"x\":293.5,\"y\":966.6667175292969},{\"command\":\"L\",\"x\":294.16668701171875,\"y\":964.0000305175781},{\"command\":\"L\",\"x\":293.5,\"y\":960.0000305175781},{\"command\":\"L\",\"x\":293.5,\"y\":958.0000305175781},{\"command\":\"L\",\"x\":292.8333740234375,\"y\":956.6667175292969},{\"command\":\"L\",\"x\":291.5,\"y\":954.6667175292969},{\"command\":\"L\",\"x\":291.5,\"y\":954.0000305175781},{\"command\":\"L\",\"x\":291.5,\"y\":953.3333435058594},{\"command\":\"L\",\"x\":291.5,\"y\":954.0000305175781},{\"command\":\"L\",\"x\":292.16668701171875,\"y\":954.6667175292969},{\"command\":\"L\",\"x\":292.8333740234375,\"y\":956.0000305175781},{\"command\":\"L\",\"x\":294.16668701171875,\"y\":961.3333435058594},{\"command\":\"L\",\"x\":295.5,\"y\":964.6667175292969},{\"command\":\"L\",\"x\":297.5,\"y\":969.3333435058594},{\"command\":\"L\",\"x\":298.8333740234375,\"y\":970.6667175292969},{\"command\":\"L\",\"x\":301.5,\"y\":970.0000305175781},{\"command\":\"L\",\"x\":304.16668701171875,\"y\":968.6667175292969},{\"command\":\"L\",\"x\":305.5,\"y\":966.0000305175781},{\"command\":\"L\",\"x\":308.8333740234375,\"y\":960.0000305175781},{\"command\":\"L\",\"x\":310.16668701171875,\"y\":957.3333435058594},{\"command\":\"L\",\"x\":310.8333740234375,\"y\":956.0000305175781},{\"command\":\"L\",\"x\":310.8333740234375,\"y\":954.6667175292969},{\"command\":\"L\",\"x\":310.8333740234375,\"y\":954.0000305175781},{\"command\":\"L\",\"x\":311.5,\"y\":956.0000305175781},{\"command\":\"L\",\"x\":312.8333740234375,\"y\":959.3333435058594},{\"command\":\"L\",\"x\":316.16668701171875,\"y\":968.0000305175781},{\"command\":\"L\",\"x\":317.5,\"y\":972.6667175292969},{\"command\":\"L\",\"x\":318.16668701171875,\"y\":977.3333435058594},{\"command\":\"L\",\"x\":319.5,\"y\":983.3333435058594},{\"command\":\"L\",\"x\":319.5,\"y\":986.0000305175781},{\"command\":\"L\",\"x\":319.5,\"y\":988.0000305175781},{\"command\":\"L\",\"x\":318.8333740234375,\"y\":988.0000305175781},{\"command\":\"L\",\"x\":318.16668701171875,\"y\":988.6667175292969},{\"command\":\"L\",\"x\":316.16668701171875,\"y\":987.3333435058594},{\"command\":\"L\",\"x\":314.8333740234375,\"y\":985.3333435058594},{\"command\":\"L\",\"x\":314.16668701171875,\"y\":980.6667175292969},{\"command\":\"L\",\"x\":314.8333740234375,\"y\":974.6667175292969},{\"command\":\"L\",\"x\":316.16668701171875,\"y\":969.3333435058594},{\"command\":\"L\",\"x\":319.5,\"y\":960.6667175292969},{\"command\":\"L\",\"x\":320.16668701171875,\"y\":957.3333435058594},{\"command\":\"L\",\"x\":321.5,\"y\":955.3333435058594},{\"command\":\"L\",\"x\":322.16668701171875,\"y\":953.3333435058594},{\"command\":\"L\",\"x\":322.8333740234375,\"y\":952.6667175292969},{\"command\":\"L\",\"x\":324.16668701171875,\"y\":952.6667175292969},{\"command\":\"L\",\"x\":324.8333740234375,\"y\":953.3333435058594},{\"command\":\"L\",\"x\":326.8333740234375,\"y\":956.0000305175781},{\"command\":\"L\",\"x\":328.16668701171875,\"y\":958.0000305175781},{\"command\":\"L\",\"x\":328.8333740234375,\"y\":960.0000305175781},{\"command\":\"L\",\"x\":329.5,\"y\":962.0000305175781},{\"command\":\"L\",\"x\":330.16668701171875,\"y\":962.0000305175781},{\"command\":\"L\",\"x\":330.16668701171875,\"y\":962.6667175292969},{\"command\":\"L\",\"x\":330.16668701171875,\"y\":962.0000305175781},{\"command\":\"L\",\"x\":330.8333740234375,\"y\":960.0000305175781},{\"command\":\"L\",\"x\":331.5,\"y\":956.0000305175781},{\"command\":\"L\",\"x\":332.8333740234375,\"y\":952.0000305175781},{\"command\":\"L\",\"x\":333.5,\"y\":950.0000305175781},{\"command\":\"L\",\"x\":334.8333740234375,\"y\":948.6667175292969},{\"command\":\"L\",\"x\":335.5,\"y\":948.6667175292969},{\"command\":\"L\",\"x\":336.16668701171875,\"y\":948.6667175292969},{\"command\":\"L\",\"x\":337.5,\"y\":950.6667175292969},{\"command\":\"L\",\"x\":338.8333740234375,\"y\":952.0000305175781},{\"command\":\"L\",\"x\":340.8333740234375,\"y\":954.0000305175781},{\"command\":\"L\",\"x\":341.5,\"y\":954.0000305175781},{\"command\":\"L\",\"x\":342.8333740234375,\"y\":954.6667175292969},{\"command\":\"L\",\"x\":344.8333740234375,\"y\":954.0000305175781},{\"command\":\"L\",\"x\":346.8333740234375,\"y\":952.6667175292969},{\"command\":\"L\",\"x\":349.5,\"y\":949.3333435058594},{\"command\":\"L\",\"x\":350.8333740234375,\"y\":948.0000305175781},{\"command\":\"L\",\"x\":351.5,\"y\":946.6667175292969},{\"command\":\"L\",\"x\":352.8333740234375,\"y\":944.0000305175781},{\"command\":\"L\",\"x\":352.8333740234375,\"y\":943.3333435058594},{\"command\":\"L\",\"x\":354.16668701171875,\"y\":942.0000305175781},{\"command\":\"L\",\"x\":354.8333740234375,\"y\":942.0000305175781},{\"command\":\"L\",\"x\":354.8333740234375,\"y\":942.6667175292969},{\"command\":\"L\",\"x\":354.16668701171875,\"y\":943.3333435058594},{\"command\":\"L\",\"x\":354.16668701171875,\"y\":946.6667175292969},{\"command\":\"L\",\"x\":354.16668701171875,\"y\":950.0000305175781},{\"command\":\"L\",\"x\":355.5,\"y\":956.0000305175781},{\"command\":\"L\",\"x\":356.16668701171875,\"y\":957.3333435058594},{\"command\":\"L\",\"x\":358.16668701171875,\"y\":959.3333435058594},{\"command\":\"L\",\"x\":360.16668701171875,\"y\":958.0000305175781},{\"command\":\"L\",\"x\":364.16668701171875,\"y\":956.0000305175781},{\"command\":\"L\",\"x\":370.8333740234375,\"y\":948.6667175292969},{\"command\":\"L\",\"x\":373.5,\"y\":943.3333435058594},{\"command\":\"L\",\"x\":375.5,\"y\":937.3333435058594},{\"command\":\"L\",\"x\":376.16668701171875,\"y\":933.3333435058594},{\"command\":\"L\",\"x\":376.8333740234375,\"y\":931.3333435058594},{\"command\":\"L\",\"x\":376.8333740234375,\"y\":930.0000305175781},{\"command\":\"L\",\"x\":376.8333740234375,\"y\":929.3333435058594},{\"command\":\"L\",\"x\":376.16668701171875,\"y\":930.0000305175781},{\"command\":\"L\",\"x\":375.5,\"y\":932.0000305175781},{\"command\":\"L\",\"x\":375.5,\"y\":937.3333435058594},{\"command\":\"L\",\"x\":374.8333740234375,\"y\":953.3333435058594},{\"command\":\"L\",\"x\":374.8333740234375,\"y\":960.6667175292969},{\"command\":\"L\",\"x\":375.5,\"y\":966.0000305175781},{\"command\":\"L\",\"x\":377.5,\"y\":974.6667175292969},{\"command\":\"L\",\"x\":378.16668701171875,\"y\":977.3333435058594},{\"command\":\"L\",\"x\":380.8333740234375,\"y\":981.3333435058594},{\"command\":\"L\",\"x\":382.16668701171875,\"y\":982.6667175292969},{\"command\":\"L\",\"x\":383.5,\"y\":982.6667175292969},{\"command\":\"L\",\"x\":387.5,\"y\":982.6667175292969},{\"command\":\"L\",\"x\":389.5,\"y\":980.6667175292969},{\"command\":\"L\",\"x\":392.16668701171875,\"y\":976.6667175292969},{\"command\":\"L\",\"x\":392.8333740234375,\"y\":973.3333435058594},{\"command\":\"L\",\"x\":392.16668701171875,\"y\":970.0000305175781},{\"command\":\"L\",\"x\":388.8333740234375,\"y\":965.3333435058594},{\"command\":\"L\",\"x\":385.5,\"y\":964.0000305175781},{\"command\":\"L\",\"x\":382.8333740234375,\"y\":964.0000305175781},{\"command\":\"L\",\"x\":377.5,\"y\":964.0000305175781},{\"command\":\"L\",\"x\":375.5,\"y\":964.6667175292969},{\"command\":\"L\",\"x\":373.5,\"y\":965.3333435058594},{\"command\":\"L\",\"x\":374.8333740234375,\"y\":963.3333435058594},{\"command\":\"L\",\"x\":376.8333740234375,\"y\":961.3333435058594},{\"command\":\"L\",\"x\":382.16668701171875,\"y\":956.0000305175781},{\"command\":\"L\",\"x\":384.16668701171875,\"y\":953.3333435058594},{\"command\":\"L\",\"x\":387.5,\"y\":950.6667175292969},{\"command\":\"L\",\"x\":388.16668701171875,\"y\":952.0000305175781},{\"command\":\"L\",\"x\":388.16668701171875,\"y\":952.6667175292969},{\"command\":\"L\",\"x\":388.8333740234375,\"y\":954.0000305175781},{\"command\":\"L\",\"x\":388.8333740234375,\"y\":954.6667175292969},{\"command\":\"L\",\"x\":389.5,\"y\":959.3333435058594},{\"command\":\"L\",\"x\":389.5,\"y\":960.6667175292969},{\"command\":\"L\",\"x\":390.16668701171875,\"y\":961.3333435058594},{\"command\":\"L\",\"x\":390.8333740234375,\"y\":960.6667175292969},{\"command\":\"L\",\"x\":393.5,\"y\":958.0000305175781},{\"command\":\"L\",\"x\":396.8333740234375,\"y\":954.0000305175781},{\"command\":\"L\",\"x\":398.16668701171875,\"y\":952.0000305175781},{\"command\":\"L\",\"x\":400.16668701171875,\"y\":949.3333435058594},{\"command\":\"L\",\"x\":400.16668701171875,\"y\":948.6667175292969},{\"command\":\"L\",\"x\":400.8333740234375,\"y\":948.0000305175781},{\"command\":\"L\",\"x\":400.8333740234375,\"y\":947.3333435058594},{\"command\":\"L\",\"x\":401.5,\"y\":948.0000305175781},{\"command\":\"L\",\"x\":402.16668701171875,\"y\":949.3333435058594},{\"command\":\"L\",\"x\":403.5,\"y\":950.6667175292969},{\"command\":\"L\",\"x\":404.8333740234375,\"y\":953.3333435058594},{\"command\":\"L\",\"x\":406.16668701171875,\"y\":954.0000305175781},{\"command\":\"L\",\"x\":407.5,\"y\":954.0000305175781},{\"command\":\"L\",\"x\":410.16668701171875,\"y\":952.0000305175781},{\"command\":\"L\",\"x\":412.16668701171875,\"y\":949.3333435058594},{\"command\":\"L\",\"x\":414.16668701171875,\"y\":944.6667175292969},{\"command\":\"L\",\"x\":414.16668701171875,\"y\":942.0000305175781},{\"command\":\"L\",\"x\":414.16668701171875,\"y\":940.6667175292969},{\"command\":\"L\",\"x\":414.16668701171875,\"y\":938.6667175292969},{\"command\":\"L\",\"x\":414.16668701171875,\"y\":938.0000305175781},{\"command\":\"L\",\"x\":415.5,\"y\":939.3333435058594},{\"command\":\"L\",\"x\":418.8333740234375,\"y\":942.6667175292969},{\"command\":\"L\",\"x\":420.16668701171875,\"y\":945.3333435058594},{\"command\":\"L\",\"x\":421.5,\"y\":946.6667175292969},{\"command\":\"L\",\"x\":422.8333740234375,\"y\":950.0000305175781},{\"command\":\"L\",\"x\":423.5,\"y\":950.6667175292969},{\"command\":\"L\",\"x\":423.5,\"y\":953.3333435058594},{\"command\":\"L\",\"x\":422.8333740234375,\"y\":954.0000305175781},{\"command\":\"L\",\"x\":421.5,\"y\":955.3333435058594},{\"command\":\"L\",\"x\":421.5,\"y\":956.0000305175781},{\"command\":\"L\",\"x\":422.16668701171875,\"y\":954.6667175292969},{\"command\":\"L\",\"x\":422.8333740234375,\"y\":954.0000305175781},{\"command\":\"L\",\"x\":424.8333740234375,\"y\":950.6667175292969},{\"command\":\"L\",\"x\":425.5,\"y\":948.6667175292969},{\"command\":\"L\",\"x\":428.16668701171875,\"y\":945.3333435058594},{\"command\":\"L\",\"x\":428.8333740234375,\"y\":943.3333435058594},{\"command\":\"L\",\"x\":428.8333740234375,\"y\":942.6667175292969},{\"command\":\"L\",\"x\":428.8333740234375,\"y\":943.3333435058594},{\"command\":\"L\",\"x\":428.8333740234375,\"y\":945.3333435058594},{\"command\":\"L\",\"x\":428.8333740234375,\"y\":948.0000305175781},{\"command\":\"L\",\"x\":428.8333740234375,\"y\":950.0000305175781},{\"command\":\"L\",\"x\":429.5,\"y\":953.3333435058594},{\"command\":\"L\",\"x\":430.16668701171875,\"y\":953.3333435058594},{\"command\":\"L\",\"x\":432.8333740234375,\"y\":952.6667175292969},{\"command\":\"L\",\"x\":434.8333740234375,\"y\":950.6667175292969},{\"command\":\"L\",\"x\":437.5,\"y\":948.6667175292969},{\"command\":\"L\",\"x\":440.16668701171875,\"y\":944.6667175292969},{\"command\":\"L\",\"x\":441.5,\"y\":942.6667175292969},{\"command\":\"L\",\"x\":442.16668701171875,\"y\":942.0000305175781},{\"command\":\"L\",\"x\":442.8333740234375,\"y\":941.3333435058594},{\"command\":\"L\",\"x\":442.8333740234375,\"y\":942.0000305175781},{\"command\":\"L\",\"x\":442.8333740234375,\"y\":943.3333435058594},{\"command\":\"L\",\"x\":442.8333740234375,\"y\":944.6667175292969},{\"command\":\"L\",\"x\":442.8333740234375,\"y\":946.0000305175781},{\"command\":\"L\",\"x\":443.5,\"y\":949.3333435058594},{\"command\":\"L\",\"x\":444.16668701171875,\"y\":950.6667175292969},{\"command\":\"L\",\"x\":445.5,\"y\":950.6667175292969},{\"command\":\"L\",\"x\":447.5,\"y\":950.6667175292969},{\"command\":\"L\",\"x\":450.16668701171875,\"y\":948.6667175292969},{\"command\":\"L\",\"x\":452.16668701171875,\"y\":945.3333435058594},{\"command\":\"L\",\"x\":453.5,\"y\":942.6667175292969},{\"command\":\"L\",\"x\":452.8333740234375,\"y\":938.6667175292969},{\"command\":\"L\",\"x\":452.16668701171875,\"y\":937.3333435058594},{\"command\":\"L\",\"x\":450.8333740234375,\"y\":936.6667175292969},{\"command\":\"L\",\"x\":448.8333740234375,\"y\":936.0000305175781},{\"command\":\"L\",\"x\":447.5,\"y\":936.6667175292969},{\"command\":\"L\",\"x\":446.16668701171875,\"y\":937.3333435058594},{\"command\":\"L\",\"x\":445.5,\"y\":938.6667175292969},{\"command\":\"L\",\"x\":445.5,\"y\":939.3333435058594},{\"command\":\"L\",\"x\":446.16668701171875,\"y\":939.3333435058594},{\"command\":\"L\",\"x\":446.8333740234375,\"y\":939.3333435058594},{\"command\":\"L\",\"x\":452.16668701171875,\"y\":937.3333435058594},{\"command\":\"L\",\"x\":454.8333740234375,\"y\":936.6667175292969},{\"command\":\"L\",\"x\":456.8333740234375,\"y\":936.0000305175781},{\"command\":\"L\",\"x\":459.5,\"y\":936.6667175292969},{\"command\":\"L\",\"x\":460.8333740234375,\"y\":937.3333435058594},{\"command\":\"L\",\"x\":461.5,\"y\":938.6667175292969},{\"command\":\"L\",\"x\":462.16668701171875,\"y\":942.0000305175781},{\"command\":\"L\",\"x\":462.16668701171875,\"y\":942.6667175292969},{\"command\":\"L\",\"x\":462.16668701171875,\"y\":944.0000305175781},{\"command\":\"L\",\"x\":462.16668701171875,\"y\":943.3333435058594},{\"command\":\"L\",\"x\":462.16668701171875,\"y\":942.6667175292969},{\"command\":\"L\",\"x\":462.16668701171875,\"y\":941.3333435058594},{\"command\":\"L\",\"x\":462.8333740234375,\"y\":938.6667175292969},{\"command\":\"L\",\"x\":464.16668701171875,\"y\":935.3333435058594},{\"command\":\"L\",\"x\":465.5,\"y\":933.3333435058594},{\"command\":\"L\",\"x\":466.16668701171875,\"y\":932.6667175292969},{\"command\":\"L\",\"x\":467.5,\"y\":933.3333435058594},{\"command\":\"L\",\"x\":469.5,\"y\":935.3333435058594},{\"command\":\"L\",\"x\":470.16668701171875,\"y\":938.6667175292969},{\"command\":\"L\",\"x\":472.8333740234375,\"y\":943.3333435058594},{\"command\":\"L\",\"x\":472.8333740234375,\"y\":944.6667175292969},{\"command\":\"L\",\"x\":474.16668701171875,\"y\":944.6667175292969},{\"command\":\"L\",\"x\":475.5,\"y\":944.0000305175781},{\"command\":\"L\",\"x\":478.16668701171875,\"y\":941.3333435058594},{\"command\":\"L\",\"x\":481.5,\"y\":937.3333435058594},{\"command\":\"L\",\"x\":484.8333740234375,\"y\":934.0000305175781},{\"command\":\"L\",\"x\":488.8333740234375,\"y\":929.3333435058594},{\"command\":\"L\",\"x\":489.5,\"y\":928.0000305175781}]'
+
+                    }
+                    else if (selectedAnnotation.inkAnnotationType === "PdfViewer") {
+                        selectedAnnotation.path = `M10,50 L10,65 M10,50 L25,50 L25,57.5 L10,57.5
+                        M40,50 L40,65 M40,50 L43,50 L55,55 L55,60 L43,65 L40,65
+                        M80,50 L80,65 M80,50 L95,50 M80,57.5 L95,57.5
+                        M110,50 L125,65 L140,50
+                        M160,50 L160,65 M155,50 L165,50 M155,65 L165,65
+                        M182,50 L192,65 L202,50 L212,65 L222,50
+                        M230,50 L230,65 M230,50 L240,50 M230,57.5 L240,57.5 M230,65 L240,65
+                        M255,50 L270,65 L285,50
+                        M295,50 L295,65 M290,50 L300,50 M290,65 L300,65
+                        M310,50 L310,65 M310,50 L325,50 M310,57.5 L325,57.5 M310,65 L325,65
+                        M340,50 L340,65 M340,50 L355,50 L355,57.5 L340,57.5 M340,57.5 L355,65`;
+                    }
+                    else if (selectedAnnotation.inkAnnotationType === "Star") {
+                        selectedAnnotation.path = '[{\"command\":\"M\",\"x\":72,\"y\":200},{\"command\":\"L\",\"x\":79,\"y\":65},{\"command\":\"L\",\"x\":92,\"y\":200},{\"command\":\"L\",\"x\":65,\"y\":110},{\"command\":\"L\",\"x\":95,\"y\":110},{\"command\":\"L\",\"x\":72,\"y\":200}]';
+                    }
+                    currentAnnotationSettings = annotationSettings();
+                    viewer.annotation.addAnnotation(selectedAnnotation.annotationType, currentAnnotationSettings)
+                    break;
+                }
+
+                case "Stamp":
+                    {
+                        currentAnnotationSettings.customStamps = null;
+                        var selectedStampComment = stampCommentListObj.value;
+                        if (stampTypeListObj.value === "Dynamic") {
+                            viewer.annotation.addAnnotation(selectedAnnotation.annotationType, currentAnnotationSettings, dynamicStampMap[selectedStampComment]);
+                        }
+                        else if (stampTypeListObj.value === "SignHere") {
+                            viewer.annotation.addAnnotation(selectedAnnotation.annotationType, currentAnnotationSettings, null, signHereStampMap[selectedStampComment]);
+                        }
+                        else if (stampTypeListObj.value === "StandardBusiness") {
+                            viewer.annotation.addAnnotation(selectedAnnotation.annotationType, currentAnnotationSettings, null, null, standardBusinessStampMap[selectedStampComment]);
+                        }
+                        break;
+                    }
+                case "CustomStamp":
+                    {
+                        viewer.annotation.addAnnotation("Stamp", currentAnnotationSettings);
+                        break;
+                    }
+            }
+            var newlyAddedAnnotation = viewer.annotationCollection[viewer.annotationCollection?.length - 1];
+            if (newlyAddedAnnotation) {
+                updateAnnotationComments(newlyAddedAnnotation);
+                viewer.annotation.editAnnotation(newlyAddedAnnotation);
+            }
+            selectedAnnotation.annotationSelected = false;
+            selectedAnnotation.replies = [];
+            displayReplies();
+        }
+    }
+    function removeFile() {
+        selectedAnnotation.customStampImageSource = "@Html.Raw(syncfusionLogo)";
+        document.querySelector(".upload-image").src = "@Html.Raw(syncfusionLogo)";
+        uploadObj.remove();
+        uploadObj.dataBind();
+    }
+    function onFileSuccess (args) {
+        var fileData = args.file.rawFile;
+        var preview = document.querySelector(".upload-image");
+        if (args.operation === "remove") {
+            if (preview) {
+                selectedAnnotation.customStampImageSource = "@Html.Raw(syncfusionLogo)";
+                preview.src = "@Html.Raw(syncfusionLogo)";
+            }
+            return;
+        }
+        if (fileData instanceof Blob) {
+            convertBlobToBase64(fileData).then(function (base64String) {
+                selectedAnnotation.customStampName = "Image";
+                selectedAnnotation.customStampImageSource = base64String;
+                if (preview) {
+                    preview.src = selectedAnnotation.customStampImageSource;
+                }
+            })
+            .catch(function (error) {
+                console.error("Failed to convert Blob to base64: ", error);
+            })
+        }
+        else {
+            console.error("Unexpected file data type: ", typeof fileData);
+        }
+    }
+    function convertBlobToBase64 (blob) {
+        return new Promise(function (resolve, reject) {
+            var reader = new FileReader();
+            reader.onloadend = function() {
+                resolve(reader.result);
+            }
+            reader.onerror = function() {
+                reject(reader.error);
+            }
+            reader.readAsDataURL(blob);
+        })
+    }
+    function onPrintAnnotationChecked(args) {
+        printAnnotationCheckBoxObj.checked = args.checked ?? false;
+        selectedAnnotation.isPrint = args.checked ?? false;
+        printAnnotationCheckBoxObj.dataBind();
+        onPropertiesValueChange("", {isInteracted: true});
+    }
+    function contextMenuItemSelected (args) {
+        switch (args.item.text) {
+            case 'Edit':
+                onReplyEdit(currentEditCommentId);
+                break;
+            case 'Delete':
+                onReplyDelete(currentEditCommentId);
+                break;
+        }
+    }
+    function onInteractionListChange (args) {
+        selectedAnnotation.allowedInteractions = args.value ?? ["None"];
+        if (selectedAnnotation.allowedInteractions.length === 0) {
+            selectedAnnotation.allowedInteractions = ["None"];
+        }
+        onPropertiesValueChange("", {isInteracted: true});
+    }
+    function onAnnotationChange(event) {
+        selectedAnnotation.annotationType = event.value;
+
+        var strokeProps = document.getElementById("e-pv-strokeProps");
+        var boundsButtons = document.getElementById("e-pv-boundsButtons");
+        var fillColor = document.getElementById("e-pv-fillColor");
+        var xyRow = document.getElementById("e-pv-XYRow");
+        var heightWidthRow = document.getElementById("e-pv-heightWidthRow");
+        var x1y1Row = document.getElementById("e-pv-X1Y1Row");
+        var x2y2Row = document.getElementById("e-pv-X2Y2Row");
+        var lineProps = document.getElementById("e-pv-lineProps");
+        var vertexButtons = document.getElementById("e-pv-vertexButtons");
+        var inkAnnotType = document.getElementById("e-pv-inkAnnotType");
+        var stampType = document.getElementById("e-pv-stampType");
+        var freeTextProps = document.getElementById("e-pv-freeTextProps");
+        var fileUploader = document.getElementById("e-pv-fileUploader");
+        var leaderLength = document.getElementById("e-pv-leaderLength");
+
+        strokeProps.hidden = true;
+        boundsButtons.hidden = true;
+        fillColor.hidden = true;
+        xyRow.hidden = true;
+        heightWidthRow.hidden = true;
+        x1y1Row.hidden = true;
+        x2y2Row.hidden = true;
+        lineProps.hidden = true;
+        vertexButtons.hidden = true;
+        inkAnnotType.hidden = true;
+        stampType.hidden = true;
+        freeTextProps.hidden = true;
+        fileUploader.hidden = true;
+        leaderLength.hidden = true;
+
+        switch (selectedAnnotation.annotationType) {
+            case 'Highlight':
+            case 'Underline':
+            case 'Strikethrough':
+            case 'Squiggly':
+                {
+                    boundsButtons.hidden = false;
+                    fillColor.hidden = false;
+                    xyRow.hidden = false;
+                    heightWidthRow.hidden = false;
+                    break;
+                }
+            case 'Line':
+            case 'Arrow':
+                {
+                    strokeProps.hidden = false;
+                    fillColor.hidden = false;
+                    x1y1Row.hidden = false;
+                    x2y2Row.hidden = false;
+                    lineProps.hidden = false;
+                    break;
+                }
+            case 'Rectangle':
+            case 'Circle':
+            case 'Radius':
+                {
+                    strokeProps.hidden = false;
+                    fillColor.hidden = false;
+                    xyRow.hidden = false;
+                    heightWidthRow.hidden = false;
+                    break;
+                }
+            case 'Polygon':
+            case 'Perimeter':
+            case 'Area':
+            case 'Volume':
+                {
+                    vertexButtons.hidden = false;
+                    xyRow.hidden = false;
+                    strokeProps.hidden = false;
+                    fillColor.hidden = false;
+                    break;
+                }
+            case 'Distance':
+                {
+                    strokeProps.hidden = false;
+                    fillColor.hidden = false;
+                    x1y1Row.hidden = false;
+                    x2y2Row.hidden = false;
+                    lineProps.hidden = false;
+                    leaderLength.hidden = false;
+                    break;
+                }
+            case 'StickyNotes':
+                {
+                    xyRow.hidden = false;
+                    heightWidthRow.hidden = false;
+                    break;
+                }
+            case 'Ink':
+                {
+                    strokeProps.hidden = false;
+                    fillColor.hidden = false;
+                    xyRow.hidden = false;
+                    heightWidthRow.hidden = false;
+                    inkAnnotType.hidden = false;
+                    break;
+                }
+            case 'Stamp':
+                {
+                    xyRow.hidden = false;
+                    heightWidthRow.hidden = false;
+                    break;
+                }
+            case 'FreeText':
+                {
+                    strokeProps.hidden = false;
+                    fillColor.hidden = false;
+                    xyRow.hidden = false;
+                    heightWidthRow.hidden = false;
+                    freeTextProps.hidden = false;
+                    break;
+                }
+            case 'CustomStamp':
+                {
+                    xyRow.hidden = false;
+                    heightWidthRow.hidden = false;
+                    break;
+                }
+        }
+        if (!isNullOrUndefined(event.isInteracted) && event.isInteracted) {
+            resetAnnotationProperties();
+        }
+    }
+
+    function onLockAnnotationChecked(args) {
+        lockAnnotationCheckBoxObj.checked = args.checked ?? false;
+        lockAnnotationCheckBoxObj.dataBind();
+        selectedAnnotation.isLocked = args.checked;
+
+        const allowedInteractions = document.getElementById('e-pv-allowedInteractions');
+        if (allowedInteractions) {
+            allowedInteractions.hidden = !(args.checked ?? false);
+        }
+        onPropertiesValueChange("", {isInteracted: true})
+    }
+
+    function showElement(show, id, className) {
+        let element;
+        if (!isNullOrUndefined(id)) {
+            element = document.getElementById(id);
+        }
+        else if (!isNullOrUndefined(className)) {
+            element = document.querySelector("." + className);
+        }
+
+        if (isNullOrUndefined(element)) {
+            return;
+        }
+        element.hidden = !show;
+    }
+
+    function disableElement (disable, id, className) {
+        let element;
+        if(!isNullOrUndefined(id)) {
+            element = document.getElementById(id);
+        }
+        else if (!isNullOrUndefined(className)) {
+            element = document.querySelector("." + className);
+        }
+        
+        if (isNullOrUndefined(element)) {
+            return;
+        }
+        element.disabled = disable;
+    }
+
+    function updateChangesAnnotation() {
+        let viewer = document.getElementById("pdfviewer").ej2_instances[0];
+        updateButton.disabled = true;
+        let annotationToUpdate = getAnnotationById(currentUpdateAnnotationId);
+        if (annotationToUpdate) {
+            let updatedValues = annotationUpdate(annotationToUpdate);
+            viewer.annotation.editAnnotation(updatedValues);
+        }
+    }
+
+    function onPropertiesValueChange(property, event) {
+        if (selectedAnnotation.annotationSelected && updateButton.disabled) {
+            if (!isNullOrUndefined(event.isInteracted) && event.isInteracted) {
+                updateButton.disabled = false;
+            }
+            else if (!isNullOrUndefined(event.event)) {
+                updateButton.disabled = false;
+            }
+            else {
+                updateButton.disabled = true;
+            }
+            let shapeAnnotation = selectedAnnotation.annotationType;
+            if (((property === "x") || (property === "y") || (property === "height") || (property === "width")) && ((shapeAnnotation === "Underline") || (shapeAnnotation === "Strikethrough") || (shapeAnnotation === "Highlight") || (shapeAnnotation === "Squiggly"))) {
+                updateButton.disabled = true;
+            }
+            if (((property === "x") || (property === "y")) && ((shapeAnnotation === "Polygon") || (shapeAnnotation === "Area") || (shapeAnnotation === "Perimeter") || (shapeAnnotation === "Volume"))) {
+                updateButton.disabled = true;
+            }
+        }
+        if (selectedAnnotation.hasOwnProperty(property)) {
+            if (!isNullOrUndefined(event.value)) {
+                selectedAnnotation[property] = event.value;
+            }
+            else if (!isNullOrUndefined(event.name)) {
+                selectedAnnotation[property] = event.name;
+            }
+        }
+        if (event && event.isInteracted && property === "stampComment") {
+            resetAnnotationProperties();
+        }
+    }
+    function onStampValueChange(event){
+        if (!event.isInteracted) {
+            return;
+        }
+        const selectedValue = event.value;
+        switch (selectedValue) {
+            case 'Dynamic':
+                currentCommentsList = dynamicStampsList;
+                selectedAnnotation.stampsType = "Dynamic";
+                selectedAnnotation.stampComment = "Approved";
+                break;
+            case 'SignHere':
+                currentCommentsList = signHereStampsList;
+                selectedAnnotation.stampsType = "SignHere";
+                selectedAnnotation.stampComment = "Accepted"
+                break;
+            case 'StandardBusiness':
+                currentCommentsList = standardBusinessStampsList;
+                selectedAnnotation.stampsType = "StandardBusiness";
+                selectedAnnotation.stampComment = "Approved";
+                break;
+            default:
+                currentCommentsList = [];
+        }
+        stampTypeListObj.value = event.value;
+        stampTypeListObj.dataBind();
+        stampCommentListObj.value = selectedAnnotation.stampComment;
+        stampCommentListObj.dataSource = currentCommentsList;
+        stampCommentListObj.dataBind();
+        resetAnnotationProperties();
+    }
+
+    function onAnnotationSelected(annotationSelectEventArgs) {
+        viewer.enableCommentPanel = true;
+        selectedAnnotation.annotationSelected = true;
+        currentUpdateAnnotationId = annotationSelectEventArgs.annotationId;
+        let currentAnnotation = getAnnotationById(currentUpdateAnnotationId);
+        if (currentAnnotation) {
+            addbutton.disabled = true;
+            updateButton.disabled = true;
+            annotationListObj.enabled = false;
+            pageNumberObj.enabled = false;
+            updateProperties(currentAnnotation);
+        }
+    }
+    function onAnnotationResized(annotationResizeEventArgs) {
+        selectedAnnotation.annotationSelected = true;
+        currentUpdateAnnotationId = annotationResizeEventArgs.annotationId;
+        let currentAnnotation = getAnnotationById(currentUpdateAnnotationId);
+        if (currentAnnotation) {
+            currentAnnotation.bounds = annotationResizeEventArgs.annotationBound;
+            updateProperties(currentAnnotation);
+        }
+    }
+    function onAnnotationMoved(annotationMoveEventArgs) {
+        selectedAnnotation.annotationSelected = true;
+        curretntUpdateAnnotationId = annotationMoveEventArgs.annotationId;
+        let currentAnnotation = getAnnotationById(currentUpdateAnnotationId);
+        if (currentAnnotation) {
+            currentAnnotation.bounds = annotationMoveEventArgs.currentPosition;
+            updateProperties(currentAnnotation);
+        }
+    }
+    function onAnnotationUnselected() {
+        viewer.enableCommentPanel = false;
+        selectedAnnotation.annotationSelected = false;
+        currentUpdateAnnotationId = "";
+        addbutton.disabled = false;
+        updateButton.disabled = true;
+        annotationListObj.enabled = true;
+        pageNumberObj.enabled = true;
+        resetAnnotationProperties();
+    }
+    function updateProperties(currentAnnotation) {
+        let viewer = document.getElementById('pdfviewer').ej2_instances[0];
+        selectedAnnotation.pageNumber = currentAnnotation.pageNumber + 1;
+        selectedAnnotation.fillColor = currentAnnotation.fillColor;
+        selectedAnnotation.strokeColor = currentAnnotation.strokeColor;
+
+        if (currentAnnotation.textMarkupAnnotationType === "Highlight" || currentAnnotation.textMarkupAnnotationType === "Underline" || currentAnnotation.textMarkupAnnotationType === "Strikethrough" || currentAnnotation.textMarkupAnnotationType === "Squiggly") {
+            selectedAnnotation.annotationType = currentAnnotation.textMarkupAnnotationType;
+        }
+        else if (currentAnnotation.shapeAnnotationType === "Square" && currentAnnotation.subject === "Rectangle") {
+            selectedAnnotation.annotationType = "Rectangle";
+        }
+        else if (currentAnnotation.shapeAnnotationType === "Line" && currentAnnotation.subject === "Arrow") {
+            selectedAnnotation.annotationType = "Arrow";
+        }
+        else if (currentAnnotation.shapeAnnotationType === "sticky") {
+            selectedAnnotation.annotationType = "StickyNotes";
+        }
+        else if (currentAnnotation.shapeAnnotationType === "stamp") {
+            if (currentAnnotation.stampAnnotationType) {
+                if (currentAnnotation.stampAnnotationType === "image") {
+                    selectedAnnotation.annotationType = "CustomStamp";
+                }
+                else if (currentAnnotation.stampAnnotationType === "path") {
+                    selectedAnnotation.annotationType = "Stamp";
+                }
+            }
+            else {
+                selectedAnnotation.annotationType = "Stamp";
+            }
+        }
+        else if (currentAnnotation.shapeAnnotationType === "Ink") {
+            selectedAnnotation.annotationType = "Ink";
+        }
+        else if (currentAnnotation.shapeAnnotationType === "Line" || currentAnnotation.shapeAnnotationType === "Polyline" || currentAnnotation.shapeAnnotationType === "Square" || currentAnnotation.shapeAnnotationType === "Circle" || currentAnnotation.shapeAnnotationType === "Polygon" && currentAnnotation.indent ) {
+            if (currentAnnotation.vertexPoints) {
+                selectedAnnotation.vertexPoints = currentAnnotation.vertexPoints;
+            }
+            if (currentAnnotation.indent === "LineDimension") {
+                selectedAnnotation.annotationType = "Distance";
+            }
+            else if (currentAnnotation.indent === "PolyLineDimension") {
+                selectedAnnotation.annotationType = "Perimeter";
+            }
+            else if (currentAnnotation.indent === "PolyLineDimension" && currentAnnotation.subject === "Arrow") {
+                selectedAnnotation.annotationType = "Arrow";
+            }
+            else if (currentAnnotation.indent === "PolygonDimension") {
+                selectedAnnotation.annotationType = "Area";
+            }
+            else if (currentAnnotation.indent === "PolygonRadius") {
+                selectedAnnotation.annotationType = "Radius";
+            }
+            else if (currentAnnotation.indent === "PolygonVolume") {
+                selectedAnnotation.annotationType = "Volume";
+            }
+            else if (currentAnnotation.shapeAnnotationType === "Line" && currentAnnotation.shapeAnnotationType === currentAnnotation.subject ) {
+                selectedAnnotation.annotationType = "Line";
+            }
+            else if (currentAnnotation.shapeAnnotationType === "Circle" && currentAnnotation.shapeAnnotationType === currentAnnotation.subject ) {
+                selectedAnnotation.annotationType = "Circle";
+            }
+        }
+        else {
+            selectedAnnotation.annotationType = currentAnnotation.shapeAnnotationType;
+            if (currentAnnotation.shapeAnnotationType === "Polygon") {
+                selectedAnnotation.vertexPoints = currentAnnotation.vertexPoints;
+            }
+        }
+
+        if (currentAnnotation.fillColor) {
+            selectedAnnotation.fillColor = currentAnnotation.fillColor;
+        }
+        // showInkAnnotationType = false;
+        if (selectedAnnotation.annotationType === "Highlight" || selectedAnnotation.annotationType === "Underline" || selectedAnnotation.annotationType === "Strikethrough" || selectedAnnotation.annotationType === "Squiggly") {
+            if (currentAnnotation.bounds[0] && currentAnnotation.bounds[0].X && currentAnnotation.bounds[0].Y && currentAnnotation.bounds[0].Width && currentAnnotation.bounds[0].Height) {
+                selectedAnnotation.bounds = currentAnnotation.bounds;
+                selectedAnnotation.width = currentAnnotation.bounds[0].Width;
+                selectedAnnotation.height = currentAnnotation.bounds[0].Height;
+                selectedAnnotation.x = currentAnnotation.bounds[0].X;
+                selectedAnnotation.y = currentAnnotation.bounds[0].Y;
+            }
+            else if (currentAnnotation.annotationAddMode && currentAnnotation.annotationAddMode === "UI Drawn Annotation") {
+                let annotBounds = currentAnnotation.bounds;
+                selectedAnnotation.bounds = [];
+                let totalWidth = 0, startX = 0, startY = 0;
+                if (annotBounds?.length > 1) {
+                    selectedAnnotation.x = annotBounds[0].left;
+                    selectedAnnotation.y = annotBounds[0].top;
+                    selectedAnnotation.height = annotBounds[0].height;
+                    let isFirstBound = true;
+                    let left = annotBounds[0].left, top = annotBounds[0].top;
+                    startX = annotBounds[0].left, startY = annotBounds[0].top;
+                    let width = annotBounds[0].width, height = annotBounds[0].height;
+                    annotBounds.forEach((element) => {
+                        left = element.left;
+                        width = element.width;
+                        height = element.height;
+                        if (top !== element.top) {
+                            if (isFirstBound) {
+                                selectedAnnotation.width = totalWidth;
+                                isFirstBound = false;
+                            }
+                            selectedAnnotation.bounds.push({
+                                X: startX,
+                                Y: startY,
+                                Width: totalWidth,
+                                Height: height
+                            });
+                            totalWidth = 0;
+                            top = element.top;
+                            startX = element.left;
+                            startY = element.top;
+                        }
+                        totalWidth += element.width;
+                    });
+                    if (totalWidth > 0) {
+                        selectedAnnotation.bounds.push({
+                            X: startX,
+                            Y: startY,
+                            Width: totalWidth,
+                            Height: annotBounds[annotBounds.length - 1].height
+                        });
+                        if (isFirstBound) {
+                            selectedAnnotation.width = totalWidth;
+                            isFirstBound = false;
+                        }
+                    }
+                }
+                else {
+                    selectedAnnotation.bounds = {
+                        X: currentAnnotation.bounds[0].left,
+                        Y: currentAnnotation.bounds[0].top,
+                        Height: currentAnnotation.bounds[0].height,
+                        Width: currentAnnotation.bounds[0].width
+                    };
+                    selectedAnnotation.width = currentAnnotation.bounds[0].width;
+                    selectedAnnotation.height = currentAnnotation.bounds[0].height;
+                    selectedAnnotation.x = currentAnnotation.bounds[0].left;
+                    selectedAnnotation.y = currentAnnotation.bounds[0].top;
+                }
+            }
+            selectedAnnotation.fillColor = currentAnnotation.color;
+        }
+        else if (selectedAnnotation.annotationType === "Line" || selectedAnnotation.annotationType === "Arrow" || selectedAnnotation.annotationType === "Distance") {
+            selectedAnnotation.vertexX1 = currentAnnotation.vertexPoints[0].x;
+            selectedAnnotation.vertexY1 = currentAnnotation.vertexPoints[0].y;
+            selectedAnnotation.vertexX2 = currentAnnotation.vertexPoints[1].x;
+            selectedAnnotation.vertexY2 = currentAnnotation.vertexPoints[1].y;
+            selectedAnnotation.vertexPoints = [];
+            if (selectedAnnotation.annotationType === "Distance") {
+                selectedAnnotation.leaderLength = currentAnnotation.leaderLength;
+            }
+        }
+        else if (selectedAnnotation.annotationType === "Ink") {
+            selectedAnnotation.width = currentAnnotation.bounds.width;
+            selectedAnnotation.height = currentAnnotation.bounds.height;
+            selectedAnnotation.x = currentAnnotation.bounds.x;
+            selectedAnnotation.y = currentAnnotation.bounds.y;
+            // showInkAnnotationType = true;            
+        }
+        else if (selectedAnnotation.annotationType === "FreeText") {
+            selectedAnnotation.width = currentAnnotation.bounds.width;
+            selectedAnnotation.height = currentAnnotation.bounds.height;
+            selectedAnnotation.x = currentAnnotation.bounds.left;
+            selectedAnnotation.y = currentAnnotation.bounds.top;
+            selectedAnnotation.defaultText = currentAnnotation.dynamicText;
+            selectedAnnotation.fontFamily = currentAnnotation.fontFamily;
+            selectedAnnotation.alignment = currentAnnotation.textAlign;
+            selectedAnnotation.fontSize = currentAnnotation.fontSize;
+            selectedAnnotation.fontColor = currentAnnotation.fontColor;
+            if (currentAnnotation.font) {
+                if (currentAnnotation.font.isBold) {
+                    selectedAnnotation.fontStyle = "Bold";
+                }
+                else if (currentAnnotation.font.isItalic) {
+                    selectedAnnotation.fontStyle = "Italic";
+                }
+                else if (currentAnnotation.font.isUnderline) {
+                    selectedAnnotation.fontStyle = "Underline";
+                }
+                else if (currentAnnotation.font.isStrikeout) {
+                    selectedAnnotation.fontStyle = "Strikethrough";
+                }
+                else {
+                    selectedAnnotation.fontStyle = "None";
+                }
+            }
+            else {
+                selectedAnnotation.fontStyle = "None";
+            }
+        }
+        else {
+            selectedAnnotation.width = currentAnnotation.bounds.width;
+            selectedAnnotation.height = currentAnnotation.bounds.height;
+            selectedAnnotation.x = currentAnnotation.bounds.left;
+            selectedAnnotation.y = currentAnnotation.bounds.top;
+        }
+        if (selectedAnnotation.annotationType === "Polygon" || selectedAnnotation.annotationType === "Perimeter" || selectedAnnotation.annotationType === "Area" || selectedAnnotation.annotationType === "Volume") {
+            selectedAnnotation.vertexPoints = currentAnnotation.vertexPoints;
+        }
+        if (currentAnnotation.lineHeadStartStyle && currentAnnotation.lineHeadEndStyle) {
+            selectedAnnotation.lineHeadStartStyle = currentAnnotation.lineHeadStartStyle;
+            selectedAnnotation.lineHeadEndStyle = currentAnnotation.lineHeadEndStyle;
+        }
+        else if (currentAnnotation.lineHeadStart && currentAnnotation.lineHeadEnd) {
+            selectedAnnotation.lineHeadStartStyle = viewer.annotation.getArrowType(currentAnnotation.lineHeadStart);
+            selectedAnnotation.lineHeadEndStyle = viewer.annotation.getArrowType(currentAnnotation.lineHeadEnd);
+        }
+        else {
+            if (selectedAnnotation.annotationType === "Line") {
+                selectedAnnotation.lineHeadStartStyle = "None";
+                selectedAnnotation.lineHeadEndStyle = "None";
+            }
+            else {
+                selectedAnnotation.lineHeadStartStyle = "Arrow";
+                selectedAnnotation.lineHeadEndStyle = "Arrow";
+            }
+        }
+        selectedAnnotation.isPrint = currentAnnotation.isPrint ?? false;
+        selectedAnnotation.isLocked = currentAnnotation.annotationSettings.isLock;
+        if (selectedAnnotation.isLocked) {
+            selectedAnnotation.allowedInteractions = currentAnnotation.allowedInteractions;
+        }
+        else {
+            selectedAnnotation.allowedInteractions = ["None"];
+        }
+        selectedAnnotation.opacity = currentAnnotation.opacity >= 100 ? 100 : currentAnnotation.opacity * 100;
+        selectedAnnotation.thickness = currentAnnotation.thickness;
+        selectedAnnotation.strokeColor = currentAnnotation.strokeColor;
+        if (currentAnnotation.note) {
+            selectedAnnotation.comment = currentAnnotation.note;
+        }
+        else if (currentAnnotation.notes) {
+            selectedAnnotation.comment = currentAnnotation.notes;
+        }
+        else {
+            selectedAnnotation.comment = "";
+        }
+        selectedAnnotation.author = currentAnnotation.author;
+        selectedAnnotation.modifiedDate = currentAnnotation.modifiedDate;
+        selectedAnnotation.state = currentAnnotation.state;
+        selectedAnnotation.showStampType = false;
+        selectedAnnotation.disableInkAnnotField = true;
+        selectedAnnotation.showFileUploader = false;
+
+        selectedAnnotation.replies = [];
+        if (selectedAnnotation.replies.length === 0 && currentAnnotation.comments) {
+            if (currentAnnotation.comments.length > 0) {
+                currentAnnotation.comments.forEach((element) => {
+                    let reply = {};
+                    reply.id = element.annotName;
+                    reply.author = element.author;
+                    reply.note = element.note;
+                    reply.modifiedDate = element.modifiedDate;
+                    reply.state = element.state;
+                    selectedAnnotation.replies.push(reply);
+                });
+            }
+        }
+        if (selectedAnnotation.replies.length === 0 && currentAnnotation.replyComment) {
+            if (currentAnnotation.replyComment.length > 0) {
+                currentAnnotation.replyComment.forEach((comment) => {
+                    let reply = {};
+                    reply.id = generateRandomId();
+                    reply.author = selectedAnnotation.replyAuthor;
+                    reply.note = comment
+                    reply.modifiedDate = formatCurrentDate(new Date());
+                    reply.state = "None";
+                    selectedAnnotation.replies.push(reply);
+                });
+            }
+        }
+        console.log(selectedAnnotation);
+        updatePropertiesToPanel();
+
+    }
+    function getAnnotationById(annotationId) {
+        let viewer = document.getElementById('pdfviewer').ej2_instances[0]
+        if (viewer && viewer.annotationCollection) {
+            for (let index = 0; index < viewer.annotationCollection.length; index++) {
+                if (viewer.annotationCollection[index].annotationId === annotationId) {
+                    return viewer.annotationCollection[index];
+                }
+            }
+        }
+        return null;
+    }
+    function onreplyCheckboxChecked(args) {
+        const divElement = document.getElementById('ischeckedReplybox');
+
+        if (divElement) {
+            if (args.checked) {
+                divElement.hidden = false;
+            } else {
+                divElement.hidden = true;
+            }
+        }
+        onPropertiesValueChange("", args);
+    }
+
+    function annotationUpdate(currentAnnotation) {
+        currentAnnotation.opacity = (Number(selectedAnnotation.opacity) / 100) ?? 1;
+        currentAnnotation.thickness = selectedAnnotation.thickness;
+        currentAnnotation.strokeColor = selectedAnnotation.strokeColor;
+        currentAnnotation.fillColor = selectedAnnotation.fillColor;
+        if (selectedAnnotation.annotationType === "Highlight" || selectedAnnotation.annotationType === "Underline" || selectedAnnotation.annotationType === "Strikethrough" || selectedAnnotation.annotationType === "Squiggly") {
+            currentAnnotation.bounds = [];
+            currentAnnotation.color = selectedAnnotation.fillColor;
+            if (selectedAnnotation.bounds.length === 0) {
+                currentAnnotation.bounds.push({
+                    X: selectedAnnotation.x,
+                    Y: selectedAnnotation.y,
+                    Width: selectedAnnotation.width,
+                    Height: selectedAnnotation.heigth,
+                    Top: selectedAnnotation.y,
+                    Left: selectedAnnotation.x
+                });
+            }
+            else if (selectedAnnotation.bounds.length > 0) {
+                selectedAnnotation.bounds.forEach((value, index) => {
+                    currentAnnotation.bounds.push({
+                        X: selectedAnnotation.bounds[index].X,
+                        Y: selectedAnnotation.bounds[index].Y,
+                        Width: selectedAnnotation.bounds[index].Width,
+                        Height: selectedAnnotation.bounds[index].Height,
+                        Top: selectedAnnotation.bounds[index].Y,
+                        Left: selectedAnnotation.bounds[index].X
+                    });
+                });
+            }
+        }
+        else if (selectedAnnotation.annotationType === "Ink") {
+            currentAnnotation.bounds.width = selectedAnnotation.width;
+            currentAnnotation.bounds.height = selectedAnnotation.height;
+            currentAnnotation.bounds.x = selectedAnnotation.x;
+            currentAnnotation.bounds.y = selectedAnnotation.y;
+        }
+        else if (selectedAnnotation.annotationType === "Line" || selectedAnnotation.annotationType === "Arrow" || selectedAnnotation.annotationType === "Distance") {
+            currentAnnotation.vertexPoints[0] = {x: selectedAnnotation.vertexX1, y: selectedAnnotation.vertexY1};
+            currentAnnotation.vertexPoints[1] = {x: selectedAnnotation.vertexX2, y: selectedAnnotation.vertexY2};
+            currentAnnotation.lineHeadStartStyle = selectedAnnotation.lineHeadStartStyle;
+            currentAnnotation.lineHeadEndStyle = selectedAnnotation.lineHeadEndStyle;
+            currentAnnotation.offset = {x: currentAnnotation.vertexPoints[0].x, y: currentAnnotation.vertexPoints[0].y};
+            if (selectedAnnotation.annotationType === "Line") {
+                currentAnnotation.subType = "Line";
+            }
+            else if (selectedAnnotation.annotationType === "Arrow") {
+                currentAnnotation.subType = "Arrow";
+            }
+            else if (selectedAnnotation.annotationType === "Distance") {
+                currentAnnotation.subType = "Distance";
+            }
+        }
+        else if (selectedAnnotation.annotationType === "Polygon" || selectedAnnotation.annotationType === "Perimeter" || selectedAnnotation.annotationType === "Area" || selectedAnnotation.annotationType === "Volume") {
+            currentAnnotation.vertexPoints = selectedAnnotation.vertexPoints;
+            currentAnnotation.bounds.width = selectedAnnotation.width;
+            currentAnnotation.bounds.height = selectedAnnotation.height;
+            currentAnnotation.bounds.left = selectedAnnotation.x;
+            currentAnnotation.bounds.top = selectedAnnotation.y;
+        }
+        else if (selectedAnnotation.annotationType === "FreeText") {
+            currentAnnotation.bounds.width = selectedAnnotation.width;
+            currentAnnotation.bounds.height = selectedAnnotation.height;
+            currentAnnotation.bounds.left = selectedAnnotation.x;
+            currentAnnotation.bounds.top = selectedAnnotation.y;
+            currentAnnotation.bounds.x = selectedAnnotation.x;
+            currentAnnotation.bounds.y = selectedAnnotation.y;
+            currentAnnotation.dynamicText = selectedAnnotation.defaultText;
+            currentAnnotation.fontFamily = selectedAnnotation.fontFamily;
+            currentAnnotation.textAlign = selectedAnnotation.alignment;
+            currentAnnotation.fontSize = selectedAnnotation.fontSize;
+            currentAnnotation.fontColor = selectedAnnotation.fontColor;
+            currentAnnotation.font.isBold = false;
+            currentAnnotation.font.isUnderline = false;
+            currentAnnotation.font.isItalic = false;
+            currentAnnotation.font.isStrikeout = false;
+            switch(selectedAnnotation.fontStyle) {
+                case "Bold" : {
+                    currentAnnotation.font.isBold = true;
+                    break;
+                }
+                case "Underline" : {
+                    currentAnnotation.font.isUnderline = true;
+                    break;
+                }
+                case "Italic" : {
+                    currentAnnotation.font.isItalic = true;
+                    break;
+                }
+                case "Strikethrough" : {
+                    currentAnnotation.font.isStrikeout = true;
+                    break;
+                }
+            }
+        }
+        else {
+            currentAnnotation.bounds.width = selectedAnnotation.width;
+            currentAnnotation.bounds.height = selectedAnnotation.height;
+            currentAnnotation.bounds.left = selectedAnnotation.x;
+            currentAnnotation.bounds.top = selectedAnnotation.y;
+        }
+        if (selectedAnnotation.annotationType === "Distance") {
+            currentAnnotation.leaderLength = selectedAnnotation.leaderLength;
+        }
+        else {
+            currentAnnotation.leaderLength = 0;
+        }
+        if (selectedAnnotation.annotationType === "Polygon" || selectedAnnotation.annotationType === "Perimeter" || selectedAnnotation.annotationType === "Area" || selectedAnnotation.annotationType === "Volume") {
+            currentAnnotation.vertexPoints = selectedAnnotation.vertexPoints;
+        }
+        currentAnnotation.isPrint = selectedAnnotation.isPrint ?? false;
+        currentAnnotation.isLocked = selectedAnnotation.isLocked ?? false;
+        currentAnnotation.annotationSettings.isLock = selectedAnnotation.isLocked ?? false;
+        if (currentAnnotation.isLocked) {
+            currentAnnotation.allowedInteractions = selectedAnnotation.allowedInteractions ?? ["None"];
+            if (currentAnnotation.allowedInteractions.length == 0) {
+                currentAnnotation.allowedInteractions = ["None"];
+            }
+        }
+        else {
+            currentAnnotation.allowedInteractions = ["None"];
+        }
+        updateAnnotationComments(currentAnnotation);
+        return currentAnnotation;
+    }
+
+    function updateAnnotationComments(currentAnnotation) {
+        let isReplyChanged = false;
+        currentAnnotation.commentType = "add";
+        if (((!isNullOrUndefined(currentAnnotation.note) && (currentAnnotation.note !== selectedAnnotation.comment)) || 
+            (!isNullOrUndefined(currentAnnotation.notes) && (currentAnnotation.notes !== selectedAnnotation.comment))) && 
+            (currentAnnotation.comments && (currentAnnotation.comments.length > 0))) {
+            
+            currentAnnotation.commentType = "edit";
+        }
+        let calibrationType = currentAnnotation.indent ?? "";
+        if (calibrationType !== "LineDimension" && calibrationType !== "PolyLineDimension" && calibrationType !== "PolygonDimension" && 
+            calibrationType !== "PolygonRadius" && calibrationType !== "PolygonVolume") {
+            
+            if (!isNullOrUndefined(currentAnnotation.note) || (currentAnnotation.shapeAnnotationType === "Ink" && !currentAnnotation.note)) {
+                currentAnnotation.note = selectedAnnotation.comment;
+            }
+            else if (!isNullOrUndefined(currentAnnotation.notes)) {
+                currentAnnotation.notes = selectedAnnotation.comment;
+            }
+        }
+        currentAnnotation.replyComment = [];
+        if (!isNullOrUndefined(selectedAnnotation.replies) && (selectedAnnotation.replies.length > 0)) {
+            if (selectedAnnotation.replies.length > currentAnnotation.comments?.length) {
+                let diff = Number(selectedAnnotation.replies.length - currentAnnotation.comments.length);
+                currentAnnotation.commentType = "add";
+                for (let index = (selectedAnnotation.replies.length - diff); index < (selectedAnnotation.replies.length); index++) {
+                    currentAnnotation.replyComment.push(selectedAnnotation.replies[index].note);
+                }
+            }
+            else if (selectedAnnotation.replies.length === currentAnnotation.comments?.length) {
+                selectedAnnotation.replies.forEach((value, index) => {
+                    if (currentAnnotation.comments[index] && (value.note !== currentAnnotation.comments[index].note)) {
+                        isReplyChanged = true;
+                        currentAnnotation.commentType = 'edit';
+                        currentAnnotation.commentId = currentAnnotation.comments[index].annotName;
+                        currentAnnotation.editComment = value.note;
+                    }
+                    currentAnnotation.replyComment.push(value.note);
+                });
+            }
+        }
+        if (!isReplyChanged) {
+            currentAnnotation.commentId = null;
+            currentAnnotation.editComment = null;
+        }
+    }
+
+    function addVertex() {
+        if (isNullOrUndefined(selectedAnnotation.vertexPoints)) {
+            selectedAnnotation.vertexPoints = [];
+        }
+        selectedAnnotation.vertexPoints.push({
+            x: selectedAnnotation.x,
+            y: selectedAnnotation.y
+        });
+        displayVertexPoints();
+        if (selectedAnnotation.vertexPoints.length > 1) {
+            deleteVertexButtonObj.disabled = false;
+        }
+        onPropertiesValueChange("", {isInteracted: true});
+    }
+
+    function deleteVertex() {
+        if (isNullOrUndefined(selectedAnnotation.vertexPoints)) {
+            selectedAnnotation.vertexPoints = [];
+        }
+        if (selectedAnnotation.vertexPoints.length > 1) {
+            selectedAnnotation.vertexPoints = selectedAnnotation.vertexPoints.slice(0, selectedAnnotation.vertexPoints.length - 1);
+        }
+        if (selectedAnnotation.vertexPoints.length > 1) {
+            deleteVertexButtonObj.disabled = false;
+            updateButton.disabled = false;
+        }
+        else {
+            deleteVertexButtonObj.disabled = true;
+            updateButton.disabled = true;
+        }
+        displayVertexPoints();
+    }
+
+    function displayVertexPoints() {
+        var tableBody = document.querySelector(".e-pv-pdfViewer-coordinate-table");
+        if (isNullOrUndefined(selectedAnnotation.vertexPoints)) {
+            selectedAnnotation.vertexPoints = [];
+        }
+        if (tableBody) {
+            tableBody.innerHTML = "";
+            for (var index = 0; index < selectedAnnotation.vertexPoints.length; index++) {
+
+                var row = document.createElement("tr");
+                
+                var leftCell = document.createElement("td");
+                var leftDivElement = document.createElement("div");
+                leftDivElement.className = "e-pv-table-items";
+
+                var leftInnerDivX = document.createElement("div");
+                leftInnerDivX.textContent = `X${index + 1} = ${vertexTableNumberFormat(selectedAnnotation.vertexPoints[index].x)}`;
+                var leftInnerDivY = document.createElement("div");
+                leftInnerDivY.textContent = `Y${index + 1} = ${vertexTableNumberFormat(selectedAnnotation.vertexPoints[index].y)}`;
+
+                leftDivElement.appendChild(leftInnerDivX);
+                leftDivElement.appendChild(leftInnerDivY);
+
+                leftCell.appendChild(leftDivElement);
+                row.appendChild(leftCell);
+                if ((index + 1) < selectedAnnotation.vertexPoints.length) {
+                    index++;
+                    var rightCell = document.createElement("td");
+                    var rightDivElement = document.createElement("div");
+                    rightDivElement.className = "e-pv-table-items";
+
+                    var rightInnerDivX = document.createElement("div");
+                    rightInnerDivX.textContent = `X${index + 1} = ${vertexTableNumberFormat(selectedAnnotation.vertexPoints[index].x)}`;
+                    var rightInnerDivY = document.createElement("div");
+                    rightInnerDivY.textContent = `Y${index + 1} = ${vertexTableNumberFormat(selectedAnnotation.vertexPoints[index].y)}`;
+
+                    rightDivElement.appendChild(rightInnerDivX);
+                    rightDivElement.appendChild(rightInnerDivY);
+
+                    rightCell.appendChild(rightDivElement);
+                    row.appendChild(rightCell); 
+                }
+                tableBody.appendChild(row);
+            }
+        }
+    }
+    
+    function addBounds() {
+        let tableBody = document.querySelector(".e-pv-annot-bounds-list");
+        if(isNullOrUndefined(selectedAnnotation.bounds)) {
+            selectedAnnotation.bounds = [];
+        }
+        let indexValue = selectedAnnotation.bounds.length;
+        selectedAnnotation.bounds.push({
+            X: selectedAnnotation.x,
+            Y: selectedAnnotation.y,
+            Height: selectedAnnotation.height,
+            Width: selectedAnnotation.width
+        });
+        if (tableBody) {
+            indexValue = indexValue + 1;
+            let row = document.createElement('tr');
+            let cell = document.createElement('td');
+            let divelement = document.createElement('div');
+            divelement.className = 'e-pv-table-items';
+            let innerdivx = document.createElement('div');
+            innerdivx.textContent = 'X' + indexValue + ' = ' + selectedAnnotation.x;
+            divelement.appendChild(innerdivx);
+            let innerdivy = document.createElement('div');
+            innerdivy.textContent = 'Y' + indexValue + ' = ' + selectedAnnotation.y;
+            divelement.appendChild(innerdivy);
+            let innerdivw = document.createElement('div');
+            innerdivw.textContent = 'W' + indexValue + ' = ' + selectedAnnotation.width;
+            divelement.appendChild(innerdivw);
+            let innerdivh = document.createElement('div');
+            innerdivh.textContent = 'H' + indexValue + ' = ' + selectedAnnotation.height;
+            divelement.appendChild(innerdivh);
+            cell.appendChild(divelement);
+            row.appendChild(cell);
+            tableBody.appendChild(row);
+        }
+        if (selectedAnnotation.bounds.length > 1) {
+            deletebutton.disabled = false;
+        }
+        onPropertiesValueChange("", {isInteracted: true});
+    }
+
+    function renderBounds() {
+        let tableBody = document.querySelector(".e-pv-annot-bounds-list");
+        if (isNullOrUndefined(selectedAnnotation.bounds)) {
+            selectedAnnotation.bounds = [];
+        }
+        let indexValue = 0;
+        if (tableBody) {
+            tableBody.innerHTML = "";
+            selectedAnnotation.bounds.forEach((item, value) => {
+                indexValue = indexValue + 1;
+                let row = document.createElement('tr');
+                let cell = document.createElement('td');
+                let divelement = document.createElement('div');
+                divelement.className = 'e-pv-table-items';
+                let innerdivx = document.createElement('div');
+                innerdivx.textContent = 'X' + indexValue + ' = ' + item.X;
+                divelement.appendChild(innerdivx);
+                let innerdivy = document.createElement('div');
+                innerdivy.textContent = 'Y' + indexValue + ' = ' + item.Y;
+                divelement.appendChild(innerdivy);
+                let innerdivw = document.createElement('div');
+                innerdivw.textContent = 'W' + indexValue + ' = ' + item.Width;
+                divelement.appendChild(innerdivw);
+                let innerdivh = document.createElement('div');
+                innerdivh.textContent = 'H' + indexValue + ' = ' + item.Height;
+                divelement.appendChild(innerdivh);
+                cell.appendChild(divelement);
+                row.appendChild(cell);
+                tableBody.appendChild(row);
+            });
+        }
+    }
+
+    function deleteBounds() {
+        if (isNullOrUndefined(selectedAnnotation.bounds)) {
+            selectedAnnotation.bounds = [];
+        }
+        if (selectedAnnotation.bounds.length > 1) {
+            selectedAnnotation.bounds = selectedAnnotation.bounds.slice(0, selectedAnnotation.bounds.length - 1);
+            var tableBody = document.querySelector(".e-pv-annot-bounds-list");
+            if (tableBody && tableBody.lastChild) {
+                tableBody.removeChild(tableBody.lastChild);
+            }
+        }
+        if (selectedAnnotation.bounds.length <= 1) {
+            deletebutton.disabled = true;
+        }
+        if (selectedAnnotation.bounds.length < 1) {
+            updateButton.disabled = true;
+        }
+        else {
+            updateButton.disabled = false;
+        }
+    }
+
+    function reset() {
+        resetAnnotationProperties();
+        if (selectedAnnotation.annotationSelected) {
+            selectedAnnotation.showFileUploader = false;
+            selectedAnnotation.disableInkAnnotField = true;
+            selectedAnnotation.showStampType = false;
+            updatePropertiesToPanel();
+        }
+    }
+
+    function resetAnnotationProperties() {
+        selectedAnnotation.vertexPoints = [];
+        selectedAnnotation.bounds = [];
+        selectedAnnotation.replies = [];
+        selectedAnnotation.showStampType = false;
+        let shapeAnnotation = selectedAnnotation.annotationType;
+
+        if (shapeAnnotation === "Arrow" || shapeAnnotation === "Distance") {
+            selectedAnnotation.lineHeadStartStyle = "Arrow";
+            selectedAnnotation.lineHeadEndStyle = "Arrow";
+            if (shapeAnnotation === "Distance") {
+                selectedAnnotation.leaderLength = 0;
+            }
+        }
+        else if (shapeAnnotation === "Perimeter") {
+            selectedAnnotation.lineHeadStartStyle = "OpenArrow";
+            selectedAnnotation.lineHeadEndStyle = "OpenArrow";
+        }
+        else {
+            selectedAnnotation.lineHeadEndStyle = "None";
+            selectedAnnotation.lineHeadStartStyle = "None";
+        }
+
+        if (shapeAnnotation === "Rectangle" || shapeAnnotation === "Circle" || shapeAnnotation === "Radius") {
+            selectedAnnotation.width = 100;
+            selectedAnnotation.height = 100;
+        } else if (shapeAnnotation === "Ink") {
+            selectedAnnotation.width = 150;
+            selectedAnnotation.height = 60;
+        } else if (shapeAnnotation === "FreeText") {
+            selectedAnnotation.width = 150;
+            selectedAnnotation.height = 26.5;
+            selectedAnnotation.fontFamily = "Helvetica";
+            selectedAnnotation.fontStyle = "None";
+            selectedAnnotation.alignment = "Left";
+            selectedAnnotation.defaultText = "Free Text";
+            selectedAnnotation.fontSize = 16;
+            selectedAnnotation.fontColor = "#000000FF";
+        } else if (shapeAnnotation === "StickyNotes") {
+            selectedAnnotation.width = 30;
+            selectedAnnotation.height = 30;
+        } else if (shapeAnnotation === "Stamp") {
+            selectedAnnotation.showStampType = true;
+            if (selectedAnnotation.stampsType === "Dynamic") {
+                selectedAnnotation.width = 140;
+                selectedAnnotation.height = 55;
+            } else if (selectedAnnotation.stampsType === "SignHere") {
+                switch (selectedAnnotation.stampComment) {
+                    case "SignHere":
+                        selectedAnnotation.width = 110;
+                        break;
+                    case "Witness":
+                        selectedAnnotation.width = 130;
+                        break;
+                    case "InitialHere":
+                        selectedAnnotation.width = 90;
+                        break;
+                    case "Accepted":
+                    case "Rejected":
+                        selectedAnnotation.width = 35;
+                        selectedAnnotation.height = 35;
+                        break;
+                    default:
+                        selectedAnnotation.height = 30;
+                        break;
+                }
+            } else if (selectedAnnotation.stampsType === "StandardBusiness") {
+                switch (selectedAnnotation.stampComment) {
+                    case "Final":
+                    case "Draft":
+                        selectedAnnotation.width = 110;
+                        break;
+                    case "Void":
+                        selectedAnnotation.width = 100;
+                        break;
+                    default:
+                        selectedAnnotation.width = 130;
+                        break;
+                }
+                selectedAnnotation.height = 30;
+            }
+        } else if (shapeAnnotation === "CustomStamp") {
+            selectedAnnotation.width = 100;
+            selectedAnnotation.height = 100;
+        } else if (shapeAnnotation === "Highlight" || shapeAnnotation === "Underline" || shapeAnnotation === "Strikethrough" || shapeAnnotation === "Squiggly") {
+            selectedAnnotation.width = 100;
+            selectedAnnotation.height = 14;
+        } else {
+            selectedAnnotation.width = 0;
+            selectedAnnotation.height = 0;
+        }
+
+        selectedAnnotation.x = 100;
+        selectedAnnotation.y = 100;
+        selectedAnnotation.fillColor = "#FFFFFF00";
+        selectedAnnotation.strokeColor = "#FF0000FF";
+        if (shapeAnnotation === "Highlight" || shapeAnnotation === "Underline" || shapeAnnotation === "Strikethrough" || shapeAnnotation === "Squiggly" || shapeAnnotation === "FreeText") {
+            selectedAnnotation.x = 10;
+            selectedAnnotation.y = 10;
+            if (shapeAnnotation === "Highlight") {
+                selectedAnnotation.fillColor = "#FFDF56FF";
+            }
+            else if (shapeAnnotation === "Underline") {
+                selectedAnnotation.fillColor = "#00FF00FF";
+            }
+            else if (shapeAnnotation === "Strikethrough") {
+                selectedAnnotation.fillColor = "#FF0000FF";
+            }
+            else if (shapeAnnotation === "Squiggly") {
+                selectedAnnotation.fillColor = "#FF0000FF";
+            }
+            else {
+                selectedAnnotation.fillColor = "#FFFFFF00";
+            }
+            selectedAnnotation.strokeColor = "#FFFFFF00";
+        }
+        if (selectedAnnotation.annotationType === "CustomStamp") {
+            selectedAnnotation.showFileUploader = true;
+        }
+        else {
+            selectedAnnotation.showFileUploader = false;
+        }
+        selectedAnnotation.opacity = 100;
+        selectedAnnotation.thickness = 1;
+        selectedAnnotation.isPrint = true;
+        selectedAnnotation.isLocked = false;
+        selectedAnnotation.author = "Guest";
+        selectedAnnotation.comment = "";
+        selectedAnnotation.state = "None";
+        selectedAnnotation.ReplyAuthor = "Guest";
+        selectedAnnotation.replyComment = "";
+        selectedAnnotation.replyState = "None";
+        selectedAnnotation.allowedInteractions = ["None"];
+        selectedAnnotation.vertexX1 = 100;
+        selectedAnnotation.vertexY1 = 100;
+        selectedAnnotation.vertexX2 = 200;
+        selectedAnnotation.vertexY2 = 100;
+        selectedAnnotation.disableInkAnnotField = false;
+        selectedAnnotation.customStampImageSource = "@Html.Raw(syncfusionLogo)";
+        uploadObj.clearAll();
+        updatePropertiesToPanel();
+    }
+    function updatePropertiesToPanel() {
+        annotationListObj.value = selectedAnnotation.annotationType;
+        pageNumberObj.value = selectedAnnotation.pageNumber;
+        heightObj.value = selectedAnnotation.height;
+        widthObj.value = selectedAnnotation.width;
+        XpositionObj.value = selectedAnnotation.x;
+        YpositionObj.value = selectedAnnotation.y;
+        X1positionObj.value = selectedAnnotation.vertexX1;
+        X2positionObj.value = selectedAnnotation.vertexX2;
+        Y1positionObj.value = selectedAnnotation.vertexY1;
+        Y2positionObj.value = selectedAnnotation.vertexY2;
+        shapeOpacityObj.value = selectedAnnotation.opacity;
+        strokeColorObj.value = selectedAnnotation.strokeColor;
+        strokeThickenssObj.value = selectedAnnotation.thickness;
+        lineHeadStartListObj.value = selectedAnnotation.lineHeadStartStyle;
+        lineHeadEndListObj.value = selectedAnnotation.lineHeadEndStyle;
+        leaderLengthObj.value = selectedAnnotation.leaderLength;
+        inkAnnoatationListObj.value = selectedAnnotation.inkAnnotationType;
+        defaultTextObj.value = selectedAnnotation.defaultText;
+        fontFamilyListObj.value = selectedAnnotation.fontFamily;
+        textAlignmentListObj.value = selectedAnnotation.alignment;
+        fontSizeObj.value = selectedAnnotation.fontSize;
+        FillcolorpickerObj.value = selectedAnnotation.fillColor;
+        fontColorpickerObj.value = selectedAnnotation.fontColor;
+        authorNameObj.value = selectedAnnotation.author;
+        commentObj.value = selectedAnnotation.comment;
+        statusListObj.value = selectedAnnotation.state;
+        replyAuthorNameObj.value = selectedAnnotation.replyAuthor;
+        replyCommentObj.value = selectedAnnotation.replyComment;
+        replyStatusObj.value = selectedAnnotation.replyState;
+        printAnnotationCheckBoxObj.checked = selectedAnnotation.isPrint;
+        lockAnnotationCheckBoxObj.checked = selectedAnnotation.isLocked;
+        checkList.value = selectedAnnotation.allowedInteractions;
+        stampCommentListObj.value = selectedAnnotation.stampComment;
+        stampTypeListObj.value = selectedAnnotation.stampsType;
+        replyCheckBoxObj.checked = (selectedAnnotation.replies ? (selectedAnnotation.replies.length > 0) : false);
+        inkAnnoatationListObj.enabled = !(selectedAnnotation.disableInkAnnotField ?? false);
+        document.getElementById("e-pv-fileUploader").hidden = !(selectedAnnotation.showFileUploader ?? false);
+        document.getElementById("e-pv-stampType").hidden = !(selectedAnnotation.showStampType ?? false);
+        document.getElementById("e-pv-allowedInteractions").hidden = !(lockAnnotationCheckBoxObj.checked ?? false);
+        document.getElementById("ischeckedReplybox").hidden = !(replyCheckBoxObj.checked ?? false);
+        displayVertexPoints();
+        displayReplies();
+        renderBounds();
+        if (!isNullOrUndefined(selectedAnnotation.bounds) && selectedAnnotation.bounds.length <= 1) {
+            deletebutton.disabled = true;
+        }
+        else {
+            deletebutton.disabled = false;
+        }
+        if (!isNullOrUndefined(selectedAnnotation.vertexPoints) && selectedAnnotation.vertexPoints.length <= 1) {
+            deleteVertexButton.disabled = true;
+        }
+        else {
+            deleteVertexButton.disabled = false;
+        }
+
+        annotationListObj.dataBind();        
+        pageNumberObj.dataBind();        
+        heightObj.dataBind();        
+        widthObj.dataBind();        
+        XpositionObj.dataBind();        
+        YpositionObj.dataBind();        
+        X1positionObj.dataBind();        
+        Y1positionObj.dataBind();        
+        X2positionObj.dataBind();        
+        Y2positionObj.dataBind();        
+        shapeOpacityObj.dataBind();        
+        strokeColorObj.dataBind();        
+        strokeThickenssObj.dataBind();        
+        lineHeadStartListObj.dataBind();        
+        lineHeadEndListObj.dataBind();        
+        leaderLengthObj.dataBind();
+        inkAnnoatationListObj.dataBind();
+        defaultTextObj.dataBind();
+        fontFamilyListObj.dataBind();
+        textAlignmentListObj.dataBind();
+        fontSizeObj.dataBind();
+        FillcolorpickerObj.dataBind();
+        authorNameObj.dataBind();
+        commentObj.dataBind();
+        statusListObj.dataBind();
+        replyAuthorNameObj.dataBind();
+        replyCommentObj.dataBind();
+        replyStatusObj.dataBind();
+        fontColorpickerObj.dataBind();
+        printAnnotationCheckBoxObj.dataBind();
+        lockAnnotationCheckBoxObj.dataBind();
+        inkAnnoatationListObj.dataBind();
+        checkList.dataBind();
+        stampCommentListObj.dataBind();
+        stampTypeListObj.dataBind();
+        replyCheckBoxObj.dataBind();
+        uploadObj.dataBind();
+    }
+    function isNullOrUndefined(obj) {
+        return (obj === null) || (obj === undefined);
+    }
+    function addReply() {       
+        var currentReplyComment = new Comment();
+        currentReplyComment.id = generateRandomId();
+        currentReplyComment.author = selectedAnnotation.replyAuthor;
+        currentReplyComment.note = selectedAnnotation.replyComment;
+        currentReplyComment.modifiedDate = formatCurrentDate(new Date());
+        currentReplyComment.state = selectedAnnotation.replyState;
+
+        selectedAnnotation.replies.push(currentReplyComment);
+        displayReplies();
+
+        // Reset the reply fields
+        selectedAnnotation.replyAuthor = 'Guest';
+        selectedAnnotation.replyComment = '';
+        selectedAnnotation.replyState = 'None';
+        replyAuthorNameObj.value = selectedAnnotation.replyAuthor;
+        replyCommentObj.value = selectedAnnotation.replyComment;
+        replyStatusObj.value = selectedAnnotation.replyState;
+        replyAuthorNameObj.dataBind();
+        replyCommentObj.dataBind();
+        replyStatusObj.dataBind();
+        onPropertiesValueChange("", {isInteracted: true});
+    }
+
+    function editReply() {
+        var currentComment = selectedAnnotation.replies.find((comment) => comment.id === currentEditCommentId);
+        if (currentComment) {
+            currentComment.author = selectedAnnotation.replyAuthor;
+            currentComment.note = selectedAnnotation.replyComment;
+            currentComment.modifiedDate = formatCurrentDate(selectedAnnotation.replyModifiedDate);
+            currentComment.state = selectedAnnotation.replyState;
+        }
+        displayReplies();
+        showElement(true, "addReplyDiv");
+        showElement(false, "editReplyDiv");
+        onPropertiesValueChange("", {isInteracted: true});
+    }
+
+    function formatCurrentDate(date) {
+        var options = {
+            month: 'short',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true, // Use 12-hour format
+        };
+        return date.toLocaleString('en-US', options).replace(',', '');
+    }
+
+    function generateRandomId() {
+        return 'id-' + Math.random().toString(36).substr(2, 9) + '-' + Date.now().toString(36);
+    }
+
+    function displayReplies() {
+        var repliesList = document.getElementById("repliesList");
+        if (!replyCheckBoxObj.checked || (!isNullOrUndefined(selectedAnnotation.replies) && selectedAnnotation.replies.length === 0)) {
+            repliesList.hidden = true;
+            return;
+        }
+        if (selectedAnnotation.replies.length > 0) {
+            repliesList.innerHTML = `
+            <div class="pdfviewer-input-title">Replies:</div>
+            <div class="e-pv-annot-inner-container replies" id="repliesContainer">
+            </div>
+            `;
+
+            repliesList.hidden = false;
+            var repliesContainer = document.getElementById('repliesContainer');
+            repliesContainer.innerHTML = '';
+
+
+            selectedAnnotation.replies.forEach(function (comment) {
+                var replyContainer = document.createElement('div');
+                replyContainer.className = 'reply-container';
+                replyContainer.id = comment.id;
+                replyContainer.innerHTML = `
+                    <div class="reply-icon e-pv-comment-icon e-pv-icon"></div>
+                    <div class="reply-main-container">
+                        <div class="reply-text">${comment.author} - ${comment.modifiedDate}</div>
+                        <div class="reply-text">${comment.note} &nbsp; ${comment.state !== 'None' ? comment.state : ''}</div>
+                    </div>
+                    <div class="more-container">
+                        <button class="e-control e-btn e-lib e-flat e-icon-btn context-menu-btn" data-id="${comment.id}" onmousedown="getCommentId('${comment.id}')"
+                        onclick="openContextMenu(event)" id='contextmenutarget' style="padding: 5px 4px;">
+                            <span class="e-icons e-more-vertical-1 e-btn-icon"></span>
+                        </button>
+                    </div>
+                `;
+                repliesContainer.appendChild(replyContainer);
+            });
+        }
+    }
+
+    function openContextMenu (args) {
+        contextMenuObj.open(args.clientY, args.clientX);
+    }
+
+    function getCommentId(commentId) {
+        currentEditCommentId = commentId;
+    }
+
+    function onReplyEdit(commentId) {
+        showElement(true, "editReplyDiv");
+        showElement(false, "addReplyDiv");
+        var comment = selectedAnnotation.replies.find(function (comment) {
+            return comment.id === commentId;
+        });
+        if (comment) {
+            selectedAnnotation.replyAuthor = comment.author;
+            selectedAnnotation.replyComment = comment.note;
+            selectedAnnotation.replyState = comment.state;
+            replyAuthorNameObj.value = selectedAnnotation.replyAuthor;
+            replyCommentObj.value = selectedAnnotation.replyComment;
+            replyStatusObj.value = selectedAnnotation.replyState;
+            replyAuthorNameObj.dataBind();
+            replyCommentObj.dataBind();
+            replyStatusObj.dataBind();
+        }
+    }
+
+    function onReplyDelete(commentId) {
+        var commentIndex = selectedAnnotation.replies.findIndex(function (comment) {
+            return comment.id === commentId;
+        });
+        if (commentIndex !== -1) {
+            selectedAnnotation.replies.splice(commentIndex, 1);
+        }
+        displayReplies();
+    }
+
+    function documentLoaded(e) {
+        var viewer = document.getElementById('pdfviewer').ej2_instances[0];
+        viewer.pageCount = JSON.parse(e.pageData).pageCount;
+        pageNumberObj.max = viewer.pageCount;
+        pageNumberObj.dataBind();
+        if (e.documentName === 'annotations-v3.pdf') {
+            viewer.annotation.addAnnotation("Highlight", {
+                bounds: [{ x: 97, y: 610, width: 340, height: 14 }],
+                pageNumber: 1
+            });
+            viewer.annotation.addAnnotation("Underline", {
+                bounds: [{ x: 97, y: 705, width: 346, height: 14 }],
+                pageNumber: 1
+            });
+            viewer.annotation.addAnnotation("Strikethrough", {
+                bounds: [{ x: 97, y: 800, width: 367, height: 14 }],
+                pageNumber: 1
+            });
+            viewer.annotation.addAnnotation("Squiggly", {
+                bounds: [{ x: 97, y: 895.5, width: 336, height: 14 }],
+                pageNumber: 1
+            });
+            viewer.annotation.addAnnotation("Line", {
+                offset: { x: 200, y: 230 },
+                pageNumber: 2,
+                VertexPoints: [{ x: 200, y: 230 }, { x: 350, y: 230 }]
+            });
+            viewer.annotation.addAnnotation("Arrow", {
+                offset: { x: 200, y: 370 },
+                pageNumber: 2,
+                VertexPoints: [{ x: 200, y: 370 }, { x: 350, y: 370 }]
+            });
+            viewer.annotation.addAnnotation("Rectangle", {
+                offset: { x: 200, y: 480 },
+                pageNumber: 2,
+                width: 150,
+                height: 75
+            });
+            viewer.annotation.addAnnotation("Circle", {
+                offset: { x: 200, y: 620 },
+                pageNumber: 2,
+                width: 90,
+                height: 90
+            });
+            viewer.annotation.addAnnotation("Polygon", {
+                offset: { x: 200, y: 800 },
+                pageNumber: 2,
+                VertexPoints: [{ x: 200, y: 800 }, { x: 242, y: 771 }, { x: 289, y: 799 }, { x: 278, y: 842 }, { x: 211, y: 842 }, { x: 200, y: 800 }]
+            });
+            viewer.annotation.addAnnotation("Distance", {
+                offset: { x: 200, y: 230 },
+                pageNumber: 3,
+                VertexPoints: [{ x: 200, y: 230 }, { x: 350, y: 230 }]
+            });
+            viewer.annotation.addAnnotation("Perimeter", {
+                offset: { x: 200, y: 350 },
+                pageNumber: 3,
+                VertexPoints: [{ x: 200, y: 350 }, { x: 285, y: 350 }, { x: 286, y: 412 }]
+            });
+            viewer.annotation.addAnnotation("Area", {
+                offset: { x: 200, y: 500 },
+                pageNumber: 3,
+                VertexPoints: [{ x: 200, y: 500 }, { x: 288, y: 499 }, { x: 289, y: 553 }, { x: 200, y: 500 }]
+            });
+            viewer.annotation.addAnnotation("Radius", {
+                offset: { x: 200, y: 630 },
+                pageNumber: 3,
+                width: 90,
+                height: 90
+            });
+            viewer.annotation.addAnnotation("Volume", {
+                offset: { x: 200, y: 810 },
+                pageNumber: 3,
+                VertexPoints: [{ x: 200, y: 810 }, { x: 200, y: 919 }, { x: 320, y: 919 }, { x: 320, y: 809 }, { x: 200, y: 810 }]
+            });
+            viewer.annotation.addAnnotation("FreeText", {
+                offset: { x: 250, y: 150 },
+                fontSize: 16,
+                fontFamily: "Helvetica",
+                pageNumber: 4,
+                width: 200,
+                height: 40,
+                isLock: false,
+                defaultText: "Syncfusion"
+            });
+            viewer.annotation.addAnnotation("Stamp", {
+                offset: { x: 200, y: 240 },
+                pageNumber: 4
+            }, 'Approved');
+            viewer.annotation.addAnnotation("Stamp", {
+                offset: { x: 200, y: 350 },
+                pageNumber: 4
+            }, undefined, 'SignHere');
+            viewer.annotation.addAnnotation("Stamp", {
+                offset: { x: 200, y: 460 },
+                pageNumber: 4
+            }, undefined, undefined, 'Confidential');
+            //The customStampImageSource property contains the stamp image as a base64 string
+            viewer.annotation.addAnnotation("Stamp", {
+                offset: { x: 200, y: 530 },
+                pageNumber: 4,
+                customStamps: [
+                    {
+                        customStampName: "Image",
+                        customStampImageSource:
+                            "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAIIAqwMBIgACEQEDEQH/xAAbAAEAAgMBAQAAAAAAAAAAAAAABQYBAwQHAv/EAEEQAAEDAwIEAwYDBAYLAAAAAAECAwQABREGIRIxQVETYXEHFCIygZEVQmIjUnKCJCUzU6HRFhc1c5KisbKzwvD/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/APcaUpQKUpQKUpQKUpQKUpQKVzXGdFtsN2ZPfbYjNJ4nHHDgJFfEK5Q5ttbuUaQhcNxvxUPcklPfflQdlYJxURpe/salthuMNpxEYvuNtKc28VKVcPGB2JB577Vyz7pNuUxy26eWlCml8Mu4OI4kR/0oB2Wvp2T17EJK43qDbloakOqL7m6I7TanHVjOMhCQTjzxgVut89i4Mqdj8Y4VlC0OIKFIUOYKTuOn0INRZZtWkrVLuDpIIHHJlPK4nX1dOJR5kk4A5DYDArVoWbHuVgTPjvF5Ul5xx5zhIBc4jkJyBlI+UHqE0FjpSlApSlApSlApSlApSlApSlApSlArClAczgVmqr7QZLptkezxHi1KvD4ihxKsFprBU6v6IB+pFBTdUKf1uUuFa0WpyUIVoYBx706chchXdKEhZSPLNXXVTsOw6NdjNxkvJS0iLEidHnDhLaPME4z5ZzVHk6kTHu1vTpyE1Jf8L3Oww1ZDaGc4XJXjklXDhP6UlWd63ybrL1rq1mNa1hLcAKEeQgcTbbvyuScHnw5KGweZJPIVRYoDT6okfSlnfWhmCwlu43FGAUKxu2j9atyT+UHvirZBixLZBaiQ2kR4zCMIQnZKRWuz2yLZ7czBgo4GWh13KidypR6qJJJPevOvaFqCXqC4HSGmzxlxQbmvJJAPXwwe2M8R9R3FQc1xde9qOqEW+C44jTFuVxPvtnHvCvI+e4HYZPavV4sdmLGajxmktMtJCENpGAkDkBUbpixRNO2dm3Q0/Cj4lrPNazzUf/uWKlkkEZByKDNKUoFKUoFKUoFKUoFKwahZ2p7dFfMZhTs+ZnHu0FHirB/VjZHqogUE3WOIYzUApzUlwBKUxLOwQCFL/bv467DCEn6qr5i6btk5ht+ZOlXlCxlLkiTxtr8whGG8fy0HdK1FZorymHbjH8dPNlC+NY/lTk1XNTe0m12SCXBFnrkOpX7uh6ItkKUBzPGEnhzjcA1bokKLAZS1BjMx20jAQy2EjHoK85i6PuOovaFNv+pWPDt8J/ggMKUCXktq+BX8HNXmT2G9HLF1trSyW2GrUFgbluT3eCIRIS26tS/iSjwgCcDl35Z3qBlSb/edVcN58e4tojKafiW2MfDQpRBXF8X5UnZPGsq5ZAr0TV2j52oL9Anx7wqCxHYWypLbeXAFH4lNqz8KiNs8x0qy2e1QrNbmYFuZDUdkYSkHOT1JPUk7k0HhsG6u3SHPeisLFwnucE95hOPdmc8DUNhR/OrCR5Ak9NvX9F6cRp20IZIR706AX1I5DA2Qn9KRsPvzJqGmXG0N6pfk3KTEhW2ykBsLKUh2Y4nKlY6lKCAOuVmuafry5T5rFs0vaHQ5JSVIm3FBaQhvq7wfNwjurAPnQZ9pms1WtlVmtDqRcnxwrdK+ERknqT0Vj7DftUN7OA1BilywWx65TnU8PjOAtMsJJzlbhBypXMhPFgADbrF6B0sNSagkzrk+5cbTDeUQ5IHwy3T+bHbYE/y9yK9sabQ02lDSAhCRhKUjAAoIaFaZ8gh++zg8vIKYsUFphB+/Ev8AmONuVTYGBgcqzSoFKUoFKUoFKUoFcV4mOW+2yJbEN6Y40gqTHYGVuHsK7awRmg8rd/1gameJn2n8Ptv5YQn+78f+8cSFLI57AJ8/Oy2eyalhxkRo79htEVI2YgQ1uEH+JSgD68NW/FQ2r7yqxWCTNZR4knZqM1/ePLPChP3IoKRc4l91FqJ3TkfUst2Aygfiz7TDTaEA8mkEAnjPXfAH2NohaPehR2Y8bVF9QwygNttJMcJSkDAAAZru0hY02CyMxFK8SWv9rMfPN55W6lE9d9vQCpughmrLNZVxI1Fc19kupYUn/wAYP+NdQVMjD+khEhsfM40nhUPMp3z9D9K76xQRN/uNxjWj3qwW9F0krKfDa8YISUn83F25VVocf2kXdR/EJlrskZQxiM14ryR5ZJA9c/SrHo973m2SFjPhCfKSzn9wPLCceXbyxUpPmRrdDemTHUMx2UFbjizgJAoPGrbpyJBRPvEi53STfhc34MRCVMrckLSvCT8aFEEjBUQdhUlfbHcrcItuYvc+VqbUBDcpf7PgDSfnJPBxBCQcDBGcnlUn7Om4kly+aonhbPBPkeGiRsIqCEqUcHkSMZ9K5bRqqMbjJ1E5FkTrndFe72m2sAF1MVBI4iD8iVKyoqO2w7VRbrJpRdkt7MGDe56GGhgJ8Njn1P8AZ9fPNd5gXNKQEXt0q7uRmz/0AqFja29znGFq2EmxuqaLzDrkhK2XUj5gF7YUNvhqsX+66nvtqlarsrsmDa7aUvQIqQULuCUqHiLdGPk4c8I686g9BMK8/lu7IxyzCB/9q4bpJkWeP7xd9TQojGeHjdipRk9hlW5/yrF21raoEGM/HcM+TMSDEhwyFuv55YA5DfcnYVx2fTD9wm/jeskMS7goYYhY42IKeyQeajtlR68tqCUjtXWVHakQL/FejupC23PcwsLSeoKVgEVsLWomsFMm1yAM5C2HGir6hSsfY1B6ILViuV50utSWkRpHvNvQTgGO6OLCe/CviB7bVMXjVMC2vCG0VTrk4MtQIeHHleZHJCf1KwKDTcNSqskB2XqSCYjTQ3fYcDzSj0SOSgSdhlP1r50FqherbM5cVQVQwmQtkNlfFxBON8/XB8wa4JNsfUzJ1Jq/wXFQWnH4tvbPEzFCUk8RyPjd2+bkOQ7nHs0iSLRY7dBkKUoy4gnYV8yHFEFxPoCtOPU+VBdaUpQKUpQKqF4H4xry027YxrYyq4yB3cPwND/vV9BVvNVTRf8ATrhqC9KIUJU4x2T2aZHAB/xcZ+tBa6UpQKr+r7lIjRWrdaz/AFrcleBF2z4W3xOq8kDf1wOtSV5ukSz216fOc4GGhk4GSo9EpHVROwHU1DaWtst2S9qG+N8Nzlp4WWSc+6R85S0P1dVHqfSgm7Rb2bTbItvjcXhR2g2kqOVKx1J6k8zVbfP+leoSxkGx2h7LxztJlD8h6FCOZ/VjtXdq25ymWY9ptSv61uSi2yr+4Rj43T5JHLzIrRfHIujtCy/dthFiqQyD8zrqhgZ7qUo/40FJsbL2q7W/YYchUdqdMlXC5SEDJQhbq/CbHTKuEEj90edXfRWi4Gk4yvAUqTMdADsp35ikckj91I7Vn2e6bTpnTUaG5hUtweLJcHVw9PQch6VZ6Dhudot12aQ1dIEWa2hXEhEllLgSe4Cga7OBPBwYHDjGMbYr6pQRNp03ZrM669arVChuu/OphkJJ8tunlUt0pSgjLxYLVew2LtAYleEctqcT8SPRXMfevq0WO12VtTdpgRoiVHKy02AVnuo8z9akaUEBr2O9L0beI8dtx1xyMpIQ2kqUodQANycZrk07JVeLyq4R2HmrZCiiJFW62UF9SilS1AHfhHAgA7b8XlVqIzWMb0GaUpQKUpQc9wkCJAkyVcmWlOH6AmoL2bsqZ0LZi4SXHowfcUeZU58ZP3VUpqNlcjT1zYaGVuRHUJA6koIFcuiZDcnR9lea+RcFkgdvgG1BN1omS48GM7JluoZYaSVuOLOEpSOZJrXdLjEtUF2bcJLceM0MrccOAP8AP0qqR4czWk1qfd2HItgZWFxLe6MLlKHJ14dE9kH1NBttDEjVVzYvtxaUza4547ZCdThSz0kLHQ4+UdAc86tcmQzDjOyJLiW2WUFxxxWwSkDJJ+lbQAOVVPU6vx29xdLsqPgBKZdzIG3ghWEtE9CtX/Kk0GzSTDlwekamnNlL08BMNCs5ZijdAweRVniPqB0qsarce1XrezWlghVsiTCp3B/tFtDicPok8CP4lq7VedSzXYFr8OBwpmyVCPEyPhStQPxEfupAKj5JNVz2eW9t2RIvLJWqGlsQbetXN1pCsuPerjmVZ6gCqLyBis0pUClKUClKUClKUClKUClKUClKUGCMjFVNqw36yeOxpmbb/wAPdcU43GntLPuqlHJCFJO6ckkJI2zzq20oKtE0iZE5q46mnKu8to8TLSmwiMwe6G99/wBSiTVoGwrNcV4uUez2yTcJiiGY7ZWrAyT2AHUk7D1oMXq6R7PapNxlk+FHQVkAZKj0SB1JOAPWozRtqfhW5ybcf9qXJz3qZk54FEbNg9kDCfoT1qGi++alvEGJdGwlq2hE+e0FApTKVu0we4Qk8R7nhNXkcqCs6q0zK1DcIWbkqNbW23ESmWk4ceCsZAV+UEAgnngnvViix2okZqPHbS2y0kIbQkYCUjYAVtpQKUpQKUpQKUpQKUpQKUpQKUpQKUpQKUpQKouv7mwi7W2HJBdZiJNxXHSd5DoUER2gOpU4rI/gq9VxO2i3PXRu6OwmFz2m/DbkKQCtKck4B+p+9BxaTtblqtQEvhM+UtUqatO4U8vdW/YbJHkkVNVgDFZoFKUoFKUoFKUoFKUoFKUoFKUoFKUoFKUoFKUoFKUoFKUoFKUoFKUoFKUoFKUoFKUoFKUoFKUoP//Z"
+                    }
+                ]
+            });
+            //The pathData property holds the value of the signature drawn using the ink annotation
+            viewer.annotation.addAnnotation("Ink", {
+                offset: { x: 250, y: 860 },
+                pageNumber: 4,
+                width: 200,
+                height: 60,
+                path: '[{\"command\":\"M\",\"x\":244.83334350585938,\"y\":982.0000305175781},{\"command\":\"L\",\"x\":244.83334350585938,\"y\":982.0000305175781},{\"command\":\"L\",\"x\":250.83334350585938,\"y\":953.3333435058594},{\"command\":\"L\",\"x\":252.83334350585938,\"y\":946.0000305175781},{\"command\":\"L\",\"x\":254.16668701171875,\"y\":940.6667175292969},{\"command\":\"L\",\"x\":256.8333435058594,\"y\":931.3333435058594},{\"command\":\"L\",\"x\":257.5,\"y\":929.3333435058594},{\"command\":\"L\",\"x\":258.8333435058594,\"y\":926.6667175292969},{\"command\":\"L\",\"x\":259.5,\"y\":924.0000305175781},{\"command\":\"L\",\"x\":259.5,\"y\":922.6667175292969},{\"command\":\"L\",\"x\":258.8333435058594,\"y\":922.0000305175781},{\"command\":\"L\",\"x\":258.16668701171875,\"y\":922.0000305175781},{\"command\":\"L\",\"x\":256.8333435058594,\"y\":922.0000305175781},{\"command\":\"L\",\"x\":256.16668701171875,\"y\":922.6667175292969},{\"command\":\"L\",\"x\":254.83334350585938,\"y\":923.3333435058594},{\"command\":\"L\",\"x\":254.16668701171875,\"y\":923.3333435058594},{\"command\":\"L\",\"x\":253.5,\"y\":923.3333435058594},{\"command\":\"L\",\"x\":252.83334350585938,\"y\":925.3333435058594},{\"command\":\"L\",\"x\":252.83334350585938,\"y\":927.3333435058594},{\"command\":\"L\",\"x\":252.83334350585938,\"y\":936.0000305175781},{\"command\":\"L\",\"x\":253.5,\"y\":940.6667175292969},{\"command\":\"L\",\"x\":254.83334350585938,\"y\":944.6667175292969},{\"command\":\"L\",\"x\":260.16668701171875,\"y\":952.0000305175781},{\"command\":\"L\",\"x\":264.16668701171875,\"y\":954.0000305175781},{\"command\":\"L\",\"x\":274.16668701171875,\"y\":958.6667175292969},{\"command\":\"L\",\"x\":278.16668701171875,\"y\":960.0000305175781},{\"command\":\"L\",\"x\":281.5,\"y\":961.3333435058594},{\"command\":\"L\",\"x\":285.5,\"y\":964.6667175292969},{\"command\":\"L\",\"x\":286.8333740234375,\"y\":967.3333435058594},{\"command\":\"L\",\"x\":286.8333740234375,\"y\":970.0000305175781},{\"command\":\"L\",\"x\":282.8333740234375,\"y\":978.6667175292969},{\"command\":\"L\",\"x\":278.16668701171875,\"y\":983.3333435058594},{\"command\":\"L\",\"x\":266.16668701171875,\"y\":991.3333435058594},{\"command\":\"L\",\"x\":259.5,\"y\":993.3333435058594},{\"command\":\"L\",\"x\":252.16668701171875,\"y\":994.0000305175781},{\"command\":\"L\",\"x\":240.83334350585938,\"y\":991.3333435058594},{\"command\":\"L\",\"x\":236.16668701171875,\"y\":988.6667175292969},{\"command\":\"L\",\"x\":230.16668701171875,\"y\":982.6667175292969},{\"command\":\"L\",\"x\":228.83334350585938,\"y\":980.6667175292969},{\"command\":\"L\",\"x\":228.16668701171875,\"y\":978.6667175292969},{\"command\":\"L\",\"x\":228.83334350585938,\"y\":974.6667175292969},{\"command\":\"L\",\"x\":230.16668701171875,\"y\":973.3333435058594},{\"command\":\"L\",\"x\":236.16668701171875,\"y\":971.3333435058594},{\"command\":\"L\",\"x\":240.83334350585938,\"y\":971.3333435058594},{\"command\":\"L\",\"x\":246.16668701171875,\"y\":972.0000305175781},{\"command\":\"L\",\"x\":257.5,\"y\":974.6667175292969},{\"command\":\"L\",\"x\":262.8333435058594,\"y\":976.0000305175781},{\"command\":\"L\",\"x\":269.5,\"y\":977.3333435058594},{\"command\":\"L\",\"x\":276.16668701171875,\"y\":978.6667175292969},{\"command\":\"L\",\"x\":279.5,\"y\":978.0000305175781},{\"command\":\"L\",\"x\":285.5,\"y\":976.6667175292969},{\"command\":\"L\",\"x\":288.16668701171875,\"y\":974.6667175292969},{\"command\":\"L\",\"x\":292.8333740234375,\"y\":969.3333435058594},{\"command\":\"L\",\"x\":293.5,\"y\":966.6667175292969},{\"command\":\"L\",\"x\":294.16668701171875,\"y\":964.0000305175781},{\"command\":\"L\",\"x\":293.5,\"y\":960.0000305175781},{\"command\":\"L\",\"x\":293.5,\"y\":958.0000305175781},{\"command\":\"L\",\"x\":292.8333740234375,\"y\":956.6667175292969},{\"command\":\"L\",\"x\":291.5,\"y\":954.6667175292969},{\"command\":\"L\",\"x\":291.5,\"y\":954.0000305175781},{\"command\":\"L\",\"x\":291.5,\"y\":953.3333435058594},{\"command\":\"L\",\"x\":291.5,\"y\":954.0000305175781},{\"command\":\"L\",\"x\":292.16668701171875,\"y\":954.6667175292969},{\"command\":\"L\",\"x\":292.8333740234375,\"y\":956.0000305175781},{\"command\":\"L\",\"x\":294.16668701171875,\"y\":961.3333435058594},{\"command\":\"L\",\"x\":295.5,\"y\":964.6667175292969},{\"command\":\"L\",\"x\":297.5,\"y\":969.3333435058594},{\"command\":\"L\",\"x\":298.8333740234375,\"y\":970.6667175292969},{\"command\":\"L\",\"x\":301.5,\"y\":970.0000305175781},{\"command\":\"L\",\"x\":304.16668701171875,\"y\":968.6667175292969},{\"command\":\"L\",\"x\":305.5,\"y\":966.0000305175781},{\"command\":\"L\",\"x\":308.8333740234375,\"y\":960.0000305175781},{\"command\":\"L\",\"x\":310.16668701171875,\"y\":957.3333435058594},{\"command\":\"L\",\"x\":310.8333740234375,\"y\":956.0000305175781},{\"command\":\"L\",\"x\":310.8333740234375,\"y\":954.6667175292969},{\"command\":\"L\",\"x\":310.8333740234375,\"y\":954.0000305175781},{\"command\":\"L\",\"x\":311.5,\"y\":956.0000305175781},{\"command\":\"L\",\"x\":312.8333740234375,\"y\":959.3333435058594},{\"command\":\"L\",\"x\":316.16668701171875,\"y\":968.0000305175781},{\"command\":\"L\",\"x\":317.5,\"y\":972.6667175292969},{\"command\":\"L\",\"x\":318.16668701171875,\"y\":977.3333435058594},{\"command\":\"L\",\"x\":319.5,\"y\":983.3333435058594},{\"command\":\"L\",\"x\":319.5,\"y\":986.0000305175781},{\"command\":\"L\",\"x\":319.5,\"y\":988.0000305175781},{\"command\":\"L\",\"x\":318.8333740234375,\"y\":988.0000305175781},{\"command\":\"L\",\"x\":318.16668701171875,\"y\":988.6667175292969},{\"command\":\"L\",\"x\":316.16668701171875,\"y\":987.3333435058594},{\"command\":\"L\",\"x\":314.8333740234375,\"y\":985.3333435058594},{\"command\":\"L\",\"x\":314.16668701171875,\"y\":980.6667175292969},{\"command\":\"L\",\"x\":314.8333740234375,\"y\":974.6667175292969},{\"command\":\"L\",\"x\":316.16668701171875,\"y\":969.3333435058594},{\"command\":\"L\",\"x\":319.5,\"y\":960.6667175292969},{\"command\":\"L\",\"x\":320.16668701171875,\"y\":957.3333435058594},{\"command\":\"L\",\"x\":321.5,\"y\":955.3333435058594},{\"command\":\"L\",\"x\":322.16668701171875,\"y\":953.3333435058594},{\"command\":\"L\",\"x\":322.8333740234375,\"y\":952.6667175292969},{\"command\":\"L\",\"x\":324.16668701171875,\"y\":952.6667175292969},{\"command\":\"L\",\"x\":324.8333740234375,\"y\":953.3333435058594},{\"command\":\"L\",\"x\":326.8333740234375,\"y\":956.0000305175781},{\"command\":\"L\",\"x\":328.16668701171875,\"y\":958.0000305175781},{\"command\":\"L\",\"x\":328.8333740234375,\"y\":960.0000305175781},{\"command\":\"L\",\"x\":329.5,\"y\":962.0000305175781},{\"command\":\"L\",\"x\":330.16668701171875,\"y\":962.0000305175781},{\"command\":\"L\",\"x\":330.16668701171875,\"y\":962.6667175292969},{\"command\":\"L\",\"x\":330.16668701171875,\"y\":962.0000305175781},{\"command\":\"L\",\"x\":330.8333740234375,\"y\":960.0000305175781},{\"command\":\"L\",\"x\":331.5,\"y\":956.0000305175781},{\"command\":\"L\",\"x\":332.8333740234375,\"y\":952.0000305175781},{\"command\":\"L\",\"x\":333.5,\"y\":950.0000305175781},{\"command\":\"L\",\"x\":334.8333740234375,\"y\":948.6667175292969},{\"command\":\"L\",\"x\":335.5,\"y\":948.6667175292969},{\"command\":\"L\",\"x\":336.16668701171875,\"y\":948.6667175292969},{\"command\":\"L\",\"x\":337.5,\"y\":950.6667175292969},{\"command\":\"L\",\"x\":338.8333740234375,\"y\":952.0000305175781},{\"command\":\"L\",\"x\":340.8333740234375,\"y\":954.0000305175781},{\"command\":\"L\",\"x\":341.5,\"y\":954.0000305175781},{\"command\":\"L\",\"x\":342.8333740234375,\"y\":954.6667175292969},{\"command\":\"L\",\"x\":344.8333740234375,\"y\":954.0000305175781},{\"command\":\"L\",\"x\":346.8333740234375,\"y\":952.6667175292969},{\"command\":\"L\",\"x\":349.5,\"y\":949.3333435058594},{\"command\":\"L\",\"x\":350.8333740234375,\"y\":948.0000305175781},{\"command\":\"L\",\"x\":351.5,\"y\":946.6667175292969},{\"command\":\"L\",\"x\":352.8333740234375,\"y\":944.0000305175781},{\"command\":\"L\",\"x\":352.8333740234375,\"y\":943.3333435058594},{\"command\":\"L\",\"x\":354.16668701171875,\"y\":942.0000305175781},{\"command\":\"L\",\"x\":354.8333740234375,\"y\":942.0000305175781},{\"command\":\"L\",\"x\":354.8333740234375,\"y\":942.6667175292969},{\"command\":\"L\",\"x\":354.16668701171875,\"y\":943.3333435058594},{\"command\":\"L\",\"x\":354.16668701171875,\"y\":946.6667175292969},{\"command\":\"L\",\"x\":354.16668701171875,\"y\":950.0000305175781},{\"command\":\"L\",\"x\":355.5,\"y\":956.0000305175781},{\"command\":\"L\",\"x\":356.16668701171875,\"y\":957.3333435058594},{\"command\":\"L\",\"x\":358.16668701171875,\"y\":959.3333435058594},{\"command\":\"L\",\"x\":360.16668701171875,\"y\":958.0000305175781},{\"command\":\"L\",\"x\":364.16668701171875,\"y\":956.0000305175781},{\"command\":\"L\",\"x\":370.8333740234375,\"y\":948.6667175292969},{\"command\":\"L\",\"x\":373.5,\"y\":943.3333435058594},{\"command\":\"L\",\"x\":375.5,\"y\":937.3333435058594},{\"command\":\"L\",\"x\":376.16668701171875,\"y\":933.3333435058594},{\"command\":\"L\",\"x\":376.8333740234375,\"y\":931.3333435058594},{\"command\":\"L\",\"x\":376.8333740234375,\"y\":930.0000305175781},{\"command\":\"L\",\"x\":376.8333740234375,\"y\":929.3333435058594},{\"command\":\"L\",\"x\":376.16668701171875,\"y\":930.0000305175781},{\"command\":\"L\",\"x\":375.5,\"y\":932.0000305175781},{\"command\":\"L\",\"x\":375.5,\"y\":937.3333435058594},{\"command\":\"L\",\"x\":374.8333740234375,\"y\":953.3333435058594},{\"command\":\"L\",\"x\":374.8333740234375,\"y\":960.6667175292969},{\"command\":\"L\",\"x\":375.5,\"y\":966.0000305175781},{\"command\":\"L\",\"x\":377.5,\"y\":974.6667175292969},{\"command\":\"L\",\"x\":378.16668701171875,\"y\":977.3333435058594},{\"command\":\"L\",\"x\":380.8333740234375,\"y\":981.3333435058594},{\"command\":\"L\",\"x\":382.16668701171875,\"y\":982.6667175292969},{\"command\":\"L\",\"x\":383.5,\"y\":982.6667175292969},{\"command\":\"L\",\"x\":387.5,\"y\":982.6667175292969},{\"command\":\"L\",\"x\":389.5,\"y\":980.6667175292969},{\"command\":\"L\",\"x\":392.16668701171875,\"y\":976.6667175292969},{\"command\":\"L\",\"x\":392.8333740234375,\"y\":973.3333435058594},{\"command\":\"L\",\"x\":392.16668701171875,\"y\":970.0000305175781},{\"command\":\"L\",\"x\":388.8333740234375,\"y\":965.3333435058594},{\"command\":\"L\",\"x\":385.5,\"y\":964.0000305175781},{\"command\":\"L\",\"x\":382.8333740234375,\"y\":964.0000305175781},{\"command\":\"L\",\"x\":377.5,\"y\":964.0000305175781},{\"command\":\"L\",\"x\":375.5,\"y\":964.6667175292969},{\"command\":\"L\",\"x\":373.5,\"y\":965.3333435058594},{\"command\":\"L\",\"x\":374.8333740234375,\"y\":963.3333435058594},{\"command\":\"L\",\"x\":376.8333740234375,\"y\":961.3333435058594},{\"command\":\"L\",\"x\":382.16668701171875,\"y\":956.0000305175781},{\"command\":\"L\",\"x\":384.16668701171875,\"y\":953.3333435058594},{\"command\":\"L\",\"x\":387.5,\"y\":950.6667175292969},{\"command\":\"L\",\"x\":388.16668701171875,\"y\":952.0000305175781},{\"command\":\"L\",\"x\":388.16668701171875,\"y\":952.6667175292969},{\"command\":\"L\",\"x\":388.8333740234375,\"y\":954.0000305175781},{\"command\":\"L\",\"x\":388.8333740234375,\"y\":954.6667175292969},{\"command\":\"L\",\"x\":389.5,\"y\":959.3333435058594},{\"command\":\"L\",\"x\":389.5,\"y\":960.6667175292969},{\"command\":\"L\",\"x\":390.16668701171875,\"y\":961.3333435058594},{\"command\":\"L\",\"x\":390.8333740234375,\"y\":960.6667175292969},{\"command\":\"L\",\"x\":393.5,\"y\":958.0000305175781},{\"command\":\"L\",\"x\":396.8333740234375,\"y\":954.0000305175781},{\"command\":\"L\",\"x\":398.16668701171875,\"y\":952.0000305175781},{\"command\":\"L\",\"x\":400.16668701171875,\"y\":949.3333435058594},{\"command\":\"L\",\"x\":400.16668701171875,\"y\":948.6667175292969},{\"command\":\"L\",\"x\":400.8333740234375,\"y\":948.0000305175781},{\"command\":\"L\",\"x\":400.8333740234375,\"y\":947.3333435058594},{\"command\":\"L\",\"x\":401.5,\"y\":948.0000305175781},{\"command\":\"L\",\"x\":402.16668701171875,\"y\":949.3333435058594},{\"command\":\"L\",\"x\":403.5,\"y\":950.6667175292969},{\"command\":\"L\",\"x\":404.8333740234375,\"y\":953.3333435058594},{\"command\":\"L\",\"x\":406.16668701171875,\"y\":954.0000305175781},{\"command\":\"L\",\"x\":407.5,\"y\":954.0000305175781},{\"command\":\"L\",\"x\":410.16668701171875,\"y\":952.0000305175781},{\"command\":\"L\",\"x\":412.16668701171875,\"y\":949.3333435058594},{\"command\":\"L\",\"x\":414.16668701171875,\"y\":944.6667175292969},{\"command\":\"L\",\"x\":414.16668701171875,\"y\":942.0000305175781},{\"command\":\"L\",\"x\":414.16668701171875,\"y\":940.6667175292969},{\"command\":\"L\",\"x\":414.16668701171875,\"y\":938.6667175292969},{\"command\":\"L\",\"x\":414.16668701171875,\"y\":938.0000305175781},{\"command\":\"L\",\"x\":415.5,\"y\":939.3333435058594},{\"command\":\"L\",\"x\":418.8333740234375,\"y\":942.6667175292969},{\"command\":\"L\",\"x\":420.16668701171875,\"y\":945.3333435058594},{\"command\":\"L\",\"x\":421.5,\"y\":946.6667175292969},{\"command\":\"L\",\"x\":422.8333740234375,\"y\":950.0000305175781},{\"command\":\"L\",\"x\":423.5,\"y\":950.6667175292969},{\"command\":\"L\",\"x\":423.5,\"y\":953.3333435058594},{\"command\":\"L\",\"x\":422.8333740234375,\"y\":954.0000305175781},{\"command\":\"L\",\"x\":421.5,\"y\":955.3333435058594},{\"command\":\"L\",\"x\":421.5,\"y\":956.0000305175781},{\"command\":\"L\",\"x\":422.16668701171875,\"y\":954.6667175292969},{\"command\":\"L\",\"x\":422.8333740234375,\"y\":954.0000305175781},{\"command\":\"L\",\"x\":424.8333740234375,\"y\":950.6667175292969},{\"command\":\"L\",\"x\":425.5,\"y\":948.6667175292969},{\"command\":\"L\",\"x\":428.16668701171875,\"y\":945.3333435058594},{\"command\":\"L\",\"x\":428.8333740234375,\"y\":943.3333435058594},{\"command\":\"L\",\"x\":428.8333740234375,\"y\":942.6667175292969},{\"command\":\"L\",\"x\":428.8333740234375,\"y\":943.3333435058594},{\"command\":\"L\",\"x\":428.8333740234375,\"y\":945.3333435058594},{\"command\":\"L\",\"x\":428.8333740234375,\"y\":948.0000305175781},{\"command\":\"L\",\"x\":428.8333740234375,\"y\":950.0000305175781},{\"command\":\"L\",\"x\":429.5,\"y\":953.3333435058594},{\"command\":\"L\",\"x\":430.16668701171875,\"y\":953.3333435058594},{\"command\":\"L\",\"x\":432.8333740234375,\"y\":952.6667175292969},{\"command\":\"L\",\"x\":434.8333740234375,\"y\":950.6667175292969},{\"command\":\"L\",\"x\":437.5,\"y\":948.6667175292969},{\"command\":\"L\",\"x\":440.16668701171875,\"y\":944.6667175292969},{\"command\":\"L\",\"x\":441.5,\"y\":942.6667175292969},{\"command\":\"L\",\"x\":442.16668701171875,\"y\":942.0000305175781},{\"command\":\"L\",\"x\":442.8333740234375,\"y\":941.3333435058594},{\"command\":\"L\",\"x\":442.8333740234375,\"y\":942.0000305175781},{\"command\":\"L\",\"x\":442.8333740234375,\"y\":943.3333435058594},{\"command\":\"L\",\"x\":442.8333740234375,\"y\":944.6667175292969},{\"command\":\"L\",\"x\":442.8333740234375,\"y\":946.0000305175781},{\"command\":\"L\",\"x\":443.5,\"y\":949.3333435058594},{\"command\":\"L\",\"x\":444.16668701171875,\"y\":950.6667175292969},{\"command\":\"L\",\"x\":445.5,\"y\":950.6667175292969},{\"command\":\"L\",\"x\":447.5,\"y\":950.6667175292969},{\"command\":\"L\",\"x\":450.16668701171875,\"y\":948.6667175292969},{\"command\":\"L\",\"x\":452.16668701171875,\"y\":945.3333435058594},{\"command\":\"L\",\"x\":453.5,\"y\":942.6667175292969},{\"command\":\"L\",\"x\":452.8333740234375,\"y\":938.6667175292969},{\"command\":\"L\",\"x\":452.16668701171875,\"y\":937.3333435058594},{\"command\":\"L\",\"x\":450.8333740234375,\"y\":936.6667175292969},{\"command\":\"L\",\"x\":448.8333740234375,\"y\":936.0000305175781},{\"command\":\"L\",\"x\":447.5,\"y\":936.6667175292969},{\"command\":\"L\",\"x\":446.16668701171875,\"y\":937.3333435058594},{\"command\":\"L\",\"x\":445.5,\"y\":938.6667175292969},{\"command\":\"L\",\"x\":445.5,\"y\":939.3333435058594},{\"command\":\"L\",\"x\":446.16668701171875,\"y\":939.3333435058594},{\"command\":\"L\",\"x\":446.8333740234375,\"y\":939.3333435058594},{\"command\":\"L\",\"x\":452.16668701171875,\"y\":937.3333435058594},{\"command\":\"L\",\"x\":454.8333740234375,\"y\":936.6667175292969},{\"command\":\"L\",\"x\":456.8333740234375,\"y\":936.0000305175781},{\"command\":\"L\",\"x\":459.5,\"y\":936.6667175292969},{\"command\":\"L\",\"x\":460.8333740234375,\"y\":937.3333435058594},{\"command\":\"L\",\"x\":461.5,\"y\":938.6667175292969},{\"command\":\"L\",\"x\":462.16668701171875,\"y\":942.0000305175781},{\"command\":\"L\",\"x\":462.16668701171875,\"y\":942.6667175292969},{\"command\":\"L\",\"x\":462.16668701171875,\"y\":944.0000305175781},{\"command\":\"L\",\"x\":462.16668701171875,\"y\":943.3333435058594},{\"command\":\"L\",\"x\":462.16668701171875,\"y\":942.6667175292969},{\"command\":\"L\",\"x\":462.16668701171875,\"y\":941.3333435058594},{\"command\":\"L\",\"x\":462.8333740234375,\"y\":938.6667175292969},{\"command\":\"L\",\"x\":464.16668701171875,\"y\":935.3333435058594},{\"command\":\"L\",\"x\":465.5,\"y\":933.3333435058594},{\"command\":\"L\",\"x\":466.16668701171875,\"y\":932.6667175292969},{\"command\":\"L\",\"x\":467.5,\"y\":933.3333435058594},{\"command\":\"L\",\"x\":469.5,\"y\":935.3333435058594},{\"command\":\"L\",\"x\":470.16668701171875,\"y\":938.6667175292969},{\"command\":\"L\",\"x\":472.8333740234375,\"y\":943.3333435058594},{\"command\":\"L\",\"x\":472.8333740234375,\"y\":944.6667175292969},{\"command\":\"L\",\"x\":474.16668701171875,\"y\":944.6667175292969},{\"command\":\"L\",\"x\":475.5,\"y\":944.0000305175781},{\"command\":\"L\",\"x\":478.16668701171875,\"y\":941.3333435058594},{\"command\":\"L\",\"x\":481.5,\"y\":937.3333435058594},{\"command\":\"L\",\"x\":484.8333740234375,\"y\":934.0000305175781},{\"command\":\"L\",\"x\":488.8333740234375,\"y\":929.3333435058594},{\"command\":\"L\",\"x\":489.5,\"y\":928.0000305175781}]'
+            });
+            viewer.annotation.addAnnotation("StickyNotes", {
+                offset: { x: 300, y: 980 },
+                pageNumber: 4,
+                isLock: false
+            });
+        }
+        selectedAnnotation.annotationType = "Rectangle";
+        selectedAnnotation.pageNumber = 1;
+        onAnnotationUnselected();
+    }
+
+</script>
+
+@section Title{
+    <title>ASP.NET Core PDF Viewer Programmatic Operations Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Programmatic Operations in ASP.NET Core PDF Viewer Control</h1>
+}

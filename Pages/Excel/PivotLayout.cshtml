@@ -1,0 +1,74 @@
+﻿@page
+@model EJ2CoreSampleBrowser.Pages.Excel.PivotLayout
+@section ActionDescription {
+    This sample demonstrates how to layout pivot table using XlsIO.
+}
+
+@section Meta {
+    <meta name="description" content="This example demonstrates the Pivot Table Layout in ASP.NET Core Excel (XlsIO) library. Explore here for more details." />
+}
+
+@section Description {
+        When there is a need to summarize large reports, Excel allows you to summarize data through pivot table insertion. Microsoft Excel supplies various built-in styles for pivot tables, allowing the creation of pivot tables with rich formats and more flexibility in summarizing reports.
+    <br />
+    <br />
+    <b>Features:</b>
+    <br />
+    <br />
+    <ul>
+        <li>Create and layout pivot table from template data</li>
+        <li>Format pivot table cells with cell styles</li>
+        <li>Convert pivot table to PDF</li>
+    </ul>
+}
+@section ControlsSection {
+    <div class="control-section">
+        @{
+            Html.BeginForm("pivotlayout", "excel", FormMethod.Post);
+            {
+                <div class="tablediv">
+                    <div class="rowdiv">
+                        <p style="font-weight:normal">
+                            Choose the pivot table layout and file format type, then click the "Create Document" button to view the document in Excel or PDF. A PDF viewer is required to view the PDF document, and an Excel viewer is required to view the Excel document.
+                        </p>
+                    </div>
+                    <br />
+                    <div class="rowdiv">
+                        <div class="celldiv">
+                            <div>
+                                Layout options
+                                <select name="layoutOption" id="layoutOption" style="width:auto;margin-left:1rem" class="e-dropdown-popup">
+                                    <option>Compact</option>
+                                    <option>Outline</option>
+                                    <option>Tabular</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="celldiv">
+                            <div>
+                                File type
+                                <input type="radio" id="excel" name="fileType" value="xlsx" checked="checked" style="margin-left: 5rem;" />
+                                <label for="excel" style="font-weight:normal">XLSX</label>
+                                &nbsp;
+                                <input type="radio" id="pdf" name="fileType" value="pdf" />
+                                <label for="pdf" style="font-weight:normal">PDF</label>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="celldiv">
+                            <input id="createpivottable" class="e-btn" name="button" type="submit" value="Create Document" style="width: 200px;text-transform:capitalize" />
+                        </div>
+                    </div>
+                </div>
+                Html.EndForm();
+            }
+        }
+    </div>
+}
+@section Title {
+    <title>ASP.NET Core Excel (XlsIO) library - Pivot Table Layout Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Pivot Table Layout in ASP.NET Core Excel (XlsIO) Library</h1>
+}

@@ -1,0 +1,123 @@
+﻿@page
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2
+@using Syncfusion.EJ2
+@{
+    var formatData = new DateTimeFormats().GetDateTimeFormatsWithId();
+    var inputformatsData = new DateTimeFormats().GetDateTimeInputFormats();
+    var fortmatValue = "dd-MMM-yy hh:mm a";
+}
+
+@section ControlsSection {
+    <div class=" col-lg-8 control-section sb-property-border">
+        <div id="wrapper-datetimepicker" class="datetimepicker-section">
+            <div id="datetimepicker-control">
+                <label class="example-label">Select Date and Time</label>
+                <ejs-datetimepicker id="datetimepicker" format="dd-MMM-yy hh:mm a" showClearButton="true" inputFormats="@(new string[] {"MM.dd.yyyy hh:mm a", "yyyy-MM-dd HH:mm"})" value=DateTime.Now></ejs-datetimepicker>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 property-panel">
+        <div class="property-panel-section">
+            <div class="property-panel-header">Properties</div>
+            <div class="property-panel-content">
+                <label class="example-label">Choose a display format</label>
+                <ejs-dropdownlist id="displayFormatDateTimePicker" value="@fortmatValue" placeholder="Select a format" change="onDateTimeFormatChange"
+                                  dataSource="@formatData">
+                </ejs-dropdownlist>
+            </div>
+            <div class="property-panel-content">
+                <label class="multi-label">Choose input formats</label>
+                <ejs-multiselect id="inputFormatsDateTimePicker" placeholder="e.g. MM.dd.yyyy hh:mm a" mode="CheckBox" showSelectAll="true" change="onDateTimeInputFormatChange"
+                                 dataSource="@inputformatsData"
+                                 value="@(new List<string> { "MM.dd.yyyy hh:mm a", "yyyy-MM-dd HH:mm" })">
+                </ejs-multiselect>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    function onDateTimeFormatChange(args) {
+        var datetimepickerOBJ = document.getElementById('datetimepicker').ej2_instances[0];
+        datetimepickerOBJ.format = args.value;
+        datetimepickerOBJ.dataBind();
+    }
+    function onDateTimeInputFormatChange(args) {
+        var datetimepickerOBJ = document.getElementById('datetimepicker').ej2_instances[0];
+        datetimepickerOBJ.inputFormats = args.value;
+        datetimepickerOBJ.dataBind();
+    }
+</script>
+
+@*custom code start*@
+<style>
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        margin-left: 300px;
+    }
+
+    .property-panel {
+        padding: 20px;
+        width: 500px;
+    }
+
+    .multi-label {
+        margin-top: 45px;
+    }
+
+    #wrapper-datetimepicker {
+        max-width: 246px;
+        margin: 30px auto;
+        padding-top: 20px;
+    }
+</style>
+@*custom code end*@
+
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>
+            In this sample, the DateTimePicker has been configured with the
+            <code>dd-MMM-yy hh:mm a</code> date time format.
+            To change this current date time format, go to the properties panel at the right side and select a date format from the available options.
+            For mobile mode touch the icon at the right side and select a date time format from the available options.
+        </p> 
+        <p>
+            Furthermore, this example showcases the flexible date value parsing functionality available in DateTimePicker component. 
+            By utilizing the <code>InputFormats</code> property, users can enter dates in various formats, which will be automatically parsed and formatted according to the chosen date format. 
+        </p>
+        
+    </div>
+
+}
+
+@section Description {
+    <div id="description">
+        <p>
+            Date Formats sample illustrates the support of custom date format in the DateTimePicker component by
+            using the <code>format</code> property. You can also change the date format by selecting it from the format options in the properties
+            panel. Use the <code>timeFormat</code> property to format the displayed time value in the popup list.
+        </p>
+        <p>
+            Furthermore, this example showcases the flexible date value parsing functionality available in DateTimePicker component.
+            By utilizing the <code>InputFormats</code> property, users can enter dates in various formats, which will be automatically parsed and formatted according to the chosen date format.
+        </p>
+        <p>
+            More information on the date format configuration can be found in the <a href="https://ej2.syncfusion.com/aspnetcore/documentation/datepicker/date-format"
+                                                                                     target="_blank" aria-label="Navigate to the documentation for Date Format in Syncfusion Datepicker control">documentation section</a>.
+        </p>
+    </div>
+
+}
+
+@section Meta {
+    <meta name="description" content="This example demonstrates the Format in ASP.NET Core DateTimePicker control. Explore here for more details." />
+}
+@section Title {
+    <title>ASP.NET Core DateTimePicker Format Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Format in ASP.NET Core DateTimePicker Control</h1>
+}

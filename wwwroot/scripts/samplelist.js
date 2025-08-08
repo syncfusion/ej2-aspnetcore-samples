@@ -7399,8 +7399,8 @@ if (!window) {
         ]
       },
       {
-        "url": "InvisibleSignature",
-        "name": "Invisible Signature",
+        "url": "InvisibleDigitalSignature",
+        "name": "Invisible Digital Signature",
         "category": "Signature",
         "order": 8,
         "component": "PDF Viewer",
@@ -7409,12 +7409,12 @@ if (!window) {
         "uid": "00232316",
         "sourceFiles": [
           {
-            "displayName": "InvisibleSignature.cshtml",
-            "path": "../Views/PdfViewer/InvisibleSignature.cshtml"
+            "displayName": "InvisibleDigitalSignature.cshtml",
+            "path": "../Views/PdfViewer/InvisibleDigitalSignature.cshtml"
           },
           {
-            "displayName": "InvisibleSignatureController.cs",
-            "path": "../Controllers/PdfViewer/InvisibleSignatureController.cs"
+            "displayName": "InvisibleDigitalSignatureController.cs",
+            "path": "../Controllers/PdfViewer/InvisibleDigitalSignatureController.cs"
           }
         ]
       }
@@ -9146,7 +9146,8 @@ if (!window) {
         "component": "Scheduler",
         "dir": "Schedule",
         "parentId": "034",
-        "type": "new"
+        "type": "new",
+        "hideOnDevice": true
       },
       {
         "url": "LocalData",

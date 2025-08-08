@@ -830,8 +830,8 @@ window.samplesList = [
                 ]
           },
           {
-              "url": "InvisibleSignature",
-              "name": "Invisible Signature",
+              "url": "InvisibleDigitalSignature",
+              "name": "Invisible Digital Signature",
               "category": "Signature",
               "order": 8,
               "component": "PdfViewer",
@@ -839,8 +839,8 @@ window.samplesList = [
               "parentId": "048",
               "uid": "0048496",
 			  "sourceFiles": [
-                    { "displayName": "InvisibleSignature.cshtml", path: "../Views/PdfViewer/InvisibleSignature.cshtml" },
-                    { "displayName": "InvisibleSignatureController.cs", path: "../Controllers/PdfViewer/InvisibleSignatureController.cs" }
+                    { "displayName": "InvisibleDigitalSignature.cshtml", path: "../Views/PdfViewer/InvisibleDigitalSignature.cshtml" },
+                    { "displayName": "InvisibleDigitalSignatureController.cs", path: "../Controllers/PdfViewer/InvisibleDigitalSignatureController.cs" }
                 ]
           }
       ],

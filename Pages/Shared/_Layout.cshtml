@@ -5,6 +5,11 @@
 @using System.Text.Encodings.Web
 @using System.Text.Json
 @{
+    #if RELEASE && STAGING
+        var isRelease = true;
+    #else
+        var isRelease = false;
+    #endif
     var nodeTemplate = "<div><span class=\"tree-text\">${name}</span>" +
             "${if(type === \"update\")}<span class=\"e-badge sb-badge e-samplestatus ${type} tree tree-badge\">Updated</span>" +
             "${else}${if(type)}<span class=\"e-badge sb-badge e-samplestatus ${type} tree tree-badge\">${type}</span>${/if}${/if}</div>";
@@ -64,7 +69,9 @@
 
         var themeName = location.hash.split('#/')[1];
         themeName = themeName ? themeName : 'tailwind3';
-        themeName = themeName === "bootstrap5" ? 'bootstrap5.3' : themeName === "bootstrap5-dark" ? "bootstrap5.3-dark" : themeName;
+        if (@isRelease.ToString().ToLower() !== 'true') {
+            themeName = themeName === "bootstrap5" ? 'bootstrap5.3' : themeName === "bootstrap5-dark" ? "bootstrap5.3-dark" : themeName;
+        }
         if (window.location.href.includes('#/')) {
             window.addEventListener("hashchange", function () {
                  location.reload();
@@ -124,7 +131,7 @@
         
         function highContrast() {
             // Check if the URL ends with "highcontrast"
-            if (window.location.href.endsWith("highcontrast")) {
+            if (window.location.href.endsWith("highcontrast") || window.location.href.endsWith("bootstrap4")) {
                 // Get the div element by its id
                 var themeSwitchDiv = document.getElementById("themeSwitchDiv");
                 // Hide the div by setting its display property to "none"
@@ -136,7 +143,7 @@
         }
     </script>
 </head>
-<body class="e-view">
+<body class="e-view" data-is-staging="@isRelease.ToString().ToLower()">
     @RenderBody()
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W8WD8WN"height="0"width="0"style="display:none;visibility:hidden"></iframe></noscript>
@@ -256,14 +263,24 @@
                 <e-dialog-position X="left" Y="bottom"></e-dialog-position>
                 <e-content-template>
                     <ul id="themelist" class="options" role="list">
-		       <li class='active' id="material3" role="listitem">
+                    @if (isRelease)
+                    {
+                        <li class='e-list' id="material" role="listitem">
+                            <span class='sb-icons sb-theme-select sb-icon-icon-selection'></span>
+                            <span class="switch-text">Material</span>
+                        </li>
+                    }
+		                <li class='active' id="material3" role="listitem">
                             <span class='sb-icons sb-theme-select sb-icon-icon-selection'></span>
                             <span class="switch-text">Material 3</span>
                         </li>
-                       @*  <li class="e-list" id="material3-dark">
+                     @if (isRelease)
+                     {
+                        <li class='e-list' id="fabric" role="listitem">
                             <span class='sb-icons sb-theme-select sb-icon-icon-selection'></span>
-                            <span class="switch-text">Material 3 Dark</span>
-                        </li> *@
+                            <span class="switch-text">Fabric</span>
+                        </li>
+                    }
                         <li class='e-list' id="fluent" role="listitem">
                             <span class='sb-icons sb-theme-select sb-icon-icon-selection'></span>
                             <span class="switch-text">Fluent</span>
@@ -272,52 +289,44 @@
                             <span class='sb-icons sb-theme-select sb-icon-icon-selection'></span>
                             <span class="switch-text">Fluent 2</span>
                         </li>
-                       @*  <li class="e-list" id="fluent-dark">
+                     @if (isRelease)
+                     {
+                        <li class='e-list' id="bootstrap" role="listitem">
                             <span class='sb-icons sb-theme-select sb-icon-icon-selection'></span>
-                            <span class="switch-text">Fluent Dark</span>
-                        </li> *@
+                            <span class="switch-text">Bootstrap</span>
+                        </li>
+                        <li class='e-list' id="bootstrap4" role="listitem">
+                            <span class='sb-icons sb-theme-select sb-icon-icon-selection'></span>
+                            <span class="switch-text">Bootstrap v4</span>
+                        </li>
+                        <li class='e-list' id="bootstrap5" role="listitem">
+                            <span class='sb-icons sb-theme-select sb-icon-icon-selection'></span>
+                            <span class="switch-text">Bootstrap v5</span>
+                        </li>
+                        <li class='e-list' id="bootstrap5.3" role="listitem">
+                            <span class='sb-icons sb-theme-select sb-icon-icon-selection'></span>
+                            <span class="switch-text">Bootstrap 5.3</span>
+                        </li>
+                         <li class="e-list" id="tailwind">
+                            <span class='sb-icons sb-theme-select sb-icon-icon-selection'></span>
+                            <span class="switch-text">Tailwind CSS</span>
+                        </li>
+                         <li class="e-list" id="tailwind3">
+                            <span class='sb-icons sb-theme-select sb-icon-icon-selection'></span>
+                            <span class="switch-text">Tailwind3 CSS</span>
+                        </li>
+                    }
+                    else 
+                    {
                         <li class='e-list' id="bootstrap5.3" role="listitem">
                             <span class='sb-icons sb-theme-select sb-icon-icon-selection'></span>
                             <span class="switch-text">Bootstrap 5</span>
                         </li>
-                       @*  <li class="e-list" id="bootstrap5-dark">
-                            <span class='sb-icons sb-theme-select sb-icon-icon-selection'></span>
-                            <span class="switch-text">Bootstrap v5 Dark</span>
-                        </li> *@
-                       @*  <li class='e-list' id="bootstrap5.3" role="listitem">
-                            <span class='sb-icons sb-theme-select sb-icon-icon-selection'></span>
-                            <span class="switch-text">Bootstrap 5.3</span>
-                        </li> *@
                         <li class="e-list" id="tailwind3">
                             <span class='sb-icons sb-theme-select sb-icon-icon-selection'></span>
                             <span class="switch-text">Tailwind CSS</span>
                         </li>
-                        <!-- <li class="e-list" id="tailwind">
-                            <span class='sb-icons sb-theme-select sb-icon-icon-selection'></span>
-                            <span class="switch-text">Tailwind CSS</span>
-                        </li> -->
-                       @*  <li class="e-list" id="tailwind-dark">
-                            <span class='sb-icons sb-theme-select sb-icon-icon-selection'></span>
-                            <span class="switch-text">Tailwind CSS Dark</span>
-                        </li> *@
-                        @* <li class="e-list" id="material">
-                            <span class='sb-icons sb-theme-select sb-icon-icon-selection'></span>
-                            <span class="switch-text">Material</span>
-                        </li>
-                        <li class="e-list" id="bootstrap4" role="listitem">
-                            <span class='sb-icons sb-theme-select sb-icon-icon-selection'></span>
-                            <span class="switch-text">Bootstrap v4</span>
-                        </li>
-                        <environment include="Development">
-                            <li class="e-list" id="bootstrap" role="listitem">
-                                <span class='sb-icons sb-theme-select sb-icon-icon-selection'></span>
-                                <span class="switch-text">Bootstrap</span>
-                            </li>
-                            <li class="e-list" id="bootstrap-dark">
-                                <span class='sb-icons sb-theme-select sb-icon-icon-selection'></span>
-                                <span class="switch-text">Bootstrap Dark</span>
-                            </li>
-                        </environment> *@
+                    }
                         <li class="e-list" id="highcontrast">
                             <span class='sb-icons sb-theme-select sb-icon-icon-selection'></span>
                             <span class="switch-text">High Contrast</span>

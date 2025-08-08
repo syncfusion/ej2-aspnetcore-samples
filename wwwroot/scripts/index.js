@@ -7,13 +7,14 @@ var prevAction;
 var ArrayItem;
 var items = [];
 var searchInstance;
+var isStaging = document.body.dataset.isStaging === "true";
 var headerThemeSwitch = document.getElementById('header-theme-switcher');
 var settingElement = ej.base.select('.sb-setting-btn');
 var themeList = document.getElementById('themelist');
-var themes = ['material3', 'fluent', 'fluent2', 'bootstrap5.3', 'tailwind', 'tailwind3', 'highcontrast', 'fluent2-highcontrast'];
+var themes = isStaging ? ['material', 'material3', 'fabric', 'fluent', 'fluent2', 'bootstrap', 'bootstrap4', 'bootstrap5', 'bootstrap5.3', 'tailwind', 'tailwind3', 'highcontrast', 'fluent2-highcontrast'] :  ['material3', 'fluent', 'fluent2', 'bootstrap5.3', 'tailwind', 'tailwind3', 'highcontrast', 'fluent2-highcontrast'];
 //var themeIndex = { 'material3': 0, 'material3-dark': 1, 'fluent': 2, 'fluent-dark': 3, 'bootstrap5': 4, 'bootstrap5-dark': 5, 'tailwind': 6, 'tailwind-dark': 7, 'material': 8, 'bootstrap4': 9, 'bootstrap': 10, 'bootstrap-dark': 11, 'highcontrast': 12 };
-var themeIndex = { 'material3': 0, 'fluent': 1, 'fluent2': 2, 'bootstrap5': 3, 'tailwind3': 4, 'highcontrast': 5, 'fluent2-highcontrast': 6 };
-var themeMode_Index = { 'material3': 'Material 3', 'fluent': 'Fluent', 'fluent2': 'Fluent 2', 'bootstrap5': 'Bootstrap 5', 'highcontrast': 'High Contrast', 'fluent2-highcontrast': 'Fluent 2 High Contrast', 'tailwind3': 'Tailwind CSS'  };
+var themeIndex = isStaging ? { 'material': 0, 'material3': 1, 'fabric': 2, 'fluent': 3, 'fluent2': 4, 'bootstrap': 5, 'bootstrap4': 6, 'bootstrap5': 7, 'bootstrap5.3': 8, 'tailwind': 9, 'tailwind3': 10, 'highcontrast': 11, 'fluent2-highcontrast': 12 } : { 'material3': 0, 'fluent': 1, 'fluent2': 2, 'bootstrap5': 3, 'tailwind3': 4, 'highcontrast': 5, 'fluent2-highcontrast': 6 };
+var themeMode_Index = isStaging ? { 'material': 'Material', 'material3': 'Material 3', 'fabric': 'Fabric', 'fluent': 'Fluent', 'fluent2': 'Fluent 2', 'bootstrap': 'Bootstrap', 'bootstrap4': 'Bootstrap v4', 'bootstrap5': 'Bootstrap v5', 'bootstrap5.3': 'Bootstrap 5.3',  'highcontrast': 'High Contrast', 'fluent2-highcontrast': 'Fluent 2 High Contrast', 'tailwind': 'Tailwind CSS', 'tailwind3': 'Tailwind3 CSS' } : { 'material3': 'Material 3', 'fluent': 'Fluent', 'fluent2': 'Fluent 2', 'bootstrap5': 'Bootstrap 5', 'highcontrast': 'High Contrast', 'fluent2-highcontrast': 'Fluent 2 High Contrast', 'tailwind3': 'Tailwind CSS'  };
 var cultureData = { "English": "en", "German - Germany*": "de", "French - Switzerland*": "fr-CH", "Arabic*": "ar", "Chinese - China*":"zh" };
 var defaultTheme = 'tailwind3';
 var themeDropDown;
@@ -423,9 +424,9 @@ function changeTheme(e) {
     var target = e.target;
     target = ej.base.closest(target, 'li');
     var themeName = target.id;
-    themeName = themeName === 'bootstrap5.3' ? 'bootstrap5' : themeName;
+    if (!isStaging) { themeName = themeName === 'bootstrap5.3' ? 'bootstrap5' : themeName; }
     var storedURL = localStorage.getItem('PreviousURL');
-    if (storedURL != null && storedURL.includes("-dark") && themeName != "highcontrast" && themeName != "fluent2-highcontrast") {
+    if (storedURL != null && storedURL.includes("-dark") && themeName != "bootstrap4" && themeName != "highcontrast" && themeName != "fluent2-highcontrast") {
         themeName = themeName + "-dark";
     } else {
         themeName = themeName;
@@ -445,7 +446,7 @@ function switchTheme(str) {
         if (str.value) {
             var dropdownMode = document.getElementById("sb-setting-mode").ej2_instances[0];
             if (window.matchMedia("(max-width: 550px)").matches) {
-                if (str.value != "highcontrast" && str.value != "fluent2-highcontrast") {
+                if (str.value != "bootstrap4" && str.value != "highcontrast" && str.value != "fluent2-highcontrast") {
                     if (dropdownMode.itemData.ThemeId == "dark") {
                         // Set the value of the second dropdown to "dark"
                         dropdownMode.value = "dark";
@@ -471,7 +472,7 @@ function switchTheme(str) {
         }
     }
     var hash = location.hash.split('/');
-    themeName = themeName === 'bootstrap5.3' ? 'bootstrap5' : themeName === 'bootstrap5.3-dark' ? 'bootstrap5-dark' : themeName;
+    if (!isStaging) { themeName = themeName === 'bootstrap5.3' ? 'bootstrap5' : themeName === 'bootstrap5.3-dark' ? 'bootstrap5-dark' : themeName; }
     if (hash[1] !== themeName) {
         hash[1] = themeName;
         localStorage.setItem('ej2-switch', ej.base.select('.sb-responsive-section .active').id);
@@ -791,12 +792,12 @@ function loadTheme(theme) {
             body.classList.remove(themes[themeItem]);
         }
     }
-    theme = theme == 'bootstrap5' ? 'bootstrap5.3' : theme == 'bootstrap5-dark' ? 'bootstrap5.3-dark' : theme;
+    if (!isStaging) { theme = theme == 'bootstrap5' ? 'bootstrap5.3' : theme == 'bootstrap5-dark' ? 'bootstrap5.3-dark' : theme; }
     body.classList.add(theme);
     themeList.querySelector('.active').classList.remove('active');
    
     var currentUpdatedTheme = theme.replace("-dark", "");
-    if(currentUpdatedTheme != "tailwind")
+    if (currentUpdatedTheme != "tailwind")
     {
         currentUpdatedTheme == 'bootstrap5.3' ? themeList.querySelector('#bootstrap5\\.3').classList.add('active') : themeList.querySelector('#' + currentUpdatedTheme).classList.add('active');
     }
@@ -816,7 +817,7 @@ function loadTheme(theme) {
     hasher.changed.add(parseHash);
     hasher.init();
    /* removing dark or light them options for fluent2-highcontrast themeSwitchDiv*/
-    if (theme == 'fluent2-highcontrast') {
+    if (theme == 'fluent2-highcontrast' || theme == 'bootstrap4') {
         var theamswitchDivDisable = document.getElementById("themeSwitchDiv");
         theamswitchDivDisable.style.display = 'none';
     }
@@ -825,7 +826,7 @@ function loadTheme(theme) {
     var mobileThemeModeDropDownstyle = window.getComputedStyle(mobileThemeModeElement);
     if (mobileThemeModeDropDownstyle.display === "block") {
         var hashValue = window.location.href.split("#/")[1];
-        if (hashValue !== 'fluent2-highcontrast' && hashValue !== 'highcontrast') {
+        if (hashValue !== 'fluent2-highcontrast' && hashValue !== 'highcontrast' && hashValue !== 'bootstrap4') {
             if (hashValue === undefined) {
                 hashValue = '';
             }
@@ -1012,7 +1013,12 @@ function getSamples(samples) {
 function getThemeName() {
     var themeName = defaultTheme;
     if (location.hash.split('/')[1] != null) {
-        themeName = location.hash.split('/')[1] === 'bootstrap5.3' ? 'bootstrap5' : location.hash.split('/')[1];
+        if (!isStaging) {
+            themeName = location.hash.split('/')[1] === 'bootstrap5.3' ? 'bootstrap5' : location.hash.split('/')[1];
+        }
+        else {
+            themeName = location.hash.split('/')[1];
+        }
     }
     return themeName;
 }
@@ -1530,7 +1536,7 @@ button.addEventListener('click', function () {
 function onModeChanges(event) {
     var currentURL = window.location.href;
     var updatedURL1 = "";
-    if (!currentURL.includes("highcontrast") && !currentURL.includes("fluent2-highcontrast")) {
+    if (!currentURL.includes("highcontrast") && !currentURL.includes("fluent2-highcontrast") && !currentURL.includes("bootstrap4")) {
         // Check if the URL already contains "-dark"
         if (!currentURL.includes("-dark")) {
             // Append "-dark" to the current URL

@@ -1,0 +1,207 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Diagram.NodesModel
+@using Syncfusion.EJ2;
+@{
+    var  getNodeDefaults = "getNodeDefaults";
+    var getConnectorDefaults = "getConnectorDefaults";
+}
+@section ControlsSection{
+    <div class="col-lg-8 control-section">
+        <div class="content-wrapper">
+            <ejs-diagram id="container" width="100%" height="700px" nodes="@Model.nodes" connectors="@Model.Connectors" getNodeDefaults="@getNodeDefaults" getConnectorDefaults="@getConnectorDefaults">
+                <e-diagram-snapsettings constraints="None"></e-diagram-snapsettings>
+            </ejs-diagram>
+        </div>
+    </div>
+    <div class="col-lg-4 property-section" id="diagram-appearance-panel">
+        <div class="property-panel-header">
+            Properties
+        </div>
+        <div class="row property-panel-content" id="appearance">
+            <div class="row row-header" style="padding-top: 10px">
+                Appearance
+            </div>
+            <div class="row" style="padding-top: 8px">
+                <div class="image-pattern-style" id="preview0" style="background-image: url('@Url.Content("~/images/Diagram/node/Nodes_1.png")'); margin-right: 3px">
+                </div>
+                <div class="image-pattern-style" id="preview1" style="background-image: url('@Url.Content("~/images/Diagram/node/Nodes_2.png")'); margin-right: 0px 3px">
+                </div>
+                <div class="image-pattern-style" id="preview2" style="background-image: url('@Url.Content("~/images/Diagram/node/Nodes_3.png")'); margin: 0px 3px">
+                </div>
+            </div>
+            <div class="row" style="padding-top: 8px">
+                <div class="image-pattern-style" id="preview3" style="background-image: url('@Url.Content("~/images/Diagram/node/Nodes_4.png")'); margin-right: 3px">
+                </div>
+                <div class="image-pattern-style" id="preview4" style="background-image: url('@Url.Content("~/images/Diagram/node/Nodes_5.png")'); margin-right: 0px 3px">
+                </div>
+            </div>
+        </div>
+        <div class="row property-panel-content" style="padding-top: 10px">
+            <div class="row row-header">
+                Behaviour
+            </div>
+            <div class="row" style="padding-top: 8px">
+                <ejs-checkbox id="aspectRatio" checked="false" label="Aspect ratio" change="checkBoxChange"></ejs-checkbox>
+            </div>
+            <div class="row" style="padding-top: 8px">
+                <ejs-checkbox id="lock" checked="false" label="Lock" change="lockChanged"></ejs-checkbox>
+            </div>
+        </div>
+    </div>
+    <style>
+        /* Css for images in property panel  */
+        .image-pattern-style {
+            background-color: white;
+            background-size: contain;
+            background-repeat: no-repeat;
+            height: 75px;
+            width: calc((100% - 12px) / 3);
+            cursor: pointer;
+            border: 1px solid #D5D5D5;
+            background-position: center;
+            float: left;
+        }
+
+        #diagram-appearance-panel .row {
+            margin-left: 0px;
+            margin-right: 0px;
+        }
+
+        #diagram-appearance-panel .row-header {
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* Selection indicator */
+        .diagram-panel-selected-style {
+            border-color: #6c6c6c;
+            border-width: 2px;
+        }
+
+    </style>
+    <script>
+        function getNodeDefaults(node, diagram) {
+            node.shape = { type :'Basic',shape: 'Ellipse' };
+            node.style = { fill: '#37909A', strokeColor: '#024249' };
+            return node;
+        }
+        function getConnectorDefaults(connector, diagram) {
+            connector.targetDecorator.style = { fill: '#024249', strokeColor: '#024249' };
+            return { style: { strokeColor: '#024249', strokeWidth: 2 } };
+        }
+        var style = document.getElementById('style');
+        var node;
+        document.getElementById('appearance').onclick = function (args) {
+            var target = args.target;
+            var diagram = document.getElementById("container").ej2_instances[0];
+            @*custom code start*@
+            var selectedElement = document.getElementsByClassName('diagram-panel-selected-style');
+            if (selectedElement.length) {
+                selectedElement[0].classList.remove('diagram-panel-selected-style');
+            }
+            @*custom code end*@
+            if (target.className === 'image-pattern-style') {
+                for (var i = 0; i < diagram.nodes.length; i++) {
+                    node = diagram.nodes[i];
+                    switch (target.id) {
+                        case 'preview0':
+                            applyStyle(node, 0, '', ~ej.diagrams.NodeConstraints.Shadow, undefined);
+                            break;
+                        case 'preview1':
+                            applyStyle(node, 2, '', ~ej.diagrams.NodeConstraints.Shadow, undefined);
+                            break;
+                        case 'preview2':
+                            applyStyle(node, 2, '5 5', ~ej.diagrams.NodeConstraints.Shadow, undefined);
+                            break;
+                        case 'preview3':
+                            applyStyle(node, 2, '5 5', ~ej.diagrams.NodeConstraints.Shadow, 'Radial');
+                            break;
+                        case 'preview4':
+                            applyStyle(node, 2, '5 5', ej.diagrams.NodeConstraints.Shadow, undefined);
+                            break;
+                    }
+                    @*custom code start*@
+                    target.classList.add('diagram-panel-selected-style');
+                    @*custom code end*@
+                }
+            }
+        };
+
+        function checkBoxChange(args) {
+            var label = "Aspect Ratio";
+            var diagram = document.getElementById("container").ej2_instances[0];
+            for (var i = 0; i < diagram.nodes.length; i++) {
+                node = diagram.nodes[i];
+                if (args.checked) {
+                    node.constraints |= ej.diagrams.NodeConstraints.AspectRatio;
+                } else {
+                    node.constraints &= ~ej.diagrams.NodeConstraints.AspectRatio;
+                }
+                diagram.dataBind();
+            }
+
+        }
+
+        function lockChanged(args) {
+            var label = "Lock";
+            var diagram = document.getElementById("container").ej2_instances[0];
+            for (var i = 0; i < diagram.nodes.length; i++) {
+                node = diagram.nodes[i];
+                if (args.checked) {
+                    node.constraints &= ~(ej.diagrams.NodeConstraints.Resize | ej.diagrams.NodeConstraints.Rotate | ej.diagrams.NodeConstraints.Drag | ej.diagrams.NodeConstraints.Delete);
+                    node.constraints |= ej.diagrams.NodeConstraints.ReadOnly;
+                } else {
+                    node.constraints = ej.diagrams.NodeConstraints.Default;
+                }
+                diagram.dataBind();
+            }
+        }
+
+        function applyStyle(node, width, array, con, type) {
+            var diagram = document.getElementById("container").ej2_instances[0];
+            node.style.fill = '#37909A';
+            node.style.strokeWidth = width;
+            node.style.strokeColor = '#024249';
+            node.style.strokeDashArray = array;
+            if (!type) {
+                node.style.gradient.type = 'None';
+            } else {
+                var gradient;
+                gradient = {
+                    cx: 50, cy: 50, fx: 50, fy: 50,
+                    stops: [{ color: '#00555b', offset: 0 },
+                    { color: '#37909A', offset: 90 }],
+                    type: 'Radial'
+                };
+                node.style.gradient = gradient;
+            }
+            if (con & ej.diagrams.NodeConstraints.Shadow) {
+                node.shadow = { angle: 45, distance: 15, opacity: 0.3, color: 'grey' };
+                node.constraints |= con;
+            } else {
+                node.constraints &= con;
+            }
+            diagram.dataBind();
+        }
+
+    </script>
+}
+@section ActionDescription{
+    <p>
+        This sample visualizes the different stages of a software development life cycle using a circular flow diagram. Customizing the appearance of the nodes is illustrated in this example.
+    </p>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Nodes in ASP.NET Core Diagram control. Explore here for more details."/>
+                }
+@section Description{
+    <p>
+        In this example, you can see how to render diagram control with nodes and how to customize the appearance of nodes. To change the appearance, Click at the different styles added in the property panel.
+    </p>
+}
+@section Title{
+                    <title>ASP.NET Core Diagram Nodes Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Nodes in ASP.NET Core Diagram Control</h1>
+                }

@@ -1,0 +1,743 @@
+﻿@using Syncfusion.EJ2
+@using Syncfusion.EJ2.Navigations
+
+@{
+    var template = "<div class=''><span class='e-pv-current-page-number' id='e-pv-redact-sb-currentPage' titlt='Current Page'>1</span><span class='e-pv-total-page-number' id='e-pv-redact-sb-totalPage' titlle='Total Page'> / 1</span></div>";
+    string comboelement = "#combo-content";
+    string[] datas = new string[] { "10%", "25%", "50%", "75%", "100%", "200%", "400%" };
+    var zoomValue = "100%";
+    var dialogVisible = false;
+    var newButton = new
+    {
+        content = "Cancel",
+        isPrimary = true
+    };
+}
+
+@section ControlsSection {
+    @{
+        var asyncSettings = new Syncfusion.EJ2.Inputs.UploaderAsyncSettings { SaveUrl = "https://ej2services.syncfusion.com/production/web-services/api/FileUploader/Save", RemoveUrl = "https://ej2services.syncfusion.com/production/web-services/api/FileUploader/Remove" };
+        var alertanimation = new Syncfusion.EJ2.Popups.DialogAnimationSettings { Effect = Syncfusion.EJ2.Popups.DialogEffect.None };
+    }
+    <div class="control-section" id="e-pv-redact-sb-target">
+
+        <div class="content-wrapper">
+            <div class="e-pv-redact-sb-flex-container">
+            </div>
+            <ejs-appbar id="defaultAppBar" colorMode="Primary">
+                <e-content-template>
+                    <span class="regular" style="margin:0 5px">Redaction</span>
+                    <div class="e-appbar-spacer"></div>
+                    <ejs-button id="downloadButton" iconCss='e-icons e-download e-btn-icon e-icon-left' cssClass="e-inherit" onclick="downloadClicked()" content="Download"></ejs-button>
+                </e-content-template>
+            </ejs-appbar>
+
+            <div id="toolbar_default">
+                <ejs-toolbar id="e-pv-redact-sb-toolbar">
+                    <e-toolbar-items>
+                        <e-toolbar-item prefixIcon="e-icon e-folder" text="Open" tooltipText="Open" id="pdfviewer_open" click="openFile"></e-toolbar-item>
+                        <e-toolbar-item type="Separator" tooltipText="separator" id="separator1"></e-toolbar-item>
+                        <e-toolbar-item prefixIcon="e-icon e-text-annotation" tooltipText="Text" text="Text" click="addText"></e-toolbar-item>
+                        <e-toolbar-item prefixIcon="e-icons e-image" tooltipText="Image" text="Image" click="imgClick"></e-toolbar-item>
+                        <e-toolbar-item prefixIcon="e-icons e-opacity" tooltipText="Pattern" text="Pattern" click="addPattern"></e-toolbar-item>
+                        <e-toolbar-item prefixIcon="e-icons black-out" tooltipText="Black out" id="e-pv-redact-sb-blackout" text="Blackout" click="addBlackout"></e-toolbar-item>
+                        <e-toolbar-item prefixIcon="e-icons white-out" tooltipText="White out" id="e-pv-redact-sb-whiteout" text="Whiteout" click="addWhiteout"></e-toolbar-item>
+                        <e-toolbar-item type="Separator" tooltipText="separator" id="separator1"></e-toolbar-item>
+                        <e-toolbar-item prefixIcon="e-icons e-redact" id="redaction" tooltipText="Redaction" text="Redact" click="Redaction" disabled=true></e-toolbar-item>
+                    </e-toolbar-items>
+                </ejs-toolbar>
+                <input id="documentUpload" accept=".pdf" type="file" style="display:block;visibility:hidden;width:0;height:0;" />
+            </div>
+        </div>
+
+        <div class="secondary-toolbar" id="toolbar_secondary">
+            <ejs-toolbar id="e-pv-redact-sb-secondary-toolbar">
+                <e-toolbar-items>
+                    <e-toolbar-item prefixIcon="e-icon e-chevron-left" id="previousPage" click="previousClicked" disabled=true></e-toolbar-item>
+                    <e-toolbar-item template="@template" cssClass="e-pv-redact-sb-currentPageNumber"></e-toolbar-item>
+                    <e-toolbar-item prefixIcon="e-icon e-chevron-right" id="nextPage" click="nextClicked" disabled=true></e-toolbar-item>
+                    <e-toolbar-item type="Separator" tooltipText="separator" id="separator1"></e-toolbar-item>
+                    <e-toolbar-item template="@comboelement" type=Input></e-toolbar-item>
+                </e-toolbar-items>
+            </ejs-toolbar>
+        </div>
+        <ejs-pdfviewer id="pdfviewer"
+                       enableToolbar='false'
+                       enableNavigationToolbar='false'
+                       enableAnnotationToolbar='false'
+                       pageChange="pageChange"
+                       documentLoad="documentLoaded"
+                       annotationAdd="annotationAdd"
+                       annotationRemove="annotationRemove"
+                       enableCommentPanel="false"
+                       documentPath="https://cdn.syncfusion.com/content/pdf/programmatical-annotations.pdf"
+                       resourceUrl="https://cdn.syncfusion.com/ej2/27.2.2/dist/ej2-pdfviewer-lib"
+                       style="height:641px;">
+        </ejs-pdfviewer>
+        <div id='dialog'>
+            <ejs-dialog id="e-pv-redact-sb-dialog" visible="dialogVisible" target="#e-pv-redact-sb-target" showCloseIcon="true" isModal="true" width="477px" minHeight="560px" animationSettings="alertanimation" header="<span id='container'><div id='dlg-template' title='UploadImage' class='e-icon-settings'> Upload Image
+        </div></span>">
+                                  <e-content-template>
+                                      <div id='e-pv-redact-sb-defaultfileupload'>
+                                      <div class="drop-area-wrap">
+                                        <div>
+                                              <ejs-uploader id='defaultfileupload' multiple="false" asyncSettings="@asyncSettings" change="onFileChange" allowedExtensions=".png, .jpg, .jpeg"></ejs-uploader>
+                                        </div>
+                                        <div>
+                                          (Only JPG and PNG images will be accepted)
+                                        </div>
+                                      </div>
+                                      <div class="image-list">
+                                        <div id='imageContainer' class="image-container" style="display:none">
+                                          <img id='imageView'  class="image-source">
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </e-content-template>
+                                  <e-dialog-buttons>
+                                            <e-dialog-dialogbutton buttonModel="newButton" click="dialogObjClose"  ></e-dialog-dialogbutton>
+                                  </e-dialog-buttons>
+                                </ejs-dialog>
+        </div>
+    </div>
+    <ejs-combobox id="combo-content" dataSource="@datas" change="zoomValueChange" width="88px" popupWidth="85px" value="@zoomValue" showClearButton=false title="Zoom"></ejs-combobox>
+
+
+}
+
+@section Meta {
+    <meta name="description"
+          content="This example demonstrates the Default Functionalities in ASP.NET Core PDF Viewer control. Explore here for more details." />
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p> The PDF Viewer facilitates the permanent removal of sensitive or confidential data from PDF files. Simplifying the redaction process, Syncfusion’s <a target='_blank' href='https://www.syncfusion.com/document-processing/pdf-framework/net/pdf-library' aria-label="Navigate to the Redaction Documendation in PDF library">.NET PDF library</a> includes features for seamless implementation. </p>
+    </div>
+}
+
+@section Description {
+    <div id="action-description">
+        <p> This example showcases the implementation of redaction using rectangle annotation, leveraging the Redaction feature in <a target='_blank' href='https://help.syncfusion.com/file-formats/pdf/working-with-redaction' aria-label="Navigate to the Redaction Documendation by pdf viewer Library">File formats</a>.</p>
+        <br />
+        <p>
+            Various types of redactions are demonstrated:
+        </p>
+        <br />
+        <ul>
+            <li>Displaying text over the redacted area</li>
+            <li>Adding an image to the redacted area</li>
+            <li>Drawing patterns on the redacted area</li>
+            <li>Blacking out the redacted area</li>
+            <li>Whitening out the redacted area</li>
+        </ul>
+        <br />
+        <p> Upon selecting areas on a page or across different pages with different redaction options, users can click the `Redact button`. This action redacts the document and reloads it into the PDF Viewer. The redacted document can then be saved or downloaded. </p>
+    </div>
+}
+
+<style>
+    .e-pv-redact-sb-flex-container {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    #e-pv-redact-sb-target .e-icon.e-folder::before {
+        content: "\e83c";
+        font-family: "e-icons";
+    }
+
+    #e-pv-redact-sb-target .e-icon.e-text-annotation::before {
+        content: "\e7b3";
+        font-family: "e-icons";
+    }
+
+    #e-pv-redact-sb-target .e-icons.e-image::before {
+        content: "\e786";
+        font-family: "e-icons";
+    }
+
+    #e-pv-redact-sb-target .e-icons.e-opacity::before {
+        content: "\e7e1";
+        font-family: "e-icons";
+    }
+
+    #e-pv-redact-sb-target .e-icons.black-out::before {
+        font-family: "e-icons";
+    }
+
+    #e-pv-redact-sb-target .e-icons.white-out::before {
+        font-family: "e-icons";
+    }
+
+    #e-pv-redact-sb-target .e-icons.e-redaction::before {
+        font-family: "e-icons";
+    }
+
+    #e-pv-redact-sb-target {
+        background: none;
+        backdrop-filter: blur(2px) !important;
+    }
+
+    #e-pv-redact-sb-secondary-toolbar .e-toolbar-item.e-template.e-pv-redact-sb-currentPageNumber {
+        min-width: 0px;
+    }
+
+    /*new*/
+    #e-pv-redact-sb-target .e-appbar {
+        height: 36px;
+        font-size: 14px !important;
+    }
+
+    #e-pv-redact-sb-toolbar.e-toolbar .e-toolbar-item .e-tbar-btn.e-tbtn-txt .e-icons.e-btn-icon {
+        padding: 4px !important;
+    }
+
+    #e-pv-redact-sb-toolbar.e-toolbar .e-toolbar-item .e-tbar-btn {
+        flex-direction: column;
+    }
+
+        #e-pv-redact-sb-toolbar.e-toolbar .e-toolbar-item .e-tbar-btn .e-icons.e-btn-icon {
+            font-size: 18px;
+        }
+
+    #e-pv-redact-sb-toolbar {
+        height: 72px !important;
+    }
+
+        #e-pv-redact-sb-toolbar .e-toolbar-items {
+            gap: 5px;
+        }
+
+        #e-pv-redact-sb-toolbar .e-toolbar-item.e-separator {
+            height: 48px !important;
+        }
+
+        #e-pv-redact-sb-toolbar, #e-pv-redact-sb-toolbar.e-toolbar, #e-pv-redact-sb-secondary-toolbar.e-toolbar {
+            border-left-width: 1px !important;
+            border-right-width: 1px !important;
+        }
+
+    #e-pv-redact-sb-secondary-toolbar.e-toolbar {
+        border-top-width: 1px !important;
+    }
+
+    #e-pv-redact-sb-currentPage {
+        font-size: 12px;
+    }
+
+    #e-pv-redact-sb-totalPage {
+        font-weight: 400;
+    }
+
+    #e-pv-redact-sb-target .e-input-group {
+        border: none !important;
+    }
+
+    #e-pv-redact-sb-blackout .black-out {
+        background-color: black;
+        width: 18px !important;
+        height: 18px !important;
+        border: 1px solid white;
+        border-radius: 3px;
+        margin: 4px !important;
+    }
+
+    #e-pv-redact-sb-whiteout .white-out {
+        background-color: white;
+        width: 18px !important;
+        height: 18px !important;
+        border: 1px solid black;
+        border-radius: 3px;
+        margin: 4px !important;
+    }
+
+    .e-bigger #e-pv-redact-sb-blackout .black-out,
+    .e-bigger #e-pv-redact-sb-whiteout .white-out {
+        position: relative;
+        top: -4px;
+    }
+
+    .e-bigger #e-pv-redact-sb-toolbar.e-toolbar .e-toolbar-item.e-pv-black-out-container .e-tbar-btn.e-btn,
+    .e-bigger #e-pv-redact-sb-toolbar.e-toolbar .e-toolbar-item.e-pv-white-out-container .e-tbar-btn.e-btn {
+        padding-top: 5px !important;
+    }
+
+    .e-bigger .e-pv-black-out-container .e-tbar-btn .e-tbar-btn-text,
+    .e-bigger .e-pv-white-out-container .e-tbar-btn .e-tbar-btn-text {
+        padding: 2px 4px 7px 4px !important;
+    }
+    /*upload image*/
+    #e-pv-redact-sb-dialog.e-dialog #e-pv-redact-sb-defaultfileupload .e-upload-files {
+        border: none !important;
+    }
+
+    #e-pv-redact-sb-target #file-uploader {
+        display: flex;
+        border: 1px dashed #c8c6c4;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        padding: 16px;
+        border-radius: 6px;
+    }
+
+    #e-pv-redact-sb-dialog.e-dialog .e-dlg-header-content {
+        border-bottom: 1px solid #C4C7C5 !important;
+        padding: 15px !important;
+    }
+
+    #e-pv-redact-sb-dialog.e-dialog .e-footer-content {
+        border-top: 1px solid #C4C7C5 !important;
+        padding: 10px !important;
+    }
+
+    #e-pv-redact-sb-dialog.e-dialog .e-dlg-header-content + .e-dlg-content {
+        padding: 20px !important;
+    }
+
+    #e-pv-redact-sb-target .e-file-select-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #e-pv-redact-sb-dialog.e-dialog .e-footer-content .e-btn {
+        background: rgba(0, 0, 0, 0);
+        border-color: rgba(0, 0, 0, 0);
+        box-shadow: none;
+        color: #242424;
+    }
+
+    #e-pv-redact-sb-target .e-upload-file-list {
+        display: none;
+    }
+
+    #e-pv-redact-sb-defaultfileupload .e-upload-files {
+        border: none !important;
+    }
+
+    #e-pv-redact-sb-target .image-source {
+        width: 70px;
+        height: 70px;
+    }
+
+    #e-pv-redact-sb-target .image-container {
+        box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 4px;
+        gap: 5px;
+        border-radius: 4px;
+    }
+
+    #e-pv-redact-sb-target .image-list {
+        display: flex;
+        justify-content: center;
+        padding: 24px 15px;
+        gap: 35px;
+    }
+
+    #e-pv-redact-sb-target .image-container-selected {
+        border: 1px solid #757575 !important;
+    }
+
+    #e-pv-redact-sb-target .image-container:hover {
+        border: 1px solid #757575;
+    }
+
+    #e-pv-redact-sb-target .drop-area-wrap {
+        display: flex;
+        border: 1px dashed #c8c6c4;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        padding: 16px;
+        border-radius: 6px;
+    }
+
+    #e-pv-redact-sb-target .control_wrapper {
+        max-width: 505px;
+        margin: auto;
+    }
+
+    #e-pv-redact-sb-target #uploadicon {
+        cursor: pointer;
+        top: 5px;
+        left: 20px;
+        position: relative;
+    }
+
+    #e-pv-redact-sb-target .e-file-select-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #e-pv-redact-sb-defaultfileupload .e-upload {
+        border: none;
+        margin-top: 10px;
+        width: 100%;
+        height: 100%;
+    }
+
+    #e-pv-redact-sb-target.control-section .e-dlg-overlay {
+        background: none;
+        backdrop-filter: blur(2px) !important;
+    }
+
+    ##e-pv-redact-sb-dialog {
+        max-height: 600px !important;
+    }
+</style>
+
+<script type="text/javascript">
+
+    var viewer
+    var fileName = "programmatical-annotations.pdf";
+    var toolbar;
+    var imageElement;
+    var primaryToolbarObj;
+    var imageElementContainer;
+    var currentPageBox;
+    var annotation;
+    var redactionCount = 0;
+    var dialogObj;
+    var customStampSource;
+    var imgSrc;
+    var url = window.baseurl + 'api/PdfViewer/Redaction';
+    window.onload = function () {
+        currentPageBox = document.getElementById('e-pv-redact-sb-currentPage');
+        primaryToolbarObj = document.getElementById('e-pv-redact-sb-toolbar').ej2_instances[0];
+        currentPageBox.innerHTML = '1';
+        viewer = document.getElementById('pdfviewer').ej2_instances[0];    
+        document.getElementById('documentUpload').addEventListener('change', readFile, false);
+        currentPageBox.addEventListener('keypress', () => {
+            var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+            var currentPage = document.getElementById('e-pv-redact-sb-currentPage');
+            if ((event.which < 48 || event.which > 57) && event.which !== 8 && event.which !== 13) {
+                event.preventDefault();
+                return false;
+            } else {
+                var currentPageNumber = parseInt((currentPage).value);
+                if (event.which === 13) {
+                    if (currentPageNumber > 0 && currentPageNumber <= pdfViewer.pageCount) {
+                        pdfViewer.navigation.goToPage(currentPageNumber);
+                    } else {
+                        (currentPage).innerHTML = pdfViewer.currentPageNumber.toString();
+                    }
+                }
+                return true;
+            }
+        });
+    }
+
+    function Redaction() {
+        if (redactionCount > 0) {
+            viewer.saveAsBlob().then(function (value) {
+                const data = value;
+                const reader = new FileReader();
+                reader.readAsDataURL(data);
+                reader.onload = function (e) {
+                    const base64String = e.target?.result.toString();
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('POST', url, true);
+                    xhr.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
+                    const requestData = JSON.stringify({ base64String: base64String });
+                    xhr.onload = function () {
+                        if (xhr.status === 200) {
+                            viewer.load(xhr.responseText, null);
+                        }
+                        else {
+                            console.error('Redaction failed:', xhr.statusText);
+                        }
+                    };
+                    xhr.onerror = function () {
+                        console.error('An error occurred during the redaction:', xhr.statusText);
+                    };
+                    xhr.send(requestData);
+                };
+            });
+            redactionCount = 0;
+            updateRedaction();
+        }
+    }
+
+    function updateRedaction() {
+        if (redactionCount <= 0) {
+            primaryToolbarObj.items[8].disabled = true;
+        }
+        else {
+            primaryToolbarObj.items[8].disabled = false;
+        }
+
+    }
+
+    function handleImageClick() {
+        customStampSource = imgSrc;
+        dialogObj.hide();
+        addImage();
+    }
+
+    function onFileChange(event) {
+        const file = event.file[0].rawFile;
+        imageElement = document.getElementById('imageView');
+        imageElementContainer = document.getElementById('imageContainer');
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const base64String = e.target.result;
+            imgSrc = base64String;
+            customStampSource = imgSrc;
+            imageElement.src = imgSrc;
+            imageElementContainer.className = 'image-container image-container-selected';
+            imageElementContainer.style.display = 'block';
+            imageElement.addEventListener('click', handleImageClick);
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function addImage() {
+        viewer = document.getElementById('pdfviewer').ej2_instances[0];
+        viewer.stampSettings.author = "Image";
+        viewer.customStampSettings = {
+            width: 200,
+            author: 'Image',
+            height: 125,
+            isAddToMenu: false,
+            enableCustomStamp: false,
+        };
+        viewer.customStamp = [
+            {
+                customStampName: 'Image',
+                customStampImageSource: customStampSource,
+            },
+        ];
+    }
+
+    function zoomValueChange(args) {
+        let zoom = args.value;
+        let previousZoom = args.previousItemData.value;
+        if (zoom !== null || previousZoom !== null) {
+            let zoomchange = parseInt(zoom.replace("%", ""), 10);
+            viewer.magnificationModule.zoomTo(zoomchange);
+        }
+    }
+
+    function documentLoaded() {
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        var pageCount = document.getElementById('e-pv-redact-sb-totalPage');
+        var currentPage = document.getElementById('e-pv-redact-sb-currentPage');
+        currentPage.innerHTML = '1';
+        pageCount.innerHTML = ' / ' + pdfViewer.pageCount;
+        updatePageNavigation();
+        updateRedaction();
+    }
+
+    function annotationAdd(args) {
+        var pdfAnnotationList;
+        pdfAnnotationList = viewer.annotationCollection;
+        var selectedAnnotationIndex = pdfAnnotationList.findIndex(item => item.annotationId == args.annotationId);
+        if (selectedAnnotationIndex != -1) {
+            annotation = pdfAnnotationList[selectedAnnotationIndex];
+        }
+        if (annotation.author == "Redaction" || annotation.customStampName == "Image" || annotation.author == "Pattern" || annotation.author == "Text") {
+            redactionCount = redactionCount + 1;
+            updateRedaction();
+        }
+    }
+
+    function annotationRemove(args) {
+        if (annotation.author == "Redaction" || annotation.customStampName == "Image" || annotation.author == "Pattern" || annotation.author == "Text") {
+            redactionCount = redactionCount - 1;
+            updateRedaction();
+        }
+    }
+
+    function updatePageNavigation() {
+        var toolbarObj = document.getElementById('e-pv-redact-sb-secondary-toolbar').ej2_instances[0];
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        if (pdfViewer.currentPageNumber === 1) {
+            toolbarObj.items[0].disabled = true;
+            toolbarObj.items[2].disabled = false;
+        } else if (pdfViewer.currentPageNumber === pdfViewer.pageCount) {
+            toolbarObj.items[0].disabled = false;
+            toolbarObj.items[2].disabled = true;
+        } else {
+            toolbarObj.items[0].disabled = false;
+            toolbarObj.items[2].disabled = false;
+        }
+    }
+    function previousClicked() {
+        viewer.navigation.goToPreviousPage();
+    }
+    function nextClicked() {
+        viewer.navigation.goToNextPage();
+    }
+    function openFile() {
+        document.getElementById('documentUpload').click();
+    }
+
+    function readFile(evt) {
+        var upoadedFiles = evt.target.files;
+        var uploadedFile = upoadedFiles[0];
+        fileName = upoadedFiles[0].name;
+        var reader = new FileReader();
+        reader.readAsDataURL(uploadedFile);
+        reader.onload = function () {
+            var obj = document.getElementById('pdfviewer').ej2_instances[0];
+            var uploadedFileUrl = this.result;
+            obj.documentPath = uploadedFileUrl;
+            obj.fileName = fileName;
+            currentPageBox = document.getElementById('e-pv-redact-sb-currentPage');
+            currentPageBox.value = '1';
+            var pageCount = document.getElementById('e-pv-redact-sb-totalPage');
+            pageCount.innerHTML = ' / ' + obj.pageCount;
+        }
+    }
+
+    function downloadClicked() {
+        var pdfViewer = document.getElementById('pdfviewer').ej2_instances[0];
+        viewer.saveAsBlob().then(function (value) {
+            var reader = new FileReader();
+            reader.readAsDataURL(value);
+            reader.onload = function (e) {
+                var base64String = e.target?.result;
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', url, true);
+                xhr.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
+                var requestData = JSON.stringify({ base64String: base64String });
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        var blobUrl = createBlobUrl(xhr.responseText.split('base64,')[1], 'application/pdf');
+                        downloadDocument(blobUrl);
+                    }
+                    else {
+                        console.error('Download failed:', xhr.statusText);
+                    }
+                };
+                xhr.onerror = function () {
+                    console.error('An error occurred during the download:', xhr.statusText);
+                };
+                xhr.send(requestData);
+            };
+        }).catch(function (error) {
+            console.error('Error saving Blob:', error);
+        });
+    }
+
+    function createBlobUrl(base64String, contentType) {
+        var sliceSize = 512;
+        var byteCharacters = atob(base64String);
+        var byteArrays = [];
+        for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+            var slice = byteCharacters.slice(offset, offset + sliceSize);
+            var byteNumbers = new Array(slice.length);
+            for (var i = 0; i < slice.length; i++) {
+                byteNumbers[parseInt(i.toString(), 10)] = slice.charCodeAt(i);
+            }
+            var byteArray = new Uint8Array(byteNumbers);
+            byteArrays.push(byteArray);
+        }
+        var blob = new Blob(byteArrays, { type: contentType });
+        return blob;
+    }
+
+    function downloadDocument(blobUrl) {
+        var Url = URL || webkitURL;
+        blobUrl = Url.createObjectURL(blobUrl);
+        viewer.fileName = fileName;
+        var anchorElement = document.createElement('a');
+        if (anchorElement.click) {
+            (anchorElement).href = blobUrl;
+            (anchorElement).target = '_parent';
+            if ('download' in anchorElement) {
+                var downloadFileName = viewer.fileName || 'downloadedFile.pdf';
+                if (downloadFileName) {
+                    if (downloadFileName.endsWith('.pdf')) {
+                        (anchorElement).download = downloadFileName;
+                    }
+                    else {
+                        var splitPdf = downloadFileName.split('.pdf')[0] + '.pdf';
+                        (anchorElement).download = splitPdf;
+                    }
+                }
+                else {
+                    (anchorElement).download = 'Default.pdf';
+                }
+            }
+            (document.body || document.documentElement).appendChild(anchorElement);
+            anchorElement.click();
+        }
+        else {
+            if (window.top === window &&
+                blobUrl.split('#')[0] === window.location.href.split('#')[0]) {
+                var padCharacter = blobUrl.indexOf('?') === -1 ? '?' : '&';
+                blobUrl = blobUrl.replace(/#|$/, padCharacter + '$&');
+            }
+            window.open(blobUrl, '_parent');
+        }
+    }
+
+    function addText() {
+        viewer.rectangleSettings = {
+            fillColor: '#a3a2a0',
+            strokeColor: '#a3a2a0',
+            author: 'Text'
+        }
+        viewer.annotation.setAnnotationMode('Rectangle');
+    }
+
+    function imgClick() {
+        dialogObj = document.getElementById('e-pv-redact-sb-dialog').ej2_instances[0];
+        dialogObj.show();
+    }
+
+    function dialogObjClose() {
+        dialogObj = document.getElementById('e-pv-redact-sb-dialog').ej2_instances[0];
+        dialogObj.hide();
+    }
+
+    function addPattern() {
+        viewer.rectangleSettings = {
+            fillColor: '#dedfe0',
+            strokeColor: '#dedfe0',
+            author: 'Pattern'
+        }
+        viewer.annotation.setAnnotationMode('Rectangle');
+    }
+
+    function addBlackout() {
+        viewer.rectangleSettings = {
+            fillColor: '#000000',
+            strokeColor: '#000000',
+            author: 'Redaction'
+        }
+        viewer.annotation.setAnnotationMode('Rectangle');
+    }
+
+    function addWhiteout() {
+        viewer.rectangleSettings = {
+            fillColor: '#ffffff',
+            strokeColor: '#ffffff',
+            author: 'Redaction'
+        }
+        viewer.annotation.setAnnotationMode('Rectangle');
+    }
+
+    function pageChange() {
+        var currentPageBox = document.getElementById('e-pv-redact-sb-currentPage');
+        currentPageBox.textContent = viewer.currentPageNumber.toString();
+        updatePageNavigation();
+    }
+
+</script>
+
+@section Title {
+    <title>ASP.NET Core PDF Viewer Redaction Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Redaction in ASP.NET Core PDF Viewer Control</h1>
+}

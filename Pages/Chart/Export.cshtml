@@ -1,0 +1,156 @@
+﻿@page
+@model EJ2CoreSampleBrowser.Pages.Chart.ExportModel
+@using Syncfusion.EJ2
+
+@{
+    var JPEG = "JPEG";
+    var mode = new String[] { "JPEG", "PNG", "SVG", "PDF", "XLSX", "CSV" };
+}
+
+@section ControlsSection{
+    <script src="~/scripts/chart/financial-data.js"></script>
+    <script src="~/scripts/chart/theme-color.js"></script>
+    <div class="col-lg-9 control-section" align="center">
+        <ejs-chart id="container" load="load" title="Top 10 Countries Using Solar Power" pointRender="labelRender">
+            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category" interval="1" labelRotation="-45">
+                <e-majorgridlines width="0"></e-majorgridlines>
+                <e-majorticklines width="0"></e-majorticklines>
+            </e-chart-primaryxaxis>
+            <e-chart-primaryyaxis minimum="0" maximum="40" interval="10" labelFormat="{value}GW">
+                <e-majorgridlines width="2"></e-majorgridlines>
+                <e-majorticklines width="0"></e-majorticklines>
+                <e-linestyle width="0"></e-linestyle>
+            </e-chart-primaryyaxis>
+            <e-chart-chartarea>
+                <e-chartarea-border width="0"></e-chartarea-border>
+            </e-chart-chartarea>
+            <e-chart-legendsettings visible="false">
+            </e-chart-legendsettings>
+            <e-series-collection>
+                <e-series dataSource="@Model.ChartPoints" xName="Country" yName="GigaWatts" name="Measurements (in Gigawatt)" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                    <e-series-marker>
+                        <e-series-datalabel visible="true" name="DataLabelMappingName" position="@Syncfusion.EJ2.Charts.LabelPosition.Top">
+                            <e-font fontWeight="600" color="#ffffff" size="7px"></e-font>
+                        </e-series-datalabel>
+                    </e-series-marker>
+                </e-series>
+            </e-series-collection>
+        </ejs-chart>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties">
+            <tbody>
+                <tr style="height: 50px;">
+                    <td style="width: 20%">
+                        <div style="margin-left: -8%;">Export Type</div>
+                    </td>
+                    <td style="width: 80%;">
+                        <div style="margin-left: -20px">
+                            <ejs-dropdownlist id="data" dataSource="@mode" value="JPEG" popupHeight="220px"></ejs-dropdownlist>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td style="width: 40%">
+                        <div style="margin-left: -8%;">File Name</div>
+                    </td>
+                    <td style="width: 40%;">
+                        <div class="e-float-input" style='margin-top:5%;width:115%;margin-left:0%'>
+                            <input type="text" value="Chart" id="fileName" style="margin-left: -20px">
+                        </div>
+                    </td>
+                </tr>
+                <tr id="button-control" style="height: 50px" align="center">
+                    <td>
+                        <div style="margin-left: 62%;">
+                            <ejs-button id="button" content="Export" isPrimary=true iconCss="e-icons e-export icon"></ejs-button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        function load(args) {
+            loadChartTheme(args);
+            args.chart.primaryXAxis.labelIntersectAction = ej.base.Browser.isDevice ? 'None' : 'Trim';
+            args.chart.series[0].marker.dataLabel.enableRotation = ej.base.Browser.isDevice ? 'true' : 'false';
+            args.chart.series[0].marker.dataLabel.angle = ej.base.Browser.isDevice ? -90 : 0;
+        }
+        document.getElementById('button').onclick = () => {
+            var chart = document.getElementById('container').ej2_instances[0];
+            var dropdown = document.getElementById('data').ej2_instances[0];
+            var fileName = ((document.getElementById('fileName'))).value;
+            chart.exportModule.export(dropdown.value, fileName);
+        };
+        function labelRender(args) {
+            pointRender(args);
+        };
+    </script>
+    @*custom code start*@
+    <style>
+        #control-container {
+            padding: 0px !important;
+        }
+
+        .e-icons.e-export::before {
+            content: '\e728';
+        }
+
+        .e-view.fabric .e-icons.e-export::before, .e-view.fabric-dark .e-icons.e-export::before {
+            content: '\e710';
+        }
+
+        .e-view.bootstrap4 .e-icons.e-export::before {
+            content: '\e780';
+        }
+
+        .e-view.tailwind-dark .e-icons.e-export::before, .e-view.tailwind3-dark .e-icons.e-export::before, .e-view.tailwind .e-icons.e-export::before, .e-view.tailwind3 .e-icons.e-export::before {
+            content: '\e7bf';
+        }
+
+        .e-view.highcontrast .e-icons.e-export::before {
+            content: '\e710';
+        }
+
+        .e-view.bootstrap5\.3 .e-icons.e-export::before, .e-view.bootstrap5\.3-dark .e-icons.e-export::before {
+            content: '\e72e';
+        }
+        .e-view.fluent .e-icons.e-export::before, .e-view.fluent-dark .e-icons.e-export::before {
+            content: '\e72e';
+        }
+        .e-view.fluent2 .e-icons.e-export::before, .e-view.fluent2-dark .e-icons.e-export::before, .e-view.fluent2-highcontrast .e-icons.e-export::before {
+            content: '\e72e';
+        }
+        .e-view.material3 .e-icons.e-export::before, .e-view.material3-dark .e-icons.e-export::before {
+            content: '\e72e';
+        }
+    </style>
+    @*custom code end*@
+}
+@*custom code start*@
+
+@section Meta{
+    <meta name="description" content="This example demonstrates the Export in ASP.NET Core Chart control. Explore here for more details." />
+}
+@*custom code end*@
+@section ActionDescription{
+    <p>
+        This sample demonstrates client-side exporting of the chart, enabling you to export its data to Excel, PDF, and CSV formats. Additionally, it allows you to save the chart in image formats such as JPEG, PNG, and SVG.
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can see how the export functionality is configured. The rendered chart can be exported in JPEG, PNG, SVG, and PDF file types. Data from the chart can also be exported to Excel and CSV files.
+    </p>
+    <p>
+        More information on the export can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/chart-print?cs-save-lang=1&cs-lang=razor#export" aria-label="Navigate to the documentation for export in ASP.NET Core Chart control">documentation section</a>.
+    </p>
+}
+@section Title{
+    <title>ASP.NET Core Chart Export Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Export in ASP.NET Core Chart Control</h1>
+}

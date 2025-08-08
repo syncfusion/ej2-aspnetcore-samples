@@ -1,0 +1,75 @@
+﻿@page
+@using Syncfusion.EJ2;
+@model EJ2CoreSampleBrowser.Pages.BulletChart.LegendModel
+
+@section ControlsSection{
+    <div class="control-section" align='center'>
+        <div id="container">
+            <ejs-bulletchart id="bulletgraph" minimum="0" maximum="30" interval="5"
+                             labelFormat="{value}K" title="Package Downloads" subtitle="in Thousands" valueField="Value"
+                             targetField="Target" dataSource="@Model.BulletData1" height="160" width="70%" load="window.onLoad"
+                             legendRender="legendRender">
+                <e-bulletchart-animation enable="false"></e-bulletchart-animation>
+                <e-bulletchart-tooltipsettings enable="true"></e-bulletchart-tooltipsettings>
+                <e-bullet-range-collection>
+                    <e-bullet-range end="8" color="#CA4218" name="Poor"></e-bullet-range>
+                    <e-bullet-range end="18" color="#EFC820" name="Avg"></e-bullet-range>
+                    <e-bullet-range end="30" color="#599C20" name="Good"></e-bullet-range>
+                </e-bullet-range-collection>
+                <e-bulletchart-legendSettings visible="true"></e-bulletchart-legendSettings>
+                <e-bulletchart-titlestyle textAlignment="@Syncfusion.EJ2.Charts.Alignment.Center"></e-bulletchart-titlestyle>
+            </ejs-bulletchart>
+        </div>
+    </div>
+    <script src="~/scripts/bullet-chart/theme-color.js"></script>
+    <script type="text/javascript">
+        window.onLoad = function (args) {
+            loadBulletChartTheme(args);
+            args.bulletChart.width = ej.base.Browser.isDevice ? "100%" : "80%";
+        }
+        var legendRender = function (args) {
+            if (args.text === 'Target_0') {
+                args.text = 'Previous Target';
+            }
+            if (args.text === 'Target_1') {
+                args.text = 'Current Target';
+            }
+            if (args.text === 'Target_2') {
+                args.text = 'Future Target';
+            }
+        }
+    </script>
+}
+@*custom code start*@
+@section Meta{
+    <meta name="description" content="This example demonstrates the Legend in ASP.NET Core BulletChart control. Explore here for more details." />
+}
+@*custom code end*@
+@section ActionDescription{
+    <div id="action-description">
+        This sample illustrates bullet chart with diferent mode of rendering such as right to left and left to right.
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+
+        </p>
+    </div>
+}
+@*custom code start*@
+@section Scripts{
+}
+
+<style>
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@*custom code end*@
+@section Title{
+    <title>ASP.NET Core BulletChart Legend Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Legend in ASP.NET Core BulletChart Control</h1>
+}

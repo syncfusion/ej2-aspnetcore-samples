@@ -1,0 +1,130 @@
+﻿@page
+@using EJ2CoreSampleBrowser.Models;
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+    <div class="col-lg-9 control-section">
+        <div class="content-wrapper">
+            <ejs-treegrid id="TreeGrid" dataSource="@TreeData.GetDefaultData().Take(2)" height="400" childMapping="Children" treeColumnIndex="1" toolbarClick="toolbarClick" allowExcelExport="true" allowPdfExport="true" toolbar="@(new List<string>() { "ExcelExport", "CsvExport", "PdfExport"})">
+                <e-treegrid-aggregates>
+                    <e-treegrid-aggregate showChildSummary="true">
+                        <e-treegrid-aggregate-columns>
+                            <e-treegrid-aggregate-column field="Approved" type="TrueCount" columnName="Approved" footerTemplate="Approved: ${TrueCount}"></e-treegrid-aggregate-column>
+                        </e-treegrid-aggregate-columns>
+                    </e-treegrid-aggregate>
+                </e-treegrid-aggregates>
+                <e-treegrid-columns>
+                    <e-treegrid-column field="TaskId" headerText="Task ID" textAlign="Right" width="80"></e-treegrid-column>
+                    <e-treegrid-column field="TaskName" headerText="Task Name" width="200"></e-treegrid-column>
+                    <e-treegrid-column field="StartDate" headerText=" Start Date" textAlign="Right" format="yMd" type="date" width="100"></e-treegrid-column>
+                    <e-treegrid-column field="Approved" headerText="Approved" type="boolean" textAlign="Center" displayAsCheckBox="true" width="100"></e-treegrid-column>
+                </e-treegrid-columns>
+            </ejs-treegrid>
+        </div>
+    </div>
+    <div class="col-lg-2 property-section">
+        <table id="property" title="Properties" style="width: 200px">
+            <tr>
+                <td style="width: 75%;">
+                    Show Child Summary
+                </td>
+
+                <td style="width: 20px;">
+                    <ejs-checkbox id="summary" checked="true" change="onChange"></ejs-checkbox>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+    <style>
+        #property td div.e-checkbox-wrapper {
+            padding-left: 0px !important;
+            padding-top: 0px !important;
+        }
+    </style>
+
+    <script>
+        function onChange(args) {
+            var treeGridObj = document.getElementById("TreeGrid").ej2_instances[0];
+            if (args.checked) {
+                treeGridObj.aggregates[0].showChildSummary = true;
+                treeGridObj.refresh();
+            }
+            else {
+                treeGridObj.aggregates[0].showChildSummary = false;
+                treeGridObj.refresh();
+            }
+        }
+
+        function toolbarClick(args) {
+            var treeGridObj = document.getElementById("TreeGrid").ej2_instances[0];
+            if (args.item.id === treeGridObj.grid.element.id + '_excelexport') {
+                treeGridObj.excelExport();
+            } else if (args.item.id === treeGridObj.grid.element.id + '_pdfexport') {
+                if (treeGridObj.enableRtl === true && treeGridObj.locale === 'ar') {
+                    var innercontent = 'You need custom fonts to export Arabic characters, refer this <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/tree-grid/pdf-export/#add-custom-font-for-pdf-exporting" aria-label="Navigate to the documentation for PDF Export in ASP.NET Core TreeGrid control">documentation section</a>';
+                    ej.popups.DialogUtility.alert({ content: innercontent });
+                }
+                else {
+                    treeGridObj.pdfExport();
+                }
+            } else if (args.item.id === treeGridObj.grid.element.id + '_csvexport') {
+                treeGridObj.csvExport();
+            }
+        }
+    </script>
+
+}
+@*custom code start*@
+
+@section Meta{
+    <meta name="description" content="This example demonstrates the Default Aggregate in ASP.NET Core Tree Grid control. Explore here for more details." />
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates aggregate functionality of the TreeGrid. In this sample, the aggregate value for the column "Approved" is displayed in column footer and provide an option to show child summary.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            The TreeGrid supports aggregates which will be displayed at the footer and every hierarchy level. The aggregate configurations can be provided by the <code>aggregates</code> property. The built-in aggregates are
+        </p>
+        <ul>
+            <li><code>Sum</code></li>
+            <li><code>Average</code></li>
+            <li><code>Min</code></li>
+            <li><code>Max</code></li>
+            <li><code>Count</code></li>
+            <li><code>TrueCount</code></li>
+            <li><code>FalseCount</code></li>
+            <li>
+                <code>Custom</code> - Requires the <code>customAggregate</code> property to perform aggregation.
+                The custom aggregate value can be accessed inside template using the key <code>${custom}</code>
+            </li>
+        </ul>
+        <p>
+            In this demo, the <code>footerTemplate</code> property is used for showing count aggregate for "Approved" column and the footerTemplate using its type name as <code>(${TrueCount})</code>.
+        </p>
+        <p>The template expression should be provided inside <code>${...}</code> the interpolation syntax.</p>
+        <p>Additionally, the Tree Grid supports client-side exporting to Excel, PDF, and CSV formats. In this demo, for the toolbar items of exporting, actions are defined in the toolbarClick event to export the Tree Grid data using the excelExport, pdfExport, and csvExport methods.</p>
+        <br>
+
+        <p>
+            More information on the data binding can be found in this <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/tree-grid/aggregates/aggregates" aria-label="Navigate to the documentation for aggregates in ASP.NET Core TreeGrid control">documentation section</a>.
+        </p>
+    </div>
+}
+
+@*custom code end*@
+@section Title{
+    <title>ASP.NET Core Tree Grid Default Aggregate Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Default Aggregate in ASP.NET Core Tree Grid Control</h1>
+}
+

@@ -1,0 +1,259 @@
+@page
+
+@using Syncfusion.EJ2.PivotView
+@using Syncfusion.EJ2.Navigations
+@section Meta{
+                    <meta name="description" content="This example demonstrates the server-side pivot engine Functionalities in ASP.NET Core Pivot Table control. Explore here for more details."/>
+                }
+@{
+    var drilledMembers = new string[] { "PRO-10001", "PRO-10002", "PRO-10003" };
+}
+@section ControlsSection{
+
+    <div class="control-section">
+        <div class="content-wrapper">
+            <ejs-pivotview id="pivotview" width="100%" height="500" dataBound="onDataBound" enableVirtualization="true" showGroupingBar="true" showFieldList="true" allowDataCompression="true"
+            allowExcelExport="true" allowPdfExport="true" showToolbar="true" toolbar="@(new List<string>() {"Export", "FieldList" })" toolbarRender="beforeToolbarRender" beforeExport="beforeExport">
+                <e-datasourcesettings url="https://ej2services.syncfusion.com/aspnet/release/api/pivot/post" mode="Server" expandAll="false" enableSorting="true">
+                    <e-rows>
+                        <e-field name="ProductID" caption="Product ID"></e-field>
+                        <e-field name="Country"></e-field>
+                    </e-rows>
+                    <e-columns>
+                        <e-field name="Year" caption="Production Year"></e-field>
+                    </e-columns>
+                    <e-values>
+                        <e-field name="Sold" caption="Units Sold"></e-field>
+                        <e-field name="Price" caption="Sold Amount"></e-field>
+                    </e-values>
+                    <e-drilledmembers>
+                        <e-field name="ProductID" items="@drilledMembers"></e-field>
+                    </e-drilledmembers>
+                    <e-formatsettings>
+                        <e-field name="Price" format="C0"></e-field>
+                        <e-field name="Sold" format="N0"></e-field>
+                    </e-formatsettings>
+                </e-datasourcesettings>
+                <e-gridSettings columnWidth="120" layout="Tabular">
+                </e-gridSettings>
+            </ejs-pivotview>
+        </div>
+    </div>
+
+    <style>
+        #pivotview {
+            width: 100%;
+            height: 100%;
+        }
+        .sb-sample-content-area {
+            min-height: 255px !important;
+        }
+        .control-section {
+            min-height: 255px !important;
+        }
+    </style>
+    <script>
+        function onDataBound() {
+            var pivotObj = document.getElementById('pivotview').ej2_instances[0];
+            if (ej.base.Browser.isDevice && pivotObj && pivotObj.enableRtl) {
+                document.querySelector('.control-section').classList.add('e-rtl');
+            }
+            if (document.querySelector('#grid_menu .e-menu-item') == null) {
+                var menuItems = [
+                    {
+                        iconCss: 'e-toolbar-grid e-icons',
+                        items: [
+                            { text: 'Compact Layout', id: 'Compact' },
+                            { text: 'Tabular Layout', id: 'Tabular' },
+                        ],
+                    },
+                ];
+                new ej.navigations.Menu(
+                    { items: menuItems, select: gridToolbarClicked },
+                    '#grid_menu'
+                );
+            }
+        }
+        function beforeToolbarRender(args) {
+            args.customToolbar.splice(2, 0, {
+                template: '<ul id="grid_menu"></ul>',
+                id: 'custom_toolbar'
+            });
+            args.customToolbar.splice(1, 0, {
+                type: 'Separator'
+            });
+        }
+        function beforeExport(args) {
+            if (args.excelExportProperties) {
+                getExcelExportProperties(args.excelExportProperties);
+            } else if (args.pdfExportProperties) {
+                getPdfExportProperties(args.pdfExportProperties);
+            }
+        }
+        function gridToolbarClicked(args) {
+            var pivotObj = document.getElementById('pivotview').ej2_instances[0];
+            if (pivotObj && pivotObj.gridSettings && pivotObj.gridSettings.layout !== args.item.id) {
+                pivotObj.setProperties({
+                    gridSettings: {
+                        layout: args.item.id
+                    },
+                    displayOption: {
+                        view: 'Both', primary: 'Table'
+                    },
+                }, true);
+                pivotObj.refresh();
+            }
+        }
+        function getExcelExportProperties(excelExportProperties) {
+        excelExportProperties.header = {
+            headerRows: 7,
+            rows: [
+                {
+                    index: 1,
+                    cells: [
+                        { index: 1, colSpan: 13, value: 'INVOICE', style: { fontColor: '#C25050', fontSize: 25, hAlign: 'Center', bold: true } }
+                    ]
+                },
+                {
+                    index: 3,
+                    cells: [
+                        { index: 1, colSpan: 3, value: 'Adventure Traders', style: { fontColor: '#C67878', fontSize: 15, bold: true } },
+                        { index: 10, colSpan: 2, value: 'INVOICE NUMBER', style: { fontColor: '#C67878', bold: true } },
+                        { index: 12, colSpan: 2, value: 'DATE', style: { fontColor: '#C67878', bold: true } }
+                    ]
+                },
+                {
+                    index: 4,
+                    cells: [
+                        { index: 1, colSpan: 3, value: '2501 Aerial Center Parkway' },
+                        { index: 10, colSpan: 2, value: 2034 },
+                        { index: 12, colSpan: 2, value: new Date() }
+                    ]
+                },
+                {
+                    index: 5,
+                    cells: [
+                        { index: 1, colSpan: 3, value: 'Tel +1 888.936.8638 Fax +1 919.573.0306' },
+                        { index: 10, colSpan: 2, value: 'CUSTOMER ID', style: { fontColor: '#C67878', bold: true } },
+                        { index: 12, colSpan: 2, value: 'TERMS', style: { fontColor: '#C67878', bold: true } }
+                    ]
+                },
+                {
+                    index: 6,
+                    cells: [
+                        { index: 10, colSpan: 2, value: 564 },
+                        { index: 12, colSpan: 2, value: 'Net 30 days' }
+                    ]
+                }
+            ]
+        };
+        excelExportProperties.footer = {
+            footerRows: 3,
+            rows: [
+                {
+                    index: 2,
+                    cells: [
+                        { colSpan: 13, value: 'Thank you for your business!', style: { fontColor: '#C67878', hAlign: 'Center', bold: true } }
+                    ]
+                },
+                {
+                    index: 3,
+                    cells: [
+                        { colSpan: 13, value: '!Visit Again!', style: { fontColor: '#C67878', hAlign: 'Center', bold: true } }
+                    ]
+                }
+            ]
+        };
+    }
+    
+    function getPdfExportProperties(pdfExportProperties) {
+        pdfExportProperties.header = {
+            fromTop: 0,
+            height: 130,
+            contents: [
+                {
+                    type: 'Text',
+                    value: 'INVOICE',
+                    position: { x: 250, y: 50 },
+                    style: { textBrushColor: '#C25050', fontSize: 19 },
+                },
+            ],
+        };
+        pdfExportProperties.footer = {
+            fromBottom: 0,
+            height: 130,
+            contents: [
+                {
+                    type: 'Text',
+                    value: 'Thank you for your business!',
+                    position: { x: 250, y: 50 },
+                    style: { textBrushColor: '#C67878', fontSize: 13 },
+                },
+            ],
+        };
+    }
+    </script>
+}
+
+@section PreScripts {
+    <script>
+        ej.base.enableRipple(false);
+    </script>
+}
+
+@section ActionDescription{
+   <div id="action-description">
+       <p>This sample shows how to use a server-side pivot engine to fetch and display summarized data in the Pivot Table.
+        It includes export options for Excel, CSV, and PDF with headers and footers, and a layout switcher to toggle
+        between Compact and Tabular views at runtime.</p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+    <p>
+        The Pivot Table's server-side pivot engine (external pivot engine) uses the Syncfusion package <a
+        target="_blank" href="https://www.nuget.org/packages/Syncfusion.Pivot.Engine/" aria-label="Navigate to the Syncfusion.Pivot.Engine NuGet packages"> Syncfusion.Pivot.Engine</a> to
+        gather data from the data source and perform all pivot operations such as <a target="_blank"
+            href="https://ej2.syncfusion.com/aspnetcore/documentation/pivot-table/aggregation/#aggregation" aria-label="Navigate to the documentation for aggregation in ASP.NET Core Pivot Table control">
+            Aggregation</a>, <a target="_blank"
+            href="https://ej2.syncfusion.com/aspnetcore/documentation/pivot-table/filtering/#filtering" aria-label="Navigate to the documentation for filtering in ASP.NET Core Pivot Table control">
+            Filtering</a>, <a target="_blank"
+            href="https://ej2.syncfusion.com/aspnetcore/documentation/pivot-table/sorting/#sorting" aria-label="Navigate to the documentation for sorting in ASP.NET Core Pivot Table control">
+            Sorting</a>, <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/pivot-table/grouping/#grouping" aria-label="Navigate to the documentation for grouping in ASP.NET Core Pivot Table control">
+            Grouping</a>, and more on a separate hosted server and only paged
+        data is sent to the pivot table viewport via web service.
+        The <a target="_blank"
+            href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.PivotView.PivotViewDataSourceSettings.html#Syncfusion_EJ2_PivotView_PivotViewDataSourceSettings_Url" aria-label="Navigate to the Url property reference in PivotViewDataSourceSettings for ASP.NET Core Pivot Table control">
+            dataSourceSettings-&gt;url</a> property allows this web service URL to be
+        connected to the pivot table.
+    </p>
+    <p>
+        In this demo, the pivot table is shown with the virtualization option enabled through the <a target="_blank"
+            href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.PivotView.PivotView.html#Syncfusion_EJ2_PivotView_PivotView_EnableVirtualization" aria-label="Navigate to the EnableVirtualization property reference for ASP.NET Core Pivot Table control">
+            enableVirtualization</a> property
+        and an external server engine. This would improve pivot table rendering performance when working with large
+        amounts of data.
+    </p>
+    <p>
+        The built-in toolbar includes export options for Excel, CSV, and PDF documents. These export features support
+        adding headers and footers, enabling enriched document formatting and presentation.
+    </p>
+    <p>
+        Additionally, a custom toolbar menu is provided to switch between <strong>Compact</strong> and
+        <strong>Tabular</strong> layouts at runtime, offering flexibility in how the summarized data is displayed.
+    </p>
+    <br />
+    <p>
+        More information about server-side aggregation can be found in this <a target="_blank"
+            href="https://ej2.syncfusion.com/aspnetcore/documentation/pivot-table/server-side-pivot-engine#connecting-pivot-table-to-server-side-pivot-engine" aria-label="Navigate to the documentation for Connecting Pivot Table to Server-side Pivot Engine">
+            documentation section</a>.
+    </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Pivot Table server-side pivot engine Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of server-side pivot engine in ASP.NET Core Pivot Table Control</h1>
+                }

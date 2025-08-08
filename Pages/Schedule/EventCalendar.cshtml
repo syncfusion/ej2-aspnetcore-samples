@@ -1,0 +1,597 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Schedule.EventCalendar
+
+@using Syncfusion.EJ2.Schedule
+@using System.Globalization
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2.Navigations
+@using Newtonsoft.Json;
+
+
+@{
+    var calendarItemTemplate = "<div class='calendar-list-item'><div class='calendar-name' title='${Name}'>${Name}</div>${if(Id !== 1)}<div class='calendar-buttons'><span id='calendar-edit-btn' class='e-icons e-edit' data-calendar-id='${Id}'></span><span id='calendar-delete-btn' class='e-icons e-trash' data-calendar-id='${Id}'></span></div>${/if}</div>";
+    var calendarHeader = "<div class=\"calendars-list-header\"><div class=\"header-text\">Calendars</div><div class=\"header-icon e-icons e-plus\"></div></div>";
+    var dateRange = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day).ToString("MMMM yyyy", CultureInfo.InvariantCulture);
+    var defaultanimation = new Syncfusion.EJ2.Popups.DialogAnimationSettings { Effect = Syncfusion.EJ2.Popups.DialogEffect.Zoom };
+    var button = new
+    {
+        content = "Add",
+        isPrimary = true
+    };
+    var currentDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day);
+}
+
+@section ControlsSection {
+    <div id="wrapper" class="control-section event-calendar-control-section">
+        <div class="toolbar-container">
+            <div id="event-calendar-toolbar">
+                <ejs-toolbar id="toolbar-def" clicked="toolbarClick" cssClass="event-calendar-toolbar" overflowMode="Scrollable">
+                    <e-toolbar-items>
+                        <e-toolbar-item prefixIcon="e-icons e-menu" tooltipText="Menu" cssClass="e-menu-btn"></e-toolbar-item>
+                        <e-toolbar-item prefixIcon="e-icons e-chevron-left" tooltipText="previous" cssClass="e-previous"></e-toolbar-item>
+                        <e-toolbar-item prefixIcon="e-icons e-chevron-right" tooltipText="next" cssClass="e-next"></e-toolbar-item>
+                        <e-toolbar-item text="@dateRange" cssClass="e-date-range"></e-toolbar-item>
+                        <e-toolbar-item align="Right" prefixIcon="e-icons e-plus" text="Create" cssClass="e-create"></e-toolbar-item>
+                        <e-toolbar-item align="Right" type="Separator"></e-toolbar-item>
+                        <e-toolbar-item align="Right" text="Today" cssClass="e-today"></e-toolbar-item>
+                        <e-toolbar-item align="Right" type="Separator"></e-toolbar-item>
+                        <e-toolbar-item align="Right" text="Day" cssClass="e-day"></e-toolbar-item>
+                        <e-toolbar-item align="Right" text="Week" cssClass="e-week"></e-toolbar-item>
+                        <e-toolbar-item align="Right" text="Month" cssClass="e-month"></e-toolbar-item>
+                        <e-toolbar-item align="Right" text="Agenda" cssClass="e-agenda"></e-toolbar-item>
+                        <e-toolbar-item align="Right" text="Timeline" cssClass="e-timeline"></e-toolbar-item>
+                        <e-toolbar-item align="Right" text="Year" cssClass="e-year"></e-toolbar-item>
+                    </e-toolbar-items>
+                </ejs-toolbar>
+            </div>
+        </div>
+        <ejs-sidebar id="left-sidebar-def" Width="300px" target=".main-content" Position="Left" change="onSidebarChange">
+            <e-content-template>
+                <div class="table-content">
+                    <div>
+                        <ejs-calendar id="calendar-def" cssClass="selected-date-calendar" created="onCalendarCreated" value="@currentDate" change="currentDateChange"></ejs-calendar>
+                    </div>
+                    <div class="calendar-list-container">
+                        <ejs-listview showCheckBox="true" select="onListViewItemSelect" height="240px" template="@calendarItemTemplate" actionComplete="onListViewActionComplete" headerTemplate="@calendarHeader" showHeader="true" id="listview-def" dataSource="@Model.CalendarCollections">
+                            <e-listview-fieldsettings id="Id" text="Name" isChecked="IsChecked"></e-listview-fieldsettings>
+                        </ejs-listview>
+                    </div>
+                </div>
+            </e-content-template>
+        </ejs-sidebar>
+        <ejs-sidebar id="rightsidebar-def" Width="260px" type="Push" position="Right" isOpen="false" target=".main-content" change="onSidebarChange">
+            <e-content-template>
+                <div id="unplanned-events-toolbar">
+                    <span class="e-icons e-exit-full-screen expand-icon"></span>
+                    <h4 id="headerText">Unplanned Events</h4>
+                </div>
+                <div id="unplanned-events-grid">
+                    <ejs-grid id="grid-def" cssClass="unplanned-events-grid" created="unplannedGridCreated" dataSource="@Model.UnPlannedEvents">
+                        <e-grid-columns>
+                            <e-grid-column field="Subject" headerText="Event" textAlign="Left" width="120"></e-grid-column>
+                            <e-grid-column field="StartTime" headerText="Date" format="dd MMMM yyyy" width="140"></e-grid-column>
+                        </e-grid-columns>
+                    </ejs-grid>
+                </div>
+            </e-content-template>
+        </ejs-sidebar>
+
+        <div class="main-content">
+            <div class="sidebar-content">
+                <div class="schedule-container">
+                    <ejs-schedule id="scheduler-def" cssClass="event-calendar" eventRendered="scheduleEventRendered" popupOpen="newEventOpen" actionComplete="scheduleActionComplete" showHeaderBar="false" selectedDate="@currentDate" height="650px" width="100%">
+                        <e-schedule-resources>
+                            <e-schedule-resource field="OwnerId" title="Owner" name="Owner" dataSource="@Model.OwnerData" textField="Text" idField="Id" colorField="Color"></e-schedule-resource>
+                        </e-schedule-resources>
+                        <e-schedule-views>
+                            <e-schedule-view option="Day"></e-schedule-view>
+                            <e-schedule-view option="Week"></e-schedule-view>
+                            <e-schedule-view option="Month"></e-schedule-view>
+                            <e-schedule-view option="Year"></e-schedule-view>
+                            <e-schedule-view option="Agenda"></e-schedule-view>
+                            <e-schedule-view option="TimelineMonth">
+                                <e-schedule-view-group resources="@Model.ResourceName"></e-schedule-view-group>
+                            </e-schedule-view>
+                        </e-schedule-views>
+                        <e-schedule-eventsettings dataSource="@Model.PlannedEvents"></e-schedule-eventsettings>
+                    </ejs-schedule>
+                </div>
+                <div class="unplanned-container">
+                    <div id="planned-open" class="e-icons e-chevron-left-double"></div>
+                    <div class="unplanned-text-container">Unplanned events</div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <ejs-dialog id="dialog-def" animationSettings="@defaultanimation" width="350px" height="250px" isModal="true" visible="false" cssClass="calendar-edit-dialog" showCloseIcon="true" header="New Calendar">
+                <e-content-template>
+                    <div>Calendar Name</div>
+                    <div class="dialog-content">
+                        <div>
+                            <ejs-textbox id="outline-textbox-def" cssClass="e-outline calendar-name" placeholder="Enter the calendar name" floatLabelType="Never"></ejs-textbox>
+                        </div>
+                        <div>
+                            <ejs-colorpicker id="color-picker-def" cssClass="calendar-color"></ejs-colorpicker>
+                        </div>
+                    </div>
+                </e-content-template>
+                <e-dialog-buttons>
+                    <e-dialog-dialogbutton buttonModel="button"></e-dialog-dialogbutton>
+                </e-dialog-buttons>
+            </ejs-dialog>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var calendars = @Html.Raw(JsonConvert.SerializeObject(Model.CalendarCollections));
+        var gridObj, calendarObj, scheduleObj, rightSidebarObj, calendarsList, selectedCalendars;
+        var iconAdd, dialog, outlineTextBox, colorPicker, isAdd;
+        var scheduleData = @Html.Raw(JsonConvert.SerializeObject(Model.PlannedEvents));
+        var gridData = @Html.Raw(JsonConvert.SerializeObject(Model.UnPlannedEvents));
+        function onListViewItemSelect(args) {
+            calendarsList = document.getElementById("listview-def").ej2_instances[0];
+            if (args && args.event && args.event.target !== null && args.event.target !== undefined) {
+                dialog = document.getElementById("dialog-def").ej2_instances[0];
+                var target = args.event.target;
+                if (target.classList.contains('e-edit') && args && args.data != null && dialog != null) {
+                    calendarsList.refresh();
+                    outlineTextBox = document.getElementById("outline-textbox-def").ej2_instances[0];
+                    colorPicker = document.getElementById("color-picker-def").ej2_instances[0];
+                    if (outlineTextBox) {
+                        outlineTextBox.value = (args.data).Name;
+                        colorPicker.value = (args.data).Color;
+                        dialog.buttons = [{ buttonModel: { content: 'Save', isPrimary: true } }];
+                        dialog.header = 'Edit Calendar';
+                        dialog.show();
+                        dialog.buttons = [{
+                            buttonModel: { isPrimary: true, content: 'Save' }, click: function () {
+                                if (outlineTextBox) {
+                                    var newValue = outlineTextBox.value.trim();
+                                    var newColor = colorPicker.value.trim();
+                                    if (newValue.length > 0) {
+                                        calendars = calendars.map(function (item) {
+                                            if (item.Name === args.data.Name) {
+                                                return Object.assign({}, item, { Name: newValue, Color: newColor });
+                                            }
+                                            return item;
+                                        });
+                                        calendarsList.dataSource = new ej.base.extend([], calendars, null, true);
+                                        scheduleObj.refreshEvents();
+                                        dialog.hide();
+                                    }
+                                }
+                            }
+                        }];
+                    }
+                }
+                else if (target && target.classList.contains('e-trash') && args && args.item != null && calendars.length > 1) {
+                    if (calendars.length > 1) {
+                        calendarsList.removeItem(args.item);
+                        calendars = calendars.filter(calendar => calendar.Id !== args.data.Id);
+                        scheduleData = scheduleObj.eventSettings.dataSource = scheduleObj.eventSettings.dataSource.filter(data => data.CalendarId !== args.data.Id);
+                        gridData = gridObj.dataSource = gridObj.dataSource.filter(data => data.CalendarId !== args.data.Id);
+                    }
+                }
+                else {
+                    var selectedCalendarsData = calendarsList.getSelectedItems().data;
+                    if (selectedCalendarsData.length > 0) {
+                        var selectedCalendarIds = selectedCalendarsData.map(function(item) {
+                            return item.Id;
+                        });
+                        var filteredScheduleData = scheduleData.filter(function(event) {
+                            return selectedCalendarIds.includes(event.CalendarId);
+                        });
+                        var filteredGridData = gridData.filter(function(event) {
+                            return selectedCalendarIds.includes(event.CalendarId);
+                        });
+                        scheduleObj.eventSettings.dataSource = new ej.base.extend([], filteredScheduleData, null, true);
+                        gridObj.dataSource = new ej.base.extend([], filteredGridData, null, true);
+
+                    } else {
+                        scheduleObj.eventSettings.dataSource = [];
+                        gridObj.dataSource = [];
+                    }
+                    scheduleObj.refreshEvents();
+                    var checkElement = calendarsList.element.querySelector(".e-icons.e-check");
+                    if (checkElement !== undefined && checkElement !== null) {
+                      checkElement.style.color= 'white';
+                    }
+                }
+            }
+        }
+        function onCalendarCreated(args) {
+            calendarObj = document.getElementById("calendar-def").ej2_instances[0];
+        }
+        function unplannedGridCreated() {
+           gridObj = document.getElementById("grid-def").ej2_instances[0];
+        }
+        function onListViewActionComplete(args) {
+            calendarsList = document.getElementById("listview-def").ej2_instances[0];
+            iconAdd = calendarsList.element.querySelector(".e-plus");
+            applyBackgroundColors();
+            if (iconAdd) {
+                iconAdd.addEventListener("click", function (args) {
+                    isAdd = true;
+                    dialog = document.getElementById("dialog-def").ej2_instances[0];
+                    outlineTextBox = document.getElementById("outline-textbox-def").ej2_instances[0];
+                    colorPicker =document.getElementById("color-picker-def").ej2_instances[0];
+                    dialog.buttons = [{ buttonModel: { content: 'Add', isPrimary: true } }];
+                    if (outlineTextBox) {
+                        outlineTextBox.value = "";
+                        colorPicker.value = "#008000ff";
+                    }
+                    dialog.header = 'New Calendar';
+                    dialog.show();
+                    dialog.buttons = [{
+                        buttonModel: { isPrimary: true, content: 'Add' }, click: function () {
+                            updateTextValue();
+                        }
+                    }];
+                });
+            }
+        }
+        function updateTextValue() {
+            if (isAdd) {
+                if (outlineTextBox) {
+                    var newValue = outlineTextBox.value.trim();
+                    newValue = newValue === "" ? "New Calendar" : newValue;
+                    var newId = (calendars.length + 1);
+                    var newItem = { Name: newValue, Id: newId, Color: colorPicker.value, IsChecked: true };
+                    calendars.push(newItem);
+                    calendarsList.dataSource = new ej.base.extend([], calendars, null, true);
+                    dialog.hide();
+                }
+                isAdd = false;
+            }
+        }
+        function applyBackgroundColors() {
+            calendars.forEach(function (calendar) {
+                var listItem = calendarsList.element.querySelector('[data-uid="' + calendar.Id + '"]');
+                if (listItem) {
+                    var checkboxFrame = listItem.querySelector(
+                        '.e-checkbox-wrapper .e-frame.e-check, ' +
+                        '.e-css.e-checkbox-wrapper .e-frame.e-check, ' +
+                        '.e-checkbox-wrapper .e-frame, ' +
+                        '.e-css.e-checkbox-wrapper .e-frame'
+                    );
+                    if (checkboxFrame) {
+                        checkboxFrame.style.backgroundColor = calendar.Color;
+                        checkboxFrame.style.borderColor = calendar.Color;
+                    }
+                }
+            });
+        }
+        function currentDateChange(args) {
+            if (args && args.isInteracted && scheduleObj) {
+                scheduleObj.selectedDate = args.value;
+            }
+        }
+        function scheduleEventRendered(args) {
+            scheduleObj = document.getElementById('scheduler-def').ej2_instances[0];
+            var categoryColor = calendars.find(function (c) {
+                return c.Id === args.data.CalendarId;
+            }).Color;
+
+            if (!args.element || !categoryColor) {
+                return;
+            }
+            if (scheduleObj.currentView === 'Agenda') {
+                (args.element.firstChild).style.borderLeftColor = categoryColor;
+            }
+            else {
+                args.element.style.backgroundColor = categoryColor;
+            }
+        }
+        function newEventOpen(args) {
+            if (args.type === "Editor") {
+                selectedCalendars = calendarsList.getSelectedItems();
+                if (!args.element.querySelector(".resource-custom-field-row")) {
+                    var row = new ej.base.createElement("div", { className: "resource-custom-field-row" });
+                    var formElement = args.element.querySelector(".e-schedule-form");
+                    formElement.firstChild.insertBefore(row, args.element.querySelector(".e-resources-row"));
+                    var container = new ej.base.createElement("div", { className: "custom-field-container" });
+                    var inputEle = new ej.base.createElement("input", { className: "e-field", attrs: { name: "CalendarId" } });
+                    container.appendChild(inputEle);
+                    row.appendChild(container);
+                    var dropDownList = new ej.dropdowns.DropDownList({
+                        dataSource: new ej.base.extend([], calendars, null, true),
+                        cssClass: "calendar-ddl",
+                        fields: { text: "Name", value: "Id" },
+                        value: selectedCalendars?.data[0]?.Id,
+                        floatLabelType: "Always", placeholder: "Calendar"
+                    });
+                    dropDownList.appendTo(inputEle);
+                    inputEle.setAttribute("name", "CalendarId");
+                } else {
+                    var calendarDDL = (args.element.querySelector(".calendar-ddl input")).ej2_instances[0];
+                    calendarDDL.dataSource = new ej.base.extend([], calendars, null, true);
+                    calendarDDL.value = selectedCalendars?.data[0]?.Id ;
+                }
+            }
+            else if (args.type === "QuickInfo" && ej.base.isNullOrUndefined(args.data.Id)) {
+                args.cancel = true;
+            }
+        }
+        function scheduleActionComplete(args){
+            if (args.requestType === 'dateNavigate' || args.requestType === 'viewNavigate') {
+                updateDateRange();
+                if (args.requestType === 'dateNavigate' && resetTime(calendarObj && calendarObj.value) !== resetTime(scheduleObj.selectedDate)) {
+                    calendarObj.value = scheduleObj.selectedDate;
+                }
+            }
+            else if (args.requestType === "eventCreated" || args.requestType === "eventChanged" || args.requestType === "eventRemoved") {
+                scheduleData = scheduleObj.eventSettings.dataSource
+            }
+        }
+        document.addEventListener("DOMContentLoaded", function() {
+            rightSidebarObj = document.getElementById("rightsidebar-def").ej2_instances[0];
+            var plannedOpen = document.getElementById("planned-open");
+            if (plannedOpen) {
+                plannedOpen.onclick = onRightSidebarToggle;
+            }
+            var rightSidebarClose = document.querySelector(".e-exit-full-screen");
+            if (rightSidebarClose) {
+                rightSidebarClose.onclick = onRightSidebarToggle;
+            }
+        });
+
+        function onRightSidebarToggle() {
+            var unplannedContainer = document.querySelector(".unplanned-container");
+            rightSidebarObj.toggle();
+            unplannedContainer.style.display = rightSidebarObj.isOpen ? 'none':'block';
+        }
+
+        function toolbarClick(args) {
+            var  sidebarObj = document.getElementById("left-sidebar-def").ej2_instances[0];
+            if (!args.item) {
+                return;
+            }
+            switch (args.item.cssClass) {
+                case 'e-menu-btn':
+                    sidebarObj.toggle();
+                    break;
+                case 'e-create':
+                    if (scheduleObj && @Model.SelectedCalendars.Length > 0) {
+                        var data = {
+                            StartTime: resetTime(new Date()),
+                            EndTime: resetTime(addDays(new Date(), 1)),
+                            CalendarId: 1,
+                            IsPlanned: true
+                        };
+                        scheduleObj.openEditor(data, 'Add', true);
+                    }
+                    break;
+                case 'e-previous':
+                    scheduleObj.selectedDate = getPreviousNextDate(true);
+                    break;
+                case 'e-next':
+                    scheduleObj.selectedDate = getPreviousNextDate(false);
+                    break;
+                case 'e-today':
+                    scheduleObj.selectedDate = new Date();
+                    break;
+                case 'e-day':
+                    scheduleObj.currentView = 'Day';
+                    break;
+                case 'e-week':
+                    scheduleObj.currentView = 'Week';
+                    break;
+                case 'e-month':
+                    scheduleObj.currentView = 'Month';
+                    break;
+                case 'e-agenda':
+                    scheduleObj.currentView = 'Agenda';
+                    break;
+                case 'e-timeline':
+                    scheduleObj.currentView = 'TimelineMonth';
+                    break;
+                case 'e-year':
+                    scheduleObj.currentView = 'Year';
+                    break;
+                default:
+                    break;
+            }
+        }
+        function resetTime(date) {
+            var newDate = new Date(date);
+            newDate.setHours(0, 0, 0, 0);
+            return newDate;
+        }
+        function addDays(date, days) {
+            var result = new Date(date);
+            result.setDate(result.getDate() + days);
+            return result;
+        }
+        function getPreviousNextDate(isPrevious) {
+            var currentDate = scheduleObj.selectedDate;
+            if (scheduleObj) {
+                var view = scheduleObj.currentView;
+                switch (view) {
+                    case 'Day':
+                    case 'Agenda':
+                        currentDate = new ej.schedule.addDays(currentDate, isPrevious ? -1 : 1);
+                        break;
+                    case 'Week':
+                        currentDate = new ej.schedule.addDays(currentDate, isPrevious ? -ej.schedule.WEEK_LENGTH : ej.schedule.WEEK_LENGTH);
+                        break;
+                    case 'Month':
+                    case 'TimelineMonth':
+                        currentDate = new ej.schedule.addMonths(currentDate, isPrevious ? -1 : 1);
+                        break;
+                    case 'Year':
+                        currentDate = new ej.schedule.addYears(currentDate, isPrevious ? -1 : 1);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return currentDate;
+        }
+        function updateDateRange() {
+            var dateRange;
+            var toolbarObj = document.getElementById('toolbar-def').ej2_instances[0];
+            if (scheduleObj) {
+                var dateCollection = scheduleObj.getCurrentViewDates();
+                dateRange = scheduleObj.getDateRangeText(dateCollection);
+                if (dateRange !== '' && toolbarObj) {
+                    var dateRangeElement = toolbarObj.element.querySelector('.e-date-range .e-tbar-btn-text');
+                    toolbarObj.element.querySelector('.e-date-range .e-tbar-btn').setAttribute('aria-label', dateRange);
+                    dateRangeElement.textContent = dateRange;
+                    toolbarObj.refreshOverflow();
+                }
+            }
+        }
+
+        function onSidebarChange() {
+            if (scheduleObj) {
+                scheduleObj.refreshEvents();
+            }
+        }
+
+    </script>
+    <style>
+    .event-calendar-control-section .sidebar-content, #unplanned-events-toolbar, .calendar-edit-dialog .dialog-content,
+    .event-calendar-control-section .calendar-list-item:hover .calendar-buttons {
+        display: flex;
+    }
+    #unplanned-events-toolbar .expand-icon {
+        padding: 0 8px;
+        cursor: pointer;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-left: 8px;
+        font-size: large;
+    }
+    .event-calendar-control-section .unplanned-text-container {
+        writing-mode: vertical-rl;
+        margin: auto;
+    }
+
+    .event-calendar-control-section .unplanned-container {
+        width: 50px;
+        display: block;
+        text-align: center;
+        padding: 12px 0;
+    }
+
+    .event-calendar-control-section .unplanned-container div {
+        padding: 6px 0;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .event-calendar-control-section #planned-open {
+        width: inherit;
+    }
+
+    .calendar-edit-dialog .dialog-content, .event-calendar-control-section .schedule-container {
+        flex-grow: 1;
+    }
+    .e-list-container .e-checkbox-wrapper .e-frame.e-check, .e-css.e-checkbox-wrapper .e-frame.e-check{
+        color: #fff;
+    }
+    .event-calendar-control-section .table-content {
+        padding: 10px;
+    }
+
+    .event-calendar-control-section .calendar-list-container {
+        padding-top: 10px;
+    }
+    .event-calendar-control-section .e-calendar .e-footer-container {
+        display: none;
+    }
+    .control-section.event-calendar-control-section {
+        border: 1px solid #D7D7D7;
+        padding-top: unset;
+        margin: 20px 0;
+    }
+
+    .event-calendar-control-section .toolbar-container {
+        border-bottom: 1px solid #D7D7D7;
+    }
+
+    .event-calendar-control-section .event-calendar-toolbar.e-toolbar .e-toolbar-item.e-create .e-tbar-btn.e-btn {
+        background-color: #0f6cbd;
+    }
+
+    .event-calendar-control-section .event-calendar-toolbar.e-toolbar .e-toolbar-item.e-create .e-tbar-btn.e-btn .e-btn-icon,
+    .event-calendar-control-section .event-calendar-toolbar.e-toolbar .e-toolbar-item.e-create .e-tbar-btn.e-btn .e-tbar-btn-text {
+        color: white;
+    }
+
+    .event-calendar-control-section .e-list-header,
+    .event-calendar-control-section .e-list-header .calendars-list-header,
+    .event-calendar-control-section .calendar-list-item.e-checkbox.e-checkbox-left {
+        display: flex;
+        align-items: center;
+    }
+
+    .event-calendar-control-section .e-list-header .e-headertemplate-text,
+    .event-calendar-control-section .e-list-header .e-headertemplate-text .header-text {
+        flex-grow: 1;
+        font-size: 16px;
+    }
+
+    .event-calendar-control-section .e-list-header .e-headertemplate-text .header-icon:hover {
+        cursor: pointer;
+    }
+
+    .event-calendar-control-section .calendar-list-item .calendar-name {
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        flex-grow: 1;
+    }
+
+    .event-calendar-control-section .calendar-list-item .calendar-buttons {
+        display: none;
+    }
+
+    .event-calendar-control-section .calendar-list-item #calendar-edit-btn,
+    .event-calendar-control-section .calendar-list-item #calendar-delete-btn {
+        padding: 0 6px;
+    }
+
+    .event-calendar-control-section .e-sidebar {
+        z-index: 1 !important;
+    }
+    .event-calendar-control-section .selected-date-calendar.e-calendar {
+        max-width: inherit;
+        min-width: inherit;
+    }
+
+    .e-bigger .event-calendar.e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar {
+        min-width: 307px;
+    }
+
+    .e-schedule-dialog-container .resource-custom-field-row {
+        padding-bottom: 8px;
+    }
+</style>
+}
+
+@section ActionDescription {
+    <p>This demo showcases the way to organize and filter multiple types of events such as Personal, Birthdays, Work, and Holidays in the scheduler.</p>
+}
+
+@section Description {
+    <p>In this example the multiple type of appointments such as Personal, Birthdays, Work,
+    and Holidays organized with filter option in a single scheduler. It helps the user to view a
+    specific or multiple type of appointments at one place.</p>
+    <p>The left sidebar helps the user to navigate between the scheduler dates and filter the appointments based
+    on their type.</p>
+    <p>The Schedule component is configured to show the appointments in colors based on their type to identify
+    the appointment type.</p>
+    <p>The right sidebar displays the list of unplanned events, which can be useful for the user to plan them later.</p>
+}
+@section Meta {
+    <meta name="description" content="This example demonstrates the Event Calendar in ASP.NET Core Scheduler control. Explore here for more details."/>
+}
+@section Title {
+    <title>ASP.NET Core Scheduler Event Calendar Example - Syncfusion Demos </title>
+}
+
+@section Header {
+    <h1 class='sb-sample-text'>Example of Event Calendar in ASP.NET Core Scheduler Control</h1>
+}

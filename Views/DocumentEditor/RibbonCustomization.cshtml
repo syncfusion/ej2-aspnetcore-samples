@@ -1,0 +1,219 @@
+@section ControlsSection{
+    <div class="col-lg-9 control-section">
+        <div id='documenteditor_titlebar' class="e-de-ctn-title"></div>
+        <ejs-documenteditorcontainer id="container" enableToolbar=true ribbonLayout="Classic" height="590px"></ejs-documenteditorcontainer>
+    </div>
+    <div class="col-lg-3 property-section">
+        <div class="content-wrapper">
+            <div class="heading-section">
+                <h5><b>Customize Ribbon</b></h5>
+            </div>
+            <div class="content-wrapper">
+                <ejs-checkbox id="showHomeTab" label="Show/Hide Home Tab" checked="true"></ejs-checkbox>
+            </div><br>
+            <div class="content-wrapper">
+                <ejs-checkbox id="showClipboard" label="Show/Hide Clipboard Group" checked="true"></ejs-checkbox>
+            </div><br>
+            <div class="content-wrapper">
+                <ejs-checkbox id="showItem" label="Show/Hide Bold & Italic Items" checked="true"></ejs-checkbox>
+            </div><br>
+            <div class="content-wrapper">
+                <ejs-checkbox id="enableItem" label="Enable/Disable Underline Item" checked="true"></ejs-checkbox>
+            </div><br>
+        </div>
+    </div>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>The Microsoft Word-style Ribbon UI in the Document Editor provides a high level of customization, allowing you to adapt the built-in tabs, groups, and commands to fit your application's unique requirements. This example demonstrates how to customize the ribbon in the Document Editor by showing or hiding tabs, groups, and items.</p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>The Document Editor Ribbon UI allows you to:</p>
+        <ul>
+            <li>Personalize built-in tabs, groups, and items</li>
+            <li>Modify predefined file menu options</li>
+            <li>Add a customized backstage menu (automatically hides the default file menu)</li>
+            <li>Show/hide existing ribbon tabs like Home tab or Insert tab</li>
+            <li>Show/hide existing groups and items within groups</li>
+            <li>Enable/disable specific items in groups</li>
+            <li>Create new custom tabs, groups within existing tabs, and items within existing groups</li>
+        </ul>
+        <p style="display: block;">
+            Explore complete customization options in our
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/document-editor/ribbon/">ribbon customization documentation</a>.
+        </p>
+    </div>
+}
+
+@section Scripts{
+    <script>
+        // Inject the Ribbon module
+        ej.documenteditor.DocumentEditorContainer.Inject(ej.documenteditor.Toolbar, ej.documenteditor.Ribbon);
+        
+        var documenteditor;
+        var container;
+        
+        window.addEventListener("beforeunload", function onbeforeunload() {
+            return 'Want to save your changes?';
+        });
+
+        ej.documenteditor.DocumentEditorContainer.Inject(ej.documenteditor.Toolbar, ej.documenteditor.Ribbon);
+    document.addEventListener('DOMContentLoaded', function () {
+            var documenteditorElement = document.getElementById("container");
+            container = documenteditorElement.ej2_instances[0];
+            container.toolbarMode = 'Ribbon';
+            container.ribbonLayout = 'Classic';
+            container.documentEditorSettings.showRuler = true;
+            documenteditor = container.documentEditor;
+            container.serviceUrl = window.baseurl + 'api/documenteditor/';
+            documenteditor.serviceUrl = window.baseurl + 'api/documenteditor/';
+            
+            var fetch = new ej.base.Fetch("@Url.Content("~/scripts/documenteditor/data-default.json")", 'GET');
+            fetch.send().then();
+            fetch.onSuccess = function (data) {
+                documenteditor.open(data);
+                documenteditor.documentName = 'Ribbon Customization';
+                updateDocumentTitle();
+            };
+            
+            titleBarDiv = document.getElementById('documenteditor_titlebar');
+    initComponentAndWireEvent();
+        showButtons(false);
+            showButtons(false);
+            container.documentChange = function () {
+                updateDocumentTitle();
+                documenteditor.focusIn();
+            };
+
+            // Event binding for Home tab visibility toggle
+            var showHomeTabElement = document.getElementById("showHomeTab");
+            if (showHomeTabElement && showHomeTabElement.ej2_instances[0]) {
+                showHomeTabElement.ej2_instances[0].change = function (args) {
+                    container.ribbon.showTab('Home', args.checked);
+                };
+            }
+
+            // Event binding for Clipboard group visibility toggle
+            var showClipboardElement = document.getElementById("showClipboard");
+            if (showClipboardElement && showClipboardElement.ej2_instances[0]) {
+                showClipboardElement.ej2_instances[0].change = function (args) {
+                    container.ribbon.showGroup({ tabId: 'Home', index: 1 }, args.checked);
+                };
+            }
+
+            // Event binding for Bold & Italic items visibility
+            var showItemElement = document.getElementById("showItem");
+            if (showItemElement && showItemElement.ej2_instances[0]) {
+                showItemElement.ej2_instances[0].change = function (args) {
+                    container.ribbon.showItems({ tabId: 'Home', groupIndex: 2, itemIndexes: [5, 6] }, args.checked);
+                };
+            }
+
+            // Event binding for Underline item enable/disable
+            var enableItemElement = document.getElementById("enableItem");
+            if (enableItemElement && enableItemElement.ej2_instances[0]) {
+                enableItemElement.ej2_instances[0].change = function (args) {
+                    container.ribbon.enableItems({ tabId: 'Home', groupIndex: 2, itemIndexes: [7] }, args.checked);
+                };
+            }
+        });
+    </script>
+}
+
+@section Meta{
+    <meta name="description" content="This example demonstrates the Ribbon Customization in ASP.NET Core DocumentEditor control. Explore here for more details."/>
+}
+
+<style>
+    .flex-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.render-mode-info {
+    background: none;
+    border: none;
+    padding-left: 0px;
+}
+
+.render-mode-info .render-mode-info-icon {
+    height: 16px;
+    width: 16px;
+}
+
+.switchLabel {
+    font-family: "Segoe UI", "GeezaPro", "DejaVu Serif", sans-serif;        
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0.24px;
+    text-align: right;
+    font-size: 14px;
+    margin-bottom: 0px;
+}
+
+.render-mode-info .render-mode-info-icon::before {
+    line-height: normal;
+}
+
+.buttonSwitch {
+    Width: 40px;
+    Height: 24px;
+}
+        #documenteditor_titlebar {
+        border-bottom: 1px solid #2B3481;
+        height: 36px;
+        line-height: 26px;
+        width: 100%;
+        font-size: 12px;
+        padding-left: 15px;
+        padding-right: 10px;
+        font-family: inherit;
+    }
+
+    #documenteditor_title_contentEditor {
+        height: 26px;
+        max-width: 85%;
+        width: auto;
+        overflow: hidden;
+        display: inline-block;
+        padding-left: 4px;
+        padding-right: 4px;
+        margin: 5px;
+    }
+
+    .single-line {
+        cursor: text !important;
+        outline: none;
+    }
+
+    .heading-section {
+        padding-bottom: 20px;
+        padding-top: 20px;
+    }
+
+    .single-line:hover {
+        border-color: #e4e4e4 !important;
+    }
+
+    [contenteditable="true"].single-line {
+        white-space: nowrap;
+        border-color: #e4e4e4 !important;
+    }
+
+    .content-wrapper {
+        margin-bottom: 10px;
+    }
+</style>
+
+@section Title{
+    <title>ASP.NET Core DocumentEditor Ribbon Customization Example - Syncfusion Demos </title>
+}
+
+@section Header{
+    <h1 class='sb-sample-text'>Example of Ribbon Customization in ASP.NET Core DocumentEditor Control</h1>
+}

@@ -1,0 +1,82 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Word.TXTtoWord
+
+@using Syncfusion.EJ2 
+@{ var Title = "Essential DocIO (Word) : Import, TXT To Word, Conversion : Syncfusion"; }
+@section ControlsSection{
+    <div class="control-section">
+        @{Html.BeginForm("txttoword", "word", FormMethod.Post, new { enctype = "multipart/form-data" });
+            {
+                <div style="margin-top: 10px;font-size:14px">
+                    Click the button to view the resultant Word document converted from a text file using the .NET Word Library (DocIO).
+                    <div style="margin-top: 10px">
+                        <div class="celldiv">
+                            Select Document :
+                            <div>
+                            <input type="button" value="Choose File" onclick="openPage()">
+                            <input type="text" id="fileNameBox" value="TXTToWord.txt" readonly="readonly" style="border:none" />
+                            <input type="file" name="file" id="fileUpload" accept=".txt" style="display:block;visibility:hidden;width:0;height:0;">
+                            <br />
+                            </div>
+                        </div>
+                        <div style="margin-top: 10px">
+                            Save As :
+                            <input type="radio" id="rdButtonDoc" name="Group1" value="WordDoc" style="margin-left: 7px" />
+                            <label for="rdButtonDoc" style="font-size:13px;font-weight:normal;text-align:match-parent" data-toggle="tooltip" title="Saves the resultant document as Word Doc format">DOC</label>
+                            &nbsp;
+                            <input type="radio" id="rdButtonDocx" name="Group1" value="WordDocx" style="margin-left: 7px" checked="checked" />
+                            <label for="rdButtonDocx" style="font-size:13px;font-weight:normal;text-align:match-parent" data-toggle="tooltip" title="Saves the resultant document as Word Docx format">DOCX</label>
+                            &nbsp;
+                            <input type="radio" id="rdButtonWordML" name="Group1" value="WordML" style="margin-left: 7px" />
+                            <label for="rdButtonWordML" style="font-size:13px;font-weight:normal;text-align:match-parent" data-toggle="tooltip" title="Saves the resultant document as WordML format">WordML</label>
+                        </div>
+                    </div>
+                    <div style="margin-top: 8px">
+                        @Html.EJS().Button("createbtn").Content("Convert to Word").Render()
+                        <br />
+                        <div class="text-danger">
+                            @Model.Message
+                        </div>
+                    </div>
+                </div>
+                Html.EndForm();
+            }
+        }
+    </div>
+}
+<script>
+    function openPage() {
+        document.getElementById('fileUpload').click();
+        document.getElementById('fileUpload').addEventListener('change', readFile, false);
+    }
+    function readFile(evt) {
+        var upoadedFiles = evt.target.files;
+
+        filename = upoadedFiles[0].name;
+        document.getElementById('fileNameBox').value = filename;
+    }
+</script>
+@section ActionDescription{
+    <div>
+         This sample demonstrates how to convert a text file to a Word document using the .NET Word Library (DocIO).
+    </div>
+}
+@section Description{
+    <div>
+        The .NET Word Library (DocIO) supports converting a TXT file to a Word document and vice versa.
+    </div>
+    <div style="margin-top: 15px">
+        More information about TXT to Word conversion can be found on this
+        <a href="https://help.syncfusion.com/file-formats/docio/text" aria-label="Documentation" >Documentation</a>
+        section.
+    </div>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the text-to-Word conversion in ASP.NET Core Word (DocIO) library. Explore here for more details."/>
+                }
+@section Title{
+                    <title>ASP.NET Core Word (DocIO) library - TXT to Word Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of TXT to Word in ASP.NET Core Word (DocIO) Library</h1>
+                }

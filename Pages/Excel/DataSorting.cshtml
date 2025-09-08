@@ -1,0 +1,239 @@
+﻿@page
+@model EJ2CoreSampleBrowser.Pages.Excel.DataSorting
+@section ActionDescription {
+    This sample demonstrates how to sort data in spreadsheet using XlsIO.
+}
+@section Meta {
+    <meta name="description" content="This example demonstrates the Data Sorting in ASP.NET Core Excel (XlsIO) library. Explore here for more details." />
+}
+@section Description {
+        Essential XlsIO can sort a range of cells dynamically, at runtime without any dependency on MS Excel. It sorts the data based on values and colors.
+    <br />
+    <br /><b>Features:</b>
+    <br />
+    <br />
+    <ul>
+        <li>Supports to sort the large data</li>
+        <li>Sorts based on the selected algorithm</li>
+        <li>Sorts the data based on the cell and font color</li>
+    </ul>
+}
+@section ControlsSection
+{
+    <div class="control-section">
+        @{
+            Html.BeginForm("datasorting", "excel", FormMethod.Post);
+            {
+                <div class="rowdiv">
+                    <p style="font-weight:normal">
+                        Click the "View Input Template" button to view the input Excel document and click the "Sort Values" button to view the output Excel document. Please note that the Microsoft Excel viewer or Microsoft Excel is required to view the Excel document.
+                    </p>
+                </div>
+                <br />
+                <div class="rowdiv">
+                    <table id="PanelTable" width="450px">
+                        <tr>
+                            <td style="font-weight: normal">
+                                Sort On Values
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <br />
+                                Choose the column to sort:
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <br />
+                                            First Column:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </td>
+                                        <td>
+                                            <select name="FirstColumn" id="firstColumn" class="e-dropdown-popup">
+                                                <option>ID</option>
+                                                <option>Name</option>
+                                                <option>Salary</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>
+                                <div id="dAddSecondLevel">
+                                    <br />
+                                    <input type="checkbox" id="addSecondLevel" name="SecondLevel" value="SecondLevel" onchange="secondClick()" />
+                                    Add Level
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table id="tblSecond">
+                                    <tr>
+                                        <td>
+                                            <br />
+                                            Second Column:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </td>
+                                        <td>
+                                            <select name="SecColumn" id="secColunn" class="e-dropdown-popup">
+                                                <option>ID</option>
+                                                <option>Name</option>
+                                                <option>Salary</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>
+                                <table id="tblCheckbox">
+                                    <tr>
+                                        <td>
+                                            <br />
+                                            <input type="checkbox" id="addThirdLevel" name="ThirdLevel" value="ThirdLevel" onchange="thirdClick()" />
+                                            Add Level
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table id="tblThird">
+                                    <tr>
+                                        <td>
+                                            <br />
+                                            Third Column:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </td>
+                                        <td>
+                                            <select name="ThirdColumn" id="third" class="e-dropdown-popup">
+                                                <option>ID</option>
+                                                <option>Name</option>
+                                                <option>Salary</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <br />
+                                Order By
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table id="tblButton" width="150px" border="0">
+                                    <tr>
+                                        <td>
+                                            <table width="150px" border="0">
+                                                <tr>
+                                                    <td>
+                                                        <table>
+                                                            <tr>
+                                                                <td>
+                                                                    <input type="radio" id="Ascending" name="SortBy" value="Ascending" checked="checked" />
+                                                                    <label for="Ascending" style="font-weight:normal">Ascending</label>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <br />
+                                                <tr>
+                                                    <td>
+                                                        <table>
+                                                            <tr>
+                                                                <td>
+                                                                    <input type="radio" id="Descending" name="SortBy" value="Descending" />
+                                                                    <label for="Descending" style="font-weight:normal">Descending</label>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>
+                                <input id="viewtemplate" type="submit" name="view" value="View Input Template" class="e-btn" height="100" style="text-transform: capitalize" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input id="sortvalues" type="submit" name="SortData" value="Sort Values" class="e-btn" height="100" style="text-transform: capitalize" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <script type="text/javascript">
+                    function ready() {
+                        document.getElementById("tblSecond").hidden = true;
+                        document.getElementById("tblThird").hidden = true;
+                        document.getElementById("tblCheckbox").hidden = true;
+                    }
+                    window.onload = ready;
+                </script>
+                <script type="text/javascript">
+                    function change() {
+
+                        var other = document.getElementById("cmbSortOn").val();
+                        if (other == "Values") {
+                            document.getElementById("pOnTop").hidden = true;
+                            document.getElementById("pOnBottom").hidden = true;
+                            document.getElementById("pAscending").hidden = false;
+                            document.getElementById("pDescending").hidden = false;
+                            document.getElementById("dAddSecondLevel").hidden = false;
+                            document.getElementById("firstColumn").val("ID");
+                        }
+                        else {
+                            document.getElementById("firstColumn").val("City");
+                            document.getElementById("pOnTop").hidden = false;
+                            document.getElementById("pOnBottom").hidden = false;
+                            document.getElementById("pAscending").hidden = true;
+                            document.getElementById("pDescending").hidden = true;
+                            document.getElementById("dAddSecondLevel").hidden = true;
+                        }
+                    }
+                    function secondClick() {
+
+                        var other = document.getElementById("addSecondLevel").checked;
+                        if (other == false) {
+                            document.getElementById("tblSecond").hidden = true;
+                            document.getElementById("tblCheckbox").hidden = true;
+                            document.getElementById("tblThird").hidden = true;
+                        }
+                        else {
+                            document.getElementById("tblSecond").hidden = false;
+                            document.getElementById("tblCheckbox").hidden = false;
+                        }
+                    }
+
+                    function thirdClick() {
+                        var other = document.getElementById("addThirdLevel").checked;
+                        if (other == false) {
+                            document.getElementById("tblThird").hidden = true;
+                        }
+                        else {
+                            document.getElementById("tblThird").hidden = false;
+                        }
+                    }
+                </script>
+                Html.EndForm();
+            }
+        }
+    </div>
+}
+@section Title {
+    <title>ASP.NET Core Excel (XlsIO) library - Data Sorting Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Data Sorting in ASP.NET Core Excel (XlsIO) Library</h1>
+}

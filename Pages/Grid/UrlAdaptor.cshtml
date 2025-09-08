@@ -1,0 +1,74 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Grid.UrlAdaptorModel
+@{
+    ViewData["Title"] = "UrlAdaptor";
+}
+
+@section ControlsSection{
+    <script>
+        function gridload() {
+            this.dataSource.dataSource.headers = [{ 'XSRF-TOKEN': document.querySelector('input[type="hidden"][name="__RequestVerificationToken"]').value }];
+        }
+    </script>
+    @Html.AntiForgeryToken()
+    <div class="control-section">
+        <ejs-grid id="Grid" allowPaging="true" allowSorting="true" allowFiltering="true" toolbar="@(new List<string>() {"Search" })" load="gridload">
+            <e-data-manager url="UrlAdaptor?handler=UrlDatasource" adaptor="UrlAdaptor"></e-data-manager>
+            <e-grid-columns>
+                <e-grid-column field="OrderID" headerText="Order ID" isPrimaryKey="true" textAlign="Right" width="120"></e-grid-column>
+                <e-grid-column field="CustomerID" headerText="Customer ID" width="150"></e-grid-column>
+                <e-grid-column field="EmployeeID" headerText="Employee ID" textAlign="Right" width="120"></e-grid-column>
+                <e-grid-column field="Freight" headerText="Freight" textAlign="Right" format="C2" width="140"></e-grid-column>
+                <e-grid-column field="ShipCity" headerText="Ship City" width="150"></e-grid-column>
+            </e-grid-columns>
+        </ejs-grid>
+    </div>
+
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            In this sample, the <code>UrlAdaptor</code> is used for binding the data source from controller actions. To perform the grid actions like paging, filtering, sorting at server side we can use <code>DataOperations</code> class.
+        </p>
+    </div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the URL Adaptor in ASP.NET Core Data Grid control. Explore here for more details."/>
+                }
+
+@section Description{
+
+    <div id="description">
+        <p>
+            The <code>UrlAdaptor</code> is the base adaptor that would interact with remote services. Here the datasource will be loaded on-Demand concept.
+            In server-side the <code>DataManagerRequest</code> class helps in binding the Grid queries passed to the server-side. Based on those queries you can perform server-side operation on the Grid data.
+            The query parameters that help you perform the server-side operations are as follows.
+        </p>
+        <ul>
+            <li><code>RequiresCounts</code> -  If it is <code>true</code> then the total count of records will included in response.</li>
+            <li><code>Skip</code> - It holds the number of records to skip.</li>
+            <li><code>Take</code> - It holds the number of records to take.</li>
+            <li><code>Sorted</code> - It contains details of current sorted column and its direction.</li>
+            <li><code>Where</code> - It contains details of current filter column name and its constraints.</li>
+        </ul>
+        <p>
+            The following grid action can be performed using <code>DataOperations</code> class under the following server side methods.
+            <ul>
+                <li><code>PerformSkip</code> - Bypasses a specified Skip value and returns the remaining collections of records.</li>
+                <li><code>PerformTake</code> - Bypasses a specified Take value and returns the remaining  collections of records.</li>
+                <li><code>PerformFiltering</code> - Filters a sequence of records based on a predicate.</li>
+                <li><code>PerformSorting</code> - Sorts the collections of records based on its direction.</li>
+                <li><code>PerformSearching</code> - Search the records based on a predicate.</li>
+            </ul>
+        </p>
+    </div>
+
+}
+@section Title{
+                    <title>ASP.NET Core Data Grid URL Adaptor Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of URL Adaptor in ASP.NET Core Data Grid Control</h1>
+                }

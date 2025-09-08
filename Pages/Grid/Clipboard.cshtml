@@ -1,0 +1,94 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Grid.ClipboardModel
+
+@{
+    ViewData["Title"] = "Clipboard";
+    var alertbutton = new
+    {
+        content = "OK",
+        isPrimary = true
+    };
+}
+
+@section ControlsSection{
+    @{
+        var alertanimation = new Syncfusion.EJ2.Popups.DialogAnimationSettings { Effect = Syncfusion.EJ2.Popups.DialogEffect.None };
+    }
+
+    @{
+
+        List<object> toolbar = new List<object>();
+        toolbar.Add(new { text = "Copy", tooltipText = "Copy", prefixIcon = "e-copy", id = "copy" });
+        toolbar.Add(new { text = "Copy With Header", tooltipText = "Copy With Header", prefixIcon = "e-copy", id = "copyHeader" });
+    }
+    <div class="control-section">
+        <ejs-grid id="Clipboard" dataSource="@Model.datasource" allowSelection="true" allowSorting="true" allowFiltering="true" toolbarClick="toolbarClick" toolbar="toolbar" allowPaging="true">
+            <e-grid-pagesettings pageCount="5"></e-grid-pagesettings>
+            <e-grid-selectionsettings type="Multiple"></e-grid-selectionsettings>
+            <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
+            <e-grid-columns>
+                <e-grid-column field="OrderID" headerText="Order ID" textAlign="Right" width="120"></e-grid-column>
+                <e-grid-column field="CustomerID" headerText="Customer Name" width="150"></e-grid-column>
+                <e-grid-column field="OrderDate" headerText="Order Date" textAlign="Right" format="yMd" width="130"></e-grid-column>
+                <e-grid-column field="Freight" headerText="Freight" textAlign="Right" format="C2" width="120"></e-grid-column>
+                <e-grid-column field="ShipCountry" headerText="Ship Country" width="150"></e-grid-column>
+            </e-grid-columns>
+        </ejs-grid>
+    </div>
+    <ejs-dialog id="alert_dialog" animationSettings="alertanimation" visible="false" target=".control-section" width="300px" header="Copy with Header" content="Atleast one row should be selected to copy with header">
+        <e-dialog-buttons>
+            <e-dialog-dialogbutton buttonModel="@alertbutton" click="alertBtnClick"></e-dialog-dialogbutton>
+        </e-dialog-buttons>
+    </ejs-dialog>
+    <script>
+
+        function toolbarClick(args) {
+            if (this.getSelectedRecords().length > 0) {
+                var withHeader = args.item.id === 'copyHeader' ? true : false;
+                this.copy(withHeader);
+            } else {
+                var dialogObj = document.getElementById('alert_dialog').ej2_instances[0];
+                dialogObj.content = args.item.id === 'copyHeader' ? 'Atleast one row should be selected to copy with header' : 'Atleast one row should be selected to copy';
+                dialogObj.header = args.item.id === 'copyHeader' ? 'Copy with Header' : 'Copy';
+                dialogObj.show();
+            }
+        }
+        function alertBtnClick() {
+            var dialogObj = document.getElementById('alert_dialog').ej2_instances[0];
+            dialogObj.hide();
+        }
+    </script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates copy to clipboard functionality of the Grid component. Select rows and click Copy button from
+            toolbar to copy content. To copy with header click Copy with header button from toolbar.
+        </p>
+    </div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Clipboard in ASP.NET Core Data Grid control. Explore here for more details."/>
+                }
+
+@section Description{
+    <div id="description">
+        <p>Selected rows or cells data in the Grid can be copied into the clipboard using the Keyboard shortcuts and <code>copy</code> method.</p>
+
+        <p>
+            In this demo, selected rows data can be copied into the clipboard using the below Keyboard shortcuts or toolbar interactions.
+            <ul>
+                <li><code>Ctrl + C</code> - Selected rows or cells data without header.</li>
+                <li><code>Ctrl + Shift + H</code> - Selected rows or cells data with header.</li>
+            </ul>
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Data Grid Clipboard Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Clipboard in ASP.NET Core Data Grid Control</h1>
+                }

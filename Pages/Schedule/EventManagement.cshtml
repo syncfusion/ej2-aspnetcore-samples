@@ -93,7 +93,7 @@
                 <!-- Toggle unplanned-events button -->
                 <e-schedule-toolbaritem name="Custom"
                                         type="Button"
-                                        prefixIcon="e-icons e-show-unplanned-events"
+                                        prefixIcon="e-icons e-show-hide-panel"
                                         align="Right"
                                         id="overview_toolbar_settings_unplanned_events"
                                         click="toggleUnplannedEventsElement"
@@ -184,7 +184,7 @@
 
 <div id="printExportTemplate">
     <ejs-dropdownbutton id="printExportBtn"
-                        iconCss="e-icons e-print-export"
+                        iconCss="e-icons e-more-horizontal-1"
                         cssClass="e-caret-hide e-tbar-btn"
                         items="@(ViewData["PrintExportItems"] as List<object>)"
                         select="handlePrintExportSelect">
@@ -560,23 +560,23 @@
 
     function toggleUnplannedEventsElement() {
         var settingsPanel = document.querySelector('.unplanned-events-container');
-        var toggleButton = document.querySelector('.e-show-unplanned-events') || document.querySelector('.e-hide-unplanned-events');
+                var toggleButton = document.querySelector('.e-show-hide-panel') || document.querySelector('.e-view-side');
 
         if (!settingsPanel || !toggleButton) return;
 
         if (settingsPanel.classList.contains('hide')) {
             ej.base.removeClass([settingsPanel], 'hide');
 
-            if (toggleButton.classList.contains('e-hide-unplanned-events')) {
-                ej.base.removeClass([toggleButton], 'e-hide-unplanned-events');
-                ej.base.addClass([toggleButton], 'e-show-unplanned-events');
+                if (toggleButton.classList.contains('e-view-side')) {
+                    ej.base.removeClass([toggleButton], 'e-view-side');
+                    ej.base.addClass([toggleButton], 'e-show-hide-panel');
             }
         } else {
             ej.base.addClass([settingsPanel], 'hide');
 
-            if (toggleButton.classList.contains('e-show-unplanned-events')) {
-                ej.base.removeClass([toggleButton], 'e-show-unplanned-events');
-                ej.base.addClass([toggleButton], 'e-hide-unplanned-events');
+                if (toggleButton.classList.contains('e-show-hide-panel')) {
+                    ej.base.removeClass([toggleButton], 'e-show-hide-panel');
+                    ej.base.addClass([toggleButton], 'e-view-side');
             }
         }
     }

@@ -7,12 +7,13 @@
 #endregion
 using EJ2CoreSampleBrowser.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Syncfusion.EJ2.BlockEditor;
 
 namespace EJ2CoreSampleBrowser_NET9.Pages.BlockEditor
 {
     public class OverviewModel : PageModel
     {
-        public List<BlockModel> BlockDataOverview { get; set; }
+        public List<Block> BlockDataOverview { get; set; }
         public void OnGet()
         {
             BlockDataOverview = new BlockData().GetBlockDataOverview();

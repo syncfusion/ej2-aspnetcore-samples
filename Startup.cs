@@ -18,7 +18,6 @@ using System.IO;
 using Microsoft.AspNetCore.StaticFiles;
 using Syncfusion.Licensing;
 using EJ2ScheduleSample.Controllers;
-using EJ2SpreadsheetSample.Controllers;
 using Microsoft.Extensions.Hosting;
 using System.Text.RegularExpressions;
 
@@ -86,7 +85,6 @@ namespace EJ2CoreSampleBrowser
                         name: "default",
                         pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapHub<ScheduleHub>("/scheduleHub");
-                endpoints.MapHub<SpreadsheetHub>("/spreadsheetHub");
             });
 
             app.UseFileServer();

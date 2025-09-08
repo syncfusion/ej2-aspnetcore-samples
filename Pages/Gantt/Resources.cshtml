@@ -7,9 +7,11 @@
         <div class="row">
             <div class="col-md-12">
                 <ejs-gantt id='Resources' dataSource="@GanttData.ResourceData()"
-                    treeColumnIndex="1" height="450px" allowSelection="true" highlightWeekends="true"
+                    treeColumnIndex="1" 
+height="650px" rowHeight="46" taskbarHeight="25"
+ allowSelection="true" highlightWeekends="true"
                     resources="@GanttData.GetResourceAllocation()" taskType="FixedWork"
-                    projectStartDate="03/28/2024" projectEndDate="07/28/2024"
+                    projectStartDate="03/26/2025" projectEndDate="07/28/2025"
                     toolbar="@(new List<string>() { "Add", "Edit", "Update", "Delete", "Cancel", "ExpandAll", "CollapseAll" })"
                     queryTaskbarInfo="queryTaskbarInfoEvent" actionBegin="actionBeginEvent" actionComplete="actionCompleteEvent" cellEdit="cellEditEvent">
                     <e-gantt-resourcefields id="ResourceId" name="ResourceName" unit="ResourceUnit">
@@ -18,14 +20,15 @@
                         endDate="EndDate" duration="Duration" progress="Progress" dependency="Predecessor"
                         child="SubTasks" work="Work" resourceInfo="Resources" type="TaskType">
                     </e-gantt-taskfields>
+                    <e-gantt-labelSettings taskLabel="Progress"></e-gantt-labelSettings>
                     <e-gantt-splitterSettings columnIndex="2"></e-gantt-splitterSettings>
                     <e-gantt-columns>
                         <e-gantt-column field="TaskId" visible="false"></e-gantt-column>
                         <e-gantt-column field="TaskName" headerText="Task Name" width="180"></e-gantt-column>
                         <e-gantt-column field="Resources" headerText="Resources" width="160" template="#resTemplate" edit="@(new {read = "read", destroy = "destroy", write = "write"})"></e-gantt-column>
                         <e-gantt-column field="Work" width="110"></e-gantt-column>
-                        <e-gantt-column field="Duration" width="100"></e-gantt-column>
-                        <e-gantt-column field="TaskType" headerText="Task Type" width="110"></e-gantt-column>
+                        <e-gantt-column field="Duration" width="150"></e-gantt-column>
+                        <e-gantt-column field="TaskType" headerText="Task Type" width="150"></e-gantt-column>
                     </e-gantt-columns>
                     <e-gantt-editsettings allowAdding="true" allowEditing="true" allowDeleting="true"
                         allowTaskbarEditing="true" showDeleteConfirmDialog="true"></e-gantt-editsettings>
@@ -235,6 +238,9 @@
             <code>DayMarkers</code> module using the <code>Gantt.Inject(DayMarkers)</code> method.
             To edit resource unit, task type, and duration, inject the <code>Toolbar</code> and <code>Edit</code> module.
         </p>
+        <br>
+    <p>More information on the Essential<sup>®</sup> Gantt Chart can be found in this <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/gantt/getting-started#adding-gantt-component">documentation section</a>.</p>
+        
     </div>
 }
 @section Meta{

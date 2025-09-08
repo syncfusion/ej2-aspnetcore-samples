@@ -31,7 +31,7 @@
                 focus="focus" blur="blur" change="change" toolbarClick="toolbarClick" beforeDialogOpen="beforeDialogOpen" dialogOpen="dialogOpen" dialogClose="dialogClose"
                  beforeQuickToolbarOpen="beforeQuickToolbarOpen" quickToolbarOpen="quickToolbarOpen" quickToolbarClose="quickToolbarClose" imageSelected="imageSelected"
         imageUploading="imageUploading" imageUploadSuccess="imageUploadSuccess" imageUploadFailed="imageUploadFailed" imageRemoving="imageRemoving"
-        destroyed="destroyed" beforeSanitizeHtml="beforeSanitizeHtml" resizing="resizing" resizeStart="resizeStart" resizeStop="resizeStop">
+        destroyed="destroyed" beforeSanitizeHtml="beforeSanitizeHtml" resizing="resizing" resizeStart="resizeStart" resizeStop="resizeStop" selectionChanged="selectionChanged">
 					<e-richtexteditor-toolbarsettings items="@items"></e-richtexteditor-toolbarsettings>
                     <e-richtexteditor-filemanagersettings enable="true" path="/Pictures/Food" ajaxSettings="@ajaxSettings"></e-richtexteditor-filemanagersettings>
                     <e-content-template>
@@ -194,6 +194,9 @@
         function actionCompleteHandler() {
             setTimeout(function () { rteObj.toolbarModule.refreshToolbarOverflow(); }, 400);
         }
+        function selectionChanged() {
+            appendElement('Rich Text Editor <b>selectionChanged</b> event called<hr>');
+        }
 
     </script>
 
@@ -281,6 +284,7 @@
             <li><code>resizing</code> – Triggers only when resizing the image</li>
             <li><code>resizeStart</code> –Triggers only when start resize the image</li>
             <li><code>resizeStop</code> – Triggers only when stop resize the image</li>
+            <li><code>selectionChanged</code> – Triggers only when the selection within the editor is modified.</li>
         </ul>
     </div>
 }

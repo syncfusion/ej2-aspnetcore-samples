@@ -17,7 +17,7 @@
         "Grid", "Chart", "Export", "SubTotal", "GrandTotal", "Formatting", "FieldList" })" saveReport="saveReport"
                            loadReport="loadReport" fetchReport="fetchReport" renameReport="renameReport" removeReport="removeReport"
                            newReport="newReport" toolbarRender="beforeToolbarRender" chartSeriesCreated="chartSeriesCreated"
-                           cellTemplate="${getCellContent(data)}" enableFieldSearching="true">
+                           cellTemplate="${getCellContent(data)}" enableFieldSearching="true" load="load">
                 <e-datasourcesettings dataSource="@Model.data" expandAll="false" enableSorting="true"
                                       emptyCellsTextContent="-" showHeaderWhenEmpty="false" excludeFields="@Model.excludeFields">
                     <e-formatsettings>
@@ -273,6 +273,11 @@
         function exportQueryCellInfo(args) {
             if (args.cell.axis === 'value' && args.cell.value === undefined) {
                 args.style.numberFormat = undefined;
+            }
+        }
+        function load(args) {
+            if (ej.base.Browser.isDevice) {
+                args.dataSourceSettings.rows = [{ name: 'rank_display', caption: 'Rank', expandAll: true, allowDragAndDrop: false }];
             }
         }
     </script>

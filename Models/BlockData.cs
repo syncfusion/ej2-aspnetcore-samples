@@ -5,35 +5,35 @@
 // licensing@syncfusion.com. Any infringement will be prosecuted under
 // applicable laws. 
 #endregion
+using System;
+using System.Collections.Generic;
+using Syncfusion.EJ2.BlockEditor;
+
 namespace EJ2CoreSampleBrowser.Models
 {
     public class BlockData
-    {        
-        public List<BlockModel> GetBlockDataAPI()
+    {
+        public List<Block> GetBlockDataAPI()
         {
-            return new List<BlockModel>
+            return new List<Block>
             {
-                new BlockModel
+                new Block
                 {
-                    id = "heading-block",
-                    type = "Heading1",
-                    content = new List<ContentModel>
+                    Id = "heading-block",
+                    Type = BlockType.Heading,
+                    Props = new { level = 1 },
+                    Content = new List<object>
                     {
-                        new ContentModel
-                        {
-                            id = "heading-content",
-                            type = "Text",
-                            content = "Block Editor API Demo"
-                        }
+                        new { id = "heading-content", type = "Text", content = "Block Editor API Demo" }
                     }
                 },
-                new BlockModel
+                new Block
                 {
-                    id = "intro-block",
-                    type = "Paragraph",
-                    content = new List<ContentModel>
+                    Id = "intro-block",
+                    Type = BlockType.Paragraph,
+                    Content = new List<object>
                     {
-                        new ContentModel
+                        new
                         {
                             id = "intro-content",
                             type = "Text",
@@ -41,346 +41,637 @@ namespace EJ2CoreSampleBrowser.Models
                         }
                     }
                 },
-                new BlockModel
+                new Block
                 {
-                    id = "api-heading",
-                    type = "Heading2",
-                    content = new List<ContentModel>
+                    Id = "api-heading",
+                    Type = BlockType.Heading,
+                    Props = new { level = 2 },
+                    Content = new List<object>
                     {
-                        new ContentModel
+                        new { id = "api-heading-content", type = "Text", content = "API Features:" }
+                    }
+                },
+                new Block
+                {
+                    Id = "api-list-1",
+                    Type = BlockType.BulletList,
+                    Content = new List<object>
+                    {
+                        new
                         {
-                            id = "api-heading-content",
+                            id = "api-list-1-content",
                             type = "Text",
-                            content = "API Features:"
+                            content = "readOnly - allows to change it as a non-editable state."
                         }
                     }
                 },
-                new BlockModel { id = "api-list-1", type = "BulletList", content = new List<ContentModel> { new ContentModel { id = "api-list-1-content", type = "Text", content = "readOnly - allows to change it as a non-editable state." } } },
-                new BlockModel { id = "api-list-2", type = "BulletList", content = new List<ContentModel> { new ContentModel { id = "api-list-2-content", type = "Text", content = "enableDragAndDrop - allows to control drag-and-drop operations within the block editor." } } },
-                new BlockModel { id = "api-list-3", type = "BulletList", content = new List<ContentModel> { new ContentModel { id = "api-list-3-content", type = "Text", content = "enableHtmlEncode - Get the encoded string value through value property and source code panel." } } },
-                new BlockModel { id = "api-list-4", type = "BulletList", content = new List<ContentModel> { new ContentModel { id = "api-list-4-content", type = "Text", content = "selectAllBlocks - Selects all blocks in the editor." } } },
-                new BlockModel { id = "api-list-5", type = "BulletList", content = new List<ContentModel> { new ContentModel { id = "api-list-5-content", type = "Text", content = "focusIn - Focuses the editor." } } },
-                new BlockModel { id = "api-list-6", type = "BulletList", content = new List<ContentModel> { new ContentModel { id = "api-list-6-content", type = "Text", content = "focusOut - Removes focus from the editor." } } },
-                new BlockModel { id = "api-list-7", type = "BulletList", content = new List<ContentModel> { new ContentModel { id = "api-list-7-content", type = "Text", content = "getBlockCount - Gets total block count." } } },
-                new BlockModel { id = "api-list-8", type = "BulletList", content = new List<ContentModel> { new ContentModel { id = "api-list-8-content", type = "Text", content = "getDataAsJson - Retrieves data from the editor as JSON." } } },
-                new BlockModel { id = "api-list-9", type = "BulletList", content = new List<ContentModel> { new ContentModel { id = "api-list-9-content", type = "Text", content = "getDataAsHtml - Retrieves data from the editor as HTML." } } },
-                new BlockModel
+                new Block
                 {
-                    id = "try-it-block",
-                    type = "Paragraph",
-                    content = new List<ContentModel>
+                    Id = "api-list-2",
+                    Type = BlockType.BulletList,
+                    Content = new List<object>
                     {
-                        new ContentModel
+                        new
+                        {
+                            id = "api-list-2-content",
+                            type = "Text",
+                            content = "enableDragAndDrop - allows to control drag-and-drop operations within the block editor."
+                        }
+                    }
+                },
+                new Block
+                {
+                    Id = "api-list-3",
+                    Type = BlockType.BulletList,
+                    Content = new List<object>
+                    {
+                        new
+                        {
+                            id = "api-list-3-content",
+                            type = "Text",
+                            content = "enableHtmlEncode - Get the encoded string value through value property and source code panel."
+                        }
+                    }
+                },
+                new Block
+                {
+                    Id = "api-list-4",
+                    Type = BlockType.BulletList,
+                    Content = new List<object>
+                    {
+                        new
+                        {
+                            id = "api-list-4-content",
+                            type = "Text",
+                            content = "selectAllBlocks - Selects all blocks in the editor."
+                        }
+                    }
+                },
+                new Block
+                {
+                    Id = "api-list-5",
+                    Type = BlockType.BulletList,
+                    Content = new List<object>
+                    {
+                        new
+                        {
+                            id = "api-list-5-content",
+                            type = "Text",
+                            content = "focusIn - Focuses the editor."
+                        }
+                    }
+                },
+                new Block
+                {
+                    Id = "api-list-6",
+                    Type = BlockType.BulletList,
+                    Content = new List<object>
+                    {
+                        new
+                        {
+                            id = "api-list-6-content",
+                            type = "Text",
+                            content = "focusOut - Removes focus from the editor."
+                        }
+                    }
+                },
+                new Block
+                {
+                    Id = "api-list-7",
+                    Type = BlockType.BulletList,
+                    Content = new List<object>
+                    {
+                        new
+                        {
+                            id = "api-list-7-content",
+                            type = "Text",
+                            content = "getBlockCount - Gets total block count."
+                        }
+                    }
+                },
+                new Block
+                {
+                    Id = "api-list-8",
+                    Type = BlockType.BulletList,
+                    Content = new List<object>
+                    {
+                        new
+                        {
+                            id = "api-list-8-content",
+                            type = "Text",
+                            content = "getDataAsJson - Retrieves data from the editor as JSON."
+                        }
+                    }
+                },
+                new Block
+                {
+                    Id = "api-list-9",
+                    Type = BlockType.BulletList,
+                    Content = new List<object>
+                    {
+                        new
+                        {
+                            id = "api-list-9-content",
+                            type = "Text",
+                            content = "getDataAsHtml - Retrieves data from the editor as HTML."
+                        }
+                    }
+                },
+                new Block
+                {
+                    Id = "try-it-block",
+                    Type = BlockType.Paragraph,
+                    Content = new List<object>
+                    {
+                        new
                         {
                             id = "try-it-content",
                             type = "Text",
                             content = "Try it out! Use the property panel on the right to interact with the API.",
-                            styles = new StyleSettings
-                            {
-                                bold = true,
-                                bgColor = "#999999"
-                            }
+                            props = new { styles = new { bold = true, bgColor = "#999999" } }
                         }
                     }
                 }
             };
         }
 
-        public List<BlockModel> GetBlockDataOverview()
+        public List<Block> GetBlockDataOverview()
         {
-            return new List<BlockModel>
+            return new List<Block>
             {
-                new BlockModel
+                new Block
                 {
-                    id = "heading-block",
-                    type = "Heading1",
-                    content = new List<ContentModel>
+                    Id = "heading-block",
+                    Type = BlockType.Heading,
+                    Props = new { level = 1 },
+                    Content = new List<object>
                     {
-                        new ContentModel { id = "heading-content", type = "Text", content = "Welcome to the Block Editor Demo!" }
+                        new { id = "heading-content", type = "Text", content = "Welcome to the Block Editor Demo!" }
                     }
                 },
-                new BlockModel
+                new Block
                 {
-                    id = "intro-block",
-                    type = "Paragraph",
-                    content = new List<ContentModel>
+                    Id = "intro-block",
+                    Type = BlockType.Paragraph,
+                    Content = new List<object>
                     {
-                        new ContentModel { id = "intro-content", type = "Text", content = "Block Editor is a powerful rich text editor that allows you to create structured content using blocks. Each block can be formatted, moved, or transformed into different types." }
-                    }
-                },
-                new BlockModel
-                {
-                    id = "styled-paragraph",
-                    type = "Paragraph",
-                    content = new List<ContentModel>
-                    {
-                        new ContentModel { id = "styled-text-1", type = "Text", content = "Try selecting text to see " },
-                        new ContentModel { id = "styled-text-2", type = "Text", content = "formatting options", styles = new StyleSettings { bold = true, italic = true } },
-                        new ContentModel { id = "styled-text-3", type = "Text", content = " or type " },
-                        new ContentModel { id = "styled-text-4", type = "Text", content = "\"/\"", styles = new StyleSettings { bgColor = "#999999", bold = true } },
-                        new ContentModel { id = "styled-text-5", type = "Text", content = " to access the command menu." }
-                    }
-                },
-                new BlockModel
-                {
-                    id = "block-types-heading",
-                    type = "Heading2",
-                    content = new List<ContentModel>
-                    {
-                        new ContentModel { id = "block-types-heading-content", type = "Text", content = "Block Types" }
-                    }
-                },
-                new BlockModel
-                {
-                    id = "quote-block",
-                    type = "Quote",
-                    content = new List<ContentModel>
-                    {
-                        new ContentModel { id = "quote-content", type = "Text", content = "The Block Editor makes document creation a seamless experience with its intuitive block-based approach.", styles = new StyleSettings { italic = true } }
-                    }
-                },
-                new BlockModel
-                {
-                    id = "callout-block",
-                    type = "Callout",
-                    children = new List<BlockModel>
-                    {
-                        new BlockModel
+                        new
                         {
-                            id = "callout-content",
-                            type = "Paragraph",
-                            content = new List<ContentModel>
+                            id = "intro-content",
+                            type = "Text",
+                            content = "Block Editor is a powerful rich text editor that allows you to create structured content using blocks. Each block can be formatted, moved, or transformed into different types."
+                        }
+                    }
+                },
+                new Block
+                {
+                    Id = "styled-paragraph",
+                    Type = BlockType.Paragraph,
+                    Content = new List<object>
+                    {
+                        new { id = "styled-text-1", type = "Text", content = "Try selecting text to see " },
+                        new
+                        {
+                            id = "styled-text-2",
+                            type = "Text",
+                            content = "formatting options",
+                            props = new { styles = new { bold = true, italic = true } }
+                        },
+                        new { id = "styled-text-3", type = "Text", content = ", or type " },
+                        new
+                        {
+                            id = "styled-text-4",
+                            type = "Text",
+                            content = "\"/\"",
+                            props = new { styles = new { bgColor = "#999999", bold = true } }
+                        },
+                        new { id = "styled-text-5", type = "Text", content = " to access the command menu." }
+                    }
+                },
+                new Block
+                {
+                    Id = "block-types-heading",
+                    Type = BlockType.Heading,
+                    Props = new { level = 2 },
+                    Content = new List<object>
+                    {
+                        new { id = "block-types-heading-content", type = "Text", content = "Block Types" }
+                    }
+                },
+                new Block
+                {
+                    Id = "quote-block",
+                    Type = BlockType.Quote,
+                    Content = new List<object>
+                    {
+                        new
+                        {
+                            id = "quote-content",
+                            type = "Text",
+                            content = "The Block Editor makes document creation a seamless experience with its intuitive block-based approach.",
+                            props = new { styles = new { italic = true } }
+                        }
+                    }
+                },
+                new Block
+                {
+                    Id = "callout-block",
+                    Type = BlockType.Callout,
+                    Props = new {
+                        Children = new List<object>
+                        {
+                            new Block
                             {
-                                new ContentModel { id = "callout-content-1", type = "Text", content = "Important: Block Editor supports various content types including Text, Link, Code, Mention, and Label.", styles = new StyleSettings { bold = true } }
+                                Id = "callout-content",
+                                Type = BlockType.Paragraph,
+                                Content = new List<object>
+                                {
+                                    new
+                                    {
+                                        id = "callout-content-1",
+                                        type = "Text",
+                                        content = "Important: Block Editor supports various content types including Text, Link, Code, Mention, and Label.",
+                                        props = new { styles = new { bold = true } }
+                                    }
+                                }
                             }
                         }
                     }
                 },
-                new BlockModel
+                new Block
                 {
-                    id = "list-types-heading",
-                    type = "Heading3",
-                    content = new List<ContentModel>
+                    Id = "list-types-heading",
+                    Type = BlockType.Heading,
+                    Props = new { level = 3 },
+                    Content = new List<object>
                     {
-                        new ContentModel { id = "list-types-heading-content", type = "Text", content = "List Types" }
+                        new { id = "list-types-heading-content", type = "Text", content = "List Types" }
                     }
                 },
-                new BlockModel
+                new Block
                 {
-                    id = "bullet-list-header",
-                    type = "BulletList",
-                    content = new List<ContentModel>
+                    Id = "bullet-list-header",
+                    Type = BlockType.BulletList,
+                    Content = new List<object>
                     {
-                        new ContentModel { id = "bullet-list-header-content", type = "Text", content = "Text blocks: Paragraph, Heading 1-4, Quote, Callout", styles = new StyleSettings { bold = true } }
+                        new
+                        {
+                            id = "bullet-list-header-content",
+                            type = "Text",
+                            content = "Text blocks: Paragraph, Heading 1-4, Quote, Callout",
+                            props = new { styles = new { bold = true } }
+                        }
                     }
                 },
-                new BlockModel
+                new Block
                 {
-                    id = "numbered-list",
-                    type = "NumberedList",
-                    content = new List<ContentModel>
+                    Id = "numbered-list",
+                    Type = BlockType.NumberedList,
+                    Content = new List<object>
                     {
-                        new ContentModel { id = "numbered-list-content", type = "Text", content = "Lists: Bullet lists, Numbered lists, Check lists" }
+                        new
+                        {
+                            id = "numbered-list-content",
+                            type = "Text",
+                            content = "Lists: Bullet lists, Numbered lists, Check lists"
+                        }
                     }
                 },
-                new BlockModel
+                new Block
                 {
-                    id = "check-list",
-                    type = "CheckList",
-                    isChecked = true,
-                    content = new List<ContentModel>
+                    Id = "check-list",
+                    Type = BlockType.Checklist,
+                    Props = new { isChecked = true },
+                    Content = new List<object>
                     {
-                        new ContentModel { id = "check-list-content", type = "Text", content = "Special blocks: Divider, Toggle, Code block" }
+                        new
+                        {
+                            id = "check-list-content",
+                            type = "Text",
+                            content = "Special blocks: Divider, Toggle, Code block"
+                        }
                     }
                 },
-                new BlockModel
+                new Block
                 {
-                    id = "divider-block",
-                    type = "Divider",
-                    content = new List<ContentModel>()
+                    Id = "divider-block",
+                    Type = BlockType.Divider
                 },
-                new BlockModel
+                new Block
                 {
-                    id = "toggle-block",
-                    type = "ToggleParagraph",
-                    isExpanded = true,
-                    content = new List<ContentModel>
+                    Id = "toggle-block",
+                    Type = BlockType.CollapsibleParagraph,
+                    Content = new List<object>
                     {
-                        new ContentModel { id = "toggle-content", type = "Text", content = "Click me to expand/collapse" }
+                        new { id = "toggle-content", type = "Text", content = "Click me to expand/collapse" }
                     },
-                    children = new List<BlockModel>
-                    {
-                        new BlockModel
+                    Props = new {
+                        IsExpanded = true,
+                        Children = new List<object>
                         {
-                            id = "toggle-child",
-                            type = "Paragraph",
-                            content = new List<ContentModel>
+                            new Block
                             {
-                                new ContentModel { id = "toggle-child-content", type = "Text", content = "This content is inside a toggle block. Toggle blocks are useful for organizing content that can be expanded or collapsed." }
+                                Id = "toggle-child",
+                                Type = BlockType.Paragraph,
+                                Content = new List<object>
+                                {
+                                    new
+                                    {
+                                        id = "toggle-child-content",
+                                        type = "Text",
+                                        content = "This content is inside a toggle block. Toggle blocks are useful for organizing content that can be expanded or collapsed."
+                                    }
+                                }
                             }
                         }
                     }
                 },
-                new BlockModel
+                new Block
                 {
-                    id = "code-block",
-                    type = "Code",
-                    content = new List<ContentModel>
+                    Id = "code-block",
+                    Type = BlockType.Code,
+                    Content = new List<object>
                     {
-                        new ContentModel { id = "code-content", type = "Text", content = "const editor = new BlockEditor();\neditor.appendTo(\"#element\");" }
+                        new
+                        {
+                            id = "code-content",
+                            type = "Text",
+                            content = "const editor = new BlockEditor();\neditor.appendTo(\"#element\");"
+                        }
                     }
                 },
-                new BlockModel
+                new Block
                 {
-                    id = "formatting-heading",
-                    type = "Heading4",
-                    content = new List<ContentModel>
+                    Id = "formatting-heading",
+                    Type = BlockType.Heading,
+                    Props = new { level = 4 },
+                    Content = new List<object>
                     {
-                        new ContentModel { id = "formatting-heading-content", type = "Text", content = "Text Formatting Examples" }
+                        new { id = "formatting-heading-content", type = "Text", content = "Text Formatting Examples" }
                     }
                 },
-                new BlockModel
+                new Block
                 {
-                    id = "formatting-examples",
-                    type = "Paragraph",
-                    content = new List<ContentModel>
+                    Id = "formatting-examples",
+                    Type = BlockType.Paragraph,
+                    Content = new List<object>
                     {
-                        new ContentModel { id = "format-bold", type = "Text", content = "Bold ", styles = new StyleSettings { bold = true } },
-                        new ContentModel { id = "format-italic", type = "Text", content = "Italic ", styles = new StyleSettings { italic = true } },
-                        new ContentModel { id = "format-underline", type = "Text", content = "Underline ", styles = new StyleSettings { underline = true } },
-                        new ContentModel { id = "format-strikethrough", type = "Text", content = "Strikethrough ", styles = new StyleSettings { strikethrough = true } },
-                        new ContentModel { id = "format-superscript", type = "Text", content = "Superscript ", styles = new StyleSettings { superscript = true } },
-                        new ContentModel { id = "format-subscript", type = "Text", content = "Subscript ", styles = new StyleSettings { subscript = true } },
-                        new ContentModel { id = "format-uppercase", type = "Text", content = "uppercase ", styles = new StyleSettings { uppercase = true } },
-                        new ContentModel { id = "format-lowercase", type = "Text", content = "LOWERCASE", styles = new StyleSettings { lowercase = true } }
+                        new
+                        {
+                            id = "format-bold",
+                            type = "Text",
+                            content = "Bold ",
+                            props = new { styles = new { bold = true } }
+                        },
+                        new
+                        {
+                            id = "format-italic",
+                            type = "Text",
+                            content = "Italic ",
+                            props = new { styles = new { italic = true } }
+                        },
+                        new
+                        {
+                            id = "format-underline",
+                            type = "Text",
+                            content = "Underline ",
+                            props = new { styles = new { underline = true } }
+                        },
+                        new
+                        {
+                            id = "format-strikethrough",
+                            type = "Text",
+                            content = "Strikethrough ",
+                            props = new { styles = new { strikethrough = true } }
+                        },
+                        new
+                        {
+                            id = "format-superscript",
+                            type = "Text",
+                            content = "Superscript ",
+                            props = new { styles = new { superscript = true } }
+                        },
+                        new
+                        {
+                            id = "format-subscript",
+                            type = "Text",
+                            content = "Subscript ",
+                            props = new { styles = new { subscript = true } }
+                        },
+                        new
+                        {
+                            id = "format-uppercase",
+                            type = "Text",
+                            content = "uppercase ",
+                            props = new { styles = new { uppercase = true } }
+                        },
+                        new
+                        {
+                            id = "format-lowercase",
+                            type = "Text",
+                            content = "LOWERCASE",
+                            props = new { styles = new { lowercase = true } }
+                        }
                     }
                 },
-                new BlockModel
+                new Block
                 {
-                    id = "link-block",
-                    type = "Paragraph",
-                    content = new List<ContentModel>
+                    Id = "link-block",
+                    Type = BlockType.Paragraph,
+                    Content = new List<object>
                     {
-                        new ContentModel { id = "link-text", type = "Text", content = "Visit " },
-                        new ContentModel { id = "link-content", type = "Link", content = "Syncfusion", linkSettings = new LinkSettings { url = "https://www.syncfusion.com/", openInNewWindow = true } },
-                        new ContentModel { id = "link-text-end", type = "Text", content = " for more information." }
+                        new { id = "link-text", type = "Text", content = "Visit " },
+                        new
+                        {
+                            id = "link-content",
+                            type = "Link",
+                            content = "Syncfusion",
+                            props = new { url = "https://www.syncfusion.com/", openInNewWindow = true }
+                        },
+                        new { id = "link-text-end", type = "Text", content = " for more information." }
                     }
                 },
-                new BlockModel
+                new Block
                 {
-                    id = "label-block",
-                    type = "Paragraph",
-                    content = new List<ContentModel>
+                    Id = "label-block",
+                    Type = BlockType.Paragraph,
+                    Content = new List<object>
                     {
-                        new ContentModel { id = "label-text", type = "Text", content = "This block contains a " },
-                        new ContentModel { id = "progress", type = "Label" },
-                        new ContentModel { id = "label-text-end", type = "Text", content = " label." }
+                        new { id = "label-text", type = "Text", content = "This block contains a " },
+                        new { id = "progress-label", type = "Label", props = new { labelId = "progress" } },
+                        new { id = "label-text-end", type = "Text", content = " label." }
                     }
                 },
-                new BlockModel
+                new Block
                 {
-                    id = "try-it-block",
-                    type = "Paragraph",
-                    content = new List<ContentModel>
+                    Id = "try-it-block",
+                    Type = BlockType.Paragraph,
+                    Content = new List<object>
                     {
-                        new ContentModel { id = "try-it-content", type = "Text", content = "Try it out! Click anywhere and start typing, or type \"/\" to see available commands.", styles = new StyleSettings { bold = true, bgColor = "#999999" } }
+                        new
+                        {
+                            id = "try-it-content",
+                            type = "Text",
+                            content = "Try it out! Click anywhere and start typing, or type \"/\" to see available commands.",
+                            props = new { styles = new { bold = true, bgColor = "#999999" } }
+                        }
                     }
                 }
             };
         }
 
-        public List<BlockModel> GetBlockDataEvents()
+        public List<Block> GetBlockDataEvents()
         {
-            return new List<BlockModel>
+            return new List<Block>
             {
-                new BlockModel
+                new Block
                 {
-                    id = "heading-block",
-                    type = "Heading1",
-                    content = new List<ContentModel>
+                    Id = "heading-block",
+                    Type = BlockType.Heading,
+                    Props = new { level = 1 },
+                    Content = new List<object>
                     {
-                        new ContentModel { id = "heading-content", type = "Text", content = "Block Editor Events Demo" }
+                        new { id = "heading-content", type = "Text", content = "Block Editor Events Demo" }
                     }
                 },
-                new BlockModel
+                new Block
                 {
-                    id = "intro-block",
-                    type = "Paragraph",
-                    content = new List<ContentModel>
+                    Id = "intro-block",
+                    Type = BlockType.Paragraph,
+                    Content = new List<object>
                     {
-                        new ContentModel { id = "intro-content", type = "Text", content = "This sample demonstrates the events triggered by the Block Editor component. Try different actions to see the events in the trace panel." }
+                        new
+                        {
+                            id = "intro-content",
+                            type = "Text",
+                            content = "This sample demonstrates the events triggered by the Block Editor component. Try different actions to see the events in the trace panel."
+                        }
                     }
                 },
-                new BlockModel
+                new Block
                 {
-                    id = "features-heading",
-                    type = "Heading2",
-                    content = new List<ContentModel>
+                    Id = "features-heading",
+                    Type = BlockType.Heading,
+                    Props = new { level = 2 },
+                    Content = new List<object>
                     {
-                        new ContentModel { id = "features-heading-content", type = "Text", content = "Notable Features:" }
+                        new { id = "features-heading-content", type = "Text", content = "Notable Features:" }
                     }
                 },
-                new BlockModel { id = "feature-list-1", type = "BulletList", content = new List<ContentModel> { new ContentModel { id = "feature-list-1-content", type = "Text", content = "Block-based editing with various block types (paragraphs, headings, lists, etc.)" } } },
-                new BlockModel { id = "feature-list-2", type = "BulletList", content = new List<ContentModel> { new ContentModel { id = "feature-list-2-content", type = "Text", content = "Slash commands for quick block transformation" } } },
-                new BlockModel { id = "feature-list-3", type = "BulletList", content = new List<ContentModel> { new ContentModel { id = "feature-list-3-content", type = "Text", content = "Rich text formatting with inline toolbar" } } },
-                new BlockModel { id = "feature-list-4", type = "BulletList", content = new List<ContentModel> { new ContentModel { id = "feature-list-4-content", type = "Text", content = "Hierarchical content organization with nested blocks" } } },
-                new BlockModel { id = "feature-list-5", type = "BulletList", content = new List<ContentModel> { new ContentModel { id = "feature-list-5-content", type = "Text", content = "Block manipulation (move, delete, duplicate)" } } },
-                new BlockModel { id = "feature-list-6", type = "BulletList", content = new List<ContentModel> { new ContentModel { id = "feature-list-6-content", type = "Text", content = "Keyboard shortcuts for efficient editing" } } },
-                new BlockModel { id = "feature-list-7", type = "BulletList", content = new List<ContentModel> { new ContentModel { id = "feature-list-7-content", type = "Text", content = "Drag and drop functionality for blocks" } } },
-                new BlockModel
+                new Block
                 {
-                    id = "try-it-block",
-                    type = "Paragraph",
-                    content = new List<ContentModel>
+                    Id = "feature-list-1",
+                    Type = BlockType.BulletList,
+                    Content = new List<object>
                     {
-                        new ContentModel
+                        new
+                        {
+                            id = "feature-list-1-content",
+                            type = "Text",
+                            content = "Block-based editing with various block types (paragraphs, headings, lists, etc.)"
+                        }
+                    }
+                },
+                new Block
+                {
+                    Id = "feature-list-2",
+                    Type = BlockType.BulletList,
+                    Content = new List<object>
+                    {
+                        new
+                        {
+                            id = "feature-list-2-content",
+                            type = "Text",
+                            content = "Slash commands for quick block transformation"
+                        }
+                    }
+                },
+                new Block
+                {
+                    Id = "feature-list-3",
+                    Type = BlockType.BulletList,
+                    Content = new List<object>
+                    {
+                        new
+                        {
+                            id = "feature-list-3-content",
+                            type = "Text",
+                            content = "Rich text formatting with inline toolbar"
+                        }
+                    }
+                },
+                new Block
+                {
+                    Id = "feature-list-4",
+                    Type = BlockType.BulletList,
+                    Content = new List<object>
+                    {
+                        new
+                        {
+                            id = "feature-list-4-content",
+                            type = "Text",
+                            content = "Hierarchical content organization with nested blocks"
+                        }
+                    }
+                },
+                new Block
+                {
+                    Id = "feature-list-5",
+                    Type = BlockType.BulletList,
+                    Content = new List<object>
+                    {
+                        new
+                        {
+                            id = "feature-list-5-content",
+                            type = "Text",
+                            content = "Block manipulation (move, delete, duplicate)"
+                        }
+                    }
+                },
+                new Block
+                {
+                    Id = "feature-list-6",
+                    Type = BlockType.BulletList,
+                    Content = new List<object>
+                    {
+                        new
+                        {
+                            id = "feature-list-6-content",
+                            type = "Text",
+                            content = "Keyboard shortcuts for efficient editing"
+                        }
+                    }
+                },
+                new Block
+                {
+                    Id = "feature-list-7",
+                    Type = BlockType.BulletList,
+                    Content = new List<object>
+                    {
+                        new
+                        {
+                            id = "feature-list-7-content",
+                            type = "Text",
+                            content = "Drag and drop functionality for blocks"
+                        }
+                    }
+                },
+                new Block
+                {
+                    Id = "try-it-block",
+                    Type = BlockType.Paragraph,
+                    Content = new List<object>
+                    {
+                        new
                         {
                             id = "try-it-content",
                             type = "Text",
                             content = "Try different actions like typing, selecting text, adding blocks, or moving blocks to see the events triggered.",
-                            styles = new StyleSettings { bold = true, bgColor = "#999999" }
+                            props = new { styles = new { bold = true, bgColor = "#999999" } }
                         }
                     }
                 }
             };
         }
-    }
-
-    public class BlockModel
-    {
-        public string id { get; set; }
-        public string type { get; set; }
-        public bool? isChecked { get; set; }
-        public bool? isExpanded { get; set; }
-        public List<ContentModel> content { get; set; } = new List<ContentModel>();
-        public List<BlockModel> children { get; set; } = new List<BlockModel>();
-    }
-
-    public class ContentModel
-    {
-        public string id { get; set; }
-        public String type { get; set; }
-        public string content { get; set; }
-        public StyleSettings styles { get; set; }
-        public LinkSettings linkSettings { get; set; }
-    }
-
-    public class StyleSettings
-    {
-        public bool bold { get; set; }
-        public bool italic { get; set; }
-        public bool underline { get; set; }
-        public bool strikethrough { get; set; }
-        public bool superscript { get; set; }
-        public bool subscript { get; set; }
-        public bool uppercase { get; set; }
-        public bool lowercase { get; set; }
-        public string bgColor { get; set; }
-    }
-
-    public class LinkSettings
-    {
-        public string url { get; set; }
-        public bool openInNewWindow { get; set; }
     }
 }

@@ -17,20 +17,20 @@
         var missed = "#missed";
     }
     <div class="col-lg-12 control-section">
-        <div class="layoutWrapper">
+        <div class="layoutWrapper e-device-layout">
             <div class="speaker">
                 <div class="camera"></div>
             </div>
             <div class="layout">
                 <div id="list-container">
                     <div style="display:none">
-                        <ejs-listview enable="true" id="all" dataSource="@Model.listdata" cssClass="e-list-template" template="@template" actionComplete="ActionComplete">
+                        <ejs-listview enable="true" id="all" dataSource="@Model.listdata" cssClass="e-list-template" template="@template">
                             <e-listview-fieldsettings text="text" groupBy="category"></e-listview-fieldsettings>
                         </ejs-listview>
-                        <ejs-listview enable="true" id="received" dataSource="@Model.listdata" cssClass="e-list-template" template="@template" actionComplete="ActionComplete">
+                        <ejs-listview enable="true" id="received" dataSource="@Model.listdata" cssClass="e-list-template" template="@template">
                             <e-listview-fieldsettings text="text" groupBy="category"></e-listview-fieldsettings>
                         </ejs-listview>
-                        <ejs-listview enable="true" id="missed" dataSource="@Model.listdata" cssClass="e-list-template" template="@template" actionComplete="ActionComplete">
+                        <ejs-listview enable="true" id="missed" dataSource="@Model.listdata" cssClass="e-list-template" template="@template">
                             <e-listview-fieldsettings text="text" groupBy="category"></e-listview-fieldsettings>
                         </ejs-listview>
                     </div>
@@ -75,13 +75,6 @@
 }
 
 <script>
-    function ActionComplete(args) {
-        if (!ej.base.Browser.isDevice) {
-            document.getElementsByClassName('layoutWrapper')[0].classList.add('e-device-layout');
-        } else {
-            document.getElementsByClassName('tabContainer')[0].classList.add('e-visbile-layer');
-        }
-    }
     function filterData(dataSource, value) {
         let newData = [];
         dataSource.filter((data) => {
@@ -194,10 +187,6 @@
     body.tailwind-dark .e-tab .e-tab-header .e-toolbar-item .e-tab-wrap,
     body.tailwind .e-tab .e-tab-header .e-toolbar-item .e-tab-wrap {
         padding: 0px 5px;
-    }
-
-    .e-visbile-layer {
-        visibility: visible;
     }
 
     /* ListView customization */

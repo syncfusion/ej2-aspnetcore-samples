@@ -5,27 +5,191 @@
 @section ControlsSection{
     <div class="control-section">
 
-        <ejs-treegrid id="TreeGrid" dataSource="@TreeData.GetShipmentData()" allowPaging="true" childMapping="Children" height="350" treeColumnIndex="1">
+        <ejs-treegrid id="StackedHeader" clipMode="EllipsisWithTooltip" dataSource="@TreeData.GetShipmentData()" created="created" allowPaging="true" showColumnChooser="true" toolbar="@( new List<string>() { "ColumnChooser"})" childMapping="Children" height="350" treeColumnIndex="1">
             <e-treegrid-pagesettings pageSize="10"></e-treegrid-pagesettings>
+            <e-treegrid-columnChooserSettings template="#column-chooser-template" headerTemplate="#columnchooser-headertemplate" footerTemplate="#columnchooser-footertemplate" renderCustomColumnChooser="renderCustomColumnChooser"></e-treegrid-columnChooserSettings>
             <e-treegrid-columns>
-                <e-treegrid-column headerText="Order Details" textAlign="Center" columns="@( new List<Syncfusion.EJ2.TreeGrid.TreeGridColumn>() { new Syncfusion.EJ2.TreeGrid.TreeGridColumn { Field = "ID", Width = "110", HeaderText = "Order ID", TextAlign= Syncfusion.EJ2.Grids.TextAlign.Right  },
-                                                                                                          new Syncfusion.EJ2.TreeGrid.TreeGridColumn { Field = "Name", Width = "220", HeaderText = "Order Name",  TextAlign= Syncfusion.EJ2.Grids.TextAlign.Left },
+                <e-treegrid-column headerText="Order Details" textAlign="Center" columns="@( new List<Syncfusion.EJ2.TreeGrid.TreeGridColumn>() { new Syncfusion.EJ2.TreeGrid.TreeGridColumn { Field = "ID", Width = "110", HeaderText = "Order ID", ShowInColumnChooser=false, TextAlign= Syncfusion.EJ2.Grids.TextAlign.Right  },
+                                                                                                          new Syncfusion.EJ2.TreeGrid.TreeGridColumn { Field = "Name", Width = "230", HeaderText = "Order Name", ClipMode=Syncfusion.EJ2.Grids.ClipMode.EllipsisWithTooltip,  TextAlign= Syncfusion.EJ2.Grids.TextAlign.Left },
                                                                                                           new Syncfusion.EJ2.TreeGrid.TreeGridColumn { Field = "OrderDate", Width = "120", HeaderText = "Order Date",  TextAlign= Syncfusion.EJ2.Grids.TextAlign.Right, Format="yMd" }} )">
                 </e-treegrid-column>
                 <e-treegrid-column headerText="Shipment Details" textAlign="Center" columns="@( new List<Syncfusion.EJ2.TreeGrid.TreeGridColumn>() { new Syncfusion.EJ2.TreeGrid.TreeGridColumn { Field = "ShipmentCategory", Width = "170", HeaderText = "Shipment Category" },
                                                                                                           new Syncfusion.EJ2.TreeGrid.TreeGridColumn { Field = "ShippedDate", Width = "140", Format="yMd", HeaderText = "Shipment Date",  TextAlign= Syncfusion.EJ2.Grids.TextAlign.Right },
-                                                                                                          new Syncfusion.EJ2.TreeGrid.TreeGridColumn { Field = "Units", Width = "90", HeaderText = "Units",  }} )">
+                                                                                                          new Syncfusion.EJ2.TreeGrid.TreeGridColumn { Field = "Units", Width = "90", TextAlign = Syncfusion.EJ2.Grids.TextAlign.Right, HeaderText = "Units",  }} )">
                 </e-treegrid-column>
-                <e-treegrid-column headerText="Price Details" textAlign="Center" columns="@( new List<Syncfusion.EJ2.TreeGrid.TreeGridColumn>() { new Syncfusion.EJ2.TreeGrid.TreeGridColumn { Field = "UnitPrice", Width = "180", HeaderText = "Price per unit", Format = "c2", Type="number", TextAlign= Syncfusion.EJ2.Grids.TextAlign.Right },
-                                                                                                          new Syncfusion.EJ2.TreeGrid.TreeGridColumn { Field = "Price", HeaderText = "Total Price", Width="160", Format="c", Type="number", TextAlign= Syncfusion.EJ2.Grids.TextAlign.Right }} )">
+                <e-treegrid-column headerText="Price Details" textAlign="Center" columns="@( new List<Syncfusion.EJ2.TreeGrid.TreeGridColumn>() { new Syncfusion.EJ2.TreeGrid.TreeGridColumn { Field = "UnitPrice", Width = "155", HeaderText = "Price per unit", Format = "c2", Type="number", TextAlign= Syncfusion.EJ2.Grids.TextAlign.Right },
+                                                                                                          new Syncfusion.EJ2.TreeGrid.TreeGridColumn { Field = "Price", HeaderText = "Total Price", Width="145", Format="c", Type="number", TextAlign= Syncfusion.EJ2.Grids.TextAlign.Right }} )">
                 </e-treegrid-column>
             </e-treegrid-columns>
         </ejs-treegrid>
 
     </div>
+    <script id="columnchooser-headertemplate" type="text/x-template">
+      <div>
+        <span id="column-chooser-text">Column Options</span>
+      </div>
+  </script>
+  <script type="text/x-template" id="column-chooser-template">                
+      <div id="tree" ></div>
+  </script>
+  <script id="columnchooser-footertemplate" type="text/x-template">
+      <div id="columnChooserFooter">
+          <button id="submitButton">Apply</button>
+          <button id="abortButton">Close</button>
+      </div>
+  </script>
+    <script>
+        var treeObj;
+        var treeData;
+        // Render TreeView in the column chooser's content
+        function renderCustomColumnChooser (targetLHTMLElement, columns)  {
+            var parentNodes = [
+                { id: 1, name: 'Order Details', hasChild: true, expanded: true },
+                { id: 2, name: 'Shipment Details', hasChild: true, expanded: true },
+                { id: 3, name: 'Price Details', hasChild: true, expanded: true },
+            ];
+            if (columns && columns.length) {
+                treeData = columns.map(function(column) {
+                    var parentId;
+                    switch (column.field) {
+                        case 'Name':
+                        case 'OrderDate':
+                            parentId = 1;
+                            break;
+                        case 'ShipmentCategory':
+                        case 'Units':
+                        case 'ShippedDate':
+                            parentId = 2;
+                            break;
+                        case 'UnitPrice':
+                        case 'Price':
+                            parentId = 3;
+                            break;
+                        default:
+                            break;
+                    }
+                    return {
+                        id: column.uid,
+                        name: column.headerText,
+                        pid: parentId,
+                        isChecked: column.visible
+                    };
+                });
+                var uniquePids = [];
+                treeData.forEach(function(item)  {
+                    if (uniquePids.indexOf(item.pid) === -1) {
+                        uniquePids.push(item.pid);
+                    }
+                });
+                const filteredParents = parentNodes.filter(function (parent) {return uniquePids.indexOf(parent.id) !== -1});
+                treeData = treeData.concat(filteredParents);
+            } else {
+                treeData = [];
+            }
+            treeObj = new ej.navigations.TreeView({
+                fields: { dataSource: treeData, id: 'id', parentID: 'pid', text: 'name', hasChildren: 'hasChild' },
+                showCheckBox: true,
+                nodeClicked: nodeCheck,
+                keyPress: nodeCheck,
+                cssClass: "no-border",
+            });
+            if (columns && columns.length) {
+                treeObj.appendTo(targetLHTMLElement);
+            } else {
+                // To show text when entered mismatched column name or invalid text
+                var noRecordDiv = document.createElement('div');
+                noRecordDiv.innerHTML = 'No Matches Found';
+                noRecordDiv.className = 'no-record-text';
+                targetLHTMLElement.appendChild(noRecordDiv);
+            }
+
+        }
+
+        // Handle checking/unchecking nodes in the TreeView (column chooser)
+        function nodeCheck(args) {
+            let checkedNode = [args.node];
+            if (args.event.target.classList.contains('e-fullrow') || args.event.key == "Enter") {
+                let getNodeDetails = treeObj.getNode(args.node);
+                if (getNodeDetails.isChecked == 'true') {
+                    treeObj.uncheckAll(checkedNode);
+                } else {
+                    treeObj.checkAll(checkedNode);
+                }
+            }
+        }
+        function created() {
+            var treegrid = document.getElementById("StackedHeader").ej2_instances[0];
+            let submitButton = new ej.buttons.Button();
+            submitButton.appendTo('#submitButton');
+            if (document.getElementById('submitButton')) {
+                (document.getElementById('submitButton')).onclick = () => {
+                    columnChooserSubmit();
+                };
+            }
+            let abortButton = new ej.buttons.Button();
+            abortButton.appendTo('#abortButton');
+            if (document.getElementById('abortButton')) {
+                (document.getElementById('abortButton')).onclick = function() {
+                    (treegrid.grid.columnChooserModule).hideDialog();
+                };
+            }
+        }
+
+        // Apply the column chooser selection
+        function columnChooserSubmit() {
+            var treegrid = document.getElementById("StackedHeader").ej2_instances[0];
+            const checkedElements= [];
+            const uncheckedElements = [];
+            let showColumns = treegrid.getVisibleColumns().filter(function (column) { return (column.showInColumnChooser === true); });
+            showColumns = showColumns.map(function (col) { return col.headerText; });
+            const treeItems = document.querySelectorAll('.e-list-item');
+            treeItems.forEach(function(item) {
+                const itemDetails = treeObj.getNode(item);
+                if (!itemDetails.hasChildren) {
+                    if (item.getAttribute('aria-checked') === 'true') {
+                        checkedElements.push(itemDetails.text);
+                    } else {
+                        uncheckedElements.push(itemDetails.text);
+                    }
+                }
+            });
+            showColumns = showColumns.filter(function(col){ uncheckedElements.indexOf(col) === -1});
+            checkedElements.forEach(item => {
+                if (!showColumns.includes(item)) {
+                    showColumns.push(item);
+                }
+            });
+            var columnsToUpdate = { visibleColumns: showColumns, hiddenColumns: uncheckedElements };
+            treegrid.grid.columnChooserModule.changeColumnVisibility(columnsToUpdate);
+        }
+    </script>
+    <style>
+        .no-record-text {
+            padding-left: 4px;
+        }
+
+        .e-columnChooserTemplate {
+            border: none;
+        }
+
+        #StackedHeader_gridcontrol_ccdlg .e-columnChooserTemplate {
+            overflow-x: auto !important;
+            overflow-y: auto;
+        }
+
+        #StackedHeader_gridcontrol_ccdlg .e-columnChooserTemplate .e-ul {
+            width: fit-content !important;
+        }
+
+        #StackedHeader_gridcontrol_ccdlg .e-treeview .e-text-content,
+        #StackedHeader_gridcontrol_ccdlg .e-treeview .e-list-text {
+            white-space: nowrap !important;
+            overflow: hidden;
+        }
+    </style>
 }
 
-@*custom code start*@
+
 
 @section Meta{
     <meta name="description" content="This example demonstrates the Stacked Header in ASP.NET Core Tree Grid control. Explore here for more details." />
@@ -34,29 +198,26 @@
 @section ActionDescription{
     <div id="action-description">
         <p>
-            This sample demonstrates the TreeGrid component with the stacked header feature. In this sample, we have shown multiple levels of column header.
+            This example demonstrates how to use stacked headers and a customizable column chooser in the Tree Grid component.
         </p>
     </div>
 }
 
 @section Description{
     <div id="description">
+        <p>The stacked header category explains the use of the <code>columns -> column</code> property to group columns under common headers, facilitating a clear and structured display of data for enhanced readability and user navigation. It categorizes columns into three groups: Order Details, comprising Order ID, Order Name, and Order Date; Shipment Details, comprising Shipment Category, Shipped Date, and Units; and Price Details, comprising Price per Unit and Total Price. </p>
+        <p>The <b>Column Chooser Template</b> category highlights a customizable layout that allows users to manage column visibility, offering flexibility and improving the overall user experience.<p>
+        <p>Key properties include <code>columnChooserSettings -> headerTemplate</code> for a custom header layout, <code>columnChooserSettings -> template</code> for a custom content layout,<code>columnChooserSettings -> footerTemplate</code> for a custom footer layout, and <code>enableSearching</code> to enable or disable search functionality.</p>
         <p>
-            The TreeGrid columns can be stacked/grouped in order to show multiple levels of column header.
-            It can be done by setting the <code>columns->columns</code> property.
+            More information about the stacked header configuration can be found in
+            this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/tree-grid/columns/column-resizing#resize-stacked-column"> documentation</a> section.
         </p>
-        <p>
-            In this demo, the columns <strong>Order ID, Order Name, Order Date</strong> are grouped under Order Details, the columns <strong>Shipment Category, Shipped Date, Units</strong> are grouped under Shipment Details and <strong>Price per Unit, Total Price</strong> are grouped under Price details.
-        </p>
-        <br />
-
-        <p>
-            More information on the data binding can be found in this <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/tree-grid/columns/column-resizing#resize-stacked-column" aria-label="Navigate to the documentation for Resize stacked column in ASP.NET Core TreeGrid control">documentation section</a>.
-        </p>
+           
     </div>
 }
 
-@*custom code end*@
+
 @section Title{
     <title>ASP.NET Core Tree Grid Stacked Header Example - Syncfusion Demos </title>
 }

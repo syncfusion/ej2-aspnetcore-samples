@@ -901,7 +901,7 @@ namespace EJ2CoreSampleBrowser.Models
 
             ShipmentData Parent1 = new ShipmentData()
             {
-                ID = "1",
+                ID = "55721",
                 Name = "Order 1",
                 Category = "Seafood",
                 Units = 1395,
@@ -915,7 +915,7 @@ namespace EJ2CoreSampleBrowser.Models
 
             ShipmentData Child1 = new ShipmentData()
             {
-                ID = "1.1",
+                ID = "55722",
                 Name = "Mackerel",
                 Category = "Frozen Seafood",
                 Units = 235,
@@ -928,7 +928,7 @@ namespace EJ2CoreSampleBrowser.Models
 
             ShipmentData Child2 = new ShipmentData()
             {
-                ID = "1.2",
+                ID = "55723",
                 Name = "Yellowfin Tuna",
                 Category = "Frozen Seafood",
                 Units = 324,
@@ -940,7 +940,7 @@ namespace EJ2CoreSampleBrowser.Models
             };
             ShipmentData Child3 = new ShipmentData()
             {
-                ID = "1.3",
+                ID = "55724",
                 Name = "Herrings",
                 Category = "Frozen Seafood",
                 Units = 488,
@@ -952,7 +952,7 @@ namespace EJ2CoreSampleBrowser.Models
             };
             ShipmentData Child4 = new ShipmentData()
             {
-                ID = "1.4",
+                ID = "55725",
                 Name = "Preserved Olives",
                 Category = "Edible",
                 Units = 125,
@@ -964,8 +964,8 @@ namespace EJ2CoreSampleBrowser.Models
             };
             ShipmentData Child5 = new ShipmentData()
             {
-                ID = "1.5",
-                Name = " Sweet corn Frozen ",
+                ID = "55726",
+                Name = " Sweet Corn Frozen ",
                 Category = "Edible",
                 Units = 223,
                 UnitPrice = 7,
@@ -982,7 +982,7 @@ namespace EJ2CoreSampleBrowser.Models
 
             ShipmentData Parent2 = new ShipmentData()
             {
-                ID = "2",
+                ID = "55727",
                 Name = "Order 2",
                 Category = "Products",
                 Units = 1944,
@@ -996,7 +996,7 @@ namespace EJ2CoreSampleBrowser.Models
 
             ShipmentData Child6 = new ShipmentData()
             {
-                ID = "2.1",
+                ID = "55728",
                 Name = "Tilapias",
                 Category = "Frozen Seafood",
                 Units = 278,
@@ -1009,7 +1009,7 @@ namespace EJ2CoreSampleBrowser.Models
 
             ShipmentData Child7 = new ShipmentData()
             {
-                ID = "2.2",
+                ID = "55729",
                 Name = "White Shrimp",
                 Category = "Frozen Seafood",
                 Units = 560,
@@ -1021,7 +1021,7 @@ namespace EJ2CoreSampleBrowser.Models
             };
             ShipmentData Child8 = new ShipmentData()
             {
-                ID = "2.3",
+                ID = "55730",
                 Name = "Fresh Cheese",
                 Category = "Dairy",
                 Units = 323,
@@ -1033,7 +1033,7 @@ namespace EJ2CoreSampleBrowser.Models
             };
             ShipmentData Child9 = new ShipmentData()
             {
-                ID = "2.4",
+                ID = "55731",
                 Name = "Blue Veined Cheese",
                 Category = "Dairy",
                 Units = 370,
@@ -1045,7 +1045,7 @@ namespace EJ2CoreSampleBrowser.Models
             };
             ShipmentData Child10 = new ShipmentData()
             {
-                ID = "2.5",
+                ID = "55732",
                 Name = "Butter",
                 Category = "Dairy",
                 Units = 413,
@@ -1064,9 +1064,9 @@ namespace EJ2CoreSampleBrowser.Models
 
             ShipmentData Parent3 = new ShipmentData()
             {
-                ID = "3",
+                ID = "55733",
                 Name = "Order 3",
-                Category = "Crystals",
+                Category = "Crystals Order",
                 Units = 1944,
                 UnitPrice = 58,
                 Price = 21233,
@@ -1078,9 +1078,9 @@ namespace EJ2CoreSampleBrowser.Models
 
             ShipmentData Child11 = new ShipmentData()
             {
-                ID = "3.1",
-                Name = "Lead glassware",
-                Category = "Solid crystals",
+                ID = "55734",
+                Name = "Lead Glassware",
+                Category = "Crystals Order",
                 Units = 542,
                 UnitPrice = 6,
                 Price = 3252,
@@ -1091,9 +1091,9 @@ namespace EJ2CoreSampleBrowser.Models
 
             ShipmentData Child12 = new ShipmentData()
             {
-                ID = "3.2",
+                ID = "55735",
                 Name = "Pharmaceutical Glassware",
-                Category = "Solid crystals",
+                Category = "Crystals Order",
                 Units = 324,
                 UnitPrice = 11,
                 Price = 3564,
@@ -1103,9 +1103,9 @@ namespace EJ2CoreSampleBrowser.Models
             };
             ShipmentData Child13 = new ShipmentData()
             {
-                ID = "3.3",
-                Name = "Glass beads",
-                Category = "Solid crystals",
+                ID = "55736",
+                Name = "Glass Beads",
+                Category = "Crystals Orders",
                 Units = 254,
                 UnitPrice = 16,
                 Price = 4064,
@@ -1890,6 +1890,202 @@ namespace EJ2CoreSampleBrowser.Models
 
                 };
             return tradeData;
+        }
+    }
+
+    public class OrdersTreeData
+    {
+        public string ID { get; set; }
+        public string Name { get; set; }
+        public int Units { get; set; }
+        public string Category { get; set; }
+        public int UnitPrice { get; set; }
+        public int Price { get; set; }
+        public DateTime ShipmentDate { get; set; }
+        public List<OrdersTreeData> Subtasks { get; set; }
+        public static List<OrdersTreeData> GetShipmentData()
+        {
+            List<OrdersTreeData> DataCollection = new List<OrdersTreeData>();
+            OrdersTreeData Parent1 = new OrdersTreeData()
+            {
+                ID = "ORD-55721",
+                Name = "Seafood Order",
+                Category = "Seafoods",
+                Units = 1395,
+                UnitPrice = 47,
+                Price = 65565,
+                ShipmentDate = new DateTime(2022, 02, 11),
+                Subtasks = new List<OrdersTreeData>()
+            };
+            OrdersTreeData Child1 = new OrdersTreeData()
+            {
+                ID = "ORD-55722",
+                Name = "Mackerel",
+                Category = "Seafood",
+                Units = 235,
+                UnitPrice = 12,
+                Price = 2820,
+                ShipmentDate = new DateTime(2022, 01, 05),
+            };
+            OrdersTreeData Child2 = new OrdersTreeData()
+            {
+                ID = "ORD-55723",
+                Name = "Yellowfin Tuna",
+                Category = "Seafood",
+                Units = 324,
+                UnitPrice = 8,
+                Price = 2592,
+                ShipmentDate = new DateTime(2022, 01, 17),
+            };
+            OrdersTreeData Child3 = new OrdersTreeData()
+            {
+                ID = "ORD-55724",
+                Name = "Herrings",
+                Category = "Seafood",
+                Units = 488,
+                UnitPrice = 11,
+                Price = 5368,
+                ShipmentDate = new DateTime(2022, 04, 16),
+            };
+            OrdersTreeData Child4 = new OrdersTreeData()
+            {
+                ID = "ORD-55725",
+                Name = "Preserved Olives",
+                Category = "Edible",
+                Units = 125,
+                UnitPrice = 9,
+                Price = 1125,
+                ShipmentDate = new DateTime(2022, 07, 11),
+            };
+            OrdersTreeData Child5 = new OrdersTreeData()
+            {
+                ID = "ORD-55726",
+                Name = " Sweet Corn Frozen ",
+                Category = "Edible",
+                Units = 223,
+                UnitPrice = 7,
+                Price = 1561,
+                ShipmentDate = new DateTime(2022, 07, 27),
+            };
+            Parent1.Subtasks.Add(Child1);
+            Parent1.Subtasks.Add(Child2);
+            Parent1.Subtasks.Add(Child3);
+            Parent1.Subtasks.Add(Child4);
+            Parent1.Subtasks.Add(Child5);
+            OrdersTreeData Parent2 = new OrdersTreeData()
+            {
+                ID = "ORD-55727",
+                Name = "Products Order",
+                Category = "Products",
+                Units = 1944,
+                UnitPrice = 58,
+                Price = 21233,
+                ShipmentDate = new DateTime(2023, 04, 25),
+                Subtasks = new List<OrdersTreeData>()
+            };
+            OrdersTreeData Child6 = new OrdersTreeData()
+            {
+                ID = "ORD-55728",
+                Name = "Tilapias",
+                Category = "Seafood",
+                Units = 278,
+                UnitPrice = 15,
+                Price = 4170,
+                ShipmentDate = new DateTime(2023, 05, 12),
+            };
+            OrdersTreeData Child7 = new OrdersTreeData()
+            {
+                ID = "ORD-55729",
+                Name = "White Shrimp",
+                Category = "Seafood",
+                Units = 560,
+                UnitPrice = 7,
+                Price = 3920,
+                ShipmentDate = new DateTime(2023, 07, 23),
+            };
+            OrdersTreeData Child8 = new OrdersTreeData()
+            {
+                ID = "ORD-55730",
+                Name = "Fresh Cheese",
+                Category = "Dairy",
+                Units = 323,
+                UnitPrice = 12,
+                Price = 3876,
+                ShipmentDate = new DateTime(2023, 07, 30),
+            };
+            OrdersTreeData Child9 = new OrdersTreeData()
+            {
+                ID = "ORD-55731",
+                Name = "Blue Veined Cheese",
+                Category = "Dairy",
+                Units = 370,
+                UnitPrice = 15,
+                Price = 5550,
+                ShipmentDate = new DateTime(2023, 10, 15),
+            };
+            OrdersTreeData Child10 = new OrdersTreeData()
+            {
+                ID = "ORD-55732",
+                Name = "Butter",
+                Category = "Dairy",
+                Units = 413,
+                UnitPrice = 9,
+                Price = 3717,
+                ShipmentDate = new DateTime(2023, 10, 30),
+            };
+            Parent2.Subtasks.Add(Child6);
+            Parent2.Subtasks.Add(Child7);
+            Parent2.Subtasks.Add(Child8);
+            Parent2.Subtasks.Add(Child9);
+            Parent2.Subtasks.Add(Child10);
+            OrdersTreeData Parent3 = new OrdersTreeData()
+            {
+                ID = "ORD-55733",
+                Name = "Crystals Order",
+                Category = "Crystals",
+                Units = 1944,
+                UnitPrice = 58,
+                Price = 21233,
+                ShipmentDate = new DateTime(2024, 02, 28),
+                Subtasks = new List<OrdersTreeData>()
+            };
+            OrdersTreeData Child11 = new OrdersTreeData()
+            {
+                ID = "ORD-55734",
+                Name = "Lead Glassware",
+                Category = "Crystal",
+                Units = 542,
+                UnitPrice = 6,
+                Price = 3252,
+                ShipmentDate = new DateTime(2024, 06, 08),
+            };
+            OrdersTreeData Child12 = new OrdersTreeData()
+            {
+                ID = "ORD-55735",
+                Name = "Pharmaceutical Glass",
+                Category = "Crystal",
+                Units = 324,
+                UnitPrice = 11,
+                Price = 3564,
+                ShipmentDate = new DateTime(2024, 06, 16),
+            };
+            OrdersTreeData Child13 = new OrdersTreeData()
+            {
+                ID = "ORD-55736",
+                Name = "Glass Beads",
+                Category = "Crystal",
+                Units = 254,
+                UnitPrice = 16,
+                Price = 4064,
+                ShipmentDate = new DateTime(2024, 06, 23)
+            };
+            Parent3.Subtasks.Add(Child11);
+            Parent3.Subtasks.Add(Child12);
+            Parent3.Subtasks.Add(Child13);
+            DataCollection.Add(Parent1);
+            DataCollection.Add(Parent2);
+            DataCollection.Add(Parent3);
+            return DataCollection;
         }
     }
 }

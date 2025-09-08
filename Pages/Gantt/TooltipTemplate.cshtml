@@ -2,16 +2,18 @@
 @using EJ2CoreSampleBrowser.Models;
 @using Syncfusion.EJ2.Gantt;
 
-@section ControlsSection{
+@section ControlsSection {
 
     <div class="control-section">
         <div class="row">
             <div class="col-md-12">
-                <ejs-gantt id='TooltipTemplate' dataSource="@GanttData.TooltipData()" height="450px" highlightWeekends="true" allowSelection="true"
-                           renderBaseline="true" treeColumnIndex="1" resources="@GanttData.EditingResources()"
-                           projectStartDate="03/24/2024" projectEndDate="05/04/2024">
-                    <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate" endDate="EndDate" duration="Duration" progress="Progress"
-                                        dependency="Predecessor" resourceInfo="ResourceId" baselineStartDate="BaselineStartDate" baselineEndDate="BaselineEndDate" child="SubTasks">
+                <ejs-gantt id='TooltipTemplate' dataSource="@GanttData.TooltipData()" height="650px" rowHeight="46"
+                    taskbarHeight="25" highlightWeekends="true" allowSelection="true" renderBaseline="true"
+                    treeColumnIndex="1" resources="@GanttData.EditingResources()" projectStartDate="03/26/2025"
+                    projectEndDate="06/01/2025">
+                    <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate" endDate="EndDate"
+                        duration="Duration" progress="Progress" dependency="Predecessor" resourceInfo="ResourceId"
+                        baselineStartDate="BaselineStartDate" baselineEndDate="BaselineEndDate" child="SubTasks">
                     </e-gantt-taskfields>
                     <e-gantt-resourcefields id="ResourceId" name="ResourceName">
                     </e-gantt-resourcefields>
@@ -27,7 +29,8 @@
                         <e-gantt-column field="BaselineEndDate"></e-gantt-column>
                         <e-gantt-column field="ResourceId"></e-gantt-column>
                     </e-gantt-columns>
-                    <e-gantt-tooltipsettings showTooltip="true" taskbar="#TaskbarTooltip" baseline="#BaselineTooltip" timeline = '#timelineTooltip'></e-gantt-tooltipsettings>
+                    <e-gantt-tooltipsettings showTooltip="true" taskbar="#TaskbarTooltip" baseline="#BaselineTooltip"
+                        timeline='#timelineTooltip'></e-gantt-tooltipsettings>
                     <e-gantt-labelSettings leftLabel="TaskName" rightLabel="ResourceId"></e-gantt-labelSettings>
                     <e-gantt-splittersettings columnIndex="2"></e-gantt-splittersettings>
                 </ejs-gantt>
@@ -36,178 +39,190 @@
     </div>
 
     <script type="text/x-template" id="TaskbarTooltip">
-        <table>
-            ${if(ganttProperties.resourceNames)}
-            <tr>
-                <td rowspan="3" style="padding:3px"><img src="../images/Gantt/${ganttProperties.resourceNames}.png" height="40px" /></td>
-                <td style="padding:3px">Task done By:</td>
-                <td style="padding:3px">${ganttProperties.resourceNames}</td>
-            </tr>
-            ${/if}
-            <tr>
-                <td style="padding:3px">Starts On:</td>
-                <td style="padding:3px">${this.getFormatedDate(StartDate)}</td>
-            </tr>
-            <tr>
-                <td style="padding:3px">Ends On:</td>
-                <td style="padding:3px">${this.getFormatedDate(EndDate)}</td>
-            </tr>
-        </table>
-    </script>
+            <table>
+                ${if(ganttProperties.resourceNames)}
+                <tr>
+                    <td rowspan="3" style="padding:3px"><img src="../images/Gantt/${ganttProperties.resourceNames}.png" height="40px" /></td>
+                    <td style="padding:3px">Task done By:</td>
+                    <td style="padding:3px">${ganttProperties.resourceNames}</td>
+                </tr>
+                ${/if}
+                <tr>
+                    <td style="padding:3px">Starts On:</td>
+                    <td style="padding:3px">${this.getFormatedDate(StartDate)}</td>
+                </tr>
+                <tr>
+                    <td style="padding:3px">Ends On:</td>
+                    <td style="padding:3px">${this.getFormatedDate(EndDate)}</td>
+                </tr>
+            </table>
+        </script>
     <script type="text/x-template" id="BaselineTooltip">
-        <table>
-            <tbody>
-                <tr>
-                    <td>Planned Start Date: </td>
-                    <td>${this.getFormatedDate(BaselineStartDate)}</td>
-                </tr>
-                <tr>
-                    <td>Planned End Date: </td>
-                    <td>${this.getFormatedDate(BaselineEndDate)}</td>
-                </tr>
-                <tr>
-                    <td>Current Start Date: </td>
-                    <td>${this.getFormatedDate(StartDate)}</td>
-                </tr>
-                <tr>
-                    <td>Current End Date: </td>
-                    <td>${this.getFormatedDate(EndDate)}</td>
-                </tr>
-            </tbody>
-        </table>
-    </script>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Planned Start Date: </td>
+                        <td>${this.getFormatedDate(BaselineStartDate)}</td>
+                    </tr>
+                    <tr>
+                        <td>Planned End Date: </td>
+                        <td>${this.getFormatedDate(BaselineEndDate)}</td>
+                    </tr>
+                    <tr>
+                        <td>Current Start Date: </td>
+                        <td>${this.getFormatedDate(StartDate)}</td>
+                    </tr>
+                    <tr>
+                        <td>Current End Date: </td>
+                        <td>${this.getFormatedDate(EndDate)}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </script>
     <script type="text/x-template" id="timelineTooltip">
-        ${if(tier == 'topTier')} 
-            <div>${topTierTooltip(value, date, tier)}</div> 
-        ${/if}
-        ${if(tier == 'bottomTier')} 
-            <div>${bottomTierTooltip(date, tier)}</div> 
-        ${/if}
-    </script>
+            ${if(tier == 'topTier')} 
+                <div>${topTierTooltip(value, date, tier)}</div> 
+            ${/if}
+            ${if(tier == 'bottomTier')} 
+                <div>${bottomTierTooltip(date, tier)}</div> 
+            ${/if}
+        </script>
 
     <script>
         function getTooltipData(startDate, endDate, tier) {
-        var gantt = document.getElementsByClassName('e-gantt')[0].ej2_instances[0];
-        var activeTasks;
-        if (tier === 'topTier') {
-            activeTasks = gantt.currentViewData.filter(function(task) {
-                var taskStart = new Date(task.StartDate);
-                var taskEnd = new Date(task.EndDate);
-                taskStart.setHours(0, 0, 0, 0);
-                taskEnd.setHours(0, 0, 0, 0);
-                return taskStart >= startDate && taskEnd <= endDate;
-            });    
-        }
-        else {
-            activeTasks = gantt.currentViewData.filter(function(task) {
-                var taskStart = new Date(task.StartDate);
-                var taskEnd = new Date(task.EndDate);
-                taskStart.setHours(0, 0, 0, 0);
-                taskEnd.setHours(0, 0, 0, 0);
-                return taskStart.getTime() === startDate.getTime() && taskEnd.getTime() === endDate.getTime();
+            var gantt = document.getElementsByClassName('e-gantt')[0].ej2_instances[0];
+            var activeTasks;
+            if (tier === 'topTier') {
+                activeTasks = gantt.currentViewData.filter(function (task) {
+                    var taskStart = new Date(task.StartDate);
+                    var taskEnd = new Date(task.EndDate);
+                    taskStart.setHours(0, 0, 0, 0);
+                    taskEnd.setHours(0, 0, 0, 0);
+                    return taskStart >= startDate && taskEnd <= endDate;
+                });
+            }
+            else {
+                activeTasks = gantt.currentViewData.filter(function (task) {
+                    var taskStart = new Date(task.StartDate);
+                    var taskEnd = new Date(task.EndDate);
+                    taskStart.setHours(0, 0, 0, 0);
+                    taskEnd.setHours(0, 0, 0, 0);
+                    return taskStart.getTime() === startDate.getTime() && taskEnd.getTime() === endDate.getTime();
+                });
+            }
+            var milestones = activeTasks.filter(function (task) {
+                return task.Duration === 0;
             });
+            var totalProgress = activeTasks.reduce(function (acc, task) {
+                return acc + (task.Progress ? task.Progress : 0);
+            }, 0);
+            var overallProgress = (activeTasks.length > 0) ? (totalProgress / activeTasks.length).toFixed(2) : 0;
+            return {
+                activeTasks: activeTasks.length,
+                milestones: milestones.length,
+                overallProgress: overallProgress
+            };
         }
-        var milestones = activeTasks.filter(function(task) {
-            return task.Duration === 0;
-        });
-        var totalProgress = activeTasks.reduce(function(acc, task) {
-            return acc + (task.Progress ? task.Progress : 0);
-        }, 0);    
-        var overallProgress = (activeTasks.length > 0) ? (totalProgress / activeTasks.length).toFixed(2) : 0;
-        return {
-            activeTasks: activeTasks.length,
-            milestones: milestones.length,
-            overallProgress: overallProgress
-        };
-    }
-    function topTierTooltip(value, date, tier) {
-        var gantt = document.getElementsByClassName('e-gantt')[0].ej2_instances[0];
-        var endDate;
-        var startdate = new Date(date);
-        if (gantt.timelineSettings.topTier.unit) {
-            endDate = new Date(startdate.getTime());
-            endDate.setDate(startdate.getDate() + 6);
+        function topTierTooltip(value, date, tier) {
+            var gantt = document.getElementsByClassName('e-gantt')[0].ej2_instances[0];
+            var endDate;
+            var startdate = new Date(date);
+            if (gantt.timelineSettings.topTier.unit) {
+                endDate = new Date(startdate.getTime());
+                endDate.setDate(startdate.getDate() + 6);
+            }
+            var data = getTooltipData(startdate, endDate, tier);
+            return generateTooltipMarkup(value, data);
         }
-        var data = getTooltipData(startdate, endDate,tier);
-        return generateTooltipMarkup(value, data);  
-    }
-    function generateTooltipMarkup(label, tooltipData) {
-                var themeIsDark = document.body.classList.contains('tailwind3-dark') ||
+        function generateTooltipMarkup(label, tooltipData) {
+            var themeIsDark = document.body.classList.contains('tailwind3-dark') ||
                 document.body.classList.contains('material3-dark') ||
                 document.body.classList.contains('bootstrap5.3-dark') ||
                 document.body.classList.contains('fluent2') ||
                 document.body.classList.contains('highcontrast');
 
-                var borderColor = themeIsDark ?  'black' : 'white';
-                return (
-                    '<div style="padding: 5px;">' +
-                    '<div style="padding-bottom: 9px; text-align: center; border-bottom: 2px solid ' + borderColor + ';">' +
-                    '<span style="font-weight: bold; font-size: 14px;">' + label + '</span>' +
-                    '</div>' +
-                    '<div style="display: flex; padding-bottom: 5px; padding-top: 9px">' +
-                    '<span style="font-weight: bold;">Active Tasks:</span>' +
-                    '<span style="padding-left: 2px;">' + tooltipData.activeTasks + '</span>' +
-                    '</div>' +
-                    '<div style="display: flex; padding-bottom: 5px;">' +
-                    '<span style="font-weight: bold;">Milestones:</span>' +
-                    '<span style="padding-left: 2px;">' + tooltipData.milestones + '</span>' +
-                    '</div>' +
-                    '<div style="display: flex; padding-bottom: 5px;">' +
-                    '<span style="font-weight: bold;">Overall Progress:</span>' +
-                    '<span style="padding-left: 2px;">' + tooltipData.overallProgress + '</span>' +
-                    '</div>' +
-                    '</div>'
-                );
-    }
-    function bottomTierTooltip(date, tier) {
-        var gantt = document.getElementsByClassName('e-gantt')[0].ej2_instances[0];
-        var startdate = new Date(date);
-        if (gantt.timelineSettings.bottomTier.unit) {
-            endDate = new Date(startdate.getTime());
+            var borderColor = themeIsDark ? 'black' : 'white';
+            return (
+                '<div style="padding: 5px;">' +
+                '<div style="padding-bottom: 9px; text-align: center; border-bottom: 2px solid ' + borderColor + ';">' +
+                '<span style="font-weight: bold; font-size: 14px;">' + label + '</span>' +
+                '</div>' +
+                '<div style="display: flex; padding-bottom: 5px; padding-top: 9px">' +
+                '<span style="font-weight: bold;">Active Tasks:</span>' +
+                '<span style="padding-left: 2px;">' + tooltipData.activeTasks + '</span>' +
+                '</div>' +
+                '<div style="display: flex; padding-bottom: 5px;">' +
+                '<span style="font-weight: bold;">Milestones:</span>' +
+                '<span style="padding-left: 2px;">' + tooltipData.milestones + '</span>' +
+                '</div>' +
+                '<div style="display: flex; padding-bottom: 5px;">' +
+                '<span style="font-weight: bold;">Overall Progress:</span>' +
+                '<span style="padding-left: 2px;">' + tooltipData.overallProgress + '</span>' +
+                '</div>' +
+                '</div>'
+            );
         }
-        var data = getTooltipData(startdate, endDate,tier);
-        return generateTooltipMarkup(date, data);
-    }
+        function bottomTierTooltip(date, tier) {
+            var gantt = document.getElementsByClassName('e-gantt')[0].ej2_instances[0];
+            var startdate = new Date(date);
+            if (gantt.timelineSettings.bottomTier.unit) {
+                endDate = new Date(startdate.getTime());
+            }
+            var data = getTooltipData(startdate, endDate, tier);
+            return generateTooltipMarkup(date, data);
+        }
 
-</script>
+    </script>
 
 
 }
 
-@section ActionDescription{
+@section ActionDescription {
     <div id="action-description">
         <p>
-            This sample explains the way of rendering tooltip template for taskbar, timeline and baseline by mapping template
-            elements to the property of taskbar, timeline and baseline in <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.gantt.gantt.html#Syncfusion_EJ2_Gantt_Gantt_TooltipSettings">tooltipSettings</a>.
+            This sample explains the way of rendering tooltip template for taskbar, timeline and baseline by mapping
+            template
+            elements to the property of taskbar, timeline and baseline in <a target="_blank"
+                href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.gantt.gantt.html#Syncfusion_EJ2_Gantt_Gantt_TooltipSettings">tooltipSettings</a>.
         </p>
     </div>
 }
-@section Description{
+@section Description {
 
     <div id="description">
         <p>
-            Tooltip can be enabled or disabled using <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Gantt.GanttTooltipSettings.html#Syncfusion_EJ2_Gantt_GanttTooltipSettings_ShowTooltip">tooltipSettings.showTooltip</a> property. In this demo, the
+            Tooltip can be enabled or disabled using <a target="_blank"
+                href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Gantt.GanttTooltipSettings.html#Syncfusion_EJ2_Gantt_GanttTooltipSettings_ShowTooltip">tooltipSettings.showTooltip</a>
+            property. In this demo, the
             tooltip template is rendered for <code>taskbar</code>,
-             <code>taskbar</code> and <code>baseline</code> using the
-            <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Gantt.GanttTooltipSettings.html#Syncfusion_EJ2_Gantt_GanttTooltipSettings_Taskbar">tooltipSettings.taskbar</a>, 
-            <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Gantt.GanttTooltipSettings.html#Syncfusion_EJ2_Gantt_GanttTooltipSettings_Timeline">tooltipSettings.timeline</a>
-             and <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Gantt.GanttTooltipSettings.html#Syncfusion_EJ2_Gantt_GanttTooltipSettings_Baseline">tooltipSettings.baseline</a> properties.
+            <code>taskbar</code> and <code>baseline</code> using the
+            <a target="_blank"
+                href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Gantt.GanttTooltipSettings.html#Syncfusion_EJ2_Gantt_GanttTooltipSettings_Taskbar">tooltipSettings.taskbar</a>,
+            <a target="_blank"
+                href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Gantt.GanttTooltipSettings.html#Syncfusion_EJ2_Gantt_GanttTooltipSettings_Timeline">tooltipSettings.timeline</a>
+            and <a target="_blank"
+                href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Gantt.GanttTooltipSettings.html#Syncfusion_EJ2_Gantt_GanttTooltipSettings_Baseline">tooltipSettings.baseline</a>
+            properties.
         </p>
         <p>
             The baseline feature enables the user to view the deviation between the planned dates and the actual dates of
-            the tasks in a project. Baselines can be enabled in Gantt Chart by enabling the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.gantt.gantt.html#Syncfusion_EJ2_Gantt_Gantt_RenderBaseline">renderBaseline</a>
+            the tasks in a project. Baselines can be enabled in Gantt Chart by enabling the <a target="_blank"
+                href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.gantt.gantt.html#Syncfusion_EJ2_Gantt_Gantt_RenderBaseline">renderBaseline</a>
             property along
             with mapping the data source values for <code>baselineStartDate</code> and <code>baselineEndDate</code>
             properties.
         </p>
+        <br>
+    <p>More information on the Essential<sup>®</sup> JS2 Gantt Chart can be found in this <a target="_blank" href="https://ej2.syncfusion.com/documentation/gantt/tooltip#enable-tooltip">documentation section</a>.</p>
     </div>
 }
-@section Meta{
-    <meta name="description" content="This example demonstrates the Tooltip Template in ASP.NET Core Gantt control. Explore here for more details." />
+@section Meta {
+    <meta name="description"
+        content="This example demonstrates the Tooltip Template in ASP.NET Core Gantt control. Explore here for more details." />
 }
-@section Title{
+@section Title {
     <title>ASP.NET Core Gantt Tooltip Template Example - Syncfusion Demos </title>
 }
-@section Header{
+@section Header {
     <h1 class='sb-sample-text'>Example of Tooltip Template in ASP.NET Core Gantt Control</h1>
 }

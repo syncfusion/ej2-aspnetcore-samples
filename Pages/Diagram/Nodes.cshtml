@@ -137,24 +137,36 @@
                 } else {
                     node.constraints &= ~ej.diagrams.NodeConstraints.AspectRatio;
                 }
-                diagram.dataBind();
             }
-
+            diagram.dataBind();
         }
 
         function lockChanged(args) {
             var label = "Lock";
             var diagram = document.getElementById("container").ej2_instances[0];
+            // Toggling constraints for nodes
             for (var i = 0; i < diagram.nodes.length; i++) {
                 node = diagram.nodes[i];
                 if (args.checked) {
-                    node.constraints &= ~(ej.diagrams.NodeConstraints.Resize | ej.diagrams.NodeConstraints.Rotate | ej.diagrams.NodeConstraints.Drag | ej.diagrams.NodeConstraints.Delete);
+                    node.constraints &= ~(ej.diagrams.NodeConstraints.Resize | ej.diagrams.NodeConstraints.Rotate | ej.diagrams.NodeConstraints.Drag);
                     node.constraints |= ej.diagrams.NodeConstraints.ReadOnly;
                 } else {
-                    node.constraints = ej.diagrams.NodeConstraints.Default;
+                    node.constraints &= ~ej.diagrams.NodeConstraints.ReadOnly;
+                    node.constraints |= (ej.diagrams.NodeConstraints.Resize | ej.diagrams.NodeConstraints.Rotate | ej.diagrams.NodeConstraints.Drag);
                 }
-                diagram.dataBind();
             }
+            // Toggling constraints for connectors
+            for (var i = 0; i < diagram.connectors.length; i++) {
+                connector = diagram.connectors[i];
+                if (args.checked) {
+                    connector.constraints &= ~(ej.diagrams.ConnectorConstraints.DragSourceEnd | ej.diagrams.ConnectorConstraints.DragTargetEnd | ej.diagrams.ConnectorConstraints.Drag | ej.diagrams.ConnectorConstraints.Delete);
+                    connector.constraints |= ej.diagrams.ConnectorConstraints.ReadOnly;
+                } else {
+                    connector.constraints &= ~ej.diagrams.ConnectorConstraints.ReadOnly;
+                    connector.constraints |= (ej.diagrams.ConnectorConstraints.DragSourceEnd | ej.diagrams.ConnectorConstraints.DragTargetEnd | ej.diagrams.ConnectorConstraints.Drag | ej.diagrams.ConnectorConstraints.Delete);
+                }
+            }
+            diagram.dataBind();
         }
 
         function applyStyle(node, width, array, con, type) {

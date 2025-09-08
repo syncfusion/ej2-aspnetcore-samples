@@ -9,6 +9,7 @@ var beautify = require('json-beautify');
 var configJson = JSON.parse(fs.readFileSync('./config.json'));
 var fsPath = require('path');
 var shelljs = require('shelljs');
+const { title } = require("process");
 require("@syncfusion/ej2-staging");
 
 gulp.task('generate-searchlist', function (done) {
@@ -150,6 +151,84 @@ gulp.task('desValidation', function (done) {
     done();
 });
 
+
+function adjustTitle(componentName, featureName) {
+    const shortTemplates = [
+        `Learn about ${featureName} in ASP.NET Core ${componentName} - Syncfusion Demos`,
+        `${featureName} feature in ASP.NET Core ${componentName} - Try it now!`
+    ];
+
+    const longTemplates = [
+        `ASP.NET Core ${componentName} ${featureName} - Syncfusion`,
+        `${featureName} Example using ASP.NET Core ${componentName} - Syncfusion`
+    ];
+
+    const base = `ASP.NET Core ${componentName} ${featureName} Example - Syncfusion Demos`;
+    const baseLength = base.length;
+
+    if (baseLength < 50) {
+        for (let template of shortTemplates) {
+            if (template.length >= 50 && template.length <= 70) {
+                return template;
+            }
+        }
+    } else if (baseLength > 70) {
+        for (let template of longTemplates) {
+            if (template.length >= 50 && template.length <= 70) {
+                return template;
+            }
+        }
+    } else {
+        return base;
+    }
+    // If no suitable template found, return the base title with adjustments
+    return base.length > 70 ? base.substring(0, 67) + '...' : base.padEnd(50, '.');
+}
+
+function adjustDescription(featureName, metaControlCategory) {
+    const shortTemplates = [
+        `Explore the ${featureName} in ASP.NET Core ${metaControlCategory}. Learn how it helps improve your app's functionality.`,
+        `This example shows how ${featureName} works in ASP.NET Core ${metaControlCategory}. Understand its purpose and usage.`,
+        `Discover the ${featureName} feature in ASP.NET Core ${metaControlCategory}. Learn how to use it in real-world scenarios.`,
+        `Learn how to use ${featureName} in ASP.NET Core ${metaControlCategory}. This guide helps you integrate it effectively.`,
+        `Understand the ${featureName} in ASP.NET Core ${metaControlCategory}. See how it enhances your development workflow.`,
+        `Explore ${featureName} in ASP.NET Core ${metaControlCategory}. Learn how to configure and apply it in your projects.`
+    ];
+
+    const longTemplates = [
+        `This example demonstrates the ${featureName} in ASP.NET Core ${metaControlCategory}. Discover its capabilities, integration steps, and customization options.`,
+        `Explore the ${featureName} feature in ASP.NET Core ${metaControlCategory}. Learn how to use it effectively and integrate it into your application with best practices.`,
+        `Understand how ${featureName} works in ASP.NET Core ${metaControlCategory}. This guide covers usage, configuration, and advanced customization.`,
+        `This demo shows how to use ${featureName} in ASP.NET Core ${metaControlCategory}, including setup, configuration, and real-world implementation tips.`,
+        `Discover the benefits of using ${featureName} in ASP.NET Core ${metaControlCategory}. Learn how to apply it efficiently in your business apps.`,
+        `Explore ${featureName} in ASP.NET Core ${metaControlCategory}. This example covers integration, customization, and practical usage scenarios.`
+    ];
+    const base = `This example demonstrates the ${featureName} feature in ASP.NET Core ${metaControlCategory}.Learn how it works and how to integrate it into your application.`
+    const baseLength = base.length;
+    if (baseLength < 150) {
+        for (let template of shortTemplates) {
+            if (template.length >= 150 && template.length <= 160) 
+                return template;
+        }
+    } else if (baseLength > 160) {
+        for (let template of longTemplates) {
+            if (template.length >= 150 && template.length <= 160) 
+                return template;
+        }
+    }
+    if(baseLength < 146 && baseLength > 135){
+        return base + ' Explore here.';
+    }
+    if (baseLength < 150 && baseLength > 145) {
+        return base + 'Check now.'; 
+    } 
+    if (baseLength > 160) {
+        return base.substring(0, 157) + '...'; 
+    }
+    return base;
+}
+
+
 gulp.task('title-section', function (done) {
     var samplelists = config.window.samplesList;
     var errorFileList = [];
@@ -181,7 +260,10 @@ gulp.task('title-section', function (done) {
                     errorFileList.push(fsPath.basename(path));
                 }
             }      
-            let title = `ASP.NET Core ${componentName} ${featureName} Example - Syncfusion Demos `;
+            var title = adjustTitle(componentName, featureName);
+            if(title.length > 70 || title.length < 50) {
+                throw new Error(`error: The title for ${featureName} in ${componentName} is not within the recommended length. Please adjust it.`);
+            }
             if (typeof content === 'string') {
             if ((/@section Title\s?{/).test(content)) {
                 content = content.replace(/@section Title+{([^}]*)}/g, `@section Title{
@@ -193,7 +275,10 @@ gulp.task('title-section', function (done) {
              }`;
             }
             
-            let description = `This example demonstrates the ${featureName} in ASP.NET Core ${metaControlCategory}. Explore here for more details.`;
+            var description = adjustDescription(featureName, metaControlCategory);
+            if(description.length > 160 || description.length < 150) {
+                throw new Error(`error: The description for ${featureName} in ${componentName} is not within the recommended length. Please adjust it.`);
+            }
             if ((/@section Meta\s?{/).test(content)) {
                 content = content.replace(/@section Meta+{([^}]*)}/g, `@section Meta{
                     <meta name="description" content="${description}"/>
@@ -301,10 +386,5 @@ gulp.task('code-leaks-analysis', function (done) {
     else {
         throw "Please clear the Git Leaks reported issues";
     }
-    done();
-});
-
-gulp.task('file-format-build', function (done) {
-    shelljs.exec('Word.bat && PDF.bat && Presentation.bat && Excel.bat')
     done();
 });

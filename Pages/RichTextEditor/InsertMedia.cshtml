@@ -1,9 +1,24 @@
-@page
+﻿@page
 
 @using Syncfusion.EJ2
+@using Syncfusion.EJ2.RichTextEditor
+
 
 @{
+    string hostUrl = "http://localhost:62928/";
     var items = new[] { "Bold", "Italic", "Underline", "|", "Formats", "Alignments", "OrderedList", "UnorderedList", "|", "CreateLink", "Image", "Audio", "Video", "|", "SourceCode", "Undo", "Redo" };
+    RichTextEditorVideoSettings InsertVideoSettings = new RichTextEditorVideoSettings
+    {
+        SaveUrl = hostUrl + "api/RichTextEditor/SaveFile",
+        RemoveUrl = hostUrl + "api/RichTextEditor/DeleteFile",
+        Path = hostUrl + "RichTextEditor/"
+    };
+    RichTextEditorAudioSettings InsertAudioSettings = new RichTextEditorAudioSettings
+    {
+        SaveUrl = hostUrl + "api/RichTextEditor/SaveFile",
+        RemoveUrl = hostUrl + "api/RichTextEditor/DeleteFile",
+        Path = hostUrl + "RichTextEditor/"
+    };
 }
 
 @section ControlsSection{
@@ -24,6 +39,10 @@
                     <p><audio controls><source src="https://cdn.syncfusion.com/ej2/richtexteditor-resources/RTE-Audio.wav" type="audio/mp3" /></audio></p>
                 </e-content-template>
                 <e-richtexteditor-toolbarsettings items="@items"></e-richtexteditor-toolbarsettings>
+                <e-richtexteditor-insertvideosettings saveUrl="@InsertVideoSettings.SaveUrl" removeUrl="@InsertVideoSettings.RemoveUrl"
+                                                      path="@InsertVideoSettings.Path"></e-richtexteditor-insertvideosettings>
+                <e-richtexteditor-insertaudiosettings saveUrl="@InsertAudioSettings.SaveUrl" removeUrl="@InsertAudioSettings.RemoveUrl"
+                                                      path="@InsertAudioSettings.Path"></e-richtexteditor-insertaudiosettings>
             </ejs-richtexteditor>
         </div>
     </div>
@@ -40,7 +59,7 @@
 
 @section ActionDescription{
     <div id="action-description">
-        <p>This sample demonstrates the option to insert the media into the Rich Text Editor content. Click the audio and video button from the toolbar item to insert the media.</p>
+        <p>This sample demonstrates the option to insert the media into the Rich Text Editor content. Click the audio and video button from the toolbar item to insert the media, or drag and drop audio and video files directly into the editor.</p>
     </div>
 }
 

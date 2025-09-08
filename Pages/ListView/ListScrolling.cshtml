@@ -61,9 +61,10 @@
 }
 
 <script>
-    var isDevice = ej.base.Browser.isDevice;
+    
     var isPrevented = false;
     function ActionComplete(args) {
+        var isDevice = ej.base.Browser.isDevice;
         var listObj_1 = document.getElementById("list-scrolling-down").ej2_instances[0];
         if (!isDevice) {
             var foodData = @Html.Raw(Json.Serialize(@Model.foodData));
@@ -103,7 +104,7 @@ var foodItems = [
                     newData.push({ text: foodItems[i].text, id: newId, price: foodItems[i].price, src: foodItems[i].src, description: foodItems[i].description, type: foodItems[i].type, rating: foodItems[i].rating });
                 }
                 listObj_1.addItem(newData);
-                if (!isDevice) {
+                if (!ej.base.Browser.isDevice) {
                     for (var i = 0; i < newData.length; i++) {
                         let ratingObj = new ejs.inputs.Rating({
                             value: newData[i].rating,

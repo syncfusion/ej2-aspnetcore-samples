@@ -36,7 +36,7 @@ namespace CoreDemos
             theme.Add(new ThemeList { Id = "fluent", Theme = "Fluent", Index = 1 });
             theme.Add(new ThemeList { Id = "fluent2", Theme = "Fluent 2", Index = 2 });
             theme.Add(new ThemeList { Id = "bootstrap5.3", Theme = "Bootstrap 5", Index = 3 });
-            theme.Add(new ThemeList { Id = "tailwind", Theme = "Tailwind CSS", Index = 4 });
+            theme.Add(new ThemeList { Id = "tailwind3", Theme = "Tailwind CSS", Index = 4 });
             theme.Add(new ThemeList { Id = "highcontrast", Theme = "High Contrast", Index = 5 });
             theme.Add(new ThemeList { Id = "fluent2-highcontrast", Theme = "Fluent 2 High Contrast", Index = 6 });
 #endif

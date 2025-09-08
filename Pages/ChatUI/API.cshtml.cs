@@ -18,6 +18,9 @@ namespace EJ2CoreSampleBrowser.Pages.ChatUI
     {
         public List<object> TimeStampFormatOptions { get; set; }
         public List<object> TypingUserOptions { get; set; }
+        public List<object> MentionUserOptions { get; set; }
+        public string[] MentionUserValues { get; set; }
+        public List<ChatUIUser> MentionUsers { get; set; }
         public object DDBListValue = "MM/dd hh:mm a";
         public List<ChatUIMessage> CommunityMessagedata { get; set; }
         public List<ToolbarItemModel> MessageToolbarItems { get; set; }
@@ -47,6 +50,30 @@ namespace EJ2CoreSampleBrowser.Pages.ChatUI
                 new { text = "Charlie", value = "Charlie" },
                 new { text = "Jordan", value = "Jordan"}
             };
+
+            
+            MentionUserOptions = new List<object>
+            {
+                 new { text = "Alice Brown", value = "Alice Brown" },
+                 new { text = "Michale Suyama", value = "Michale Suyama" },
+                 new { text = "Charlie", value = "Charlie" },
+                 new { text = "Janet", value = "Janet" },
+                 new { text = "Jordan Peele", value = "Jordan Peele" }
+            };
+
+            MentionUserValues = new string[] { "Alice Brown", "Michale Suyama", "Charlie", "Janet", "Jordan Peele" };
+
+            var userModels = new ChatMessagesData().GetUniqueMentionUsers();
+
+            MentionUsers = userModels.Select(u => new ChatUIUser
+            {
+                Id = u.id,
+                User = u.user,
+                AvatarUrl = u.avatarUrl,
+                AvatarBgColor = u.avatarBgColor,
+                StatusIconCss = u.statusIconCss
+            }).ToList();
+
         }
 
         public class ToolbarItemModel

@@ -54,21 +54,22 @@
     var modifiedDataA = { addedRecords: [], deletedRecords: [], changedRecords: [] };
     var modifiedDataB = { addedRecords: [], deletedRecords: [], changedRecords: [] };
 
-    var dataA = new ej.data.DataManager({
-        json: @Html.Raw(JsonConvert.SerializeObject(Model.GroupA))
-    });
-
-    var dataB = new ej.data.DataManager({
-        json: @Html.Raw(JsonConvert.SerializeObject(Model.GroupB))
-    });
+    var dataA; 
+    var dataB;
 
     function groupACreated() {
+        dataA = new ej.data.DataManager({
+            json: @Html.Raw(JsonConvert.SerializeObject(Model.GroupA))
+       });
         listbox1 = ej.base.getComponent(document.querySelector('#listbox1'), 'listbox');
         listbox1.dataSource = dataA;
         listbox1.dataBind();
     }
 
     function groupBCreated() {
+        dataB = new ej.data.DataManager({
+            json: @Html.Raw(JsonConvert.SerializeObject(Model.GroupB))
+        });
         listbox2 = ej.base.getComponent(document.querySelector('#listbox2'), 'listbox');
         listbox2.dataSource = dataB;
         listbox2.dataBind();

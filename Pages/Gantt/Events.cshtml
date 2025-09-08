@@ -2,35 +2,42 @@
 @using EJ2CoreSampleBrowser.Models;
 @using Syncfusion.EJ2.Gantt;
 
-@section ControlsSection{
+@section ControlsSection {
 
     <div class="col-lg-9 control-section">
         <div class="row">
             <div class="col-md-12">
-                <ejs-gantt id='Events' dataSource="@GanttData.ProjectNewData()" height="450px" highlightWeekends="true" allowSelection="true" treeColumnIndex="1"
-                           allowReordering="true" allowResizing="true" allowSorting="true" enableContextMenu="true" showColumnMenu="true"
-                           toolbar="@(new List<string>() { "Add", "Edit", "Update", "Delete", "Cancel", "ExpandAll", "CollapseAll", "Search" })"
-                           projectStartDate="03/24/2024" projectEndDate="07/06/2024" load="load" dataBound="ganttdataBound" created="created" toolbarClick="toolbarClick"
-                           beforeTooltipRender="beforeTooltipRender" actionBegin="actionBegin" actionComplete="actionComplete" cellEdit="cellEdit" endEdit="endEdit"
-                           taskbarEditing="taskbarEditing" taskbarEdited="taskbarEdited" rowSelecting="rowSelecting" rowSelected="rowSelected" rowDeselecting="rowDeselecting"
-                           rowDeselected="rowDeselected" columnDragStart="columnDragStart" columnDrag="columnDrag" columnDrop="columnDrop" expanding="expanding" expanded="expanded"
-                           collapsing="collapsing" collapsed="collapsed" columnMenuClick="columnMenuClick" columnMenuOpen="columnMenuOpen" contextMenuClick="contextMenuClick"
-                           contextMenuOpen="contextMenuOpen" resizeStart="resizeStart" resizeStop="resizeStop" resizing="resizing" splitterResizeStart="splitterResizeStart"
-                           splitterResizing="splitterResizing" splitterResized="splitterResized" recordDoubleClick="recordDoubleClick" onTaskbarClick="onTaskbarClick">
+                <ejs-gantt id='Events' dataSource="@GanttData.ProjectNewData()" height="650px" rowHeight="46"
+                    taskbarHeight="25" highlightWeekends="true" allowSelection="true" treeColumnIndex="1"
+                    allowReordering="true" allowResizing="true" allowSorting="true" enableContextMenu="true"
+                    showColumnMenu="true"
+                    toolbar="@(new List<string>() { "Add", "Edit", "Update", "Delete", "Cancel", "ExpandAll", "CollapseAll", "Search" })"
+                    projectStartDate="03/26/2025" projectEndDate="07/20/2025" load="load" dataBound="ganttdataBound"
+                    created="created" toolbarClick="toolbarClick" beforeTooltipRender="beforeTooltipRender"
+                    actionBegin="actionBegin" actionComplete="actionComplete" cellEdit="cellEdit" endEdit="endEdit"
+                    taskbarEditing="taskbarEditing" taskbarEdited="taskbarEdited" rowSelecting="rowSelecting"
+                    rowSelected="rowSelected" rowDeselecting="rowDeselecting" rowDeselected="rowDeselected"
+                    columnDragStart="columnDragStart" columnDrag="columnDrag" columnDrop="columnDrop" expanding="expanding"
+                    expanded="expanded" collapsing="collapsing" collapsed="collapsed" columnMenuClick="columnMenuClick"
+                    columnMenuOpen="columnMenuOpen" contextMenuClick="contextMenuClick" contextMenuOpen="contextMenuOpen"
+                    resizeStart="resizeStart" resizeStop="resizeStop" resizing="resizing"
+                    splitterResizeStart="splitterResizeStart" splitterResizing="splitterResizing"
+                    splitterResized="splitterResized" recordDoubleClick="recordDoubleClick" onTaskbarClick="onTaskbarClick">
 
-                    <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate"
-                                        endDate="EndDate" duration="Duration" progress="Progress" dependency="Predecessor" child="SubTasks">
+                    <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate" endDate="EndDate"
+                        duration="Duration" progress="Progress" dependency="Predecessor" parentID="ParentID">
                     </e-gantt-taskfields>
                     <e-gantt-columns>
-                        <e-gantt-column field="TaskId" width="80"></e-gantt-column>
+                        <e-gantt-column field="TaskId" width="100"></e-gantt-column>
                         <e-gantt-column field="TaskName" width="250"></e-gantt-column>
                         <e-gantt-column field="StartDate"></e-gantt-column>
                         <e-gantt-column field="EndDate"></e-gantt-column>
                         <e-gantt-column field="Duration"></e-gantt-column>
-                        <e-gantt-column field="Predecessor"></e-gantt-column>
+                        <e-gantt-column field="Predecessor" width="190"></e-gantt-column>
                         <e-gantt-column field="Progress"></e-gantt-column>
                     </e-gantt-columns>
-                    <e-gantt-editsettings allowAdding="true" allowEditing="true" allowDeleting="true" allowTaskbarEditing="true"></e-gantt-editsettings>
+                    <e-gantt-editsettings allowAdding="true" allowEditing="true" allowDeleting="true"
+                        allowTaskbarEditing="true"></e-gantt-editsettings>
                     <e-gantt-labelSettings leftLabel="TaskName"></e-gantt-labelSettings>
                     <e-gantt-splittersettings columnIndex="2"></e-gantt-splittersettings>
                 </ejs-gantt>
@@ -173,34 +180,43 @@
 
 }
 
-@section ActionDescription{
+@section ActionDescription {
     <div id="action-description">
         <p>
-            This sample demonstrates all the events that occur on all the Gantt operations with the help of Event Trace panel.
+            This sample demonstrates all the events that occur on all the Gantt operations with the help of Event Trace
+            panel.
         </p>
     </div>
 }
-@section Description{
+@section Description {
 
     <div id="description">
         <p>
-            The Gantt triggers events based on its actions. The events can be used as an extension point to perform custom operations.
+            The Gantt triggers events based on its actions. The events can be used as an extension point to perform custom
+            operations.
         </p>
         <p>
-            In this demo, perform Gantt actions such as load, created, dataBound, toolbarClick, beforeTooltipRender, actionBegin, actionComplete, cellEdit,
-            endEdit, taskbarEditing, taskbarEdited, rowSelecting, rowSelected, rowDeselecting, rowDeselected, columnDragStart, columnDrag,
-            columnDrop, expanding, expanded, collapsing, collapsed, columnMenuClick, columnMenuOpen, contextMenuClick, contextMenuOpen, resizeStart,
-            resizing, resizeStop, splitterResizeStart, splitterResizing, splitterResized, recordDoubleClick, onTaskbarClick and
+            In this demo, perform Gantt actions such as load, created, dataBound, toolbarClick, beforeTooltipRender,
+            actionBegin, actionComplete, cellEdit,
+            endEdit, taskbarEditing, taskbarEdited, rowSelecting, rowSelected, rowDeselecting, rowDeselected,
+            columnDragStart, columnDrag,
+            columnDrop, expanding, expanded, collapsing, collapsed, columnMenuClick, columnMenuOpen, contextMenuClick,
+            contextMenuOpen, resizeStart,
+            resizing, resizeStop, splitterResizeStart, splitterResizing, splitterResized, recordDoubleClick, onTaskbarClick
+            and
             see the <strong>Event Trace</strong> panel for the events emitted.
         </p>
+        <br>
+    <p>More information on the Essential<sup>®</sup> Gantt Chart can be found in this <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/gantt/getting-started#adding-gantt-component">documentation section</a>.</p>
     </div>
 }
-@section Meta{
-    <meta name="description" content="This example demonstrates the Events in ASP.NET Core Gantt control. Explore here for more details." />
+@section Meta {
+    <meta name="description"
+        content="This example demonstrates the Events in ASP.NET Core Gantt control. Explore here for more details." />
 }
-@section Title{
+@section Title {
     <title>ASP.NET Core Gantt Events Example - Syncfusion Demos </title>
 }
-@section Header{
+@section Header {
     <h1 class='sb-sample-text'>Example of Events in ASP.NET Core Gantt Control</h1>
 }

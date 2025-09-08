@@ -7,37 +7,37 @@
         <div class="row">
             <div class="col-md-12">
                 <ejs-gantt id='TaskbarTemplate' dataSource="@GanttData.TaskbarTemplateData()" dateFormat="hh:mm a"
-                           height="450px" projectStartDate="03/05/2024 06:00 PM" projectEndDate="03/05/2024 09:50 PM"
+                           height="650px" projectStartDate="03/05/2025 06:00 PM" projectEndDate="03/05/2025 09:50 PM"
                            treeColumnIndex="1" rowHeight="75" taskbarHeight="65" durationUnit="Minute"
                            taskbarTemplate="#childtask" milestoneTemplate="#milestone">
                     <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate"
                                         endDate="EndDate" dependency="Predecessor"></e-gantt-taskfields>
                     <e-gantt-columns>
-                        <e-gantt-column field="TaskId" headerText="Event Id"></e-gantt-column>
+                        <e-gantt-column field="TaskId" headerText="Event Id" width="130"></e-gantt-column>
                         <e-gantt-column field="TaskName" headerText="Event Name" width="250" clipMode="EllipsisWithTooltip"></e-gantt-column>
                         <e-gantt-column field="StartDate" headerText="Start Time"></e-gantt-column>
                         <e-gantt-column field="EndDate" headerText="End Time"></e-gantt-column>
                         <e-gantt-column field="Winner" headerText="Winner"></e-gantt-column>
                         <e-gantt-column field="Movie" headerText="Movie"></e-gantt-column>
-                        <e-gantt-column field="Performance" headerText="Moments / Performance Details"></e-gantt-column>
+                        <e-gantt-column field="Performance" headerText="Moments / Performance Details" width="250"></e-gantt-column>
                     </e-gantt-columns>
                     <e-gantt-splitterSettings columnIndex="1"></e-gantt-splitterSettings>
                     <e-gantt-dayworkingtimecollection>
                         <e-gantt-dayworkingtime from="0" to="24"></e-gantt-dayworkingtime>
                     </e-gantt-dayworkingtimecollection>
-                    <e-gantt-timelinesettings timelineUnitSize="60">
+                    <e-gantt-timelinesettings timelineUnitSize="70">
                         <e-timelinesettings-toptier unit="Hour" format="MMM dd, yyyy"></e-timelinesettings-toptier>
                         <e-timelinesettings-bottomtier unit="Minutes" count="2" format="h:mm a"></e-timelinesettings-bottomtier>
                     </e-gantt-timelinesettings>
                     <e-gantt-labelsettings leftLabel="TaskName"></e-gantt-labelsettings>
                     <e-gantt-eventmarkers>
-                        <e-gantt-eventmarker day="03/05/2024 07:09:00 PM" label="Performance"></e-gantt-eventmarker>
-                        <e-gantt-eventmarker day="03/05/2024 07:46:00 PM" label="Moments"></e-gantt-eventmarker>
-                        <e-gantt-eventmarker day="03/05/2024 07:59:00 PM" label="Performance"></e-gantt-eventmarker>
-                        <e-gantt-eventmarker day="03/05/2024 08:08:00 PM" label="Moments"></e-gantt-eventmarker>
-                        <e-gantt-eventmarker day="03/05/2024 08:24:00 PM" label="Moments"></e-gantt-eventmarker>
-                        <e-gantt-eventmarker day="03/05/2024 08:31:00 PM" label="Performance"></e-gantt-eventmarker>
-                        <e-gantt-eventmarker day="03/05/2024 08:47:00 PM" label="Moments"></e-gantt-eventmarker>
+                        <e-gantt-eventmarker day="03/05/2025 07:09:00 PM" label="Performance"></e-gantt-eventmarker>
+                        <e-gantt-eventmarker day="03/05/2025 07:46:00 PM" label="Moments"></e-gantt-eventmarker>
+                        <e-gantt-eventmarker day="03/05/2025 07:59:00 PM" label="Performance"></e-gantt-eventmarker>
+                        <e-gantt-eventmarker day="03/05/2025 08:08:00 PM" label="Moments"></e-gantt-eventmarker>
+                        <e-gantt-eventmarker day="03/05/2025 08:24:00 PM" label="Moments"></e-gantt-eventmarker>
+                        <e-gantt-eventmarker day="03/05/2025 08:31:00 PM" label="Performance"></e-gantt-eventmarker>
+                        <e-gantt-eventmarker day="03/05/2025 08:47:00 PM" label="Moments"></e-gantt-eventmarker>
                     </e-gantt-eventmarkers>
                     <e-gantt-tooltipsettings taskbar="#tooltip"></e-gantt-tooltipsettings>
                 </ejs-gantt>
@@ -97,7 +97,19 @@
                 <img class="moments" height="32" width="32" src="@Url.Content("~/scripts/Images/Gantt/moments.svg")" alt="Moments"/>
             ${else}
                 <img class="moments" height="32" width="32" src="@Url.Content("~/scripts/Images/Gantt/moments.svg")" alt="Moments"/>
-                <span class="e-task-label" style="position:absolute;top:15px;font-size:12px;text-overflow:ellipsis;height:90%;overflow:hidden;">${Performance}</span>
+                <span class="e-task-label" style="
+                    position: absolute;
+                    top: 15px;
+                    left: 40px;
+                    right: 5px;
+                    font-size: 12px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    height: 90%;
+                    line-height: 1.2;
+                ">${Performance}
+                </span>
             ${/if}
         </div>
         ${else if(TaskName == 'Oscar performance')}
@@ -106,7 +118,19 @@
                 <img class="face-mask" height="32" width="32" src="@Url.Content("~/scripts/Images/Gantt/face-mask.svg")" alt="Face Mask"/>
             ${else}
                 <img class="face-mask" height="32" width="32" src="@Url.Content("~/scripts/Images/Gantt/face-mask.svg")" alt="Face Mask"/>
-                <span class="e-task-label" style="position:absolute;top:5px;font-size:12px;text-overflow:ellipsis;height:90%;overflow:hidden;">${Performance}</span>
+                 <span class="e-task-label" style="
+                    position: absolute;
+                    top: 15px;
+                    left: 40px;
+                    right: 5px;
+                    font-size: 12px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    height: 90%;
+                    line-height: 1.2;
+                ">${Performance}
+                </span>
             ${/if}
         </div>
         ${else}
@@ -116,11 +140,41 @@
             ${else}
                 ${if(taskData.Winner && taskData.Movie)}
                     <img class="oscar" height="32" width="32" src="@Url.Content("~/scripts/Images/Gantt/oscar.svg")" alt="Oscar Medal"/>
-                    <span class="e-task-label" style="position:absolute; top:13px;font-size:14px;">${taskData.Winner}</span>
-                    <span class="e-task-label" style="position:absolute;top:33px;font-size:10px;text-overflow:ellipsis;">${taskData.Movie}</span>
+                    <span class="e-task-label" style="
+                        position:absolute;
+                        top:8px;
+                        left:40px;
+                        right:5px;
+                        font-size:14px;
+                        white-space:nowrap;
+                        overflow:hidden;
+                        text-overflow:ellipsis;
+                    ">${taskData.Winner}
+                    </span>
+                    <span class="e-task-label" style="
+                        position:absolute;
+                        top:28px;
+                        left:40px;
+                        right:5px;
+                        font-size:10px;
+                        white-space:nowrap;
+                        overflow:hidden;
+                        text-overflow:ellipsis;
+                    ">${taskData.Movie}
+                    </span>
                 ${else if(taskData.Movie)}
                     <img class="oscar" height="32" width="32" src="@Url.Content("~/scripts/Images/Gantt/oscar.svg")" alt="Oscar Medal"/>
-                    <span class="e-task-label" style="position:absolute; top:0px;font-size:12px;text-overflow:ellipsis;"></br> ${taskData.Movie} </span>
+                    <span class="e-task-label" style="
+                        position:absolute;
+                        top:15px;
+                        left:40px;
+                        right:5px;
+                        font-size:12px;
+                        white-space:nowrap;
+                        overflow:hidden;
+                        text-overflow:ellipsis;
+                    ">${taskData.Movie}
+                    </span>
                 ${else}
                     <span class="e-task-label"></span>
                 ${/if}
@@ -149,6 +203,8 @@
             This sample visualizes the complete event schedule of the 90th Academy awards.
             Taskbars are customized using template support and timeline header is customized for a better view of the data.
         </p>
+        <br>
+    <p>More information on the Essential<sup>®</sup> Gantt Chart can be found in this <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/gantt/task-scheduling">documentation section</a>.</p>
     </div>
 }
 @section Description{

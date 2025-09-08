@@ -2,15 +2,16 @@
 @using EJ2CoreSampleBrowser.Models;
 @using Syncfusion.EJ2.Gantt;
 
-@section ControlsSection{
+@section ControlsSection {
 
     <div class="col-lg-9 control-section">
         <div class="row">
             <div class="col-md-12">
-                <ejs-gantt id="KeyboardNavigations" dataSource="@GanttData.ProjectNewData()" height="450px" highlightWeekends="true" allowSelection="true" treeColumnIndex="1"
-                           toolbar="@(new List<string>() { "Search" })" projectStartDate="03/24/2024" projectEndDate="07/06/2024">
-                    <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate"
-                                        endDate="EndDate" duration="Duration" progress="Progress" dependency="Predecessor" child="SubTasks">
+                <ejs-gantt id="KeyboardNavigations" dataSource="@GanttData.ProjectNewData()" height="650px" rowHeight="46"
+                    taskbarHeight="25" highlightWeekends="true" allowSelection="true" treeColumnIndex="1"
+                    toolbar="@(new List<string>() { "Search" })" projectStartDate="03/26/2025" projectEndDate="07/20/2025">
+                    <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate" endDate="EndDate"
+                        duration="Duration" progress="Progress" dependency="Predecessor" parentID="ParentID">
                     </e-gantt-taskfields>
                     <e-gantt-columns>
                         <e-gantt-column field="TaskId" width="80"></e-gantt-column>
@@ -21,7 +22,8 @@
                         <e-gantt-column field="Predecessor"></e-gantt-column>
                         <e-gantt-column field="Progress"></e-gantt-column>
                     </e-gantt-columns>
-                    <e-gantt-editsettings allowAdding="true" allowEditing="true" allowDeleting="true"></e-gantt-editsettings>
+                    <e-gantt-editsettings allowAdding="true" allowEditing="true"
+                        allowDeleting="true"></e-gantt-editsettings>
                     <e-gantt-labelSettings leftLabel="TaskName"></e-gantt-labelSettings>
                     <e-gantt-splittersettings columnIndex="2"></e-gantt-splittersettings>
                 </ejs-gantt>
@@ -258,143 +260,147 @@
         </table>
     </div>
 }
-@section ActionDescription{
+@section ActionDescription {
     <div id="action-description">
         <p>
-            This demo showcases the keyboard shortcuts applicable on Gantt and also lists out in below descriptions, and this
+            This demo showcases the keyboard shortcuts applicable on Gantt and also lists out in below descriptions, and
+            this
             demo also explains how those applicable shortcuts interacts with Gantt actions.
         </p>
     </div>
 }
-@section Description{
+@section Description {
     <div id="description">
         <p>
-            All the Gantt actions can be controlled via keyboard keys and are availed using the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.gantt.gantt.html#Syncfusion_EJ2_Gantt_Gantt_AllowKeyboard">allowKeyboard</a>
+            All the Gantt actions can be controlled via keyboard keys and are availed using the <a target="_blank"
+                href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.gantt.gantt.html#Syncfusion_EJ2_Gantt_Gantt_AllowKeyboard">allowKeyboard</a>
             property, which is set to true by default. The applicable key combinations and their relative functionalities
             are listed below.
         </p>
         <p>
-            <table>
-                <tr>
-                    <td><b>Keys</b></td>
-                    <td><b>Description</b></td>
-                </tr>
-                <tr>
-                    <td><code>Alt + J</code></td>
-                    <td>Focus Gantt Component</td>
-                </tr>
-                <tr>
-                    <td><code>Tab / Shift + Tab</code></td>
-                    <td>Focus the next or previous element</td>
-                </tr>
-                <tr>
-                    <td><code>Home</code></td>
-                    <td>First Row Selection</td>
-                </tr>
-                <tr>
-                    <td><code>End</code></td>
-                    <td>Last Row Selection</td>
-                </tr>
-                <tr>
-                    <td><code>DownArrow</code></td>
-                    <td>Move Row Selection Down</td>
-                </tr>
-                <tr>
-                    <td><code>UpArrow</code></td>
-                    <td>Move Row Selection Up</td>
-                </tr>
-                <tr>
-                    <td><code>LeftArrow</code></td>
-                    <td>Move Cell Selection Left</td>
-                </tr>
-                <tr>
-                    <td><code>RightArrow</code></td>
-                    <td>Move Cell Selection Right</td>
-                </tr>
-                <tr>
-                    <td><code>Ctrl + UpArrow</code></td>
-                    <td>Collapse All</td>
-                </tr>
-                <tr>
-                    <td><code>Ctrl + DownArrow</code></td>
-                    <td>Expand All</td>
-                </tr>
-                <tr>
-                    <td><code>Ctrl + Shift + UpArrow</code></td>
-                    <td>Collapse Row</td>
-                </tr>
-                <tr>
-                    <td><code>Ctrl + Shift + DownArrow</code></td>
-                    <td>Expand Row</td>
-                </tr>
-                <tr>
-                    <td><code>Enter</code></td>
-                    <td>Save Request</td>
-                </tr>
-                <tr>
-                    <td><code>Esc</code></td>
-                    <td>Cancel Request</td>
-                </tr>
-                <tr>
-                    <td><code>Insert</code></td>
-                    <td>Add Record</td>
-                </tr>
-                <tr>
-                    <td><code>Ctrl + Insert</code></td>
-                    <td>Add Record By Dialog</td>
-                </tr>
-                <tr>
-                    <td><code>Ctrl + F2</code></td>
-                    <td>Edit Record By Dialog</td>
-                </tr>
-                <tr>
-                    <td><code>Delete</code></td>
-                    <td>Delete Row</td>
-                </tr>
-                <tr>
-                    <td><code>Ctrl + Shift + F</code></td>
-                    <td>Focus Search Textbox</td>
-                </tr>
-                <tr>
-                    <td><code>Shift + F5</code></td>
-                    <td>Focus Task</td>
-                </tr>
-                <tr>
-                    <td><code>Shift + DownArrow</code></td>
-                    <td>Move Cell Selection Down</td>
-                </tr>
-                <tr>
-                    <td><code>Shift + UpArrow</code></td>
-                    <td>Move Cell Selection Up</td>
-                </tr>
-                <tr>
-                    <td><code>Shift + LeftArrow</code></td>
-                    <td>Move Cell Selection Left</td>
-                </tr>
-                <tr>
-                    <td><code>Shift + RightArrow</code></td>
-                    <td>Move Cell Selection Right</td>
-                </tr>
-                <tr>
-                    <td><code>Ctrl + Z</code></td>
-                    <td>Undo Last Action</td>
-                </tr>
-                <tr>
-                    <td><code>Ctrl + Y</code></td>
-                    <td>Redo Last Action</td>
-                </tr>
-            </table>
+        <table>
+            <tr>
+                <td><b>Keys</b></td>
+                <td><b>Description</b></td>
+            </tr>
+            <tr>
+                <td><code>Alt + J</code></td>
+                <td>Focus Gantt Component</td>
+            </tr>
+            <tr>
+                <td><code>Tab / Shift + Tab</code></td>
+                <td>Focus the next or previous element</td>
+            </tr>
+            <tr>
+                <td><code>Home</code></td>
+                <td>First Row Selection</td>
+            </tr>
+            <tr>
+                <td><code>End</code></td>
+                <td>Last Row Selection</td>
+            </tr>
+            <tr>
+                <td><code>DownArrow</code></td>
+                <td>Move Row Selection Down</td>
+            </tr>
+            <tr>
+                <td><code>UpArrow</code></td>
+                <td>Move Row Selection Up</td>
+            </tr>
+            <tr>
+                <td><code>LeftArrow</code></td>
+                <td>Move Cell Selection Left</td>
+            </tr>
+            <tr>
+                <td><code>RightArrow</code></td>
+                <td>Move Cell Selection Right</td>
+            </tr>
+            <tr>
+                <td><code>Ctrl + UpArrow</code></td>
+                <td>Collapse All</td>
+            </tr>
+            <tr>
+                <td><code>Ctrl + DownArrow</code></td>
+                <td>Expand All</td>
+            </tr>
+            <tr>
+                <td><code>Ctrl + Shift + UpArrow</code></td>
+                <td>Collapse Row</td>
+            </tr>
+            <tr>
+                <td><code>Ctrl + Shift + DownArrow</code></td>
+                <td>Expand Row</td>
+            </tr>
+            <tr>
+                <td><code>Enter</code></td>
+                <td>Save Request</td>
+            </tr>
+            <tr>
+                <td><code>Esc</code></td>
+                <td>Cancel Request</td>
+            </tr>
+            <tr>
+                <td><code>Insert</code></td>
+                <td>Add Record</td>
+            </tr>
+            <tr>
+                <td><code>Ctrl + Insert</code></td>
+                <td>Add Record By Dialog</td>
+            </tr>
+            <tr>
+                <td><code>Ctrl + F2</code></td>
+                <td>Edit Record By Dialog</td>
+            </tr>
+            <tr>
+                <td><code>Delete</code></td>
+                <td>Delete Row</td>
+            </tr>
+            <tr>
+                <td><code>Ctrl + Shift + F</code></td>
+                <td>Focus Search Textbox</td>
+            </tr>
+            <tr>
+                <td><code>Shift + F5</code></td>
+                <td>Focus Task</td>
+            </tr>
+            <tr>
+                <td><code>Shift + DownArrow</code></td>
+                <td>Move Cell Selection Down</td>
+            </tr>
+            <tr>
+                <td><code>Shift + UpArrow</code></td>
+                <td>Move Cell Selection Up</td>
+            </tr>
+            <tr>
+                <td><code>Shift + LeftArrow</code></td>
+                <td>Move Cell Selection Left</td>
+            </tr>
+            <tr>
+                <td><code>Shift + RightArrow</code></td>
+                <td>Move Cell Selection Right</td>
+            </tr>
+            <tr>
+                <td><code>Ctrl + Z</code></td>
+                <td>Undo Last Action</td>
+            </tr>
+            <tr>
+                <td><code>Ctrl + Y</code></td>
+                <td>Redo Last Action</td>
+            </tr>
+        </table>
         </p>
+         <br>
+    <p>More information on the Essential<sup>®</sup> Gantt Chart can be found in this <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/gantt/es5-getting-started#adding-gantt-control">documentation section</a>.</p>
     </div>
 
 }
-@section Meta{
-    <meta name="description" content="This example demonstrates the Keyboard Interaction in ASP.NET Core Gantt control. Explore here for more details." />
+@section Meta {
+    <meta name="description"
+        content="This example demonstrates the Keyboard Interaction in ASP.NET Core Gantt control. Explore here for more details." />
 }
-@section Title{
+@section Title {
     <title>ASP.NET Core Gantt Keyboard Navigation Example - Syncfusion Demos </title>
 }
-@section Header{
+@section Header {
     <h1 class='sb-sample-text'>Example of Keyboard Navigation in ASP.NET Core Gantt Control</h1>
 }
-

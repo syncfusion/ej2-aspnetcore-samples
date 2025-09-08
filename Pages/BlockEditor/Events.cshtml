@@ -6,11 +6,11 @@
 @section ControlsSection {
     <div class="col-lg-8 control-section">
         <div class="content-wrapper">
-            <ejs-blockeditor id="events-blockeditor" created="function(e){ logEvent('created'); }" contentChanged="function(e){ logEvent('contentChanged'); }" blockAdded="function(e){ logEvent('blockAdded'); }" blockRemoved="function(e){ logEvent('blockRemoved'); }" blockMoved="function(e){ logEvent('blockMoved'); }" blockDrag="function(e){ logEvent('blockDrag'); }" blockDragStart="function(e){ logEvent('blockDragStart'); }" blockDrop="function(e){ logEvent('blockDrop'); }" focus="function(e){ logEvent('focus'); }" blur="function(e){ logEvent('blur'); }" selectionChanged="function(e){ logEvent('selectionChanged'); }" beforePaste="function(e){ logEvent('beforePaste'); }" afterPaste="function(e){ logEvent('afterPaste'); }" undoRedoPerformed="function(e){ logEvent('undoRedoPerformed'); }">
+            <ejs-blockeditor id="events-blockeditor" created="function(e){ logEvent('created'); }" contentChanged="function(e){ logEvent('contentChanged'); }" blockAdded="function(e){ logEvent('blockAdded'); }" blockRemoved="function(e){ logEvent('blockRemoved'); }" blockMoved="function(e){ logEvent('blockMoved'); }" blockDrag="function(e){ logEvent('blockDrag'); }" blockDragStart="function(e){ logEvent('blockDragStart'); }" blockDrop="function(e){ logEvent('blockDrop'); }" focus="function(e){ logEvent('focus'); }" blur="function(e){ logEvent('blur'); }" selectionChanged="function(e){ logEvent('selectionChanged'); }" beforePaste="function(e){ logEvent('beforePaste'); }" afterPaste="function(e){ logEvent('afterPaste'); }" undoRedoPerformed="function(e){ logUndoRedoEvent(e); }">
                 <e-blocks>
                     @foreach (var block in Model.BlockDataEvents)
                     {
-                        <e-block id="@block.id" type="@block.type.ToString()" content="@block.content"></e-block>
+                        <e-block id="@block.Id" type="@block.Type" content="@block.Content" props="@block.Props"></e-block>
                     }
                 </e-blocks>
             </ejs-blockeditor>
@@ -43,6 +43,10 @@
         function logEvent(eventName) {
             appendElement(`BlockEditor <b>${eventName}</b> event called<hr>`);
         };
+
+        function logUndoRedoEvent(event) {
+            appendElement(`BlockEditor <b>${event.isUndo ? 'Undo' : 'Redo'}</b> action performed<hr>`);
+        }
 
         function appendElement(html) {
             var span = document.createElement('span');

@@ -9,8 +9,7 @@ using EJ2CoreSampleBrowser.Models;
 using Microsoft.AspNetCore.Mvc;
 using Syncfusion.EJ2.TreeGrid;
 using Syncfusion.EJ2.TreeGridExport;
-
-namespace EJ2CoreSampleBrowser_NET6.Controllers.TreeGrid
+namespace EJ2CoreSampleBrowser.Controllers.TreeGrid
 {
     public partial class TreeGridController : Controller
     {
@@ -30,7 +29,6 @@ namespace EJ2CoreSampleBrowser_NET6.Controllers.TreeGrid
             Syncfusion.EJ2.TreeGrid.TreeGrid gridProperty = ConvertTreeGridObject(treeGridModel);
             return exp.ExportToExcel<TreeData>(gridProperty, TreeData.GetDefaultData());
         }
-
         public IActionResult CsvExport(string treeGridModel)
         {
             if (treeGridModel == null)
@@ -51,7 +49,6 @@ namespace EJ2CoreSampleBrowser_NET6.Controllers.TreeGrid
             Syncfusion.EJ2.TreeGrid.TreeGrid gridProperty = ConvertTreeGridObject(treeGridModel);
             return exp.ExportToPdf<TreeData>(gridProperty, TreeData.GetDefaultData());
         }
-
         private Syncfusion.EJ2.TreeGrid.TreeGrid ConvertTreeGridObject(string gridProperty)
         {
             Syncfusion.EJ2.TreeGrid.TreeGrid TreeGridModel = (Syncfusion.EJ2.TreeGrid.TreeGrid)Newtonsoft.Json.JsonConvert.DeserializeObject(gridProperty, typeof(Syncfusion.EJ2.TreeGrid.TreeGrid));
@@ -59,7 +56,6 @@ namespace EJ2CoreSampleBrowser_NET6.Controllers.TreeGrid
             TreeGridModel.Columns = cols.columns;
             return TreeGridModel;
         }
-
         public class TreeGridColumnModel
         {
             public List<TreeGridColumn> columns { get; set; }

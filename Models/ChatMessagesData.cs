@@ -146,6 +146,48 @@ namespace EJ2CoreSampleBrowser.Models
             return CommunityMessages;
         }
 
+        public List<UserModel> GetUniqueMentionUsers()
+        {
+            return new List<UserModel>
+            {
+                new UserModel
+                {
+                    id = "admin",
+                    user = "Alice Brown",
+                    statusIconCss = "e-icons e-user-busy"
+                },
+                new UserModel
+                {
+                    id = "user1",
+                    user = "Michale Suyama",
+                    avatarBgColor = "#87cefa",
+                    statusIconCss = "e-icons e-user-online"
+                },
+                new UserModel
+                {
+                    id = "user2",
+                    user = "Charlie",
+                    avatarUrl = "./../css/chatui/images/charlie.png",
+                    avatarBgColor = "#e6cdde",
+                    statusIconCss = "e-icons e-user-away"
+                },
+                new UserModel
+                {
+                    id = "user3",
+                    user = "Janet",
+                    avatarUrl = "./../css/chatui/images/janet.png",
+                    avatarBgColor = "#dec287",
+                    statusIconCss = "e-icons e-user-offline"
+                },
+                new UserModel
+                {
+                    id = "user4",
+                    user = "Jordan Peele",
+                    statusIconCss = "e-icons e-user-busy"
+                }
+            };
+        }
+
         public class UserModel
     {
         public string id { get; set; }

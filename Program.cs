@@ -18,7 +18,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.FileProviders;
 using Syncfusion.Licensing;
 using EJ2ScheduleSample.Pages;
-using EJ2SpreadsheetSample.Pages;
 
 using System.Text.RegularExpressions;
 
@@ -101,6 +100,16 @@ app.UseStaticFiles(new StaticFileOptions
     Path.Combine(Directory.GetCurrentDirectory(), "Pages")),
     RequestPath = "/Pages"
 });
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    ServeUnknownFileTypes = true,
+    DefaultContentType = "plain/text",
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "Models")),
+    RequestPath = "/Models"
+});
+
 app.UseStaticFiles(new StaticFileOptions
 {
     ServeUnknownFileTypes = true,
@@ -120,7 +129,6 @@ app.UseStaticFiles(new StaticFileOptions
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapHub<ScheduleHub>("/scheduleHub");
-    endpoints.MapHub<SpreadsheetHub>("/spreadsheetHub");
 });
 
 app.Run();

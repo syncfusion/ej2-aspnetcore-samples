@@ -20,7 +20,6 @@ namespace EJ2CoreSampleBrowser.Pages.Gantt
             public static List<DropDownList> Columns ()
             {
                 List<DropDownList> Data = new List<DropDownList>();
-                Data.Add(new DropDownList { id = "TaskId", type = "TaskId" });
                 Data.Add(new DropDownList { id = "TaskName", type = "TaskName" });
                 Data.Add(new DropDownList { id = "StartDate", type = "StartDate" });
                 Data.Add(new DropDownList { id = "EndDate", type = "EndDate" });

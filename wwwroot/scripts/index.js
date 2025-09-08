@@ -792,13 +792,19 @@ function loadTheme(theme) {
             body.classList.remove(themes[themeItem]);
         }
     }
-    if (!isStaging) { theme = theme == 'bootstrap5' ? 'bootstrap5.3' : theme == 'bootstrap5-dark' ? 'bootstrap5.3-dark' : theme; }
+    if (!isStaging) {
+        theme = theme == 'bootstrap5' ? 'bootstrap5.3' : theme == 'bootstrap5-dark' ? 'bootstrap5.3-dark' : theme;
+    }
     body.classList.add(theme);
     themeList.querySelector('.active').classList.remove('active');
    
     var currentUpdatedTheme = theme.replace("-dark", "");
-    if (currentUpdatedTheme != "tailwind")
-    {
+    if (currentUpdatedTheme == "tailwind") {
+        if (isStaging) {
+            currentUpdatedTheme == 'bootstrap5.3' ? themeList.querySelector('#bootstrap5\\.3').classList.add('active') : themeList.querySelector('#' + currentUpdatedTheme).classList.add('active');
+        }
+    }
+    else {
         currentUpdatedTheme == 'bootstrap5.3' ? themeList.querySelector('#bootstrap5\\.3').classList.add('active') : themeList.querySelector('#' + currentUpdatedTheme).classList.add('active');
     }
     selectedTheme = theme;
@@ -812,7 +818,13 @@ function loadTheme(theme) {
         toggleLeftPane();
     }
     elasticlunr.clearStopWords();
-    searchInstance = elasticlunr.Index.load(window.searchIndex);
+    const script = document.createElement('script');
+    script.src = window.baseurl + 'scripts/search-index.js';
+    script.type = 'text/javascript';
+    script.onload = function () {
+        searchInstance = elasticlunr.Index.load(window.searchIndex);
+    }
+    document.head.appendChild(script);
     hasher.initialized.add(parseHash);
     hasher.changed.add(parseHash);
     hasher.init();
@@ -1386,7 +1398,50 @@ function initializeGTM() {
         })(window, document, 'script', 'dataLayer', 'GTM-W8WD8WN');
     }, 500);
 }
+
+function loadStylesheet(href) {
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = href;
+    document.head.appendChild(link);
+}
+
+function loadScript(src, integrity) {
+    const script = document.createElement("script");
+    script.src = src;
+    script.type = "text/javascript";
+    if (integrity) {
+        script.crossOrigin = "anonymous";
+        script.integrity = integrity;
+    }
+    document.head.appendChild(script);
+}
+
 function removeOverlay() {
+    loadStylesheet(window.baseurl + "styles/highlight.css");
+    loadStylesheet(window.baseurl + "css/roboto.css");
+    loadStylesheet(window.baseurl + "css/site.css");
+    if (window.location.href.includes("richtexteditor/onlinehtmleditor") || window.location.href.includes("richtexteditor/overview") || window.location.href.includes("richtexteditor/enterkeyconfiguration")) {
+        loadStylesheet(window.baseurl + "css/richtexteditor/codemirror.css");
+        const scripts = [
+            {
+                src: "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/css/css.js",
+                integrity: "sha384-bx2UEHmkahlrzAHJQxatI4mjOrSrRKEmueT3DZSS3OY392BXvcqXcgUqWnse30VV"
+            },
+            {
+                src: "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.js",
+                integrity: "sha384-83KFdJ/lJGxIW+p+cbX3MI8vwU/s+pQbv42uek9/nt283oRLzP8YJ2J7uSBgoRuw"
+            },
+            {
+                src: "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/htmlmixed/htmlmixed.js",
+                integrity: "sha384-yUJOFmuHndKeGdERelLizdhzB2ghbvBSFWMcE7z3t5kOERXoOwvNQhYTAvjiZV80"
+            }
+        ];
+
+        scripts.forEach(({ src, integrity }) => {
+            loadScript(src, integrity);
+        });
+    }
     setTimeout(function () {
         document.body.setAttribute('aria-busy', 'false');
         sbContentOverlay.classList.add('sb-hide');
@@ -1512,11 +1567,39 @@ function ScrollToSelected() {
     }
 }
 
-//window.onload = function () {
- //   setTimeout(function () {
- //       ScrollToSelected();
- //   }, 500);
-//}
+window.addEventListener('load', function () {
+    // Get the meta description content
+    const metaDescription = document.querySelector('meta[name="description"]')?.getAttribute('content');
+    // Get the page title
+    const pageTitle = document.title;
+    setOpenGraphTags({
+        'og:title': pageTitle,
+        'og:description': metaDescription,
+        'og:url': window.location.href,
+        'og:image': 'https://cdn.syncfusion.com/content/images/company-logos/Syncfusion_Logo_Image.png',
+        'og:type': 'website'
+    });
+});
+
+//Appends Open Graph meta tags for link previews on social media platforms like Facebook and LinkedIn.These tags define how the page title, description, URL, and image are displayed when shared.
+function setOpenGraphTags(ogData) {
+    const head = document.getElementsByTagName('head')[0];
+
+    const createOrUpdateMeta = (property, content) => {
+        let meta = document.querySelector(`meta[property='${property}']`);
+        if (!meta) {
+            meta = document.createElement('meta');
+            meta.setAttribute('property', property);
+            head.appendChild(meta);
+        }
+        meta.setAttribute('content', content);
+    };
+
+    for (const [property, content] of Object.entries(ogData)) {
+        createOrUpdateMeta(property, content);
+    }
+}
+
 
 document.addEventListener("DOMContentLoaded", function () { setTimeout(function () { ScrollToSelected(); }, 500); });
 

@@ -4,21 +4,24 @@
 
 @section ControlsSection{
     <div class="control-section">
-        <ejs-treegrid id="TreeGrid" dataSource="@TreeData.GetShipmentData()" height="400" DataBound="ondataBound" childMapping="Children" width="Auto" treeColumnIndex="1">
+        <ejs-treegrid id="TreeGrid" dataSource="@OrdersTreeData.GetShipmentData()" height="400"  ExcelAggregateQueryCellInfo="excelAggregateQuerCellInfo"
+                      PdfAggregateQueryCellInfo="pdfAggregateQuerCellInfo" dataBound="ondataBound" toolbarClick="toolbarClick" gridLines="Both" allowExcelExport="true" allowPdfExport="true"
+                      toolbar="@(new List<string>() { "ExcelExport", "PdfExport","CsvExport"})" childMapping="Subtasks" width="Auto" treeColumnIndex="1">
             <e-treegrid-aggregates>
                 <e-treegrid-aggregate>
                     <e-treegrid-aggregate-columns>
-                        <e-treegrid-aggregate-column field="Category" type="Custom" footerTemplate="Count of <input type='text' id='dropdown' /> : ${Custom}" customAggregate=@("customAggregateFn")></e-treegrid-aggregate-column>
+                        <e-treegrid-aggregate-column field="Category" type="Custom" footerTemplate="Count of <input type='text' id='customers' /> : ${Custom}" customAggregate=@("customAggregateFn")></e-treegrid-aggregate-column>
                     </e-treegrid-aggregate-columns>
                 </e-treegrid-aggregate>
             </e-treegrid-aggregates>
             <e-treegrid-columns>
-                <e-treegrid-column field="ID" headerText="Order ID" textAlign="Right" width="60"></e-treegrid-column>
-                <e-treegrid-column field="Name" headerText="Order Name" width="170"></e-treegrid-column>
-                <e-treegrid-column field="Category" headerText="Category" width="260" minWidth="260"></e-treegrid-column>
-                <e-treegrid-column field="Units" headerText="Units" textAlign="Right" width="60"></e-treegrid-column>
-                <e-treegrid-column field="UnitPrice" headerText="Unit Price" textAlign="Right" format="C0" width="85"></e-treegrid-column>
-                <e-treegrid-column field="Units" headerText="Units" textAlign="Right" format="C0" width="90"></e-treegrid-column>
+                <e-treegrid-column field="ID" headerText="Order ID" textAlign="Left" width="120"></e-treegrid-column>
+                <e-treegrid-column field="Name" headerText="Shipment Name" width="195"></e-treegrid-column>
+                <e-treegrid-column field="ShipmentDate" headerText="Shipment Date" width="130" type="date" format="yMd" textAlign="Right"></e-treegrid-column>
+                <e-treegrid-column field="Category" headerText="Category" width="230" minWidth="230"></e-treegrid-column>
+                <e-treegrid-column field="Units" headerText="Total Units" textAlign="Right" width="100"></e-treegrid-column>
+                <e-treegrid-column field="UnitPrice" headerText="Unit Price($)" textAlign="Right" format="C0" width="100" type="number"></e-treegrid-column>
+                <e-treegrid-column field="Price" headerText="Price($)" textAlign="Right" format="C0" width="100" type="number"></e-treegrid-column>
             </e-treegrid-columns>
         </ejs-treegrid>
     </div>
@@ -26,9 +29,11 @@
     @*custom code start*@
 
     <style>
-
-        .e-input {
-            padding: 1px !important;
+        .fluent2 input#customers {
+            padding-bottom: 8px !important;
+        }
+        .bootstrap5\.3 input#customers {
+            padding-bottom: 5px !important;
         }
 
         .e-summarycell.e-templatecell {
@@ -39,14 +44,16 @@
     @*custom code end*@
 
     <script>
-        var value = "Frozen Seafood";
+        var value = "Seafood";
         var listObj;
         var foods = [
-            { food: 'Frozen Seafood' },
+            { food: 'Seafood' },
             { food: 'Dairy' },
             { food: 'Edible' },
-            { food: 'Solid crystals' },
+            { food: 'Crystal' },
         ];
+        
+        //Initializes a DropDownList in the footer for category selection.
         function ondataBound(args) {
             if (!ej.base.isNullOrUndefined(listObj)) {
                 listObj.destroy();
@@ -55,20 +62,51 @@
                 dataSource: foods,
                 fields: { value: 'food' },
                 placeholder: 'Select a Category',
-                width: '165px',
+                width: '110px',
                 value: value,
                 change: function () {
-                    setTimeout(function () {
-                        var treegrid = document.getElementById("TreeGrid").ej2_instances[0];
-                        value = listObj.value.toString();
-                        treegrid.refresh();
-                    }, 300);
+                    var treegrid = document.getElementById("TreeGrid").ej2_instances[0];
+                    value = listObj.value.toString();
+                    treegrid.refresh();
                 }
             });
-            listObj.appendTo('#dropdown');
+            listObj.appendTo('#customers');
         }
+        
+        //Handles the 'excelQueryCellInfo' event to customize aggregate cells during Excel export.
+        function excelAggregateQuerCellInfo(args) {
+            if(args.cell.column.headerText === "Category") {
+                args.style.value = "Count of" + " " + value + " : " + args.row.data.Category.Custom;
+            }
+        }
+       
+        //Handles the 'pdfQueryCellInfo' event to customize aggregate cells during PDF export.
+        function pdfAggregateQuerCellInfo(args) {
+            if(args.cell.column.headerText === "Category") {
+                args.value = "Count of" + " " + value + " : " + args.row.data.Category.Custom;
+            }
+        }
+
+        function toolbarClick(args) {
+            var treeGridObj = document.getElementById("TreeGrid").ej2_instances[0];
+            if (args.item.id === treeGridObj.grid.element.id + '_excelexport') {
+                treeGridObj.excelExport();
+            } else if (args.item.id === treeGridObj.grid.element.id + '_pdfexport') {
+                if (treeGridObj.enableRtl === true && treeGridObj.locale === 'ar') {
+                    var innercontent = 'You need custom fonts to export Arabic characters, refer this <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/tree-grid/pdf-export/#add-custom-font-for-pdf-exporting" aria-label="Navigate to the documentation for PDF Export in ASP.NET Core TreeGrid control">documentation section</a>';
+                    ej.popups.DialogUtility.alert({ content: innercontent });
+                }
+                else {
+                    treeGridObj.pdfExport({pageOrientation: 'Landscape'});
+                }
+            } else if (args.item.id === treeGridObj.grid.element.id + '_csvexport') {
+                treeGridObj.csvExport();
+            }
+        }
+        
+        //Custom aggregate function to calculate the count of items for the selected category.
         function customAggregateFn(data) {
-            var sampleData = ej.grids.getObject('result', data);
+            var sampleData = data.result ? ej.grids.getObject("result",data) : data;
             var countLength;
             countLength = 0;
             sampleData.filter(function (item) {
@@ -92,35 +130,19 @@
 
 @section ActionDescription{
     <div id="action-description">
-        <p>This sample demonstrates custom aggregate functionality of the TreeGrid. In this sample, the custom aggregate value for the columns "Category" is displayed in column footer with dropdown to display the count of selected category name.</p>
+        <p>This sample demonstrates custom aggregates and exporting functionality in the Tree Grid. Aggregate values for the columns are displayed in the column footer, and export options are available via the toolbar buttons.</p>
     </div>
 }
 @section Description{
     <div id="description">
         <p>
-            The TreeGrid supports aggregates which will be displayed at the footer and every hierarchy level.
-            The aggregate configurations can be provided by the <code>Aggregates</code> property.
+            The Tree Grid supports aggregates displayed in the footer, which can be configured using the <code>aggregates</code> property. Here, a <code>customAggregate</code> configuration is applied to the <b>Category</b> column to show a dropdown that displays the count of the selected category.
         </p>
-        <p>The built-in aggregates are,</p>
-        <ul>
-            <li><code>Sum</code></li>
-            <li><code>Average</code></li>
-            <li><code>Min</code></li>
-            <li><code>Max</code></li>
-            <li><code>Count</code></li>
-            <li><code>TrueCount</code></li>
-            <li><code>FalseCount</code></li>
-            <li>
-                <code>Custom</code> - Requires the <code>CustomAggregate</code> property to perform aggregation.
-                The custom aggregate value can be accessed inside template using the key <code>${Custom}</code>
-            </li>
-        </ul>
         <p>
-            In this demo, the footerTemplate property shows the custom aggregate value for the columns “Category” in column footer to display the count of category name.
+            The Tree Grid also supports seamless exports to <b>Excel</b>, <b>PDF</b>, or <b>CSV</b> with a single click. The <code>excelAggregateQueryCellInfo</code> and <code>pdfAggregateQueryCellInfo</code> events ensure that footer aggregate values are accurately preserved in the exported files.
         </p>
-        <p>The template expression should be provided inside <code>${...}</code> the interpolation syntax.</p>
         <p>
-            More information about aggregate can be found in this <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/tree-grid/aggregates/custom-aggregate" aria-label="Navigate to the documentation for custom-aggregate in ASP.NET Core TreeGrid control">documentation section</a>.
+            More information about custom aggregate can be found in this <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/tree-grid/aggregates/custom-aggregate" aria-label="Navigate to the documentation for custom-aggregate in ASP.NET Core TreeGrid control">documentation</a> section.
         </p>
     </div>
 }

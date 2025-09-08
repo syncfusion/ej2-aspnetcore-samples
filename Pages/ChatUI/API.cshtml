@@ -6,7 +6,7 @@
     <div class="col-lg-8 control-section sb-property-border">
         <div class="api-chatui">
             <ejs-chatui id="chatui" headerText="Design Community" headerIconCss="chat_header_icon" showTimeBreak=true
-                timeStampFormat="MM/dd hh:mm a" created="onCreated">
+                        timeStampFormat="MM/dd hh:mm a" created="onCreated" mentionUsers="@Model.MentionUsers">
                 <e-chatui-messagetoolbarsettings items="@Model.MessageToolbarItems" itemClicked="onMessageToolbarClicked"></e-chatui-messagetoolbarsettings>
                 <e-chatui-user id="admin" user="Alice"></e-chatui-user>
                  <e-chatui-messages>
@@ -30,13 +30,13 @@
                         </td>
                     </tr>
                     <tr>
-                        <td> <div>Show timestamp</div> </td>
+                        <td> <div>Show timeStamp</div> </td>
                         <td style="padding-right: 10px">
                             <ejs-switch id="chatTimestamp" checked=true change="onTimeStampSwitchChange"></ejs-switch>
                         </td>
                     </tr>
                     <tr>
-                        <td> <div>Show timebreak</div> </td>
+                        <td> <div>Show timeBreak</div> </td>
                         <td style="padding-right: 10px">
                             <ejs-switch id="chatTimebreak" checked=true change="onTimeBreakSwitchChange"></ejs-switch>
                         </td>
@@ -54,7 +54,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td> <div>Compact Mode</div> </td>
+                        <td> <div>Compact mode</div> </td>
                         <td style="padding-right: 10px">
                             <ejs-switch id="compactMode" checked=false change="onCompactModeSwitchChange"></ejs-switch>
                         </td>
@@ -63,6 +63,12 @@
                         <td> <div>Typing users</div> </td>
                         <td style="padding-right: 10px">
                             <ejs-multiselect id="chat_typingUsers" dataSource="@Model.TypingUserOptions" placeholder="Typing users..." select="onTypingUsersSelect" removed="onTypingUsersRemove"></ejs-multiselect>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> <div>Mention users</div> </td>
+                        <td style="padding-right: 10px">
+                            <ejs-multiselect id="chat_mentionUsers" dataSource="@Model.MentionUserOptions" value="@Model.MentionUserValues" placeholder="Mention users..." select="onMentionUsersSelect" removed="onMentionUsersRemove"></ejs-multiselect>
                         </td>
                     </tr>
                 </tbody>
@@ -101,7 +107,7 @@
         function onCompactModeSwitchChange(args) {
             chatUIObj.enableCompactMode = args.checked;
         }
-
+        
         function onTypingUsersSelect(args) {
             const user = { user: args.itemData.value, avatarBgColor: '#87cefa' };
             if (['Laura', 'Charlie'].includes(args.itemData.value)) {
@@ -111,8 +117,26 @@
             chatUIObj.typingUsers = [...chatUIObj.typingUsers, user];
         }
 
+         function onMentionUsersSelect(args) {
+            const mentionUsers = {
+                'Alice Brown': { user: 'Alice Brown', id: 'admin', avatarBgColor: '#87cefa', statusIconCss: 'e-icons e-user-busy' },
+                'Michale Suyama': { user: 'Michale Suyama', id: 'user1', avatarBgColor: '#87cefa', statusIconCss: 'e-icons e-user-online' },
+                'Charlie': { user: 'Charlie', id: 'user2', avatarBgColor: '#e6cdde', avatarUrl: './../css/chatui/images/charlie.png', statusIconCss: 'e-icons e-user-away' },
+                'Janet': { user: 'Janet', id: 'user3', avatarBgColor: '#dec287', avatarUrl: './../css/chatui/images/janet.png', statusIconCss: 'e-icons e-user-offline' },
+                'Jordan Peele': { user: 'Jordan Peele', id: 'user4', avatarBgColor: '#87cefa', statusIconCss: 'e-icons e-user-busy' }
+            };
+            const user = mentionUsers[args.itemData.value];
+            chatUIObj.mentionUsers = [...chatUIObj.mentionUsers, user];
+             chatUIObj.dataBind();
+        }
+
         function onTypingUsersRemove(args) {
             chatUIObj.typingUsers = chatUIObj.typingUsers.filter(user => user.user !== args.itemData.value);
+        }
+
+        function onMentionUsersRemove(args) {
+             chatUIObj.mentionUsers = chatUIObj.mentionUsers.filter(user => user.user !== args.itemData.value);
+             chatUIObj.dataBind();
         }
 
         function onMessageToolbarClicked(args) {
@@ -122,6 +146,7 @@
                     isForwarded: true,
                     isPinned: args.message.isPinned,
                     author: args.message.author,
+                    mentionUsers: args.message.mentionUsers,
                     text: args.message.text,
                     timeStamp: args.message.timeStamp,
                     timeStampFormat: args.message.timeStampFormat,
@@ -184,6 +209,7 @@
             <li><code>showFooter</code>: Toggles the visibility of the chat footer.</li>
             <li><code>enableCompactMode</code>: Reduces spacing and left-aligns all messages to display more content within the visible chat area. </li>
             <li><code>typingUsers</code>: Allows users to manage the list of users who are typing, updated through the multi-select options in the property pane.</li>
+            <li><code>mentionUsers</code>: Configurable list of users that can be tagged using <code>@@</code> in chat messages.</li>
             <li><code>statusIconCss</code>: Defines a CSS class for the status bar icon, with built-in styles for Online, Offline, Away, and Busy statuses, while allowing further customization.</li>
             <li><code>messageToolbarSettings</code>: Configures the toolbar that appears on individual messages, allowing customization such as copy, forward, reply, pin and delete. Supports adding, removing, or reordering toolbar items based on application needs.</li>
         </ul>

@@ -1,10 +1,10 @@
 ﻿[![.NET](https://github.com/syncfusion/ej2-aspnetcore-samples/actions/workflows/dotnet.yml/badge.svg)](https://github.com/syncfusion/ej2-aspnetcore-samples/actions/workflows/dotnet.yml)
 
- # Syncfusion ASP.NET Core Component Examples  
+ # Syncfusion® ASP.NET Core Component Examples  
 
-This repository contains the demos of [Syncfusion ASP.NET Core Components](https://www.syncfusion.com/aspnet-core-ui-controls/). This is the best place to check the controls to get more insight into the usage of APIs.
+This repository contains the demos of [Syncfusion® ASP.NET Core Components](https://www.syncfusion.com/aspnet-core-ui-controls/). This is the best place to check the controls to get more insight into the usage of APIs.
 
-The following topics can help you to use the Syncfusion ASP.NET Core Components and run this application in your local.
+The following topics can help you to use the Syncfusion® ASP.NET Core Components and run this application in your local.
 
 * [Requirements to run the demo](#requirements-to-run-the-demo)
 * [How to run the demo](#how-to-run-the-demo)
@@ -65,7 +65,8 @@ Clone the repository. This repository contains the .NET 8 and .NET 9 project and
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/tree-grid/getting-started-core">TreeGrid</a></div>
             <p>&nbsp;</p>
             <div><p class="controlcategory">INTERACTIVE CHAT</p></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/ai-assistview/getting-started">AI AssistView - Preview</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/ai-assistview/getting-started">AI AssistView</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/chat-ui/getting-started">Chat UI - Preview</a></div>
             <p>&nbsp;</p>
             <div><p class="controlcategory">DATA VISUALIZATION</p></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/getting-started">Charts</a></div>
@@ -93,12 +94,12 @@ Clone the repository. This repository contains the .NET 8 and .NET 9 project and
         </td>
         <td>
             <p></p>
-            <div><p class="controlcategory">EDITORS</p></div>
+            <div><p class="controlcategory">VIEWERS & EDITORS</p></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/rich-text-editor/getting-started">RichTextEditor</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/markdowneditor/overview#/fluent2">Markdown Editor</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/document-editor/getting-started-core">Word Processor</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/in-place-editor/getting-started">In-place Editor</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/image-editor/getting-started">Image Editor</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/block-editor/getting-started">Block Editor - Preview</a></div>
             <p>&nbsp;</p>
             <div><p class="controlcategory">CALENDARS</p></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/schedule/getting-started">Scheduler</a></div>
@@ -139,7 +140,7 @@ Clone the repository. This repository contains the .NET 8 and .NET 9 project and
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/multi-select/getting-started">Multiselect DropDown</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/mention/getting-started">Mention</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/list-box/getting-started-core">ListBox</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/multicolumn-combobox/getting-started">MultiColumn ComboBox - Preview</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/multicolumn-combobox/getting-started">MultiColumn ComboBox</a></div>
             <p>&nbsp;</p>
             <div><p class="controlcategory">NAVIGATION</p></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/accordion/getting-started">Accordion</a></div>
@@ -184,6 +185,7 @@ Clone the repository. This repository contains the .NET 8 and .NET 9 project and
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/signature/getting-started">Signature</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/rating/getting-started">Rating</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/otp-input/getting-started">OTP Input</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/speech-to-text/getting-started">Speech To Text</a></div>
             <p>&nbsp;</p>
             <div><p class="controlcategory">LAYOUT</p></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/avatar/getting-started-asp-core">Avatar</a></div>
@@ -211,15 +213,15 @@ Clone the repository. This repository contains the .NET 8 and .NET 9 project and
 
 ## License
 
-Syncfusion ASP.NET Core Components is available under the Syncfusion Essential Studio program, and can be licensed either under the Syncfusion Community License Program or the Syncfusion commercial license.
+Syncfusion® ASP.NET Core Components is available under the Syncfusion® Essential Studio program, and can be licensed either under the Syncfusion® Community License Program or the Syncfusion® commercial license.
 
-To be qualified for the Syncfusion Community License Program, you must have gross revenue of less than one (1) million U.S. dollars (USD 1,000,000.00) per year and have less than five (5) developers in your organization, and agree to be bound by Syncfusion’s terms and conditions.
+To be qualified for the Syncfusion® Community License Program, you must have gross revenue of less than one (1) million U.S. dollars (USD 1,000,000.00) per year and have less than five (5) developers in your organization, and agree to be bound by Syncfusion’s terms and conditions.
 
 Customers who do not qualify for the community license can contact sales@syncfusion.com for commercial licensing options.
 
 You may not use this product without first purchasing a Community License or a Commercial License, as well as agreeing to and complying with Syncfusion's license terms and conditions.
 
-The Syncfusion license that contains the terms and conditions can be found at
+The Syncfusion® license that contains the terms and conditions can be found at
 [https://www.syncfusion.com/content/downloads/syncfusion_license.pdf](https://www.syncfusion.com/content/downloads/syncfusion_license.pdf)
 
 ## Support and feedback
@@ -236,4 +238,4 @@ The Syncfusion license that contains the terms and conditions can be found at
 * [ASP.NET Core Components](https://www.syncfusion.com/aspnet-core-ui-controls/)
 * [ASP.NET Core Live Demos](https://ej2.syncfusion.com/aspnetcore/) 
 
-<p>Copyright © 2001-2025 Syncfusion®, Inc. Updated on 2025-09-08 at precisely 07:59:36 EST.</p> 
+<p>Copyright © 2001-2025 Syncfusion®, Inc. Updated on 2025-09-22 at precisely 07:59:36 EST.</p> 

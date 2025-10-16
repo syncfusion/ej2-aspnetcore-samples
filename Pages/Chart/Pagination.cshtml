@@ -1,0 +1,600 @@
+﻿@page
+@model EJ2CoreSampleBrowser.Pages.Chart.PaginationModel
+@using Syncfusion.EJ2
+
+@section ControlsSection {
+    
+    <div class="control-section" align='center'>
+        <ejs-chart id="container" height="70%" load="load" chartMouseClick="onChartMouseClick" resized="onResized" annotationRender="onAnnotationRender">
+            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category"
+                                  interval="1"  
+                                  zoomFactor="0.175" 
+                                  zoomPosition="0" 
+                                  enableAutoIntervalOnZooming="false"
+                                  isIndexed="true"
+                                  edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift"
+                                  labelPlacement="@Syncfusion.EJ2.Charts.LabelPlacement.OnTicks">
+                <e-majorgridlines width="0"></e-majorgridlines>
+            </e-chart-primaryxaxis>
+            <e-chart-primaryyaxis visible="false" maximum="30">
+                <e-majorgridlines width="0"></e-majorgridlines>
+            </e-chart-primaryyaxis>
+            <e-chart-chartarea>
+                <e-chartarea-border width="0"></e-chartarea-border>
+            </e-chart-chartarea>
+            <e-chart-zoomsettings enableSelectionZooming="true" enableAnimation=true enablePan=true toolbarItems="new String[] {}" mode="@Syncfusion.EJ2.Charts.ZoomMode.X"></e-chart-zoomsettings>
+            <e-series-collection>
+                <e-series dataSource="@Model.ChartPoints" opacity="0.5" width="2" xName="XValue" yName="Y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.SplineArea">
+                    <e-series-marker visible="true" isFilled="true" width="8" height="8">
+                        <e-series-datalabel visible="true" position="@Syncfusion.EJ2.Charts.LabelPosition.Top">
+                        </e-series-datalabel>
+                    </e-series-marker>
+                    <e-series-border width="2"></e-series-border>
+                </e-series>
+            </e-series-collection>
+            <e-chart-annotations>
+                <e-chart-annotation x="20" y="40" content="<div id='chart_image'><img src='./../scripts/chart/images/cloudy.png' alt='Cloud Picture' style='width: 70px; height: 70px'/></div>" coordinateUnits='@Syncfusion.EJ2.Charts.Units.Pixel' region='@Syncfusion.EJ2.Charts.Regions.Chart'></e-chart-annotation>
+                <e-chart-annotation x="90" y="30" content="<div id='temperature' style='font-size: 50px;'>12</div>" coordinateUnits='@Syncfusion.EJ2.Charts.Units.Pixel' region='@Syncfusion.EJ2.Charts.Regions.Chart'></e-chart-annotation>
+                <e-chart-annotation x="140" y="20" content="<div id='celsius' style='font-size: 17px; vertical-align: super; opacity: 1;'>°C | </div>" coordinateUnits='@Syncfusion.EJ2.Charts.Units.Pixel' region='@Syncfusion.EJ2.Charts.Regions.Chart'></e-chart-annotation>
+                <e-chart-annotation x="170" y="20" content="<div id='fahrenheit' style='font-size: 17px; vertical-align: super; opacity: 0.5;'>°F</div>" coordinateUnits='@Syncfusion.EJ2.Charts.Units.Pixel' region='@Syncfusion.EJ2.Charts.Regions.Chart'></e-chart-annotation>
+                <e-chart-annotation x="800" y="34" content="<div id='days' style='font-size: 15px; text-align:right;'>Friday</div>" coordinateUnits='@Syncfusion.EJ2.Charts.Units.Pixel' region='@Syncfusion.EJ2.Charts.Regions.Chart'></e-chart-annotation>
+                <e-chart-annotation x="800" y="53" content="<div id='weather' style='font-size: 15px; text-align:right;'>Sunny</div>" coordinateUnits='@Syncfusion.EJ2.Charts.Units.Pixel' region='@Syncfusion.EJ2.Charts.Regions.Chart'></e-chart-annotation>
+                <e-chart-annotation x="800" y="12" content="<div id='title' style='font-size: 20px; font-weight: 600'>USA, Texas</div>" coordinateUnits='@Syncfusion.EJ2.Charts.Units.Pixel' region='@Syncfusion.EJ2.Charts.Regions.Chart'></e-chart-annotation>
+                <e-chart-annotation x="190" y="14" content="<div id='text' style='font-size: 11px;'></div>" coordinateUnits='@Syncfusion.EJ2.Charts.Units.Pixel' region='@Syncfusion.EJ2.Charts.Regions.Chart'></e-chart-annotation>
+            </e-chart-annotations>
+        </ejs-chart>
+
+        <div id="container" align='center'></div>
+        <div align='center' id="chart-button-container">
+            <button id="friday" class="chart-custom-button active">
+                <div class="day">Friday</div>
+                <img src="./../scripts/chart/images/sunny_image.png" alt="Friday">
+                <div class="temp">2°C - 12°C</div>
+            </button>
+            <button id="saturday" class="chart-custom-button">
+                <div class="day">Saturday</div>
+                <img src="./../scripts/chart/images/sunny_image.png" alt="Saturday">
+                <div class="temp">6°C - 16°C</div>
+            </button>
+            <button id="sunday" class="chart-custom-button">
+                <div class="day">Sunday</div>
+                <img src="./../scripts/chart/images/cloudy.png" alt="Sunday">
+                <div class="temp">15°C - 18°C</div>
+            </button>
+            <button id="monday" class="chart-custom-button">
+                <div class="day">Monday</div>
+                <img src="./../scripts/chart/images/cloudy.png" alt="Monday">
+                <div class="temp">12°C - 16°C</div>
+            </button>
+            <button id="tuesday" class="chart-custom-button">
+                <div class="day">Tuesday</div>
+                <img src="./../scripts/chart/images/rainy.png" alt="Tuesday">
+                <div class="temp">14°C - 18°C</div>
+            </button>
+        </div>
+    </div>
+
+    <style>
+        #control-container {
+            padding: 0px !important;
+        }
+
+        #chart-button-container {
+            padding: 5px;
+            /* Remove padding around the container */
+            width: 75%;
+            background-color: rgb(237, 236, 236);
+            /* Same color as the button background */
+            display: flex;
+            justify-content: space-between;
+            /* Ensure buttons take up the full width */
+            align-items: center;
+            /* Align items in the center vertically */
+            border-radius: 10px;
+            /* Optional: for rounded corners */
+        }
+
+        .chart-custom-button {
+            flex-grow: 1;
+            /* Make buttons grow to fill the container */
+            flex-basis: 0;
+            /* Ensure all buttons have the same width */
+            height: 35%;
+            /* Set a fixed height for the buttons */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: none;
+            /* Remove the border for seamless alignment */
+            border-radius: 5px;
+            /* Remove the border-radius for no gaps */
+            justify-content: center;
+            /* Center content within the button */
+            background-color: rgb(237, 236, 236);
+            /* Button background */
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            /* Smooth transition for background color and shadow */
+            position: relative;
+            /* To position the line correctly */
+        }
+
+        /* Add the line after every button except the last one */
+        .chart-custom-button:not(:last-child):not(.active)::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            width: 2px;
+            /* Width of the line */
+            height: 80%;
+            /* Height of the line, adjust as needed */
+            background-color: rgba(0, 0, 0, 0.2);
+            /* Light shadow color */
+        }
+
+        /* Specifically remove the line from the Tuesday button */
+        .chart-custom-button.no-line::after {
+            display: none;
+        }
+
+        .chart-custom-button img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .day,
+        .temp {
+            font-size: 13px;
+        }
+
+        .light-theme-bg {
+            background-color: rgb(237, 236, 236) !important;
+        }
+
+        .light-theme-bg.active {
+            background-color: white !important;
+        }
+
+        .light-theme-bg:hover {
+            background-color: #dbdada !important;
+        }
+
+        .dark-theme-bg {
+            background-color: #333 !important;
+        }
+
+        .dark-theme-bg.active {
+            background-color: #7b7b7b !important;
+            box-shadow: 0 0 0 2px #7b7b7b !important;
+        }
+
+        .dark-theme-bg:hover {
+            background-color: #7b7b7b !important;
+        }
+
+        .chart-custom-button.active {
+            box-shadow: 0 0 0 2px rgb(237, 236, 236);
+            /* Create an outward border effect */
+            z-index: 2;
+            /* Ensure the selected button is above other buttons and lines */
+        }
+
+        #material-gradient-chart stop {
+            stop-color: #00bdae;
+        }
+
+        #fabric-gradient-chart stop {
+            stop-color: #4472c4;
+        }
+
+        #bootstrap-gradient-chart stop {
+            stop-color: #a16ee5;
+        }
+
+        #bootstrap4-gradient-chart stop {
+            stop-color: #a16ee5;
+        }
+
+        #fluent-gradient-chart stop {
+            stop-color: #1AC9E6;
+        }
+
+        #fluent-dark-gradient-chart stop {
+            stop-color: #1AC9E6;
+        }
+
+        #highcontrast-gradient-chart stop {
+            stop-color: #79ECE4;
+        }
+
+        #tailwind-gradient-chart stop {
+            stop-color: #5A61F6;
+        }
+
+        #tailwind3-gradient-chart stop {
+            stop-color: #2F4074;
+        }
+
+        #bootstrap5-gradient-chart stop {
+            stop-color: #FD7E14;
+        }
+
+        #material-dark-gradient-chart stop {
+            stop-color: #9ECB08;
+        }
+
+        #fabric-dark-gradient-chart stop {
+            stop-color: #4472c4;
+        }
+
+        #bootstrap-dark-gradient-chart stop {
+            stop-color: #a16ee5;
+        }
+
+        #tailwind-dark-gradient-chart stop {
+            stop-color: #8B5CF6;
+        }
+
+        #tailwind3-dark-gradient-chart stop {
+            stop-color: #8029F1;
+        }
+
+        #bootstrap5-dark-gradient-chart stop {
+            stop-color: #FD7E14;
+        }
+
+        #material3-gradient-chart stop {
+            stop-color: #6355C7;
+        }
+
+        #material3-dark-gradient-chart stop {
+            stop-color: #4EAAFF;
+        }
+
+        #fluent2-gradient-chart stop {
+            stop-color: #6200EE;
+        }
+
+        #fluent2-highcontrast-gradient-chart stop {
+            stop-color: #9BB449;
+        }
+
+        #fluent2-dark-gradient-chart stop {
+            stop-color: #9BB449;
+        }
+
+        .chart-gradient stop[offset="0"] {
+            stop-opacity: 0.9;
+        }
+
+        .chart-gradient stop[offset="1"] {
+            stop-opacity: 0.3;
+        }
+
+        #days, #weather {
+            font-size: 15px;
+            opacity: 0.7;
+            position: relative;
+            right: 0;
+            width: 85px;
+        }
+    </style>
+    <svg style="height: 0">
+        <defs>
+            <linearGradient id="material-gradient-chart" style=" opacity: 0.75 " class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0"></stop>
+                <stop offset="1"></stop>
+            </linearGradient>
+            <linearGradient id="fabric-gradient-chart" style=" opacity: 0.75 " class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0"></stop>
+                <stop offset="1"></stop>
+            </linearGradient>
+            <linearGradient id="bootstrap-gradient-chart" style=" opacity: 0.75 " class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0"></stop>
+                <stop offset="1"></stop>
+            </linearGradient>
+            <linearGradient id="bootstrap4-gradient-chart" style=" opacity: 0.75 " class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0"></stop>
+                <stop offset="1"></stop>
+            </linearGradient>
+            <linearGradient id="highcontrast-gradient-chart" style=" opacity: 0.75 " class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0"></stop>
+                <stop offset="1"></stop>
+            </linearGradient>
+            <linearGradient id="tailwind-gradient-chart" style=" opacity: 0.75 " class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0"></stop>
+                <stop offset="1"></stop>
+            </linearGradient>
+            <linearGradient id="bootstrap5-gradient-chart" style=" opacity: 0.75 " class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0"></stop>
+                <stop offset="1"></stop>
+            </linearGradient>
+            <linearGradient id="material-dark-gradient-chart" style=" opacity: 0.75 " class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0"></stop>
+                <stop offset="1"></stop>
+            </linearGradient>
+            <linearGradient id="fabric-dark-gradient-chart" style=" opacity: 0.75 " class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0"></stop>
+                <stop offset="1"></stop>
+            </linearGradient>
+            <linearGradient id="bootstrap-dark-gradient-chart" style=" opacity: 0.75 " class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0"></stop>
+                <stop offset="1"></stop>
+            </linearGradient>
+            <linearGradient id="tailwind-dark-gradient-chart" style=" opacity: 0.75 " class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0"></stop>
+                <stop offset="1"></stop>
+            </linearGradient>
+            <linearGradient id="tailwind3-gradient-chart" style=" opacity: 0.75 " class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0"></stop>
+                <stop offset="1"></stop>
+            </linearGradient>
+            <linearGradient id="tailwind3-dark-gradient-chart" style=" opacity: 0.75 " class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0"></stop>
+                <stop offset="1"></stop>
+            </linearGradient>
+            <linearGradient id="bootstrap5-dark-gradient-chart" style=" opacity: 0.75 " class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0"></stop>
+                <stop offset="1"></stop>
+            </linearGradient>
+            <linearGradient id="fluent-gradient-chart" style=" opacity: 0.75 " class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0"></stop>
+                <stop offset="1"></stop>
+            </linearGradient>
+            <linearGradient id="fluent-dark-gradient-chart" style=" opacity: 0.75 " class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0"></stop>
+                <stop offset="1"></stop>
+            </linearGradient>
+            <linearGradient id="material3-gradient-chart" style=" opacity: 0.75 " class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0"></stop>
+                <stop offset="1"></stop>
+            </linearGradient>
+            <linearGradient id="material3-dark-gradient-chart" style=" opacity: 0.75 " class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0"></stop>
+                <stop offset="1"></stop>
+            </linearGradient>
+            <linearGradient id="fluent2-gradient-chart" style=" opacity: 0.75 " class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0"></stop>
+                <stop offset="1"></stop>
+            </linearGradient>
+            <linearGradient id="fluent2-highcontrast-gradient-chart" style=" opacity: 0.75 " class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0"></stop>
+                <stop offset="1"></stop>
+            </linearGradient>
+            <linearGradient id="fluent2-dark-gradient-chart" style=" opacity: 0.75 " class="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0"></stop>
+                <stop offset="1"></stop>
+            </linearGradient>
+        </defs>
+    </svg>
+    <script src="~/scripts/chart/theme-color.js"></script>
+    <script type="text/javascript">
+        var image = 'sunny_image';
+        var count = 25;
+        var day = 'Friday';
+        var chart;
+        var rainfalls = 0;
+        var moistureLevels = 30;
+        var breezeSpeeds = 5;
+        var weather = 'Sunny';
+        var temperatureData = [
+            { celsius: 12, fahrenheit: 54 },
+            { celsius: 16, fahrenheit: 61 },
+            { celsius: 18, fahrenheit: 64 },
+            { celsius: 16, fahrenheit: 61 },
+            { celsius: 18, fahrenheit: 64 }
+        ];
+        var buttonRanges = {
+            celsius: [
+                { min: 2, max: 12 },
+                { min: 6, max: 16 },
+                { min: 15, max: 18 },
+                { min: 12, max: 16 },
+                { min: 14, max: 18 }
+            ],
+            fahrenheit: [
+                { min: 36, max: 54 },
+                { min: 43, max: 61 },
+                { min: 59, max: 64 },
+                { min: 54, max: 61 },
+                { min: 57, max: 64 }
+            ]
+        };
+        var isFahrenheit = false;
+        var setIsFahrenheit = false;
+        var buttonIndex = 0;
+        var themesList = ['bootstrap5', 'bootstrap5dark', 'tailwind', 'tailwinddark', 'material', 'materialdark', 'bootstrap4', 'bootstrap', 'bootstrapdark', 'fabric', 'fabricdark', 'highcontrast', 'fluent', 'fluentdark', 'material3', 'material3dark', 'fluent2', 'fluent2highcontrast', 'fluent2dark', 'tailwind3', 'tailwind3dark'];
+        var borderColor = ['#FD7E14', '#FD7E14', '#5A61F6', '#8B5CF6', '#00bdae', '#9ECB08', '#a16ee5', '#a16ee5', '#a16ee5', '#4472c4', '#4472c4', '#79ECE4', '#1AC9E6', '#1AC9E6', '#6355C7', '#4EAAFF', '#6200EE', '#9BB449', '#9BB449', '#2F4074', '#8029F1'];
+        function load(args) {
+            chart = args.chart;
+            loadChartTheme(args);
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+            selectedTheme = selectedTheme == 'bootstrap5.3' ? 'bootstrap5' : selectedTheme == 'bootstrap5.3-dark' ? 'bootstrap5-dark' : selectedTheme;
+            var isDarkTheme = /dark/i.test(selectedTheme) || /contrast/i.test(selectedTheme);
+            args.chart.series[0].fill = 'url(#' + selectedTheme.toLowerCase() + '-gradient-chart)';
+            args.chart.series[0].border = { width: 4, color: borderColor[themesList.indexOf(args.chart.theme.toLowerCase())] };
+            args.chart.series[0].marker = { fill: borderColor[themesList.indexOf(args.chart.theme.toLowerCase())] };
+            args.chart.annotations[3].x = selectedTheme.indexOf('Tailwind') !== -1 ? 167 : 163;
+            var buttons = document.querySelectorAll('.chart-custom-button');
+            var buttonContainer = document.getElementById('chart-button-container');
+            buttons.forEach(button => {
+                if (isDarkTheme) {
+                    button.classList.add('dark-theme-bg');
+                    button.classList.remove('light-theme-bg');
+                    buttonContainer.style.backgroundColor = '#333';
+                } else {
+                    button.classList.add('light-theme-bg');
+                    button.classList.remove('dark-theme-bg');
+                    buttonContainer.style.backgroundColor = 'rgb(237, 236, 236)';
+                }
+            });
+            if (ej.base.Browser.isDevice) {
+                buttonContainer.style.width = '97%';
+            } else {
+                buttonContainer.style.width = '75%';
+            }
+        };
+
+        function onResized(args) {
+            var maxAnnotationX = args.chart.availableSize.width;
+            args.chart.annotations[4].x = maxAnnotationX - 50;
+            args.chart.annotations[5].x = maxAnnotationX - 50;
+            args.chart.annotations[6].x = maxAnnotationX - 50;
+        };
+
+        function onChartMouseClick(args) {
+            if (chart) {
+                var activeButton = document.querySelector('.chart-custom-button.active');
+                var index = Array.from(document.querySelectorAll('.chart-custom-button')).indexOf(activeButton);
+                var celsius;
+                var fahrenheit;
+                if (index !== -1 && temperatureData[index]) {
+                    if (temperatureData[index]) {
+                        var tempData = temperatureData[index];
+                        celsius = tempData.celsius;
+                        fahrenheit = tempData.fahrenheit;
+                    }
+                    var temperatureElement = document.getElementById('temperature');
+                    var celsiusElement = document.getElementById('celsius');
+                    var fahrenheitElement = document.getElementById('fahrenheit');
+                    if (args.target === 'celsius' && temperatureElement) {
+                        temperatureElement.innerHTML = "<b style='font-size: 50px'>".concat(celsius, "</b>");
+                        isFahrenheit  = false;
+                        if (celsiusElement) {
+                            celsiusElement.style.opacity = '1';
+                        }
+                        if (fahrenheitElement) {
+                            fahrenheitElement.style.opacity = '0.5';
+                        }
+                        chart.series[0].marker.dataLabel.name = 'datalabel';
+                    }
+                    else if (args.target === 'fahrenheit' && temperatureElement) {
+                        temperatureElement.innerHTML = "<b style='font-size: 50px'>".concat(fahrenheit, "</b>");
+                        isFahrenheit  = true;
+                        if (celsiusElement) {
+                            celsiusElement.style.opacity = '0.5';
+                        }
+                        if (fahrenheitElement) {
+                            fahrenheitElement.style.opacity = '1';
+                        }
+                        chart.series[0].marker.dataLabel.name = 'datalabel1';
+                    }
+                }
+                var buttons = document.querySelectorAll('.chart-custom-button .temp');
+                buttons.forEach(function (buttonTempElement, idx) {
+                    var minTemp;
+                    var maxTemp;
+                    if (args.target === 'fahrenheit') {
+                        minTemp = buttonRanges.fahrenheit[idx].min;
+                        maxTemp = buttonRanges.fahrenheit[idx].max;
+                        buttonTempElement.textContent = minTemp + "°F - " + maxTemp + "°F";
+                    }
+                    else {
+                        minTemp = buttonRanges.celsius[idx].min;
+                        maxTemp = buttonRanges.celsius[idx].max;
+                        buttonTempElement.textContent = minTemp + "°C - " + maxTemp + "°C";
+                    }
+                });
+            }
+        };
+
+        function onAnnotationRender(args) {
+            if (args.content.id === 'container_Annotation_0') {
+                args.content.innerHTML = '<div id="chart_cloud" align="center"><img src="./../scripts/chart/images/' + image + '.png" alt="Cloud Picture" style="width: 70px; height: 70px; margin-right: 10px;"/>';
+            }
+            else if (args.content.id === 'container_Annotation_1') {
+                var tempDisplay = isFahrenheit ? temperatureData[buttonIndex].fahrenheit : temperatureData[buttonIndex].celsius;
+                args.content.innerHTML = '<div id="temperature"><b align="center" style="font-size: 50px">' + tempDisplay + '<b></div>';
+            }
+            else if (args.content.id === 'container_Annotation_2') {
+                args.content.innerHTML = '<div id="celsius" style="font-size: 17px; vertical-align: super; cursor: pointer; opacity: 1;">°C | </div>';
+            }
+            else if (args.content.id === 'container_Annotation_3') {
+                args.content.innerHTML = '<div id="fahrenheit" style="font-size: 17px; vertical-align: super; cursor: pointer; opacity: 0.5;">°F</div>';
+            }
+            else if (args.content.id === 'container_Annotation_4') {
+                args.content.innerHTML = ej.base.Browser.isDevice ? '<div id="days" style="text-align: right; font-size: 9px; opacity: 0.7;">' + day + '</div>' : '<div id="days" style="text-align: right; font-size: 15px; opacity: 0.7;">' + day + '</div>';
+            }
+            else if (args.content.id === 'container_Annotation_5') {
+                args.content.innerHTML = '<div id="weather" style="text-align: right; font-size: 15px; opacity: 0.7;">' + weather + '</div>';
+            }
+            else if (args.content.id === 'container_Annotation_6') {
+                args.content.innerHTML = ej.base.Browser.isDevice ? "<div id=\"title\" style=\"font-size: 16px; font-weight: 600\">USA, Texas</div>" : "<div id=\"title\" style=\"font-size: 20px; font-weight: 600\">USA, Texas</div>";
+            }
+            else {
+                args.content.innerHTML = '<div style="text-align:left; opacity: 0.7;">' + 'Rainfall: ' + rainfalls + ' mm/hr<br>' + 'Moisture: ' + moistureLevels + '%<br>' + 'Breeze: ' + breezeSpeeds + ' km/hr' + '</div>';
+            }
+        };
+
+        function updateChart(buttonId, img, tempCount, chartDay, zoomPos, zoomFactor, rainfall, moistureLevel, breezeSpeed, weatherCondition) {
+            image = img;
+            count = tempCount;
+            day = chartDay;
+            rainfalls = rainfall;
+            moistureLevels = moistureLevel;
+            breezeSpeeds = breezeSpeed;
+            weather = weatherCondition;
+            chart.primaryXAxis.zoomPosition = zoomPos;
+            chart.primaryXAxis.zoomFactor = zoomFactor;
+            chart.duration = 600;
+            const buttons = document.querySelectorAll('.chart-custom-button');
+            buttons.forEach(function (button) { return button.classList.remove('active'); });
+            const selectedButton = document.getElementById(buttonId);
+            selectedButton.classList.add('active');
+        };
+
+        document.getElementById('friday').onclick = () => {
+            buttonIndex = 0;
+            updateChart('friday', 'sunny_image', 25, 'Friday', 0, 0.175, 0, 30, 5, 'Sunny');
+        };
+        document.getElementById('saturday').onclick = () => {
+            buttonIndex = 1;
+            updateChart('saturday', 'sunny_image', 25, 'Saturday', 0.206, 0.175, 0, 35, 6, 'Sunny');
+        };
+        document.getElementById('sunday').onclick = () => {
+            buttonIndex = 2;
+            updateChart('sunday', 'cloudy', 24, 'Sunday', 0.413, 0.175, 1, 40, 4, 'Cloudy');
+        };
+        document.getElementById('monday').onclick = () => {
+            buttonIndex = 3;
+            updateChart('monday', 'cloudy', 19, 'Monday', 0.620, 0.175, 2, 45, 5, 'Cloudy');
+        };
+        document.getElementById('tuesday').onclick = () => {
+            buttonIndex = 4;
+            updateChart('tuesday', 'rainy', 18, 'Tuesday', 0.827, 0.175, 5, 50, 6, 'Rainy');
+        };
+    </script>
+}
+@section Meta {
+    <meta name="description" content="This example demonstrates the Live Data Sorting in ASP.NET Core Chart control. Explore here for more details." />
+}
+@section ActionDescription {
+    <div id="action-description">
+        <p>
+            This sample demonstrates the panning feature of the charts.
+        </p>
+    </div>
+}
+@section Description {
+    <div id="description">
+        <p>
+            This example demonstrates how to view the next set of data through panning. You can swipe left or right, or click on the days at the bottom to navigate through the data. Enable animation during panning by using the <code>enableAnimation</code> property in <code>zoomSettings</code>.
+        </p>
+        <p>
+            More information on zooming and panning can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/zooming" aria-label="Navigate to the documentation for Zooming in ASP.NET Core Chart control">documentation section<span class="sr-only">opens in a new tab</span></a>.
+        </p>
+    </div>
+}
+@*custom code start*@
+@section Scripts {
+}
+@*custom code end*@
+@section Title {
+    <title>ASP.NET Core Chart Live Data Sorting Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Live Data Sorting in ASP.NET Core Chart Control</h1>
+}

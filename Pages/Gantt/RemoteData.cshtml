@@ -1,0 +1,124 @@
+﻿@page
+@using EJ2CoreSampleBrowser.Models;
+@using Syncfusion.EJ2.Gantt;
+@model EJ2CoreSampleBrowser.Pages.Gantt.RemoteDataModel;
+@section ControlsSection {
+    <div class="control-section">
+        <div class="row">
+            <div class="col-md-12">
+                <div style="display:flex;">
+                    <div style="width: 250px; padding-bottom: 10px;">
+                        <ejs-dropdownlist id="recordCount" dataSource="@Model.DropdownData" value="@Model.RecordCount"
+                            change="change" placeholder="1,000 Rows">
+                            <e-dropdownlist-fields text="Text" value="Value"></e-dropdownlist-fields>
+                        </ejs-dropdownlist>
+                    </div>
+                    <span style="padding-left: 20px; font-size: 15px; margin-top: 5px;">
+                        <b>Data initial load time:</b> <span id="loadTime"></span> sec
+                    </span>
+                </div>
+                <ejs-gantt id='RemoteData' treeColumnIndex="1" height="650px" rowHeight="46" taskbarHeight="25" allowSelection="true" highlightWeekends="true"
+                    includeWeekend="true" projectStartDate="12/28/2024" projectEndDate="03/19/2025" gridLines="Horizontal" 
+                    enableVirtualization="true" enableTimelineVirtualization="true">
+                    <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate" endDate="EndDate"
+                        duration="Duration" progress="Progress" dependency="Predecessor" parentID="ParentId">
+                    </e-gantt-taskfields>
+                     <e-data-manager url= "https://ej2services.syncfusion.com/aspnet/development/api/GanttWebApiRemoteData?count=1000"
+                        adaptor="WebApiAdaptor" crossDomain="true"></e-data-manager>
+                    <e-gantt-splittersettings columnIndex="2"></e-gantt-splittersettings>
+                    <e-gantt-columns>
+                        <e-gantt-column field="TaskId"></e-gantt-column>
+                        <e-gantt-column field="TaskName" headerText="Project Activity" width="250"
+                            clipMode="EllipsisWithTooltip"></e-gantt-column>
+                        <e-gantt-column field="StartDate" headerText="Planned Start Date" width="200"></e-gantt-column>
+                        <e-gantt-column field="Duration" headerText="Estimated Duration" width="160"></e-gantt-column>
+                        <e-gantt-column field="Progress" headerText="Completion (%)" width="200"></e-gantt-column>
+                    </e-gantt-columns>
+                    <e-gantt-timelinesettings timelineUnitSize="50">
+                        <e-timelinesettings-toptier unit="Week" format="MMM dd, y"></e-timelinesettings-toptier>
+                        <e-timelinesettings-bottomtier unit="Day" format="dd"></e-timelinesettings-bottomtier>
+                    </e-gantt-timelinesettings>
+                    <e-gantt-labelsettings leftLabel="TaskName" taskLabel="Progress"></e-gantt-labelsettings>
+                </ejs-gantt>
+            </div>
+        </div>
+    </div>
+    <script>
+        
+        let startLoadTime;
+        let allowLoadTimeMeasure = true;
+        function change(args) {
+            const count = args.value;
+            const gantt = document.getElementById("RemoteData").ej2_instances[0];
+            startLoadTime = new Date();
+            allowLoadTimeMeasure = true;
+            gantt.dataSource = new ej.data.DataManager({
+                url: `https://ej2services.syncfusion.com/aspnet/development/api/GanttWebApiRemoteData?count=${count}`,
+                adaptor: new ej.data.WebApiAdaptor(),
+                crossDomain: true
+            });
+        }
+        document.addEventListener("DOMContentLoaded", function () {
+            startLoadTime = new Date();
+            const gantt = document.getElementById("RemoteData").ej2_instances[0];    
+            gantt.dataBound = function () {
+                if (allowLoadTimeMeasure && startLoadTime) {
+                    const diff = (new Date().getTime() - startLoadTime.getTime())/1000;
+                    document.getElementById("loadTime").innerText = diff.toFixed(2);
+                    allowLoadTimeMeasure = false;
+                }
+            };
+        });
+    </script>
+}
+@section ActionDescription {
+    <div id="action-description">
+        <p>
+            This sample demonstrates the way of binding data to Gantt Chart with a remote service. The Gantt Chart data
+            source is bound to remote data using the DataManager. The data in this sample shows the various phases of barley
+            harvesting.
+        </p>
+    </div>
+}
+@section Description {
+    <div id="description">
+        <p>
+            The <code>dataSource</code> property in Gantt Chart can be assigned with the instance of
+            <code>DataManager</code> to bind remote data.
+            The DataManager, which will act as an interface between the service endpoint and the Gantt Chart, will require
+            the below minimal information to interact with service endpoint properly.
+        </p>
+        <ol>
+            <li><code>DataManager->url</code> - Defines the service endpoint to fetch data.</li>
+            <li>
+                <code>DataManager->adaptor</code> - Defines the adaptor option. By default, ODataAdaptor is used for remote
+                binding. Adaptor is responsible for processing response and request from/to the service endpoint. Adaptors
+                are designed to interact with particular service endpoints. They are,
+            </li>
+            <li>
+                <code>UrlAdaptor</code> - Use this to interact with any remote services. This is the base adaptor for all
+                remote
+                based adaptors.
+            </li>
+            <li><code>ODataAdaptor</code> - Use this to interact with OData endpoints.</li>
+            <li><code>ODataV4Adaptor</code> - Use this to interact with OData V4 endpoints.</li>
+            <li><code>WebApiAdaptor</code> - Use this to interact with Web API created under OData standards.</li>
+            <li><code>WebMethodAdaptor</code> - Use this to interact with web methods.</li>
+        </ol>
+        <p>In this demo, remote data is bound by assigning service data as an instance of <code>DataManager</code> to the
+            <code>dataSource</code> property. More information on the data binding can be found in this documentation
+            section.
+        </p>
+        <p>More information on the Essential<sup>®</sup> Gantt Chart can be found in this <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/gantt/data-binding#remote-data">documentation section</a>.</p>
+    </div>
+}
+@section Meta {
+    <meta name="description"
+        content="This example demonstrates the Remote Data in ASP.NET Core Gantt control. Explore here for more details." />
+}
+@section Title {
+    <title>ASP.NET Core Gantt Remote Data Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Remote Data in ASP.NET Core Gantt Control</h1>
+}

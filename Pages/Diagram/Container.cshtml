@@ -1,0 +1,149 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Diagram.ContainerModel
+@using Syncfusion.EJ2.Diagrams;
+@{
+    
+}
+@section ControlsSection {
+    <div class="control-section">
+        <ejs-toolbar id="toolbarEditor" clicked="toolbarClick">
+            <e-toolbar-items>
+                <e-toolbar-item template="#fontfamilytemp" id="FontStyle"  type=Input tooltipText="Font Style"></e-toolbar-item>
+                <e-toolbar-item type="Separator"></e-toolbar-item>
+                <e-toolbar-item template="#fontSize" id="FontSize"  type=Input tooltipText="Font Size"></e-toolbar-item>
+                <e-toolbar-item prefixIcon="e-bold e-icons" id="Bold"  tooltipText="Bold"></e-toolbar-item>
+                <e-toolbar-item prefixIcon="e-italic e-icons" id="Italic"  tooltipText="Italic"></e-toolbar-item>
+                <e-toolbar-item prefixIcon="e-icons e-underline" id="Underline"  tooltipText="Underline"></e-toolbar-item>
+                <e-toolbar-item type="Separator"></e-toolbar-item>
+                <e-toolbar-item template="#fontColors" id="FontColor"  type=Input cssClass="tb-item-middle"
+                    tooltipText="Font Color"></e-toolbar-item>
+            </e-toolbar-items>
+        </ejs-toolbar>
+        <div>
+            <ejs-dropdownlist id="fontfamilytemp" dataSource="@Model.fontFamilyItems" index="0"
+                select="updateAnnotationValue"></ejs-dropdownlist>
+        </div>
+        <div>
+            <ejs-numerictextbox id="fontSize" format="##" value="12" min="1" max="20" step="1" Type="text"
+                change="updateAnnotationValue"></ejs-numerictextbox>
+        </div>
+        <div>
+            <ejs-colorpicker id="fontColors" mode="Palette" change="changeFontColor"></ejs-colorpicker>
+        </div>
+        <div id="diagram-space">
+            <ejs-diagram id="diagram" width="100%" height="700px" created="create" nodes="@Model.nodes"
+             connectors="@Model.connectors" constraints="@(DiagramConstraints.Default | DiagramConstraints.Bridging)">
+                <e-diagram-rulersettings showRulers="true" dynamicGrid="true"></e-diagram-rulersettings>
+            </ejs-diagram>
+        </div>
+    </div>
+    <script>
+        var toolbarObj = {};
+        
+        function create() {
+            toolbarObj = document.getElementById("toolbarEditor").ej2_instances[0];
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            diagram.fitToPage();
+        }
+        function toolbarClick(args) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            switch (args.item.tooltipText) {
+                case 'Bold':
+                    updateAnnotationValue('bold', args.value, null, 10);
+                    break;
+                case 'Italic':
+                    updateAnnotationValue('italic', args.value, null, 11);
+                    break;
+                case 'Underline':
+                    updateAnnotationValue('underline', args.value, null, 12);
+                    break;
+            }
+            diagram.dataBind();
+        }
+        //Apply the appearence of the Annotation
+        function updateAnnotationValue(value, fontSize, fontFamily, index, isSelected) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            for (var i = 0; i < diagram.selectedItems.nodes.length; i++) {
+                var node = diagram.selectedItems.nodes[i];
+                var option = value.itemData !== undefined ? 'fontfamily' : typeof value.value === 'number' ? 'fontsize' : value;
+                const annotations = (node.shape.type === 'Container') ? [node.shape.header.annotation] : node.annotations || [];
+                for (var j = 0; j < annotations.length; j++) {
+                    var annotationstyle = annotations[j].style;
+                    if (option === 'fontsize') {
+                        annotationstyle.fontSize = value.value;
+                    } else if (option === 'fontfamily') {
+                        annotationstyle.fontFamily = value.itemData.value;
+                    }
+                    else if (option === 'bold') {
+                        annotationstyle.bold = !annotationstyle.bold;
+                        isSelected = annotationstyle.bold;
+                    }
+                    else if (option === 'italic') {
+                        annotationstyle.italic = !annotationstyle.italic;
+                        isSelected = annotationstyle.italic;
+                    }
+                    else if (option === 'underline') {
+                        if (annotationstyle.textDecoration === "None") {
+                            annotationstyle.textDecoration = 'Underline';
+                            isSelected = true;
+                        }
+                        else {
+                            annotationstyle.textDecoration = 'None';
+                            isSelected = false;
+                        }
+                    }
+                    var toolbarTextStyle = document.getElementById("toolbarEditor");
+                    if (toolbarTextStyle) {
+                        toolbarTextStyle = toolbarTextStyle.ej2_instances[0];
+                    }
+                    if (toolbarTextStyle.items[index] !== undefined) {
+                        var cssClass = toolbarTextStyle.items[index].cssClass;
+                        toolbarTextStyle.items[index].cssClass = isSelected ? cssClass + ' tb-item-selected' : cssClass.replace(' tb-item-selected', '');
+                        toolbarTextStyle.dataBind();
+                    }
+                    diagram.dataBind();
+                }
+            }
+
+        }
+
+        function changeFontColor(arg) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            for (var i = 0; i < diagram.selectedItems.nodes.length; i++) {
+                var nodes = diagram.selectedItems.nodes[i];
+                if (nodes.shape.type === 'Container') {
+                    nodes.shape.header.annotation.style.color = arg.currentValue.rgba;
+                    diagram.dataBind();
+                } else {
+                    for (var j = 0; j < nodes.annotations.length; j++) {
+                        nodes.annotations[j].style.color = arg.currentValue.rgba;
+                        diagram.dataBind();
+                    }
+                }
+            }
+        }
+
+        @*custom code end*@
+    </script>
+}
+@section ActionDescription {
+    <p>
+        This sample visualizes a structured process flow by grouping related elements using built-in container shapes.
+    </p>
+}
+@section Meta {
+    <meta name="description"
+        content="This example demonstrates the Default Functionalities in ASP.NET Core Diagram control. Explore here for more details." />
+}
+@section Description {
+    This sample demonstrates how a process can be organized using containers that group related elements together. Setting
+    the <code>type</code> property of a shape to Container enables the grouping behavior. Nodes can be added inside the container using
+    the <code>children</code> property. Additionally, containers can be created interactively by dragging container shapes from the
+    symbol palette into the diagram.
+}
+@section Title {
+    <title>ASP.NET Core Diagram Container Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Container Feature in ASP.NET Core Diagram Control</h1>
+}

@@ -1,0 +1,349 @@
+﻿@page
+@model EJ2CoreSampleBrowser.Pages.PivotTable.OverviewModel
+@{
+}
+@using Syncfusion.EJ2.PivotView
+@section Meta {
+    <meta name="description" content="This sample provides an overview of ASP.NET Core Pivot Table, allowing you to organize and summarize pivot data in grid and chart views. Learn more.." />
+}
+@section ControlsSection {
+    <div class="control-section" id="pivot-table-section">
+        <div class="content-wrapper">
+            <ejs-pivotview id="pivotview" allowExcelExport="true" enableVirtualization="true" allowDeferLayoutUpdate="true"
+                           allowDrillThrough="true" allowGrouping="true" showGroupingBar="true" enableValueSorting="true"
+                           exportAllPages="false" allowNumberFormatting="true" allowConditionalFormatting="true" allowPdfExport="true"
+                           showToolbar="true" maxNodeLimitInMemberEditor="50" allowCalculatedField="true" showFieldList="true"
+                           width="100%" height="600" toolbar="@(new List<string>() {"New", "Save", "SaveAs", "Rename", "Remove", "Load",
+        "Grid", "Chart", "Export", "SubTotal", "GrandTotal", "Formatting", "FieldList" })" saveReport="saveReport"
+                           loadReport="loadReport" fetchReport="fetchReport" renameReport="renameReport" removeReport="removeReport"
+                           newReport="newReport" toolbarRender="beforeToolbarRender" chartSeriesCreated="chartSeriesCreated"
+                           cellTemplate="${getCellContent(data)}" enableFieldSearching="true" load="load">
+                <e-datasourcesettings dataSource="@Model.data" expandAll="false" enableSorting="true"
+                                      emptyCellsTextContent="-" showHeaderWhenEmpty="false" excludeFields="@Model.excludeFields">
+                    <e-formatsettings>
+                        <e-field name="international_students" format="N0" maximumSignificantDigits="10"
+                                 minimumSignificantDigits="1" useGrouping="true"></e-field>
+                        <e-field name="faculty_count" format="N0" maximumSignificantDigits="10" minimumSignificantDigits="1"
+                                 useGrouping="true"></e-field>
+                    </e-formatsettings>
+                    <e-filtersettings>
+                        <e-field name="region" type="Exclude" items="@Model.filterMembers"></e-field>
+                    </e-filtersettings>
+                    <e-rows>
+                        <e-field name="rank_display" caption="Rank" expandAll="true" allowDragAndDrop="false"></e-field>
+                        <e-field name="university" caption="University" expandAll="true" allowDragAndDrop="false"></e-field>
+                    </e-rows>
+                    <e-columns>
+                        <e-field name="region" caption="Region"></e-field>
+                        <e-field name="country" caption="Country"></e-field>
+                    </e-columns>
+                    <e-values>
+                        <e-field name="international_students" caption="Students"></e-field>
+                        <e-field name="faculty_count" caption="Faculty"></e-field>
+                    </e-values>
+                    <e-filters>
+                        <e-field name="type" caption="University Type"></e-field>
+                    </e-filters>
+                    <e-fieldMapping>
+                        <e-field name="rank_display" dataType="number"></e-field>
+                        <e-field name="country" caption="Country"></e-field>
+                        <e-field name="city" caption="City"></e-field>
+                        <e-field name="region" caption="Region"></e-field>
+                        <e-field name="research_output" caption="Research Output"></e-field>
+                        <e-field name="student_faculty_ratio" caption="Student faculty ratio"></e-field>
+                    </e-fieldMapping>
+                    <e-groupsettings>
+                        <e-field name="rank_display" type="Number" rangeInterval="100"></e-field>
+                    </e-groupsettings>
+                    <e-conditionalformatsettings>
+                        <e-format measure="international_students" value1="1" value2="5000" conditions="Between"
+                                  applyGrandTotals="false">
+                            <e-fieldlist-style backgroundColor="#E10000" color="white" fontFamily="Tahoma" fontSize="12px">
+                            </e-fieldlist-style>
+                        </e-format>
+                        <e-format measure="international_students" value1="50000" conditions="GreaterThan"
+                                  applyGrandTotals="false">
+                            <e-fieldlist-style backgroundColor="#0C860C" color="white" fontFamily="Tahoma" fontSize="12px">
+                            </e-fieldlist-style>
+                        </e-format>
+                        <e-format measure="faculty_count" value1="1" value2="1000" conditions="Between"
+                                  applyGrandTotals="false">
+                            <e-fieldlist-style backgroundColor="#E10000" color="white" fontFamily="Tahoma" fontSize="12px">
+                            </e-fieldlist-style>
+                        </e-format>
+                        <e-format measure="faculty_count" value1="10000" conditions="GreaterThan" applyGrandTotals="false">
+                            <e-fieldlist-style backgroundColor="#0C860C" color="white" fontFamily="Tahoma" fontSize="12px">
+                            </e-fieldlist-style>
+                        </e-format>
+                    </e-conditionalformatsettings>
+                </e-datasourcesettings>
+                <e-gridSettings columnWidth="120" rowHeight="36" allowSelection="true" excelQueryCellInfo="exportQueryCellInfo">
+                    <e-selectionSettings mode="Cell" cellSelectionMode="Box"></e-selectionSettings>
+                </e-gridSettings>
+                <e-displayOption view="Both"></e-displayOption>
+                <e-chartSettings title="Top Universities Analysis" load="onChartLoad"></e-chartSettings>
+            </ejs-pivotview>
+        </div>
+        <div class="urllink">
+            Source:
+            <a href="https://www.topuniversities.com/university-rankings?utm_source=topnav" target="_blank" aria-label="University Rankings">
+                QS World
+                University Rankings
+            </a>
+        </div>
+    </div>
+
+    <style>
+        #pivotview {
+            width: 100%;
+            height: 100%;
+        }
+
+        @@media only screen and (max-width: 400px) {
+            #pivot-table-section {
+                overflow: auto;
+            }
+        }
+
+        .sb-sample-content-area {
+            min-height: 255px !important;
+        }
+
+        .control-section {
+            min-height: 255px !important;
+        }
+
+        .e-hyperlinkcell {
+            text-decoration: auto;
+        }
+
+            .e-hyperlinkcell:hover {
+                text-decoration: underline;
+            }
+
+        .university-logo {
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .urllink {
+            float: right;
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+    </style>
+    <script>
+        window.getCellContent = function (args) {
+            var pivotObj = document.getElementById('pivotview').ej2_instances[0];
+            if (args.cellInfo && args.cellInfo.axis === 'value' && pivotObj.pivotValues[args.cellInfo.rowIndex] && pivotObj.pivotValues[args.cellInfo.rowIndex][0].hasChild) {
+                if (args.targetCell.classList.contains(args.cellInfo.cssClass)) {
+                    args.targetCell.classList.remove(args.cellInfo.cssClass);
+                    args.cellInfo.style = undefined;
+                }
+            }
+            if (args.cellInfo && args.cellInfo.axis === 'row' && args.cellInfo.valueSort.axis === 'university') {
+                var cellValue = ej.base.select('.e-cellvalue', args.targetCell);
+                cellValue.classList.add('e-hyperlinkcell');
+                cellValue.addEventListener('click', hyperlinkCellClick.bind(pivotObj));
+            }
+            return '';
+        };
+        function hyperlinkCellClick(args) {
+            var pivotObj = document.getElementById('pivotview').ej2_instances[0];
+            var cell = args.target.closest('.e-rowsheader');
+            var pivotValue = pivotObj.pivotValues[Number(cell.getAttribute('index'))][Number(cell.getAttribute('aria-colindex')) -1];
+            var link = pivotObj.dataSourceSettings.dataSource[pivotValue.index[0]].link;
+            window.open(link, '_blank');
+        }
+        function onChartLoad(args) {
+            var selectedTheme = location.hash.split("/")[1];
+            selectedTheme = selectedTheme ? selectedTheme : "Material";
+            args.chart.theme = (selectedTheme.charAt(0).toUpperCase() +
+                selectedTheme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast');
+        }
+        function chartSeriesCreated() {
+            var pivotObj = document.getElementById('pivotview').ej2_instances[0];
+            pivotObj.chartSettings.chartSeries.legendShape = pivotObj.chartSettings.chartSeries.type === 'Polar' ? 'Rectangle' : 'SeriesType';
+        }
+        function saveReport(args) {
+            var reports = [];
+            var isSaved = false;
+            if (localStorage.pivotviewReports && localStorage.pivotviewReports !== "") {
+                reports = JSON.parse(localStorage.pivotviewReports);
+            }
+            if (args.report && args.reportName && args.reportName !== '') {
+            let report = JSON.parse(args.report);
+            report.dataSourceSettings.dataSource = [];
+            report.pivotValues = [];
+            args.report = JSON.stringify(report);
+            reports.map(function (item) {
+                if (args.reportName === item.reportName) {
+                    item.report = args.report;
+                    isSaved = true;
+                }
+            });
+                if (!isSaved) {
+                    reports.push(args);
+                }
+                localStorage.pivotviewReports = JSON.stringify(reports);
+            }
+        }
+        function fetchReport(args) {
+            var reportCollection = [];
+            var reeportList = [];
+            if (localStorage.pivotviewReports && localStorage.pivotviewReports !== "") {
+                reportCollection = JSON.parse(localStorage.pivotviewReports);
+            }
+            reportCollection.map(function (item) {
+                reeportList.push(item.reportName);
+            });
+            args.reportName = reeportList;
+        }
+        function loadReport(args) {
+            var pivotObj = document.getElementById('pivotview').ej2_instances[0];
+            var reportCollection = [];
+            if (localStorage.pivotviewReports && localStorage.pivotviewReports !== "") {
+                reportCollection = JSON.parse(localStorage.pivotviewReports);
+            }
+            reportCollection.map(function (item) {
+                if (args.reportName === item.reportName) {
+                    args.report = item.report;
+                }
+            });
+            if (args.report) {
+                let report = JSON.parse(args.report);
+                report.dataSourceSettings.dataSource = pivotObj.dataSourceSettings.dataSource;
+                pivotObj.dataSourceSettings = report.dataSourceSettings;
+            }
+        }
+        function removeReport(args) {
+            var reportCollection = [];
+            if (localStorage.pivotviewReports && localStorage.pivotviewReports !== "") {
+                reportCollection = JSON.parse(localStorage.pivotviewReports);
+            }
+            for (var i = 0; i < reportCollection.length; i++) {
+                if (reportCollection[i].reportName === args.reportName) {
+                    reportCollection.splice(i, 1);
+                }
+            }
+            if (localStorage.pivotviewReports && localStorage.pivotviewReports !== "") {
+                localStorage.pivotviewReports = JSON.stringify(reportCollection);
+            }
+        }
+        function renameReport(args) {
+            var reportCollection = [];
+            if (localStorage.pivotviewReports && localStorage.pivotviewReports !== "") {
+                reportCollection = JSON.parse(localStorage.pivotviewReports);
+            }
+            if (args.isReportExists) {
+                for (var i = 0; i < reportCollection.length; i++) {
+                    if (reportCollection[i].reportName === args.rename) {
+                        reportCollection.splice(i, 1);
+                    }
+                }
+            }
+            reportCollection.map(function (item) {
+                if (args.reportName === item.reportName) {
+                    item.reportName = args.rename;
+                }
+            });
+            if (localStorage.pivotviewReports && localStorage.pivotviewReports !== "") {
+                localStorage.pivotviewReports = JSON.stringify(reportCollection);
+            }
+        }
+        function newReport() {
+            var pivotObj = document.getElementById('pivotview').ej2_instances[0];
+            pivotObj.setProperties({
+                dataSourceSettings: {
+                    columns: [],
+                    rows: [],
+                    values: [],
+                    filters: []
+                }
+            }, false);
+        }
+        function beforeToolbarRender(args) {
+            args.customToolbar.splice(6, 0, {
+                type: 'Separator'
+            });
+            args.customToolbar.splice(9, 0, {
+                type: 'Separator'
+            });
+        }
+        function exportQueryCellInfo(args) {
+            if (args.cell.axis === 'value' && args.cell.value === undefined) {
+                args.style.numberFormat = undefined;
+            }
+        }
+        function load(args) {
+            if (ej.base.Browser.isDevice) {
+                args.dataSourceSettings.rows = [{ name: 'rank_display', caption: 'Rank', expandAll: true, allowDragAndDrop: false }];
+            }
+        }
+    </script>
+}
+
+@section PreScripts {
+    <script>
+        ej.base.enableRipple(false);
+    </script>
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>
+            This sample provides an overview of <a target="_blank"
+                                                   href="https://www.syncfusion.com/aspnet-core-ui-controls/pivot-table" aria-label="ASP.NET Core Pivot Table">
+                ASP.NET Core Pivot Table
+            </a>, which allows you to organize and summarize pivot data
+            in a detailed or abstract view and display it as a grid and chart.
+        </p>
+    </div>
+}
+
+@section Description {
+    <div id="description">
+        <p>
+            The ASP.NET Core Pivot Table is a powerful control for organizing and summarizing business data and displaying
+            the
+            results in a table and chart format. It includes major features such as built-in <a target="_blank"
+                                                                                                href="https://ej2.syncfusion.com/aspnetcore/documentation/pivot-table/aggregation/#aggregation" aria-label="aggregations">
+                aggregations
+            </a>, <a target="_blank"
+                     href="https://ej2.syncfusion.com/aspnetcore/documentation/pivot-table/field-list/#field-list" aria-label="pivot table field list">
+                pivot table field list
+            </a> for report manipulation, Excel-like <a target="_blank"
+                                                        href="https://ej2.syncfusion.com/aspnetcore/documentation/pivot-table/filtering/#filtering" aria-label="filtering">
+                filtering
+            </a> and <a target="_blank"
+                        href="https://ej2.syncfusion.com/aspnetcore/documentation/pivot-table/sorting/#sorting" aria-label="sorting">
+                sorting
+            </a>, <a target="_blank"
+                     href="https://ej2.syncfusion.com/aspnetcore/documentation/pivot-table/editing/#editing" aria-label="editing">
+                editing
+            </a>, <a target="_blank"
+                     href="https://ej2.syncfusion.com/aspnetcore/documentation/pivot-table/excel-export/#excel-export" aria-label="Excel">
+                Excel
+            </a> and <a target="_blank"
+                        href="https://ej2.syncfusion.com/aspnetcore/documentation/pivot-table/pdf-export/#pdf-export" aria-label="PDF">
+                PDF
+            </a> exporting, and so on, which are used in this demo, as well as a large data source loaded without any
+            performance degradation by using <a target="_blank"
+                                                href="https://ej2.syncfusion.com/aspnetcore/documentation/pivot-table/virtual-scrolling/#virtual-scrolling" aria-label="virtualization">
+                virtualization
+            </a> support.
+        </p><br />
+        <p>
+            More information on the ASP.NET Core Pivot Table can be found in this <a target="_blank"
+                                                                                     href="https://ej2.syncfusion.com/aspnetcore/documentation/pivot-table/getting-started" aria-label="documentation section">
+                documentation section
+            </a>.
+        </p>
+    </div>
+}
+@section Title {
+    <title>ASP.NET Core Pivot Table Overview - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Overview of ASP.NET Core Pivot Table Control</h1>
+}

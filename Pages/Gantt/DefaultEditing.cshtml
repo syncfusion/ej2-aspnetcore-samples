@@ -1,0 +1,153 @@
+﻿@page
+@using EJ2CoreSampleBrowser.Models;
+@using Syncfusion.EJ2.Gantt;
+
+@section ControlsSection {
+    <div class="control-section">
+        <div class="row">
+            <div class="col-md-12">
+                <ejs-gantt id='Editing' dataSource="@GanttData.EditingData()" gridLines="Both" treeColumnIndex="1"
+                    created="created" actionBegin="actionBegin" height="650px" rowHeight="46" taskbarHeight="25"
+                    allowSelection="true" highlightWeekends="true" resources="@GanttData.EditingResources()"
+                    projectStartDate="03/26/2025" projectEndDate="09/10/2025" enableHover="true"
+                    toolbar="@(new List<string>() { "Add", "Edit", "Update", "Delete", "Cancel", "ExpandAll", "CollapseAll", "Indent", "Outdent" })">
+                    <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate" endDate="EndDate"
+                        duration="Duration" progress="Progress" dependency="Predecessor" parentID="ParentID" notes="Notes"
+                        resourceInfo="ResourceId">
+                    </e-gantt-taskfields>
+                    <e-gantt-resourcefields id="ResourceId" name="ResourceName">
+                    </e-gantt-resourcefields>
+                    <e-gantt-splittersettings columnIndex="3"></e-gantt-splittersettings>
+                    <e-gantt-columns>
+                        <e-gantt-column field="TaskId" width="80"></e-gantt-column>
+                        <e-gantt-column field="TaskName" headerText="Job Name" width="250"
+                            clipMode="EllipsisWithTooltip"></e-gantt-column>
+                        <e-gantt-column field="StartDate"></e-gantt-column>
+                        <e-gantt-column field="EndDate"></e-gantt-column>
+                        <e-gantt-column field="Duration"></e-gantt-column>
+                        <e-gantt-column field="Progress"></e-gantt-column>
+                        <e-gantt-column field="Predecessor"></e-gantt-column>
+                    </e-gantt-columns>
+                    <e-gantt-editsettings allowAdding="true" allowEditing="true" allowDeleting="true"
+                        allowTaskbarEditing="true" showDeleteConfirmDialog="true"></e-gantt-editsettings>
+                    <e-gantt-timelinesettings>
+                        <e-timelinesettings-toptier unit="Week" format="MMM dd, y"></e-timelinesettings-toptier>
+                        <e-timelinesettings-bottomtier unit="Day"></e-timelinesettings-bottomtier>
+                    </e-gantt-timelinesettings>
+                    <e-gantt-labelSettings leftLabel="TaskName" rightLabel="ResourceId"></e-gantt-labelSettings>
+                    <e-gantt-eventmarkers>
+                        <e-gantt-eventmarker day="4/17/2024" label="Project approval and kick-off"></e-gantt-eventmarker>
+                        <e-gantt-eventmarker day="5/3/2024" label="Foundation inspection"></e-gantt-eventmarker>
+                        <e-gantt-eventmarker day="6/7/2024" label="Site manager inspection"></e-gantt-eventmarker>
+                        <e-gantt-eventmarker day="7/16/2024" label="Property handover and sign-off"></e-gantt-eventmarker>
+                    </e-gantt-eventmarkers>
+                    <e-gantt-editdialogfields>
+                        <e-gantt-editdialogfield type="General"></e-gantt-editdialogfield>
+                        <e-gantt-editdialogfield type="Dependency"></e-gantt-editdialogfield>
+                        <e-gantt-editdialogfield type="Resources"></e-gantt-editdialogfield>
+                        <e-gantt-editdialogfield type="Notes"></e-gantt-editdialogfield>
+                    </e-gantt-editdialogfields>
+                </ejs-gantt>
+            </div>
+        </div>
+    </div>
+    <script>
+        var startDate
+        function created(args) {
+            var gantt = document.getElementsByClassName('e-gantt')[0].ej2_instances[0];
+            gantt.treeGrid.grid.columns[1].validationRules = { required: true, minLength: [5, 'Task name should have a minimum length of 5 characters'] };
+            gantt.treeGrid.grid.columns[3].validationRules = { required: [customFn, 'Please enter a value greater than the start date.'] };
+            gantt.treeGrid.grid.columns[4].validationRules = { required: true };
+            gantt.treeGrid.grid.columns[5].validationRules = { required: true, min: 0, max: 100 };
+            gantt.enableHover = true;
+        }
+        function actionBegin(args) {
+            if (args.columnName === "EndDate" || args.requestType === "beforeOpenAddDialog" || args.requestType === "beforeOpenEditDialog") {
+                startDate = args.rowData.ganttProperties.startDate;
+            }
+            if (args.requestType === "taskbarediting" && args.taskBarEditAction === "ChildDrag") {
+                startDate = args.data.ganttProperties.startDate;
+            }
+
+        }
+        function customFn(args) {
+            var endDate;
+            var gantt = (document.getElementsByClassName('e-gantt')[0]).ej2_instances[0];
+            if (args.element && args.value) {
+                var dateOptions = { format: gantt.dateFormat, type: 'dateTime', skeleton: 'yMd' };
+                endDate = gantt.globalize.parseDate(args.value, dateOptions);
+                if (!startDate && gantt.editModule.dialogModule['beforeOpenArgs']) {
+                    startDate = gantt.editModule.dialogModule['beforeOpenArgs'].rowData['ganttProperties'].startDate;
+                    endDate = gantt.editModule.dialogModule['beforeOpenArgs'].rowData['ganttProperties'].endDate;
+                }
+                startDate.setHours(0, 0, 0, 0);
+                endDate.setHours(0, 0, 0, 0);
+            }
+            return startDate <= endDate;
+        }
+
+    </script>
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>
+            This sample demonstrates the various phases involved in constructing a residential house, from testing the soil
+            to handing over the fully constructed property to the owner. This also demonstrates CRUD operations in a Gantt
+            Chart.
+            You can perform CRUD operations as follows,
+        <ul>
+            <li><code>Add</code> - To add new task, click Add toolbar button.</li>
+            <li>
+                <code>Edit </code>- To edit a task, double click a row or double click a taskbar or click toolbar Edit
+                button after selecting a row.
+            </li>
+            <li><code>Indent</code> - To indent a task, click toolbar indent button after selecting a row./li>
+            <li><code>Outdent</code> - To outdent a task, click toolbar outdent button after selecting a row.</li>
+            <li><code>Delete</code> - To delete a task, click toolbar Delete button after selecting a row.</li>
+            <li>
+                <code>Update, Cancel</code> - You can save or discard changes by clicking toolbar Update and Cancel button
+                respectively.
+            </li>
+        </ul>
+        </p>
+    </div>
+}
+@section Description {
+
+    <div id="description">
+        <p>
+            This CRUD operations can be configured in Gantt Chart using <a target="_blank"
+                href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.gantt.gantt.html#Syncfusion_EJ2_Gantt_Gantt_AllowTaskbarDragAndDrop">allowTaskbarEditing</a> in  <a target="_blank"
+                href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.gantt.gantt.html#Syncfusion_EJ2_Gantt_Gantt_EditSettings">editSettings</a>.
+            Gantt Chart has two modes to manipulate the datasource:
+        <ul>
+            <li><code>Auto</code></li>
+            <li><code>Dialog</code></li>
+        </ul>
+
+        In this demo, <code>Auto</code> mode is enabled for editing. On the TreeGrid side, you can start editing any row by
+        double
+        clicking on it or clicking on toolbar’s Edit button, then the currently selected row will be changed to edited
+        state. On the chart side, you can edit the tasks using edit dialog by double clicking on the taskbars and you
+        can edit the dependency connector lines using drag and drop action with connector line points available on
+        either side of the taskbar. It is possible to connect parent-parent, child-child, child-parent and parent -child
+        dependency relationships.
+        <br>
+        In this sample column.validationRules has been enabled for the columns. It uses the Form Validator control to define
+        validation rules, displaying error messages for invalid field values.
+
+        </p>
+        <br />
+    </div>
+}
+@section Meta {
+    <meta name="description"
+        content="This example demonstrates the Editing in ASP.NET Core Gantt control. Explore here for more details." />
+}
+@section Title {
+    <title>ASP.NET Core Gantt Editing Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Editing in ASP.NET Core Gantt Control</h1>
+}

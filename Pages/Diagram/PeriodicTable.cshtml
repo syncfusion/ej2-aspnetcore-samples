@@ -1,0 +1,115 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Diagram.PeriodicTableModel
+@using Syncfusion.EJ2;
+@using Syncfusion.EJ2.DropDowns;
+@{
+    var getNodeDefaults = "getNodeDefaults";
+    var getConnectorDefaults = "getConnectorDefaults";
+} 
+@section ControlsSection {
+    <div class="control-section">
+        <ejs-diagram id="container" width="100%" height="645px" nodes="@Model.Nodes" connectors="@Model.Connectors" constraints="@Model.Constraints"
+                     getConnectorDefaults="@getConnectorDefaults" selectedItems="Model.DiagramSelector" created="Create"
+                     selectionChange="selectionChange" mouseEnter="onMouseEnter" mouseLeave="onMouseLeave">
+            <e-diagram-scrollsettings scrollLimit="Diagram" canAutoScroll="false"></e-diagram-scrollsettings>
+            <e-diagram-snapsettings constraints="None"></e-diagram-snapsettings>
+        </ejs-diagram>
+            </div>
+  
+
+
+ 
+    <script>
+
+     function Create() {
+            var diagram = document.getElementById("container").ej2_instances[0];
+            diagram.fitToPage();
+          }
+        function selectionChange(args) {
+             var diagram = document.getElementById("container").ej2_instances[0];
+            if (args.state === 'Changed') {
+                var selectednode = args.newValue[0];
+                if (selectednode && selectednode.addInfo && selectednode.addInfo.label) {
+                    var label = selectednode.addInfo.label;
+                    var cellValue = selectednode.addInfo.cellValue;
+                     var cellValueAsString = cellValue.toString();
+                    // Highlight Selected Group/Period Elements
+                    for (var i = 0; i < diagram.nodes.length; i++) {
+                        var node = diagram.nodes[i];
+                        var element = node.addInfo;
+                        var name=element["Name"];
+                         var period=element["Period"];
+                          var group=element["Group"];
+                          var category=element["Category"];
+                           if (element && name) {
+                               node.style.opacity = ((label === 'PERIOD' && period === cellValueAsString) ||
+                                            (label === 'GROUP' && group === cellValueAsString&&category !== 'lanthanides' &&category !== 'actinides')) ? 1 : 0.3;
+                        }
+                    }
+                }
+                else {
+                    for (var nodeIndex = 0; nodeIndex < diagram.nodes.length; nodeIndex++) {
+                        diagram.nodes[nodeIndex].style.opacity = 1;
+                    }
+                }
+            }
+        }
+          function  onMouseEnter(args) {
+               var diagram = document.getElementById("container").ej2_instances[0];
+            var element = args.actualObject;
+            if (element.shape && element.shape.type != 'Text') {
+                if (element.annotations && element.annotations.length > 0) {
+                    // Toggle atomic mass number visibility
+                    element.annotations[element.annotations.length - 1].visibility = true;
+                    // scale up the node
+                    diagram.scale(element, 1.25, 1.25, { x: 0.5, y: 0.5 });
+                    diagram.dataBind();
+                }
+            }
+        }
+        function onMouseLeave (args) {
+             var diagram = document.getElementById("container").ej2_instances[0];
+            var element = args.element;
+            if (element.shape && element.shape.type != 'Text') {
+                if (element.annotations && element.annotations.length > 0) {
+                    // Toggle atomic mass number visibility
+                    element.annotations[element.annotations.length - 1].visibility = false;
+                    // scale down the node
+                    diagram.scale(element, 1 / 1.25, 1 / 1.25, { x: 0.5, y: 0.5 });
+                    diagram.dataBind();
+                }
+            }
+        }
+       
+
+        function getConnectorDefaults(obj) {
+            
+             obj.constraints= ej.diagrams.ConnectorConstraints.None,
+                obj.type= 'Orthogonal',
+                obj.style= { strokeColor: '#555555' },
+                obj.targetDecorator= { shape: 'None' }
+        }
+        
+    </script>
+
+}
+@section ActionDescription{
+    <p>
+        This sample demonstrates an interactive Periodic Table of Elements built using the Syncfusion<sup>®</sup> ASP.NET Core Diagram component, displaying all known elements with categorization by color, detailed hover information, and highlighting by period or group.
+    </p>
+}
+@section Meta{
+                    <meta name="description" content="Explore the Periodic Table interactively with Syncfusion ASP.NET Core Diagram. Color-coded elements, hover details, and dynamic highlighting by period and group make learning chemistry engaging."/>
+                }
+
+@section Description{
+    <p>
+        Elements in this interactive Periodic Table are nodes showing atomic number, symbol, and name; atomic mass appears on hover. Elements are color-coded by category with a clear legend. Users can dynamically highlight elements by clicking period or group numbers, instantly revealing chemical trends and relationships.
+    </p>
+}
+@section Title{
+                    <title>ASP.NET Core Diagram Periodic Table Example - Syncfusion Demos </title> 
+                }
+@section Header{
+    <h1 class='sb-sample-text'>Example of Interactive Periodic Table of Elements in ASP.NET Core Diagram Component</h1>
+                }

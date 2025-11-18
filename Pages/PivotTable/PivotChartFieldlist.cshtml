@@ -1,0 +1,356 @@
+@page
+
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2.PivotView
+@using Syncfusion.EJ2.DropDowns
+@section Meta{
+    <meta name="description" content="This example demonstrates the Pivot Chart with Field List in ASP.NET Core Pivot Table control. Explore here for more details."/>
+}
+
+@{
+    var data = new PivotTableData().GetPivot_Data();
+}
+@section ControlsSection {
+
+	<div class="control-section" style="overflow:auto">
+		<div class="content-wrapper" style="width: 100%;">
+			<div style="width: 100%;">
+				<ejs-toolbar id="defaultToolbar" class="defaultToolbar" height="50px" clicked="ToolbarCliked" beforeCreate="beforeCreate">
+					<e-toolbar-items>
+						<e-toolbar-item id="layout" template='<div class="toolbar-template" id="layout_switch"><label for="toolbar-switch" class="label_option">Show/hide Toolbar:</label><div id="toolbar-switch"></div></div>'></e-toolbar-item>
+						<e-toolbar-item id="display" template='<div class="toolbar-template toolbar-temp"><label class="label_option display_label">Display Option:</label><select id="displayOptionddl" name="ddl-display-option"><option value="Both">Both</option><option value="Table">Table</option><option value="Chart">Chart</option></select></div>'></e-toolbar-item>
+						<e-toolbar-item id="preference" template='<div class="toolbar-template toolbar-temp"><label class="label_option display_label">Primary View:</label><select id="primaryViewddl" name="ddl-primary-view"><option value="Table">Table</option><option value="Chart">Chart</option></select></div>'></e-toolbar-item>
+						<e-toolbar-item prefixIcon="sb-icons sb-icon-Next" id='fieldlist' tooltipText="Collapse Field List" align="Right"></e-toolbar-item>
+					</e-toolbar-items>
+				</ejs-toolbar>
+			</div>
+			<div id="pivot_sidebar" class="maincontent" style="width: 100%; height: 720px;">
+				<div id='pivot_container' style="width: 64%;">
+					<ejs-pivotview id="PivotView" enginePopulated="onGridEnginePopulate" dataBound="pivotDataBound" width="100%" height="350" toolbar="@(new List<string>() { "Grid", "Chart" })" showToolbar="true" actionBegin="pivotActionBegin">
+					<e-gridSettings columnWidth="140"></e-gridSettings>
+					<e-displayOption view="Both" primary="Chart"></e-displayOption>
+					<e-chartSettings title="Sales Analysis" load="onChartLoad">
+						<e-chartSeries type="Column"></e-chartSeries>
+					</e-chartSettings>
+				</ejs-pivotview>
+				</div>
+			</div>
+			<aside style="height: 100%;">
+				<ejs-sidebar id="defaultSidebar" class="default-sidebar" isOpen="true" type="Auto" position="Right" enableGestures="false" change="onChange" target=".maincontent">
+					<e-content-template>
+						<ejs-pivotfieldlist id="PivotFieldList" renderMode="Fixed" load="onLoad" enginePopulated="onFieldListEnginePopulate" dataBound="onDataBound" enableFieldSearching="true" allowCalculatedField="true">
+							<e-datasourcesettings dataSource="@data" expandAll="false" enableSorting="true" allowLabelFilter="true" allowValueFilter="true">
+								<e-fieldlist-formatsettings>
+									<e-field name="Amount" format="C0"></e-field>
+								</e-fieldlist-formatsettings>
+								<e-fieldlist-rows>
+									<e-field name="Country"></e-field>
+									<e-field name="Products"></e-field>
+								</e-fieldlist-rows>
+								<e-fieldlist-columns>
+									<e-field name="Year"></e-field>
+									<e-field name="Order_Source" caption="Order Source"></e-field>
+								</e-fieldlist-columns>
+								<e-fieldlist-values>
+									<e-field name="In_Stock" caption="In Stock"></e-field>
+									<e-field name="Sold" caption="Units Sold"></e-field>
+									<e-field name="Amount" caption="Sold Amount"></e-field>
+								</e-fieldlist-values>
+								<e-fieldlist-filters>
+									<e-field name="Product_Categories" caption="Product Categories"></e-field>
+								</e-fieldlist-filters>
+							</e-datasourcesettings>
+						</ejs-pivotfieldlist>
+					</e-content-template>
+				</ejs-sidebar>
+			</aside>
+		</div>
+	</div>
+
+	<style>
+		#PivotViewcontainerwrapper {
+			height: auto !important;
+		}
+
+		.e-bigger .e-tbar-btn .tb-icons {
+			font-size: 20px;
+		}
+
+		.e-tbar-btn .tb-icons {
+			font-family: 'e-icons';
+			speak: none;
+			font-size: 16px;
+			font-style: normal;
+			font-weight: normal;
+			font-variant: normal;
+			text-transform: none;
+		}
+
+		.e-tbar-menu-icon:before {
+			content: "\e725";
+		}
+
+		#layout_switch {
+			align-items: center;
+			display: flex;
+			gap: 10px;
+		}
+
+		.label_option {
+			margin-bottom: unset;
+		}
+
+		.toolbar-temp {
+			margin-left: 10px;
+		}
+
+		.display_label {
+			margin-right: 10px;
+		}
+
+		#pivot_sidebar .e-sidebar.e-right {
+			border-left: unset !important;
+		}
+
+		.default-sidebar {
+			width: 35% !important;
+		}
+
+		#defaultToolbar .sb-icons {
+			font-size: 20px !important;
+		}
+
+		.pivot-fieldList {
+			display: none !important;
+		}
+	</style>
+	<script>
+		var displayOptionDropDown;
+		var primaryViewDropDown;
+		var isInitial = false;
+		var isChecked = true;
+		var displayOption = 'Both';
+		var preference = 'Chart';
+		function onLoad(args) {
+		 if(document.getElementById('PivotFieldList') && ej.base.Browser.isDevice) {
+			  var fieldlistObj = document.getElementById('PivotFieldList').ej2_instances[0];
+				fieldlistObj.renderMode = 'Popup';
+				fieldlistObj.target = '.control-section';
+				ej.base.setStyleAttribute(document.getElementById('PivotFieldList'), {
+				  'width': 0,
+				  'height': 0,
+				  'float': 'left',
+				  'display': 'none'
+				});
+		 }
+		}
+		function onGridEnginePopulate(args) {
+			 if (!ej.base.Browser.isDevice) {
+					var pivotObj = document.getElementById('PivotView').ej2_instances[0];
+					var fieldlistObj = document.getElementById('PivotFieldList').ej2_instances[0];
+					if (fieldlistObj) {
+						fieldlistObj.update(pivotObj);
+					}
+				}
+		}
+		function onFieldListEnginePopulate(args) {
+				if (document.getElementById('PivotView')) {
+					var pivotObj = document.getElementById('PivotView').ej2_instances[0];
+					var fieldlistObj = document.getElementById('PivotFieldList').ej2_instances[0];
+					fieldlistObj.updateView(pivotObj);
+				}
+		}
+		function onDataBound(args) {
+				if (document.getElementById('PivotView')) {
+					var pivotObj = document.getElementById('PivotView').ej2_instances[0];
+					if (ej.base.Browser.isDevice) {
+						pivotObj.element.style.width = "100%";
+						pivotObj.allowCalculatedField = true;
+						pivotObj.showFieldList = true;
+					}
+					pivotObj.refresh();
+					pivotObj.tooltip.destroy();
+				}
+		}
+		function pivotDataBound() {
+		 if (document.getElementById('PivotView')) {
+			var pivotObj = document.getElementById('PivotView').ej2_instances[0];
+			if (document.getElementById('displayOptionddl') && document.getElementById('displayOptionddl') && document.getElementById('toolbar-switch') && !isInitial) {
+			isInitial = true;
+			displayOptionDropDown = new ej.dropdowns.DropDownList({
+			  floatLabelType: 'Auto',
+			  width: 100,
+			  value: displayOption,
+			  change: function (args) {
+				displayOption = args.value;
+				if (args.value !== 'Both') {
+				  primaryViewDropDown.readonly = true;
+				  pivotObj.displayOption = { view: args.value };
+				} else if (args.value == 'Both') {
+				  primaryViewDropDown.readonly = false;
+				  pivotObj.displayOption = {
+					view: args.value,
+					primary: primaryViewDropDown.value,
+				  };
+				}
+				pivotObj.refresh();
+			  }
+			});
+			displayOptionDropDown.appendTo('#displayOptionddl');
+			primaryViewDropDown = new ej.dropdowns.DropDownList({
+			  floatLabelType: 'Auto',
+			  width: 100,
+			  value: preference,
+			  change: function (args) {
+				preference = args.value;
+				if (pivotObj.displayOption.view == 'Both') {
+				  pivotObj.displayOption = { view: 'Both', primary: args.value };
+				  pivotObj.refresh();
+				}
+			  }
+			});
+			primaryViewDropDown.appendTo('#primaryViewddl');
+			var layoutSwitch = new ej.buttons.Switch({
+			  checked: isChecked,
+			  cssClass: 'pivot-toolbar-switch',
+			  change: function (args) {
+				isChecked = args.checked;
+				pivotObj.showToolbar = !pivotObj.showToolbar;
+				pivotObj.refresh();
+			  }
+			});
+			layoutSwitch.appendTo('#toolbar-switch');
+		  }
+		 }
+		}
+		function beforeCreate() {
+			if (document.getElementById('PivotView').ej2_instances != undefined) {
+				var pivotObj = document.getElementById('PivotView').ej2_instances[0];
+				isInitial = false;
+				pivotObj.layoutRefresh();
+			}
+		}
+		function ToolbarCliked(args) {
+			if (document.getElementById('PivotView')) {
+				var sideObj = document.getElementById('defaultSidebar').ej2_instances[0];
+				var toolbarObj = document.getElementById('defaultToolbar').ej2_instances[0];
+				if (args.item.id == "fieldlist") {
+					sideObj.toggle();
+					toolbarObj.items[3].prefixIcon = sideObj.isOpen ? 'sb-icons sb-icon-Next' : 'sb-icons sb-icon-Previous';
+					toolbarObj.items[3].tooltipText = sideObj.isOpen ? 'Collapse Field List' : 'Expand Field List';
+				}
+				if (ej.base.Browser.isDevice) {
+					sideObj.isOpen = false;
+					toolbarObj.items[3].prefixIcon = 'sb-icons sb-icon-Next pivot-fieldList';
+				}
+			}
+		}
+		function onChange() {
+			var sideObj = document.getElementById('defaultSidebar').ej2_instances[0];
+			var pivotObj = document.getElementById('PivotView').ej2_instances[0];
+			  if (!sideObj.isOpen) {
+				document.getElementById('pivot_container').style.width = '100%';
+			  } else {
+				document.getElementById('pivot_container').style.width = '64%';
+			  }
+			setTimeout(function () {
+				pivotObj.layoutRefresh();
+			}, 1000);
+		}
+		function onChartLoad(args) {
+			var selectedTheme = location.hash.split("/")[1];
+			selectedTheme = selectedTheme ? selectedTheme : "Material";
+			args.chart.theme = (selectedTheme.charAt(0).toUpperCase() +
+				selectedTheme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast');
+		}
+		function pivotActionBegin(args) {
+			if (args.actionName == "Show table view") {
+				primaryViewDropDown.value = 'Table';
+			  } else if (args.actionName == "Show chart view") {
+				primaryViewDropDown.value = 'Chart';
+			  }
+		}
+		setTimeout(function () {
+			var pivotObj = document.getElementById('PivotView').ej2_instances[0];
+			if (ej.base.Browser.isDevice) {
+				var sideObj = document.getElementById('defaultSidebar').ej2_instances[0];
+				var toolbarObj = document.getElementById('defaultToolbar').ej2_instances[0];
+				sideObj.isOpen = false;
+				toolbarObj.items[3].prefixIcon = 'sb-icons sb-icon-Next pivot-fieldList';
+				pivotObj.toolbar = ['Grid', 'Chart', 'FieldList'];
+			}
+			pivotObj.layoutRefresh();
+		}, 1000);
+	</script>
+}
+
+@section PreScripts {
+    <script>
+        ej.base.enableRipple(false);
+    </script>
+}
+
+@section ActionDescription{
+   <div id="action-description">
+       <p>
+           This sample demonstrates rendering a pivot table and pivot chart along with the Excel-like field list feature. It
+            also provides interactive controls to toggle the toolbar and dynamically switch between different display modes.
+       </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            This example showcases the Syncfusion Pivot Table component alongside a Pivot Chart and a field list rendered
+            statically within a sidebar layout. The static field list allows users to configure and customize the report by
+            dragging and dropping fields into the appropriate sections such as rows, columns, values, and filters—without
+            relying on a popup interface. This enhances accessibility and usability, especially in wide-screen or dashboard
+            environments.
+        </p>
+        <p>
+            The Pivot Table component supports three display modes, which are implemented in this sample and can be
+            configurable using the <a target="_blank"
+            href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.PivotView.PivotViewDisplayOption.html#Syncfusion_EJ2_PivotView_PivotViewDisplayOption_View">displayOption.view</a> property:
+        </p>
+        <table>
+            <tr>
+                <td style="vertical-align: top;padding: 4px 0;">
+                    <code>Table :</code>
+                </td>
+                <td>Displays only the pivot table (default).</td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top;padding: 4px 0;">
+                    <code>Chart :</code>
+                </td>
+                <td>Displays only the pivot chart.</td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top;padding: 4px 0;">
+                    <code>Both :</code>
+                </td>
+                <td>Displays both the pivot table and pivot chart.</td>
+            </tr>
+        </table>
+        <br />
+        <p>
+            A <strong>Primary View</strong> dropdown lets users choose whether to prioritize the chart or table when both
+            are shown.</p>
+        <p>
+            Additionally, the <strong>Show/Hide Toolbar</strong> toggle controls the visibility of the built-in toolbar,
+            which includes
+            options for switching views and chart types.</p>
+        <p>
+            More information on the pivot chart can be found in this <a target="_blank"
+				href="https://ej2.syncfusion.com/aspnetcore/documentation/pivot-table/pivot-chart">
+                documentation section</a>.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Pivot Table Chart with Field List Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Pivot Chart with Field List in ASP.NET Core Pivot Table Control</h1>
+                }

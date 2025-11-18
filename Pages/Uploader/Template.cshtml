@@ -1,0 +1,496 @@
+@page
+
+@using Syncfusion.EJ2
+
+@{
+    var asyncSettings = new Syncfusion.EJ2.Inputs.UploaderAsyncSettings { SaveUrl = @Url.Content("http://localhost:62928/api/FileUploader/Save"), RemoveUrl = @Url.Content("http://localhost:62928/api/FileUploader/Remove") };
+}
+
+@section ControlsSection{
+    <div class="col-lg-8 control-section">
+        <div class="control_wrapper">
+            <div id='dropArea'>
+                <span id='drop' class="droparea"> Drop files here or <a href="" id='browse'><u>Browse</u></a> </span>
+                <ejs-uploader id="UploadFiles" removing="onFileRemove" dropArea=".control-fluid" asyncSettings="@asyncSettings" selected="onFileSelect" success="onUploadSuccess" failure="onUploadFailed" progress="onFileUpload" ></ejs-uploader>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 property-section">
+        <div id="property" title="Properties">
+            <div style='margin-left: 50px; padding-top:25px;'>
+                <button class="e-btn e-css" id="clearbtn">Clear All</button>
+            </div>
+        </div>
+    </div>
+}
+
+<style>
+    #dropArea {
+        min-height: 50px;
+        padding-top: 15px;
+        position: relative;
+    }
+
+    #drop {
+        padding: 3% 30% 3%;
+        display: inherit;
+        border: 1px dashed #c3c3cc
+    }
+
+    .droparea {
+        font-size: 13px;
+    }
+
+    .e-bigger .droparea {
+        font-size: 14px;
+    }
+
+    .control_wrapper {
+        max-width: 400px;
+        margin: auto;
+    }
+
+    .e-file-select-wrap {
+        display: none;
+    }
+
+    .e-upload {
+        float: none;
+        border: none;
+    }
+
+    .ul-element {
+        list-style: none;
+        width: 100%;
+        padding-left: 0;
+    }
+
+    .file-name {
+        padding: 8px 6px 8px 0;
+        font-size: 13px;
+        width: 46%;
+        display: inline-block;
+        position: relative;
+        top: 4px;
+    }
+
+    .e-bigger .file-name {
+        font-size: 14px;
+    }
+
+    .file-size {
+        padding: 4px;
+        font-size: 13px;
+        width: 18%;
+        display: inline-block;
+        position: relative;
+    }
+
+    .e-bigger .file-size {
+        font-size: 14px;
+    }
+
+    .file-lists {
+        border: 1px solid lightgray;
+        padding: 0 6px 0 14px;
+        margin-top: 15px;
+        position: relative;
+        background: rgba(0, 0, 0, 0.04);
+    }
+
+    .file-size, .file-name {
+        font-family: "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    span.progress-bar-container {
+        display: block;
+        float: right;
+        height: 20px;
+        right: 13%;
+        top: 14px;
+        position: relative;
+        width: 20%;
+    }
+
+    .progress {
+        width: 100%;
+        height: 15px;
+        -webkit-appearance: none;
+    }
+
+    .close-icon-container {
+        cursor: pointer;
+        font-size: 11px;
+        height: 24px;
+        margin: 0 12px 0 22px;
+        padding: 0;
+        position: absolute;
+        right: 0;
+        width: 24px;
+        top: 6px;
+    }
+
+        .close-icon-container.e-icons::before {
+            left: 7px;
+            position: inherit;
+            top: 7px;
+            content: '\e7e7';
+        }
+
+    .bootstrap4 .close-icon-container.e-icons::before {
+        left: 7px;
+        position: inherit;
+        top: 7px;
+        content: '\e745';
+    }
+
+    .tailwind .close-icon-container.e-icons::before,
+    .tailwind3 .close-icon-container.e-icons::before,
+    .tailwind-dark .close-icon-container.e-icons::before,
+    .tailwind3-dark .close-icon-container.e-icons::before {
+        content: '\e7e7';
+    }
+
+    .fabric .close-icon-container.e-icons::before,
+    .fabric-dark .close-icon-container.e-icons::before,
+    .highcontrast .close-icon-container.e-icons::before {
+        content: '\e953';
+    }
+
+    .bootstrap5 .close-icon-container.e-icons::before,
+    .bootstrap5-dark .close-icon-container.e-icons::before {
+        content: '\e7e7';
+    }
+
+    .material .close-icon-container.e-icons::before,
+    .material-dark .close-icon-container.e-icons::before {
+        content: '\e932';
+    }
+
+    .bootstrap .close-icon-container.e-icons::before,
+    .bootstrap-dark .close-icon-container.e-icons::before {
+        content: '\e7fc';
+    }
+
+
+
+        .bootstrap4 .file-lists {
+            background: #fff;
+        }
+
+        .close-icon-container.delete-icon::before {
+            content: '\e94a';
+        }
+
+        .bootstrap4 .close-icon-container.delete-icon::before {
+            content: '\e773';
+        }
+
+        .tailwind .close-icon-container.delete-icon::before,
+        .tailwind-dark .close-icon-container.delete-icon::before,
+        .tailwind3 .close-icon-container.delete-icon::before,
+        .tailwind3-dark .close-icon-container.delete-icon::before {
+            content: '\e820';
+        }
+        .bootstrap5 .close-icon-container.delete-icon::before,
+        .bootstrap5-dark .close-icon-container.delete-icon::before {
+            content: '\e820';
+        }
+
+        .fabric .close-icon-container.delete-icon::before,
+        .fabric-dark .close-icon-container.delete-icon::before {
+            content: '\e965';
+        }
+
+        .highcontrast .close-icon-container.delete-icon::before {
+            content: '\e965';
+        }
+
+        .fluent .close-icon-container.delete-icon::before,
+        .fluent-dark .close-icon-container.delete-icon::before {
+            content: '\e820';
+        }
+        .tailwind .close-icon-container.delete-icon,
+        .tailwind3 .close-icon-container.delete-icon  {
+            top: 10px;
+        }
+
+
+        .close-icon-container:hover {
+            background-color: rgba(0, 0, 0, 0.12);
+            border-color: transparent;
+            border-radius: 50%;
+            box-shadow: 0 0 0 transparent;
+        }
+
+        .bootstrap4 .close-icon-container:hover {
+            background-color: #e9ecef;
+            border-color: transparent;
+            border-radius: 4px;
+            box-shadow: 0 0 0 transparent;
+        }
+
+
+    .highcontrast .close-icon-container:hover {
+        background-color: #ffd939;
+        color: black;
+    }
+
+    .highcontrast .close-icon-container {
+        color: #ffffff;
+    }
+
+    .upload-success {
+        color: #2bc700;
+    }
+
+    .upload-fails {
+        color: #f44336;
+    }
+
+    progress::-webkit-progress-bar {
+        border: 1px solid lightgrey;
+        background-color: #ffffff;
+        border-radius: 2px;
+    }
+
+    #dropArea progress {
+        border: 1px solid lightgrey;
+        background-color: #ffffff;
+        border-radius: 2px;
+    }
+
+    .bootstrap4 #dropArea progress {
+        background-color: #dee2e6;
+        border-radius: 4px;
+    }
+
+    .bootstrap4 progress::-webkit-progress-value {
+        background-color: #007bff;
+        border-radius: 4px;
+    }
+
+
+    .highcontrast #dropArea progress {
+        background-color: #000000;
+    }
+
+    .highcontrast progress::-webkit-progress-bar {
+        background-color: #000000;
+    }
+
+    .material progress::-webkit-progress-value {
+        border-radius: 2px;
+        background-color: #ff4081;
+    }
+
+    .bootstrap progress::-webkit-progress-value {
+        border-radius: 2px;
+        background-color: #1f496e;
+    }
+
+    .fabric progress::-webkit-progress-value {
+        background-color: #1763ff;
+        border-radius: 2px;
+        top: -66px;
+    }
+
+    .highcontrast progress::-webkit-progress-value {
+        background-color: #ffd939;
+        border-radius: 2px;
+    }
+
+    .material progress::-moz-progress-bar {
+        border-radius: 2px;
+        background-color: #ff4081;
+    }
+
+    .bootstrap progress::-moz-progress-bar {
+        border-radius: 2px;
+        background-color: #1f496e;
+    }
+
+    .fabric progress::-moz-progress-bar {
+        background-color: #1763ff;
+        border-radius: 2px;
+        top: -66px;
+    }
+
+    .highcontrast progress::-moz-progress-bar {
+        background-color: #ffd939;
+        border-radius: 2px;
+    }
+
+    .material #dropArea span a {
+        color: #ff4081;
+    }
+
+    .fabric #dropArea span a {
+        color: #1763ff;
+    }
+
+    .bootstrap #dropArea span a {
+        color: #1f496e;
+    }
+
+    .highcontrast #dropArea span a {
+        color: #ffd939;
+    }
+    .material3-dark #dropArea span a,
+    .material-dark #dropArea span a {
+        color:#56a4fd;
+    }
+    .fabric-dark #dropArea span a {
+        color:#0074cc;
+    }
+    .bootstrap-dark #dropArea span a {
+        color:#0070f0;
+    }
+    .bootstrap5-dark #dropArea span a {
+        color:#0d6efd;
+    }
+    .tailwind-dark #dropArea span a,
+    .tailwind3-dark #dropArea span a {
+        color:#22d3ee;
+    }
+</style>
+
+@section PreScripts {
+    <script>
+        function onFileRemove(args) {
+            args.postRawFile = false;
+        }
+        var dropElement = document.getElementsByClassName('control-fluid')[0];
+        var filesDetails = [];
+        document.getElementById('browse').onclick = function () {
+            document.getElementsByClassName('e-file-select-wrap')[0].querySelector('button').click();
+            return false;
+        };
+        document.getElementById('clearbtn').onclick = function () {
+            var uploadObj = document.getElementById("UploadFiles")
+            uploadObj.ej2_instances[0].element.value = '';
+            if (!ej.base.isNullOrUndefined(document.getElementById('dropArea').querySelector('.upload-list-root'))) {
+                ej.base.detach(document.getElementById('dropArea').querySelector('.upload-list-root'));
+            }
+            uploadObj.ej2_instances[0].filesData = [];
+            uploadObj.ej2_instances[0].fileList = [];
+        };
+        var parentElement; var proxy; var progressbarContainer;
+        function onFileSelect(args) {
+            if (ej.base.isNullOrUndefined(document.getElementById('dropArea').querySelector('.upload-list-root'))) {
+                parentElement = ej.base.createElement('div', { className: 'upload-list-root' });
+                parentElement.appendChild(ej.base.createElement('ul', { className: 'ul-element' }));
+                document.getElementById('dropArea').appendChild(parentElement);
+            }
+            for (var i = 0; i < args.filesData.length; i++) {
+                formSelectedData(args.filesData[i], this);    // create the LI element for each file Data
+            }
+            this.filesData = this.filesData.concat(args.filesData);
+            this.upload(args.filesData, true);
+            args.cancel = true;
+        }
+        function formSelectedData(selectedFiles, proxy) {
+            var liEle = ej.base.createElement('li', { className: 'file-lists', attrs: { 'data-file-name': selectedFiles.name } });
+            liEle.appendChild(ej.base.createElement('span', { className: 'file-name ', innerHTML: selectedFiles.name }));
+            liEle.appendChild(ej.base.createElement('span', { className: 'file-size ', innerHTML: proxy.bytesToSize(selectedFiles.size) }));
+            if (selectedFiles.status === proxy.localizedTexts('readyToUploadMessage')) {
+                progressbarContainer = ej.base.createElement('span', { className: 'progress-bar-container' });
+                progressbarContainer.appendChild(ej.base.createElement('progress', { className: 'progress', attrs: { value: '0', max: '100' } }));
+                liEle.appendChild(progressbarContainer);
+            }
+            else {
+                liEle.querySelector('.file-name').classList.add('upload-fails');
+            }
+            var closeIconContainer = ej.base.createElement('span', { className: 'e-icons close-icon-container' });
+            ej.base.EventHandler.add(closeIconContainer, 'click', removeFiles, proxy);
+            liEle.appendChild(closeIconContainer);
+            document.querySelector('.ul-element').appendChild(liEle);
+            proxy.fileList.push(liEle);
+        }
+        function onFileUpload(args) {
+            var li = document.getElementById('dropArea').querySelector('[data-file-name="' + args.file.name + '"]');
+            ej.base.EventHandler.remove(li.querySelector('.close-icon-container'), 'click', removeFiles);
+            var progressValue = Math.round((args.e.loaded / args.e.total) * 100);
+            if (!isNaN(progressValue)) {
+                li.getElementsByTagName('progress')[0].value = progressValue;   // Updating the progress bar value
+            }
+        }
+        function onUploadSuccess(args) {
+            var _this = this;
+            var spinnerElement = document.getElementById('dropArea');
+            var li = document.getElementById('dropArea').querySelector('[data-file-name="' + args.file.name + '"]');
+            if (!ej.base.isNullOrUndefined(li.querySelector('.progress-bar-container'))) {
+                ej.base.detach(li.querySelector('.progress-bar-container'));
+            }
+            if (args.operation === 'upload') {
+                li.querySelector('.file-name').classList.add('upload-success');
+                li.querySelector('.close-icon-container').classList.add('delete-icon');
+                (li.querySelector('.close-icon-container')).onclick = function () {
+                    generateSpinner(_this.uploadWrapper);
+                };
+                li.querySelector('.close-icon-container').onkeydown = function (e) {
+                    if (e.keyCode === 13) {
+                        generateSpinner(e.target.closest('.e-upload'));
+                    }
+                };
+            }
+            if (args.operation === 'remove') {
+                this.filesData.splice(this.fileList.indexOf(li), 1);
+                this.fileList.splice(this.fileList.indexOf(li), 1);
+                ej.base.detach(li);
+                ej.popups.hideSpinner(spinnerElement);
+                ej.base.detach(spinnerElement.querySelector('.e-spinner-pane'));
+            }
+            ej.base.EventHandler.add(li.querySelector('.close-icon-container'), 'click', removeFiles, this);
+        }
+        function generateSpinner(targetElement) {
+            ej.popups.createSpinner({ target: targetElement, width: '25px' });
+            ej.popups.showSpinner(targetElement);
+        }
+        function onUploadFailed(args) {
+            var li = document.getElementById('dropArea').querySelector('[data-file-name="' + args.file.name + '"]');
+            ej.base.EventHandler.add(li.querySelector('.close-icon-container'), 'click', removeFiles, this);
+            li.querySelector('.file-name ').classList.add('upload-fails');
+            if (args.operation === 'upload') {
+                ej.base.detach(li.querySelector('.progress-bar-container'));
+            }
+        }
+        function removeFiles(args) {
+            var removeFile = this.filesData[this.fileList.indexOf(args.currentTarget.parentElement)];
+            var statusCode = removeFile.statusCode;
+            if (statusCode === '2') {
+                this.remove(removeFile, true);
+            } else {
+                var li = args.currentTarget.parentElement;
+                ej.base.detach(li);
+            }
+        }
+    </script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This <a href="https://www.syncfusion.com/aspnet-core-ui-controls/file-upload"
+        target="_blank" aria-label="Navigate to explore the Syncfusion ASP.NET Core File Upload">ASP.NET Core File Upload</a> example demonstrates how to customize the file list with template. Browse or select the files to view the file list template.</p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>The Uploader control allows to customize its file list using template property. The template used for each file in file list.</p>
+        <p>For more information, you can refer to the Template section from this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/uploader/template "aria-label="Navigate to the documentation for template in ASP.NET Core Uploader control" > Documentation section</a>.</p>
+    </div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Template in ASP.NET Core File Upload control. Explore here for more details."/>
+                }
+@section Title{
+                    <title>ASP.NET Core File Upload Template Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Template in ASP.NET Core File Upload Control</h1>
+                }

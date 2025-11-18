@@ -1,0 +1,80 @@
+﻿@page
+@using EJ2CoreSampleBrowser.Models;
+@using Syncfusion.EJ2
+@model EJ2CoreSampleBrowser.Pages.TreeGrid.CellEditTypesModel
+
+@section ControlsSection{
+    <div class="control-section">
+        <ejs-treegrid id="TreeGrid" load="load" dataSource="@TreeData.GetDefaultData()" height="400" childMapping="Children"
+                      treeColumnIndex="1" toolbar="@(new List<string>() { "Add","Edit", "Delete", "Update", "Cancel" })">
+            <e-treegrid-editsettings allowAdding="true" allowEditing="true" allowDeleting="true" mode="Row"></e-treegrid-editsettings>
+            <e-treegrid-columns>
+                <e-treegrid-column field="TaskId" headerText="Task ID" isPrimaryKey="true" validationRules="@(new { required=true, number=true})" textAlign="Right" width="70"></e-treegrid-column>
+                <e-treegrid-column field="TaskName" headerText="Task Name" validationRules="@(new { required=true})" editType="stringedit" width="180"></e-treegrid-column>
+                <e-treegrid-column field="StartDate" headerText="Start Date" validationRules="@(new { required = true, date = "M/d/y hh:mm a" })" editType="datepickeredit" textAlign="Right" edit="@(new{@params=new{format="M/d/y hh:mm a",type="datetime"}})" width="185"></e-treegrid-column>
+                <e-treegrid-column field="Approved" headerText="Approved" editType="booleanedit" textAlign="Center" width="90" displayAsCheckbox="true" type="boolean"></e-treegrid-column>
+                <e-treegrid-column field="Progress" headerText="Progress" validationRules="@Model.Dict" editType="numericedit" edit="@(new{@params=new{format="n"}})" width="100" textAlign="Right"></e-treegrid-column>
+                <e-treegrid-column field="Priority" headerText="Priority" editType="dropdownedit" width="100"></e-treegrid-column>
+            </e-treegrid-columns>
+        </ejs-treegrid>
+    </div>
+
+    <script>
+        function load() {
+            var treegridObj = document.getElementById("TreeGrid").ej2_instances[0];
+            for (i = 0; i < treegridObj.columns.length; i++) {
+                if (treegridObj.columns[i].field == "StartDate") {
+                    treegridObj.columns[i].format = { type: 'dateTime', format: 'M/d/y hh:mm a' };
+                }
+            }
+        }
+    </script>
+}
+
+@*custom code start*@
+
+@section Meta{
+    <meta name="description" content="This example demonstrates the Cell Edit Type in ASP.NET Core Tree Grid control. Explore here for more details." />
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the supported cell edit types of TreeGrid columns. The list of cell edit types are as follows,
+        </p>
+        <ul>
+            <li><code>NumericTextBox</code> component for integers, double, and decimal data types.</li>
+            <li><code>TextBox</code> component for string data type.</li>
+            <li><code>DropDownList</code> component for list data type.</li>
+            <li><code>DatePicker</code> component for date data type.</li>
+            <li><code>DateTimePicker</code> component for dateTime data type.</li>
+            <li><code>Checkbox</code> component for boolean data type</li>
+        </ul>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            The <code>columns.editType</code>  is used to customize the edit type of the particular column. You can set the columns.editType based on data type of the column.
+        </p>
+        <p>
+            In this sample, we show the following editTypes for the TreeGrid columns
+        </p>
+        <ul>
+            <li><code>NumericTextBox</code></li>
+            <li><code>TextBox</code></li>
+            <li><code>DropDownList</code></li>
+            <li><code>DateTimePicker</code></li>
+            <li><code>Checkbox</code></li>
+        </ul>
+    </div>
+}
+
+@*custom code end*@
+@section Title{
+    <title>ASP.NET Core Tree Grid Cell Edit Type Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Cell Edit Type in ASP.NET Core Tree Grid Control</h1>
+}

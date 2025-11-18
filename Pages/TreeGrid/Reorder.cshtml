@@ -1,0 +1,118 @@
+﻿@page
+@using EJ2CoreSampleBrowser.Models;
+@using Syncfusion.EJ2
+@model EJ2CoreSampleBrowser.Pages.TreeGrid.ReorderModel
+
+@section ControlsSection{
+    <div class="col-lg-9 control-section">
+        <div class="content-wrapper">
+            <ejs-treegrid id="TreeGrid" dataSource="@TreeData.GetDefaultData()" allowReordering="true" allowPaging="true" height="350" childMapping="Children" treeColumnIndex="1" actionComplete="actionComplete">
+                <e-treegrid-pagesettings pageSize="10"></e-treegrid-pagesettings>
+                <e-treegrid-columns>
+                    <e-treegrid-column field="TaskId" headerText="Task ID" textAlign="Right" width="80"></e-treegrid-column>
+                    <e-treegrid-column field="TaskName" headerText="Task Name" width="190"></e-treegrid-column>
+                    <e-treegrid-column field="StartDate" headerText=" Start Date" textAlign="Right" format="yMd" type="date" width="100"></e-treegrid-column>
+                    <e-treegrid-column field="Duration" headerText="Duration" textAlign="Right" width="90"></e-treegrid-column>
+                    <e-treegrid-column field="Progress" headerText="Progress" textAlign="Right" width="90"></e-treegrid-column>
+                </e-treegrid-columns>
+            </ejs-treegrid>
+        </div>
+    </div>
+
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties" style="width: 100%">
+            <tr style="height: 50px">
+                <td style="width: 30%">
+                    <div style="padding-top: 10px">Column</div>
+                </td>
+                <td style="width: 80%;">
+                    <div>
+                        <ejs-dropdownlist id="Columns" width="130px" dataSource="@Model.Columns" placeholder="Select a Column" index="0" popupHeight="220px" change="columnChange">
+                            <e-dropdownlist-fields text="name" value="id"></e-dropdownlist-fields>
+                        </ejs-dropdownlist>
+                    </div>
+                </td>
+            </tr>
+            <tr style="height: 50px">
+                <td style="width: 50%">
+                    <div>Column Index</div>
+                </td>
+                <td style="width: 50%;">
+                    <div>
+                        <ejs-dropdownlist id="Index" width="130px" dataSource="@Model.Indexes" placeholder="Select a Format" index="0" popupHeight="220px" change="indexChange">
+                            <e-dropdownlist-fields text="index" value="id"></e-dropdownlist-fields>
+                        </ejs-dropdownlist>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        var indexes = @Html.Raw(Json.Serialize(Model.Indexes));
+        function columnChange(e) {
+            var treegrid = document.getElementById("TreeGrid").ej2_instances[0];
+            var dropDownIndex = document.getElementById("Index").ej2_instances[0];
+            var columnName = e.value;
+            var index = treegrid.getColumnIndexByField(columnName);
+            dropDownIndex.value = index;
+        }
+        function indexChange(e) {
+            var index = e.value;
+            var dropDownColumn = document.getElementById("Columns").ej2_instances[0];
+            var treegrid = document.getElementById("TreeGrid").ej2_instances[0];
+            var columnName = dropDownColumn.value;
+            treegrid.reorderColumns(columnName, treegrid.columns[index].field);
+        }
+        function actionComplete(args) {
+             if (args.requestType === 'reorder') {
+                var dropDownColumn = document.getElementById("Columns").ej2_instances[0];
+                var columnName = dropDownColumn.value;
+                var index = this.getColumnIndexByField(columnName);
+                var dropdown = document.getElementById("Index").ej2_instances[0];
+                dropdown.value = index;
+            }
+        }
+    </script>
+
+}
+
+@*custom code start*@
+
+@section Meta{
+    <meta name="description" content="This example demonstrates the Reorder in ASP.NET Core Tree Grid control. Explore here for more details." />
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates reordering feature of the TreeGrid columns. Select column name and index from properties panel to reorder the columns. You can also reorder columns by simply drag and drop in the desired column position.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            Reordering can be enabled by setting <code>allowReordering</code> property as true.
+            Reordering can be done by drag and drop the column header from one index to another index within the TreeGrid.
+        </p>
+        <p>The location in which the column to be placed, will be indicated by two arrows symbols.</p>
+        <p>
+            In this demo, you can either reorder columns by drag and drop or by selecting column name and column index from the dropdown to reorder the columns.
+        </p>
+        <br />
+
+        <p>
+            More information on the sorting can be found in this <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/tree-grid/columns/column-reorder" aria-label="Navigate to the documentation for column-reorder in ASP.NET Core TreeGrid control">documentation section</a>.
+        </p>
+    </div>
+}
+
+@*custom code end*@
+@section Title{
+    <title>ASP.NET Core Tree Grid Reorder Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Reorder in ASP.NET Core Tree Grid Control</h1>
+}

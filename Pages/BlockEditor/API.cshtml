@@ -1,0 +1,200 @@
+﻿@page
+@model EJ2CoreSampleBrowser_NET9.Pages.BlockEditor.APIModel
+@using Syncfusion.EJ2
+
+@section ControlsSection {
+    <div class="col-lg-8 control-section">
+        <div class="blockeditor-api">
+            <ejs-blockeditor id="api-blockeditor" created="onCreated" height="600px" focus="onFocus" blocks="@Model.BlockDataAPI">
+            </ejs-blockeditor>
+        </div>
+    </div>
+    <div class="col-lg-4 property-section">
+        <div id="property" title="Properties">
+            <table id="property" title="Properties">
+                <tbody>
+                    <tr>
+                        <td>
+                            <div>ReadOnly </div>
+                        </td>
+                        <td>
+                            <div style="padding-top: 0;padding-left: 0;">
+                                <ejs-checkbox id="readonly" checked=false change="readOnlyChange" aria-label="Readonly"></ejs-checkbox>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>Drag and Drop </div>
+                        </td>
+                        <td>
+                            <div style="padding-top: 0;padding-left: 0;">
+                                <ejs-checkbox id="enableDragDrop" checked=true change="EnableDragDropChange" aria-label="Enable Drag and Drop"></ejs-checkbox>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>Get Data</div>
+                        </td>
+                        <td>
+                            <div class='e-btn-group' style="padding: 0; margin: 10px 0 0 10px;">
+                                <ejs-button cssClass="e-btn" id="getJson" content="JSON"></ejs-button>
+                                <ejs-button cssClass="e-btn" id="getHtml" content="HTML"></ejs-button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <div>
+                                <button id="getBlockCount" class="btn btn-default">Get Block Count</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <div>
+                                <button id="selectall" class="btn btn-default">Select All Blocks</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <div>
+                                <button id="print" class="btn btn-default">Print</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+@section PreScripts {
+    <script>
+        var blockEditorObj;
+        var focusedBlock;
+
+        // Sample helper: escape raw HTML so we can show it safely as plain text in the dialog when needed
+        var escapeHtml = function (html) {
+          return html
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+        };
+
+        // Sample integration: single predefined DialogUtility alert helper reused by all actions (JSON/HTML)
+        var openDialog = function (title, content, isHtml) {
+          var updatedContent = isHtml ? escapeHtml(content) : content;
+          var dlg = ej.popups.DialogUtility.alert({
+            title: title,
+            // Keep consistent readable formatting for all outputs in this sample
+            content: `<pre style="white-space: pre-wrap;">${updatedContent}</pre>`,
+            okButton: { text: 'OK', click: function () { dlg.close(); } },
+            isModal: true,
+            position: { X: 'center', Y: 'center' },
+            height: "400px",
+            width: "500px",
+            closeOnEscape: true
+          });
+        };
+
+        // Sample lifecycle wiring: capture the BlockEditor instance once the component is created
+        function onCreated() {
+            blockEditorObj = ej.base.getInstance(document.getElementById('api-blockeditor'), ejs.blockeditor.BlockEditor);
+        }
+
+        // Sample event hook: track the last focused block id for potential focused operations
+        function onFocus(args) {
+            focusedBlock = args.blockId;
+        }
+
+        // Sample property-panel wiring: toggle read-only mode via checkbox
+        function readOnlyChange(args) {
+            blockEditorObj.readOnly = args.checked;
+        }
+
+        // Sample property-panel wiring: toggle drag-and-drop via checkbox
+        function EnableDragDropChange(args) {
+            blockEditorObj.enableDragAndDrop = args.checked;
+        }
+
+        // Sample action: get editor data as JSON and show it in a predefined dialog (pretty-printed)
+        document.getElementById('getJson').onclick = function () {
+	          var jsonData = blockEditorObj.getDataAsJson();
+	          openDialog('JSON Data', JSON.stringify(jsonData, null, 2));
+        };
+
+        // Sample action: get editor HTML and show it as escaped text using the same dialog helper
+        document.getElementById('getHtml').onclick = function () {
+	          var htmlData = blockEditorObj.getDataAsHtml();
+	          openDialog('Editor HTML', htmlData, true);
+        };
+
+        // Sample action: show a compact predefined dialog with the total block count
+        document.getElementById('getBlockCount').onclick = function () {
+          var dialog = ej.popups.DialogUtility.alert({
+            title: "Block Count",
+            content: '<div>Total blocks: <b>' + blockEditorObj.getBlockCount() + '</b></div>',
+            okButton: { text: 'OK', click: function () { dialog.close(); } },
+            isModal: true,
+            position: { X: 'center', Y: 'center' },
+            width: "250px",
+            closeOnEscape: true
+          });
+        };
+
+        // Sample action: invoke core API to select all blocks from the property panel
+        document.getElementById('selectall').onclick = function () {
+          blockEditorObj.selectAllBlocks();
+        };
+
+        // Sample action: print the editor content via the built-in API
+        document.getElementById('print').onclick = function () {
+          blockEditorObj.print();
+        };
+    </script>
+}
+
+<style>
+    .blockeditor-api {
+        width: 100%;
+        margin: 0 auto;
+    }
+</style>
+
+@section Meta {
+    <meta name="description" content="This example demonstrates the API's' in ASP.NET Core Block Editor control. Explore here for more details." />
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>This sample demonstrates the usage of API in Block Editor. Use the properties panel to change read-only mode, enable/disable drag and drop, get JSON data, get HTML data, get block count and select all blocks</p>
+    </div>
+}
+
+@section Description {
+    <div id="description">
+        <p>In this demo, you can explore the API behaviors by:</p>
+        <ul>
+            <li>Click the <code>readOnly</code> checkbox to enable/disable editable and non-editable mode of the Block Editor.</li>
+            <li>Click the <code>enableDragDrop</code> checkbox to enable/disable drag and drop functionality.</li>
+            <li>
+                Use the grouped buttons:
+                <ul>
+                    <li><code>JSON</code>: Shows the editor’s data as JSON in a predefined dialog.</li>
+                    <li><code>HTML</code>: Shows the editor’s HTML output as text in a predefined dialog.</li>
+                </ul>
+            </li>
+            <li>Click the <code>getBlockCount</code> button to display the total number of blocks in an predefined dialog.</li>
+            <li>Click the <code>selectAllBlocks</code> button to select all content in the editor.</li>
+            <li>Click the <code>print</code> button to preview the content before printing from the editor.</li>
+        </ul>
+    </div>
+}

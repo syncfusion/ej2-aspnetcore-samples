@@ -1,0 +1,153 @@
+﻿@page
+@model EJ2CoreSampleBrowser.Pages.Chart.AxisLabelTemplateModel
+@using Syncfusion.EJ2
+@{
+    var xValue = "Netherlands";
+}
+@section ControlsSection{
+    <div class="control-section" align="center">
+        <ejs-chart id="container"
+                title="Olympic medal standings 2024"
+                subTitle="Source: www.olympics.com"
+                isTransposed="true"
+                load="load"
+                loaded="loaded">
+            <e-chart-titlestyle textOverflow="@Syncfusion.EJ2.Charts.TextOverflow.Wrap"></e-chart-titlestyle>
+            <e-chart-subtitlestyle textOverflow="@Syncfusion.EJ2.Charts.TextOverflow.Wrap"></e-chart-subtitlestyle>
+
+            <e-chart-chartarea>
+                <e-chartarea-border width="0"></e-chartarea-border>
+            </e-chart-chartarea>
+
+            <e-chart-legendsettings visible="true"></e-chart-legendsettings>
+            <e-chart-tooltipsettings enable="true"></e-chart-tooltipsettings>
+
+            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category"
+                                isInversed="true">
+                <e-majorgridlines width="0"></e-majorgridlines>
+                <e-linestyle width="0"></e-linestyle>
+                <e-majorticklines width="0"></e-majorticklines>
+            </e-chart-primaryxaxis>
+
+            <e-chart-primaryyaxis visible="false" maximum=130>
+            </e-chart-primaryyaxis>
+
+            <e-chart-annotations>
+            <e-chart-annotation content="<img style='margin-top:15px;height:150px;width:220px;opacity:0.5' src='./../scripts/chart/images/medals.png' alt='Medals' />" coordinateUnits="@Syncfusion.EJ2.Charts.Units.Point" x="xValue" y="110"></e-chart-annotation>
+            </e-chart-annotations>
+
+            <e-series-collection>
+                <e-series type="@Syncfusion.EJ2.Charts.ChartSeriesType.StackingColumn"
+                        name="Gold"
+                        fill="#FFD700"
+                        xName="Country"
+                        yName="Count"
+                        legendShape="@Syncfusion.EJ2.Charts.LegendShape.Rectangle"
+                        dataSource="@Model.OlympicsGoldData">
+                    <e-series-marker>
+                        <e-series-datalabel visible="true"
+                                            position="@Syncfusion.EJ2.Charts.LabelPosition.Middle">
+                        </e-series-datalabel>
+                    </e-series-marker>
+                </e-series>
+
+                <e-series type="@Syncfusion.EJ2.Charts.ChartSeriesType.StackingColumn"
+                        name="Silver"
+                        fill="#C0C0C0"
+                        xName="Country"
+                        yName="Count"
+                        legendShape="@Syncfusion.EJ2.Charts.LegendShape.Rectangle"
+                        dataSource="@Model.OlympicsSilverData">
+                    <e-series-marker>
+                        <e-series-datalabel visible="true"
+                                            position="@Syncfusion.EJ2.Charts.LabelPosition.Middle">
+                        </e-series-datalabel>
+                    </e-series-marker>
+                </e-series>
+
+                <e-series type="@Syncfusion.EJ2.Charts.ChartSeriesType.StackingColumn"
+                        name="Bronze"
+                        fill="#CD7F32"
+                        xName="Country"
+                        yName="Count"
+                        legendShape="@Syncfusion.EJ2.Charts.LegendShape.Rectangle"
+                        dataSource="@Model.OlympicsBronzeData">
+                    <e-series-marker>
+                        <e-series-datalabel visible="true"
+                                            position="@Syncfusion.EJ2.Charts.LabelPosition.Middle">
+                        </e-series-datalabel>
+                    </e-series-marker>
+                </e-series>
+            </e-series-collection>
+        </ejs-chart>
+    </div>
+
+    <style>
+        #control-container {
+            padding: 0px !important;
+        }
+        .light-bg {
+            color: #000000;
+        }
+        .dark-bg {
+            color: #ffffff;
+        }
+    </style>
+
+    <script id="AxisLabelTemplate" type="text/x-template">
+    <div id="labelTemplate" class="light-bg" style="display:flex;align-items:center;gap:8px;border-radius:3px;width:130px;justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:6px;flex:1;min-width:0;">
+        <span style="font-size:12px;width:18px;text-align:right;display:inline-block;">${(value + 1)}.</span>
+        <span style="font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${label}</span>
+        </div>
+        <img src="./../scripts/chart/images/labelTemplate/${label}.png" alt="${label} flag" width="22" height="22" style="border-radius:50%" />
+    </div>
+    </script>
+    <script src="~/scripts/chart/theme-color.js"></script>
+
+    <script>
+        function load(args) {
+            loadChartTheme(args);
+            args.chart.annotations[0].y = ej.base.Browser.isDevice ? "90" : "110";
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+            args.chart.primaryXAxis.labelTemplate = "#AxisLabelTemplate";
+        }
+        function loaded(args) {
+            var selectedTheme = loadChartTheme(args);
+            var isDark = selectedTheme.includes('Dark') || selectedTheme.includes('HighContrast');
+            var labels = document.querySelectorAll('#labelTemplate');
+            for (var i = 0; i < labels.length; i++) {
+                var el = labels[i];
+                el.classList.remove('dark-bg');
+                el.classList.remove('light-bg');
+                el.classList.add(isDark ? 'dark-bg' : 'light-bg');
+            }
+        };
+    </script>
+}
+
+@section Scripts{
+}
+@section Meta{
+    <meta name="description" content="This example demonstrates the Axis Label Template in ASP.NET Core Chart control. Axis labels display custom HTML including flags and responsive country names." />
+}
+@section ActionDescription{
+    <p>
+        This sample shows the 2024 Olympic medal standings for the top 10 countries using a stacked Column chart. The x-axis uses label templates to display each country’s rank and name (with flag), enabling quick comparison of Gold, Silver, and Bronze totals.
+    </p>
+}
+@section Description{
+    <p>
+         Use the axis label template feature to customize axis labels via the <code>LabelTemplate</code> property on the chart axis. Templates can include HTML markup, conditional styling, and embedded icons or images (for example, country flags). This sample binds rank and country to the template while the series plot medal counts.
+    </p>
+    <p>
+        More information on the axis labels can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/axis-labels" aria-label="Navigate to the documentation for Axis label in ASP.NET Core Chart component">documentation section</a>.
+    </p>
+}
+@section Title{
+    <title>ASP.NET Core Chart Axis Label Template Example - Syncfusion Demos</title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Axis Label Template in ASP.NET Core Chart Control</h1>
+}

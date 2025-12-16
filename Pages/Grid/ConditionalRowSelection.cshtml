@@ -1,0 +1,112 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Grid.ConditionalRowSelectionModel
+
+
+@{
+    ViewData["Title"] = "ConditionalRowSelection";
+}
+
+@section ControlsSection{
+    <div class="control-section">
+        @{
+            var isRowSelectable = "isRowSelectable";
+        }
+        <ejs-grid id="ConditionalSelection" dataSource="@Model.datasource" allowSorting="true" isRowSelectable="isRowSelectable" height="400" allowFiltering="true" toolbar="@(new List<string>() { "Edit", "Update", "Cancel" })" allowSelection="true" enableVirtualization="true">
+            <e-grid-selectionSettings persistSelection="true" checkboxOnly="true"></e-grid-selectionSettings>
+            <e-grid-editSettings allowEditing="true"></e-grid-editSettings>
+            <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
+            <e-grid-columns>
+                <e-grid-column type="checkbox" width="60" allowEditing="false"></e-grid-column>
+                <e-grid-column field="OrderID" headerText="Order ID" isPrimaryKey="true" width="110" allowEditing="false"></e-grid-column>
+                <e-grid-column field="CustomerName" headerText="Customer Name" width="170" allowEditing="false"></e-grid-column>
+                <e-grid-column field="Product" headerText="Product" width="150"allowEditing="false" template="#productTemplate"></e-grid-column>
+                <e-grid-column field="Amount" headerText="Amount" width="110" format="C2" allowEditing="false" textAlign="Right"></e-grid-column>
+                <e-grid-column field="OrderDate" headerText="Order Date" width="120" format="yMd" allowEditing="false" textAlign="Right"></e-grid-column>
+                <e-grid-column field="Status" headerText="Status" width="150" editType="dropdownedit" template="#statusTemplate"></e-grid-column>
+            </e-grid-columns>
+        </ejs-grid>
+    </div>
+<style>
+    #ConditionalSelection .e-gridcontent .e-product-info,
+    #ConditionalSelection .e-gridcontent .e-status-info {
+        display: flex;
+        align-items: center;
+    }
+
+    #ConditionalSelection .e-gridcontent .e-product-info img,
+    #ConditionalSelection .e-gridcontent .e-status-info img {
+        margin-right: 5px;
+    }
+
+    #ConditionalSelection .e-gridcontent .e-product-info img {
+        width: 40px;
+        height: 40px;
+        border-radius: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+
+    .material3-dark #ConditionalSelection .e-gridcontent .e-status-info img,
+    .bootstrap5\.3-dark #ConditionalSelection .e-gridcontent .e-status-info img,
+    .fluent2-dark #ConditionalSelection .e-gridcontent .e-status-info img,
+    .tailwind3-dark #ConditionalSelection .e-gridcontent .e-status-info img,
+    .fluent2-highcontrast #ConditionalSelection .e-gridcontent .e-status-info img,
+    .fluent-dark #ConditionalSelection .e-gridcontent .e-status-info img,
+    .highcontrast #ConditionalSelection .e-gridcontent .e-status-info img {
+        filter: brightness(0) invert(1);
+    }
+
+    .fluent2-highcontrast #ConditionalSelection .e-gridcontent .e-row:hover .e-status-info img,
+    .fluent2-highcontrast #ConditionalSelection .e-gridcontent .e-rowcell.e-selectionbackground .e-status-info img {
+        filter: none;
+    }
+</style>
+<script type="text/x-template" id="productTemplate">
+    <div class="e-product-info">
+        <img src="@Url.Content("~/scripts/Images/product/${Product}.png")" alt="${Product}" />
+        <span>${Product}</span>
+    </div>
+</script>
+    <script type="text/x-template" id="statusTemplate">
+    <div class="e-status-info">
+        <img src="@Url.Content("~/scripts/Images/status/${Status}.svg")" alt="${Status}" />
+        <span>${Status}</span>
+    </div>
+</script>
+<script type="text/javascript">
+    function isRowSelectable(data) {
+        if (data.Status === "Canceled" || data.Status === "Delivered") {
+            return false;
+        }
+        return true;
+    }
+</script>
+
+}
+@section ActionDescription{
+    <div id="action-description">
+        <p>This sample demonstrates the conditional row selection of the Data Grid using checkbox selection.
+            It allows end-users to select only specific rows based on certain conditions.</p>
+    </div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Conditional Row Selection in ASP.NET Core Data Grid control. Explore here for more details."/>
+                }
+
+@section Description{
+    <div id="description">
+        <p>In this demo, conditional row selection is implemented using the
+            <code>isRowSelectable</code> callback function.
+            This callback function executes before the grid loads data, evaluates each row, and returns <strong>false</strong> for orders
+            with <strong>Delivered</strong> or <strong>Canceled</strong> status.
+        </p>
+        <p>Selection is persisted by enabling <code>selectionSettings -> persistSelection</code>. With this setting, selected rows remain checked across all operations. Persist selection
+            requires at least one column to be defined as a primary key using the <code>columns -> isPrimaryKey</a></code> property.</p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Data Grid Conditional Row Selection Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Conditional Row Selection in ASP.NET Core Data Grid Control</h1>
+                }

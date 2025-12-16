@@ -1,0 +1,79 @@
+﻿@page
+@model EJ2CoreSampleBrowser.Pages.Chart.InversedSplineModel
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="control-section" align="center">
+        <ejs-chart id="container" load="load" title="Stock Market Capitalization as a Percentage of GDP by Country" subTitle="Source: wikipedia.org" isTransposed="true">
+            <e-chart-tooltipsettings enable="true" showNearestTooltip="true" enableHighlight="true" format="${point.x}: <b>${point.y}</b>" header="<b>Stock Market Cap</b>">
+            </e-chart-tooltipsettings>
+            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category" labelPlacement="OnTicks">
+                <e-minorticklines width="0"></e-minorticklines>
+                <e-majorticklines width="0"></e-majorticklines>
+                <e-linestyle width="0"></e-linestyle>
+            </e-chart-primaryxaxis>
+            <e-chart-primaryyaxis labelFormat="{value}%"
+                                  edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift"
+                                  title="Capitalization Ratio (% of GDP)"
+                                  interval="40">
+                <e-majorgridlines width="0"></e-majorgridlines>
+                <e-majorticklines width="0"></e-majorticklines>
+                <e-linestyle width="0"></e-linestyle>
+            </e-chart-primaryyaxis>
+            <e-chart-chartarea>
+                <e-chartarea-border width="0"></e-chartarea-border>
+            </e-chart-chartarea>
+            <e-series-collection>
+                <e-series dataSource="@Model.ChartPoints" xName="Country" width="2" yName="Y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline">
+                    <e-series-marker visible="true" height="7" width="7" isFilled="true"></e-series-marker>
+                </e-series>
+            </e-series-collection>
+        </ejs-chart>
+    </div>
+    <script src="~/scripts/chart/theme-color.js"></script>
+    <script>
+        function load(args) {
+           loadChartTheme(args);
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+            args.chart.primaryYAxis.labelRotation = ej.base.Browser.isDevice ? -45 : 0;
+        }
+    </script>
+}
+@*custom code start*@
+@section Scripts {
+
+}
+
+<style>
+
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@section Meta{
+    <meta name="description" content="This example demonstrates the Inversed Spline in ASP.NET Core Chart control. Explore here for more details." />
+}
+@*custom code end*@
+@section ActionDescription{
+    <p>
+        This sample showcases an inversed spline chart depicting stock market capitalization as a percentage of GDP by country, with enhanced interactivity through markers and tooltips.
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can see how to render and configure inversed spline type charts using the <code>isTransposed</code> property. A spline chart uses a curved line to connect points in a data series.
+        <code>Markers</code> are used to represent individual data points and their values.
+    </p>
+    <p>
+        <code>Tooltip</code> is enabled in this example. To see the tooltip in action, hover over or tap on the chart.
+    </p>
+    <p>
+        More information about the spline series can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/chart-types/spline" aria-label="Navigate to the documentation for spline in ASP.NET Core Chart control">documentation section</a>.
+    </p>
+}
+@section Title{
+    <title>ASP.NET Core Chart Inversed Spline Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Inversed Spline in ASP.NET Core Chart Control</h1>
+}

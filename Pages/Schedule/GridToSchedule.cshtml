@@ -1,0 +1,269 @@
+﻿@page
+@model EJ2CoreSampleBrowser.Pages.Schedule.GridToSchedule
+
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2
+
+@{
+
+    var Resources = new string[] { "Employees" };
+
+    List<ResourceDataSourceModel> EmployeeData = new List<ResourceDataSourceModel>
+    {
+                new ResourceDataSourceModel { text = "Nancy", id = 1, color = "#df5286" },
+                new ResourceDataSourceModel { text = "Steven", id = 2, color = "#7fa900" },
+                new ResourceDataSourceModel { text = "Robert", id = 3, color = "#ea7a57" },
+                new ResourceDataSourceModel { text = "Smith", id = 4, color = "#5978ee" },
+                new ResourceDataSourceModel { text = "Michael", id = 5, color = "#f57b42" },
+                new ResourceDataSourceModel { text = "Root", id = 6, color = "#1aaa55" },
+                new ResourceDataSourceModel { text = "John", id = 7, color = "#ffb74d" },
+                new ResourceDataSourceModel { text = "Chirish", id = 8, color = "#7460ee" },
+                new ResourceDataSourceModel { text = "Megan", id = 9, color = "#c0ca33" }
+    };
+    var gridData = new List<object>
+    {
+                new { Task = "Test report validation", Duration = "3 Hours" },
+                new { Task = "Timeline estimation", Duration = "4 Hours" },
+                new { Task = "Workflow Analysis", Duration = "2 Hours" },
+                new { Task = "Quality Analysis", Duration = "5 Hours" },
+                new { Task = "Cross-browser testing", Duration = "1 Hour" },
+                new { Task = "Resolution-based testing", Duration = "3 Hours" },
+                new { Task = "Project Preview", Duration = "6 Hours" },
+                new { Task = "Developers Meeting", Duration = "2 Hours" },
+                new { Task = "Test case correction", Duration = "7 Hours" },
+                new { Task = "Debugging", Duration = "4 Hours" },
+                new { Task = "Exception handling", Duration = "5 Hours" },
+                new { Task = "Bug fixing", Duration = "1 Hour" },
+                new { Task = "Bug Automation", Duration = "3 Hours" },
+                new { Task = "Bug fixing", Duration = "6 Hours" }
+    };
+   
+}
+
+@section ControlsSection {
+    <div class="control-section">
+        <div class="content-wrapper grid-to-schedule">
+            <div class="schedule-container">
+                <div class="schedule-content">
+                    <h5 style="text-align: center; margin: 0; position: relative; bottom: 10px;">Task Management</h5>
+                    <ejs-schedule id="Schedule" rowAutoHeight="true" width="100%" height="100%" cssClass="grid-schedule" eventDragArea=".content-wrapper" selectedDate="new DateTime(DateTime.Today.Year, 4, 4)" currentView="TimelineDay" dragStop="dragStop" dataBound="onScheduledataBound">
+                        <e-schedule-views>
+                            <e-schedule-view option="TimelineDay"></e-schedule-view>
+                        </e-schedule-views>
+                        <e-schedule-group enableCompactView="false" resources="@Resources"></e-schedule-group>
+                        <e-schedule-resources>
+                            <e-schedule-resource dataSource="@EmployeeData" field="TaskId" title="Employee" name="Employees" textField="text" idField="id" colorField="color"></e-schedule-resource>
+                        </e-schedule-resources>
+                        <e-schedule-eventsettings dataSource="@Model.DataSource">
+                        </e-schedule-eventsettings>
+                    </ejs-schedule>
+                </div>
+                <div class="grid-content">
+                    <h5 style="text-align: center; margin: 0; position: relative; bottom: 10px;">Unplanned Tasks</h5>
+                    <ejs-grid id="Grid" width="280px" height="100%" dataSource="@gridData" cssClass="drag-grid" allowRowDragAndDrop="true" rowDrag="rowDrag" rowDrop="onRowDrop" dataBound="onGridDataBound">
+                        <e-grid-rowdropsettings targetID="Schedule"></e-grid-rowdropsettings>
+                        <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true"></e-grid-editSettings>
+                        <e-grid-columns>
+                            <e-grid-column field="Task" headerText="Task" width="50"></e-grid-column>
+                            <e-grid-column field="Duration" headerText="Duration" width="30"></e-grid-column>
+                        </e-grid-columns>
+                    </ejs-grid>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        function calculateEventDuration(startTime, endTime) {
+            var durationInMilliseconds = endTime - startTime;
+            var durationInHours = durationInMilliseconds / (1000 * 60 * 60);
+            return durationInHours + ' Hours';
+        }
+
+        function handleDragStop(args, scheduleObj, gridObj) {
+            if (ej.base.closest(args.event.target, '#Grid')) {
+                gridObj = document.getElementById('Grid').ej2_instances[0];
+                scheduleObj.deleteEvent(args.data.Id);
+                var startTime = new Date(args.data.StartTime);
+                var endTime = new Date(args.data.EndTime);
+                var formattedDuration = calculateEventDuration(startTime, endTime);
+                var gridRecord = { Task: args.data.Subject, Duration: formattedDuration };
+                gridObj.addRecord(gridRecord);
+            }
+        }
+
+        function dragStop(args) {
+            const scheduleObj = document.getElementById('Schedule').ej2_instances[0];
+            const gridObj = document.getElementById('Grid').ej2_instances[0];
+            handleDragStop(args, scheduleObj, gridObj);
+        }
+
+        function onScheduledataBound() {
+            var resourceDataCounter = 0;
+            const scheduleObj = document.getElementById('Schedule').ej2_instances[0];
+            var resourceCells = scheduleObj.element.querySelectorAll('.e-resource-cells .e-resource-text');
+            for (var i = 0; i < resourceCells.length; i++) {
+                var cell = resourceCells[i];
+                var workcells = scheduleObj.element.querySelector('.e-work-cells');
+                if (!workcells) continue;
+                var timestamp = Number(workcells.getAttribute('data-date'));
+                var startDate = new Date(timestamp);
+                var endDate = new Date(startDate);
+                endDate.setDate(startDate.getDate() + 1);
+                var events = scheduleObj.getEvents(startDate, endDate, true);
+                if (resourceDataCounter < scheduleObj.resourceCollection[0].dataSource.length) {
+                    resourceDataCounter++;
+                }
+                var resourceEvents = [];
+                for (var j = 0; j < events.length; j++) {
+                    if (events[j].TaskId === resourceDataCounter) {
+                        resourceEvents.push(events[j]);
+                    }
+                }
+                var currentText = cell.innerText;
+                var eventCount = resourceEvents.length;
+                var resourceName = currentText.split('(')[0].trim();
+                cell.innerText = resourceName + ' (' + eventCount + ')';
+            }
+        }
+
+        function rowDrag(args) {
+            args.cancel = true;
+        }
+
+        function onRowDrop(args) {
+            args.cancel = true;
+            const scheduleObj = document.getElementById('Schedule').ej2_instances[0];
+            var scheduleElement = ej.base.closest(args.target, '.e-content-wrap');
+            if (scheduleElement && args.target.classList.contains('e-work-cells')) {
+                const gridObj = document.getElementById('Grid').ej2_instances[0];
+                var cellData = scheduleObj.getCellDetails(args.target);
+                var resourceDetails = scheduleObj.getResourcesByIndex(cellData.groupIndex);
+                var durationStr = args.data[0].Duration;
+                var durationHours = parseInt(durationStr.split(' ')[0], 10);
+                var startTime = new Date(cellData.startTime);
+                var endTime = new Date(startTime.getTime() + durationHours * 60 * 60 * 1000);
+                var eventData = {
+                    Id: scheduleObj.getEventMaxID(),
+                    Subject: args.data[0].Task,
+                    StartTime: startTime,
+                    EndTime: endTime,
+                    IsAllDay: cellData.isAllDay,
+                    TaskId: resourceDetails.resourceData.id,
+                };
+                scheduleObj.addEvent(eventData);
+                gridObj.deleteRecord(args.data[0]);
+            }
+        }
+
+        function onGridDataBound() {
+            var scheduleObj = document.getElementById('Schedule').ej2_instances[0];
+            if (scheduleObj) {
+                var selectedCells = scheduleObj.element.querySelectorAll('.e-selected-cell');
+                for (var i = 0; i < selectedCells.length; i++) {
+                    selectedCells[i].classList.remove('e-selected-cell');
+                }
+            }
+        }
+
+    </script>
+
+
+    <style>
+
+    .content-wrapper.grid-to-schedule .schedule-container {
+        display: grid;
+        grid-template-columns: 5fr 1fr;
+    }
+
+    .grid-to-schedule .e-drag-clone,
+    .grid-to-schedule .e-schedule-event-clone {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .content-wrapper.grid-to-schedule .schedule-container .schedule-content,
+    .content-wrapper.grid-to-schedule .schedule-container .grid-content {
+        height: 500px;
+    }
+
+    .content-wrapper.grid-to-schedule .schedule-container .grid-content {
+        margin-left: 10px;
+    }
+
+    .grid-schedule.e-schedule.e-device .e-timeline-view .e-resource-left-td {
+        width: 110px;
+    }
+
+    .drag-grid.e-grid .e-cloneproperties.e-draganddrop {
+        margin-top: 40px;
+    }
+
+    .grid-schedule.e-schedule .e-timeline-view .e-date-header-wrap table col,
+    .grid-schedule.e-schedule .e-timeline-view .e-content-wrap table col {
+        width: 100px;
+    }
+
+    @@media screen and (max-width: 768px) {
+        .content-wrapper.grid-to-schedule .schedule-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content-wrapper.grid-to-schedule .schedule-container .grid-content {
+            margin-top: 10px;
+        }
+
+        .drag-grid.e-grid {
+            width: 100% !important;
+        }
+
+        .drag-grid.e-grid .e-cloneproperties.e-draganddrop {
+           margin-top: 20px;
+        }
+
+        .content-wrapper.grid-to-schedule .schedule-container .schedule-content,
+        .content-wrapper.grid-to-schedule .schedule-container .grid-content {
+            height: 100% !important;
+        }
+    }
+    </style>
+
+}
+@*custom code start*@
+@section Meta {
+    <meta name="description" content="This example demonstrates the Drag Events From Grid in ASP.NET Core schedule control. Explore here for more details." />
+}
+@*custom code end*@
+@section ActionDescription {
+    <div id="action-description">
+        <p>
+            This example illustrates how to drag and drop events between the DataGrid and the Scheduler.
+        </p>
+    </div>
+}
+@section Description {
+    <div id="description">
+        <p>
+            In this example, the DataGrid's <code>allowRowDragAndDrop</code> and <code>rowDropSettings</code> are used to drag
+            and drop items from the DataGrid to the Scheduler. The <code>rowDrop</code> event of the DataGrid is triggered when an item
+            is dropped to the Scheduler. Within the <code>rowDrop</code> event, the <code>addEvent</code> method
+            is used to add the dropped item to the target Scheduler, and the <code>deleteRecord</code> method is used to remove
+            the dragged item from the DataGrid.<br>
+
+            For Scheduler to DataGrid, <code>eventDragArea</code> is used to drag a range of events. The <code>dragStop</code> event of the Scheduler is 
+            triggered when an item is dropped from the Scheduler to the DataGrid. Within the <code>dragStop</code> event, the DataGrid's <code>addRecord</code> method is used to add the
+            dropped event to the target DataGrid, and the <code>deleteEvent</code> method is used to remove the dragged event from the
+            Scheduler.
+        </p>
+    </div>
+}
+@section Title {
+    <title>ASP.NET Core Drag Events From Grid Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Drag Events From Grid in ASP.NET Core schedule Control</h1>
+}
+

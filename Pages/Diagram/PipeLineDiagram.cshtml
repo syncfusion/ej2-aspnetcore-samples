@@ -1,0 +1,838 @@
+﻿@page
+@using Syncfusion.EJ2;
+@using Syncfusion.EJ2.Diagrams;
+@using Syncfusion.EJ2.LinearGauge;
+@using Syncfusion.EJ2.Popups;
+@model EJ2CoreSampleBrowser.Pages.Diagram.PipeLineDiagramModel
+@{
+    var getNodeDefaults = "getNodeDefaults";
+    var getConnectorDefaults = "getConnectorDefaults";
+    var onCreated = "onCreated";
+    var load = "load";
+}
+@section ControlsSection{
+
+    <div class="control-section">
+        <div class="content-wrapper" style="width: 100%">
+            <ejs-diagram id="diagram" width="100%" height="700px" nodes="@Model.Nodes" connectors="@Model.Connectors" constraints="@Model.Constraints" getConnectorDefaults="@getConnectorDefaults" getNodeDefaults="@getNodeDefaults" created="@onCreated" load="@load">
+                <e-diagram-scrollsettings scrollLimit="Diagram" canAutoScroll="false"></e-diagram-scrollsettings>
+                <e-diagram-snapsettings constraints="None"></e-diagram-snapsettings>
+            </ejs-diagram>
+        </div>
+    </div>
+
+    <script>
+        var numericBox;
+        var gauge;
+        var tankFlow1 = true;
+        var tankFlow2 = true;
+        var tankFlow3 = true;
+        var pumpflow = true;
+        var autoStopped = false;
+        var isDiagramCreated = false;
+        var diagram;
+        var pressureInterval;
+        var animationIntervals = {};
+        var gradualStopIntervals = {};
+        var checkbox;
+        var checkValve1CloseBtn;
+        var checkValve2CloseBtn;
+        var checkValve3CloseBtn;
+        var inputTankOn = false;
+
+        // **NEW: System state management variables**
+        var isSystemLocked = false; // When pump is off, lock tank valves
+        var isStorageShutdown = false; // When storage is off but pump can still be controlled
+
+        // Function called when diagram is created
+        function onCreated() {
+            diagram = document.getElementById("diagram").ej2_instances[0];
+            diagram.nodes[16].flip=2;
+            diagram.dataBind();
+            diagram.nodes[16].rotateAngle=90;
+            diagram.dataBind();
+            appendHTMLElements();
+            diagram.fitToPage();
+            runAnimation();
+            isDiagramCreated = true;
+            diagram.tool = ej.diagrams.DiagramTools.ZoomPan;
+        }
+
+        function load() {
+            setTimeout(function () {
+                if (isDiagramCreated) {
+                    appendHTMLElements();
+                    diagram = document.getElementById("diagram").ej2_instances[0];
+                    diagram.fitToPage();
+                    runAnimation();
+                }
+            });
+        }
+
+        function getNodeDefaults(obj) {
+            obj.constraints = (ej.diagrams.NodeConstraints.Default | ej.diagrams.NodeConstraints.ReadOnly) & ~ej.diagrams.NodeConstraints.Select;
+            obj.addInfo = { valve: true };
+            return obj;
+        }
+
+        function getConnectorDefaults(connector) {
+            connector.type = 'Orthogonal';
+            connector.cornerRadius = 3;
+            if (connector.id === "Connector5" || connector.id === "Connector6") {
+                connector.style = { strokeWidth: 5, strokeDashArray: "10,1" };
+            } else {
+                connector.style = { strokeWidth: 10 };
+            }
+            connector.targetDecorator = { shape: "None" };
+            if (connector.id === "Connector13" || connector.id === "Connector14") {
+                connector.style = { strokeWidth: 2, strokeDashArray: "10,1" };
+                connector.type = "Straight";
+            }
+            return connector;
+        }
+
+        function appendHTMLElements() {
+            appendTemperatureControl();
+            setTimeout(function () {
+                appendvalveControls();
+            }, 10);
+            addPumpCheckBox();
+            appendCollantValue();
+        }
+
+        // ===== **NEW: CORE SYSTEM LOGIC FUNCTIONS** =====
+
+        function shutDownPump() {
+            isSystemLocked = true;
+            pumpflow = false;
+
+            // Stop pump animations
+            startPumpAnimation(false);
+            updatePressureAnimation(true);
+            animatePathFlow("Connector11_path", false, '#A7A2A2', true);
+            setTimeout(function () { animatePathFlow("Connector12_path", false, "#A7A2A2", true); }, 500);
+            setTimeout(function () {
+                if (checkValve3CloseBtn && checkValve3CloseBtn.checked) {
+                    checkValve3CloseBtn.toggle();
+                }
+            }, 600);
+            setTimeout(function () { 
+                // Close all valves including storage valve when pump shuts down
+                if (checkValve1CloseBtn && checkValve1CloseBtn.checked) {
+                    checkValve1CloseBtn.toggle();
+                }
+                if (checkValve2CloseBtn && checkValve2CloseBtn.checked) {
+                    checkValve2CloseBtn.toggle();
+                }
+            }, 700);
+        }
+
+        function startUpPump() {
+            isSystemLocked = false;  // Important: Reset system lock when pump starts
+            isStorageShutdown = false;  // Reset storage shutdown state
+            pumpflow = true;
+            // Start pump animations
+            startPumpAnimation(true);
+            updatePressureAnimation(false);
+            animatePathFlow("Connector11_path", true, '#8DC276');
+            setTimeout(function () { animatePathFlow("Connector12_path", true, "#8DC276"); }, 500);
+            setTimeout(function () {
+                if (checkValve1CloseBtn && !checkValve1CloseBtn.checked && !inputTankOn) {
+                    checkValve1CloseBtn.toggle();
+                }
+                if (checkValve2CloseBtn && !checkValve2CloseBtn.checked && !inputTankOn) {
+                    checkValve2CloseBtn.toggle();
+                }
+            }, 600);
+            setTimeout(function () {
+                if (checkValve3CloseBtn && !checkValve3CloseBtn.checked) {
+                    checkValve3CloseBtn.toggle();
+                }
+                if (checkbox && !checkbox.checked) {
+                    checkbox.toggle();
+                }
+            }, 700);
+            autoStopped = false;
+        }
+
+        function shutDownStorage() {
+            isStorageShutdown = true;
+            // Stop storage animations
+            animatePathFlow("Connector9_path", false, 'red', true);
+            setTimeout(function () { animatePathFlow("Connector10_path", false, "#A7A2A2", true); }, 500);
+            startStorageAnimation(false);
+        }
+
+        function startUpStorage() {
+            isStorageShutdown = false;
+            animatePathFlow("Connector9_path", true, 'red');
+            setTimeout(function () { animatePathFlow("Connector10_path", true, "red"); }, 500);
+            startStorageAnimation(true);
+        }
+
+        // **NEW FUNCTION: Start entire system from storage valve**
+        function startUpSystemFromStorage() {
+            if (checkbox && !checkbox.checked) {
+                checkbox.toggle();
+            }
+            if (checkValve1CloseBtn && !checkValve1CloseBtn.checked) {
+                checkValve1CloseBtn.toggle();
+            }
+            if (checkValve2CloseBtn && !checkValve2CloseBtn.checked) {
+                checkValve2CloseBtn.toggle();
+            }
+            animatePathFlow("Connector9_path", true, 'red');
+            setTimeout(function () { animatePathFlow("Connector10_path", true, "red"); }, 500);
+            startStorageAnimation(true);
+            isSystemLocked = false;
+            isStorageShutdown = false;
+        }
+
+        function checkTankValveShutdown() {
+            // If both tank valves are manually closed, shut down entire system
+            if (!tankFlow1 && !tankFlow2 && pumpflow) {
+                if (checkbox && checkbox.checked) {
+                    checkbox.toggle();
+                }
+                if (checkValve3CloseBtn && checkValve3CloseBtn.checked) {
+                    checkValve3CloseBtn.toggle();
+                }
+            }
+        }
+
+        // ===== **UPDATED: VALVE CONTROL LOGIC** =====
+
+        function appendvalveControls() {
+            var valveButtons = ['valveButton1', 'valveButton2', 'valveButton3'];
+            var switchContainers = ['switch-buttons1', 'switch-buttons2', 'switch-buttons3'];
+
+            // Cleanup existing elements
+            valveButtons.forEach(function (id, index) {
+                var existingInput = document.getElementById(id);
+                if (existingInput) {
+                    var switchInstance = existingInput.ej2_instances ? existingInput.ej2_instances[0] : null;
+                    if (switchInstance && switchInstance instanceof ej.buttons.Switch) {
+                        switchInstance.destroy();
+                    }
+                    existingInput.remove();
+                }
+
+                var switchContainer = document.getElementById(switchContainers[index]);
+                if (switchContainer) {
+                    while (switchContainer.firstChild) {
+                        switchContainer.firstChild.remove();
+                    }
+                }
+            });
+
+            // **UPDATED: Valve 1 (Tank 1 inlet) - Start as ON with new logic**
+            var newInput1 = document.createElement('input');
+            newInput1.type = 'checkbox';
+            newInput1.id = 'valveButton1';
+            var container1 = document.getElementById('switch-buttons1');
+            if (container1) container1.appendChild(newInput1);
+
+            checkValve1CloseBtn = new ej.buttons.Switch({
+                checked: true,
+                change: function (args) {
+                    if (isSystemLocked && args.checked) {
+                        isSystemLocked = false;
+                        inputTankOn = true;
+                        setTimeout(function() { inputTankOn = false; }, 2000);
+                        startUpPump();
+                        startUpStorage();
+                    }
+                    valveStateClick1(args.checked ? 'Open' : 'Close');
+                }
+            });
+            checkValve1CloseBtn.appendTo('#valveButton1');
+
+            // **UPDATED: Valve 2 (Tank 2 inlet) - Start as ON with new logic**
+            var newInput2 = document.createElement('input');
+            newInput2.type = 'checkbox';
+            newInput2.id = 'valveButton2';
+            var container2 = document.getElementById('switch-buttons2');
+            if (container2) container2.appendChild(newInput2);
+
+            checkValve2CloseBtn = new ej.buttons.Switch({
+                checked: true,
+                change: function (args) {
+                    if (isSystemLocked && args.checked) {
+                        isSystemLocked = false;
+                        inputTankOn = true;
+                        setTimeout(function() { inputTankOn = false; }, 2000);
+                        startUpPump();
+                        startUpStorage();
+                    }
+                    valveStateClick2(args.checked ? 'Open' : 'Close');
+                }
+            });
+            checkValve2CloseBtn.appendTo('#valveButton2');
+
+            // **UPDATED: Valve 3 (Storage outlet) - Start as ON with new logic**
+            var newInput3 = document.createElement('input');
+            newInput3.type = 'checkbox';
+            newInput3.id = 'valveButton3';
+            var container3 = document.getElementById('switch-buttons3');
+            if (container3) container3.appendChild(newInput3);
+
+            checkValve3CloseBtn = new ej.buttons.Switch({
+                checked: true,
+                change: function (args) {
+                    if (!args.checked) {
+                        // Storage valve manually closed - shut down pump if running
+                        if (checkbox && checkbox.checked) {
+                            checkbox.toggle(); // This will trigger shutDownPump()
+                        }
+                        shutDownStorage();
+                    } else {
+                        // Storage valve manually opened
+                        if (isSystemLocked || isStorageShutdown) {
+                            // If system was locked, restart the entire system
+                            startUpSystemFromStorage();
+                        } else if (pumpflow && !isSystemLocked) {
+                            // Normal operation - just start storage
+                            startUpStorage();
+                        }
+                    }                    
+                    valveStateClick3(args.checked ? 'Open' : 'Close');
+                }
+            });
+            checkValve3CloseBtn.appendTo('#valveButton3');
+        }
+
+        function valveStateClick1(action) {
+            var flow = document.getElementById("showFlowContainer1");
+            updateValveState(flow, action, 1);
+        }
+
+        function valveStateClick2(action) {
+            var flow = document.getElementById("showFlowContainer2");
+            updateValveState(flow, action, 2);
+        }
+
+        function valveStateClick3(action) {
+            var flow = document.getElementById("showFlowContainer3");
+            updateValveState(flow, action, 3);
+        }
+
+        // **COMPLETELY UPDATED: updateValveState function with proper logic**
+        function updateValveState(flow, action, valveNumber) {
+            if (!flow) return;
+
+            if (action === "Close") {
+                flow.style.background = "#e5e7eb";
+
+                switch (valveNumber) {
+                    case 1:
+                        tankFlow1 = false;
+                        animatePathFlow("Connector1_path", false, '#ffb734', true);
+                        setTimeout(function () { animatePathFlow("Connector3_path", false, "#A7A2A2", true); }, 500);
+                        break;
+                    case 2:
+                        tankFlow2 = false;
+                        animatePathFlow("Connector2_path", false, '#7C099C', true);
+                        setTimeout(function () { animatePathFlow("Connector4_path", false, "#A7A2A2", true); }, 500);
+                        break;
+                    case 3:
+                        tankFlow3 = false;
+                        animatePathFlow("Connector9_path", false, 'red', true);
+                        setTimeout(function () { animatePathFlow("Connector10_path", false, "#A7A2A2", true); }, 500);
+                        startStorageAnimation(false);
+                        break;
+                }
+
+                // Check if both tank valves are closed
+                if (valveNumber <= 2) {
+                    checkTankValveShutdown();
+                }
+
+            } else if (action === "Open") {
+                // **NEW: Check conditions for opening valves**
+                var canOpen = false;
+
+                if (valveNumber <= 2) {
+                    // Tank valves can only open if pump is running and system is not locked
+                    canOpen = pumpflow && !isSystemLocked && !isStorageShutdown;
+                } else if (valveNumber === 3) {
+                    // Storage valve can open if pump is running and system is not locked
+                    canOpen = pumpflow && !isSystemLocked;
+                }
+
+                if (canOpen) {
+                    switch (valveNumber) {
+                        case 1:
+                            tankFlow1 = true;
+                            flow.style.background = "#ffb734";
+                            animatePathFlow("Connector1_path", true, '#ffb734');
+                            setTimeout(function () { animatePathFlow("Connector3_path", true, "#ffb734"); }, 100);
+                            break;
+                        case 2:
+                            tankFlow2 = true;
+                            flow.style.background = "#7C099C";
+                            animatePathFlow("Connector2_path", true, '#7C099C');
+                            setTimeout(function () { animatePathFlow("Connector4_path", true, "#7C099C"); }, 100);
+                            break;
+                        case 3:
+                            tankFlow3 = true;
+                            flow.style.background = "red";
+                            animatePathFlow("Connector9_path", true, 'red');
+                            setTimeout(function () { animatePathFlow("Connector10_path", true, "red"); }, 100);
+                            startStorageAnimation(true);
+                            break;
+                    }
+                }
+            }
+        }
+
+        // **UPDATED: Pump control logic**
+        function addPumpCheckBox() {
+            if (checkbox) {
+                checkbox.destroy();
+            }
+            checkbox = new ej.buttons.Switch({
+                checked: true, // Start as ON
+                change: onCheckBoxChange
+            });
+            checkbox.appendTo('#pumpCheckBox');
+        }
+
+        function onCheckBoxChange(args) {
+            if (args.checked) {
+                startUpPump();
+            } else {
+                // Pump manually turned OFF
+                shutDownPump();
+            }
+        }
+
+        function appendTemperatureControl() {
+            if (gauge) {
+                gauge.destroy();
+            }
+            gauge = new ej.lineargauge.LinearGauge({
+                height: "120px",
+                container: {
+                    width: 4,
+                    height: 100,
+                    roundedCornerRadius: 5,
+                    type: 'Thermometer',
+                    border: { width: 1 }
+                },
+                background: 'transparent',
+                axes: [{
+                    minimum: -20,
+                    maximum: 100,
+                    pointers: [{
+                        value: 40,
+                        height: 10,
+                        width: 4,
+                        placement: 'Center',
+                        offset: 0,
+                        markerType: 'Triangle',
+                        color: '#2674a5ff',
+                        type: 'Bar'
+                    }],
+                    line: { width: 0 },
+                    majorTicks: { height: 7, interval: 30 },
+                    minorTicks: { height: 0, interval: 5 },
+                    labelStyle: { font: { fontFamily: 'inherit' } }
+                }],
+                annotations: [{
+                    content: '<div style="font-size:13px;margin-left: 30px;margin-top: -50px;"> °C </div>',
+                    axisIndex: 0,
+                    axisValue: 50,
+                    x: 0,
+                    y: 0,
+                    zIndex: '1'
+                }]
+            });
+            gauge.appendTo('#thermometer');
+        }
+
+        function appendCollantValue() {
+            if (numericBox) {
+                numericBox.destroy();
+            }
+            numericBox = new ej.inputs.NumericTextBox({
+                min: -50,
+                max: 75,
+                value: 12,
+                step: 2,
+                format: '##.##',
+                change: function (args) {
+                    if (gauge && gauge.axes && gauge.axes[0] && gauge.axes[0].pointers && gauge.axes[0].pointers[0]) {
+                        gauge.axes[0].pointers[0].value = 28 + args.value;
+                        gauge.axes[0].pointers[0].color = getColorFromTemperature(28 + args.value);
+                    }
+                }
+            });
+            numericBox.appendTo('#numeric');
+        }
+
+        function getColorFromTemperature(value) {
+            if (value < 30) return 'cyan';
+            if (value < 60) return 'blue';
+            if (value < 80) return 'orange';
+            return 'red';
+        }
+
+        function runAnimation() {
+            addFlowAnimationClass();
+            startConnectorAnimation();
+            startPumpAnimation(true);
+            startStorageAnimation(true);
+            updatePressureAnimation(false);
+        }
+
+        function addFlowAnimationClass() {
+            var style = document.createElement('style');
+            style.textContent = '@@keyframes dashFlow { to { stroke-dashoffset: -15; } } ' +
+                '.flow-animation { stroke-dasharray: 10, 10 !important; stroke-dashoffset: 0 !important; ' +
+                'animation: dashFlow 1s linear infinite !important; }';
+            document.head.appendChild(style);
+        }
+
+        function startConnectorAnimation() {
+            var diagramConnectors = diagram.connectors;
+            for (var i = 0; i < diagramConnectors.length; i++) {
+                var currentConnector = diagramConnectors[i];
+                var sourceNode = diagram.getObject(currentConnector.sourceID);
+                if (sourceNode && sourceNode.addInfo) {
+                    var isValveOpen = sourceNode.addInfo.valve;
+                    if (isValveOpen && currentConnector.addInfo && currentConnector.addInfo.animate) {
+                        animatePathFlow(currentConnector.id + "_path", true, currentConnector.style.strokeColor);
+                    }
+                }
+            }
+        }
+
+        // **UPDATED: Enhanced animation function with proper cleanup**
+        function animatePathFlow(pathId, animate, color, slow) {
+            var dashArray = "10,5";
+            var speed = 30;
+            var path = document.getElementById(pathId);
+            if (!path) return;
+
+            // **FIRST: Clean up any existing intervals for this path**
+            if (animationIntervals[pathId]) {
+                clearInterval(animationIntervals[pathId]);
+                delete animationIntervals[pathId];
+            }
+            if (gradualStopIntervals[pathId]) {
+                clearInterval(gradualStopIntervals[pathId]);
+                delete gradualStopIntervals[pathId];
+            }
+
+            if (animate) {
+                var offset = 0;
+                path.setAttribute("stroke", color);
+                path.setAttribute("stroke-dasharray", dashArray);
+
+                // Start new interval and store its ID
+                var intervalId = window.setInterval(function () {
+                    offset = (offset - 1) % 1000;
+                    path.setAttribute("stroke-dashoffset", offset);
+                }, speed);
+                animationIntervals[pathId] = intervalId;
+            } else {
+                if (slow) {
+                    var currentColor = path.getAttribute('stroke') || color;
+                    var offsetAnimation = parseFloat(path.getAttribute("stroke-dashoffset") || "0");
+                    var step = 0;
+                    var steps = 30;
+                    var duration = 1000;
+                    var interval = duration / steps;
+
+                    var startColor = hexToRgb(currentColor);
+                    var endColor = hexToRgb(currentColor); // white or background color
+
+                    gradualStopIntervals[pathId] = window.setInterval(function () {
+                        step++;
+                        offsetAnimation = (offsetAnimation - 1) % 1000;
+                        path.setAttribute("stroke-dashoffset", offsetAnimation.toString());
+
+                        var progress = step / steps;
+                        var r = Math.round(startColor.r + (endColor.r - startColor.r) * progress);
+                        var g = Math.round(startColor.g + (endColor.g - startColor.g) * progress);
+                        var b = Math.round(startColor.b + (endColor.b - startColor.b) * progress);
+                        path.setAttribute("stroke", color);
+
+                        if (step >= steps) {
+                            // **CRITICAL: Complete cleanup when animation finishes**
+                            clearInterval(gradualStopIntervals[pathId]);
+                            delete gradualStopIntervals[pathId];
+                            path.setAttribute("stroke", color); // Final color
+                            path.setAttribute("stroke-dasharray", "none");
+                            path.setAttribute("stroke-dashoffset", "0"); // Reset offset
+                        }
+                    }, interval);
+
+                } else {
+                    // Immediate stop
+                    path.setAttribute("stroke", color || "black");
+                    path.setAttribute("stroke-dasharray", "none");
+                    path.setAttribute("stroke-dashoffset", "0");
+                }
+            }
+        }
+
+        function hexToRgb(hex) {
+            var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : { r: 0, g: 0, b: 0 };
+        }
+
+        function startPumpAnimation(start) {
+            var pumpElement = document.getElementById('fan');
+            if (pumpElement) {
+                if (start) {
+                    pumpElement.classList.add('rotate-animation');
+                } else {
+                    pumpElement.classList.remove('rotate-animation');
+                }
+            }
+        }
+
+        function startStorageAnimation(on) {
+            var storageElement = document.getElementById('productStorage');
+            if (!storageElement) return;
+            if (on) {
+                // Restart animation
+                storageElement.classList.remove('fill-animation', 'paused');
+                void storageElement.offsetWidth; // Force reflow
+                storageElement.classList.add('fill-animation');
+            } else {
+                // Pause animation without removing it
+                storageElement.classList.add('paused');
+            }
+        }
+
+        function updatePressureAnimation(highPressureMode) {
+            if (pressureInterval) {
+                clearInterval(pressureInterval);
+            }
+            pressureInterval = setInterval(function () {
+                var randomPressure;
+                if (highPressureMode) {
+                    randomPressure = Math.floor(Math.random() * 16) + 90;
+                } else {
+                    randomPressure = Math.floor(Math.random() * 21) + 20;
+                }
+                updatePressure(randomPressure);
+            }, 2000);
+        }
+
+        function updatePressure(psi) {
+            var needle = document.getElementById('needle');
+            var valueDisplay = document.getElementById('pressureValue');
+            if (needle && valueDisplay) {
+                psi = Math.max(0, Math.min(psi, 100));
+                var angle = -90 + (psi / 100) * 90;
+                needle.style.transform = 'rotate(' + angle + 'deg)';
+                valueDisplay.textContent = psi + ' PSI';
+            }
+        }
+
+        function fitToPage() {
+            var diagram = document.getElementById("footballResultDiagram").ej2_instances[0];
+            diagram.tool = ej.diagrams.DiagramTools.ZoomPan;
+            diagram.fitToPage();
+        }
+    </script>
+
+    <style>
+        .product-container {
+            width: 100px;
+            height: 130px;
+            border: 2px solid #000;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product {
+            background-color: red;
+            width: 100%;
+            height: 0;
+            position: absolute;
+            bottom: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .fill-animation {
+            animation: fill 40s ease-in infinite forwards;
+            animation-play-state: running;
+        }
+
+            .fill-animation.paused {
+                animation-play-state: paused;
+            }
+
+        @@keyframes fill {
+            from {
+                height: 0;
+            }
+
+            to {
+                height: 100%;
+            }
+        }
+
+        .pump-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            left: 25px;
+        }
+
+        .pump-body {
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, #5c5c5c 0%, #2c2c2c 100%);
+            border-radius: 50%;
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            border: 5px solid #4a4a4a;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+        }
+
+        .fan-blades {
+            position: relative;
+            margin-top: 43%;
+            left: 40%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 40px;
+        }
+
+        .rotate-animation {
+            animation: rotateBlades 2s linear infinite;
+        }
+
+        .blade {
+            position: absolute;
+            width: 15px;
+            height: 50px;
+            background: linear-gradient(to bottom, #bbb 0%, #888 100%);
+            top: calc(50% - 25px);
+            left: calc(50% - 7.5px);
+            border-radius: 8px;
+            transform-origin: center calc(100% - 25px);
+        }
+
+            .blade:nth-child(1) {
+                transform: rotate(0deg);
+            }
+
+            .blade:nth-child(2) {
+                transform: rotate(90deg);
+            }
+
+            .blade:nth-child(3) {
+                transform: rotate(180deg);
+            }
+
+            .blade:nth-child(4) {
+                transform: rotate(270deg);
+            }
+
+        .hub {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #aaa 0%, #666 100%);
+            border-radius: 50%;
+            z-index: 10;
+        }
+
+        @@keyframes rotateBlades {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        .pressure-container {
+            display: flex;
+        }
+
+        .pressure-indicator {
+            text-align: center;
+        }
+
+        .pressure-gauge {
+            position: relative;
+            width: 70px;
+            height: 40px;
+            background: #ddd;
+            border-top-left-radius: 100px;
+            border-top-right-radius: 100px;
+            border: 1px solid black;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        .needle {
+            width: 4px;
+            height: 70px;
+            background: red;
+            transition: transform 0.5s ease-in-out;
+            margin-left: 33px;
+            margin-top: 5px;
+        }
+
+        .pressure-value {
+            font-size: 12px;
+            margin-top: 10px;
+            margin-left: 20px;
+        }
+
+        .switch-buttons {
+            display: block;
+            margin-top: 3px;
+        }
+
+        .switch-container {
+            left: -10px;
+            top: 20px;
+            position: absolute;
+        }
+
+        #pumpCheckBoxContainer {
+            position: relative;
+            top: 80px;
+            left: -35px;
+        }
+    </style>
+
+}
+
+@section ActionDescription{
+    <p>
+        This sample visualizes a real-time chemical reactor system as an interactive Pipeline and Instrumentation Diagram (P&ID) using the Syncfusion<sup>®</sup> ASP.NET Core Diagram component, showcasing dynamic fluid flows, tank levels, pressure, and temperature.
+    </p>
+}
+@section Meta{
+    <meta name="description" content="Simulate a real-time chemical reactor P&ID using Syncfusion ASP.NET Core Diagram. Control fluid flows, tank levels, and temperature with interactive elements and live animations." />
+}
+@section Description{
+    <p>
+        Users actively control valve operations and pump states to observe real-time fluid flow, tank level changes, dynamic pressure, and temperature visualizations. Interactive toggles manage fluid flow between tanks, simulating operational conditions within an industrial process environment.
+    </p>
+}
+@section Title{
+    <title>ASP.NET Core pipeline and instrumentation diagram Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Real-time Pipeline & Instrumentation Diagram (P&ID) in ASP.NET Core Diagram Component</h1>
+}

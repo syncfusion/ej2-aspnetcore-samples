@@ -1,0 +1,179 @@
+﻿@page
+@using EJ2CoreSampleBrowser.Services
+
+@using Syncfusion.EJ2
+@{
+    var toolbarItems = new object[]
+    {
+        "AICommands", "AIQuery", "|", "Bold", "Italic", "Underline", "StrikeThrough", "|", "Alignments", "Formats", "OrderedList",
+        "UnorderedList", "CheckList", "CodeBlock", "Blockquote", "CreateLink", "Image", "CreateTable", "|", "SourceCode", "|", "Undo", "Redo"
+    };
+    var quickToolbarItems = new[]
+    {
+        "AICommands", "AIQuery", "|", "Bold", "Italic", "Underline", "StrikeThrough", "Fontcolor", "BackgroundColor", "|", "Unorderedlist", "OrderedList"
+    };
+}
+@section ControlsSection {
+    <div class="control-section">
+        <ejs-richtexteditor id="editor" created="created" aiAssistantPromptRequest="onAIAssitantPromptRequest">
+            <e-content-template>
+                <p><strong>Editing and Improving</strong></p>
+                <p>In today's competitive landscape, effective marketing focuses on building lasting customer relationships rather than just selling products. Brands are expected to provide personalized experiences through data analytics and consumer insights. As expectations evolve, marketers must stay agile and proactive in their strategies.</p>
+                <p><strong>Tone and style</strong></p>
+                <p>Agile methodologies are essential in modern project management, particularly in software development. They enable teams to adapt quickly and deliver greater customer value through iterative processes and collaboration. Successful Agile implementation requires fostering a culture of adaptability, trust, and shared ownership.</p>
+                <p><strong>Grammar</strong></p>
+                <p>Strong leadership is more than directing a team—it's about inspiring people toward a common vision. Effective leaders cultivate transparency, empathy, and accountability within their organizations. They empower others by encouraging autonomy and providing opportunities for growth. In times of uncertainty or rapid change, it's the leaders who stay grounded and lead with clarity who build the most resilient and high-performing teams.</p>
+                <p><strong>Summarization, simplification, or elaboration</strong></p>
+                <p>Strong leadership inspires a team toward a shared vision while promoting transparency, empathy, and accountability. Effective leaders empower others through autonomy and growth. In times of uncertainty or change, clear leaders build resilient, high-performing teams.</p>
+            </e-content-template>
+            <e-richtexteditor-toolbarsettings items="@toolbarItems" />
+            <e-richtexteditor-quicktoolbarsettings text="@quickToolbarItems" />
+        </ejs-richtexteditor>
+    </div>
+}
+<script>
+    var userId;
+    var abortController;
+    var editor;
+    var baseURL = window.baseurl;
+    function created() {
+        editor = this;
+    }
+    function onAIAssitantPromptRequest(args) {
+        window.fingerPrint().then(function (userID) {
+            userId = userID;
+            try {
+                abortController = new AbortController();
+                fetch(baseURL + '/api/AI/Stream', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authentication': userId
+                    },
+                    body: JSON.stringify({
+                        message: (args.prompt || '') + (args.text || '')
+                    }),
+                    signal: abortController.signal
+                })
+                .then(function (response) {
+                    if (!response.ok) {
+                        return response.text().then(function (text) {
+                            if (response.status === 402) {
+                                showBanner(text);
+                            }
+                            let errorData;
+                            try {
+                                errorData = JSON.parse(text);
+                            } catch (e) {
+                                errorData = { error: 'HTTP Error ' + response.status + ': ' + text };  // Fallback
+                            }
+                            throw new Error(errorData.error || ('HTTP Error ' + response.status));
+                        });
+                    }
+
+                    var reader = response.body.getReader();
+                    var decoder = new TextDecoder();
+                    var fullText = '';
+                    var streamingStopped = false;
+
+                    function processStream() {
+                        return reader.read().then(function (result) {
+                            if (streamingStopped) {
+                                return;
+                            }
+                            var done = result.done;
+                            var value = result.value;
+                            if (done) {
+                                editor.addAIPromptResponse(fullText, true);
+                                return;
+                            }
+                            var chunk = decoder.decode(value, { stream: true });
+                            fullText += chunk;
+                            editor.addAIPromptResponse(fullText, false);
+                            return processStream();
+                        });
+                    }
+
+                    return processStream();
+                })
+                .catch(function (error) {
+                    if (error.name === 'AbortError') {
+                        console.log('AI Request aborted by user.');
+                        return;
+                    } else if (error.message && error.message.indexOf('token limit') !== -1) {
+                        editor.addAIPromptResponse(error.message, false);
+                        editor.addAIPromptResponse(error.message, true);
+                        // TO DO Token limit logic goes here.
+                    } else {
+                        console.error('There was a problem with the fetch operation:', error);
+                    }
+                });
+            } catch (error) {
+                console.error('Unexpected error:', error);
+            }
+        })
+        .catch(function (e) {
+            console.error('Failed to retrieve user ID:', e);
+        });
+    }
+
+    function onAIAssistantStopRespondingClick() {
+        if (abortController) {
+            abortController.abort();
+        }
+    }
+</script>
+
+@section Meta{
+    <meta name="description" content="This demo explains how to use AI Assistant feature of the Rich Text Editor control." />
+}
+@section ActionDescription{
+    <div id="action-description">
+        <p>The AI Assistant feature provides a user interface such as an AssistView inside a popup, nested dropdown with predefined prompts, and a toolbar button for interacting with an AI model.</p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            The <b>AI Assistant</b> feature provides a predefined user interface for integrating AI capabilities into the
+            Rich Text Editor, enabling users to create, edit, and enhance content more efficiently.
+        </p>
+        <ul>
+            <li>
+                The AI Assistant can be accessed via the keyboard shortcut(<code>Alt + Enter or ⌥ + Enter</code>) or
+                toolbar.
+            </li>
+            <li>
+                The <b>AI Commands</b> menu provides a predefined list of prompts useful for performing common
+                content-related actions such as improving, shortening, elaborating, simplifying, summarizing, and checking
+                grammar.
+            </li>
+            <li>
+                The <b>AI Query </b>button helps to open the AI Assistant with the flexibility to provide a user defined
+                prompt when processing the content.
+            </li>
+        </ul>
+        <p><b>Processing of the Prompt:</b></p>
+        <ul>
+            <li>
+                When a prompt is executed the <code>aiAssistantPromptRequest</code> event is triggered, followed by a
+                <code>fetch</code> request to the backend service to process the query.
+            </li>
+            <li>
+                The response from the LLM is streamed back into the editor’s Assistant view using the
+                <code>addAIPromptResponse</code> public method.
+            </li>
+            <li>
+                When the Stop Responding button is clicked the streaming process is cancelled by setting the
+                <code>stopStreaming</code> boolean to false.
+            </li>
+        </ul>
+    </div>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of RichtextEditor with AI integration</h1>
+}
+@section Title{
+    <title>ASP.NET Core Richt Text Editor with AI Assistant Example - Syncfusion Demos </title>
+}

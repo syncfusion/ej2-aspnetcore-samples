@@ -1,0 +1,198 @@
+﻿@page
+@model EJ2CoreSampleBrowser_NET8.Pages.AIAssistView.Ai_Text_To_SpeechModel
+@using Syncfusion.EJ2
+@using Syncfusion.EJ2.InteractiveChat
+@using System.Text.Json;
+@{
+    var promptsData = new[]
+    {
+        new { prompt = "What is AI?", response = "<div> AI stands for Artificial Intelligence, enabling machines to mimic human intelligence for tasks such as learning, problem - solving, and decision - making.</ div >", suggestionData = new List<string> { } }
+    };
+}
+@section ControlsSection {
+    <div class="control-section">
+        <div class="integration-texttospeech-section">
+            <ejs-aiassistview id="aiAssistView"
+                              prompts="@promptsData"
+                              promptSuggestions="@Model.Suggestions"
+                              promptRequest="onPromptRequest"
+                              stopRespondingClick="stopRespondingClick"
+                              created="onCreated">
+                <e-aiassistview-toolbarsettings items="@Model.Items" itemClicked="toolbarItemClicked"></e-aiassistview-toolbarsettings>
+                <e-aiassistview-responsetoolbarsettings items="@Model.ResponseToolbarItems" itemClicked="onResponseToolbarItemClicked"></e-aiassistview-responsetoolbarsettings>
+            </ejs-aiassistview>
+        </div>
+    </div>
+}
+
+@section PreScripts {
+    <script src="https://cdn.jsdelivr.net/npm/marked@latest/marked.min.js"></script>
+    <script>
+        var assistObj = null;
+        var currentUtterance = null;
+        var stopStreaming = false;
+        // Azure OpenAI configuration
+        const azureOpenAIApiKey = 'Your_AzureOpenAIApiKey'; // Replace with your key
+        const azureOpenAIEndpoint = 'Your_AzureOpenAIEndpoint'; // Replace with your endpoint
+        const azureOpenAIApiVersion = '2024-07-01-preview'; // Replace to match your resource
+        const azureDeploymentName = 'Your_AzureDeploymentName'; // Replace with your deployment name
+        var suggestions = @Html.Raw(JsonSerializer.Serialize(Model.Suggestions));
+
+        function onCreated() {
+            assistObj = ej.base.getComponent(document.getElementById("aiAssistView"), "aiassistview");
+        }
+
+        function toolbarItemClicked(args) {
+            if (args.item.iconCss === 'e-icons e-refresh') {
+                assistObj.prompts = [];
+                assistObj.promptSuggestions = suggestions;
+                stopStreaming = true;
+            }
+        }
+
+        function onResponseToolbarItemClicked(args) {
+            const responseHtml = assistObj.prompts[args.dataIndex].response;
+            if (responseHtml) {
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = responseHtml;
+                const text = (tempDiv.textContent || tempDiv.innerText || '').trim();
+                if (args.item.iconCss === 'e-icons e-audio' || args.item.iconCss === 'e-icons e-assist-stop') {
+                    if (currentUtterance) {
+                        speechSynthesis.cancel();
+                        currentUtterance = null;
+                        assistObj.responseToolbarSettings.items[1].iconCss = 'e-icons e-audio';
+                        assistObj.responseToolbarSettings.items[1].tooltip = 'Read Aloud';
+                    } else {
+                        const utterance = new SpeechSynthesisUtterance(text);
+                        utterance.onend = () => {
+                            currentUtterance = null;
+                            assistObj.responseToolbarSettings.items[1].iconCss = 'e-icons e-audio';
+                            assistObj.responseToolbarSettings.items[1].tooltip = 'Read Aloud';
+                        };
+                        speechSynthesis.speak(utterance);
+                        currentUtterance = utterance;
+                        assistObj.responseToolbarSettings.items[1].iconCss = 'e-icons e-assist-stop';
+                        assistObj.responseToolbarSettings.items[1].tooltip = 'Stop';
+                    }
+                } else if (args.item.iconCss === 'e-icons e-assist-copy') {
+                    navigator.clipboard.writeText(text);
+                }
+            }
+        }
+
+        async function streamResponse(fullResponse) {
+            let streamedResponseText = '';
+            if (fullResponse) {
+                await new Promise(resolve => setTimeout(resolve, 300));
+                let i = 0;
+                while (i < fullResponse.length && !stopStreaming) {
+                    streamedResponseText += fullResponse[i];
+                    i++;
+                    assistObj.addPromptResponse(marked.parse(streamedResponseText), false);
+                    assistObj.scrollToBottom();
+                    await new Promise(resolve => setTimeout(resolve, 10));
+                }
+            }
+            return streamedResponseText;
+        }
+
+        async function onPromptRequest(args) {
+            stopStreaming = false;
+            try {
+                const response = await fetch(
+                    `${azureOpenAIEndpoint.replace(/\/$/, '')}/openai/deployments/${encodeURIComponent(azureDeploymentName)}/chat/completions?api-version=${encodeURIComponent(azureOpenAIApiVersion)}`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'api-key': azureOpenAIApiKey
+                        },
+                        body: JSON.stringify({
+                            messages: [{ role: 'user', content: args.prompt || 'Hi' }],
+                            temperature: 0.7,
+                            max_tokens: 200
+                        })
+                    }
+                );
+                const data = await response.json().catch(() => ({}));
+                if (!response.ok) {
+                    const errorMsg = data?.error?.message || `HTTP ${response.status} ${response.statusText}`;
+                    throw new Error(errorMsg);
+                }
+                const fullResponse = data?.choices?.[0]?.message?.content?.trim() || 'No response received.';
+                const streamedText = await streamResponse(fullResponse);
+                if (!stopStreaming) {
+                    assistObj.addPromptResponse(marked.parse(streamedText), true);
+                }
+                assistObj.promptSuggestions = suggestions;
+            } catch (error) {
+                console.error('Error fetching Azure OpenAI response:', error);
+                assistObj.addPromptResponse('⚠️ Something went wrong while connecting to the OpenAI service. Please check your API key.', true);
+                stopStreaming = true;
+            }
+        }
+
+        function stopRespondingClick() {
+            stopStreaming = true;
+        }
+    </script>
+}
+
+<style>
+    .integration-texttospeech-section {
+        height: 450px;
+        width: 650px;
+        margin: 0 auto;
+    }
+
+        .integration-texttospeech-section .e-view-container {
+            margin: auto;
+        }
+
+</style>
+
+@section Meta {
+    <meta name="description" content="This example demonstrates the integration of Text-to-Speech functionality with the ASP.NET Core AIAssistView control, using Azure OpenAI for responses. Explore here for more details." />
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>
+            This sample demonstrates the integration of <code>Text-to-Speech</code> functionality with the AI AssistView component. It allows users to convert AI-generated responses into spoken audio using the browser's <code>SpeechSynthesis</code> API, with responses powered by Azure OpenAI.
+        </p>
+    </div>
+}
+
+@section Description {
+    <div id="description">
+        <p>
+            In this example, the AI AssistView component is integrated with <code>Text-to-Speech</code> functionality to enable voice-based interaction with AI-generated responses.
+        </p>
+        <p>
+            The sample demonstrates the following features:
+        </p>
+        <ul>
+            <li>
+                The <code>responseToolbarSettings</code> includes a custom <code>Read Aloud</code> button that extracts plain text from the AI response and uses the browser's <code>SpeechSynthesis</code> API to vocalize it.
+            </li>
+            <li>
+                The <code>SpeechSynthesisUtterance</code> interface is used to manage speech playback, including toggling between play and stop states.
+            </li>
+            <li>
+                Additional response toolbar buttons include <code>Copy</code> to copy the response text, and <code>Like</code> and <code>Need Improvement</code> for user feedback.
+            </li>
+            <li>
+                The <code>toolbarSettings</code> adds a right-aligned <code>Refresh</code> button to clear previous prompts.
+            </li>
+            <li>
+                Responses are streamed dynamically using the <code>addPromptResponse</code> method, and the <code>scrollToBottom</code> method ensures the latest response is always visible.
+            </li>
+            <li>
+                Markdown content is rendered using the <code>Marked</code> plugin for rich formatting in AI responses.
+            </li>
+            <li>
+                The <code>promptSuggestions</code> provides AI prompt suggestions to guide user interactions.
+            </li>
+        </ul>
+    </div>
+}

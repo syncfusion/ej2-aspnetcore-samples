@@ -1,0 +1,413 @@
+﻿@page
+
+@using Syncfusion.EJ2
+
+@{
+    string[] toolbarItems = new string[] { "NewFolder", "Cut", "Copy", "Paste", "Delete", "Download", "Rename", "SortBy", "Refresh", "Selection", "View", "Details" };
+}
+
+@section ControlsSection {
+<div class="control-section">
+    <div class="sample-container">
+            <ejs-filemanager id="filemanager"
+                             height="600px"
+                             cssClass="e-fm-template-sample"
+                             navigationPaneTemplate="#treeTemplate"
+                             largeIconsTemplate="#largeIconsTemplate"
+                             fileLoad="onFileLoad"
+                             menuOpen="onMenuOpen">
+
+                <e-filemanager-ajaxsettings url="https://ej2-aspcore-service.azurewebsites.net/api/FileManager/FileOperations"
+                                            uploadUrl="https://ej2-aspcore-service.azurewebsites.net/api/FileManager/Upload"
+                                            downloadUrl="https://ej2-aspcore-service.azurewebsites.net/api/FileManager/Download"
+                                            getImageUrl="https://ej2-aspcore-service.azurewebsites.net/api/FileManager/GetImage">
+                </e-filemanager-ajaxsettings>
+
+                <e-filemanager-toolbarsettings items="toolbarItems"></e-filemanager-toolbarsettings>
+
+                <e-filemanager-detailsviewsettings>
+                    <e-detailsviewsettings-columns>
+                        <e-detailsviewsettings-column field="name" headerText="File Name" template="${name}"></e-detailsviewsettings-column>
+                        <e-detailsviewsettings-column field="size" headerText="File Size" template="#sizeColumnTemplate"></e-detailsviewsettings-column>
+                        <e-detailsviewsettings-column field="_fm_modified" headerText="Date Modified"></e-detailsviewsettings-column>
+                        <e-detailsviewsettings-column headerText="Actions" template="#actionColumnTemplate"></e-detailsviewsettings-column>
+                    </e-detailsviewsettings-columns>
+                </e-filemanager-detailsviewsettings>
+
+            </ejs-filemanager>
+    </div>
+</div>
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>
+            This sample showcases how to customize the Syncfusion File Manager's control with template support in the Navigation pane, Large icons and Details view.
+        </p>
+    </div>
+}
+
+@section Description {
+    <div id="description">
+        <p>
+            The <code>navigationPaneTemplate</code> renders the nodes with icons based on folder names, while the<code>largeIconsTemplate</code> displays files with styled backgrounds and a action menu in each file/folder.
+            The <code>detailsViewSettings</code> template shows file information like name, size, and modified date in columns.
+            File operations such as Open, Delete, Download, and Refresh are handled through a dropdown menu option showed in each item,
+            and the <code>select</code> initiates each action to the corresponding File Manager methods (<code>openFile</code>,
+            <code>downloadFiles</code>, <code>deleteFiles</code>, and <code>refreshFiles</code>).
+        </p>
+        <p>
+            <b>Note: </b>File Manager's upload functionality is restricted in the online demos for security reasons. If you need to test upload functionality, please install
+            <a target="_blank" href="https://www.syncfusion.com/downloads" aria-label="Download Syncfusion Essential Studio">Syncfusion Essential Studio<sup>&reg;</sup> </a>on your machine and run the demo.
+        </p>
+
+    </div>
+}
+
+@section Meta {
+    <meta name="description" content="This example demonstrates the Template in ASP.NET Core File Manager control. Explore here for more details." />
+}
+@section Title {
+    <title>ASP.NET Core File Manager Template Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Template in ASP.NET Core File Manager Control</h1>
+}
+
+<script id="treeTemplate" type="text/x-template">
+    <div class="e-nav-pane-node" style="display: inline-flex; align-items: center;">
+        <span class="e-icons ${getIconsForFolders(name)}"></span>
+        <span class="folder-name" style="margin-left:8px;">${name}</span>
+    </div>
+</script>
+
+<script id="largeIconsTemplate" type="text/x-template">
+    ${getLargeIconsViewTemplateJSON(data)}
+</script>
+
+<script id="sizeColumnTemplate" type="text/x-template">
+    <div>${validateSize(data)}</div>
+</script>
+
+<script id="actionColumnTemplate" type="text/x-template">
+    <div class="action-ddb" data-name="${name}" data-isFile="${isFile}"></div>
+</script>
+
+
+<script>
+    const actionItems = [
+        { text: 'Open', iconCss: 'e-icons e-folder-open' },
+        { text: 'Download', iconCss: 'e-icons e-download' },
+        { text: 'Refresh', iconCss: 'e-icons e-refresh' },
+        { text: 'Delete', iconCss: 'e-icons e-trash' }
+    ];
+
+    function onMenuOpen(args) {
+        args.cancel = true;
+    }
+
+    function onFileLoad(args) {
+        const validModules = ['DetailsView', 'LargeIconsView'];
+        if (validModules.indexOf(args.module) !== -1) {
+            const actionBtn = args.element.querySelector('.action-ddb');
+            if (actionBtn && !actionBtn.hasAttribute('data-ddb-initialized')) {
+                wireDropDownButton(actionBtn);
+            }
+        }
+    }
+
+    function wireDropDownButton(hostEl) {
+        const fileName = hostEl.getAttribute('data-name') || '';
+        const isFile = (hostEl.getAttribute('data-isfile') || 'false') === 'true';
+        const items = isFile ? actionItems.filter((i) => i.text !== 'Open') : actionItems;
+        const ddb = new ej.splitbuttons.DropDownButton({
+            items: items,
+            cssClass: 'e-caret-hide filemanager-dropdown-button',
+            select: (args) => {
+                const action = args.item.text || '';
+                onActionSelect(action, { name: fileName, isFile });
+            },
+            iconCss: 'e-icons e-more-vertical-1'
+        });
+        ddb.appendTo(hostEl);
+        hostEl.setAttribute('data-ddb-initialized', 'true');
+    }
+
+    function onActionSelect(action, item) {
+        const fileManager = document.getElementById('filemanager').ej2_instances[0];
+        switch (action) {
+            case 'Open':
+                fileManager.openFile(item.name);
+                break;
+            case 'Download':
+                fileManager.downloadFiles([item.name]);
+                break;
+            case 'Refresh':
+                fileManager.refreshFiles();
+                break;
+            case 'Delete':
+                fileManager.deleteFiles([item.name]);
+                break;
+            default:
+                break;
+        }
+    }
+
+    function formatSize(bytes) {
+        if (!bytes) return "0 B";
+        const sizes = ["B", "KB", "MB", "GB", "TB"];
+        let i = 0;
+        while (bytes >= 1024 && i < sizes.length - 1) {
+            bytes /= 1024;
+            i++;
+        }
+        return `${bytes.toFixed(1)} ${sizes[i]}`;
+    }
+
+    function validateSize(data) { return (!data || !data.isFile) ? '-' : formatSize(data.size); }
+
+    function getBackgroundCss(item) {
+        const NamedFileBackgrounds = {
+            "Adam.png": "background-Adam",
+            "Andrew.png": "background-Andrew",
+            "Ellie.png": "background-Ellie",
+            "Jameson.png": "background-Jameson",
+            "John.png": "background-John",
+            "Josie.png": "background-Josie",
+            "Apple pie.png": "background-Applepie",
+            "Bread.png": "background-Bread",
+            "Doughnut.png": "background-Doughnut",
+            "Nuggets.png": "background-Nuggets",
+            "Sugar cookie.png": "background-Sugarcookie",
+            "bird.jpg": "background-bird",
+            "sea.jpg": "background-sea",
+            "seaview.jpg": "background-seaview",
+            "snow.jpg": "background-snow",
+            "snowfall.jpg": "background-snowfall"
+        };
+
+        const ExtensionBackgrounds = {
+            "jpg": "background-jpg",
+            "jpeg": "background-jpg",
+            "png": "background-png",
+            "pptx": "background-pptx",
+            "pdf": "background-pdf",
+            "mp4": "background-video",
+            "mp3": "background-audio",
+            "docx": "background-doc",
+            "txt": "background-txt",
+            "xlsx": "background-xlsx"
+        };
+
+        if (!item.isFile) return "file-icon background-folder";
+        if (NamedFileBackgrounds[item.name]) return `file-icon ${NamedFileBackgrounds[item.name]}`;
+        const ext = item.name.split('.').pop() || '';
+        return `file-icon ${ExtensionBackgrounds[ext] || "background-default"}`;
+    }
+
+    function getIconsForFolders(name) {
+        const iconMap = {
+            Files: 'e-folder',
+            Documents: 'e-file-document',
+            Downloads: 'e-download',
+            Pictures: 'e-thumbnail',
+            Music: 'e-file-format',
+            Videos: 'e-video',
+            Employees: 'e-export-png',
+            Food: 'e-export-png',
+            Nature: 'e-export-png'
+        };
+        return iconMap[name] || 'e-folder';
+    }
+
+    function getFileIconCssClass(item) {
+        if (!item.isFile) return "";
+
+        const extensionMap = {
+            jpg: "image",
+            jpeg: "image",
+            png: "image",
+            gif: "image",
+            mp3: "music",
+            wav: "music",
+            mp4: "video",
+            avi: "video",
+            doc: "doc",
+            docx: "docx",
+            ppt: "pptx",
+            pptx: "pptx",
+            xls: "xlsx",
+            xlsx: "xlsx",
+            txt: "txt",
+            js: "js",
+            css: "css",
+            html: "html",
+            exe: "exe",
+            msi: "msi",
+            php: "php",
+            xml: "xml",
+            zip: "zip",
+            rar: "rar",
+            pdf: "pdf"
+        };
+
+        const extension = (item.name.split('.').pop() || "").toLowerCase();
+        const iconType = extensionMap[extension] || "unknown";
+        return `e-list-icon e-fe-${iconType}`;
+    }
+
+    function getLargeIconsViewTemplateJSON(item) {
+        const formattedDate = item.dateCreated
+            ? new Date(item.dateCreated).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            })
+            : '';
+        const iconClass = getFileIconCssClass(item);
+        const backgroundClass = getBackgroundCss(item);
+        const iconHtml = item.isFile ? `<div class="${iconClass}"></div>` : '';
+        return `
+            <div class="custom-icon-card">
+                <div class="file-header">
+                    <div class="left-info">
+                        ${iconHtml}
+                        <div class="file-name" title="${item.name}">${item.name}</div>
+                    </div>
+                    <div class="action-ddb" data-name="${item.name}" data-isFile="${item.isFile}"></div>
+                </div>
+                <div class="${backgroundClass}" title="${item.name}"></div>
+                <div class="file-formattedDate">Created on ${formattedDate}</div>
+            </div>
+        `;
+    }
+</script>
+
+<style>
+    .e-filemanager.e-fm-template-sample .e-list-icon {
+        height: 20px !important;
+        margin: 0 !important;
+        width: 20px !important;
+    }
+    .e-dropdown-btn.filemanager-dropdown-button {
+        border: none;
+        margin-right: -6px;
+        box-shadow: none;
+        background: transparent;
+    }
+    .e-dropdown-btn.filemanager-dropdown-button:hover, .e-dropdown-btn.filemanager-dropdown-button.e-btn:hover {
+        background: #d4d4d4;
+    }
+    .fluent2-dark .e-dropdown-btn.filemanager-dropdown-button:hover, .fluent2-dark .e-dropdown-btn.filemanager-dropdown-button.e-btn:hover,
+    .fluent-dark .e-dropdown-btn.filemanager-dropdown-button:hover, .fluent-dark .e-dropdown-btn.filemanager-dropdown-button.e-btn:hover,
+    .material3-dark .e-dropdown-btn.filemanager-dropdown-button:hover, .material3-dark .e-dropdown-btn.filemanager-dropdown-button.e-btn:hover,
+    .tailwind3-dark .e-dropdown-btn.filemanager-dropdown-button:hover, .tailwind3-dark .e-dropdown-btn.filemanager-dropdown-button.e-btn:hover,
+    .fluent2-highcontrast .e-dropdown-btn.filemanager-dropdown-button:hover, .fluent2-highcontrast .e-dropdown-btn.filemanager-dropdown-button.e-btn:hover,
+    .highcontrast .e-dropdown-btn.filemanager-dropdown-button:hover, .highcontrast .e-dropdown-btn.filemanager-dropdown-button.e-btn:hover,
+    .bootstrap5\.3-dark .e-dropdown-btn.filemanager-dropdown-button:hover, .bootstrap5\.3-dark .e-dropdown-btn.filemanager-dropdown-button.e-btn:hover {
+        background: #3d3d3d;
+    }
+    .bootstrap5\.3 .e-dropdown-btn.filemanager-dropdown-button {
+        color: #242424;
+    }
+    .e-filemanager.e-fm-template-sample .e-grid .e-gridheader .e-fe-grid-icon + .e-rowcell, .e-filemanager .e-grid .e-gridheader .e-fe-grid-icon + .e-headercell, .e-filemanager .e-grid .e-gridcontent .e-fe-grid-icon + .e-rowcell, .e-filemanager .e-grid .e-gridcontent .e-fe-grid-icon + .e-headercell {
+        padding-left: 6px;
+    }
+    .e-fm-template-sample .e-nav-pane-node .e-icons {
+        font-size: larger;
+    }
+    .e-fm-template-sample .custom-icon-card {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        height: 100%;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    .e-fm-template-sample .file-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .e-fm-template-sample .left-info {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        overflow: hidden;
+        flex-shrink: 1;
+        flex-grow: 1;
+    }
+    .e-fm-template-sample .file-name {
+        font-size: 14px;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 160px;
+    }
+    .e-fm-template-sample .file-formattedDate {
+        font-size: 12px;
+        margin-top: 8px;
+        text-align: center;
+        font-weight: 600;
+    }
+    .e-filemanager.e-fm-template-sample.e-fe-mobile .e-large-icons .e-list-parent .e-list-item {
+        height: 185px;
+        width: 100px;
+        margin: 8px 4px;
+    }
+    .e-filemanager.e-fm-template-sample.e-fe-mobile .e-large-icons .e-list-parent .e-list-item .file-icon {
+        width: 150px;
+        height: 90px;
+    }
+    .e-filemanager.e-fm-template-sample.e-fe-mobile .e-large-icons .e-list-parent .e-list-item .file-name {
+        max-width: 100px;
+    }
+    .e-filemanager.e-fm-template-sample .e-large-icons .e-list-item {
+        height: 240px;
+        width: 210px;
+    }
+    .e-filemanager.e-fm-template-sample .e-large-icons .e-list-parent .e-list-item .file-icon {
+        width: 190px;
+        height: 150px;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: contain;
+        margin-bottom: 10px;
+    }
+    /* Generic file type backgrounds */
+    .background-folder     { background-image: url('@Url.Content("~/css/filemanager/images/folders.svg")'); }
+    .background-png        { background-image: url('@Url.Content("~/css/filemanager/images/image-png.svg")'); }
+    .background-pptx       { background-image: url('@Url.Content("~/css/filemanager/images/pptx.png")'); }
+    .background-jpg        { background-image: url('@Url.Content("~/css/filemanager/images/image-jpg.svg")'); }
+    .background-doc        { background-image: url('@Url.Content("~/css/filemanager/images/docx.png")'); }
+    .background-pdf        { background-image: url('@Url.Content("~/css/filemanager/images/pdfphoto.png")'); }
+    .background-txt        { background-image: url('@Url.Content("~/css/filemanager/images/text.png")'); }
+    .background-video      { background-image: url('@Url.Content("~/css/filemanager/images/video.png")'); }
+    .background-audio      { background-image: url('@Url.Content("~/css/filemanager/images/music.png")'); }
+    .background-xlsx       { background-image: url('@Url.Content("~/css/filemanager/images/xlsx.png")'); }
+    /* People images */
+    .background-Adam       { background-image: url('@Url.Content("~/css/filemanager/images/adam.png")'); }
+    .background-Andrew     { background-image: url('@Url.Content("~/css/filemanager/images/andrew.png")'); }
+    .background-Ellie      { background-image: url('@Url.Content("~/css/filemanager/images/ellie.png")'); }
+    .background-Jameson    { background-image: url('@Url.Content("~/css/filemanager/images/jameson.png")'); }
+    .background-John       { background-image: url('@Url.Content("~/css/filemanager/images/john.png")'); }
+    .background-Josie      { background-image: url('@Url.Content("~/css/filemanager/images/josie.png")'); }
+    /* Food images */
+    .background-Applepie   { background-image: url('@Url.Content("~/css/filemanager/images/apple-pie.png")'); }
+    .background-Bread      { background-image: url('@Url.Content("~/css/filemanager/images/bread.png")'); }
+    .background-Doughnut   { background-image: url('@Url.Content("~/css/filemanager/images/doughnut.png")'); }
+    .background-Nuggets    { background-image: url('@Url.Content("~/css/filemanager/images/nuggets.png")'); }
+    .background-Sugarcookie{ background-image: url('@Url.Content("~/css/filemanager/images/sugar-cookie.png")'); }
+    /* Nature images */
+    .background-bird       { background-image: url('@Url.Content("~/css/filemanager/images/bird.png")'); }
+    .background-sea        { background-image: url('@Url.Content("~/css/filemanager/images/sea.png")'); }
+    .background-seaview    { background-image: url('@Url.Content("~/css/filemanager/images/seaview.png")'); }
+    .background-snow       { background-image: url('@Url.Content("~/css/filemanager/images/snow.png")'); }
+    .background-snowfall   { background-image: url('@Url.Content("~/css/filemanager/images/snowfall.png")'); }
+</style>

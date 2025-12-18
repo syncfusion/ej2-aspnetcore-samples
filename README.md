@@ -19,7 +19,7 @@ The following topics can help you to use the Syncfusion® ASP.NET Core Component
 
 ## How to run the demo
 
-Clone the repository. This repository contains the .NET 8 and .NET 9 project and solution files.
+Clone the repository. This repository contains the .NET 8, .NET 9 and .NET 10 project and solution files.
 
 ### Run the demo using .NET CLI
 
@@ -31,6 +31,9 @@ Clone the repository. This repository contains the .NET 8 and .NET 9 project and
 
    To run .NET 9 ASP.NET Core project
    > `dotnet run --project EJ2CoreSampleBrowser_NET9.csproj`
+
+   To run .NET 10 ASP.NET Core project
+   > `dotnet run --project EJ2CoreSampleBrowser_NET10.csproj`
 
 ### Run the demo using Visual Studio
 
@@ -197,6 +200,10 @@ Clone the repository. This repository contains the .NET 8 and .NET 9 project and
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/splitter/getting-started">Splitter</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/dashboard-layout/getting-started/">Dashboard Layout</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/timeline/getting-started">Timeline</a></div>
+            <p>&nbsp;</p>
+            <div><p class="controlcategory">Smart Controls</p></div>
+            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/smart-paste/getting-started">Smart Paste Button</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/smart-textarea/getting-started">Smart TextArea</a></div>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>

@@ -1,0 +1,73 @@
+@page
+
+@section ControlsSection{
+    @{
+        var labelFont = new Syncfusion.EJ2.LinearGauge.LinearGaugeLabel { Font = new Syncfusion.EJ2.LinearGauge.LinearGaugeFont { Size = "0px" } };
+        var titleStyle = new Syncfusion.EJ2.LinearGauge.LinearGaugeTitleStyleLinearGauge { FontFamily = "inherit", FontWeight = "normal" };
+    }
+    <div class="control-section">
+        <ejs-lineargauge load="gaugeLoad" id='defaultContainer' Background='Transparent' style='display:block;' Orientation='Horizontal'>
+            <e-lineargauge-container Type="RoundedRectangle" Width="30" RoundedCornerRadius=20 BackgroundColor="#D6D6D6" ,></e-lineargauge-container>
+            <e-lineargauge-border Width="1"></e-lineargauge-border>
+            <e-lineargauge-axes>
+                <e-lineargauge-axis Minimum="0" Maximum="100" OpposedPosition="true" labelStyle="labelFont">
+                    <e-axis-majorticks Interval="10" Height="0"></e-axis-majorticks>
+                    <e-axis-minorticks Interval="1" Height="0"></e-axis-minorticks>
+                    <e-axis-line Width="0"></e-axis-line>
+                    <e-lineargauge-pointers>
+                        <e-lineargauge-pointer Type="Bar" Value="41" Color="#2196F3" Height=30 Width=30 RoundedCornerRadius="20"></e-lineargauge-pointer>
+                    </e-lineargauge-pointers>
+                </e-lineargauge-axis>
+            </e-lineargauge-axes>
+            <e-lineargauge-annotations>
+                <e-lineargauge-annotation Content='<div style="font-size: 15px;color: white;margin-top: -25px;margin-left:50%">41%</div>' X="0" Y="0" AxisValue=10 AxisIndex=0 ZIndex="1"></e-lineargauge-annotation>
+            </e-lineargauge-annotations>
+        </ejs-lineargauge>
+    </div>
+    <!-- custom code start -->
+    <style>
+        .control-section {
+            min-height: 450px;
+        }
+    </style>
+    <!-- custom code end -->
+}
+
+<script>
+    window.gaugeLoad = function (args) {
+       args.gauge.animationDuration = 3000;
+    @* custom code start *@
+        var theme = themeName ? themeName : 'Material';
+        args.gauge.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-high/i, 'High').replace(/5.3/i, '5');
+    @* custom code end *@
+    }
+</script>
+
+@section Meta{
+    <meta name="description" content="This example demonstrates the Progress Bar in ASP.NET Core LinearGauge control. Explore here for more details." />
+                }
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample shows a linear gauge that resembles a progress bar and indicates a task completion rate of 41%.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this example, you can see how to render and configure a new progress bar using the linear gauge. This can be accomplished by combining axis, pointer, and annotation.
+        </p>
+        <p>
+            More information on the linear gauge can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/linear-gauge/getting-started" aria-label="documentation section">documentation section</a>.
+        </p>
+    </div>
+}
+@section Title{
+    <title>ASP.NET Core Progress Bar Example - Syncfusion Demos </title>
+                }
+@section Header{
+    <h1 class='sb-sample-text'>Example of Progress Bar in ASP.NET Core LinearGauge Control</h1>
+                }

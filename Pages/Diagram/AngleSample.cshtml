@@ -1,0 +1,675 @@
+﻿@page
+@model EJ2CoreSampleBrowser.Pages.Diagram.AngleSampleModel
+@using Syncfusion.EJ2
+@using Syncfusion.EJ2.Diagrams
+@using Syncfusion.EJ2.CircularGauge
+@using Syncfusion.EJ2.DropDowns
+@using Syncfusion.EJ2.Notifications
+@using Syncfusion.EJ2.Inputs
+
+@{
+    var getNodeDefaults = "getNodeDefaults";
+    var getConnectorDefaults = "getConnectorDefaults";
+    var onRotationChange = "onRotationChange";
+    var onLocationChanged = "onLocationChanged";
+}
+
+@section ControlsSection {
+
+    <div class="control-section angle-diagram-container" style="position: relative;">
+        <ejs-diagram id="diagram" height="750px"
+                     scrollChange="handleScrollChange"
+                     created="diagramCreated"
+                     click="diagramClick"
+                     getNodeDefaults="@getNodeDefaults"
+                     getConnectorDefaults="@getConnectorDefaults"
+                     nodes="@Model.Nodes"
+                     connectors="@Model.Connectors"
+                     rotateChange="onRotationChange"
+                     nodeTemplate="#nodetemplate">
+            <e-diagram-snapsettings constraints="None"></e-diagram-snapsettings>
+            <e-diagram-pagesettings width="1300" height="820" background="@Model.Background"></e-diagram-pagesettings>
+            <e-diagram-selecteditems constraints="@Model.Constraints"></e-diagram-selecteditems>
+        </ejs-diagram>
+    </div>
+
+    <style>
+    .angle-diagram-container .e-ddl.e-input-group .e-input-group-icon, .e-ddl.e-input-group.e-control-wrapper .e-input-group-icon:hover {
+        color: #9CA3AF;
+    }
+
+    .angle-diagram-container .e-ddl.e-input-group.e-control-wrapper .e-input {
+        color: #9CA3AF;
+        font-size: 16px;
+        font-weight: 500;
+    }
+
+    .angle-diagram-container .angle-control-section {
+        margin-bottom: 25px;
+        background: linear-gradient(145deg, #ffffff, #f8f9fa);
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .angle-diagram-container .angle-control-label {
+        display: flex;
+        align-items: center;
+        font-weight: 600;
+        font-size: 18px;
+        color: #2c3e50;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .angle-diagram-container .angle-control {
+        align-items: center;
+        background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+        border: 2px solid #e9ecef;
+        border-radius: 12px;
+        padding: 15px;
+        transition: all 0.3s ease;
+        height: 100px;
+    }
+
+    .angle-diagram-container .angle-display {
+        flex: 1;
+        text-align: center;
+        margin: 0 20px;
+    }
+
+    .angle-diagram-container .angle-value {
+        font-size: 20px;
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 5px;
+    }
+
+    .angle-diagram-container .angle-description {
+        font-size: 15px;
+        color: #7f8c8d;
+        font-weight: 500;
+        margin-top: 10px;
+    }
+
+    .angle-diagram-container .efficiency-section {
+        text-align: center;
+        margin-bottom: 30px;
+        background: linear-gradient(145deg, #ffffff, #f1f3f4);
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    .angle-diagram-container .e-diagram-selector {
+        stroke-width: 0;
+    }
+    </style>
+
+    <script id="nodetemplate" type="text/x-template">
+        ${if(id == 'location')}
+        <div class="angle-control-section" style="height:150px;width:300px">
+            <div class="angle-control-label" style="font-size:18px;font-weight:600">
+                Select location
+            </div>
+            <div id="locationDropdown"></div>
+        </div>
+        ${else if(id == 'angle')}
+        <div class="angle-control-section" style="width: 300px; height: 185px;">
+            <div class="angle-control-label" style="font-size:18px;font-weight:600">
+                Tilt Angle
+            </div>
+            <div>
+                <input id="angleValue" style="height:40px !important;font-size:large" />
+            </div>
+            <div class="angle-description" id="angleDescription">${getAngleDescription()}</div>
+        </div>
+        ${else if(id == 'efficiency')}
+        <div class="efficiency-section" style="width: 300px; height: 345px">
+            <h3 class="angle-control-label" style="font-size:18px;font-weight:600">
+                System Efficiency
+            </h3>
+            <div style="width: 210px; height:180px; margin:auto;">
+                <div id="circular"></div>
+            </div>
+            <div style="width:250px">
+                <div id="efficiencyMsg"></div>
+            </div>
+        </div>
+        ${/if}
+    </script>
+
+    <script>
+        var currentAngle = 303;
+        var efficiency = 78;
+        var selectedLocation = 'New York';
+        var selectedDateTime = new Date();
+        var sunElevation = 0;
+        var sunAzimuth = 0;
+        var optimalTilt = 0;
+        var solarIrradiance = 0;
+        var incidenceAngle = 0;
+        var intPanelAngleDeg = 0;
+        var message = '';
+        var severity = '';
+        var dropDownObj;
+        var angleNumeric; // EJ2 NumericTextBox instance
+        var suppressAngleChange = false; // Prevent recursive updates
+
+        var locationData = [
+            { name: "New York", latitude: 40.7128, longitude: -74.0060, angle: 0 },
+            { name: "Los Angeles", latitude: 34.0522, longitude: -118.2437, angle: 25 },
+            { name: "Chicago", latitude: 41.8781, longitude: -87.6298, angle: 50 },
+            { name: "Houston", latitude: 29.7604, longitude: -95.3698, angle: 75 },
+            { name: "Phoenix", latitude: 33.4484, longitude: -112.0740, angle: 100 }
+        ];
+
+        function diagramCreated(args) {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            UpdatePanelState(false, true, false);
+            initializeTemplateComponents();
+            initializeAngleControls(); // Ensure NumericTextBox is initialized
+            updateUI();
+            diagram.fitToPage();
+        }
+
+        function diagramClick() {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            var solarPanelNode = diagram.getObject('solarPanelFrame');
+            if (solarPanelNode) diagram.select([solarPanelNode]);
+        }
+
+        function handleScrollChange() {
+            if (dropDownObj && dropDownObj.isPopupOpen) {
+                dropDownObj.hidePopup();
+            }
+        }
+
+        function getNodeDefaults(obj, diagram) {
+            if (obj.id !== 'solarPanelFrame') {
+                obj.constraints = ej.diagrams.NodeConstraints.None;
+            }
+            return obj;
+        }
+
+        function getConnectorDefaults(connector, diagram) {
+            connector.constraints = ej.diagrams.ConnectorConstraints.None;
+            connector.segments = [
+                {
+                    type: 'Bezier',
+                    point1: { x: 350, y: 260 },
+                    point2: { x: 610, y: 260 }
+                },
+            ];
+            return connector;
+        }
+
+        function initializeTemplateComponents() {
+            // Location dropdown
+            var locationDropdown = document.querySelector('[id*="locationDropdown"]');
+            if (locationDropdown && !locationDropdown.ej2_instances) {
+                dropDownObj = new ej.dropdowns.DropDownList({
+                    dataSource: [
+                        { name: 'New York', Value: 'New York' },
+                        { name: 'Los Angeles', Value: 'Los Angeles' },
+                        { name: 'Chicago', Value: 'Chicago' },
+                        { name: 'Houston', Value: 'Houston' },
+                        { name: 'Phoenix', Value: 'Phoenix' }
+                    ],
+                    fields: { text: 'name', value: 'Value' },
+                    value: selectedLocation,
+                    placeholder: 'Select a location',
+                    change: onLocationChanged,
+                    allowFiltering: false,
+                    popupHeight: '200px',
+                    popupWidth: '212px'
+                });
+                dropDownObj.appendTo(locationDropdown);
+            }
+
+            // Circular gauge
+            var gaugeElement = document.querySelector('[id*="circular"]');
+            if (gaugeElement && !gaugeElement.ej2_instances) {
+                initializeCircularGauge(gaugeElement);
+            }
+
+            // Message component
+            var messageElement = document.querySelector('[id*="efficiencyMsg"]');
+            if (messageElement && !messageElement.ej2_instances) {
+                initializeMessage(messageElement);
+            }
+        }
+
+        function initializeCircularGauge() {
+            var gaugeElement = document.getElementById('circular');
+            if (gaugeElement && !gaugeElement.ej2_instances) {
+                var gauge = new ej.circulargauge.CircularGauge({
+                    width: '200px',
+                    height: '200px',
+                    background: 'transparent',
+                    axes: [{
+                        startAngle: 225,
+                        endAngle: 45,
+                        minimum: 0,
+                        maximum: 100,
+                        radius: '95%',
+                        lineStyle: { width: 15, color: '#F2F4F6' },
+                        majorTicks: { height: 0 },
+                        minorTicks: { height: 0 },
+                        labelStyle: { font: { size: '0px' } },
+                        ranges: [
+                            { start: 0, end: 40, color: '#EF5B2E', startWidth: 18, endWidth: 18 },
+                            { start: 40, end: 60, color: '#FEA714', startWidth: 18, endWidth: 18 },
+                            { start: 60, end: 90, color: '#3ABA47', startWidth: 18, endWidth: 18 }
+                        ],
+                        pointers: [{
+                            type: 'Marker',
+                            value: efficiency,
+                            markerShape: 'Triangle',
+                            markerHeight: 25,
+                            markerWidth: 6,
+                            radius: '85%',
+                            color: '#111',
+                            animation: { enable: false }
+                        }],
+                        annotations: [{
+                            angle: 90,
+                            radius: '0%',
+                            zIndex: '1',
+                            content: '<div style="text-align: center;">' +
+                                '<div style="font-size: 20px; font-weight: bold; color: #1A2A3B;" id="efficiencyValue">' +
+                                Math.round(efficiency) + '<span style="font-size:20px;font-weight:500;">%</span>' +
+                                '</div>' +
+                                '<div style="font-size: 14px; font-weight: 500; color: #888; margin-top: 5px; text-align: right; padding-left: 10px; text-transform: uppercase;">' +
+                                'EFFICIENCY' +
+                                '</div>' +
+                                '</div>'
+                        }]
+                    }]
+                });
+                gauge.appendTo(gaugeElement);
+            }
+        }
+
+        function initializeMessage() {
+            var messageElement = document.getElementById('efficiencyMsg');
+            if (messageElement && !messageElement.ej2_instances) {
+                getEfficiencyMessageSeverity();
+                var messageObj = new ej.notifications.Message({
+                    content: message,
+                    severity: severity,
+                    showIcon: true,
+                    cssClass: 'performance-message',
+                    visible: true,
+                    showCloseIcon: false
+                });
+                messageObj.appendTo(messageElement);
+            }
+        }
+
+        // Initialize NumericTextBox and interaction handling for angle
+        function initializeAngleControls() {
+            var inputId = 'angleValue';
+            var inputEl = document.getElementById(inputId);
+
+            if (!inputEl) return;
+
+            // Destroy if already exists (e.g., due to re-render)
+            if (inputEl.ej2_instances && inputEl.ej2_instances[0]) {
+                try { inputEl.ej2_instances[0].destroy(); } catch (e) { }
+            }
+
+            var relativeAngle = intPanelAngleDeg - 57;
+
+            angleNumeric = new ej.inputs.NumericTextBox({
+                min: -57,
+                max: 43,
+                strictMode: true,
+                step: 1,
+                decimals: 0,
+                format: 'n0',
+                value: relativeAngle,
+                showSpinButton: true,
+                change: function(args) {
+                    if (suppressAngleChange) return;
+                    var val = (typeof args.value === 'number') ? args.value : angleNumeric.value;
+                    if (typeof val === 'number') {
+                        applyRelativeAngle(val);
+                    }
+                }
+            });
+            angleNumeric.appendTo('#' + inputId);
+
+            // Prevent diagram from intercepting while editing
+            ['pointerdown', 'mousedown', 'touchstart', 'click'].forEach(function(evt) {
+                inputEl.addEventListener(evt, function(e) { e.stopPropagation(); });
+            });
+
+            // Commit on Enter and keep focus
+            inputEl.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    inputEl.blur();
+                    setTimeout(function() { inputEl.focus(); }, 0);
+                }
+                e.stopPropagation();
+            });
+
+            // If user types numeric keys while diagram has focus, focus the input
+            document.addEventListener('keydown', function onDocKeydown(e) {
+                var active = document.activeElement;
+                if (active && (active === inputEl || (active.closest && active.closest('.e-input-group') === inputEl.closest('.e-input-group')))) return;
+                var key = e.key;
+                var isEditKey = (key >= '0' && key <= '9') || key === '+' || key === '-' || key === 'Backspace' || key === 'Delete';
+                if (isEditKey) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    inputEl.focus();
+                    setTimeout(function() { try { inputEl.select(); } catch (err) { } }, 0);
+                }
+            }, { capture: true });
+        }
+
+        // Converts relative angle (-57..43) to rotateAngle [303..360, 0..43], updates model and UI
+        function applyRelativeAngle(val) {
+            if (typeof val !== 'number') return;
+            var r = Math.round(val);
+            if (r < -57) r = -57;
+            if (r > 43) r = 43;
+            var rotateAngle = (r < 0) ? (r + 360) : r;
+            currentAngle = rotateAngle % 360;
+
+            updateDiagram();
+            angleCalculation();
+            calculateSolarPosition();
+            calculateEfficiency();
+            updateUI();
+        }
+
+        function onRotationChange(args) {
+            if (args.state === 'Completed') {
+                if (args.source) {
+                    var node = args.source.nodes[0];
+                    if (node && node.id === 'solarPanelFrame') {
+                        currentAngle = parseInt(args.newValue.rotateAngle.toString());
+                        UpdatePanelState(true, true, true);
+                    }
+                }
+            } else if (args.state == 'Progress') {
+                if (args.source) {
+                    var selectedNode = args.source.nodes[0];
+                    if (selectedNode && selectedNode.id === 'solarPanelFrame') {
+                        var proposedAngle = args.newValue.rotateAngle;
+                        var normalizedAngle = proposedAngle % 360;
+                        if (normalizedAngle < 0) normalizedAngle += 360;
+
+                        // Allow angles between 303-360 and 0-44 only
+                        if (!((normalizedAngle >= 303 && normalizedAngle <= 360) ||
+                            (normalizedAngle >= 0 && normalizedAngle <= 44))) {
+                            args.cancel = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        function onLocationChanged(args) {
+            selectedLocation = args.value;
+            var location = getLocationData(selectedLocation);
+            if (location) {
+                // Map location angle [0..100] -> diagram allowed [303..360,0..43]
+                var locationAngle = Math.min(100, location.angle);
+                if (locationAngle <= 57) {
+                    currentAngle = 303 + locationAngle;
+                } else {
+                    currentAngle = locationAngle - 57;
+                }
+                UpdatePanelState(true, true, true);
+            }
+        }
+
+        function angleCalculation() {
+            var normalizedAngle = currentAngle;
+            if (normalizedAngle >= 303 && normalizedAngle <= 360) {
+                intPanelAngleDeg = normalizedAngle - 303;  // 303..360 -> 0..57
+            } else if (normalizedAngle >= 0 && normalizedAngle <= 43) {
+                intPanelAngleDeg = 57 + normalizedAngle;   // 0..43 -> 57..100
+            } else {
+                intPanelAngleDeg = Math.max(0, Math.min(100, intPanelAngleDeg));
+            }
+        }
+
+        function calculateSolarPosition() {
+            var location = getLocationData(selectedLocation);
+            if (!location) return;
+
+            var lat = location.latitude * Math.PI / 180.0;
+            var dayOfYear = getDayOfYear(selectedDateTime);
+            var declination = 23.45 * Math.PI / 180.0 * Math.sin(2 * Math.PI * (284 + dayOfYear) / 365.0);
+            var hourAngle = 0; // Solar noon
+
+            var elevation = Math.asin(Math.sin(declination) * Math.sin(lat) +
+                Math.cos(declination) * Math.cos(lat) * Math.cos(hourAngle));
+
+            sunElevation = Math.max(0, elevation * 180.0 / Math.PI);
+            sunAzimuth = 180.0;
+            optimalTilt = Math.max(0, Math.min(60, Math.abs(location.latitude)));
+
+            if (sunElevation > 0) {
+                var elevationRad = elevation;
+                var airMass = 1.0 / Math.sin(elevationRad);
+                airMass = Math.max(1.0, Math.min(40.0, airMass));
+                solarIrradiance = 1353 * Math.pow(0.7, Math.pow(airMass, 0.678)) * Math.sin(elevationRad);
+                solarIrradiance = Math.max(0, solarIrradiance);
+            } else {
+                solarIrradiance = 0;
+            }
+        }
+
+        function getDayOfYear(date) {
+            const startOfYearUTC = Date.UTC(date.getUTCFullYear(), 0, 1);
+            const todayUTC = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+            return Math.floor((todayUTC - startOfYearUTC) / 86400000) + 1;
+        }
+
+        function calculateEfficiency() {
+            if (sunElevation <= 0) {
+                efficiency = 0;
+                incidenceAngle = 90;
+                return;
+            }
+
+            // Base calculations
+            var panelTiltRad = (intPanelAngleDeg * Math.PI) / 180.0;
+            var sunElevRad = (sunElevation * Math.PI) / 180.0;
+            var azimuthDiff = 0; 
+
+            var cosIncidence =
+                Math.sin(sunElevRad) * Math.cos(panelTiltRad) +
+                Math.cos(sunElevRad) * Math.sin(panelTiltRad) * Math.cos(azimuthDiff);
+            cosIncidence = Math.max(0, Math.min(1, cosIncidence));
+            incidenceAngle = (Math.acos(cosIncidence) * 180.0) / Math.PI;
+
+            var irradianceFactor = Math.min(1.0, solarIrradiance / 900.0);
+            var temperatureFactor = 0.95;
+            var systemLossFactor = 0.95;
+
+            var optimalAngleDiff = Math.abs(intPanelAngleDeg - optimalTilt);
+            var optimalAngleFactor = Math.max(0.9, 1.0 - (optimalAngleDiff / 90.0) * 0.2);
+
+            var eff =
+                100.0 *
+                cosIncidence *
+                irradianceFactor *
+                temperatureFactor *
+                systemLossFactor *
+                optimalAngleFactor;
+
+            if (optimalAngleDiff < 5) eff = Math.min(100, eff * 1.08);
+
+            // Gradual noon uplift (mirror TS logic)
+            var noonAngle = currentAngle;
+            var d = Math.min(noonAngle, 360 - noonAngle);
+            var strongFloorWindowDeg = 10;
+            var noonWindowDeg = 15;
+
+            if (d <= noonWindowDeg) {
+                var weight = 0.5 * (1 + Math.cos((Math.PI * d) / noonWindowDeg));
+                var t = Math.min(1, d / strongFloorWindowDeg);
+                var minAtD = 65 + (60 - 65) * t;
+                var maxAtD = 75 + (68 - 75) * t;
+                var noonTarget = minAtD + (maxAtD - minAtD) * irradianceFactor;
+
+                var blended = eff + (noonTarget - eff) * weight;
+                var uplifted = Math.max(eff, blended);
+                if (d <= strongFloorWindowDeg) uplifted = Math.max(uplifted, irradianceFactor);
+
+                eff = Math.min(100, uplifted);
+            }
+
+            efficiency = Math.max(0, Math.min(100, eff));
+        }
+
+        function updateDiagram() {
+            var diagram = document.getElementById("diagram").ej2_instances[0];
+            var solarPanelNode = diagram.getObject('solarPanelFrame');
+            if (solarPanelNode) {
+                solarPanelNode.rotateAngle = currentAngle;
+                diagram.dataBind();
+            }
+        }
+
+        // Keep NumericTextBox in sync with current model value without firing change
+        function syncAngleInputFromModel() {
+            if (!angleNumeric) return;
+            var relativeAngle = intPanelAngleDeg - 57;
+            suppressAngleChange = true;
+            angleNumeric.value = relativeAngle;
+            angleNumeric.dataBind();
+            suppressAngleChange = false;
+        }
+
+        function updateUI() {
+            // Sync NumericTextBox value from model
+            syncAngleInputFromModel();
+
+            // Update angle description
+            var angleDescElement = document.getElementById('angleDescription');
+            if (angleDescElement) {
+                angleDescElement.textContent = getAngleDescription();
+            }
+
+            // Update efficiency gauge
+            var gaugeElement = document.getElementById("circular");
+            if (gaugeElement && gaugeElement.ej2_instances && gaugeElement.ej2_instances[0]) {
+                var gauge = gaugeElement.ej2_instances[0];
+                if (gauge.axes && gauge.axes[0] && gauge.axes[0].pointers) {
+                    gauge.axes[0].pointers[0].value = efficiency;
+                    gauge.axes[0].annotations[0].content = `
+    <div style="text-align: center;"> 
+        <div style="font-size: 20px; font-weight: bold; color: #1A2A3B;" id="gaugeEfficiencyValue">
+            ${Math.round(efficiency)}<span style="font-size:20px; font-weight:500;">%</span>
+        </div>
+        <div style="font-size: 14px; font-weight: 500; color: #888; margin-top: 5px; text-align: right; padding-left: 10px; text-transform: uppercase;">
+            EFFICIENCY
+        </div>
+    </div>`;
+                    gauge.dataBind();
+                }
+            }
+
+            // Update performance message
+            getEfficiencyMessageSeverity();
+            var messageElement = document.getElementById("efficiencyMsg");
+            if (messageElement && messageElement.ej2_instances && messageElement.ej2_instances[0]) {
+                var messageObj = messageElement.ej2_instances[0];
+                messageObj.content = message;
+                messageObj.severity = severity;
+                messageObj.dataBind();
+            }
+            setTimeout(() => {
+                var diagram = document.getElementById("diagram").ej2_instances[0];
+                diagram.select([diagram.getObject('solarPanelFrame')]);
+            }, 10);
+        }
+
+        function getAngleDescription() {
+            // Use relative angle from 'horizontal' (which corresponds to intPanelAngleDeg = 57)
+            var relativeAngle = Math.abs(intPanelAngleDeg - 57);
+            if (relativeAngle <= 5) return "Horizontal";
+            else if (relativeAngle < 15) return "Low Tilt";
+            else if (relativeAngle < 25) return "Medium Tilt";
+            else if (relativeAngle < 40) return "High Tilt";
+            else return "Steep Tilt";
+        }
+
+        function getEfficiencyMessageSeverity() {
+            if (efficiency >= 60) {
+                message = "Excellent Performance";
+                severity = "Success";
+            } else if (efficiency > 40) {
+                message = "Fair Performance";
+                severity = "Warning";
+            } else {
+                message = "Poor Performance";
+                severity = "Error";
+            }
+        }
+
+        function getAngleForLocation(locationName) {
+            var location = locationData.find(function(loc) {
+                return loc.name.toLowerCase() === locationName.toLowerCase();
+            });
+            return location ? location.angle : 45;
+        }
+
+        function getLocationData(locationName) {
+            var location = locationData.find(function(loc) {
+                return loc.name.toLowerCase() === locationName.toLowerCase();
+            });
+            return location || null;
+        }
+
+        function getAvailableLocations() {
+            return locationData.map(function(location) {
+                return location.name;
+            });
+        }
+
+        function UpdatePanelState(needDiagramUpdate, canCalculate, needUIUpdate){
+            if(needDiagramUpdate){
+                updateDiagram();
+            }
+            if(canCalculate){
+                angleCalculation();
+            }
+            calculateSolarPosition();
+            calculateEfficiency();
+            if(needUIUpdate){
+                updateUI();
+            }
+        }
+    </script>
+}
+
+@section ActionDescription{
+    <p>
+        This sample demonstrates an interactive solar panel tilt system built with the Syncfusion<sup>®</sup> ASP.NET Core Diagram. Adjust the panel angle to see real-time changes in system efficiency based on the sun's position and location.
+    </p>
+}
+
+@section Description{
+    <p>
+        This interactive diagram visualizes a solar panel system. The sun's path is represented by a curved connector, and users can adjust the panel's tilt angle either by direct rotation or using integrated text box. The system provides immediate feedback through a dynamic efficiency gauge and performance messages. Users can also select different locations to observe how regional variations impact overall solar efficiency.
+    </p>
+}
+
+@section Title{
+    <title>ASP.NET Core Solar Panel Angle Adjustment - Syncfusion Demos</title>
+}
+
+@section Header{
+    <h1 class='sb-sample-text'>Solar Panel Angle Adjustment System</h1>
+}

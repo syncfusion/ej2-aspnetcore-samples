@@ -1,0 +1,744 @@
+﻿@page
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2
+@model EJ2CoreSampleBrowser.Pages.TreeGrid.FoodItem
+
+@{
+    var Cancel = new
+    {
+        content = "Cancel",
+        cssClass = "e-danger",
+        isPrimary = true
+    };
+    var Print = new
+    {
+        content = "Print",
+        isPrimary = true
+    };
+    var defaultanimation = new Syncfusion.EJ2.Popups.DialogAnimationSettings { Effect = Syncfusion.EJ2.Popups.DialogEffect.Zoom };
+}
+
+@section ControlsSection {
+    <div class="control-section">
+        <div class="content-wrapper">
+            <div class="treegrid-center-container">
+                <div class="resmenu-toolbar-search">
+                    <input id="search-autocomplete" type="text" placeholder="Search for DISHES" />
+                    <span class="e-input-group-icon e-search-icon"></span>
+                </div>
+                <ejs-treegrid id="MenuTreeGrid"
+                              dataSource="@FoodItem.GetData()"
+                              idMapping="FoodId"
+                              parentIdMapping="CategoryId"
+                              allowKeyboard="false"
+                              treeColumnIndex="0"
+                              height="400"
+                              rowTemplate="#rowTemplate"
+                              created="createdTreeGrid"
+                              dataBound="onDataBound"
+                              rowDataBound="rowDataBound">
+                    <e-treegrid-columns>
+                        <e-treegrid-column field="FoodName" headerText="Explore Our Menu" width="150" textAlign="Left"></e-treegrid-column>
+                    </e-treegrid-columns>
+                </ejs-treegrid>
+                <ejs-dialog id="cartDialog"
+                            header="Bill Summary"
+                            content=""
+                            width="400px"
+                            showCloseIcon="true"
+                            isModal="true"
+                            visible="false"
+                            created="createdDialog"
+                            target="#MenuTreeGrid"
+                            beforeOpen="beforeOpen">
+                    <e-dialog-buttons>
+                        <e-dialog-dialogbutton buttonModel="Cancel" click="clearCart"></e-dialog-dialogbutton>
+                        <e-dialog-dialogbutton buttonModel="Print" click="printCartDialogContent"></e-dialog-dialogbutton>
+                    </e-dialog-buttons>
+                </ejs-dialog>
+                <div id="template">
+                    <div>
+                        <div class="e-btn-group e-custom-button"><button id="CartUpdate" class="e-btn">VIEW CART<span id="cartbadge" class="e-cart-badge e-badge e-badge-primary e-badge-notification e-badge-overlap">0</span></button></div>
+                    </div>
+                </div>
+                <div id="template2">
+                    <div style="display:flex;align-items:center;cursor:auto;">
+                        <img src="@Url.Content("../images/TreeGrid/male.png")" alt="avatar" style="width:40px;height:40px;border-radius:50%;margin-right:14px;">
+                        <div>
+                            <div style="font-size:20px;font-weight:600;line-height:1.2;">Hi, <span style="color:#ff9800;font-weight:700;">Susan</span></div>
+                            <div style="font-size:13px;color:#888;line-height:1.2;">Morrisville, USA</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script id="emptytemplate" type="text/x-template">
+        <div class='emptyRecordTemplate'>
+        <span class="resmenu-emptyRecord">Hmm... we could not find that dish. Want to try something else?</span>
+        </div>
+    </script>
+
+    <script id="rowTemplate" type="text/x-template">
+        <tr>
+              ${if(FoodName === FoodCategory || CategoryId == null)}
+              <td class='resmenu-cell resmenu-parentfoodname' colspan="3">
+                <span class="resmenu-title">${FoodName}&nbsp;<span> (${iterateFootType(vegCount, nonvegCount)})</span> </span>
+              </td>
+              ${else}
+              <td class='resmenu-cell'>
+                <div class='resmenu-card'>
+                   <div class="foodname-row" style=" display: flex;">
+                      ${if(FoodType === 'Veg')}
+                        <span class='resmenu-FoodCategory_icon_veg'><span class="resmenu-veg-icon"></span></span>
+                      ${else}
+                        <span class='resmenu-FoodCategory_icon_nonveg'><span class="resmenu-nonveg-icon"></span></span>
+                      ${/if}
+                      <span class='resmenu-foodname'>${FoodName}</span>
+                    </div>
+                    <div class="resmenu-rating">
+                      <span>
+                        <span class="resmenu-rating-thumbsup">👍</span>
+                        <span class="resmenu-rating-value">${Rating}</span>&nbsp;
+                        <span class="resmenu-rating-count">(${TotalReviews})</span>
+                      </span>
+                    </div>
+                    <div class='resmenu-fooddesc'>
+                      ${FoodDescription}
+                    </div>
+                    <div class="resmenu-info-separator">${chiptags(ingredients)}</div>
+                  </div>
+              </td>
+              <td class='resmenu-cell'>
+                <div class="resmenu-price-section">
+                  ${if(originalPrice> newPrice)}
+                  <span class="resmenu-price">$${newPrice} &nbsp;&nbsp;</span>
+                  <span class='price-direction'>  <-- </span>
+                  <span class="resmenu-old-price">$${originalPrice}</span>
+                  ${else}
+                  <span class="resmenu-price">$${newPrice}</span>
+                  ${/if}
+                </div>
+              </td>
+              <td class='resmenu-cell'>
+                  <div class="menu-right">
+                      <div class="resmenu-image-wrap">
+                          <img class="resmenu-image" src="${Image}" alt="${FoodName}"/>
+                      <div class="resmenu-count">
+                          <input id="food-numeric" class="resmenu-food-count" type="text"  />
+                      </div>
+                      </div>
+                  </div>
+              </td>
+              ${/if}
+        </tr>
+    </script>
+
+    <script type="text/javascript">
+         var foodorderDetails = [];
+         var cartCount = 0;
+         window.iterateFootType = function (vegCount, nonvegCount) {
+             var sumOfFood = 0;
+             if (vegCount > 0) {
+                 sumOfFood += vegCount;
+             }
+             if (nonvegCount > 0) {
+                 sumOfFood += nonvegCount;
+             }
+             return sumOfFood;
+         };
+
+         window.chiptags = function (ingredients) {
+             var chipElement = document.createElement('div');
+             var chipList = new ej.buttons.ChipList({ chips: ingredients, cssClass: 'e-outline' }, chipElement);
+             chipElement.id = "ingredientsList";
+             return chipList.element.outerHTML;
+         };
+
+        function rowDataBound(args) {
+            const { CategoryId, FoodName } = args.data;
+            if (CategoryId) {
+                const foodItem = foodorderDetails.find(item => item.foodName?.toLowerCase() === FoodName?.toLowerCase());
+
+                new ej.inputs.NumericTextBox({
+                    value: foodItem?.count || 0,
+                    min: 0,
+                    max: 10,
+                    step: 1,
+                    format: 'N',
+                    width: '110px',
+                    change: foodCountChangeFn
+                }).appendTo(args.row.querySelector('.resmenu-food-count'));
+            }
+        }
+
+        function beforeOpen(args){
+            var dialogObj = document.getElementById('cartDialog').ej2_instances[0]
+            var itemsInCart = foodorderDetails.filter(function (item) { return item.count > 0; });
+            if(itemsInCart.length <4){
+                args.maxHeight = '500px';
+            }
+            else{
+                args.maxHeight = '600px';
+            }
+            if( itemsInCart.length === 0) {
+                dialogObj.buttons[1].buttonModel.disabled = true;
+                dialogObj.refresh();
+            }
+            else {
+                dialogObj.buttons[1].buttonModel.disabled = false;
+                dialogObj.refresh();
+            }
+        }
+
+         function foodCountChangeFn(args) {
+             if (args.event == undefined || null == args.event.srcElement) {
+                 return;
+             }
+             var currentRow = args.event.srcElement.closest("tr");
+             var foodName = currentRow.querySelector(".resmenu-foodname").textContent;
+             var price = parseFloat(currentRow.querySelector(".resmenu-price").textContent.replace(/[^0-9.]/g, ""));
+             var count = args.value;
+             if (args.previousValue < args.value) {
+                 cartCount += (count - (args.previousValue || 0));
+             } else if (args.previousValue > args.value) {
+                cartCount -= (args.previousValue || 0) - count;
+             }
+             document.getElementsByClassName('e-cart-badge')[0].textContent = cartCount;
+             var existingFood = foodorderDetails.find(function (item) { return item.foodName === foodName; });
+             if (existingFood) {
+                 existingFood.count = count;
+                 existingFood.price = price;
+             } else {
+                 foodorderDetails.push({
+                     foodName: foodName,
+                     price: price,
+                     count: count
+                 });
+             }
+         }
+         var foodMenu = @Html.Raw(Json.Serialize(FoodItem.GetData()));
+         var dishNames = Array.from(new Set(foodMenu.map(function (item) { return item.FoodName; })));
+         var autoComplete = new ej.dropdowns.AutoComplete({
+             dataSource: dishNames,
+             placeholder: 'Search for dishes',
+             width: 800,
+             highlight: true,
+             filterType: 'Contains',
+             change: function (args) {
+                 var value = args.value ? args.value.toLowerCase() : '';
+                 var searchedData = foodMenu.filter(function (item) {
+                     return item.FoodName.toLowerCase().includes(value) ||
+                         item.FoodCategory.toLowerCase().includes(value) ||
+                         !item.CategoryId;
+                 });
+                 searchedData.forEach(function (parent) {
+                     if (!parent.CategoryId) {
+                         var childItems = searchedData.filter(function (item) { return item.CategoryId === parent.FoodId; });
+                         parent.vegCount = childItems.filter(function (item) { return item.FoodType === 'Veg'; }).length;
+                         parent.nonvegCount = childItems.filter(function (item) { return item.FoodType === 'Non-veg'; }).length;
+                     }
+                 });
+
+                 searchedData = searchedData.filter(function (item) {
+                         var foodcount = item.vegCount + item.nonvegCount;
+                         return (foodcount === 0 && item.CategoryId) || (foodcount > 0 && !item.CategoryId);
+                 });
+                 var treegrid = document.querySelector('#MenuTreeGrid').ej2_instances[0];
+                 treegrid.dataSource = searchedData;
+             }
+         });
+         autoComplete.appendTo('#search-autocomplete');
+
+        function createdTreeGrid(){
+             var treegridObj = document.getElementById('MenuTreeGrid').ej2_instances[0];
+             treegridObj.toolbar = [{ template: '#template2' ,id: 'customerDetails', align: 'Left'},{ template: '#template' ,id: 'cartButton', align: 'Right'}];
+             treegridObj.refresh();
+        }
+
+         function onDataBound() {
+            var treegridObj = document.getElementById('MenuTreeGrid').ej2_instances[0];
+            treegridObj.emptyRecordTemplate = "#emptytemplate";
+        }
+
+        function createdDialog(){
+            var dialogObj = document.getElementById('cartDialog').ej2_instances[0];
+            document.getElementById('CartUpdate').addEventListener('click', function () {
+               var itemsInCart = foodorderDetails.filter(function (item) { return item.count > 0; });
+             dialogObj.content = getCartTableHtml(itemsInCart);
+           dialogObj.show();
+            });
+        }
+        function getCartTableHtml(cartItems) {
+            if (!cartItems.length) {
+                return '<div style="padding:20px;text-align:center;">No items in cart.</div>';
+            }
+            var rows = cartItems.filter(i => i.count > 0).map(item => `
+            <tr>
+                <td>${item.foodName}</td>
+                <td>$${item.price}</td>
+                <td style="text-align:center;">${item.count}</td>
+                <td style="text-align:right;">$${(item.price * item.count).toFixed(2)}</td>
+            </tr>
+        `).join('');
+            var total = Math.round(cartItems.reduce((sum, item) => sum + (item.price * item.count), 0));
+            var delivery = 3.6;
+            var gst = Math.round(total * 0.12 * 100) / 100;
+            var toPay = Math.round((total + delivery + gst) * 100) / 100;
+            return `
+            <div class="sample-order">
+            <div  class="resmenu-order-no"><span > Order No: </span>${Math.floor(Math.random() * (99 - 10 + 1)) + 100}</div>
+            <div  ><span class="resmenu-order-date">Date: </span>${new Date().toLocaleDateString()}</div>
+            </div>
+            <div id="dialog-container">
+                <div style="max-height:220px;overflow-y:auto;margin-bottom:12px;">
+                <table style="width:100%;border-collapse:collapse;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid #e0e0e0;">
+                            <th style="text-align:left;">Dish</th>
+                            <th style="text-align:left;">Price</th>
+                            <th style="text-align:center;">Qty</th>
+                            <th style="text-align:right;">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>${rows}</tbody>
+                </table>
+                </div>
+                <div style="border-top:2px solid #eee;padding-top:12px;">
+                    <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+                        <span>Item Total</span><span>$${total}</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+                        <span>Delivery Fee</span><span>$${delivery}</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+                        <span>TAX & Other Charges</span><span>$${gst}</span>
+                    </div>
+                    <div style="border-top:2px solid #beb5b5;display:flex;justify-content:space-between;font-weight:bold;font-size:18px;margin-top:10px;">
+                        <span>TO PAY</span><span>$${toPay}</span>
+                    </div>
+                </div>
+                 <div class="resmenu-thank-note">
+                <div >Thank you for your order!</div>
+                </div>
+            </div>
+        `;
+        }
+
+        function clearCart() {
+            foodorderDetails.forEach(function (item) { item.count = 0; });
+            cartCount = 0;
+            document.getElementsByClassName('e-cart-badge')[0].textContent = cartCount;
+            var numericBoxes = document.querySelectorAll('.resmenu-food-count.e-numerictextbox');
+            numericBoxes.forEach(function (box) {
+                var instance = box.ej2_instances && box.ej2_instances[0];
+                if (instance) instance.value = 0;
+            });
+            var dialogObj = document.getElementById('cartDialog').ej2_instances[0];
+            dialogObj.content = getCartTableHtml([]);
+            dialogObj.hide();
+        }
+
+        function printCartDialogContent(){
+            const itemsInCart = foodorderDetails.filter(item => item.count > 0);
+            if (!itemsInCart.length) {
+              alert('There is no item selected.');
+              return;
+            }
+            var treeGridElement = document.getElementById('MenuTreeGrid');
+            var rect = treeGridElement.getBoundingClientRect();
+            var windowWidth = 400;
+            var windowHeight = 600;
+            var leftPosition = rect.left + window.scrollX + (rect.width / 2) - (windowWidth / 2);
+            var topPosition = rect.top + window.scrollY + (rect.height / 2) - (windowHeight / 2);
+            var printContents = document.querySelector('#cartDialog .e-dlg-content')?.innerHTML || '';
+            var printWindow = window.open('', '', `height=${windowHeight},width=${windowWidth},left=${leftPosition},top=${topPosition}`);
+            printWindow?.document.write(printContents);
+            printWindow.focus();
+            printWindow.addEventListener('afterprint', function (args) {
+                printWindow.close();
+                clearCart();
+            });
+            printWindow.print();
+        }
+
+    </script>
+
+    <style>
+        @@media print {
+
+            body{font-family:sans-serif;} ul{margin-bottom:16px;} div{margin-bottom:4px;}
+        }
+        
+        .border {
+           border-color: #e0e0e0;
+           border: 1px solid #e0e0e0;
+           border-width: 1px 0px 0px 0px;
+        }
+
+        .resmenu-image {
+           width: 60px;
+           height: 60px;
+           vertical-align: baseline;
+           border-radius: 50px;
+           margin-left: 20px;
+           background-repeat: no-repeat;
+        }
+
+        .resmenu-emptyRecord {
+           font-style: italic;
+           font-size: 20px;
+        }
+
+        .tailwind3-dark #TreeGrid .e-table td.border,
+        .fluent2-dark #TreeGrid .e-table td.border,
+        .bootstrap5\.3-dark #TreeGrid .e-table td.border,
+        .material3-dark #TreeGrid .e-table td.border,
+        .fluent2-highcontrast #TreeGrid .e-table td.border {
+           color: #fff;
+        }
+
+        .treegrid-center-container .e-gridheader .e-headercelldiv {
+            text-align: center;
+            font-weight: bold;
+            font-size: 16px;
+            letter-spacing: 2.45px !important;
+        }
+
+        :root {
+            --green: #27ae60;
+            --red: #e74c3c;
+            --radius: 12px;
+            --grey-line: #e5e7eb;
+        }
+
+        [class*="veg-icon"],
+        [class*="e-veg-icon"],
+        [class*="e-nonveg-icon"] {
+            display: inline-block;
+            border-radius: 50%;
+        }
+
+        [class*="veg-icon"] {
+            width: 12px;
+            height: 12px;
+            margin: 0 0 4px 2px;
+        }
+
+        .material3 [class*="veg-icon"],
+        .tailwind3 [class*="veg-icon"] {
+            margin: 0 0 2px 2px;
+        }
+
+        .resmenu-veg-icon {
+            background: green;
+        }
+
+        .resmenu-nonveg-icon {
+            background: red;
+        }
+
+        [class*="FoodCategory_icon"] {
+            width: 20px;
+            height: 20px;
+            border: 2px solid;
+        }
+
+        .resmenu-FoodCategory_icon_veg {
+            border-color: green;
+        }
+
+        .resmenu-FoodCategory_icon_nonveg {
+            border-color: red;
+        }
+
+        .resmenu-e-veg-icon,
+        .resmenu-e-nonveg-icon {
+            border: 2px solid;
+            border-radius: 4px;
+            background: #fff;
+            position: relative;
+        }
+
+        .resmenu-e-veg-icon {
+            border-color: var(--green);
+        }
+
+        .resmenu-e-nonveg-icon {
+            border-color: var(--red);
+        }
+
+            .resmenu-e-veg-icon::after,
+            .resmenu-e-nonveg-icon::after {
+                content: '';
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                position: absolute;
+                top: 4px;
+                left: 4px;
+            }
+
+        .resmenu-e-veg-icon::after {
+            background: var(--green);
+        }
+
+        .resmenu-e-nonveg-icon::after {
+            background: var(--red);
+        }
+
+        .resmenu-price {
+            font-weight: bold;
+        }
+
+        .resmenu-old-price {
+            font-size: 12px;
+            text-decoration: line-through;
+            margin: 3px;
+        }
+
+        .resmenu-card {
+            width: 30vw;
+            padding: 10px;
+            margin-bottom: 50px;
+        }
+
+        .resmenu-info-separator {
+            margin: 20px 0 0 0;
+        }
+
+        .resmenu-cell {
+            border-bottom: 1px solid var(--grey-line);
+        }
+
+        .resmenu-image {
+            width: 110px;
+            height: 110px;
+            float: right;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-radius: var(--radius);
+            margin: 20px;
+            transition: transform .3s;
+        }
+
+        .resmenu-image-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: end;
+        }
+
+        .resmenu-image-wrap:hover .resmenu-image {
+            transform: scale(1.2);
+        }
+
+        .resmenu-count {
+            margin: 10px 20px 0 0;
+        }
+
+        .resmenu-food-count {
+            width: 60px;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .resmenu-price-section {
+            text-align: right;
+            width: 28vw;
+        }
+
+        .resmenu-rating {
+            padding: 15px 0;
+            font-size: 13px;
+            font-weight: 400;
+        }
+
+        .resmenu-rating-value {
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .resmenu-rating-thumbsup,
+        .resmenu-rating-count {
+            font-size: 15px;
+        }
+
+        .resmenu-foodname {
+            font-weight: 600;
+            font-size: 18px;
+            margin-left: 7px;
+        }
+
+        .resmenu-fooddesc {
+            font-weight: 400;
+            letter-spacing: .45px;
+        }
+
+        .resmenu-title {
+            float: right;
+            margin: 5px 0 0 5px;
+            font-weight: bold;
+        }
+
+        .resmenu-parentfoodname {
+            height: 48px;
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        #cartbadge {
+            top: -14px;
+            font-size: 10px;
+        }
+
+        .e-toolbar-right {
+            right: 20px !important;
+        }
+
+        #CartUpdate {
+            font-weight: 400;
+            font-size: 10px;
+        }
+
+        .treegrid-center-container,
+        .resmenu-toolbar-search {
+            width: 800px;
+            margin: 32px auto;
+        }
+
+        .resmenu-toolbar-search {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 16px;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+        }
+
+        #search-autocomplete {
+            height: 45px;
+            width: 100%;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        #ingredientsList .e-chip.e-outline {
+            color: #222 !important;
+            border-color: #ccc !important;
+            background: #D3D3D3 !important;
+            box-shadow: none !important;
+            cursor: default !important;
+            transition: none !important;
+        }
+
+        #cartDialog_title {
+            text-align: center;
+        }
+
+        .treegrid-center-container .e-treegridexpand,
+        .treegrid-center-container .e-treegridcollapse {
+            vertical-align: middle !important;
+            margin-left: 7px;
+        }
+        .material3-dark #search-autocomplete {
+  padding-top: 15px !important;
+  padding-bottom: 15px !important;
+  padding-left: 13px;
+}
+        .treegrid-center-container .e-toolbar {
+            height: 60px !important;
+        }
+
+        @@media (max-width: 1200px) {
+            .treegrid-center-container, .resmenu-toolbar-search {
+                width: 100%;
+                padding: 0 8px;
+                box-sizing: border-box;
+            }
+        }
+
+        .material3-dark [class*="veg-icon"] {
+            margin: 0 0 3px 2px;
+        }
+         @@media (max-width: 450px) {
+    .resmenu-image {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .resmenu-count {
+        margin: 0 5px 0 0;
+    }
+    
+    .resmenu-rating-thumbsup{
+	        position: relative;
+            top: -2px;
+	    }
+        
+    .resmenu-price-section {
+        text-align: left;
+    }
+    }
+    .sample-order{
+      display: flex;   
+      flex-direction: row;
+      justify-content: space-between;
+      margin-bottom: 15px;
+  }
+  .resmenu-order-no , .resmenu-order-date{
+      font-weight: bold;
+  }
+  .resmenu-order-no{
+      font-size: medium;
+  }
+  .resmenu-thank-note{
+      font-weight: bold;
+      font-style: italic;
+      margin: 30px;
+      justify-items: center;
+      font-size: medium;
+  }
+  #dialog-container td{
+      padding: 5px 0;
+  }
+    </style>
+}
+
+@*custom code start*@
+@section Meta {
+    <meta name="description" content="This example demonstrates a restaurant menu using ASP.NET Core and Syncfusion TreeGrid control." />
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>
+            This demo shows how the Tree Grid can be used to create a visually rich and interactive food menu. The demo meets
+            different viewer preferences, such as vegetarian and bestseller dishes. It uses a food dataset that includes
+            details for categories like salads, pizza, burgers, hot-dogs, chowmein, and desserts, with descriptions, prices and
+            ratings.
+        </p>
+    </div>
+}
+
+@section Description {
+    <div id="description">
+        <p>
+            The sample shows how dynamic, customizable row templates and custom cell rendering make the menu more informative
+            and attractive. The Tree Grid row template adds visual elements like images, ratings, and price comparisons
+            right in the cells. With its flexibility and easy customization, the Tree Grid is a great tool for creating
+            interesting and engaging food menu presentations.
+        </p>
+        <p>
+            More information about TreeGrid can be found in the
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/tree-grid/getting-started-core">documentation section</a>.
+        </p>
+    </div>
+}
+
+@*custom code end*@
+@section Title {
+    <title>ASP.NET Core TreeGrid Restaurant Menu Example - Syncfusion Demos</title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Restaurant Menu in ASP.NET Core TreeGrid Control</h1>
+}

@@ -1,0 +1,191 @@
+﻿@page
+
+@using Syncfusion.EJ2.PivotView
+@using Syncfusion.EJ2.Navigations
+@section Meta{
+    <meta name="description" content="This example demonstrates the pivot table export its own format using server-side pivot engine Functionalities in ASP.NET Core Pivot Table control. Explore here for more details."/>
+}
+@section ControlsSection{
+
+    <div class="control-section">
+        <div class="content-wrapper">
+            <ejs-pivotview id="PivotView" width="100%" height="450" dataBound="onDataBound" showGroupingBar="true" showFieldList="true"
+            allowExcelExport="true" allowPdfExport="true" showToolbar="true" toolbar="@(new List<string>() {"Chart", "FieldList" })" toolbarRender="beforeToolbarRender">
+                <e-datasourcesettings url="http://localhost:62928/api/pivot/post" mode="Server" expandAll="true" enableSorting="true">
+                    <e-rows>
+                        <e-field name="Country"></e-field>
+                        <e-field name="Products"></e-field>
+                    </e-rows>
+                    <e-columns>
+                        <e-field name="Year" caption="Production Year"></e-field>
+                    </e-columns>
+                    <e-values>
+                        <e-field name="Sold" caption="Units Sold"></e-field>
+                        <e-field name="Amount" caption="Sold Amount"></e-field>
+                    </e-values>
+                    <e-formatsettings>
+                        <e-field name="Amount" format="C0"></e-field>
+                        <e-field name="Sold" format="N0"></e-field>
+                    </e-formatsettings>
+                    <e-fieldmapping>
+                        <e-field name="ProductCategories" caption="Product Categories"></e-field>
+                        <e-field name="OrderSource" caption="Order Source"></e-field>
+                        <e-field name="InStock" caption="In Stock"></e-field>
+                    </e-fieldmapping>
+                </e-datasourcesettings>
+                <e-displayOption view="Both"></e-displayOption>
+                <e-chartSettings title="Sales Analysis">
+                <e-primaryYAxis>
+                    <e-border width="0"></e-border>
+                </e-primaryYAxis>
+                <e-chartSeries type="Bar">
+                    <e-animation enable="false"></e-animation>
+                </e-chartSeries>
+                <e-legendSettings visible="false"> </e-legendSettings>
+                </e-chartSettings>
+                <e-gridSettings columnWidth="120">
+                </e-gridSettings>
+            </ejs-pivotview>
+        </div>
+    </div>
+
+    <style>
+        .e-pivotview {
+            width: 100%;
+            height: 100%;
+        }
+
+        .sb-sample-content-area {
+            min-height: 255px !important;
+        }
+
+        .control-section {
+            min-height: 255px !important;
+        }
+
+        .tabular-layout-switch {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .pivot-layout-switch {
+            margin-left: 10px;
+        }
+
+        .e-tool-grid {
+            content: "\e705";
+        }
+    </style>
+    <script>
+        function onDataBound() {
+            var pivotObj = document.getElementById('PivotView').ej2_instances[0];
+            if (ej.base.Browser.isDevice && pivotObj && pivotObj.enableRtl) {
+                document.querySelector('.control-section').classList.add('e-rtl');
+            }
+            if (document.querySelector('#grid_menu .e-menu-item') == null) {
+                var menuItems = [
+                    {
+                        iconCss: 'e-toolbar-grid e-icons',
+                        items: [
+                            { text: 'Compact Layout', id: 'Compact' },
+                            { text: 'Tabular Layout', id: 'Tabular' },
+                        ],
+                    },
+                ];
+                new ej.navigations.Menu(
+                    { items: menuItems, select: gridToolbarClicked.bind(this) },
+                    '#grid_menu'
+                );
+            }
+        }
+        function beforeToolbarRender(args) {
+            args.customToolbar.splice(0, 0, {
+                prefixIcon: 'e-menu-icon e-pivotview-excel-export e-icons',
+                tooltipText: 'Excel Export as Pivot',
+                click: toolbarClicked.bind(this),
+            });
+            args.customToolbar.splice(1, 0, {
+                type: 'Separator'
+            });
+            args.customToolbar.splice(2, 0, {
+                template: '<ul id="grid_menu"></ul>',
+                id: 'custom_toolbar'
+            });
+            args.customToolbar.splice(3, 0, {
+                type: 'Separator'
+            });
+        }
+        function gridToolbarClicked(args) {
+            var pivotObj = document.getElementById('PivotView').ej2_instances[0];
+            if (pivotObj && pivotObj.gridSettings && pivotObj.gridSettings.layout !== args.item.id &&
+                (args.item.id == 'Compact' || args.item.id == 'Tabular')) {
+                pivotObj.setProperties({
+                    gridSettings: {
+                        layout: args.item.id
+                    },
+                    displayOption: {
+                        view: 'Both', primary: 'Table'
+                    },
+                }, true);
+                pivotObj.refresh();
+            }
+        }
+        function toolbarClicked() {
+            var pivotObj = document.getElementById('PivotView').ej2_instances[0];
+            pivotObj.exportAsPivot();
+        }
+    </script>
+}
+
+@section PreScripts {
+    <script>
+        ej.base.enableRipple(false);
+    </script>
+}
+
+@section ActionDescription{
+   <div id="action-description">
+       <p>This sample demonstrates exporting a server-side Syncfusion Pivot Table as a fully interactive Excel Pivot Table.
+       </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>This sample shows how to export a <strong>server-side</strong> Syncfusion Pivot Table to an Excel file while
+            preserving its native pivot structure. The exported Excel file supports full interactivity, allowing users to
+            customize pivot configurations directly within Excel.</p>
+        <p>The Pivot Table uses a server-side pivot engine powered by the <a target="_blank"
+                href="https://www.nuget.org/packages/Syncfusion.Pivot.Engine/"> Syncfusion.Pivot.Engine</a> package. This
+            engine runs on a separate hosted server, performing all pivot operations—including <a target="_blank"
+                href="https://ej2.syncfusion.com/aspnetcore/documentation/pivot-table/aggregation#aggregation">
+                Aggregation</a>, <a target="_blank"
+                href="https://ej2.syncfusion.com/aspnetcore/documentation/pivot-table/filtering#filtering">
+                Filtering</a>, <a target="_blank"
+                href="https://ej2.syncfusion.com/aspnetcore/documentation/pivot-table/sorting#sorting">
+                Sorting</a>, and <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/pivot-table/grouping#grouping">
+                Grouping</a> and returns only paged data to the client. The connection to the remote service is configured
+            using the <a target="_blank"
+                href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.PivotView.PivotViewDataSourceSettings.html#Syncfusion_EJ2_PivotView_PivotViewDataSourceSettings_Url">
+                dataSourceSettings-&gt;url</a> property.</p>
+        <p><strong>Excel Export</strong> is available via the built-in toolbar and generates a true Excel Pivot Table, not
+            just static data. This enables users to interact with and manipulate the exported report directly in Excel.</p>
+        <p>Additionally, the toolbar includes custom menu items to toggle between <code>Compact</code> and
+            <code>Tabular</code> layouts and to switch chart types dynamically. This empowers users to customize both the
+            visual structure and the associated chart representation of their data.</p>
+        <br />
+        <p>
+            More information about server-side aggregation can be found in this <a target="_blank"
+                href="https://ej2.syncfusion.com/aspnetcore/documentation/pivot-table/server-side-pivot-engine#connecting-pivot-table-to-server-side-pivot-engine" aria-label="Navigate to the documentation for Connecting Pivot Table to Server-side Pivot Engine">
+                documentation section
+            </a>.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Pivot Table export with its own format Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of pivot table export with its own format in ASP.NET Core Pivot Table Control</h1>
+                }

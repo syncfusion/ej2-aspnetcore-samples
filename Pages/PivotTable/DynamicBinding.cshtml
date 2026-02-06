@@ -1,0 +1,905 @@
+@page
+
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2.PivotView
+@section Meta {
+    <meta name="description"
+        content="This example demonstrates dynamically binding JSON/CSV/OLAP data sources and loading/saving reports at runtime in the ASP.NET Core Pivot Table control." />
+}
+
+@{
+    var data = new PivotTableData().GetPivot_Data();
+}
+@section ControlsSection {
+    <div class="control-section" id="pivot-table-section" style="overflow: initial">
+        <input type="file" id="connectFile" style="display:none" />
+        <ejs-pivotview id="pivotview" width="100%" height="500" showFieldList="true" showToolbar="true"
+            allowCalculatedField="true" allowExcelExport="true" allowNumberFormatting="true"
+            allowConditionalFormatting="true" allowPdfExport="true"
+            toolbar="@(new string[] { "Grid", "Chart", "Export", "SubTotal", "GrandTotal", "Formatting", "FieldList" })"
+            toolbarRender="toolbarRender" dataBound="onDataBound" enginePopulated="onEnginePopulated">
+            <e-datasourcesettings dataSource="@data" type="JSON" expandAll="false" enableSorting="true">
+                <e-formatsettings>
+                    <e-field name="Amount" format="C0"></e-field>
+                </e-formatsettings>
+                <e-drilledmembers>
+                    <e-field name="Country" items="@(new string[] { "France" })"></e-field>
+                </e-drilledmembers>
+                <e-rows>
+                    <e-field name="Country"></e-field>
+                    <e-field name="Products"></e-field>
+                </e-rows>
+                <e-columns>
+                    <e-field name="Year" caption="Production Year"></e-field>
+                    <e-field name="Quarter"></e-field>
+                </e-columns>
+                <e-values>
+                    <e-field name="Sold" caption="Units Sold"></e-field>
+                    <e-field name="Amount" caption="Sold Amount"></e-field>
+                </e-values>
+            </e-datasourcesettings>
+            <e-displayOption view="Both"></e-displayOption>
+            <e-gridSettings columnWidth="120"></e-gridSettings>
+        </ejs-pivotview>
+
+        <!-- Remote data/report dialog -->
+        <ejs-dialog id="remoteDialog" visible="false" isModal="true" showCloseIcon="true" width="480px" header="Connect">
+            <e-content-template>
+                <div style="display:flex;flex-direction:column;gap:12px">
+                    <input id="remoteUrlInput" type="text" class="e-input" placeholder="Enter URL" />
+                    <div style="display:flex;justify-content:flex-end;gap:8px">
+                        <ejs-button id="remoteOpenBtn" content="Open" isPrimary="true"></ejs-button>
+                        <ejs-button id="remoteCancelBtn" content="Cancel"></ejs-button>
+                    </div>
+                </div>
+            </e-content-template>
+        </ejs-dialog>
+
+        <!-- OLAP dialog -->
+        <ejs-dialog id="olapDialog" visible="false" isModal="true" showCloseIcon="true" width="620px"
+            header="Connect to OLAP(XMLA)">
+            <e-content-template>
+                <div style="display:flex;flex-direction:column;gap:12px">
+                    <div class="olap-row">
+                        <label style="min-width:80px;font-weight:500">URL</label>
+                        <div style="display:flex;flex:1;gap:8px;align-items:center">
+                            <ejs-textbox id="olapUrlInput" type="text" value="https://bi.syncfusion.com/olap/msmdpump.dll"
+                                placeholder="Enter OLAP endpoint URL (e.g., https://bi.syncfusion.com/olap/msmdpump.dll)"
+                                cssClass="e-input" style="flex:1"></ejs-textbox>
+                            <ejs-button id="olapConnectBtn" content="Connect" isPrimary="true"></ejs-button>
+                        </div>
+                    </div>
+                    <div class="olap-row">
+                        <label style="display:block;margin-bottom:4px;font-weight:500">Data Sources</label>
+                        <ejs-dropdownlist id="olapDataSourceDrop" placeholder="Select data source" cssClass="e-input"
+                            style="width:100%"></ejs-dropdownlist>
+                    </div>
+                    <div class="olap-row">
+                        <label style="display:block;margin-bottom:4px;font-weight:500">Catalogs</label>
+                        <ejs-dropdownlist id="olapCatalogDrop" placeholder="Select catalog" cssClass="e-input"
+                            style="width:100%"></ejs-dropdownlist>
+                    </div>
+                    <div class="olap-row">
+                        <label style="display:block;margin-bottom:4px;font-weight:500">Cubes</label>
+                        <ejs-dropdownlist id="olapCubeDrop" placeholder="Select cube" cssClass="e-input"
+                            style="width:100%"></ejs-dropdownlist>
+                    </div>
+                    <div id="olapUiMessage" style="color:var(--e-error, #b00020);font-size:14px;display:none"></div>
+                    <div style="display:flex;justify-content:flex-end;gap:8px">
+                        <ejs-button id="olapOkBtn" content="OK" isPrimary="true"></ejs-button>
+                        <ejs-button id="olapCancelBtn" content="Cancel"></ejs-button>
+                    </div>
+                </div>
+            </e-content-template>
+        </ejs-dialog>
+
+        <!-- Error dialog -->
+        <ejs-dialog id="errorDialog" visible="false" isModal="true" showCloseIcon="true" width="420px" header="Error">
+            <e-content-template>
+                <div style="display:flex;flex-direction:column;gap:12px">
+                    <p id="errorMessage" class="error-message"></p>
+                    <div style="display:flex;justify-content:flex-end">
+                        <ejs-button id="errorOkBtn" content="OK" isPrimary="true"></ejs-button>
+                    </div>
+                </div>
+            </e-content-template>
+        </ejs-dialog>
+    </div>
+
+    <style>
+        /* Layout */
+        .e-pivotview {
+            width: 100%;
+            height: 100%;
+        }
+
+        .sb-sample-content-area,
+        .control-section {
+            min-height: 255px !important;
+        }
+
+        /* Toolbar icon placeholders using Syncfusion e-icons font */
+        .e-connect-report::before,
+        .e-save-report::before,
+        .e-open-report::before {
+            font-family: 'e-icons';
+        }
+
+        .e-connect-report::before {
+            content: '\e835';
+        }
+
+        .e-save-report::before {
+            content: '\e98e';
+        }
+
+        .e-open-report::before {
+            content: '\e760';
+        }
+
+        .e-pivot-toolbar-menu .e-menu-item .e-icons {
+            margin-right: 6px;
+        }
+
+        /* CSV/JSON/OLAP menu icons */
+        .e-csv-icon::before,
+        .e-json-icon::before,
+        .e-olap-icon::before {
+            color: #666;
+        }
+
+        .e-csv-icon::before {
+            content: '\e7ba';
+            font-family: 'e-icons';
+        }
+
+        /* JSON icon via inline SVG (keeps consistent look even if font glyph missing) */
+        .e-json-icon.e-icons::before {
+            font-family: unset;
+            content: "";
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" fill="white"/><rect x="2" y="2" width="20" height="20" rx="2.5" stroke="%23555" stroke-width="2"/><path d="M6.3115 10.255C6.41117 10.255 6.49783 10.2918 6.5715 10.3655C6.64517 10.4392 6.682 10.5258 6.682 10.6255V13.18C6.682 13.8603 6.539 14.3457 6.253 14.636C5.97133 14.922 5.50767 15.065 4.862 15.065C4.459 15.065 4.09933 15.0238 3.783 14.9415C3.679 14.9155 3.5945 14.8592 3.5295 14.7725C3.4645 14.6815 3.432 14.5797 3.432 14.467V14.09C3.432 14.0077 3.46667 13.9427 3.536 13.895C3.60967 13.843 3.68767 13.8322 3.77 13.8625C4.07333 13.9708 4.3615 14.025 4.6345 14.025C4.8815 14.025 5.06133 13.9513 5.174 13.804C5.291 13.6567 5.3495 13.4053 5.3495 13.05V10.6255C5.3495 10.5258 5.38633 10.4392 5.46 10.3655C5.53367 10.2918 5.62033 10.255 5.72 10.255H6.3115ZM9.15886 12.01C9.76552 12.1877 10.188 12.4 10.4264 12.647C10.6647 12.894 10.7839 13.2233 10.7839 13.635C10.7839 14.5883 10.1664 15.065 8.93136 15.065C8.53702 15.065 8.17952 15 7.85886 14.87C7.75919 14.831 7.67902 14.7617 7.61836 14.662C7.56202 14.5623 7.53386 14.454 7.53386 14.337V14.0055C7.53386 13.9232 7.56852 13.8625 7.63786 13.8235C7.70719 13.7845 7.77869 13.7823 7.85236 13.817C8.19469 13.9773 8.53269 14.0575 8.86636 14.0575C9.25636 14.0575 9.45136 13.9275 9.45136 13.6675C9.45136 13.5462 9.42102 13.453 9.36036 13.388C9.29969 13.323 9.18919 13.2645 9.02886 13.2125C8.45252 13.0348 8.03652 12.8138 7.78086 12.5495C7.52952 12.2808 7.40386 11.9493 7.40386 11.555C7.40386 11.1303 7.55552 10.7967 7.85886 10.554C8.16652 10.3113 8.61069 10.19 9.19136 10.19C9.60736 10.19 9.97786 10.2355 10.3029 10.3265C10.4069 10.3568 10.4914 10.4197 10.5564 10.515C10.6214 10.606 10.6539 10.7078 10.6539 10.8205V11.139C10.6539 11.2257 10.617 11.295 10.5434 11.347C10.474 11.3947 10.396 11.4033 10.3094 11.373C9.92369 11.2473 9.57269 11.1845 9.25636 11.1845C8.90102 11.1845 8.72336 11.308 8.72336 11.555C8.72336 11.7717 8.86852 11.9233 9.15886 12.01ZM12.6133 12.6275C12.6133 13.5375 12.9274 13.9925 13.5558 13.9925C14.1841 13.9925 14.4983 13.5375 14.4983 12.6275C14.4983 11.7175 14.1841 11.2625 13.5558 11.2625C12.9274 11.2625 12.6133 11.7175 12.6133 12.6275ZM11.8918 10.84C12.2991 10.4067 12.8538 10.19 13.5558 10.19C14.2578 10.19 14.8124 10.4067 15.2198 10.84C15.6271 11.2733 15.8308 11.8692 15.8308 12.6275C15.8308 13.3858 15.6271 13.9817 15.2198 14.415C14.8124 14.8483 14.2578 15.065 13.5558 15.065C12.8538 15.065 12.2991 14.8483 11.8918 14.415C11.4844 13.9817 11.2808 13.3858 11.2808 12.6275C11.2808 11.8692 11.4844 11.2733 11.8918 10.84ZM19.9508 10.255C20.0505 10.255 20.1372 10.2918 20.2108 10.3655C20.2845 10.4392 20.3213 10.5258 20.3213 10.6255V14.6295C20.3213 14.7292 20.2845 14.8158 20.2108 14.8895C20.1372 14.9632 20.0505 15 19.9508 15H19.4568C19.2098 15 19.0322 14.8895 18.9238 14.6685L17.7993 12.4065C17.7993 12.4022 17.7972 12.4 17.7928 12.4C17.7885 12.4 17.7863 12.4022 17.7863 12.4065V14.6295C17.7863 14.7292 17.7495 14.8158 17.6758 14.8895C17.6022 14.9632 17.5155 15 17.4158 15H16.9218C16.8222 15 16.7355 14.9632 16.6618 14.8895C16.5882 14.8158 16.5513 14.7292 16.5513 14.6295V10.6255C16.5513 10.5258 16.5882 10.4392 16.6618 10.3655C16.7355 10.2918 16.8222 10.255 16.9218 10.255H17.4158C17.6628 10.255 17.8405 10.3655 17.9488 10.5865L19.0733 12.8485C19.0733 12.8528 19.0755 12.855 19.0798 12.855C19.0842 12.855 19.0863 12.8528 19.0863 12.8485V10.6255C19.0863 10.5258 19.1232 10.4392 19.1968 10.3655C19.2705 10.2918 19.3572 10.255 19.4568 10.255H19.9508Z" fill="%23555"/></svg>');
+        }
+
+        /* OLAP icon via inline SVG */
+        .e-olap-icon.e-icons::before {
+            font-family: unset;
+            content: "";
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox=\'0 0 24 24\' fill=\'none\'><path d="M3 6.5L7.5 8.75M3 6.5L8 4M3 6.5V12M12 22L16.5 19.75M12 22V16M12 22L7.5 19.75M21 6.5L16 4M21 6.5L16.5 8.75M21 6.5V12M12 11L7.5 8.75M12 11L16.5 8.75M12 11V16M7.5 8.75L16 4M7.5 8.75V19.75M16 4L12 2L8 4M8 4L16.5 8.75M16.5 8.75V19.75M16.5 19.75L21 17.5V12M12 16L21 12M12 16L3 12M3 12V17.5L7.5 19.75" stroke=\'%23666\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/></svg>');
+        }
+
+        /* Dialog layout helpers */
+        .olap-row {
+            display: grid;
+            grid-template-columns: 160px 1fr;
+            align-items: center;
+        }
+
+        .olap-row label {
+            color: #666;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        /* Optional error style (reserved) */
+        .error-message {
+            color: #333;
+            font-size: 14px;
+            margin: 0 0 20px;
+            line-height: 1.4;
+            white-space: pre-wrap;
+            text-align: left;
+        }
+    </style>
+
+    <script>
+        ej.base.enableRipple(false);
+        var pivotObj, connectMenuObj, openMenuObj;
+        var shouldAutoConfig = false;
+        var currentRemoteMode = null;
+        var remoteDefaults = { json: 'https://cdn.syncfusion.com/data/sales-analysis.json', csv: 'https://cdn.syncfusion.com/data/sales-analysis.csv', report: 'https://api.jsonbin.io/v3/b/6912d9ecd0ea881f40e12335' };
+        var currentData = null;
+        var lastRemote = { kind: null, url: null };
+        var olapConnected = false;
+
+        function toDialogText(value) {
+            if (value == null) return '';
+            if (typeof value === 'string') return value;
+            if (value instanceof Error) return value.message || String(value);
+            try { return JSON.stringify(value, null, 2); } catch (_) { return String(value); }
+        }
+        function ej2Alert(message, title) {
+            return new Promise(function (resolve) {
+                var dlg = ej.popups.DialogUtility.alert({
+                    title: title || 'Message',
+                    content: toDialogText(message),
+                    okButton: { text: 'OK', click: function () { dlg.hide(); } },
+                    position: { X: 'center', Y: 'center' },
+                    width: '420px',
+                    close: function () { resolve(); dlg.destroy(); }
+                });
+            });
+        }
+
+        function getPivot() {
+            return document.getElementById('pivotview') && document.getElementById('pivotview').ej2_instances && document.getElementById('pivotview').ej2_instances[0];
+        }
+        function getRemoteDialog() {
+            var el = document.getElementById('remoteDialog'); return el && el.ej2_instances && el.ej2_instances[0];
+        }
+        function getOlapDialog() {
+            var el = document.getElementById('olapDialog'); return el && el.ej2_instances && el.ej2_instances[0];
+        }
+        function getErrorDialog() {
+            var el = document.getElementById('errorDialog'); return el && el.ej2_instances && el.ej2_instances[0];
+        }
+        function getOlapDataSourceDrop() {
+            var el = document.getElementById('olapDataSourceDrop'); return el && el.ej2_instances && el.ej2_instances[0];
+        }
+        function getOlapCatalogDrop() {
+            var el = document.getElementById('olapCatalogDrop'); return el && el.ej2_instances && el.ej2_instances[0];
+        }
+        function getOlapCubeDrop() {
+            var el = document.getElementById('olapCubeDrop'); return el && el.ej2_instances && el.ej2_instances[0];
+        }
+
+        function openRemoteDialog(title, urlValue) {
+            var dlg = getRemoteDialog(); if (!dlg) return;
+            dlg.header = title || 'Connect';
+            var input = document.getElementById('remoteUrlInput');
+            if (input) {
+                input.setAttribute('autocomplete', 'off');
+                input.value = urlValue || '';
+            }
+            dlg.show();
+        }
+        function closeRemoteDialog() {
+            var dlg = getRemoteDialog(); if (dlg) dlg.hide();
+            var input = document.getElementById('remoteUrlInput'); if (input) { input.value = ''; }
+        }
+
+        function showOlapDialog() {
+            var dlg = getOlapDialog(); if (!dlg) return; dlg.show();
+            var urlInput = document.getElementById('olapUrlInput').ej2_instances[0]; if (urlInput) urlInput.value = 'https://bi.syncfusion.com/olap/msmdpump.dll';
+            olapConnected = false;
+            setOlapUiMessage('');
+            var dsDrop = getOlapDataSourceDrop(); if (dsDrop) { dsDrop.dataSource = []; dsDrop.enabled = false; dsDrop.placeholder = 'Select data source'; dsDrop.value = null; dsDrop.dataBind(); }
+            var catDrop = getOlapCatalogDrop(); if (catDrop) { catDrop.dataSource = []; catDrop.enabled = false; catDrop.placeholder = 'Select catalog'; catDrop.value = null; catDrop.dataBind(); }
+            var cubeDrop = getOlapCubeDrop(); if (cubeDrop) { cubeDrop.dataSource = []; cubeDrop.enabled = false; cubeDrop.placeholder = 'Select cube'; cubeDrop.value = null; cubeDrop.dataBind(); }
+        }
+        function setOlapUiMessage(msg) {
+            var el = document.getElementById('olapUiMessage'); if (el) { el.textContent = msg; el.style.display = msg ? 'block' : 'none'; }
+        }
+
+        function parseCSV(csvString) {
+            var lines = csvString.split(/\r?\n|\r/).filter(function (l) { return l.trim(); });
+            return lines.map(function (line) {
+                return line.split(',').map(function (cell) { return cell.trim().replace(/^"|"$/g, '').replace(/""/g, '"'); });
+            });
+        }
+
+        function isOlapActive() {
+            var p = getPivot(); if (!p) return false;
+            var ds = p.dataSourceSettings || {};
+            return p.dataType === 'olap' || !!p.olapEngineModule || ds.providerType === 'SSAS';
+        }
+        function cleanOlapForRelational() {
+            var p = getPivot(); if (!p) return;
+            p.olapEngineModule = null; p.dataType = 'pivot'; p.engineModule = new ej.pivotview.PivotEngine();
+            if (p.dataSourceSettings) {
+                p.dataSourceSettings.providerType = undefined;
+                p.dataSourceSettings.catalog = undefined;
+                p.dataSourceSettings.cube = undefined;
+                p.dataSourceSettings.url = undefined;
+            }
+            p.refresh();
+        }
+        function resetPivot() {
+            var p = getPivot(); if (!p) return;
+            if (p.engineModule) { p.engineModule.fieldList = {}; }
+            p.dataSourceSettings.rows = [];
+            p.dataSourceSettings.columns = [];
+            p.dataSourceSettings.values = [];
+            p.dataSourceSettings.filters = [];
+            p.dataSourceSettings.conditionalFormatSettings = [];
+            p.dataSourceSettings.formatSettings = [];
+            p.dataSourceSettings.drilledMembers = [];
+            p.dataSourceSettings.fieldMapping = [];
+            p.dataSourceSettings.excludeFields = [];
+            p.dataSourceSettings.filterSettings = [];
+            p.dataSourceSettings.sortSettings = [];
+            p.dataSourceSettings.valueSortSettings = {};
+            p.dataSourceSettings.calculatedFieldSettings = [];
+            p.dataSourceSettings.groupSettings = [];
+            p.dataSourceSettings.expandAll = false;
+            p.dataSourceSettings.showGrandTotals = true;
+            p.dataSourceSettings.showRowGrandTotals = true;
+            p.dataSourceSettings.showColumnGrandTotals = true;
+            p.dataSourceSettings.showSubTotals = true;
+            p.dataSourceSettings.showRowSubTotals = true;
+            p.dataSourceSettings.showColumnSubTotals = true;
+        }
+        function setPivotData(type, data) {
+            var p = getPivot(); if (!p) return;
+            if (isOlapActive()) cleanOlapForRelational();
+            p.dataSourceSettings.type = type;
+            p.dataSourceSettings.dataSource = data;
+            delete p.dataSourceSettings.url;
+            currentData = data; shouldAutoConfig = true; p.refresh();
+        }
+
+        function applyReportSettings(p, reportSettings, isOlapReport, entireReportSettings) {
+            return new Promise(function (resolve) {
+                var hasWrapper = !!(entireReportSettings && entireReportSettings.dataSourceSettings);
+
+                if (isOlapReport) {
+                    currentData = [];
+                    p.engineModule = null;
+                    p.olapEngineModule = new ej.pivotview.OlapEngine();
+                    p.dataType = 'olap';
+                    if (hasWrapper) {
+                        p.loadPersistData(JSON.stringify(entireReportSettings));
+                    } else {
+                        if (reportSettings && reportSettings.type) { delete reportSettings.type; }
+                        p.dataSourceSettings = reportSettings;
+                    }
+                    shouldAutoConfig = false;
+                    p.refresh();
+                    resolve();
+                    return;
+                }
+
+                cleanOlapForRelational();
+
+                var maybeDataUrl = reportSettings.dataUrl || reportSettings.url;
+                var maybeCsvUrl = reportSettings.csvUrl;
+
+                function applyDirect() {
+                    if (hasWrapper) {
+                        p.loadPersistData(JSON.stringify(entireReportSettings));
+                    } else {
+                        p.dataSourceSettings = reportSettings;
+                    }
+                    shouldAutoConfig = false;
+                    p.refresh();
+                    resolve();
+                }
+
+                if (!reportSettings.dataSource || reportSettings.dataSource.length === 0) {
+                    if (maybeDataUrl) {
+                        fetch(maybeDataUrl, { cache: 'no-store' })
+                            .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status + ': ' + r.statusText); return r.json(); })
+                            .then(function (j) {
+                                var arr = Array.isArray(j) ? j : (j && j.data ? j.data : j);
+                                if (!Array.isArray(arr) || !arr.length || typeof arr[0] !== 'object') { throw new Error('Invalid JSON at dataUrl.'); }
+                                currentData = arr;
+                                if (hasWrapper) {
+                                    entireReportSettings.dataSourceSettings.dataSource = arr;
+                                    entireReportSettings.dataSourceSettings.type = 'JSON';
+                                } else {
+                                    reportSettings.dataSource = arr;
+                                    reportSettings.type = 'JSON';
+                                }
+                                applyDirect();
+                            })
+                            .catch(function () {
+                                if (hasWrapper) {
+                                    entireReportSettings.dataSourceSettings.dataSource = [];
+                                } else {
+                                    reportSettings.dataSource = [];
+                                }
+                                applyDirect();
+                            });
+                        return;
+                    } else if (maybeCsvUrl) {
+                        fetch(maybeCsvUrl, { cache: 'no-store' })
+                            .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status + ': ' + r.statusText); return r.text(); })
+                            .then(function (t) {
+                                var csvArray = parseCSV(t);
+                                if (!csvArray.length) { throw new Error('CSV appears empty.'); }
+                                currentData = csvArray;
+                                if (hasWrapper) {
+                                    entireReportSettings.dataSourceSettings.dataSource = csvArray;
+                                    entireReportSettings.dataSourceSettings.type = 'CSV';
+                                } else {
+                                    reportSettings.dataSource = csvArray;
+                                    reportSettings.type = 'CSV';
+                                }
+                                applyDirect();
+                            })
+                            .catch(function () {
+                                if (hasWrapper) {
+                                    entireReportSettings.dataSourceSettings.dataSource = [];
+                                } else {
+                                    reportSettings.dataSource = [];
+                                }
+                                applyDirect();
+                            });
+                        return;
+                    }
+                }
+
+                if (reportSettings.dataSource && reportSettings.dataSource.length) {
+                    currentData = reportSettings.dataSource;
+                }
+                applyDirect();
+            });
+        }
+
+        function toolbarClicked() {
+            try {
+                var persisted = pivotObj.getPersistData();
+                var parsed = JSON.parse(persisted);
+
+                if (parsed && typeof parsed === 'object') {
+                    delete parsed.pivotValues;
+                }
+
+                var hasInline = Array.isArray(parsed.dataSourceSettings?.dataSource) && parsed.dataSourceSettings.dataSource.length > 0;
+                if (!hasInline && lastRemote.kind && lastRemote.url) {
+                    if (lastRemote.kind === 'JSON') {
+                        parsed.dataSourceSettings.dataUrl = lastRemote.url;
+                        parsed.dataSourceSettings.type = 'JSON';
+                    } else if (lastRemote.kind === 'CSV') {
+                        parsed.dataSourceSettings.csvUrl = lastRemote.url;
+                        parsed.dataSourceSettings.type = 'CSV';
+                    }
+                }
+
+                var json = JSON.stringify(parsed, null, 2);
+                var blob = new Blob([json], { type: 'application/json' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = 'pivot.json';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            } catch (err) {
+                ej2Alert('Failed to save: ' + (err && err.message ? err.message : err), 'Error');
+            }
+        }
+
+        function handleConnectFileChange(e) {
+            var file = e.target.files && e.target.files[0];
+            if (!file) return;
+
+            var isCsv = e.target.getAttribute('data-type') === 'CSV' || /\.csv$/i.test(file.name);
+            var reader = new FileReader();
+
+            reader.onload = function (evt) {
+                try {
+                    if (isCsv) {
+                        var csvString = String(evt.target && evt.target.result || '');
+                        if (!csvString.trim()) {
+                            ej2Alert('CSV file is empty.', 'Error');
+                            return;
+                        }
+
+                        var csvArray = parseCSV(csvString);
+
+                        if (!csvArray.length || csvArray.length <= 1) {
+                            ej2Alert('CSV appears empty or contains only headers.', 'Error');
+                            return;
+                        }
+
+                        var headerLen = csvArray[0].length;
+                        var inconsistent = csvArray.slice(1).some(function (row) { return row.length !== headerLen; });
+                        if (inconsistent) {
+                            ej2Alert('Malformed CSV: inconsistent number of columns across rows.', 'Error');
+                            return;
+                        }
+
+                        resetPivot();
+                        setPivotData('CSV', csvArray);
+                        lastRemote = { kind: 'CSV', url: null };
+                    } else {
+                        var raw = String(evt.target && evt.target.result || '');
+                        var parsed = JSON.parse(raw);
+                        var unwrapped = (parsed && typeof parsed === 'object' && 'record' in parsed) ? parsed.record : parsed;
+                        var looksLikeReport = !Array.isArray(unwrapped) &&
+                            (unwrapped.dataSourceSettings || unwrapped.rows || unwrapped.columns || unwrapped.values || unwrapped.url || unwrapped.providerType);
+
+                        if (looksLikeReport) {
+                            var reportSettings = unwrapped.dataSourceSettings || unwrapped;
+                            var isOlapReport = reportSettings && reportSettings.providerType === 'SSAS';
+                            resetPivot();
+                            applyReportSettings(pivotObj, reportSettings, isOlapReport, unwrapped)
+                                .catch(function (err) { ej2Alert('Failed to load report: ' + err.message, 'Error'); });
+                        } else {
+                            var arr2 = Array.isArray(unwrapped) ? unwrapped : (unwrapped && unwrapped.data ? unwrapped.data : unwrapped);
+                            if (!Array.isArray(arr2) || !arr2.length || typeof arr2[0] !== 'object') {
+                                ej2Alert('Invalid JSON: expected report or non-empty array of objects.', 'Error');
+                                return;
+                            }
+                            resetPivot();
+                            setPivotData('JSON', arr2);
+                            lastRemote = { kind: 'JSON', url: null };
+                        }
+                    }
+                } catch (err) {
+                    ej2Alert('Failed to load file: ' + (err && err.message ? err.message : String(err)), 'Error');
+                } finally {
+                    e.target.value = '';
+                }
+            };
+
+            reader.onerror = function () {
+                ej2Alert('Failed to read the file.', 'Error');
+            };
+
+            reader.readAsText(file);
+        }
+
+        function loadRemoteAndBind(kind, url) {
+            var cleanUrl = (url || '').trim();
+            if (!cleanUrl) return Promise.reject(new Error('Empty URL'));
+            if (kind === 'CSV') {
+                if (!/\.csv(\?|$)/i.test(cleanUrl)) {
+                    return Promise.reject(new Error('Only .csv URLs are allowed for the CSV data source.'));
+                }
+                return fetch(cleanUrl, { cache: 'no-store' }).then(function (rc) {
+                    if (!rc.ok) return rc.text().then(function () { throw new Error('HTTP ' + rc.status + ': ' + rc.statusText); });
+                    return rc.text();
+                }).then(function (csv) {
+                    var arr = parseCSV(csv);
+                    resetPivot();
+                    setPivotData('CSV', arr);
+                    return;
+                });
+            }
+            else {
+                return fetch(cleanUrl, { cache: 'no-store' }).then(function (rj) {
+                    if (!rj.ok) return rj.text().then(function (t) { throw new Error('HTTP ' + rj.status + ': ' + rj.statusText); });
+                    return rj.json();
+                }).then(function (json) {
+                    var unwrapped = (json && typeof json === 'object' && 'record' in json) ? json.record : json;
+                    var looksLikeReport = !Array.isArray(unwrapped) && (unwrapped.dataSourceSettings || unwrapped.rows || unwrapped.columns || unwrapped.values || unwrapped.url || unwrapped.providerType);
+                    if (looksLikeReport) {
+                        var reportSettings = unwrapped.dataSourceSettings || unwrapped;
+                        var isOlapReport = reportSettings && reportSettings.providerType === 'SSAS';
+                        return applyReportSettings(getPivot(), reportSettings, isOlapReport, unwrapped);
+                    }
+                    var arr2 = Array.isArray(unwrapped) ? unwrapped : (unwrapped && unwrapped.data ? unwrapped.data : unwrapped);
+                    if (!Array.isArray(arr2) || !arr2.length || typeof arr2[0] !== 'object') throw new Error('Invalid JSON: expected array or report.');
+                    lastRemote = { kind: 'JSON', url: cleanUrl };
+                    resetPivot();
+                    setPivotData('JSON', arr2);
+                    return;
+                });
+            }
+        }
+
+        function xmlaSoapEnvelope(requestType, restrictions, properties) {
+            restrictions = restrictions || {}; properties = properties || {};
+            var restrXml = Object.keys(restrictions).length ?
+                '<Restrictions><RestrictionList>' + Object.keys(restrictions).map(function (k) { return '<' + k + '>' + String(restrictions[k]) + '</' + k + '>'; }).join('') + '</RestrictionList></Restrictions>' :
+                '<Restrictions />';
+            var propXml = '<Properties><PropertyList>' + Object.keys(properties).map(function (k) { return '<' + k + '>' + String(properties[k]) + '</' + k + '>'; }).join('') + '</PropertyList></Properties>';
+            return '<?xml version="1.0" encoding="utf-8"?>' +
+                '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+                '<soap:Header />' +
+                '<soap:Body>' +
+                '<Discover xmlns="urn:schemas-microsoft-com:xml-analysis">' +
+                '<RequestType>' + requestType + '</RequestType>' +
+                restrXml +
+                propXml +
+                '</Discover>' +
+                '</soap:Body>' +
+                '</soap:Envelope>';
+        }
+        function postXMLA(endpoint, bodyXml) {
+            return fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'text/xml; charset=utf-8', 'Accept': 'text/xml, application/xml, */*;q=0.1' }, body: bodyXml })
+                .then(function (res) { return res.text().then(function (text) { if (!res.ok) { throw new Error('HTTP ' + res.status + ': ' + res.statusText + '\n' + text); } return text; }); });
+        }
+        function parseRowset(xmlText) {
+            var parser = new DOMParser(); var xml = parser.parseFromString(xmlText, 'text/xml');
+            var rows = Array.prototype.slice.call(xml.getElementsByTagNameNS('*', 'row'));
+            var result = rows.map(function (r) { var obj = {}; Array.prototype.slice.call(r.children).forEach(function (c) { obj[c.localName] = (c.textContent || '').trim(); }); return obj; });
+            var fault = xml.getElementsByTagNameNS('*', 'Fault')[0]; if (fault) throw new Error((fault.textContent || 'SOAP Fault').trim());
+            return result;
+        }
+        function discoverDataSources(endpoint) { var body = xmlaSoapEnvelope('DISCOVER_DATASOURCES', {}, {}); return postXMLA(endpoint, body).then(function (xml) { return parseRowset(xml).map(function (r) { return r.DataSourceName || r.DATASOURCE_NAME || r.Name || r.NAME; }).filter(Boolean); }); }
+        function discoverCatalogsWithDS(endpoint, dataSource) { var body = xmlaSoapEnvelope('DBSCHEMA_CATALOGS', {}, { DataSourceInfo: dataSource }); return postXMLA(endpoint, body).then(function (xml) { return parseRowset(xml).map(function (r) { return r.CATALOG_NAME; }).filter(Boolean); }); }
+        function discoverCubesWithDS(endpoint, catalog, dataSource) { var body = xmlaSoapEnvelope('MDSCHEMA_CUBES', { CATALOG_NAME: catalog }, { DataSourceInfo: dataSource }); return postXMLA(endpoint, body).then(function (xml) { return parseRowset(xml).filter(function (r) { return r.CUBE_SOURCE === '1'; }).map(function (r) { return r.CUBE_NAME; }).filter(Boolean); }); }
+
+        function applyOlapBinding(opts) {
+            var p = getPivot(); if (!p) return;
+            var url = (opts && opts.url) || ''; var catalog = (opts && opts.catalog) || ''; var cube = (opts && opts.cube) || ''; var dataSourceInfo = (opts && opts.dataSourceInfo) || '';
+            if (!url || !catalog || !cube) return;
+
+            var olapSettings = {
+                url: url,
+                catalog: catalog,
+                providerType: 'SSAS',
+                cube: cube,
+                localeIdentifier: 1033,
+                dataSourceInfo: dataSourceInfo,
+                rows: [],
+                columns: [],
+                values: [],
+                filters: [],
+                drilledMembers: [],
+                fieldMapping: [],
+                excludeFields: [],
+                filterSettings: [],
+                sortSettings: [],
+                valueSortSettings: {},
+                calculatedFieldSettings: [],
+                groupSettings: [],
+                expandAll: false,
+                conditionalFormatSettings: [],
+                formatSettings: [],
+                showGrandTotals: true,
+                showRowGrandTotals: true,
+                showColumnGrandTotals: true,
+                showSubTotals: true,
+                showRowSubTotals: true,
+                showColumnSubTotals: true
+            };
+
+            p.engineModule = null;
+            p.olapEngineModule = new ej.pivotview.OlapEngine();
+            p.dataType = 'olap';
+            p.dataSourceSettings = olapSettings;
+            if ((p.dataSourceSettings).type) {
+                (p.dataSourceSettings).type = undefined;
+            }
+            currentData = [];
+            shouldAutoConfig = true;
+            p.refresh();
+        }
+
+        function toolbarRender(args) {
+            var connectMenuTpl = { template: '<ul id="connect_menu"></ul>', id: 'custom_toolbar' };
+            args.customToolbar.splice(0, 0, connectMenuTpl);
+            var openMenuTpl = { template: '<ul id="open_menu"></ul>', id: 'open_toolbar' };
+            args.customToolbar.splice(1, 0, openMenuTpl);
+            var saveItem = { prefixIcon: 'e-save-report e-btn-icon e-icons', tooltipText: 'Save Pivot Report as JSON', click: toolbarClicked };
+            args.customToolbar.splice(2, 0, saveItem);
+            var separator = { type: 'Separator' }; args.customToolbar.splice(3, 0, separator);
+        }
+        function onDataBound() {
+            pivotObj = getPivot();
+            var connectEl = document.getElementById('connect_menu');
+            if (connectEl) {
+                var items = [{
+                    iconCss: 'e-connect-report e-btn-icon e-icons',
+                    items: [
+                        { text: 'JSON', iconCss: 'e-json-icon e-icons', items: [{ text: 'Local', id: 'local_json' }, { text: 'Remote', id: 'remote_json' }] },
+                        { text: 'CSV', iconCss: 'e-csv-icon e-icons', items: [{ text: 'Local', id: 'local_csv' }, { text: 'Remote', id: 'remote_csv' }] },
+                        { text: 'OLAP(XMLA)', id: 'olap', iconCss: 'e-olap-icon e-icons' }
+                    ]
+                }];
+                if (connectMenuObj) { connectMenuObj.destroy(); connectMenuObj = null; }
+                connectMenuObj = new ej.navigations.Menu({ items: items, select: gridToolbarClicked, cssClass: 'e-pivot-toolbar-menu' }, '#connect_menu');
+            }
+            var openEl = document.getElementById('open_menu');
+            if (openEl) {
+                var openItems = [{
+                    iconCss: 'e-open-report e-btn-icon e-icons',
+                    items: [{ text: 'Load Pivot Report', items: [{ text: 'Local JSON', id: 'local_report' }, { text: 'Remote JSON', id: 'remote_report' }] }]
+                }];
+                if (openMenuObj) { openMenuObj.destroy(); openMenuObj = null; }
+                openMenuObj = new ej.navigations.Menu({ items: openItems, select: openToolbarClicked, cssClass: 'e-pivot-toolbar-menu' }, '#open_menu');
+            }
+            if (shouldAutoConfig && pivotObj && (!pivotObj.dataSourceSettings.values || pivotObj.dataSourceSettings.values.length === 0)) {
+                shouldAutoConfig = false;
+                if (pivotObj.pivotFieldListModule && pivotObj.pivotFieldListModule.dialogRenderer) {
+                    setTimeout(function () { pivotObj.pivotFieldListModule.dialogRenderer.onShowFieldList(); }, 0);
+                }
+            }
+        }
+        function onEnginePopulated() {
+            if (shouldAutoConfig && pivotObj) {
+                shouldAutoConfig = false;
+                pivotObj.displayOption = { view: 'Both', primary: 'Table' };
+                if (!pivotObj.dataSourceSettings.values || pivotObj.dataSourceSettings.values.length === 0) {
+                    if (pivotObj.pivotFieldListModule && pivotObj.pivotFieldListModule.dialogRenderer) {
+                        pivotObj.pivotFieldListModule.dialogRenderer.onShowFieldList();
+                    }
+                }
+            }
+        }
+        function openToolbarClicked(args) {
+            var id = args && args.item && args.item.id; if (!id) return;
+            if (id === 'local_report') {
+                var input = document.getElementById('connectFile');
+                input.value = ''; input.accept = '.json'; input.removeAttribute('data-type');
+                input.onchange = handleConnectFileChange; input.click(); return;
+            }
+            if (id === 'remote_report') {
+                currentRemoteMode = 'remote-report';
+                openRemoteDialog('Load Pivot Report', remoteDefaults.report);
+            }
+        }
+        function gridToolbarClicked(args) {
+            var id = args && args.item && args.item.id; if (!id) return;
+            if (id === 'local_csv' || id === 'local_json') {
+                var ext = id === 'local_csv' ? 'CSV' : 'JSON';
+                var input = document.getElementById('connectFile');
+                input.value = ''; input.accept = ext === 'CSV' ? '.csv' : '.json'; input.setAttribute('data-type', ext);
+                input.onchange = handleConnectFileChange; input.click(); return;
+            }
+            if (id === 'remote_csv' || id === 'remote_json') {
+                var type = id === 'remote_csv' ? 'CSV' : 'JSON';
+                currentRemoteMode = 'remote-' + type.toLowerCase();
+                openRemoteDialog('Connect to ' + type, remoteDefaults[type.toLowerCase()]);
+                return;
+            }
+            if (id === 'olap') {
+                showOlapDialog();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            pivotObj = getPivot();
+
+            var remoteOpenBtn = document.getElementById('remoteOpenBtn').ej2_instances[0];
+            remoteOpenBtn.element.onclick = function () {
+                var input = document.getElementById('remoteUrlInput');
+                var url = input.value.trim();
+                if (!url) {
+                    closeRemoteDialog();
+                    var dlg = getErrorDialog();
+                    var msgEl = document.getElementById('errorMessage');
+                    if (msgEl) msgEl.textContent = 'Please enter a valid URL.';
+                    dlg.show();
+                    return;
+                }
+                var kind = currentRemoteMode === 'remote-csv' ? 'CSV' : 'JSON';
+                loadRemoteAndBind(kind, url)
+                    .then(function () { closeRemoteDialog(); })
+                    .catch(function (err) {
+                        closeRemoteDialog();
+                        var dlg = getErrorDialog();
+                        var msgEl = document.getElementById('errorMessage');
+                        if (msgEl) msgEl.textContent = 'Failed to load remote ' + kind + ': ' + (err && err.message ? err.message : err) + '\nTip: Ensure CORS is allowed.';
+                        dlg.show();
+                    });
+            };
+            var remoteCancelBtn = document.getElementById('remoteCancelBtn').ej2_instances[0];
+            remoteCancelBtn.element.onclick = closeRemoteDialog;
+
+            var olapConnectBtn = document.getElementById('olapConnectBtn').ej2_instances[0];
+            olapConnectBtn.element.onclick = function () {
+                setOlapUiMessage('');
+                var connectBtn = document.getElementById('olapConnectBtn').ej2_instances[0];
+                connectBtn.content = 'Connecting...'; connectBtn.disabled = true; connectBtn.dataBind();
+                var dsDrop = getOlapDataSourceDrop();
+                dsDrop.placeholder = 'Loading...'; dsDrop.value = null; dsDrop.dataSource = []; dsDrop.enabled = false; dsDrop.dataBind();
+                var catDrop = getOlapCatalogDrop();
+                catDrop.placeholder = 'Select catalog'; catDrop.value = null; dsDrop.dataSource = []; catDrop.enabled = false; catDrop.dataBind();
+                var cubeDrop = getOlapCubeDrop();
+                cubeDrop.placeholder = 'Select cube'; cubeDrop.value = null; cubeDrop.dataSource = []; cubeDrop.enabled = false; cubeDrop.dataBind();
+                var urlInput = document.getElementById('olapUrlInput').ej2_instances[0];
+                var url = urlInput.value.trim();
+                discoverDataSources(url).then(function (list) {
+                    dsDrop.placeholder = 'Select data source'; dsDrop.dataSource = list; dsDrop.enabled = list.length > 0; dsDrop.dataBind();
+                    olapConnected = true;
+                    setOlapUiMessage(list.length ? '' : 'No data sources found.');
+                }).catch(function (e) {
+                    setOlapUiMessage('Connect failed: ' + e.message + '. If the browser blocks this due to CORS, configure a proxy base URL and try again.');
+                    olapConnected = false;
+                    dsDrop.placeholder = 'Select data source'; dsDrop.dataSource = []; dsDrop.enabled = false; dsDrop.dataBind();
+                }).finally(function () {
+                    connectBtn.content = 'Connect'; connectBtn.disabled = false; connectBtn.dataBind();
+                });
+            };
+            var olapDataSourceDrop = getOlapDataSourceDrop();
+            olapDataSourceDrop.change = function (e) {
+                var ds = e.value; if (!ds) return;
+                setOlapUiMessage('');
+                var catDrop = getOlapCatalogDrop();
+                catDrop.placeholder = 'Loading...'; catDrop.value = null; catDrop.dataSource = []; catDrop.enabled = false; catDrop.dataBind();
+                var cubeDrop = getOlapCubeDrop();
+                cubeDrop.placeholder = 'Select cube'; cubeDrop.value = null; cubeDrop.dataSource = []; cubeDrop.enabled = false; cubeDrop.dataBind();
+                var urlInput = document.getElementById('olapUrlInput').ej2_instances[0];
+                var url = urlInput.value.trim();
+                discoverCatalogsWithDS(url, ds).then(function (catalogs) {
+                    catDrop.placeholder = 'Select catalog'; catDrop.dataSource = catalogs; catDrop.enabled = catalogs.length > 0; catDrop.dataBind();
+                }).catch(function (e) { setOlapUiMessage('Failed to load catalogs: ' + e.message); });
+            };
+            var olapCatalogDrop = getOlapCatalogDrop();
+            olapCatalogDrop.change = function (e) {
+                var cat = e.value; if (!cat) return;
+                setOlapUiMessage('');
+                var cubeDrop = getOlapCubeDrop();
+                cubeDrop.placeholder = 'Loading...'; cubeDrop.value = null; cubeDrop.dataSource = []; cubeDrop.enabled = false; cubeDrop.dataBind();
+                var urlInput = document.getElementById('olapUrlInput').ej2_instances[0];
+                var url = urlInput.value.trim();
+                var dsDrop = getOlapDataSourceDrop();
+                var ds = dsDrop.value;
+                discoverCubesWithDS(url, cat, ds).then(function (cubes) {
+                    cubeDrop.placeholder = 'Select cube'; cubeDrop.dataSource = cubes; cubeDrop.enabled = cubes.length > 0; cubeDrop.dataBind();
+                }).catch(function (e) { setOlapUiMessage('Failed to load cubes: ' + e.message); });
+            };
+            var olapCubeDrop = getOlapCubeDrop();
+            olapCubeDrop.change = function (e) {
+                var cube = e.value; if (!cube) return;
+            };
+            var olapOkBtn = document.getElementById('olapOkBtn').ej2_instances[0];
+            olapOkBtn.element.onclick = function () {
+                var dsDrop = getOlapDataSourceDrop(); var ds = dsDrop.value;
+                var catDrop = getOlapCatalogDrop(); var catalog = catDrop.value;
+                var cubeDrop = getOlapCubeDrop(); var cube = cubeDrop.value;
+                var urlInput = document.getElementById('olapUrlInput').ej2_instances[0];
+                var url = urlInput.value.trim();
+                if (!url || !ds || !catalog || !cube) { setOlapUiMessage('Please connect and select Data Source, Catalog and Cube.'); return; }
+                setOlapUiMessage('');
+                applyOlapBinding({ url: url, catalog: catalog, cube: cube, dataSourceInfo: ds });
+                var dlg = getOlapDialog(); if (dlg) dlg.hide();
+            };
+            var olapCancelBtn = document.getElementById('olapCancelBtn').ej2_instances[0];
+            olapCancelBtn.element.onclick = function () { var dlg = getOlapDialog(); if (dlg) dlg.hide(); };
+
+            var errorOkBtn = document.getElementById('errorOkBtn').ej2_instances[0];
+            errorOkBtn.element.onclick = function () { var dlg = getErrorDialog(); if (dlg) dlg.hide(); };
+        });
+    </script>
+}
+@section PreScripts {
+    <script> ej.base.enableRipple(false); </script>
+}
+@section ActionDescription {
+    <div id="action-description">
+        <p>This sample demonstrates how to dynamically load data from multiple data sources in the Pivot Table, including
+            local and remote JSON/CSV files, as well as an OLAP(XMLA) data source via customized toolbar menu options.
+            Additionally, you can save and reload Pivot Table report(s) as JSON files for future analysis.</p>
+    </div>
+}
+@section Description {
+    <div id="description">
+        <p>This sample showcases how to dynamically load data at runtime. Use the custom toolbar to switch sources or
+            save/load reports.</p>
+        <h4>Open a Data Source:</h4>
+        <b>JSON</b>
+        <ul>
+            <li><strong>Local JSON Data:</strong> Toolbar → JSON → Local.</li>
+            <li><strong>Remote JSON Data:</strong> Toolbar → JSON → Remote.</li>
+        </ul>
+        <b>CSV</b>
+        <ul>
+            <li><strong>Local CSV Data:</strong> Toolbar → CSV → Local.</li>
+            <li><strong>Remote CSV Data:</strong> Toolbar → CSV → Remote.</li>
+        </ul>
+        <b>OLAP(XMLA)</b>
+        <ul>
+            <li>Use the <strong>OLAP(XMLA)</strong> option to connect to an OLAP server with dynamic discovery of data
+                sources, catalogs, and cubes.</li>
+        </ul>
+        <h4>Load a Pivot Report:</h4>
+        <ul>
+            <li><strong>Local JSON Pivot Report:</strong> Toolbar → Load Pivot Report → Local JSON.</li>
+            <li><strong>Remote JSON Pivot Report:</strong> Toolbar → Load Pivot Report → Remote JSON.</li>
+        </ul>
+        <h4>Save a Pivot Report:</h4>
+        <p>Click the “Save Pivot Report as JSON” toolbar item to download the current configuration (data excluded).</p>
+        <br />
+        <p>More info: <a target="_blank"
+                href="https://ej2.syncfusion.com/aspnetcore/documentation/pivot-table/data-binding">Data Binding</a> and <a
+                target="_blank"
+                href="https://ej2.syncfusion.com/aspnetcore/documentation/pivot-table/tool-bar#save-and-load-report-as-a-json-file">Save/load
+                report</a>.</p>
+    </div>
+}
+@section Title {
+    <title>ASP.NET Core Pivot Table Dynamic Binding Example - Syncfusion Demos</title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Dynamic Binding in ASP.NET Core Pivot Table Control</h1>
+}

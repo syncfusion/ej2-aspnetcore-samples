@@ -1,0 +1,219 @@
+﻿@page 
+@using EJ2CoreSampleBrowser.Services
+@{
+    var priorityLists = new string[] { "Low", "Medium", "High" };
+    var bugReports = new List<string>
+    {
+        "Hi, this is Alice. On July 3rd, I encountered a bug in Chrome where the dropdown menu in the navigation bar fails to close after selecting an item. While this might not be a major issue, I kindly request that you investigate and resolve it. Regards, J. Abraham",
+        "On May 2nd, K. John Doe reported a critical bug where the login page unexpectedly refreshes instead of logging in when the login button is clicked, impacting all major browsers. This prevents users from accessing their accounts. To reproduce: open any browser, navigate to the login page, enter valid credentials, and click 'Login'."
+    };
+    var copyBtnIconIndex = -1;
+    var copyIcon = "e-icons e-copy";
+    var checkIcon = "e-icons e-check";
+    var visible = false;
+}
+
+@section ControlsSection{
+        <div class="control-section">
+
+    <div class="bug-form-container">
+        <h6 style="text-align:center;">Bug Report Form</h6>
+        <form id="bugReport" class="e-form" method="post" style="position:center">
+            <div class="form-row">
+                <div class="e-control-wrapper TextBox-control-section col-md-6">
+                    <label class="e-form-label">Bug Name</label>
+                    <ejs-textbox id="bug-name" placeholder="What's the bug ?" data-smartpaste-description="Extract the core purpose of the bug data and use it as the value for Bug name field"></ejs-textbox>
+                </div>
+                <div class="e-control-wrapper col-md-6">
+                    <label class="e-form-label">Bug Priority</label>
+                    <ejs-combobox id="bug-priority" dataSource="priorityLists" placeholder="Set priority" data-smartpaste-description="Only allowed values are Low, Medium and High" onchange="handlePriorityChange()"></ejs-combobox>
+                </div>
+            </div>
+
+            <div class="e-control-wrapper TextArea-control-section">
+                <label class="e-form-label">Bug Description</label>
+                <ejs-textarea id="bug-description" placeholder="Describe a little about the bug." rows="2" cols="100"></ejs-textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="e-control-wrapper TextBox-control-section col-md-6">
+                    <label class="e-form-label">Reporter</label>
+                    <ejs-textbox id="reporter-name" placeholder="Who is the reporter ?" data-smartpaste-description="Name must follow the format: Initial Firstname Lastname"></ejs-textbox>
+                </div>
+                <div class="e-control-wrapper TextBox-control-section col-md-6">
+                    <label class="e-form-label">Submitted Date</label>
+                    <ejs-textbox id="submitted-date" placeholder="When it is reported ?" data-smartpaste-description="Date must follow the format: Month Day. For ex: May 01"></ejs-textbox>
+                </div>
+            </div>
+
+            <div class="e-control-wrapper TextArea-control-section">
+                <label class="e-form-label">Repro Steps</label>
+                <ejs-textarea id="repro-steps" placeholder="Enter the repro steps here.." data-smartpaste-description="Structure each steps in a Numbered format." rows="2" cols="100"></ejs-textarea>
+            </div>
+
+            <div class="button-container" style="margin-top: 10px;">
+                    <ejs-button id="resetBtn" content="Reset" cssClass="e-outline" type="reset" IconCss="e-icons e-reset"></ejs-button>
+                    <ejs-smartpaste id="smartPasteBtn" content="Smart Paste" cssClass="e-primary" iconCss="e-icons e-paste" onclick="return handleSmartPasteClick(event)"></ejs-smartpaste>
+            </div>
+            <div class="e-spinner-pane e-spin-hide">
+                <div class="e-spinner-inner" aria-disabled="true">
+                    <svg id="5pXtG" class="e-spin-fluent2" viewBox="0 0 30 30" style="transform-origin: 15px 15px 15px; height: 30px; width: 30px;">
+                        <path class="e-path-circle" d="M 15 15 m -15 0 a 15 15 0 1 0 30 0 a 15 15 0 1 0 -30 0">
+                        </path>
+                        <path class="e-path-arc" d="M 25.606601717798213 4.3933982822017885 A 15 15 0 0 0 4.393398282201785 4.3933982822017885">
+                        </path>
+                    </svg>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+            <div class="sample-data-section">
+                <h6 style="text-align:center;">Sample content</h6>
+                <div class="content-flexed">
+                    @foreach (var (bug, index) in bugReports.Select((bug, index) => (bug, index)))
+                    {
+                        <div class="content-body" data-index="@index">
+                            <div class="copy-container" style="float: right">
+                                <ejs-button id="copyBtn_@index" iconCss="@(copyBtnIconIndex == index ? checkIcon : copyIcon)" cssClass="custom-copy-icon e-primary" onclick="copyToClipboard(@index)"></ejs-button>
+                            </div>
+                            <p>@bug</p>
+                        </div>
+                    }
+                </div>
+            </div>
+</div>
+}
+
+<style>
+    .bug-form-container, .sample-data-section {
+        width: 100%;
+        margin: 30px auto;
+    }
+    .bug-form-container {
+        position: relative;
+        border-radius: 20px;
+        padding: 15px;
+        border: 2px solid #ddd;
+        max-width: 600px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .form-row {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 15px;
+    }
+    .e-control-wrapper {
+        flex: 1;
+    }
+    .e-form-label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+    .button-container {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+    }
+    .sample-data-section .content-flexed {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+    }
+    .sample-data-section .content-body {
+        line-height: 28px;
+        font-size: 14px;
+        max-width: 49%;
+        border-radius: 10px;
+        padding: 20px;
+        border: 2px solid #ddd;
+        position: relative;
+    }
+    .e-btn.e-icon-btn.custom-copy-icon {
+        padding: 4px;
+        font-size: 10px;
+    }
+    .e-btn.custom-copy-icon:focus {
+        box-shadow: none;
+    }
+    .TextArea-control-section{
+        padding: 0px 15px;
+        margin-bottom: 15px;
+    }
+</style>
+
+<script>
+  let allowSmartPasteOnce = false;
+
+  async function handleSmartPasteClick(event) {
+    const spinElement = document.querySelector('.e-spinner-pane');
+    spinElement.classList.remove('e-spin-hide');
+    spinElement.classList.add('e-spin-show');
+    if (allowSmartPasteOnce) {
+      allowSmartPasteOnce = false;
+      return true;
+    }
+    event.preventDefault();
+    event.stopPropagation();
+
+    try {
+      const userID = await fingerPrint();
+      const Tokens = await getRemainingTokens(userID);
+
+      if (Tokens.remainingTokens <= 300) {
+        showBanner(Tokens.alertMessage);
+        spinElement.classList.remove('e-spin-show');
+        spinElement.classList.add('e-spin-hide');
+        return false;
+      }
+
+      allowSmartPasteOnce = true;
+      document.getElementById('smartPasteBtn').click();
+      return false;
+
+    } catch (err) {
+      return false;
+    } 
+  }
+
+  function handlePriorityChange() {
+    const spinElement = document.querySelector('.e-spinner-pane');
+    spinElement.classList.remove('e-spin-show');
+    spinElement.classList.add('e-spin-hide');
+  }
+
+  function copyToClipboard(index) {
+    const text = document.querySelector(`.content-body[data-index="${index}"] p`).innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      var copyBtnIconIndex = -1;
+      copyBtnIconIndex = index;
+      document.getElementById('copyBtn_' + index).ej2_instances[0].iconCss = 'e-icons e-check';
+      setTimeout(() => {
+        document.getElementById('copyBtn_' + index).ej2_instances[0].iconCss = 'e-icons e-copy';
+        copyBtnIconIndex = -1;
+      }, 2000);
+    });
+  }
+</script>
+
+@section Meta{
+<meta name="description" content="This example demonstrates the Smart Paste with Annotation in ASP.NET Core Smart Paste control. Explore here for more details." />
+}
+@section ActionDescription{
+<div id="action-description">
+   <p>This sample demonstrates the usage of <code>data-smartpaste-description</code> in form fields to customize field descriptions. It shows how to provide specific descriptions for form fields, enhancing the Smart Paste feature's ability to automatically populate form data based on these custom descriptions.</p>
+</div>
+}
+@section Description{
+<div id="description">
+    <p>This sample uses the <code>data-smartpaste-description</code> attribute to customize field descriptions. By default, Smart Paste automatically identifies and describes form fields based on labels, names, or nearby text. You can override these descriptions by setting <code>data-smartpaste-description</code> for specific fields, which helps the backend model provide more accurate form auto-filling.</p>
+</div>
+}
+@section Title{
+<title>ASP.NET Core Smart Paste with Annotation Example - Syncfusion Demos </title>
+}
+@section Header{
+<h1 class='sb-sample-text'>Example of Smart Paste with Annotation in ASP.NET Core Smart Paste</h1>
+}

@@ -10,6 +10,7 @@ using EJ2CoreSampleBrowser.Services;
 using EJ2CoreSampleBrowser.Models;
 using System.Collections.Concurrent;
 using Newtonsoft.Json;
+using AsyncKeyedLock;
 
 namespace EJ2SDiagramSample.Pages
 {
@@ -117,64 +118,52 @@ namespace EJ2SDiagramSample.Pages
         }
         #endregion
 
-        private static readonly ConcurrentDictionary<string, SemaphoreSlim> _connLocks = new();
+        private static readonly AsyncKeyedLocker<string> _connLocks = new();
 
-        private static SemaphoreSlim GetConnectionLock(string connectionId)
-        {
-            return _connLocks.GetOrAdd(connectionId, _ => new SemaphoreSlim(1, 1));
-        }
         public async Task BroadcastToOtherClients(List<string> payloads, long clientVersion, List<string>? elementIds, SelectionEvent currentSelection, string roomName)
         {
             var connId = Context.ConnectionId;
-            var gate = GetConnectionLock(connId);
-            await gate.WaitAsync();
-            try
+            using var _ = await _connLocks.LockAsync(connId);
+            var versionKey = "diagram:version";
+
+            var (acceptedSingle, serverVersionSingle) = await _redisService.CompareAndIncrementAsync(versionKey, clientVersion);
+            long serverVersionFinal = serverVersionSingle;
+
+            if (!acceptedSingle)
             {
-                var versionKey = "diagram:version";
-
-                var (acceptedSingle, serverVersionSingle) = await _redisService.CompareAndIncrementAsync(versionKey, clientVersion);
-                long serverVersionFinal = serverVersionSingle;
-
-                if (!acceptedSingle)
+                var recentUpdates = await GetUpdatesSinceVersionAsync(clientVersion, maxScan: 200);
+                var recentlyTouched = new HashSet<string>(StringComparer.Ordinal);
+                foreach (var upd in recentUpdates)
                 {
-                    var recentUpdates = await GetUpdatesSinceVersionAsync(clientVersion, maxScan: 200);
-                    var recentlyTouched = new HashSet<string>(StringComparer.Ordinal);
-                    foreach (var upd in recentUpdates)
-                    {
-                        if (upd.ModifiedElementIds == null) continue;
-                        foreach (var id in upd.ModifiedElementIds)
-                            recentlyTouched.Add(id);
-                    }
-
-                    var overlaps = elementIds?.Where(id => recentlyTouched.Contains(id)).Distinct().ToList();
-                    if (overlaps?.Count > 0)
-                    {
-                        await Clients.Caller.SendAsync("RevertCurrentChanges", elementIds);
-                        await Clients.Caller.SendAsync("ShowConflict");
-                        return;
-                    }
-
-                    var (_, newServerVersion) = await _redisService.CompareAndIncrementAsync(versionKey, serverVersionSingle);
-                    serverVersionFinal = newServerVersion;
+                    if (upd.ModifiedElementIds == null) continue;
+                    foreach (var id in upd.ModifiedElementIds)
+                        recentlyTouched.Add(id);
                 }
 
-                var update = new DiagramUpdateMessage
+                var overlaps = elementIds?.Where(id => recentlyTouched.Contains(id)).Distinct().ToList();
+                if (overlaps?.Count > 0)
                 {
-                    SourceConnectionId = connId,
-                    Version = serverVersionFinal,
-                    ModifiedElementIds = elementIds
-                };
+                    await Clients.Caller.SendAsync("RevertCurrentChanges", elementIds);
+                    await Clients.Caller.SendAsync("ShowConflict");
+                    return;
+                }
 
-                await StoreUpdateInRedis(update, connId);
-                SelectionEvent selectionEvent = BuildSelectedElementEvent(currentSelection.ElementIds, currentSelection.SelectorBounds);
-                await UpdateSelectionBoundsInRedis(selectionEvent, currentSelection.ElementIds, currentSelection.SelectorBounds);
-                await Clients.OthersInGroup(roomName).SendAsync("ReceiveData", payloads, serverVersionFinal, selectionEvent);
-                await RemoveOldUpdates(serverVersionFinal);
+                var (_, newServerVersion) = await _redisService.CompareAndIncrementAsync(versionKey, serverVersionSingle);
+                serverVersionFinal = newServerVersion;
             }
-            finally
+
+            var update = new DiagramUpdateMessage
             {
-                gate.Release();
-            }
+                SourceConnectionId = connId,
+                Version = serverVersionFinal,
+                ModifiedElementIds = elementIds
+            };
+
+            await StoreUpdateInRedis(update, connId);
+            SelectionEvent selectionEvent = BuildSelectedElementEvent(currentSelection.ElementIds, currentSelection.SelectorBounds);
+            await UpdateSelectionBoundsInRedis(selectionEvent, currentSelection.ElementIds, currentSelection.SelectorBounds);
+            await Clients.OthersInGroup(roomName).SendAsync("ReceiveData", payloads, serverVersionFinal, selectionEvent);
+            await RemoveOldUpdates(serverVersionFinal);
         }
         private async Task RemoveOldUpdates(long currentServerVersion)
         {
@@ -379,7 +368,7 @@ namespace EJ2SDiagramSample.Pages
                 _diagramUsers.AddOrUpdate(userId, diagramUser,
                     (key, existingValue) => diagramUser
                 );
-                await RequestAndLoadStateAsync(roomName,diagramId,Context.ConnectionId,Context.ConnectionAborted);
+                await RequestAndLoadStateAsync(roomName, diagramId, Context.ConnectionId, Context.ConnectionAborted);
 
                 long currentServerVersion = await GetDiagramVersion();
                 await Clients.Caller.SendAsync("UpdateVersion", currentServerVersion);

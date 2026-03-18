@@ -1,0 +1,93 @@
+@page
+
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2
+
+@{
+    var appointments = new ScheduleData().GetEventsData();
+}
+@section ControlsSection{
+    <div class="control-section">
+        <ejs-schedule id="schedule" width="100%" height="650px" selectedDate="new DateTime(DateTime.Today.Year, 2, 15)" popupOpen="onPopupOpen" eventRendered="onEventRendered">
+            <e-schedule-eventsettings dataSource="@appointments">
+            </e-schedule-eventsettings>
+        </ejs-schedule>
+    </div>
+
+    <style>
+        .custom-field-row {
+            margin-bottom: 20px;
+        }
+    </style>
+
+    <script src="~/scripts/schedule/applyCategoryColor.js"></script>
+    <script type="text/javascript">
+        function onPopupOpen(args) {
+            if (args.type === 'Editor') {
+                if (!args.element.querySelector('.custom-field-row')) {
+                    var row = ej.base.createElement('div', { className: 'custom-field-row' });
+                    var formElement = args.element.querySelector('.e-schedule-form');
+                    formElement.firstChild.insertBefore(row, args.element.querySelector('.e-title-location-row'));
+                    var container = ej.base.createElement('div', { className: 'custom-field-container' });
+                    var inputEle = ej.base.createElement('input', {
+                        className: 'e-field', attrs: { name: 'EventType' }
+                    });
+                    container.appendChild(inputEle);
+                    row.appendChild(container);
+                    var drowDownList = new ej.dropdowns.DropDownList({
+                        dataSource: [
+                            { text: 'Public Event', value: 'public-event' },
+                            { text: 'Maintenance', value: 'maintenance' },
+                            { text: 'Commercial Event', value: 'commercial-event' },
+                            { text: 'Family Event', value: 'family-event' }
+                        ],
+                        fields: { text: 'text', value: 'value' },
+                        value: (args.data).EventType,
+                        floatLabelType: 'Always', placeholder: 'Event Type'
+                    });
+                    drowDownList.appendTo(inputEle);
+                    inputEle.setAttribute('name', 'EventType');
+                }
+            }
+        }
+        function onEventRendered(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            applyCategoryColor(args, scheduleObj.currentView);
+        }
+    </script>
+}
+
+@*custom code start*@
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Additional Fields in ASP.NET Core Scheduler control. Explore here for more details."/>
+                }
+@*custom code end*@
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This demo shows how to add additional fields to the default editor window. Here, an additional field
+            <code>Event Type</code> has been added to the default event editor and its value is processed accordingly.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            In this demo, the additional field is added to the default event editor by making use of the
+            <code>popupOpen</code> event which gets triggered before the event editor getting opened on Schedule.
+            <code>popupOpen</code> is a client-side event that triggers before any of the popups getting opened on Schedule.
+        </p>
+        <p>
+            Here, the additional field (any of the form elements) is needed to be provided with the common class
+            <code>e-field</code>, so as to handle and process those additional data into the default event object.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Scheduler Additional Fields Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Additional Fields in ASP.NET Core Scheduler Control</h1>
+                }

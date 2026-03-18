@@ -1,0 +1,226 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Gantt.FrozenColumnModel
+@using Syncfusion.EJ2
+@using Syncfusion.EJ2.Gantt
+@using EJ2CoreSampleBrowser.Models;
+
+@{  
+  var columnsData = new[]
+  {
+    new { id = "TaskId", name = "Task ID" },
+    new { id = "TaskName", name = "Task Name" },
+    new { id = "StartDate", name = "Start Date" },
+    new { id = "EndDate", name = "End Date" },
+    new { id = "Duration", name = "Duration" },
+    new { id = "Progress", name = "Progress" },
+    new { id = "Predecessor", name = "Dependency" },
+    new { id = "ResourceId", name = "Assignee" },
+    new { id = "Designation", name = "Designation" },
+    new { id = "Status", name = "Status" }
+  };
+    var columnValue = "TaskId";
+  var directionData = new[]
+  {
+    new { id = "Left", name = "Left" },
+    new { id = "Right", name = "Right" },
+    new { id = "Fixed", name = "Fixed" },
+    new { id = "None", name = "None" },
+  };
+    var directionValue = "Left";
+}
+
+@section ControlsSection {
+    <div class="control-section">
+        <ejs-gantt id="frozenColumns" resources="@GanttData.EditingResources()" dataSource="@Model.DataSource" treeColumnIndex="1" projectStartDate="02/27/2025"
+            projectEndDate="05/04/2025" height="650px" rowHeight="46" taskbarHeight="25" allowSelection="false"
+            toolbar="@(new List<object>{
+                      new { template = "#toolbar-columns", align = "Left"}, 
+                      new { template = "#toolbar-direction", align = "Left"}})">
+            <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate" endDate="EndDate" duration="Duration"
+                progress="Progress" dependency="Predecessor" parentID="ParentID" resourceInfo="ResourceId"></e-gantt-taskfields>
+            <e-gantt-resourcefields id="ResourceId" name="ResourceName"></e-gantt-resourcefields>
+            <e-gantt-columns>
+                <e-gantt-column field="TaskId" freeze="Left"></e-gantt-column>
+                <e-gantt-column field="TaskName" headerText="Task Name" freeze="Left"></e-gantt-column>
+                <e-gantt-column field="StartDate"></e-gantt-column>
+                <e-gantt-column field="Duration"></e-gantt-column>
+                <e-gantt-column field="EndDate"></e-gantt-column>
+                <e-gantt-column field="Progress"></e-gantt-column>
+                <e-gantt-column field="Predecessor"></e-gantt-column>
+                <e-gantt-column field="ResourceId" headerText="Assignee" freeze="Right"></e-gantt-column>
+                <e-gantt-column field="Designation"></e-gantt-column>
+                <e-gantt-column field="Status"></e-gantt-column>
+            </e-gantt-columns>
+            <e-gantt-timelinesettings>
+                <e-timelinesettings-toptier unit="Week" format="dd/MM/yyyy"></e-timelinesettings-toptier>
+                <e-timelinesettings-bottomtier unit="Day"></e-timelinesettings-bottomtier>
+            </e-gantt-timelinesettings>
+            <e-gantt-splittersettings position="70%"></e-gantt-splittersettings>
+            <e-gantt-labelSettings leftLabel="TaskName" taskLabel='Progress'></e-gantt-labelSettings>
+        </ejs-gantt>
+    </div>
+    <div id="toolbar-columns">
+      <label class="column-label">Columns: </label>
+      <ejs-dropdownlist id="columnlist" dataSource="@columnsData" Value="columnValue"change="onChange" width="200px">
+      <e-dropdownlist-fields value="id" text="name"></e-dropdownlist-fields></ejs-dropdownlist>
+    </div>
+    <div id="toolbar-direction">
+      <label class="direction-label">Freeze Direction: </label>
+      <ejs-dropdownlist id="directionlist" dataSource="@directionData" Value="directionValue" change="onDirectionChange" width="200px">
+       <e-dropdownlist-fields value="id" text="name"></e-dropdownlist-fields></ejs-dropdownlist>
+    </div>
+ 
+    <script>
+      function onChange(e) {
+          var gantt=document.getElementById('frozenColumns').ej2_instances[0]
+          let columnName = e.value;
+          let column = gantt.getColumnByField(columnName, gantt.columns);
+          let value = column.freeze === undefined ? 'None' : column.freeze;
+           document.getElementById('directionlist').ej2_instances[0].value = value;
+      }
+      function onDirectionChange(e) {
+        var gantt = document.getElementById('frozenColumns').ej2_instances[0];
+        var columnName = document.getElementById('columnlist').ej2_instances[0].value;
+        var columns = gantt.getGanttColumns();
+        var column = columns.find((col) => col.field === columnName);
+        if (column) {
+            column.freeze = e.value === 'None' ? 'None' : e.value;
+            gantt.columns = columns;
+        }
+      }
+    </script>
+
+    <style>
+    .tailwind3 #frozenColumns .e-content .e-leftfreeze,
+    .tailwind3 #frozenColumns .e-content .e-rightfreeze,
+    .tailwind3 #frozenColumns .e-content .e-fixedfreeze {
+      background-color: #e0e7ff !important;
+    }
+    .tailwind3 #frozenColumns .e-columnheader .e-leftfreeze,
+    .tailwind3 #frozenColumns .e-columnheader .e-rightfreeze,
+    .tailwind3 #frozenColumns .e-columnheader .e-fixedfreeze {
+      background-color: #d8dfff !important;
+    }
+    /* ==================== TAILWIND3 DARK ==================== */
+    .tailwind3-dark #frozenColumns .e-content .e-leftfreeze,
+    .tailwind3-dark #frozenColumns .e-content .e-rightfreeze,
+    .tailwind3-dark #frozenColumns .e-content .e-fixedfreeze {
+      background-color: #1e1b4b !important;
+    }
+    .tailwind3-dark #frozenColumns .e-columnheader .e-leftfreeze,
+    .tailwind3-dark #frozenColumns .e-columnheader .e-rightfreeze,
+    .tailwind3-dark #frozenColumns .e-columnheader .e-fixedfreeze {
+      background-color: #2d2b55 !important; /* slightly lighter than content for depth */
+    }
+    .fluent2 #frozenColumns .e-content .e-leftfreeze,
+    .fluent2 #frozenColumns .e-content .e-rightfreeze,
+    .fluent2 #frozenColumns .e-content .e-fixedfreeze { 
+      background-color: #ebf3fc !important; 
+    }
+   .fluent2 #frozenColumns .e-columnheader .e-leftfreeze,
+   .fluent2 #frozenColumns .e-columnheader .e-rightfreeze,
+   .fluent2 #frozenColumns .e-columnheader .e-fixedfreeze {
+      background-color: #e5f1ff !important; /* slightly lighter than content for depth */
+    }
+    .fluent2-dark #frozenColumns .e-content .e-leftfreeze,
+    .fluent2-dark #frozenColumns .e-content .e-rightfreeze,
+    .fluent2-dark #frozenColumns .e-content .e-fixedfreeze { 
+      background-color: #082338 !important; 
+    }
+    .fluent2-dark #frozenColumns .e-columnheader .e-leftfreeze,
+    .fluent2-dark #frozenColumns .e-columnheader .e-rightfreeze,
+    .fluent2-dark #frozenColumns .e-columnheader .e-fixedfreeze {
+      background-color: #082338 !important; /* slightly lighter than content for depth */
+    }
+.material3 #frozenColumns .e-content .e-leftfreeze,
+.material3 #frozenColumns .e-content .e-rightfreeze,
+.material3 #frozenColumns .e-content .e-fixedfreeze { background-color: rgba(234, 221, 255) !important; }
+.material3 #frozenColumns .e-columnheader .e-leftfreeze,
+.material3 #frozenColumns .e-columnheader .e-rightfreeze,
+.material3 #frozenColumns .e-columnheader .e-fixedfreeze {
+  background-color: rgb(230, 216, 251) !important; }
+ /* slightly lighter than content for depth */
+.material3-dark #frozenColumns .e-content .e-leftfreeze,
+.material3-dark #frozenColumns .e-content .e-rightfreeze,
+.material3-dark #frozenColumns .e-content .e-fixedfreeze { background-color: rgb(60, 42, 107) !important; }
+.material3-dark #frozenColumns .e-columnheader .e-leftfreeze,
+.material3-dark #frozenColumns .e-columnheader .e-rightfreeze,
+.material3-dark #frozenColumns .e-columnheader .e-fixedfreeze {
+  background-color: rgb(78, 57, 130) !important;
+}
+.bootstrap5\.3 #frozenColumns .e-content .e-leftfreeze,
+.bootstrap5\.3 #frozenColumns .e-content .e-rightfreeze,
+.bootstrap5\.3 #frozenColumns .e-content .e-fixedfreeze { background-color:  #86b7fe !important; }
+.bootstrap5\.3 #frozenColumns .e-columnheader .e-leftfreeze,
+.bootstrap5\.3 #frozenColumns .e-columnheader .e-rightfreeze,
+.bootstrap5\.3 #frozenColumns .e-columnheader .e-fixedfreeze {
+   background-color: #8fbdff !important;
+}
+.bootstrap5\.3-dark #frozenColumns .e-content .e-leftfreeze,
+.bootstrap5\.3-dark #frozenColumns .e-content .e-rightfreeze,
+.bootstrap5\.3-dark #frozenColumns .e-content .e-fixedfreeze { background-color:  #86b7fe !important; }
+.bootstrap5\.3-dark #frozenColumns .e-columnheader .e-leftfreeze,
+.bootstrap5\.3-dark #frozenColumns .e-columnheader .e-rightfreeze,
+.bootstrap5\.3-dark #frozenColumns .e-columnheader .e-fixedfreeze {
+   background-color: #8fbdff !important;
+}
+/* Fluent2 High Contrast - separate class as you said */
+.fluent2-highcontrast #frozenColumns .e-content .e-leftfreeze, .fluent2-highcontrast #frozenColumns .e-content .e-leftfreeze .e-treecolumn-container .e-treegridexpand, .fluent2-highcontrast #frozenColumns .e-content .e-leftfreeze .e-treecolumn-container .e-treegridcollapse,
+.fluent2-highcontrast #frozenColumns .e-content .e-rightfreeze, .fluent2-highcontrast #frozenColumns .e-content .e-rightfreeze .e-treecolumn-container .e-treegridexpand, .fluent2-highcontrast #frozenColumns .e-content .e-rightfreeze .e-treecolumn-container .e-treegridcollapse,
+.fluent2-highcontrast #frozenColumns .e-content .e-fixedfreeze, .fluent2-highcontrast #frozenColumns .e-content .e-fixedfreeze .e-treecolumn-container .e-treegridexpand, .fluent2-highcontrast #frozenColumns .e-content .e-fixedfreeze .e-treecolumn-container .e-treegridcollapse {
+  background-color: #45e3f4 !important;
+  color: #000 !important;
+}
+.fluent2-highcontrast #frozenColumns .e-columnheader .e-leftfreeze,
+.fluent2-highcontrast #frozenColumns .e-columnheader .e-rightfreeze,
+.fluent2-highcontrast #frozenColumns .e-columnheader .e-fixedfreeze {
+  background-color: #07dff3 !important;
+  color: #000 !important;
+}
+#frozenColumns .e-template{
+    padding: 0px !important;
+}
+#frozenColumns .e-template .e-dropdownlist{
+    margin: auto !important;
+}
+.fluent2 #frozenColumns .e-toolbar-items, .fluent2-dark #frozenColumns .e-toolbar-items, .fluent2-highcontrast #frozenColumns .e-toolbar-items, .material3 #frozenColumns .e-toolbar-items,.material3-dark #frozenColumns .e-toolbar-items{
+  margin-top: 4px;
+}
+.direction-label{
+    margin-left: 15px;
+}
+.column-label, .direction-label{
+    margin-right: 5px;
+    margin-top: 5px;
+    font-size: 14px;
+}
+</style>
+}
+ 
+@section ActionDescription {
+    <div id="action-description">
+        <p>
+            This sample demonstrates the column freezing feature in the Gantt Chart. Frozen columns remain fixed while other columns scroll horizontally, improving readability.
+        </p>
+    </div>
+}
+@section Description {
+    <div id="description">
+        <p>The freezing feature allows users to freeze specfied number of columns while scrolling the remaining content.
+         The freezing behavior can be configured using the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.gantt.gantt.html#Syncfusion_EJ2_Gantt_Gantt_FrozenColumns">frozenColumns</a> property.
+        Additionally, to keep specific columns visible during horizontal scrolling, use the <a target="_blank" href="ps://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Gantt.GanttColumn.html#Syncfusion_EJ2_Gantt_GanttColumn_Freeze">column.freeze</a> property on the relevant columns to freeze them to the <code>Left</code>, <code>Right</code> or <code>Fixed</code>.
+        </p>
+        <p>In this example, the <b>Task ID</b> and <b>Task Name</b> columns are frozen on the left, and the <b>Assignee</b> column is frozen on the right using the <code className="code">column.freeze</code> property.</p>
+        <p>More information on the Essential<sup>®</sup> ASP.NET Core Gantt Chart can be found in this <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/gantt/getting-started#add-aspnet-core-gantt-control">documentation section</a>.</p>
+    </div>
+}
+@section Meta {
+    <meta name="description"
+        content="This example demonstrates the Frozen columns in ASP.NET Core Gantt control. Explore here for more details." />
+}
+@section Title {
+    <title>ASP.NET Core Gantt Frozen columns Example - Syncfusion Demos</title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Frozen columns in ASP.NET Core Gantt Control</h1>
+}

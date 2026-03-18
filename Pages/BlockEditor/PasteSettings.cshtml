@@ -1,0 +1,152 @@
+﻿@page
+@model EJ2CoreSampleBrowser_NET9.Pages.BlockEditor.PasteSettingsModel
+@using Syncfusion.EJ2
+
+@{
+    var data = new[] {
+        new { Id = "plainText", Format = "Plain Text" },
+        new { Id = "keepFormat", Format = "Keep Format" }
+    };
+}
+
+@section ControlsSection {
+    <div class="col-lg-8 control-section">
+        <div class="paste-blockeditor">
+            <ejs-blockeditor id="block-editor" height="600px" blocks="@Model.BlockDataPaste"></ejs-blockeditor>
+        </div>
+    </div>
+    <div class="col-lg-4 property-section" id="popup">
+        <table id="property" title="Properties">
+            <tbody>
+                <tr>
+                    <td><div>Format Option</div></td>
+                    <td>
+                        <div>
+                            <ejs-dropdownlist id="formatOption" dataSource="@data" index="1" popupHeight="200px" change="formatChange">
+                                <e-dropdownlist-fields text="Format" value="Id"></e-dropdownlist-fields>
+                            </ejs-dropdownlist>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><div>Denied Tags</div></td>
+                    <td>
+                        <div>
+                            <ejs-textbox id="deniedTagsBox" placeholder="'img[!href]', 'h1'" blur="onDeniedTagsChange" />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><div>Allowed Style Properties</div></td>
+                    <td>
+                        <div>
+                            <ejs-textbox id="allowedStylesBox" placeholder="'href', 'style'" blur="onAllowedStylesChange" />
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+}
+
+@section PreScripts {
+    <script>
+        var pasteCleanupSettings = {
+          deniedTags: ['script', 'iframe'],
+        };
+
+        // Sample helper: resolve the Block Editor instance from the page (used by all setters below)
+        function getBlockEditor() {
+          var blockEditor = ej.base.getComponent(document.getElementById('block-editor'), 'blockeditor');
+          return blockEditor;
+        }
+
+        // Sample integration: push the current pasteSettings object into the editor and rebind
+        function updatePasteSettings() {
+          var blockEditor = getBlockEditor();
+          if (!blockEditor) {
+            return;
+          }
+          blockEditor.pasteCleanupSettings = { ...pasteCleanupSettings };
+          blockEditor.dataBind();
+        }
+
+        // Sample integration: dropdown toggle between plainText vs keepFormat and apply to editor
+        function formatChange(args) {
+          if (args.value === "plainText") {
+            pasteCleanupSettings.plainText = true;
+            pasteCleanupSettings.keepFormat = false;
+          } else {
+            pasteCleanupSettings.plainText = false;
+            pasteCleanupSettings.keepFormat = true;
+          }
+          updatePasteSettings();
+        }
+
+        // Sample integration: parse comma-separated denied tags textbox and apply to editor paste settings
+        function onDeniedTagsChange(args) {
+          var value = args.value;
+          if (value) {
+            var tags = value.split(',').map(function (s) {
+              return s.trim().replace(/^['"]|['"]$/g, '');
+            }).filter(function (s) { return s !== ''; });
+            pasteCleanupSettings.deniedTags = tags;
+            updatePasteSettings();
+          }
+        }
+
+        // Sample integration: parse comma-separated allowed styles textbox and apply to editor paste settings
+        function onAllowedStylesChange(args) {
+          var value = args.value;
+          if (value) {
+            var styles = value.split(',').map(function (s) {
+              return s.trim().replace(/^['"]|['"]$/g, '');
+            }).filter(function (s) { return s !== ''; });
+            pasteCleanupSettings.allowedStyles = styles;
+            updatePasteSettings();
+          }
+        }
+    </script>
+}
+
+<style>
+    .paste-blockeditor {
+        height: 600px;
+        width: 100%;
+        margin: 0 auto;
+    }
+</style>
+
+@section Meta {
+    <meta name="description" content="This example demonstrates the PasteCleanupSettings in ASP.NET Core Block Editor control. Explore here for more details." />
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>
+            This sample demonstrates the Block Editor <code>PasteCleanupSettings</code> property allows you to define various options to control how content is pasted into the editor.
+        </p>
+    </div>
+}
+
+@section Description {
+    <div id="description">
+        <p>The following settings are available to cleanup the content in pasteCleanup settings property:</p>
+        <ul>
+            <li>Select any option in <code>Format Option</code> drop down list for the paste content.</li>
+            <ul>
+                <li>Select the <code>Plain Text</code> option to paste the content as plain text.</li>
+                <li>Select the <code>Keep Format</code> option to keep the same format in the copied content.</li>
+            </ul>
+            <li>Fill the <code>denied tags</code> text box to ignore the tags when pasting HTML content.</li>
+            <ul>
+                <li><code>['a[!href]']</code> - paste the content by filtering anchor tags that don’t have the 'href' attribute.</li>
+                <li><code>['a[href, target]']</code> - paste the content by filtering anchor tags that have the 'href' and 'target' attributes</li>
+            </ul>
+            <li>Fill the <code>allowed style</code> properties to paste the content by accepting these style attributes and removing other attributes.</li>
+            <ul>
+                <li><code>['color', 'margin']</code> - This will allow only the style properties 'color' and 'margin' in each pasted element.</li>
+            </ul>
+        </ul>
+    </div>
+}

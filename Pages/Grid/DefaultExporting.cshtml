@@ -1,0 +1,161 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Grid.DefaultExportingModel
+@using System.Linq
+@{
+    ViewData["Title"] = "DefaultExporting";
+}
+
+
+@section ControlsSection{
+    <div class="col-lg-9 control-section">
+        <div class="control-section">
+            <ejs-grid id="Grid" dataSource="@Model.DataSource" allowExcelExport="true"  allowGrouping="true" allowFiltering="true" allowSorting="true" allowMultiSorting="true" allowPdfExport="true" toolbarClick="toolbarClick" ExcelQueryCellInfo="exportQueryCellInfo"
+                      pdfQueryCellInfo="exportQueryCellInfo" dataBound="gridDataBound" toolbar="@(new List<string>() {"ExcelExport", "PdfExport", "CsvExport" })" height="350">
+                <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
+                <e-grid-columns>
+                    <e-grid-column headerText="Employee Image" template="#template1" width="150" textAlign="Center"></e-grid-column>
+                    <e-grid-column field="FirstName" headerText="Name" width="130"></e-grid-column>
+                    <e-grid-column field="Title" headerText="Designation" width="180"></e-grid-column>
+                    <e-grid-column headerText="Email ID" template="#template2" width="180"></e-grid-column>
+                    <e-grid-column field="HireDate" headerText="Hire Date" format='yMd' textAlign="Right" width="135"></e-grid-column>
+                    <e-grid-column field="Address" allowGrouping="false" width="180"></e-grid-column>
+                </e-grid-columns>
+            </ejs-grid>
+        </div>
+        </div>
+
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties" style="width: 100%;">
+            <tbody>
+                <tr>
+                    <td style="width: 60%">
+                        <div style="padding-left: 0px">Export template column</div>
+                    </td>
+                    <td style="width: 30%;padding-bottom: 10px">
+                        <div>
+                            <ejs-checkbox id="export" checked="true" change="onChange"></ejs-checkbox>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+        <script id="template1" type="text/x-template">
+            <div class="image">
+                <img src="@Url.Content("~/scripts/Images/Employees/${EmployeeID}.png")" alt="${EmployeeID}" />
+            </div>
+        </script>
+        <script id="template2" type="text/x-template">
+            <div class="link">
+                <a href="mailto:${EmailID}">${EmailID}</a>
+            </div>
+        </script>
+
+
+        <style>
+            .image img {
+                height: 55px;
+                width: 55px;
+                border-radius: 50px;
+                box-shadow: inset 0 0 1px #e0e0e0, inset 0 0 14px rgba(0,0,0,0.2);
+            }
+        </style>
+        <script>
+
+            function toolbarClick(args) {
+                var gridObj = document.getElementById("Grid").ej2_instances[0];
+                if (args.item.id === 'Grid_pdfexport') {
+                    gridObj.pdfExport();
+                }
+                if (args.item.id === 'Grid_excelexport') {
+                    gridObj.excelExport();
+                }
+                if (args.item.id === 'Grid_csvexport') {
+                    gridObj.csvExport();
+                }
+            }
+
+            function exportQueryCellInfo(args) {
+                if (args.column.headerText === 'Employee Image') {
+                    if (args.name === "excelQueryCellInfo") {
+                        args.image = { height: 75, base64: args.data["EmployeeImage"], width: 75 };
+                    } else {
+                        args.image = { base64: args.data["EmployeeImage"] };
+                    }
+                }
+                if (args.column.headerText === 'Email ID') {
+                    args.hyperLink = {
+                        target: "mailto:" + args.data["EmailID"],
+                        displayText: args.data["EmailID"]
+                    };
+                }
+            };
+
+            var fields = ['Employee Image', 'Email ID'];
+            function onChange(args) {
+                var grid = document.getElementById("Grid").ej2_instances[0];
+                if (args.checked) {
+                    grid.showColumns(fields, "headerText");
+                    grid.toolbarModule.toolbar.hideItem(2, true);
+                } else {
+                    grid.hideColumns(fields, "headerText");
+                    grid.toolbarModule.toolbar.hideItem(2, false);
+                }
+            };
+            var isInitial = true;
+            function gridDataBound(args) {
+                if (isInitial) {
+                    var grid = document.getElementById("Grid").ej2_instances[0];
+                    grid.toolbarModule.toolbar.hideItem(2, true);
+                    isInitial = false;
+                }
+            }
+        </script>
+
+
+    }
+
+    @section ActionDescription{
+        <div id="action-description">
+            <p>
+                This sample demonstrates the client-side exporting of the Grid, which allows you to export its data to the Excel, PDF, and CSV formats.
+                Use the toolbar buttons to export Grid data to the desired format.
+            </p>
+        </div>
+    }
+
+    @section Meta{
+                    <meta name="description" content="This example demonstrates the Default Exporting in ASP.NET Core Data Grid control. Explore here for more details."/>
+                }
+
+    @section Description{
+        <div id="description">
+            <p>Grid supports client-side exporting which allows you to export its data to the Excel, PDF, and CSV formats.</p>
+            <p>
+                In this demo, while exporting, we have included images and hyperlinks from the template columns i.e <strong><i>Image</i></strong> and <strong><i>URL</i></strong>
+                using the <code>
+                    <a target="_blank" class="code"
+                       href="https://ej2.syncfusion.com/documentation/api/grid/#excelquerycellinfo" aria-label="Navigate to the excelQueryCellInfo event reference for ASP.NET Core Grid control">
+                        excelQueryCellInfo
+                    </a>
+                </code> and <code>
+                    <a target="_blank" class="code"
+                       href="https://ej2.syncfusion.com/documentation/api/grid/#pdfquerycellinfo" aria-label="Navigate to the pdfQueryCellInfo event reference for ASP.NET Core Grid control">
+                        pdfQueryCellInfo
+                    </a>
+                </code> events. The ExcelExport, PdfExport, and CsvExport items are defined in the toolbar,
+                for which we have defined actions in the toolbarClick event to export the Grid data using the
+                <code>excelExport</code>, <code>pdfExport</code>, and <code>csvExport</code> methods.
+            </p>
+
+            <p>
+                Note: Since CSV format supports only plain text, images and hyperlinks will not be exported on this.
+            </p>
+        </div>
+    }
+    @section Title{
+                    <title>ASP.NET Core Data Grid Default Exporting Example - Syncfusion Demos </title>
+                }
+    @section Header{
+                    <h1 class='sb-sample-text'>Example of Default Exporting in ASP.NET Core Data Grid Control</h1>
+                }

@@ -1,0 +1,298 @@
+﻿@page
+@using EJ2CoreSampleBrowser.Models;
+
+@{
+    ViewData["Title"] = "VirtualScrolling";
+}
+
+@section ControlsSection {
+
+    <div class="control-section">
+        <div>
+            <ejs-treegrid id="TreeGrid" height="450" rowHeight="50" dataSource="@VirtualScrollData.GetVirtualScrollData()"
+                          enableVirtualization="true" enableVirtualMaskRow="true" clipMode="EllipsisWithTooltip" idMapping="TaskID"
+                          parentIdMapping="ParentID" treeColumnIndex="2" actionBegin="actionBegin" load="load"
+                          toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel", "Indent", "Outdent" })">
+
+                <e-treegrid-editsettings allowAdding="true" allowEditing="true"                 allowDeleting="true" mode="Row"
+                                         newRowPosition="Child"></e-treegrid-editsettings>
+
+                <e-treegrid-columns>
+                    <e-treegrid-column field="TaskID" headerText="ID" textAlign="Right"      width="90" isPrimaryKey="true"
+                                       visible="false"></e-treegrid-column>
+                    <e-treegrid-column field="ParentID" headerText="Parent ID" textAlign="Right" width="90"
+                                       visible="false"></e-treegrid-column>
+                    <e-treegrid-column field="ResourceId" headerText="Resource" width="360"
+                                       validationRules="@(new { required = true })"></e-treegrid-column>
+                    <e-treegrid-column field="Type" headerText="Type" width="120" editType="dropdownedit"></e-treegrid-column>
+                    <e-treegrid-column field="Status" headerText="Status" width="130" textAlign="Center"
+                                       template="#statusTemplate" editType="dropdownedit"
+                                       validationRules="@(new { required = true })"></e-treegrid-column>
+                    <e-treegrid-column field="Region" headerText="Region" width="150" editType="dropdownedit"
+                                       template="#regionTemplate"></e-treegrid-column>
+                    <e-treegrid-column field="Environment" headerText="Environment" width="140" textAlign="Left"
+                                       editType="dropdownedit" validationRules="@(new { required = true })"></e-treegrid-column>
+                    <e-treegrid-column field="MonthlyCost" headerText="Monthly Cost ($)" width="130" textAlign="Right"
+                                       editType="numericedit" edit="@(new { @params = new { format = "n" } })"
+                                       format="C0"></e-treegrid-column>
+                    <e-treegrid-column field="Cpu" headerText="CPU (%)" width="110" textAlign="Right" editType="numericedit"
+                                       edit="@(new { @params = new { format = "n" } })" format="N0"></e-treegrid-column>
+                    <e-treegrid-column field="Memory" headerText="Memory (%)" width="110" textAlign="Right"
+                                       editType="numericedit" edit="@(new { @params = new { format = "n" } })"
+                                       format="N0"></e-treegrid-column>
+                    <e-treegrid-column field="Disk" headerText="Disk (%)" width="110" textAlign="Right"
+                                       editType="numericedit" edit="@(new { @params = new { format = "n" } })"
+                                       format="N0"></e-treegrid-column>
+                    <e-treegrid-column field="NetworkMbps" headerText="Network (mbps)" width="150" editType="numericedit"
+                                       edit="@(new { @params = new { format = "n" } })" textAlign="Right" format="N0"></e-treegrid-column>
+                    <e-treegrid-column field="RequestsPerSec" headerText="Requests (per sec)" width="150"
+                                       editType="numericedit" edit="@(new { @params = new { format = "n" } })" textAlign="Right"
+                                       format="N0"></e-treegrid-column>
+                    <e-treegrid-column field="ErrorRatePpm" headerText="Error Rate (ppm)" width="170" textAlign="Right"
+                                       editType="numericedit" edit="@(new { @params = new { format = "n" } })"
+                                       format="N0"></e-treegrid-column>
+                    <e-treegrid-column field="SecurityFindings" headerText="Security Errors" width="110" textAlign="Right"
+                                       editType="numericedit" edit="@(new { @params = new { format = "n" } })"
+                                       format="N0"></e-treegrid-column>
+                    <e-treegrid-column field="StorageGb" headerText="Storage (GB)" width="120" textAlign="Right"
+                                       editType="numericedit" edit="@(new { @params = new { format = "n" } })"
+                                       format="N0"></e-treegrid-column>
+                    <e-treegrid-column field="InstanceCount" headerText="Instances" width="110" textAlign="Right"
+                                       editType="numericedit" edit="@(new { @params = new { format = "n" } })"
+                                       format="N0"></e-treegrid-column>
+                    <e-treegrid-column field="UptimeDays" headerText="Uptime (days)" width="150" textAlign="Right"
+                                       editType="numericedit" edit="@(new { @params = new { format = "n" } })"
+                                       format="N0"></e-treegrid-column>
+                    <e-treegrid-column field="ComplianceScore" headerText="Compliance Score" width="180"
+                                       editType="numericedit" edit="@(new { @params = new { format = "n" } })" textAlign="Left"
+                                       template="#complianceTemplate"></e-treegrid-column>
+                    <e-treegrid-column field="Priority" headerText="Priority" width="120" textAlign="Center"
+                                       template="#priorityTemplate" editType="dropdownedit"
+                                       validationRules="@(new { required = true })"></e-treegrid-column>
+                </e-treegrid-columns>
+            </ejs-treegrid>
+        </div>
+    </div>
+
+    <!-- Template Scripts -->
+    <script type="text/x-template" id="statusTemplate">
+            <div class="rg-badge rg-badge-status" data-status="${Status}">
+                ${Status}
+            </div>
+    </script>
+
+    <script type="text/x-template" id="regionTemplate">
+            <div class="rg-region" data-region="${Region}">
+                <span class="rg-region-flag"></span>
+                <span class="rg-region-name">${Region}</span>
+            </div>
+    </script>
+
+    <script type="text/x-template" id="complianceTemplate">
+            <div class="rg-compliance-wrapper">
+                <div class="rg-compliance"><i style="width:${ComplianceScore}%"></i></div>
+                <div class="rg-compliance-value">${ComplianceScore}</div>
+            </div>
+    </script>
+
+    <script type="text/x-template" id="priorityTemplate">
+            <div class="rg-badge rg-badge-priority" data-priority="${Priority}">
+                ${Priority}
+            </div>
+    </script>
+    <script type="text/javascript">
+        function actionBegin(args) {
+            if (args.requestType === 'save') {
+                args.data.TaskID = 10000 + Math.floor(Math.random() * 10001);
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        function load(args) {
+            var treegrid = document.getElementById("TreeGrid").ej2_instances[0];
+            if (treegrid.enableVirtualization) {
+                args.enableSeamlessScrolling = true;
+            }
+        }
+    </script>
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>
+            This sample demonstrates row virtualization in the TreeGrid component, enabling smooth scrolling and efficient
+            rendering of large sets of self-referencing records with full CRUD support and custom cell templates.
+        </p>
+    </div>
+}
+
+@section Meta {
+    <meta name="description"
+          content="This example demonstrates the Virtual Scrolling in ASP.NET Core Tree Grid control. Explore here for more details." />
+}
+
+@section Description {
+    <div id="description">
+        <p>
+            Row virtualization in TreeGrid displays only the rows currently visible in the viewport, ensuring smooth scrolling and optimal performance with large datasets.
+            TreeGrid virtualization is enabled by setting the <code>enableVirtualization</code> property to <code>true</code>. The <code>height</code> property must be explicitly defined when virtualization is enabled.
+        </p>
+        <p>
+            For seamless scrolling, set <code>args.enableSeamlessScrolling</code> as <code>true</code> in the TreeGrid's <code><a target="_blank" class="code" 
+            href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.treegrid.treegrid.html#Syncfusion_EJ2_TreeGrid_TreeGrid_Load">load</a></code> event. 
+            This ensures smooth vertical and horizontal transitions, providing a smoother experience during fast scrolling when virtualization is enabled.
+        </p>
+
+        <p>
+            This demo showcases a self‑referential data source containing 10,000 records. In the TreeGrid, the hierarchical relationship is established by mapping the <code>parentIdMapping</code> property to the "ParentID" field and the <code>idMapping</code> property to the "TaskID" field in the data source.
+            The toolbar enables full CRUD operations along with hierarchy management options:
+            <ul>
+                <li><code>Indent</code>: Moves the selected row to become the last child of the row directly above it.</li>
+                <li><code>Outdent</code>: Moves the selected row up one level, making it a sibling of its previous parent.</li>
+            </ul>
+        </p>
+        <p>
+            More information on the Virtual Scrolling can be found in <a target="_blank"
+                                                                         href="https://ej2.syncfusion.com/aspnetcore/documentation/tree-grid/virtual-scroll"
+                                                                         aria-label="Navigate to the documentation for virtual-scroll in ASP.NET Core TreeGrid control">documentation</a>
+            section.
+        </p>
+    </div>
+}
+
+@section Title {
+    <title>ASP.NET Core Tree Grid Virtual Scrolling Example - Syncfusion Demos </title>
+}
+
+@section Header {
+    <h1 class='sb-sample-text'>Example of Virtual Scrolling in ASP.NET Core Tree Grid Control</h1>
+}
+
+<style>
+    .rg-badge {
+        padding: 4px 8px;
+        border-radius: 4px;
+        text-align: center;
+        font-size: 12px;
+        font-weight: 500;
+        width: 100px;
+        line-height: 2;
+    }
+
+    .rg-badge-status[data-status="Running"] {
+        background: #66bb6a;
+        color: white;
+    }
+
+    .rg-badge-status[data-status="Stopped"] {
+        background: #ef5350;
+        color: white;
+    }
+
+    .rg-badge-status[data-status="Degraded"] {
+        background: #ffb74d;
+        color: white;
+    }
+
+    .rg-badge-status[data-status="Maintenance"] {
+        background: #0277bd;
+        color: white;
+    }
+
+    .rg-badge-priority[data-priority="Low"] {
+        background-color: #ccffcc;
+        color: #00cc00;
+    }
+
+    .rg-badge-priority[data-priority="High"] {
+        background-color: #ffe5cc;
+        color: #cc6600;
+    }
+
+    .rg-badge-priority[data-priority="Critical"] {
+        background-color: #ffcccc;
+        color: #cc0000;
+    }
+
+    .rg-compliance {
+        width: 100px;
+        height: 12px;
+        background: #f3f4f6;
+        border-radius: 20px;
+        overflow: hidden;
+    }
+
+    .rg-compliance>i {
+        display: block;
+        height: 100%;
+        background: #2563eb;
+        border-radius: 20px;
+    }
+
+    .rg-compliance-wrapper {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .rg-compliance-value {
+        color: #1e40af;
+        font-weight: 600;
+    }
+
+    .rg-region {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .rg-region-flag {
+        display: inline-flex;
+        width: 20px;
+        height: 14px;
+        border-radius: 2px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        flex-shrink: 0;
+    }
+
+    .rg-region[data-region="West US"] .rg-region-flag,
+    .rg-region[data-region="East US"] .rg-region-flag {
+        background-image: url('data:image/svg+xml;utf8,<svg width="20" height="14" viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg"><rect width="20" height="14" fill="%23B22234"/><rect y="0" width="20" height="2" fill="%23fff"/><rect y="4" width="20" height="2" fill="%23fff"/><rect y="8" width="20" height="2" fill="%23fff"/><rect y="12" width="20" height="2" fill="%23fff"/><rect width="8" height="8" fill="%233C3B6E"/></svg>');
+    }
+
+    .rg-region[data-region="EU West"] .rg-region-flag,
+    .rg-region[data-region="EU Central"] .rg-region-flag {
+        background-image: url('data:image/svg+xml;utf8,<svg width="20" height="14" viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg"><rect width="20" height="14" fill="%23003399"/><circle cx="10" cy="7" r="2" fill="%23FFCC00"/><circle cx="13" cy="7" r="0.6" fill="%23FFCC00"/><circle cx="7" cy="7" r="0.6" fill="%23FFCC00"/><circle cx="10" cy="4" r="0.6" fill="%23FFCC00"/><circle cx="10" cy="10" r="0.6" fill="%23FFCC00"/></svg>');
+    }
+
+    .rg-region[data-region="Canada Central"] .rg-region-flag {
+        background-image: url('data:image/svg+xml;utf8,<svg width="20" height="14" viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg"><rect width="20" height="14" fill="%23fff"/><rect width="5" height="14" fill="%23FF0000"/><rect x="15" width="5" height="14" fill="%23FF0000"/><path d="M10,5 L10.5,7 L9,7.5 L10.5,8 L10,10 L11,8.5 L12,10 L11.5,8 L13,7.5 L11.5,7 L12,5 L11,6.5 Z" fill="%23FF0000"/></svg>');
+    }
+
+    .rg-region[data-region="Australia East"] .rg-region-flag {
+        background-image: url('data:image/svg+xml;utf8,<svg width="20" height="14" viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg"><rect width="20" height="14" fill="%23012169"/><rect width="8" height="6" fill="%23012169"/><path d="M0,0 L8,6 M8,0 L0,6" stroke="%23fff" stroke-width="1.2"/><path d="M4,0 L4,6 M0,3 L8,3" stroke="%23fff" stroke-width="2"/><path d="M4,0 L4,6 M0,3 L8,3" stroke="%23C8102E" stroke-width="1.2"/><circle cx="15" cy="10" r="1" fill="%23fff"/><circle cx="13" cy="8" r="0.8" fill="%23fff"/><circle cx="17" cy="8" r="0.8" fill="%23fff"/></svg>');
+    }
+
+    .rg-region[data-region="Asia Pacific"] .rg-region-flag {
+        background-image: url('data:image/svg+xml;utf8,<svg width="20" height="14" viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg"><rect width="20" height="14" fill="%23f97316"/><circle cx="10" cy="7" r="3" fill="%23fff"/><text x="10" y="10" font-size="6" text-anchor="middle" fill="%23f97316" font-weight="bold">AP</text></svg>');
+    }
+
+    .rg-region[data-region="South America"] .rg-region-flag {
+        background-image: url('data:image/svg+xml;utf8,<svg width="20" height="14" viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg"><rect width="20" height="14" fill="%23009739"/><path d="M10,1 L18,7 L10,13 L2,7 Z" fill="%23FEDD00"/><circle cx="10" cy="7" r="2.5" fill="%23002776"/></svg>');
+    }
+
+    .rg-region-flag {
+        background-image: url('data:image/svg+xml;utf8,<svg width="20" height="14" viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg"><rect width="20" height="14" fill="%236b7280" rx="2"/><circle cx="10" cy="7" r="4" fill="none" stroke="%23fff" stroke-width="0.8"/><path d="M10,3 Q12,7 10,11 M10,3 Q8,7 10,11 M6,7 L14,7" stroke="%23fff" stroke-width="0.8" fill="none"/></svg>');
+    }
+
+    .tailwind3-dark .rg-compliance-value,
+    .fluent2-dark .rg-compliance-value,
+    .bootstrap5\.3-dark .rg-compliance-value,
+    .material3-dark .rg-compliance-value,
+    .fluent2-highcontrast .rg-compliance-value {
+        color: #fff;
+    }
+</style>

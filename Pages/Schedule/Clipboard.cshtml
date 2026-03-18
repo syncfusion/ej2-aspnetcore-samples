@@ -1,0 +1,112 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Schedule.Clipboard
+
+@using Syncfusion.EJ2
+@using EJ2CoreSampleBrowser.Models
+
+@{
+    var appointments = new ScheduleData().GetScheduleData();
+}
+
+@section ControlsSection{
+    <div class="control-section">
+        <div class="content-wrapper">
+            <ejs-schedule id="Schedule" width="100%" height="550px" currentView="Week" selectedDate="new DateTime(DateTime.Today.Year, 1, 10)" allowClipboard="true"  showQuickInfo="false">
+                <e-schedule-views>
+                    <e-schedule-view option="Week"></e-schedule-view>
+                    <e-schedule-view option="Day"></e-schedule-view>
+                    <e-schedule-view option="Month"></e-schedule-view>
+                    <e-schedule-view option="TimelineDay"></e-schedule-view>
+                    <e-schedule-view option="TimelineWeek"></e-schedule-view>
+                    <e-schedule-view option="TimelineWorkWeek"></e-schedule-view>
+                    <e-schedule-view option="TimelineMonth"></e-schedule-view>
+                </e-schedule-views>
+                <e-schedule-eventsettings dataSource="@appointments"></e-schedule-eventsettings>
+            </ejs-schedule>
+        </div>
+    </div>
+    <ejs-contextmenu id="ScheduleContextMenu" target=".e-schedule" items="@Model.menuItems" beforeOpen="onContextMenuBeforeOpen" select="onMenuItemSelect" cssClass="schedule-context-menu"></ejs-contextmenu>
+
+    <style>
+        .e-bigger .schedule-context-menu ul .e-menu-item .e-menu-icon {
+            font-size: 14px;
+        }
+        .schedule-context-menu ul .e-menu-item .e-menu-icon {
+            font-size: 12px;
+        }
+    </style>
+
+    <script type="text/javascript">
+        var selectedTarget;
+        var targetElement;
+        function onContextMenuBeforeOpen(args) {
+            var newEventElement = document.querySelector('.e-new-event');
+            if (newEventElement) {
+                ej.base.remove(newEventElement);
+            }
+            var scheduleObj = document.getElementById('Schedule').ej2_instances[0];
+            scheduleObj.closeQuickInfoPopup();
+            targetElement = args.event.target;
+            if (ej.base.closest(targetElement, '.e-contextmenu')) {
+                return;
+            }
+            selectedTarget = ej.base.closest(targetElement, '.e-appointment,.e-work-cells,' +
+                '.e-vertical-view .e-date-header-wrap .e-all-day-cells,.e-vertical-view .e-date-header-wrap .e-header-cells');
+            if (ej.base.isNullOrUndefined(selectedTarget)) {
+                args.cancel = true;
+                return;
+            }
+            if (selectedTarget.classList.contains('e-appointment')) {
+                this.showItems(['Cut', 'Copy'], true);
+                this.hideItems(['Paste'], true);
+            } else {
+                this.showItems(['Paste'], true);
+                this.hideItems(['Cut', 'Copy'], true);
+            }
+        }
+
+        function onMenuItemSelect(args) {
+            var scheduleObj = document.getElementById('Schedule').ej2_instances[0];
+            var selectedMenuItem = args.item.id;
+            switch (selectedMenuItem) {
+                case 'Cut':
+                    scheduleObj.cut([selectedTarget]);
+                    break;
+                case 'Copy':
+                    scheduleObj.copy([selectedTarget]);
+                    break;
+                case 'Paste':
+                    scheduleObj.paste(targetElement);
+                    break;
+            }
+        }
+    </script>
+}
+
+@section ActionDescription{
+    <p>This example demonstrates how to use clipboard operations (cut, copy, and paste) with Scheduler events, along with a context menu for additional actions.</p>
+}
+
+@section Description{
+    <p>In this example, the Scheduler provides clipboard functionality allowing users to cut, copy, and paste events. Additionally, a context menu is available for more actions. The following features are demonstrated:</p>
+    <ul>
+        <li><strong>Copy:</strong> Select one or multiple events and use the Copy button or context menu to copy them to the clipboard.</li>
+        <li><strong>Cut:</strong> Select one or multiple events and use the Cut button or context menu to move them to the clipboard, removing them from their original position.</li>
+    </ul>
+    <p>Key points:</p>
+    <ul>
+        <li>Single-click selects a single event, replacing any previous selection.</li>
+        <li>Ctrl+click allows for selecting multiple events.</li>
+        <li>The clipboard is cleared after each copy or cut operation to prevent unintended duplications.</li>
+        <li>Right-click to open the context menu for more options.</li>
+    </ul>
+    <p><strong>Note:</strong> This clipboard functionality operates within the Scheduler itself and does not interact with the system clipboard.</p>
+}
+
+@section Title{
+    <title>ASP.NET Core Scheduler Clipboard and Context Menu Example - Syncfusion Demos</title>
+}
+
+@section Header{
+    <h1 class='sb-sample-text'>Example of Clipboard and Context Menu in ASP.NET Core Scheduler Control</h1>
+}

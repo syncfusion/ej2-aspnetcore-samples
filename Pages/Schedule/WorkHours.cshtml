@@ -1,0 +1,110 @@
+@page
+
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2
+
+@{
+    var appointments = new ScheduleData().GetEmployeeEventData();
+}
+
+@section ControlsSection{
+    <div class="col-lg-9 control-section">
+        <div class="schedule-wrapper">
+            <ejs-schedule id="schedule" width="100%" height="650px" selectedDate="new DateTime(DateTime.Today.Year, 2, 15)" eventRendered="onEventRendered">
+                <e-schedule-views>
+                    <e-schedule-view option="Day"></e-schedule-view>
+                    <e-schedule-view option="Week"></e-schedule-view>
+                    <e-schedule-view option="WorkWeek"></e-schedule-view>
+                    <e-schedule-view option="Month"></e-schedule-view>
+                    <e-schedule-view option="TimelineWeek"></e-schedule-view>
+                    <e-schedule-view option="TimelineMonth"></e-schedule-view>
+                </e-schedule-views>
+                <e-schedule-workhours highlight="true" start="08:00" end="20:00"></e-schedule-workhours>
+                <e-schedule-eventsettings dataSource="@appointments"></e-schedule-eventsettings>
+            </ejs-schedule>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id='property' title='Properties' class='property-panel-table' style="width: 100%;">
+            <tbody>
+                <tr style="height: 50px">
+                    <td style="width: 100%;">
+                        <div>
+                            <ejs-timepicker id="startTime" format="HH:mm" value="new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 8, 0, 0)" placeholder="Work Start" floatLabelType="Always"></ejs-timepicker>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td style="width: 100%;">
+                        <div>
+                            <ejs-timepicker id="endTime" format="HH:mm" value="new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 20, 0, 0)" placeholder="Work End" floatLabelType="Always"></ejs-timepicker>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td style="width: 100%;">
+                        <div class="evtbtn" title="Submit" style="padding-bottom: 10px">
+                            <ejs-button id="submit" content="Submit"></ejs-button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="~/scripts/schedule/applyCategoryColor.js"></script>
+    <script type="text/javascript">
+        document.getElementById("submit").addEventListener('click', function () {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            var start = document.getElementById('startTime');
+            var end = document.getElementById('endTime');
+            scheduleObj.workHours.start = start.value;
+            scheduleObj.workHours.end = end.value;
+        });
+        function onEventRendered(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            applyCategoryColor(args, scheduleObj.currentView);
+        }
+    </script>
+}
+
+@*custom code start*@
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Work Hours in ASP.NET Core Scheduler control. Explore here for more details."/>
+                }
+@*custom code end*@
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This demo showcases how to set the required working hours on Scheduler, thus visually highlighting the cells underlying the
+            given work hour range.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            In this demo, the work hours are set by using the
+            <code>workHours</code> property and it usually applies only on the working days defined for the Scheduler. It can either be highlighted
+            or not by defining the
+            <code>highlight</code> option within the
+            <code>workHours</code> property. The working hour range can be defined by making use of the
+            <code>start</code> and <code>end</code> option available within the
+            <code>workHours</code> property.
+        </p>
+        <p>
+            To set discontinuous working hours on a day, then the default
+            <code>workHours</code> on Scheduler needs to be disabled by setting false to
+            <code>highlight</code> option within it. Then, make use of the
+            <code>setWorkHours</code> method which accepts the days collection and the start & end hour values as parameters.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Scheduler Work Hours Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Work Hours in ASP.NET Core Scheduler Control</h1>
+                }

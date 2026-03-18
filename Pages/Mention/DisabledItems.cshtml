@@ -1,0 +1,106 @@
+@page
+
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2
+@{
+    var emailData = new EmailData().EmailList();
+    char nameMentionChar = '@';
+}
+@section ControlsSection {
+    <div class="col-lg-12 control-section">
+        <div id="mention-controls">
+            <table>
+                <tr>
+                    <td>
+                        <label id="disabled-size">Compose your content</label>
+                        <div id="disabledMention" placeholder="Type @@ and tag user"></div>
+                        <ejs-mention id="disabled" target="#disabledMention" mentionChar="@nameMentionChar" dataSource="@emailData" allowSpaces="true" itemTemplate="<div class='listItems'><img class='mentionEmpImage' src='../images/Mention/${Eimg}.png' alt='employee'/><span class='person'>${Name}</span><span class='email'>${EmailId}</span></div>" noRecordsTemplate="No item related to the search" displayTemplate="${Name}" popupWidth="250px" popupHeight="200px">
+                            <e-mention-fields text="Name" disabled="State" ></e-mention-fields>
+                        </ejs-mention>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
+    @*custom code start*@
+    <style>
+        #disabledMention {
+            min-height: 100px;
+            border: 1px solid #D7D7D7;
+            width: 600px;
+            padding: 8px;
+            font-size: 14px;
+            border-radius: 4px;
+        }
+
+        #mention-controls {
+            margin: 0 auto;
+            width: 600px;
+        }
+
+        .listItems {
+            padding-left: 12px;
+            vertical-align: middle;
+            width: 80%;
+        }
+
+        #disabledMention_popup .e-dropdownbase .e-list-item {
+            line-height: 25px;
+            text-indent: 8px;
+        }
+
+        .mentionEmpImage {
+            width: 44px;
+            float: left;
+        }
+
+        .person {
+            font-size: 16px;
+            margin-top: 8px;
+        }
+
+        .e-dropdownbase .e-list-item * {
+            display: block;
+        }
+
+        div#disabledMention[placeholder]:empty:before {
+            content: attr(placeholder);
+            color: #555;
+        }
+
+        #disabled-size {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        @@media screen and (max-width: 1010px) {
+            #disabledMention,
+            #mention-controls, #mention-controls table {
+                width: 100%;
+            }
+        }
+    </style>
+    @*custom code end*@
+
+}
+@section Meta{
+    <meta name="description" content="This example demonstrates the disabled items functionalities in ASP.NET Core Mention control. Explore here for more details." />
+}
+@section ActionDescription{
+    <div id="action-description">
+        <p>This sample demonstrates the disabled items functionalities of the Mention component. Type the <code>@@</code> character in the editable element and you will notice that the disabled items are greyed out and cannot be selected.</p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>The Mention provides options for individual items to be in either an enabled or disabled state for specific scenarios. Once an item is disabled, it cannot be select a particular item. To configure the disabled item columns, use the <code>fields.disabled</code> property.</p>
+    </div>
+}
+@section Title{
+    <title>ASP.NET Core Mention Component disabled items functionalities Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Disabled Items Functionalities in ASP.NET Core Mention Control</h1>
+}

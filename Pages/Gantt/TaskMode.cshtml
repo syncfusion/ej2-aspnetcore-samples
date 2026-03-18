@@ -1,0 +1,88 @@
+﻿@page
+@using EJ2CoreSampleBrowser.Models;
+@using Syncfusion.EJ2.Gantt;
+
+@section ControlsSection {
+    <div class="control-section">
+        <div class="row">
+            <div class="col-md-12">
+                <ejs-gantt id='Resources' dataSource="@GanttData.TaskModeData()" treeColumnIndex="1" height="650px"
+                    rowHeight="46" taskbarHeight="25" allowSelection="true" highlightWeekends="true"
+                    resources="@GanttData.EditingResources()" resourceIDMapping="ResourceId"
+                    resourceNameMapping="ResourceName" projectStartDate="02/18/2025" projectEndDate="03/30/2025"
+                    taskMode="Custom"
+                    toolbar="@(new List<string>() { "Add", "Edit", "Update", "Delete", "Cancel", "ExpandAll", "CollapseAll" })">
+                    <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate" endDate="EndDate"
+                        duration="Duration" progress="Progress" dependency="Predecessor" manual="IsManual" child="SubTasks"
+                        notes="Notes" resourceInfo="ResourceId">
+                    </e-gantt-taskfields>
+                    <e-gantt-splitterSettings position="35%"></e-gantt-splitterSettings>
+                    <e-gantt-columns>
+                        <e-gantt-column field="TaskId" visible="false" width="100"></e-gantt-column>
+                        <e-gantt-column field="TaskName" headerText="Task Name" width="200"
+                            clipMode="EllipsisWithTooltip"></e-gantt-column>
+                        <e-gantt-column field="IsManual" headerText="Task Mode" width="100"></e-gantt-column>
+                    </e-gantt-columns>
+                    <e-gantt-editsettings allowAdding="true" allowEditing="true" allowDeleting="true"
+                        allowTaskbarEditing="true" showDeleteConfirmDialog="true"></e-gantt-editsettings>
+                    <e-gantt-labelSettings leftLabel="TaskName"></e-gantt-labelSettings>
+                    <e-gantt-editdialogfields>
+                        <e-gantt-editdialogfield type="General"></e-gantt-editdialogfield>
+                        <e-gantt-editdialogfield type="Dependency"></e-gantt-editdialogfield>
+                        <e-gantt-editdialogfield type="Resources"></e-gantt-editdialogfield>
+                    </e-gantt-editdialogfields>
+                </ejs-gantt>
+            </div>
+        </div>
+    </div>
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>The Gantt provides support for automatic and manual task scheduling modes. Scheduling mode of a task is used to
+            indicate whether the start and end dates of a task will be automatically validated or not. Using the property <a
+                target="_blank"
+                href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.gantt.gantt.html#Syncfusion_EJ2_Gantt_Gantt_TaskMode">taskMode</a>
+            we can able to change the scheduling mode of a task. The following are the enumeration values that can be set to
+            the property <a target="_blank"
+                href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.gantt.gantt.html#Syncfusion_EJ2_Gantt_Gantt_TaskMode">taskMode</a>.
+        </p>
+        <ul>
+            <li>Auto</li>
+            <li>Manual</li>
+            <li>Custom</li>
+        </ul>
+    </div>
+}
+@section Description {
+
+    <div id="description">
+        <p>When the <a target="_blank"
+                href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.gantt.gantt.html#Syncfusion_EJ2_Gantt_Gantt_TaskMode">taskMode</a>
+            property is set as <code>Auto</code> scheduling mode, all the tasks in the project will be rendered as
+            automatically scheduled tasks. Thus, the start and end dates of the tasks in the project will be automatically
+            validated.</p>
+        <p>When the <a target="_blank"
+                href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.gantt.gantt.html#Syncfusion_EJ2_Gantt_Gantt_TaskMode">taskMode</a>
+            property is set as <code>Manual</code> scheduling mode, all the tasks in the project will be rendered as
+            manually scheduled tasks. Thus, the dates of the tasks will not get validated automatically by the system.</p>
+        <p>When the <a target="_blank"
+                href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.gantt.gantt.html#Syncfusion_EJ2_Gantt_Gantt_TaskMode">taskMode</a>
+            property is set as <code>Custom</code>, the scheduling mode for each tasks will be mapped from the data source
+            field. The property <code>manual</code> is used to map the scheduling mode field from the data source.</p>
+        <p>Gantt component features are segregated into individual feature-wise modules. To use editing feature, inject the
+            <code>Edit</code> module using the <code>Gantt.Inject(Edit)</code> method. To use a selection, inject the
+            <code>Selection</code> module using the <code>Gantt.Inject(Selection)</code> method, and to use toolbar by
+            injecting the <code>Toolbar</code> module using the <code>Gantt.Inject(Toolbar)</code> method. </p>
+    </div>
+}
+@section Meta {
+    <meta name="description"
+        content="This example demonstrates the Task Scheduling Mode in ASP.NET Core Gantt control. Explore here for more details." />
+}
+@section Title {
+    <title>ASP.NET Core Gantt Task Scheduling Mode Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Task Scheduling Mode in ASP.NET Core Gantt Control</h1>
+}

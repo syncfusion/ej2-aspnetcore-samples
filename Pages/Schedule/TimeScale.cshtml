@@ -1,0 +1,156 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Schedule.TimeScale
+
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2
+@using Syncfusion.EJ2.Schedule
+@using Syncfusion.EJ2.DropDowns
+
+@{
+    var scheduleSourceData = new ScheduleData().GetScheduleData();
+    var workDays = new int[] { 0, 1, 2, 3, 4, 5 };
+}
+
+@section ControlsSection{
+    <div class="col-lg-9 control-section">
+        <div class="content-wrapper">
+            <ejs-schedule id="schedule" width="100%" height="650px" cssClass="time-scale" selectedDate="new DateTime(DateTime.Today.Year, 1, 10)" currentView="TimelineWeek" workDays="@workDays">
+                <e-schedule-timescale interval="60" slotCount="6"></e-schedule-timescale>
+                <e-schedule-views>
+                    <e-schedule-view option="Day"></e-schedule-view>
+                    <e-schedule-view option="Week"></e-schedule-view>
+                    <e-schedule-view option="TimelineDay"></e-schedule-view>
+                    <e-schedule-view option="TimelineWeek"></e-schedule-view>
+                </e-schedule-views>
+                <e-schedule-eventsettings dataSource="@scheduleSourceData"></e-schedule-eventsettings>
+            </ejs-schedule>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties" style="width: 100%">
+            <tbody>
+                <tr style="height: 50px">
+                    <td style="width: 100%;">
+                        <div>
+                            <ejs-dropdownlist id="interval" value="@("60")" dataSource="@Model.intervals" change="intervalChange" placeholder="Interval (in minutes)" floatLabelType="Always">
+                                <e-dropdownlist-fields text="Text" value="Value"></e-dropdownlist-fields>
+                            </ejs-dropdownlist>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td style="width: 100%;">
+                        <div>
+                            <ejs-dropdownlist id="slotCount" value="@("6")" dataSource="@Model.slots" change="slotCountChange" placeholder="Slot Count" floatLabelType="Always">
+                                <e-dropdownlist-fields text="Text" value="Value"></e-dropdownlist-fields>
+                            </ejs-dropdownlist>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td style="width: 100%;">
+                        <div>
+                            <ejs-dropdownlist id="timescale" value="@("enable")" dataSource="@Model.options" change="timeScaleOptionChange" placeholder="Gridlines" floatLabelType="Always">
+                                <e-dropdownlist-fields text="Text" value="Value"></e-dropdownlist-fields>
+                            </ejs-dropdownlist>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td style="width: 100%;">
+                        <div>
+                            <ejs-dropdownlist id="template" value="@("no")" dataSource="@Model.timescaleoptions" change="timeScaleTemplateOptionChange" placeholder="Apply Template" floatLabelType="Always">
+                                <e-dropdownlist-fields text="Text" value="Value"></e-dropdownlist-fields>
+                            </ejs-dropdownlist>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <style>
+        .time-scale.e-schedule.e-device .e-vertical-view .e-left-indent,
+        .time-scale.e-schedule.e-device .e-vertical-view .e-time-cells-wrap {
+            width: 50px;
+        }
+
+        .time-scale.e-schedule .e-timeline-view .e-date-header-wrap table col,
+        .time-scale.e-schedule .e-timeline-view .e-content-wrap table col {
+            width: 75px;
+        }
+    </style>
+    <script id="majorSlotTemplate" type="text/x-template">
+        <div>${majorSlotTemplate(data.date)}</div>
+    </script>
+    <script id="minorSlotTemplate" type="text/x-template">
+        <div style="text-align: center">${minorSlotTemplate(data.date)}</div>
+    </script>
+    <script type="text/javascript">
+        window.majorSlotTemplate = function (date) {
+            var instance = new ej.base.Internationalization();
+            return instance.formatDate(date, { skeleton: 'hm' });
+        };
+        window.minorSlotTemplate = function (date) {
+            var instance = new ej.base.Internationalization();
+            return instance.formatDate(date, { skeleton: 'ms' }).replace(':00', '');
+        };
+
+        function intervalChange(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            scheduleObj.timeScale.interval = parseInt(args.value, 10);
+            scheduleObj.dataBind();
+        }
+
+        function slotCountChange(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            scheduleObj.timeScale.slotCount = parseInt(args.value, 10);
+            scheduleObj.dataBind();
+        }
+
+        function timeScaleOptionChange(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            scheduleObj.timeScale.enable = (args.value === 'enable') ? true : false;
+            scheduleObj.dataBind();
+        }
+
+        function timeScaleTemplateOptionChange(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            scheduleObj.timeScale.majorSlotTemplate = (args.value === 'yes') ? '#majorSlotTemplate' : null;
+            scheduleObj.timeScale.minorSlotTemplate = (args.value === 'yes') ? '#minorSlotTemplate' : null;
+            scheduleObj.dataBind();
+        }
+    </script>
+}
+@*custom code start*@
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Timescale in ASP.NET Core Scheduler control. Explore here for more details."/>
+                }
+@*custom code end*@
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This demo depicts how to customize the grid lines of scheduler with different duration, count and also, how to
+            apply template customizations on it.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this demo, scheduler has been allowed to display different number of grid lines per hour assigned with different duration
+            to each cell, by making use of the
+            <code>interval</code> and
+            <code>slotCount</code> properties. The grid lines can also be disabled on scheduler, by setting <code>false</code> to the
+            <code>enable</code> property available within
+            <code>timeScale</code>. The time header text can be customized by making use of the
+            <code>majorSlotTemplate</code> and
+            <code>minorSlotTemplate</code> properties.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Scheduler Timescale Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Timescale in ASP.NET Core Scheduler Control</h1>
+                }

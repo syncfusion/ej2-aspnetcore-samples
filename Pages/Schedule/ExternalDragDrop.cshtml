@@ -1,0 +1,399 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Schedule.ExternalDragDrop
+
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2
+
+@{
+    var treeDataSource = new ScheduleData().GetWaitingListData();
+    var hospitalData = new ScheduleData().GetHospitalData();
+    var resources = new string[] { "Departments", "Consultants" };
+}
+@section ControlsSection{
+    <div class="control-section">
+        <div class="content-wrapper">
+            <div class="schedule-container">
+                <div class="title-container">
+                    <div class="title-text">Doctor's Appointments</div>
+                </div>
+                <ejs-schedule id="schedule" width="100%" height="650px" cssClass="schedule-drag-drop" resourceHeaderTemplate="#resource-template" currentView="TimelineDay" selectedDate="new DateTime(DateTime.Today.Year, 7, 2)" actionBegin="onActionBegin">
+                    <e-schedule-group enableCompactView="false" resources="@resources"></e-schedule-group>
+                    <e-schedule-resources>
+                        <e-schedule-resource dataSource="@Model.departments" field="DepartmentID" title="Department" name="Departments" textField="text" idField="id" colorField="color"></e-schedule-resource>
+                        <e-schedule-resource dataSource="@Model.consultants" field="ConsultantID" title="Consultant" name="Consultants" textField="text" idField="id" colorField="color" groupIDField="groupId" allowMultiple="false"></e-schedule-resource>
+                    </e-schedule-resources>
+                    <e-schedule-views>
+                        <e-schedule-view option="TimelineDay"></e-schedule-view>
+                        <e-schedule-view option="TimelineMonth"></e-schedule-view>
+                    </e-schedule-views>
+                    <e-schedule-workhours highlight="true" start="08:00" end="18:00"></e-schedule-workhours>
+                    <e-schedule-eventsettings dataSource="@hospitalData">
+                        <e-eventsettings-fields>
+                            <e-field-subject name="Name" title="Patient Name"></e-field-subject>
+                            <e-field-starttime name="StartTime" title="From"></e-field-starttime>
+                            <e-field-endtime name="EndTime" title="To"></e-field-endtime>
+                            <e-field-description name="Description" title="Reason"></e-field-description>
+                        </e-eventsettings-fields>
+                    </e-schedule-eventsettings>
+                </ejs-schedule>
+            </div>
+            <div class="treeview-container">
+                <div class="title-container">
+                    <div class="title-text">Waiting List</div>
+                </div>
+                <ejs-treeview id="tree" allowDragAndDrop="true" dragArea=".content-wrapper" nodeDragStop="onTreeDragStop" nodeSelecting="onItemSelecting" nodeDragging="onTreeDrag" nodeDragStart="onTreeDragStart" nodeTemplate="#treeTemplate" cssClass="treeview-external-drag">
+                    <e-treeview-fields dataSource="@treeDataSource" id="Id" text="Name"></e-treeview-fields>
+                </ejs-treeview>
+            </div>
+        </div>
+    </div>
+    <style>
+        /* custom code start*/
+        .content-wrapper {
+            display: -ms-flexbox;
+            display: flex;
+        }
+
+        .e-device-hover {
+            background-color: #e0e0e0 !important;
+        }
+
+        .schedule-container {
+            padding-right: 10px;
+            width: 100%;
+        }
+
+        .title-container {
+            padding-bottom: 10px;
+        }
+
+        .title-text {
+            font-size: 18px;
+            margin: 0px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 1.1;
+        }
+        /* custom code end*/
+
+        .treeview-external-drag #waiting {
+            height: 100%;
+            padding: 0;
+        }
+
+        .treeview-external-drag #waitdetails {
+            width: 95%;
+            float: left;
+            height: 100%;
+            padding: 0;
+        }
+
+        .treeview-external-drag #waitlist {
+            width: 100%;
+            height: 50%;
+            font-weight: bold;
+            font-family: "Segoe UI";
+            font-size: 12px;
+            padding: 5px 0 0 10px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .treeview-external-drag #waitcategory {
+            height: 50%;
+            font-family: "Segoe UI";
+            font-size: 10px;
+            opacity: 0.6;
+            padding-left: 10px;
+            padding-top: 5px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .treeview-external-drag .e-list-text,
+        .e-bigger .treeview-external-drag .e-list-text {
+            border: 0.5px solid #E1E7EC;
+            height: 50px;
+            line-height: 15px !important;
+            padding: 0 5px;
+            width: 220px;
+        }
+
+        .treeview-external-drag .e-list-parent,
+        .e-bigger .treeview-external-drag .e-list-parent {
+            height: 100%;
+            padding: 0 2px;
+        }
+
+        .treeview-external-drag .e-list-item,
+        .e-bigger .treeview-external-drag .e-list-item {
+            height: 100%;
+            padding: 0 0 5px 0;
+        }
+
+        .treeview-external-drag .e-fullrow,
+        .e-bigger .treeview-external-drag .e-fullrow {
+            height: 55px;
+        }
+
+        .treeview-external-drag .e-list-item.e-hover > .e-fullrow,
+        .treeview-external-drag .e-list-item.e-active > .e-fullrow,
+        .treeview-external-drag .e-list-item.e-active.e-hover > .e-fullrow,
+        .e-bigger .treeview-external-drag .e-list-item.e-hover > .e-fullrow,
+        .e-bigger .treeview-external-drag .e-list-item.e-active > .e-fullrow,
+        .e-bigger .treeview-external-drag .e-list-item.e-active.e-hover > .e-fullrow {
+            background-color: transparent;
+            border-color: transparent;
+            box-shadow: none !important;
+        }
+
+        .fluent2-highcontrast .treeview-external-drag .e-list-item.e-hover > .e-text-content .e-list-text {
+            color: #fff;
+        }
+
+        .treeview-external-drag .e-text-content,
+        .e-bigger .treeview-external-drag .e-text-content {
+            padding: 0;
+            background-color: inherit;
+        }
+
+        .e-drag-item.e-treeview.treeview-external-drag,
+        .e-bigger .e-drag-item.e-treeview.treeview-external-drag {
+            padding: 0 !important;
+        }
+
+        .e-schedule.schedule-drag-drop .e-timeline-view .e-resource-left-td,
+        .e-schedule.schedule-drag-drop .e-timeline-month-view .e-resource-left-td {
+            width: 160px;
+        }
+
+        .e-schedule.schedule-drag-drop .e-resource-cells.e-parent-node .specialist-category {
+            padding-left: 30px
+        }
+
+        .e-schedule.e-rtl.schedule-drag-drop .e-resource-cells.e-parent-node .specialist-category {
+            padding-right: 30px
+        }
+
+        .e-schedule.schedule-drag-drop .e-resource-cells.e-child-node .specialist-category,
+        .e-schedule.schedule-drag-drop .e-resource-cells.e-child-node .specialist-name {
+            padding: 5px
+        }
+
+        .e-schedule.schedule-drag-drop .e-resource-cells.e-parent-node .specialist-name {
+            padding: 0 10px
+        }
+
+        .e-schedule.schedule-drag-drop .e-resource-cells.e-parent-node .template-wrap {
+            padding: 3px 0px;
+        }
+
+        .e-schedule.schedule-drag-drop .e-resource-cells.e-child-node .specialist-category .specialist-image {
+            width: 45px;
+            height: 40px;
+            float: left;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .e-schedule.schedule-drag-drop .specialist-name {
+            font-size: 13px;
+        }
+
+        .e-schedule.schedule-drag-drop .specialist-designation {
+            font-size: 10px;
+        }
+
+        .e-schedule-dialog .e-all-day-time-zone-row,
+        .e-schedule-dialog .e-location-container,
+        .e-bigger .e-schedule-dialog .e-all-day-time-zone-row,
+        .e-bigger .e-schedule-dialog .e-location-container {
+            display: none;
+        }
+
+        .e-schedule-dialog .e-subject-container,
+        .e-bigger .e-schedule-dialog .e-subject-container {
+            padding-right: 0;
+            width: 100%;
+        }
+
+        .e-schedule-dialog.e-rtl .e-subject-container,
+        .e-bigger .e-schedule-dialog.e-rtl .e-subject-container {
+            padding-left: 0;
+        }
+
+        @@media (max-width: 550px) {
+            /* custom code start*/
+            .content-wrapper {
+                display: block;
+            }
+
+            .schedule-container {
+                padding-bottom: 10px
+            }
+            /* custom code end*/
+            .treeview-external-drag.e-treeview,
+            .e-bigger .treeview-external-drag.e-treeview {
+                width: 250px;
+            }
+
+                .e-bigger .treeview-external-drag.e-treeview.e-drag-item {
+                    position: relative !important;
+                }
+        }
+        .e-disble-not-allowed {
+            cursor: unset !important;
+        }
+        .e-drag-item.treeview-external-drag .e-icon-expandable {
+            display: none;
+        }
+    </style>
+
+    <!-- Template to render tree node -->
+    <script id="treeTemplate" type="text/x-template">
+        <div id="waiting">
+            <div id="waitdetails">
+                <div id="waitlist">${Name}</div>
+                <div id="waitcategory">${DepartmentName} - ${Description}</div>
+            </div>
+        </div>
+    </script>
+
+    <!-- Resource Header Template -->
+    <script id="resource-template" type="text/x-template">
+        <div class="template-wrap">
+            <div class="specialist-category">
+                ${getConsultantImage(data)}
+                <div class="specialist-name">${getConsultantName(data)}</div>
+                <div class="specialist-designation">${getConsultantDesignation(data)}</div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/javascript">
+
+        function getConsultantName(value) {
+            return value.resourceData[value.resource.textField];
+        }
+
+        function getConsultantImage(value) {
+            var resourceName = value.resourceData[value.resource.textField];
+            if (resourceName === 'GENERAL' || resourceName === 'DENTAL') {
+                return '';
+            } else {
+                var path = "@Url.Content("~/css/schedule/images/")";
+                var src = path + resourceName.toLowerCase() + ".png";
+                return '<img class="specialist-image" src=' + src + ' alt="Specialist picture"></img>';
+            }
+        }
+
+        function getConsultantDesignation(value) {
+            var resourceName = value.resourceData[value.resource.textField];
+            if (resourceName === 'GENERAL' || resourceName === 'DENTAL') {
+                return '';
+            } else {
+                return value.resourceData.designation;
+            }
+        }
+
+        var isTreeItemDropped = false;
+        var draggedItemId = '';
+
+        function onTreeDrag(event) {
+            var scheduleObj = document.querySelector(".e-schedule").ej2_instances[0];
+            if (scheduleObj.isAdaptive) {
+                var classElement = scheduleObj.element.querySelector('.e-device-hover');
+                if (classElement) {
+                    classElement.classList.remove('e-device-hover');
+                }
+                if (event.target.classList.contains('e-work-cells')) {
+                    ej.base.addClass([event.target], 'e-device-hover');
+                }
+            }
+        }
+
+        function onActionBegin(event) {
+            if (event.requestType === 'eventCreate' && isTreeItemDropped) {
+                var treeObj = document.querySelector(".e-treeview.treeview-external-drag").ej2_instances[0];
+                var treeViewdata = treeObj.fields.dataSource;
+                var filteredPeople = treeViewdata.filter(function (item) { return item.Id !== parseInt(draggedItemId, 10); });
+                treeObj.fields.dataSource = filteredPeople;
+                var elements = document.querySelectorAll('.e-drag-item.treeview-external-drag');
+                for (var i = 0; i < elements.length; i++) {
+                    remove(elements[i]);
+                }
+            }
+        }
+
+        function onItemSelecting(args){
+            args.cancel = true;
+        }
+
+        function onTreeDragStop(event) {
+            var treeElement = ej.base.closest(event.target, '.e-treeview');
+            var scheduleObj = document.querySelector(".e-schedule").ej2_instances[0];
+            var classElement = scheduleObj.element.querySelector('.e-device-hover');
+            if (classElement) {
+                classElement.classList.remove('e-device-hover');
+            }
+            if (!treeElement) {
+                event.cancel = true;
+                var scheduleElement = ej.base.closest(event.target, '.e-content-wrap');
+                if (scheduleElement) {
+                    var treeviewData = this.fields.dataSource;
+                    if (event.target.classList.contains('e-work-cells')) {
+                        var filteredData =
+                            treeviewData.filter(function (item) { return item.Id === parseInt(event.draggedNodeData.id, 10); });
+                        var cellData = scheduleObj.getCellDetails(event.target);
+                        var resourceDetails = scheduleObj.getResourcesByIndex(cellData.groupIndex);
+                        var eventData = {
+                            Name: filteredData[0].Name,
+                            StartTime: cellData.startTime,
+                            EndTime: cellData.endTime,
+                            IsAllDay: cellData.isAllDay,
+                            Description: filteredData[0].Description,
+                            DepartmentID: resourceDetails.resourceData.groupId,
+                            ConsultantID: resourceDetails.resourceData.id
+                        };
+                        scheduleObj.openEditor(eventData, 'Add', true);
+                        isTreeItemDropped = true;
+                        draggedItemId = event.draggedNodeData.id;
+                    }
+                }
+            }
+             document.body.classList.remove('e-disble-not-allowed');
+        }
+        function onTreeDragStart() {
+            document.body.classList.add('e-disble-not-allowed');
+        }
+    </script>
+}
+@*custom code start*@
+@section Meta{
+                    <meta name="description" content="This example demonstrates the External Drag and Drop in ASP.NET Core Scheduler control. Explore here for more details."/>
+                }
+@*custom code end*@
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This example illustrates how to drag and drop the events from an external source into scheduler. Here, you can drag and drop the items from TreeView control into scheduler.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this example, <code>resourceHeaderTemplate</code> is used to change the default appearance of the resource header
+            column. Within the <code>actionBegin</code> event of scheduler, the dragged item from the TreeView control is removed,
+            when it is being dragged and dropped onto the scheduler. When the item is being dropped onto the scheduler, the event editor is
+            explicitly made to open with the target details by invoking the <code>openEditor</code> method of scheduler within the
+            <code>nodeDragStop</code> event of TreeView.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Scheduler External Drag and Drop Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of External Drag and Drop in ASP.NET Core Scheduler Control</h1>
+                }

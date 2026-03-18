@@ -1,0 +1,141 @@
+@page
+@section ControlsSection{
+     <div class="control-section">
+        <div class="control-wrapper">
+		<div style="display: flex;">
+ 		   <div id="export-cache-container" >
+              		<label for="unchecked" id="export"> Enable Cache </label>
+                        <ejs-switch id="unchecked" change="enableCacheAdaptor" checked="false"></ejs-switch>
+                    </div>
+                </div>
+                <ejs-grid id="Grid"  allowPaging="true">                  
+                    <e-data-manager url="http://localhost:62928/api/Orders" crossdomain="true" adaptor="WebApiAdaptor"></e-data-manager>
+                    <e-grid-columns>
+                        <e-grid-column field="OrderID" headerText="Order ID" textAlign="Right" width="160"></e-grid-column>
+                        <e-grid-column field="CustomerID" headerText="Customer ID" width="170"></e-grid-column>
+                        <e-grid-column field="EmployeeID"  headerText="Employee ID" textAlign="Right" width="170"></e-grid-column>
+                        <e-grid-column field="Freight" headerText="Freight" format="C2" textAlign="Right" width="170"></e-grid-column>
+                        <e-grid-column field="ShipCountry" headerText="Ship Country" width="150" textAlign="Center"></e-grid-column>
+                    </e-grid-columns>
+                </ejs-grid>                
+    	 </div>
+      </div>
+<style>
+    #export-cache-container {
+        display: flex;
+        margin-bottom: 7px;
+    }
+    #export-cache-container label {
+        font-size: 15px;
+        margin-right: 8px;
+    }
+    .material3 #export-cache-container .e-switch-wrapper.e-wrapper,
+    .material3-dark #export-cache-container .e-switch-wrapper.e-wrapper,
+    .tailwind3 #export-cache-container .e-switch-wrapper.e-wrapper,
+    .tailwind3-dark #export-cache-container .e-switch-wrapper.e-wrapper {
+        margin: -1.25px 0px 0px 0px;
+    }
+    .bootstrap5\.3 #export-cache-container .e-switch-wrapper.e-wrapper,
+    .bootstrap5\.3-dark #export-cache-container .e-switch-wrapper.e-wrapper,
+    .fluent2 #export-cache-container .e-switch-wrapper.e-wrapper,
+    .fluent2-dark #export-cache-container .e-switch-wrapper.e-wrapper,
+    .fluent2-highcontrast #export-cache-container .e-switch-wrapper.e-wrapper {
+        margin: 1.5px 0px 0px 0px;
+    }
+    .e-bigger.material3 #export-cache-container .e-switch-wrapper.e-wrapper,
+    .e-bigger.material3-dark #export-cache-container .e-switch-wrapper.e-wrapper,
+    .e-bigger.tailwind3 #export-cache-container .e-switch-wrapper.e-wrapper,
+    .e-bigger.tailwind3-dark #export-cache-container .e-switch-wrapper.e-wrapper {
+        margin: -5.5px 0px 0px 0px;
+    }
+    .e-bigger.bootstrap5\.3 #export-cache-container .e-switch-wrapper.e-wrapper,
+    .e-bigger.bootstrap5\.3-dark #export-cache-container .e-switch-wrapper.e-wrapper,
+    .e-bigger.fluent2 #export-cache-container .e-switch-wrapper.e-wrapper,
+    .e-bigger.fluent2-dark #export-cache-container .e-switch-wrapper.e-wrapper,
+    .e-bigger.fluent2-highcontrast #export-cache-container .e-switch-wrapper.e-wrapper {
+        margin: -0.5px 0px 0px 0px;
+    }
+
+    .fluent #export-cache-container .e-switch-wrapper.e-wrapper,
+    .fluent-dark #export-cache-container .e-switch-wrapper.e-wrapper,
+    .highcontrast #export-cache-container .e-switch-wrapper.e-wrapper {
+        margin: 1.75px 0px 0px 0px;
+    }
+
+    .e-bigger.fluent #export-cache-container .e-switch-wrapper.e-wrapper,
+    .e-bigger.fluent-dark #export-cache-container .e-switch-wrapper.e-wrapper {
+        margin: -0.5px 0px 0px 0px;
+    }
+
+    .e-bigger.highcontrast #export-cache-container .e-switch-wrapper.e-wrapper {
+        margin: 0.75px 0px 0px 0px;
+    }
+</style>
+
+  <script>
+        function enableCacheAdaptor(args) {
+            var grid = document.getElementById("Grid").ej2_instances[0];
+ 	    grid.dataSource =  new ej.data.DataManager({
+                  url: "http://localhost:62928/api/Orders",
+                  adaptor:new ej.data.WebApiAdaptor(),
+                  crossDomain: true,
+                  enableCache : args.checked
+            });
+        }
+</script>
+
+   }
+@section ActionDescription{
+	<div id="action-description">
+		<p>This sample demonstrates the way of data binding Grid component with remote service. The Grid data source is bound to
+        remote data using DataManager.
+		</p>
+	</div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Remote Data in ASP.NET Core Data Grid control. Explore here for more details."/>
+                }
+
+@section Description{
+    <div id="description">
+		<p>The Grid supports data binding. The <code>dataSource</code> property can be assigned with the
+    instance of <code>DataManager</code> to bind remote data.</p>
+
+    <p>The DataManager, which will act as an interface between the service endpoint and the Grid, 
+    will require the below minimal information to interact with service endpoint properly.
+    </p>
+    <ul>
+        <li><code>DataManager->url</code> - Defines the service endpoint to fetch data</li>
+        <li><code>DataManager->adaptor</code> - Defines the adaptor option. 
+        By default, <code>ODataAdaptor</code> is used for remote binding.</li>
+    </ul>
+    <p>Adaptor is responsible for processing response and request from/to the service endpoint.
+        <code>syncfusion/ej2-data</code> package provides some predefined adaptors which are designed 
+        to interact with particular service endpoints. They are,</p>
+    <ul>
+        <li><code>UrlAdaptor</code> - Use this to interact any remote services. 
+        This is the base adaptor for all remote based adaptors.</li>
+        <li><code>ODataAdaptor</code> - Use this to interact with OData endpoints.</li>
+        <li><code>ODataV4Adaptor</code> - Use this to interact with OData V4 endpoints.</li>
+        <li><code>WebApiAdaptor</code> - Use this to interact with Web API created under OData standards.</li>
+        <li><code>WebMethodAdaptor</code> - Use this to interact with web methods.</li>
+    </ul>
+    <p>In this demo, remote data is bound by assigning service data as an 
+        instance of <code>DataManager</code> to the <code>dataSource</code> property.</p>
+   <p>The <code>DataManager</code> provides an option to avoid sending requests for previously visited pages by enabling the <code>enableCache</code> property.
+            When this property is enabled, the DataManager does not send a request to the server when revisiting a page. 
+            However, the cache will be reset if any data action, such as sorting or filtering, is performed.
+    </p>
+    <p>
+        More information on the data binding can be found in this documentation section.
+    </p>
+	
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Data Grid Remote Data Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Remote Data in ASP.NET Core Data Grid Control</h1>
+                }

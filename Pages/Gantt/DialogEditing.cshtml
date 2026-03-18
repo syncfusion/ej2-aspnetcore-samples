@@ -1,0 +1,304 @@
+@page
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2.Gantt
+
+@section ControlsSection {
+    <div class="control-section">
+        <div class="row">
+            <div class="col-md-12">
+                <ejs-gantt id="Dialog" dataSource="@GanttData.DialogData()" gridLines="Both" treeColumnIndex="1"
+                    created="created" actionBegin="actionBegin" actionComplete="actionComplete" height="650px"
+                    allowSelection="true" highlightWeekends="true" showColumnMenu ="true" resources="@GanttData.DataResources()"
+                    projectStartDate="03/30/2025" projectEndDate="08/07/2025"
+                    toolbar="@(new List<string>() { "Add", "Edit", "Delete", "ExpandAll", "CollapseAll" })"
+                    taskMode="Custom" allowResizing="true" taskbarHeight="25" rowHeight="46">
+                    <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate" endDate="EndDate"
+                        duration="Duration" progress="Progress" dependency="Predecessor" child="SubTasks"
+                        segments="Segments"
+                        constraintType="ConstraintType" constraintDate="ConstraintDate" resourceInfo="Resources"
+                        manual="IsManual" work="Work">
+                    </e-gantt-taskfields>
+                    <e-gantt-resourcefields id="ResourceId" name="ResourceName" unit="Unit"></e-gantt-resourcefields>
+                    <e-gantt-splittersettings position="50%"></e-gantt-splittersettings>
+                    <e-gantt-columns>
+                        <e-gantt-column field="TaskId" headerText="Task ID" width="100"></e-gantt-column>
+                        <e-gantt-column field="TaskName" headerText="Task Name" width="200"
+                            clipMode="EllipsisWithTooltip"></e-gantt-column>
+                        <e-gantt-column field="StartDate" headerText="Start Date"></e-gantt-column>
+                        <e-gantt-column field="Duration" headerText="Duration"></e-gantt-column>
+                        <e-gantt-column field="ConstraintType" width="173"></e-gantt-column>
+                        <e-gantt-column field="ConstraintDate" width="176"></e-gantt-column>
+                        <e-gantt-column field="IsManual" width="150"></e-gantt-column>
+                        <e-gantt-column field="Work"></e-gantt-column>
+                    </e-gantt-columns>
+                    <e-gantt-editsettings allowAdding="true" allowEditing="true" allowDeleting="true"
+                        allowTaskbarEditing="true" showDeleteConfirmDialog="true" mode="Dialog">
+                    </e-gantt-editsettings>
+                    <e-gantt-timelinesettings showTooltip="true">
+                        <e-timelinesettings-toptier unit="Week" format="dd/MM/yyyy"></e-timelinesettings-toptier>
+                        <e-timelinesettings-bottomtier unit="Day" count="1"></e-timelinesettings-bottomtier>
+                    </e-gantt-timelinesettings>
+                    <e-gantt-labelsettings rightLabel="TaskName"></e-gantt-labelsettings>
+                    <e-gantt-eventmarkers>
+                        <e-gantt-eventmarker day="07/11/2025" label="Project approval and kick-off"></e-gantt-eventmarker>
+                    </e-gantt-eventmarkers>
+                    <e-gantt-adddialogfields>
+                        <e-gantt-adddialogfield type="General"
+                            fields="@(new string[] { "TaskId", "TaskName", "StartDate", "Duration", "EndDate", "Progress"})">
+                        </e-gantt-adddialogfield>
+                        <e-gantt-adddialogfield type="Dependency"
+                            additionalParams="@(new { 
+                                allowSorting = true,
+                                toolbar = new string[] { "Add", "Edit", "Delete", "Search" },
+                                editSettings = new { allowEditing = true, allowAdding = true, allowDeleting = true },
+                                searchSettings = new { fields = new string[] { "TaskName" }, ignoreCase = true }
+                            })">
+                        </e-gantt-adddialogfield>
+                        <e-gantt-adddialogfield type="Resources"
+                            additionalParams="@(new { 
+                                allowFiltering = true,
+                                allowSorting = true,
+                                allowResizing = true,
+                                showColumnMenu = true,
+                                filterSettings = new { type = "Menu" },
+                                columns = new[] { 
+                                    new { field = "ResourceId", width = "70", headerText = "ID",template="" }, 
+                                    new { field = "ResourceName", width = "180", headerText = "Resource Name", template = "#columnTemplate" },
+                                    new { field = "Unit", width = "84", headerText = "Unit", template="" },
+                                    new { field = "Role", width = "120", headerText = "Role", template = "#roleTemplate" }
+                                }
+                            })">
+                        </e-gantt-adddialogfield>
+                        <e-gantt-adddialogfield type="Segments"
+                            additionalParams="@(new { 
+                                allowFiltering = true,
+                                allowSorting = true,
+                                allowReordering = true,
+                                allowResizing = true,
+                                toolbar = new string[] { "Add", "Edit", "Delete" },
+                                editSettings = new { allowEditing = true, allowAdding = true, allowDeleting = true },
+                                filterSettings = new { type = "Menu" }
+                            })">
+                        </e-gantt-adddialogfield>
+                        <e-gantt-adddialogfield type="Custom" headerText="Advanced"
+                            fields="@(new string[] { "ConstraintType", "ConstraintDate", "IsManual", "Work" })">
+                        </e-gantt-adddialogfield>
+                    </e-gantt-adddialogfields>
+                    <e-gantt-editdialogfields>
+                        <e-gantt-editdialogfield type="General"
+                            fields="@(new string[] { "TaskId", "TaskName", "StartDate", "Duration", "EndDate", "Progress"})">
+                        </e-gantt-editdialogfield>
+                        <e-gantt-editdialogfield type="Dependency"
+                            additionalParams="@(new { 
+                                allowSorting = true,
+                                toolbar = new string[] { "Add", "Edit", "Delete", "Search" },
+                                editSettings = new { allowEditing = true, allowAdding = true, allowDeleting = true },
+                                searchSettings = new { fields = new string[] { "TaskName" }, ignoreCase = true }
+                            })">
+                        </e-gantt-editdialogfield>
+                        <e-gantt-editdialogfield type="Resources"
+                            additionalParams="@(new { 
+                                allowFiltering = true,
+                                allowSorting = true,
+                                allowResizing = true,
+                                showColumnMenu = true,
+                                filterSettings = new { type = "Menu" },
+                                columns = new[] { 
+                                    new { field = "ResourceId", width = "70", headerText = "ID",template="" }, 
+                                    new { field = "ResourceName", width = "180", headerText = "Resource Name", template = "#columnTemplate" },
+                                    new { field = "Unit", width = "84", headerText = "Unit",template="" },
+                                    new { field = "Role", width = "120", headerText = "Role",  template = "#roleTemplate" }
+                                }
+                            })">
+                        </e-gantt-editdialogfield>
+                        <e-gantt-editdialogfield type="Segments"
+                            additionalParams="@(new { 
+                                allowFiltering = true,
+                                allowSorting = true,
+                                allowReordering = true,
+                                allowResizing = true,
+                                toolbar = new string[] { "Add", "Edit", "Delete" },
+                                editSettings = new { allowEditing = true, allowAdding = true, allowDeleting = true },
+                                filterSettings = new { type = "Menu" }
+                            })">
+                        </e-gantt-editdialogfield>
+                        <e-gantt-editdialogfield type="Custom" headerText="Advanced"
+                            fields="@(new string[] { "ConstraintType", "ConstraintDate", "IsManual", "Work" })">
+                        </e-gantt-editdialogfield>
+                    </e-gantt-editdialogfields>
+                </ejs-gantt>
+            </div>
+        </div>
+    </div>
+
+    <!-- Client-Side Templates -->
+    <script type="text/x-template" id="columnTemplate">
+        ${if(ResourceName)}
+            <div class="image">
+                <img src="@Url.Content("~/images/Gantt/${ResourceName}.png")" style="height:25px;width:25px" />
+                <div style="display:inline-block;width:100%;position:relative;left:5px">${ResourceName}</div>
+            </div>
+        ${/if}
+    </script>
+    <script type="text/x-template" id="roleTemplate">
+        ${if(Role)}
+            <div style="display: flex; align-items: center; margin-bottom: 5px; font-size: 14px; padding: 2px;">
+                <div>${Role}</div>
+            </div>
+        ${else}
+            <div></div>
+        ${/if}
+    </script>
+    <script type="text/x-template" id="idTemplate">
+        ${if(ResourceId)}
+            <div style="display: flex; align-items: center; margin-bottom: 5px; font-size: 14px; padding: 2px;">
+                <div>${ResourceId}</div>
+            </div>
+        ${else}
+            <div></div>
+        ${/if}
+    </script>
+    <script type="text/x-template" id="unitTemplate">
+        ${if(Unit)}
+            <div style="display: flex; align-items: center; margin-bottom: 5px; font-size: 14px; padding: 2px;">
+                <div>${Unit}</div>
+            </div>
+        ${else}
+            <div></div>
+        ${/if}
+    </script>
+
+    <script>
+                    
+
+        var startDate;
+        function created(args) {
+            var gantt = document.getElementById('Dialog').ej2_instances[0];
+            gantt.treeGrid.grid.columns[1].validationRules = { required: true, minLength: [5, 'Task name should have a minimum length of 5 characters'] };
+            gantt.treeGrid.grid.columns[2].validationRules = { required: true };
+            gantt.treeGrid.grid.columns[3].validationRules = { required: true };
+            gantt.treeGrid.grid.columns[4].validationRules = { required: [customFn, 'Please enter a value greater than the start date.'] };
+            gantt.treeGrid.grid.columns[6].validationRules = { required: true, min: 0, max: 100 };
+        }
+
+        function actionBegin(args) {
+
+            if (args.columnName === "EndDate" || args.requestType === "beforeOpenAddDialog" || args.requestType === "beforeOpenEditDialog") {
+                startDate = args.rowData.ganttProperties.startDate;
+            }
+            if (args.requestType === "taskbarediting" && args.taskBarEditAction === "ChildDrag") {
+                startDate = args.data.ganttProperties.startDate;
+            }
+        }
+
+        function actionComplete(args) {
+            var gantt = document.getElementById('Dialog').ej2_instances[0];
+            if (args.requestType === 'openAddDialog' || args.requestType === 'openEditDialog') {
+                var tabObj = document.getElementById(gantt.element.id + "_Tab").ej2_instances[0];
+                tabObj.selected = function (args) {
+                    if (args.selectedIndex === 1) {
+                        var gridObj = document.getElementById(gantt.element.id + "DependencyTabContainer").ej2_instances[0];
+                        gridObj.queryCellInfo = function (args) {
+                            if (args.column.field === "name") {
+                                args.cell.innerText = args.data.name.substring(args.data.id.length + 1);
+                            }
+                        };
+                        var cols = gridObj.columns;
+                        cols[1].edit.edit = function (args) {
+                            if (args.requestType === "add") {
+                                args.rowData.uniqueId = ej.base.getUniqueID("gantt");
+                            }
+                            var field = "name";
+                            var gantt = document.getElementById(gantt.element.id).ej2_instances[0];
+                            var dependencygridData = gantt.editModule.dialogModule.idCollection;
+                            for (var i = 0; i < dependencygridData.length; i++) {
+                                dependencygridData[i].text = dependencygridData[i].text.substring(dependencygridData[i].id.length + 1);
+                            }
+                            var comboValue = "";
+                            if (args.rowData[field]) {
+                                comboValue = args.rowData[field].substring(0, args.rowData.id.length);
+                            }
+                            var autoObj = new ej.dropdowns.ComboBox({
+                                dataSource: new ej.data.DataManager(dependencygridData),
+                                popupHeight: "180px",
+                                allowCustom: false,
+                                enableRtl: gantt.enableRtl,
+                                fields: { value: "value", text: "text" },
+                                value: comboValue,
+                                change: function (arg) {
+                                    var tr = arg.element.closest("tr");
+                                    var idInput = tr.querySelector("#" + gantt.element.id + "DependencyTabContainerid");
+                                    if (idInput) {
+                                        if (!ej.base.isNullOrUndefined(arg.itemData) && !ej.base.isNullOrUndefined(arg.item)) {
+                                            idInput.value = arg.itemData.value;
+                                        } else {
+                                            idInput.value = "";
+                                        }
+                                    }
+                                },
+                                autofill: true
+                            });
+                            autoObj.appendTo(args.element);
+                        };
+                        cols[1].edit.read = function (args) {
+                            var ej2Instance = args.ej2_instances[0];
+                            return ej2Instance.value + "-" + ej2Instance.text;
+                        };
+                        gridObj.refresh();
+                    }
+                };
+            }
+        }
+
+        function customFn(args) {
+            var endDate;
+            var gantt = document.getElementById('Dialog').ej2_instances[0];
+            if (args.element && args.value) {
+                var dateOptions = { format: gantt.dateFormat, type: 'dateTime', skeleton: 'yMd' };
+                endDate = gantt.globalize.parseDate(args.value, dateOptions);
+                if (!startDate && gantt.editModule.dialogModule['beforeOpenArgs']) {
+                    startDate = gantt.editModule.dialogModule['beforeOpenArgs'].rowData['ganttProperties'].startDate;
+                    endDate = gantt.editModule.dialogModule['beforeOpenArgs'].rowData['ganttProperties'].endDate;
+                }
+                startDate.setHours(0, 0, 0, 0);
+                endDate.setHours(0, 0, 0, 0);
+            }
+            return startDate <= endDate;
+        }
+    </script>
+}
+
+@section ActionDescription {
+    <div id="action-description">
+         <p>This sample illustrates the phases of a software development project, with tasks like analysis, design, development, testing, and documentation. This also demonstrates CRUD operations in a Gantt Chart.
+    </p>
+    </div>
+}
+
+@section Description {
+    <div id="description">
+            <p>This sample demonstrates how to fully customize the dialog editing interface in the ASP.NET Core Gantt Chart using the <code><a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Gantt.Gantt.html#Syncfusion_EJ2_Gantt_Gantt_AddDialogFields">addDialogFields</a></code> and <code><a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Gantt.GanttEditDialogFields.html">editDialogFields</a></code> properties along with <code><a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Gantt.GanttAddDialogField.html#Syncfusion_EJ2_Gantt_Gantt_AdditionalParams">additionalParams</a></code>. It showcases how to override default input and grid components within each tab and organize custom fields across multiple tabs for a structured editing experience.
+                The following tab-level customizations are included:</p>
+		         <ul>
+		        	<li><b>Dependency Tab</b> - Includes additional toolbar items and improved task naming to simplify task relationship management.</li>
+                    <li><b>Resource Tab</b> - Combines resource images and names, introduces a Role column, and supports column menu options for flexible configuration.</li>
+                    <li><b>Segments Tab</b> - Enhanced with extra toolbar options for efficient segment editing and control.</li>
+                    <li><b>Advanced Tab</b> - Organizes Work and Task Mode input fields for quick access and improved clarity.</li>
+		        </ul>
+            <br/>
+        <p>More information on the Essential<sup>®</sup> ASP.NET Core Gantt Chart can be found in this <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/gantt/managing-tasks/editing-tasks#dialog-editing">documentation section</a>.</p>
+</div>
+}
+
+@section Meta {
+    <meta name="description"
+        content="This example demonstrates the Dialog Editing in ASP.NET Core Gantt control. Explore here for more details." />
+}
+
+@section Title {
+    <title>ASP.NET Core Gantt Dialog Editing Example - Syncfusion Demos</title>
+}
+
+@section Header {
+    <h1 class='sb-sample-text'>Example of Dialog Editing in ASP.NET Core Gantt Control</h1>
+}

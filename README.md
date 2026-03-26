@@ -69,7 +69,7 @@ Clone the repository. This repository contains the .NET 8, .NET 9 and .NET 10 pr
             <p>&nbsp;</p>
             <div><p class="controlcategory">INTERACTIVE CHAT</p></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/ai-assistview/getting-started">AI AssistView</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/chat-ui/getting-started">Chat UI - Preview</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/chat-ui/getting-started">Chat UI</a></div>
             <p>&nbsp;</p>
             <div><p class="controlcategory">DATA VISUALIZATION</p></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/getting-started">Charts</a></div>
@@ -202,8 +202,8 @@ Clone the repository. This repository contains the .NET 8, .NET 9 and .NET 10 pr
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/timeline/getting-started">Timeline</a></div>
             <p>&nbsp;</p>
             <div><p class="controlcategory">Smart Controls</p></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/smart-paste/getting-started">Smart Paste Button</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/smart-textarea/getting-started">Smart TextArea</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/smart-paste/getting-started">Smart Paste - Preview</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/smart-textarea/getting-started">Smart TextArea - Preview</a></div>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>

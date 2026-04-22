@@ -1,0 +1,296 @@
+@page
+
+@using Syncfusion.EJ2
+
+@{
+    string hostUrl = "https://ej2-aspcore-service.azurewebsites.net/";
+    var ajaxSettings = new
+    {
+        url = hostUrl + "api/FileManager/FileOperations",
+        getImageUrl = hostUrl + "api/FileManager/GetImage",
+        uploadUrl = hostUrl + "api/FileManager/Upload",
+        downloadUrl = hostUrl + "api/FileManager/Download"
+    };
+    var items = new[]
+    {
+        "Bold", "Italic", "Underline", "StrikeThrough", "SuperScript", "SubScript", "|",
+        "FontName", "FontSize", "FontColor", "BackgroundColor", "|",
+        "LowerCase", "UpperCase",
+        "Formats", "Alignments", "|", "NumberFormatList", "BulletFormatList", "|",
+        "Outdent", "Indent", "|",
+        "CreateLink", "Image", "FileManager", "Video", "Audio", "CreateTable", "|", "FormatPainter", "ClearFormat", "|", "EmojiPicker", "Print", "|",
+        "SourceCode", "FullScreen", "|", "Undo", "Redo"
+    };
+}
+
+@section ControlsSection{
+    <div class="col-lg-8 control-section">
+        <div class="control-wrapper">
+                <ejs-richtexteditor id="defaultRTE"
+                created="created" actionBegin="actionBegin" actionComplete="actionComplete"
+                focus="focus" blur="blur" change="change" toolbarClick="toolbarClick" beforeDialogOpen="beforeDialogOpen" dialogOpen="dialogOpen" dialogClose="dialogClose"
+                 beforeQuickToolbarOpen="beforeQuickToolbarOpen" quickToolbarOpen="quickToolbarOpen" quickToolbarClose="quickToolbarClose" imageSelected="imageSelected"
+        imageUploading="imageUploading" imageUploadSuccess="imageUploadSuccess" imageUploadFailed="imageUploadFailed" imageRemoving="imageRemoving"
+        destroyed="destroyed" beforeSanitizeHtml="beforeSanitizeHtml" resizing="resizing" resizeStart="resizeStart" resizeStop="resizeStop" selectionChanged="selectionChanged">
+					<e-richtexteditor-toolbarsettings items="@items"></e-richtexteditor-toolbarsettings>
+                    <e-richtexteditor-filemanagersettings enable="true" path="/Pictures/Food" ajaxSettings="@ajaxSettings"></e-richtexteditor-filemanagersettings>
+                    <e-content-template>
+                    <div>
+                        <p>
+                            The Rich Text Editor component is a WYSIWYG ('what you see is what you get') editor that provides the best user experience to create and update the content.
+                            Users can format their content using standard toolbar commands.
+                        </p>
+                        <p><b> Key features:</b></p>
+                        <ul>
+                            <li><p> Provides IFRAME and DIV modes </p></li>
+                            <li><p> Capable of handling markdown editing.</p></li>
+                            <li><p> Contains a modular library to load the necessary functionality on demand.</p></li>
+                            <li><p> Provides a fully customizable toolbar.</p></li>
+                            <li><p> Provides HTML view to edit the source directly for developers.</p></li>
+                            <li><p> Supports third - party library integration.</p></li>
+                            <li><p> Allows a preview of modified content before saving it.</p></li>
+                            <li><p> Handles images, hyperlinks, video, hyperlinks, uploads, etc.</p></li>
+                            <li><p> Contains undo / redo manager.</p></li>
+                            <li><p> Creates bulleted and numbered lists.</p></li>
+                        </ul>
+                    </div>
+                </e-content-template>
+				</ejs-richtexteditor>
+        </div>
+    </div>
+    <div class="col-lg-4 property-section">
+        <table id="property" title="Event Trace">
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="eventarea" style="height: 200px;overflow: auto">
+                            <span class="EventLog" id="EventLog" style="word-break: normal;"></span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="evtbtn">
+                            <ejs-button id="clear" cssClass="e-flat" content="Clear"></ejs-button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        var rteObj;
+        document.getElementById('clear').onclick = function () {
+            document.getElementById('EventLog').innerHTML = '';
+        };
+        function created() {
+            rteObj = this;
+            appendElement('Rich Text Editor <b>create</b> event called<hr>');
+        }
+        function actionBegin(args) {
+            appendElement('<b>' + args.requestType + '</b> action is called<hr>');
+            handleFullScreen(args);
+        }
+        function actionComplete(args) {
+            appendElement('<b>' + args.requestType + '</b> action is completed<hr>');
+            actionCompleteHandler();
+        }
+        function focus() {
+            appendElement('Rich Text Editor <b>focus</b> event called<hr>');
+        }
+        function blur() {
+            appendElement('Rich Text Editor <b>blur</b> event called<hr>');
+        }
+        function change() {
+            appendElement('Rich Text Editor <b>change</b> event called<hr>');
+        }
+        function toolbarClick() {
+            appendElement('Rich Text Editor <b>toolbar click</b> event called<hr>');
+        }
+         function beforeDialogOpen() {
+        appendElement('Rich Text Editor <b>beforeDialogOpen</b> event called<hr>');
+        }
+
+        function dialogOpen() {
+            appendElement('Rich Text Editor <b>dialogOpen</b> event called<hr>');
+        }
+
+        function dialogClose() {
+            appendElement('Rich Text Editor <b>dialogClose</b> event called<hr>');
+        }
+
+        function beforeQuickToolbarOpen() {
+            appendElement('Rich Text Editor <b>beforeQuickToolbarOpen</b> event called<hr>');
+        }
+
+        function quickToolbarOpen() {
+            appendElement('Rich Text Editor <b>quickToolbarOpen</b> event called<hr>');
+        }
+
+        function quickToolbarClose() {
+            appendElement('Rich Text Editor <b>quickToolbarClose</b> event called<hr>');
+        }
+
+        function imageSelected() {
+            appendElement('Rich Text Editor <b>imageSelected</b> event called<hr>');
+        }
+
+        function imageUploading() {
+            appendElement('Rich Text Editor <b>imageUploading</b> event called<hr>');
+        }
+
+        function imageUploadSuccess() {
+            appendElement('Rich Text Editor <b>imageUploadSuccess</b> event called<hr>');
+        }
+
+        function imageUploadFailed() {
+            appendElement('Rich Text Editor <b>imageUploadFailed</b> event called<hr>');
+        }
+
+        function imageRemoving() {
+            appendElement('Rich Text Editor <b>imageRemoving</b> event called<hr>');
+        }
+
+        function destroyed() {
+            appendElement('Rich Text Editor <b>destroyed</b> event called<hr>');
+        }
+
+        function beforeSanitizeHtml() {
+            appendElement('Rich Text Editor <b>beforeSanitizeHtml</b> event called<hr>');
+        }
+
+        function resizing() {
+            appendElement('Rich Text Editor <b>resizing</b> event called<hr>');
+        }
+
+        function resizeStart() {
+            appendElement('Rich Text Editor <b>resizeStart</b> event called<hr>');
+        }
+
+        function resizeStop() {
+            appendElement('Rich Text Editor <b>resizeStop</b> event called<hr>');
+        }
+        function appendElement(html) {
+            var span = document.createElement('span');
+            span.innerHTML = html;
+            var log = document.getElementById('EventLog');
+            log.insertBefore(span, log.firstChild);
+        }
+        function handleFullScreen(e) {
+            var sbCntEle = document.querySelector('.sb-content.e-view');
+            var sbHdrEle = document.querySelector('.sb-header.e-view');
+            if (e.targetItem === 'Maximize') {
+                if (ej.base.Browser.isDevice && ej.base.Browser.isIos) {
+                    ej.base.addClass([sbCntEle, sbHdrEle], ['hide-header']);
+                }
+            }
+            else if (e.targetItem === 'Minimize') {
+                if (ej.base.Browser.isDevice && ej.base.Browser.isIos) {
+                    ej.base.removeClass([sbCntEle, sbHdrEle], ['hide-header']);
+                }
+            }
+        }
+        function actionCompleteHandler() {
+            setTimeout(function () { rteObj.toolbarModule.refreshToolbarOverflow(); }, 400);
+        }
+        function selectionChanged() {
+            appendElement('Rich Text Editor <b>selectionChanged</b> event called<hr>');
+        }
+
+    </script>
+
+    <style>
+        .control-wrapper {
+            margin: 0 auto;
+        }
+
+        .property-section .right-side {
+            padding-left: 10px;
+        }
+
+        .property-section .left-side {
+            padding: 5px;
+            width: 25%
+        }
+        /* custom code start */
+        .sb-header {
+            z-index: 100;
+        }
+        #EventLog b {
+            color: #018607;
+        }
+
+        .material3-dark #EventLog b, .fluent-dark #EventLog b, .bootstrap5-dark #EventLog b, .bootstrap-dark #EventLog b, .tailwind-dark #EventLog b, .tailwind3-dark #EventLog b, .highcontrast #EventLog b, .material-dark #EventLog b, .fabric-dark #EventLog b {
+            color: #21A32E;}
+
+        hr {
+            margin: 1px 10px 1px 0px;
+            border-top: 1px solid #eee;
+        }
+
+        .sb-content.e-view.hide-header {
+            top: 0 !important;
+        }
+
+        .sb-header.e-view.hide-header {
+            display: none;
+        }
+        /* custom code end */
+
+    </style>
+}
+
+@*custom code start*@
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Events in ASP.NET Core Rich Text Editor control. Explore here for more details."/>
+                }
+
+@*custom code end*@
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This sample demonstrates the events that trigger on every action of the Rich Text Editor. The event details are showcased in the event trace panel.
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            The Rich Text Editor triggers the events based on its actions.
+            The events can be used as an extension point to perform custom operations.
+        </p>
+        <ul>
+           <li><code>change</code> - Triggers when the editor gets blurred and changes are made to the content.</li>
+            <li><code>focus</code> - Triggers when the editor is in focus.</li>
+            <li><code>blur</code> - Triggers when focused out of the editor.</li>
+            <li><code>actionBegin</code> - Triggers before the execution of command.</li>
+            <li><code>actionComplete</code> - Triggers after the execution of command.</li>
+            <li><code>created</code> - Triggers when the component is created.</li>
+            <li><code>beforeDialogOpen</code> – Event triggers when the dialog is being opened..</li>
+            <li><code>dialogOpen</code> – Event triggers when a dialog is opened.</li>
+            <li><code>dialogClose</code> – Event triggers after the dialog has been closed.</li>
+            <li><code>beforeQuickToolbarOpen</code> – Event triggers when the quick toolbar is being opened.</li>
+            <li><code>quickToolbarOpen</code> – Event triggers when a quick toolbar is opened.</li>
+            <li><code>quickToolbarClose</code> – Event triggers after the quick toolbar has been closed.</li>
+            <li><code>imageSelected</code> – Event triggers when the image is selected or dragged into the insert image dialog</li>
+            <li><code>imageUploading</code> – Event triggers when the selected image begins to upload in the insert image dialog</li>
+            <li><code>imageUploadSuccess</code> – Event triggers when the image is successfully uploaded to the server side</li>
+            <li><code>imageUploadFailed</code> – Event triggers when there is an error in the image upload</li>
+            <li><code>imageRemoving</code> – Event triggers when the selected image is cleared from the insert image dialog</li>
+            <li><code>destroyed</code> – Triggers when the component is destroyed.</li>
+            <li><code>beforeSanitizeHtml</code> – Event triggers before sanitize the value. It's only applicable to editorMode as `HTML`</li>
+            <li><code>resizing</code> – Triggers only when resizing the image</li>
+            <li><code>resizeStart</code> –Triggers only when start resize the image</li>
+            <li><code>resizeStop</code> – Triggers only when stop resize the image</li>
+            <li><code>selectionChanged</code> – Triggers only when the selection within the editor is modified.</li>
+        </ul>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Rich Text Editor Events Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Events in ASP.NET Core Rich Text Editor Control</h1>
+                }

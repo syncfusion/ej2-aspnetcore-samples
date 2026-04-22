@@ -1,0 +1,238 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Diagram.UserHandleModel
+@using Syncfusion.EJ2;
+@{
+    var getNodeDefaults = "getNodeDefaults";
+    var getTool = "getTool";
+}
+@section ControlsSection{
+    <div id="diagram-userhandleContainer" class="col-lg-8 control-section">
+        <div class="content-wrapper">
+            <ejs-diagram id="container" width="100%" height="600px" getCustomTool="@getTool" selectedItems="@UserHandleModel.selector" created="fitToPage" nodes="@Model.nodes" connectors="@Model.Connectors" getNodeDefaults="@getNodeDefaults" fixedUserHandleTemplate="#fixeduserhandletemplate" fixedUserHandleClick="fixedUserHandleClick">
+                <e-diagram-snapsettings constraints="None"></e-diagram-snapsettings>
+            </ejs-diagram>
+        </div>
+    </div>
+    <div id="userhandle-property-panel" class="col-lg-4 property-section">
+        <div class="property-panel-header">
+            Properties
+        </div>
+        <div class="row property-panel-content" id="appearance">
+           
+            <div class="row">
+                <div class="row row-header1" style="font-size: 14px">
+                    Alignment
+                </div>
+                <div class="row" style="padding-top: 8px">
+                    <div class="diagram-image-pattern-style diagram-panel-selected-style" id="left" style="background-image: url('@Url.Content("~/images/Diagram/user-handle/bottoml.png")'); margin-right: 4px">
+                    </div>
+                    <div class="diagram-image-pattern-style" id="right" style="background-image: url('@Url.Content("~/images/Diagram/user-handle/bottomr.png")'); margin: 0px 4px">
+                    </div>
+                    <div class="diagram-image-pattern-style" id="topr" style="background-image: url('@Url.Content("~/images/Diagram/user-handle/topr.png")');">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row property-panel-content" id="pattern">
+            <div class="row">
+                <div class="row row-header1" style="font-size: 14px">
+                    Appearance
+                </div>
+                <div class="row" style="padding-top: 8px">
+                    <div class="diagram-image-pattern-style" id="pattern1" style="background-image: url('@Url.Content("~/images/Diagram/user-handle/pattern1.png")'); margin-right: 4px">
+                    </div>
+                    <div class="diagram-image-pattern-style" id="pattern2" style="background-image: url('@Url.Content("~/images/Diagram/user-handle/pattern2.png")'); margin: 0px 4px">
+                    </div>
+                    <div class="diagram-image-pattern-style" id="pattern3" style="background-image: url('@Url.Content("~/images/Diagram/user-handle/pattern3.png")');">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        /* Css for images in property panel  */
+        .diagram-image-pattern-style {
+            background-color: white;
+            background-size: contain;
+            background-repeat: no-repeat;
+            height: 50px;
+            width: calc((100% - 18px) / 3);
+            cursor: pointer;
+            border: 1px solid #D5D5D5;
+            background-position: center;
+            float: left;
+        }
+
+        #userhandle-property-panel .row {
+            margin: 10px 0px 0px 0px;
+        }
+        /* Selection indicator */
+        .diagram-panel-selected-style {
+            border-color: #006CE6;
+            border-width: 2px;
+        }
+
+        /* Diagram Div CSS */
+        #diagram-userhandleContainer, .control-section {
+            padding-top: 0px;
+            padding-bottom: 0px;
+            padding-right: 0px;
+            padding-left: 0px;
+        }
+
+    </style>
+    <script>
+
+        function getTool(action) {
+            var diagram = document.getElementById("container").ej2_instances[0];
+            if (action === 'clone') {
+                return new CloneTool(diagram.commandHandler);
+            }
+        }
+
+        var __extends = (this && this.__extends) || (function () {
+            var extendStatics = Object.setPrototypeOf ||
+                /* jshint proto: true */
+                ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+                function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            return function (d, b) {
+                extendStatics(d, b);
+                function __() { this.constructor = d; }
+                d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+            };
+        })();
+        var CloneTool = (function (_super) {
+            __extends(CloneTool, _super);
+            function CloneTool() {
+                return _super !== null && _super.apply(this, arguments) || this;
+            }
+            CloneTool.prototype.mouseDown = function (args) {
+                var diagram = document.getElementById("container").ej2_instances[0];
+                var newObject;
+                if (diagram.selectedItems.nodes.length > 0) {
+                    newObject = ej.diagrams.cloneObject(diagram.selectedItems.nodes[0]);
+                }
+                else {
+                    newObject = ej.diagrams.cloneObject(diagram.selectedItems.connectors[0]);
+                }
+                newObject.id += ej.diagrams.randomId();
+                diagram.paste([newObject]);
+                args.source = diagram.nodes[diagram.nodes.length - 1];
+                args.sourceWrapper = args.source.wrapper;
+                _super.prototype.mouseDown.call(this, args);
+                this.inAction = true;
+            };
+            return CloneTool;
+        }(ej.diagrams.MoveTool));
+
+        function setuserhandleposition(offset, side, target) {
+            var diagram = document.getElementById("container").ej2_instances[0];
+            diagram.selectedItems.userHandles[0].offset = offset;
+            diagram.selectedItems.userHandles[0].side = side;
+            target.classList.add('diagram-panel-selected-style');
+        }
+
+        function applyuserhandlestyle(bgcolor, target) {
+            var diagram = document.getElementById("container").ej2_instances[0];
+            diagram.selectedItems.userHandles[0].backgroundColor = bgcolor;
+            diagram.selectedItems.userHandles[0].pathColor = 'White';
+            target.classList.add('diagram-panel-selected-style');
+        }
+
+        function fitToPage() {
+            var diagram = document.getElementById("container").ej2_instances[0];
+            diagram.select([diagram.nodes[0]]);
+            diagram.fitToPage();
+            diagram.dataBind();
+        }
+        function getNodeDefaults(node) {
+            var obj = {
+                style: { fill: '#578CA9', strokeColor: 'none' },
+            };
+            return obj;
+        }
+
+        function fixedUserHandleClick(args) {
+            var diagram = document.getElementById("container").ej2_instances[0];
+            diagram.select([diagram.nameTable.Decision]);
+            diagram.remove();
+        }
+        
+        document.getElementById('appearance').onclick = function (args) {
+            var diagram = document.getElementById("container").ej2_instances[0];
+            var target = args.target;
+            var appearanceBlock = document.getElementById('appearance');
+            var selectedElement = appearanceBlock.getElementsByClassName('diagram-panel-selected-style');
+            if (selectedElement.length) {
+                selectedElement[0].classList.remove('diagram-panel-selected-style');
+            }
+            if (target.className === 'diagram-image-pattern-style') {
+                switch (target.id) {
+                    case 'left':
+                        setuserhandleposition(0, 'Bottom', target);
+                        break;
+                    case 'right':
+                        setuserhandleposition(1, 'Bottom', target);
+                        break;
+                    case 'topr':
+                        setuserhandleposition(0, 'Right', target);
+                        break;
+                }
+            }
+            diagram.dataBind();
+        }
+        document.getElementById('pattern').onclick = function (args) {
+            var diagram = document.getElementById("container").ej2_instances[0];
+            var target = args.target;
+            var patternBlock = document.getElementById('pattern');
+            var selectedElement = patternBlock.getElementsByClassName('diagram-panel-selected-style');
+            if (selectedElement.length) {
+                selectedElement[0].classList.remove('diagram-panel-selected-style');
+            }
+            if (target.className === 'diagram-image-pattern-style') {
+                switch (target.id) {
+                    case 'pattern1':
+                        applyuserhandlestyle('#1E90FF', target);
+                        break;
+                    case 'pattern2':
+                        applyuserhandlestyle('#3CB371', target);
+                        break;
+                    case 'pattern3':
+                        applyuserhandlestyle('#FF6347', target);
+                        break;
+                }
+            }
+            diagram.dataBind();
+        }
+
+    </script>
+    <script id="fixeduserhandletemplate" type="text/x-template">
+        <div style="width:100%;height:100%">
+        <button style="border-radius:50%; width:25px; height:25px; border:none; cursor:context-menu; padding:0; display:flex; align-items:center; justify-content:center;">
+        <img src="@Url.Content("~/images/Diagram/user-handle/delete.png")" style="width:100%; height:100%; border-radius:50%;" />
+        </button>
+        </div>
+    </script>
+}
+@section ActionDescription{
+    <p>
+        This sample visualizes a simple flow diagram along with options to execute the frequently used commands using user handles.
+    </p>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the User Handles in ASP.NET Core Diagram control. Explore here for more details."/>
+                }
+@section Description{
+    <p>
+        User handles are icons that are placed around the node to run the frequently used commands. This example shows how to render
+        and configure user handles and how to interact with the diagram using user handles. The <code>userHandles</code> property of the <code>selectedItems</code> can be used to add user handles to the diagram.<code> fixedUserHandleTemplate</code> property of the diagram provides template support for customizing fixed user handles and we provide the HTML  button to delete the node. Click the templates in the property
+        panel, to customize the size, position, and appearance of the user handles.
+
+    </p>
+}
+@section Title{
+                    <title>ASP.NET Core Diagram User Handles Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of User Handles in ASP.NET Core Diagram Control</h1>
+                }

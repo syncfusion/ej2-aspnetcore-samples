@@ -1,0 +1,298 @@
+﻿@page
+@model EJ2CoreSampleBrowser.Pages.Diagram.DistanceDiagramModel
+@using Syncfusion.EJ2.Diagrams;
+@using Syncfusion.EJ2.DropDowns;
+@{
+    var getNodeDefaults = "getNodeDefaults";
+    var onSourcePointChanged = "onSourcePointChanged";
+    var onTargetPointChanged = "onTargetPointChanged";
+    var onUnitChanged = "onUnitChanged";
+    var created = "created";
+}
+
+@section ControlsSection{
+    <div class="control-section diagram-distance-measurement">
+        
+
+        <div id="diagram-space" class="sb-mobile-diagram">
+            <ejs-diagram id="distanceDiagram" 
+                         width="100%" 
+                         height="750px" 
+                         nodes="@Model.Nodes" 
+                         connectors="@Model.Connectors"
+                         getNodeDefaults="@getNodeDefaults"
+                         created="@created"
+                         sourcePointChange="@onSourcePointChanged"
+                         targetPointChange="@onTargetPointChanged"
+                         rulerSettings="@Model.RulerSettings">
+            </ejs-diagram>
+        </div>
+        <div class="distance-units">
+            <label class="distance-unit-label">Unit: </label>
+            <ejs-dropdownlist id="unitDropdown" 
+                              dataSource="@Model.UnitOptions"
+                              index="0"
+                              change="@onUnitChanged"
+                              width="155px"
+                              placeholder="Select Unit">
+            </ejs-dropdownlist>
+        </div>
+    </div>
+
+    <style>
+        .diagram-distance-measurement {
+            height: 100%;
+            width: 100%;
+        }
+
+        .diagram-distance-measurement {
+            position: relative;
+        }
+
+        .diagram-distance-measurement .distance-units {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 7px;
+            background: #fafafa;
+            top: 60px;
+            right: 50px;
+            padding: 5px;
+            border: 0.5px solid #e0e0e0;
+        }
+
+        .diagram-distance-measurement .e-ddl.e-input-group .e-input-group-icon,
+        .e-ddl.e-input-group.e-control-wrapper .e-input-group-icon:hover {
+            color: #9CA3AF;
+        }
+
+        .diagram-distance-measurement .e-ddl.e-input-group.e-control-wrapper .e-input {
+            color: #9CA3AF;
+        }
+
+        .diagram-distance-measurement .distance-unit-label{
+            color: #333 !important;
+            margin-bottom: 0px !important;
+            margin-right: 10px !important;
+        }
+
+        .sb-mobile-diagram {
+            width: 100%;
+            height: 100%;
+            float: left;
+        }
+    </style>
+
+    <script>
+        var diagram;
+        var selectedUnit = 'in';
+        function created() {
+            diagram = document.getElementById("distanceDiagram").ej2_instances[0];
+            diagram.tool = ej.diagrams.DiagramTools.SingleSelect;
+            diagram.dataBind();
+            diagram.snapSettings = {
+                constraints: ej.diagrams.SnapConstraints.ShowLines,
+                gridType: 'Dots',
+                horizontalGridlines: { dotIntervals: [1, 30, 1, 30, 1, 30] },
+                verticalGridlines: { dotIntervals: [1, 30, 1, 30, 1, 30] },
+            };
+            updateAllMeasurementConnectors();
+        }
+
+        function getNodeDefaults(node) {
+            node.constraints = ej.diagrams.NodeConstraints.None;
+            if(node.id=="bedroomDoor2"){
+                node.flip = ej.diagrams.FlipDirection.Horizontal;
+            }
+            return node;
+        }
+
+        function onSourcePointChanged(args) {
+            updateDimensionConnectors(args.connector);
+        }
+
+        function onTargetPointChanged(args) {
+            updateDimensionConnectors(args.connector);
+        }
+
+        function onUnitChanged(args) {
+            selectedUnit = args.value;
+            updateConnectorAnnotationsFromStoredDistances();
+            diagram.dataBind();
+        }
+
+        function formatMeasurement(value) {
+            return value.toFixed(1) + ' ' + selectedUnit;
+        }
+
+        function convertPixelsToSelectedUnit(pixelValue) {
+            switch (selectedUnit) {
+                case 'ft':
+                    return pixelValue / 96.0;
+                case 'in':
+                    return pixelValue / 8.0;
+                case 'cm':
+                    return pixelValue / 3.15;
+                default:
+                    return pixelValue / 96.0;
+            }
+        }
+
+        function convertBetweenUnits(value, fromUnit, toUnit) {
+            if (fromUnit === toUnit) return value;
+            var inchValue;
+            switch (fromUnit) {
+                case 'ft':
+                    inchValue = value * 12.0;
+                    break;
+                case 'cm':
+                    inchValue = value / 2.54;
+                    break;
+                default:
+                    inchValue = value;
+            }
+            switch (toUnit) {
+                case 'ft':
+                    return inchValue / 12.0;
+                case 'cm':
+                    return inchValue * 2.54;
+                default:
+                    return inchValue;
+            }
+        }
+
+        function updateConnectorAnnotationsFromStoredDistances() {
+            if (!diagram || !diagram.connectors) return;
+            diagram.connectors.forEach(function (connector) {
+                if (connector.id.includes('Measurement') &&
+                    connector.annotations &&
+                    connector.annotations.length > 0) {
+                    var content = connector.annotations[0].content;
+                    var parts = content.split(' ');
+                    if (parts.length > 1) {
+                        var value = parseFloat(parts[0]);
+                        var currentUnit = parts[1];
+                        var convertedValue = convertBetweenUnits(value, currentUnit, selectedUnit);
+                        connector.annotations[0].content = formatMeasurement(convertedValue);
+                    }
+                }
+            });
+        }
+
+        function updateDimensionConnectors(movedConnector) {
+            var id = movedConnector.id;
+            if (!id.startsWith('Separator') && id !== 'RestroomSeparator' && id !== 'HallSeparator') return;
+
+            var measurementId = id + 'Measurement';
+            var dimConnector = diagram.getObject(measurementId);
+            var extStartConnector = diagram.getObject(measurementId + '_ExtStart');
+            var extEndConnector = diagram.getObject(measurementId + '_ExtEnd');
+
+            if (!dimConnector || !extStartConnector || !extEndConnector) return;
+
+            var wallOuterTop = diagram.getObject('WallOuterTop');
+            var wallOuterBottom = diagram.getObject('WallOuterBottom');
+            var wallOuterRight = diagram.getObject('WallOuterRight');
+            var startX, startY, endX, endY, distance, isHorizontal;
+
+            switch (id) {
+                case 'Separator1':
+                    distance = Math.abs(movedConnector.targetPoint.x - movedConnector.sourcePoint.x);
+                    startX = movedConnector.sourcePoint.x;
+                    endX = movedConnector.targetPoint.x;
+                    startY = endY = wallOuterBottom.sourcePoint.y + 60;
+                    isHorizontal = true;
+                    break;
+                case 'Separator3':
+                    distance = Math.abs(movedConnector.targetPoint.x - movedConnector.sourcePoint.x);
+                    startX = movedConnector.sourcePoint.x;
+                    endX = movedConnector.targetPoint.x;
+                    startY = endY = wallOuterBottom.sourcePoint.y + 30;
+                    isHorizontal = true;
+                    break;
+                case 'HallSeparator':
+                    distance = Math.abs(movedConnector.targetPoint.y - movedConnector.sourcePoint.y);
+                    startY = movedConnector.sourcePoint.y;
+                    endY = movedConnector.targetPoint.y;
+                    startX = endX = 260;
+                    isHorizontal = false;
+                    break;
+                case 'Separator4':
+                    distance = Math.abs(movedConnector.targetPoint.x - movedConnector.sourcePoint.x);
+                    startX = movedConnector.sourcePoint.x;
+                    endX = movedConnector.targetPoint.x;
+                    startY = endY = wallOuterTop.sourcePoint.y - 20;
+                    isHorizontal = true;
+                    break;
+                case 'Separator2':
+                    distance = Math.abs(movedConnector.targetPoint.y - movedConnector.sourcePoint.y);
+                    startY = movedConnector.sourcePoint.y;
+                    endY = movedConnector.targetPoint.y;
+                    startX = endX = wallOuterRight.sourcePoint.x + 40;
+                    isHorizontal = false;
+                    break;
+                case 'RestroomSeparator':
+                    distance = Math.abs(movedConnector.targetPoint.y - movedConnector.sourcePoint.y);
+                    startY = movedConnector.sourcePoint.y;
+                    endY = movedConnector.targetPoint.y;
+                    startX = endX = wallOuterRight.sourcePoint.x + 80;
+                    isHorizontal = false;
+                    break;
+            }
+
+            // Update properties of existing connectors
+            dimConnector.sourcePoint = { x: startX, y: startY };
+            dimConnector.targetPoint = { x: endX, y: endY };
+            dimConnector.annotations[0].content = formatMeasurement(convertPixelsToSelectedUnit(distance));
+
+            if (isHorizontal) {
+                extStartConnector.sourcePoint = { x: startX, y: startY - 10 };
+                extStartConnector.targetPoint = { x: startX, y: startY + 10 };
+                extEndConnector.sourcePoint = { x: endX, y: endY - 10 };
+                extEndConnector.targetPoint = { x: endX, y: endY + 10 };
+            } else {
+                extStartConnector.sourcePoint = { x: startX - 10, y: startY };
+                extStartConnector.targetPoint = { x: startX + 10, y: startY };
+                extEndConnector.sourcePoint = { x: endX - 10, y: endY };
+                extEndConnector.targetPoint = { x: endX + 10, y: endY };
+            }
+
+            diagram.dataBind();
+        }
+
+        function updateAllMeasurementConnectors() {
+            // This function would be called after diagram is created to initialize measurements
+            if (diagram && diagram.connectors) {
+                // Update all measurement connectors
+                updateConnectorAnnotationsFromStoredDistances();
+                diagram.dataBind();
+            }
+        }
+    </script>
+}
+
+@section ActionDescription{
+    <p>
+        This sample uses the Syncfusion<sup>®</sup> EJ2 ASP.NET Core Diagram component to demonstrate measuring and visualizing distances between elements with interactive connectors.
+    </p>
+}
+
+@section Description{
+    <p>
+        In this demo, distance connectors are automatically generated and updated as users reposition the wall shapes. These connectors display dimensions between elements, with labels showing exact distances in inches, feet, and centimeters. The entire diagram is responsive, recalculating distances in real time to help users better understand spatial relationships and alignment.
+    </p>
+    <br>
+}
+
+@section Meta{
+    <meta name="description" content="This example demonstrates Distance Measurement functionality in ASP.NET Core Diagram control. Explore here for more details."/>
+}
+
+@section Title{
+    <title>ASP.NET Core Diagram Distance Measurement Example - Syncfusion Demos</title> 
+}
+
+@section Header{
+    <h1 class='sb-sample-text'>Example of Distance Measurement in ASP.NET Core Diagram Control</h1>
+}

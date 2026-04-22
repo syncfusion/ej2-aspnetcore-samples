@@ -1,0 +1,160 @@
+﻿@page
+@using EJ2CoreSampleBrowser.Models;
+@using Syncfusion.EJ2.Gantt;
+
+@section ControlsSection {
+	<div class="control-section">
+		<div class="row">
+			<div class="col-md-12">
+				<div style="display: flex;">
+					<div style="display: flex; margin-bottom: 10px;">
+						<div style="display: flex; align-items: center;">
+							<label class="overlapgantt" for="autoUpdateWBS" style="margin-right: 5px;font-size: 15px;"> Auto Update WBS </label>
+							<ejs-switch id="unchecked" change="autoUpdateWBSChange" checked="true"></ejs-switch>
+						</div>
+					</div>
+				</div>
+				
+				<div>	
+					<ejs-gantt id="GanttChart"
+							   dataSource="@GanttData.WBSData()"
+							   allowSorting="true"
+							   enableContextMenu="true"
+							   enableWBS="true"
+							   enableAutoWbsUpdate="true"
+							   allowPdfExport="true"
+							   allowSelection="true"
+							   allowFiltering="true"
+							   allowUnscheduledTasks="true"
+							   highlightWeekends="true"
+							   gridLines="Both"
+							   height="650px"
+							   treeColumnIndex="2"
+							   dataBound="wbsdataBound"
+							   projectStartDate="03/30/2025"
+							   projectEndDate="05/30/2025"
+							   rowHeight="46"
+							   taskbarHeight="25"
+							   toolbar="@(new List<string>() { "Add", "Edit", "Update", "Delete", "Cancel", "ExpandAll", "CollapseAll", "Indent", "Outdent" })">
+
+
+						<e-gantt-selectionsettings mode="Row" type="Single" enableToggle="false"></e-gantt-selectionsettings>
+
+						<e-gantt-splittersettings columnIndex="4"></e-gantt-splittersettings>
+
+						<e-gantt-timelinesettings>
+							<e-timelinesettings-toptier unit="Week" format="dd/MM/yyyy"></e-timelinesettings-toptier>
+							<e-timelinesettings-bottomtier unit="Day" count="1"></e-timelinesettings-bottomtier>
+
+						</e-gantt-timelinesettings>
+
+						<e-gantt-editsettings allowAdding="true"
+											  allowEditing="true"
+											  allowDeleting="true"
+											  allowTaskbarEditing="true"
+											  showDeleteConfirmDialog="true">
+						</e-gantt-editsettings>
+
+						<e-gantt-filtersettings type="Menu"></e-gantt-filtersettings>
+
+
+
+						<e-gantt-tooltipsettings showTooltip="true"></e-gantt-tooltipsettings>
+
+						<e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate" duration="Duration"
+											progress="Progress" dependency="Predecessor" parentID="ParentID">
+						</e-gantt-taskfields>
+
+						<e-gantt-labelsettings taskLabel="${Progress}%">
+						</e-gantt-labelsettings>
+
+						<e-gantt-columns>
+							<e-gantt-column field="TaskId" headerText="Task ID" visible="false"></e-gantt-column>
+							<e-gantt-column field="WBSCode" headerText="WBS Code" width= "150px"></e-gantt-column>
+							<e-gantt-column field="TaskName" headerText="Task Name" width="260px"></e-gantt-column>
+							<e-gantt-column field="StartDate" headerText="Start Date"  width= "140px"></e-gantt-column>
+							<e-gantt-column field="WBSPredecessor" headerText="WBS Predecessor" width= "190px"></e-gantt-column>
+							<e-gantt-column field="Duration" headerText="Duration" allowEditing="false"></e-gantt-column>
+							<e-gantt-column field="Progress" headerText="Progress"></e-gantt-column>
+						</e-gantt-columns>
+						<e-gantt-eventmarkers>
+                        <e-gantt-eventmarker day="04/2/2024" label="Project Initiation"></e-gantt-eventmarker>
+                    	</e-gantt-eventmarkers>
+
+					</ejs-gantt>
+			  </div>
+				
+			 </div>
+		</div>
+   </div>
+	<style>
+
+		.e-bigger .overlapgantt {
+			margin: 5px 5px 0px 5px !important;
+		 } 
+	</style>
+	<script>
+		function autoUpdateWBSChange(args) {
+			var ganttObj = document.getElementsByClassName('e-gantt')[0].ej2_instances[0];
+			 if (args.checked) {
+					ganttObj.enableAutoWbsUpdate = true;
+			} else {
+					ganttObj.enableAutoWbsUpdate = false;
+			}
+		}
+
+		function wbsdataBound() {
+			var ganttObj = document.getElementsByClassName('e-gantt')[0].ej2_instances[0];
+			ganttObj.element.getElementsByClassName('e-span-label')[0].style.top = '125px';
+			ganttObj.element.getElementsByClassName('e-gantt-right-arrow')[0].style.top = '131px';
+		}
+	</script>
+}  
+
+@section ActionDescription {
+		<div id="action-description">
+			<p>
+				This sample demonstrates how the Gantt Chart supports Work Breakdown Structure (WBS) codes, including
+				automatic updates to WBS codes and predecessors. It ensures data consistency during common operations like
+				sorting, filtering, editing, and drag-and-drop—making project tracking more structured and reliable.
+			</p>
+		</div>
+
+	}
+@section Description {
+
+		<div id="description">
+
+			<p>
+				The <strong>Work Breakdown Structure (WBS)</strong> is a hierarchical numbering system used to represent each task's position within the overall project structure.
+				By enabling the <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/gantt#enablewbs">enableWBS</a> property, the Gantt Chart generates WBS codes and WBS predecessors for all tasks.
+			</p>
+
+			<p>
+				By default, the <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/gantt#enableautowbsupdate">enableAutoWbsUpdate</a> property is set to <code>false</code>.
+				To ensure WBS codes remain accurate after actions such as sorting, filtering, editing, or drag and drop, set this property to <code>true</code>.
+			</p>
+
+			<p>
+				When <code>enableAutoWbsUpdate</code> is enabled, WBS codes are recalculated automatically whenever the task hierarchy changes.
+				This maintains consistency and structural clarity throughout the project lifecycle.
+			</p>
+
+			<p>
+				This example showcases how enabling WBS along with automatic updates enhances task tracking and provides a clear, organized project view.
+			</p>
+			<br>
+    <p>More information on the Essential<sup>®</sup> Gantt Chart can be found in this <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/gantt/columns/wbs-column">documentation section</a>.</p>
+		</div>
+
+	}
+@section Meta {
+		<meta name="description" content="This example demonstrates the WBS Column in ASP.NET Core Gantt control. Explore here for more details." />
+	}
+@section Title {
+		<title>ASP.NET Core Gantt WBS Column Example - Syncfusion Demos </title>
+	}
+@section Header {
+		<h1 class='sb-sample-text'>Example of WBS Column in ASP.NET Core Gantt Control</h1>
+	}
+

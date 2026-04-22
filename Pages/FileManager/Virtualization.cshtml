@@ -1,0 +1,59 @@
+@page
+
+@using Syncfusion.EJ2
+
+@{
+    string[] items = new string[] { "NewFolder", "Cut", "Copy", "Paste", "Delete", "Download", "Rename", "SortBy", "Refresh", "View", "Details"};
+    string[] layout = new string[] { "SortBy", "View", "Refresh", "|", "Paste", "|", "NewFolder", "|", "Details", "|", "SelectAll" };
+    string[] file = new string[] { "Cut", "Copy", "|", "Delete", "Download", "Rename", "|", "Details" };
+}
+
+@section ControlsSection{
+    <div class=" control-section">
+        <div class="sample-container">
+            <!-- File Manager virtualization feature sample -->
+            <ejs-filemanager id="filemanager" enableVirtualization="true">
+                <e-filemanager-ajaxsettings url="https://ej2-aspcore-service.azurewebsites.net/api/Virtualization/FileOperations"
+                                            downloadUrl="https://ej2-aspcore-service.azurewebsites.net/api/Virtualization/Download"
+                                            uploadUrl="https://ej2-aspcore-service.azurewebsites.net/api/Virtualization/Upload"
+                                            getImageUrl="https://ej2-aspcore-service.azurewebsites.net/api/Virtualization/GetImage">
+                </e-filemanager-ajaxsettings>
+                <e-filemanager-toolbarsettings items="items">
+                </e-filemanager-toolbarsettings>
+                <e-filemanager-contextmenusettings file="file" layout="layout">
+                </e-filemanager-contextmenusettings>
+            </ejs-filemanager>
+
+        </div>
+    </div>
+
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample illustrates the implementation of UI virtualization within the File Manager component, enhancing performance and user experience by dynamically loading folders and files as the user scrolls through the items. In both the details view and large icons view, the component efficiently handles extensive data sets, ensuring smooth navigation. Particularly, the <code>documents</code> and <code>text documents</code> folders in this example contain a substantial number of files, showcasing the capability of the File Manager to manage and display large volumes of data seamlessly.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>In this demo, virtualization is enabled by setting the <a href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.FileManager.FileManager.html#Syncfusion_EJ2_FileManager_FileManager_EnableVirtualization" target="_blank" aria-label="enablevirtualization">enableVirtualization</a> property to <code>true</code>.</p>
+        <p>To use the virtual scrolling feature, inject the virtualization module using the <code>FileManager.Inject(Virtualization)</code> section.</p>
+        <p>
+            <b>Note: </b>File Manager’s upload functionality is restricted in the online demos for security reasons. If you need to test upload functionality, please install
+            <a target="_blank" href="https://www.syncfusion.com/downloads" aria-label="Download Syncfusion Essential Studio">Syncfusion Essential Studio<sup>&reg;</sup> </a>on your machine and run the demo.
+        </p>
+    </div>
+}
+
+@section Meta{
+    <meta name="description" content="This example demonstrates the how to enable the virtual scrolling feature in a ASP.NET Core File Manager control." />
+}
+@section Title{
+    <title>ASP.NET Core File Manager Virtualization Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Virtualization in ASP.NET Core File Manager Control</h1>
+}

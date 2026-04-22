@@ -1,0 +1,79 @@
+@page
+
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2
+
+@{
+    var appointments = new ScheduleData().GetScheduleData();
+    var scrollTimeValue = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 9, 0, 0);
+}
+
+@section ControlsSection{
+    <div class="col-lg-9 control-section">
+        <div class="schedule-wrapper">
+            <ejs-schedule id="schedule" height="650" selectedDate="new DateTime(DateTime.Today.Year, 1, 10)" eventRendered="onEventRendered">
+                <e-schedule-views>
+                    <e-schedule-view option="Day"></e-schedule-view>
+                    <e-schedule-view option="Week"></e-schedule-view>
+                    <e-schedule-view option="TimelineDay"></e-schedule-view>
+                    <e-schedule-view option="TimelineWeek"></e-schedule-view>
+                </e-schedule-views>
+                <e-schedule-eventsettings dataSource="@appointments"></e-schedule-eventsettings>
+            </ejs-schedule>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties" class="property-panel-table" style="width: 100%;">
+            <tbody>
+                <tr style="height: 50px">
+                    <td style="width: 100%;">
+                        <div>
+                            <ejs-timepicker id="ScrollToHour" format="HH:mm" value=@scrollTimeValue change="onChange" placeholder="Scroll To" floatLabelType="Always"></ejs-timepicker>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="~/scripts/schedule/applyCategoryColor.js"></script>
+    <script type="text/javascript">
+        function onChange(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            scheduleObj.scrollTo(args.text);
+        }
+        function onEventRendered(args) {
+            var scheduleObj = document.getElementById('schedule').ej2_instances[0];
+            applyCategoryColor(args, scheduleObj.currentView);
+        }
+    </script>
+}
+
+@*custom code start*@
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Scroll Time in ASP.NET Core Scheduler control. Explore here for more details."/>
+                }
+@*custom code end*@
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This demo illustrates the way of manually scrolling to specific time on Scheduler.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            In this demo, the way of manually scrolling to specific time on scheduler has been demonstrated by making use of the
+            <code>scrollTo</code> method of Scheduler.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Scheduler Scroll Time Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Scroll Time in ASP.NET Core Scheduler Control</h1>
+                }

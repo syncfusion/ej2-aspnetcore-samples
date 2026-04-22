@@ -1,0 +1,211 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.TreeMap.Legend
+
+@using Syncfusion.EJ2.TreeMap;
+
+@{
+    var leafBorder = new TreeMapBorder { Color = "black", Width = 0.5 };
+    var titleFont = new TreeMapFont { FontFamily = "Segoe UI" };
+    var treeMapLegend = new Legend().getDataSource("Election");
+}
+
+@section ControlsSection{
+    
+    <div class="col-lg-9 control-section">
+        <div id="container">
+            <ejs-treemap id="container" load="treeMapLoad" dataSource="@treeMapLegend" weightValuePath="Population" rangeColorValuePath="WinPercentage" equalColorValuePath="Winner" format="n" useGroupingSeparator="true">
+                <e-treemap-titlesettings text="US presidential election result - 2016" textStyle="titleFont"></e-treemap-titlesettings>
+                <e-treemap-leafitemsettings labelPath="State" fill="#6699cc" border="leafBorder" labelStyle="titleFont">
+                    <e-leafitemsettings-colormappings>
+                        <e-leafitemsettings-colormapping value="Trump" color="@("#D84444")"></e-leafitemsettings-colormapping>
+                        <e-leafitemsettings-colormapping value="Clinton" color="@("#316DB5")"></e-leafitemsettings-colormapping>
+                    </e-leafitemsettings-colormappings>
+                </e-treemap-leafitemsettings>
+                <e-treemap-legendsettings height="10" visible="true" position="@LegendPosition.Top" shape="@LegendShape.Rectangle"></e-treemap-legendsettings>
+                <e-treemap-tooltipsettings visible="true" format="<b>${Winner}</b><br>State : ${State}<br>Trump : ${Trump} %<br>Clinton : ${Clinton} %" textStyle="titleFont"></e-treemap-tooltipsettings>
+            </ejs-treemap>
+        </div>
+        <div style="float: right; margin-right: 10px;">
+            Source:
+            <a href=" https://en.wikipedia.org/wiki/United_States_presidential_election,_2016" rel="nofollow" target="_blank" aria-label="wikipedia">en.wikipedia.org</a>
+        </div>
+    </div>
+<div class="col-lg-3 property-section">
+    <table id="property" title="Properties" style="width: 100%">
+        <tbody>
+            <tr>
+                <td>
+                    <div style="padding-top: 0px;">Legend Type</div>
+                </td>
+                <td style="width: 80%; height:30%">
+                    <div style="padding-top: 0px;padding-left: 10px;">
+                        <select name="selectIndex" autocomplete="off" id="legendMode">
+                            <option value="Default" selected>Default</option>
+                            <option value="Interactive">Interactive</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="property-text" style="padding: 0px;">Position</div>
+                </td>
+                <td>
+                    <div style="padding-top: 0px;padding-left: 10px;">
+                        <select name="selectIndex" autocomplete="off" id="legendPosition">
+                            <option value="Top" selected>Top</option>
+                            <option value="Bottom">Bottom</option>
+                            <option value="Left">Left</option>
+                            <option value="Right">Right</option>
+                            <option value="Auto">Auto</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+}
+<style>
+    .property-panel-table div {
+        padding-left: 0px;
+    }
+
+    tr {
+        height: 50px;
+    }
+</style>
+<script>
+    @* custom code start *@
+    function treeMapLoad(args) {
+        window.treemap = args.treemap;
+        var theme = themeName ? themeName : 'Material';
+        args.treemap.theme = (theme.charAt(0).toUpperCase() +
+                theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-high/i, 'High').replace(/5.3/i, '5');
+    }
+    @* custom code end *@
+    function resize(args) {
+        if(args.currentSize.width > args.currentSize.height && this.treemapInstance.legendSettings.position === 'Auto') {
+        this.treemapInstance.legendSettings.orientation = 'Vertical';
+        if (this.treemapInstance.legendSettings.mode === 'Interactive') {
+            this.treemapInstance.legendSettings.height = '70%';
+            this.treemapInstance.legendSettings.width = '10';
+        } else {
+            this.treemapInstance.legendSettings.height = '';
+            this.treemapInstance.legendSettings.width = '';
+        }
+    } else if (this.legendPositionElement.value === 'Auto') {
+        if (this.treemapInstance.availableSize.width > this.treemapInstance.availableSize.height) {
+            this.treemapInstance.legendSettings.orientation = 'Vertical';
+            if (this.treemapInstance.legendSettings.mode === 'Interactive') {
+                this.treemapInstance.legendSettings.height = '70%';
+                this.treemapInstance.legendSettings.width = '10';
+            } else {
+                this.treemapInstance.legendSettings.height = '';
+                this.treemapInstance.legendSettings.width = '';
+            }
+        } else {
+            this.treemapInstance.legendSettings.orientation = 'Horizontal';
+            if (this.treemapInstance.legendSettings.mode === 'Interactive') {
+                this.treemapInstance.legendSettings.height = '10';
+                this.treemapInstance.legendSettings.width = '';
+            } else {
+                this.treemapInstance.legendSettings.height = '';
+                this.treemapInstance.legendSettings.width = '';
+            }
+        }
+    }
+	}
+    window.onload = function () {
+        window.legendMode = new ej.dropdowns.DropDownList({
+            index: 0,
+            width: '100%',
+            change: function () {
+                window.treemap.legendSettings.mode = window.legendMode.value;
+                window.treemap.refresh();
+            }
+        });
+        window.legendMode.appendTo('#legendMode');
+
+        var legendPosition = new ej.dropdowns.DropDownList({
+            index: 0,
+            placeholder: 'Legend Position',
+            width: '100%',
+            change: () => {
+                window.treemap.legendSettings.position = legendPosition.value;
+            if (legendPosition.value === 'Left' || legendPosition.value === 'Right') {
+                window.treemap.legendSettings.orientation = 'Vertical';
+                if (window.treemap.legendSettings.mode === 'Interactive') {
+                    window.treemap.legendSettings.height = '70%';
+                    window.treemap.legendSettings.width = '10';
+                } else {
+                    window.treemap.legendSettings.height = '';
+                    window.treemap.legendSettings.width = '';
+                }
+            }
+            else if (legendPosition.value === 'Auto') {
+                if (window.treemap.availableSize.width > window.treemap.availableSize.height) {
+                    window.treemap.legendSettings.orientation = 'Vertical';
+                    if (window.treemap.legendSettings.mode === 'Interactive') {
+                        window.treemap.legendSettings.height = '70%';
+                        window.treemap.legendSettings.width = '10';
+                    } else {
+                        window.treemap.legendSettings.height = '';
+                        window.treemap.legendSettings.width = '';
+                    }
+                } else {
+                    window.treemap.legendSettings.orientation = 'Horizontal';
+                    if (window.treemap.legendSettings.mode === 'Interactive') {
+                        window.treemap.legendSettings.height = '10';
+                        window.treemap.legendSettings.width = '';
+                    } else {
+                        window.treemap.legendSettings.height = '';
+                        window.treemap.legendSettings.width = '';
+                    }
+                }
+            }
+            else {
+                window.treemap.legendSettings.orientation = 'Horizontal';
+                if (window.treemap.legendSettings.mode === 'Interactive') {
+                    window.treemap.legendSettings.height = '10';
+                    window.treemap.legendSettings.width = '';
+                }
+            }
+            window.treemap.refresh();
+        }
+    });
+    legendPosition.appendTo('#legendPosition');
+    };
+</script>
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Legend in ASP.NET Core TreeMap control. Explore here for more details."/>
+                }
+@section ActionDescription{
+<div id="action-description">
+    <p>
+        This sample visualizes USA president election results in the year 2016. Type of the legend can be changed by using the <code>Legend Type</code> in properties panel.
+    </p>
+</div>
+}
+@section Description{
+<div id="description">
+    <p>
+        In this example, you can see the type of legend available in treemap. And we have applied equal color mapping based on certain value.
+    </p>
+    <p>
+        Tooltip is enabled in this example. To see the tooltip in action, hover the mouse over an item or tap an item in touch enabled devices
+    </p>
+    <br />
+    <p style="font-weight: 500">Injecting Module</p>
+    <p>
+        Treemap component features are segregated into individual feature-wise modules. To use a legend, inject the <code>Legend</code> module using the <code>Treemap.Inject(TreeMapLegend)</code> method.
+    </p>
+</div>
+
+}
+@section Title{
+                    <title>ASP.NET Core TreeMap Legend Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Legend in ASP.NET Core TreeMap Control</h1>
+                }

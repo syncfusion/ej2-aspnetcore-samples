@@ -1,0 +1,137 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Chart.ChartLegendTemplateModel
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+  <div class="control-section" align='center'>
+    <ejs-chart id="container"
+               title="@Model.Title"
+               subTitle="@Model.SubTitle"
+               legendRender="legendRender"
+               load="load">
+
+      <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category"
+                            labelPlacement="OnTicks"
+                            edgeLabelPlacement="Shift">
+        <e-majorgridlines width="0"></e-majorgridlines>
+      </e-chart-primaryxaxis>
+
+      <e-chart-primaryyaxis minimum="0" maximum="50" interval="10" title="Medal Count">
+        <e-linestyle width="0"></e-linestyle>
+        <e-majorticklines width="0"></e-majorticklines>
+      </e-chart-primaryyaxis>
+
+      <e-chart-chartarea>
+        <e-chartarea-border width="0"></e-chartarea-border>
+      </e-chart-chartarea>
+
+      <e-chart-tooltipsettings enable="true"
+                               header="<b>${point.x}</b>"
+                               format="${series.name} Medals : <b>${point.y}</b>">
+      </e-chart-tooltipsettings>
+
+      <e-chart-legendsettings visible="true" position="Right">
+      </e-chart-legendsettings>
+
+      <e-series-collection>
+        <e-series dataSource="@Model.MedalData"
+                  type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column"
+                  xName="Country" 
+                  yName="Gold" 
+                  name="Gold" 
+                  columnSpacing="0.1">
+        </e-series>
+
+        <e-series dataSource="@Model.MedalData"
+                  type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column"
+                  xName="Country" 
+                  yName="Silver" 
+                  name="Silver" 
+                  columnSpacing="0.1">
+        </e-series>
+
+        <e-series dataSource="@Model.MedalData"
+                  type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column"
+                  xName="Country" 
+                  yName="Bronze" 
+                  name="Bronze" 
+                  columnSpacing="0.1">
+        </e-series>
+      </e-series-collection>
+    </ejs-chart>
+  </div>
+}
+
+@section Meta{
+  <meta name="description" content="This sample demonstrates customizable legend templates using all-time Summer Olympic medal data in an ASP.NET Core Chart." />
+}
+
+@section ActionDescription{
+  <div id="action-description">
+    <p>
+      This sample demonstrates customizable legend templates using all-time Summer Olympic medal data.
+      It displays Gold, Silver, and Bronze medal counts for five countries — Argentina, Austria,
+      Ethiopia, Iran, and India. Each legend entry features a medal icon rendered through a custom
+      legend template to enhance visual clarity and data interpretation.
+    </p>
+  </div>
+}
+
+@section Description{
+  <div id="description">
+    <p>
+      This sample shows how to render and configure a custom legend template in a Column chart.
+      The legend items are customized using the
+      <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.ChartLegendSettings.html"
+          aria-label="Navigate to the documentation for template in LegendSettings in the EJ2 Chart control"><code>template</code></a>
+      property of
+      <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Charts.ChartLegendSettings.html"
+          aria-label="Navigate to the documentation for LegendSettings in the EJ2 Chart control"><code>legendSettings</code></a>,
+      which allows embedding custom HTML content such as medal images and styled text into each legend item.
+    </p>
+    <p>
+      The <code>legendRender</code> event is used to dynamically update the template content for each series — setting the medal icon image and
+      label text per series.
+    </p>
+    <p>
+      <code>Tooltip</code> is enabled in this example. To see a tooltip in action, hover over or tap on the chart.
+    </p>
+    <p>
+      More information on chart legends can be found in the
+      <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/legend"
+          aria-label="Navigate to the documentation for Legend in ASP.NET Core Chart control">documentation</a>.
+    </p>
+  </div>
+}
+
+<script src="~/scripts/chart/theme-color.js"></script>
+<script>
+
+  function legendRender(args) {
+    var chart = document.getElementById('container').ej2_instances[0];
+    var matchedSeries = chart.series.find(function (s) { return s.name === args.text; });
+    var opacity = matchedSeries && !matchedSeries.visible ? '0.5' : '1';
+    
+    // Simple string replacements on the template (matching TS sample exactly)
+    args.template = args.template
+      .replace('opacity:1;', 'opacity:' + opacity + ';')
+      .replace('src=""', 'src="./../scripts/chart/images/' + args.text.toLowerCase() + '-medal.png"')
+      .replace('font-size:', 'color:' + args.fill + ';font-weight:bold;font-size:')
+      .replace('></span>', '>' + args.text + '</span>');
+  }
+
+  function load(args) {
+    loadChartTheme(args);
+    var chart = document.getElementById('container').ej2_instances[0];
+    chart.width = ej.base.Browser.isDevice ? '100%' : '75%';
+    chart.legendSettings.template = '<div class="template" style="display:flex;align-items:center;gap:' + (ej.base.Browser.isDevice ? '1px' : '8px') + ';opacity:1;">' +
+    '<img class="e-image" src="" width="20" height="20" />' +
+    '<span class="e-text" style="font-size:' + (ej.base.Browser.isDevice ? '9px' : '14px') + ';"></span>' +
+    '</div>';
+  }
+</script>
+<style>
+  #control-container {
+    padding: 0px !important;
+  }
+</style>

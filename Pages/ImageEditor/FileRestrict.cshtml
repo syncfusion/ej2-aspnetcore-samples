@@ -1,0 +1,201 @@
+@page
+@using Syncfusion.EJ2
+@using System.Text.Json
+
+@{
+    int minFileSize = 1;
+    int maxFileSize = 100;
+    string[] allowedExtensions = new string[6] { ".jpeg", ".jpg", ".png", ".svg", ".webp", ".bmp" };
+    List<object> units = new List<object>
+    {
+        new { text = "KB" },
+        new { text = "MB" }
+    };
+    var fileExtensionsList = new List<object>
+    {
+        new { Name = "JPEG", Value = ".jpeg" },
+        new { Name = "JPG", Value = ".jpg" },
+        new { Name = "PNG", Value = ".png" },
+        new { Name = "SVG", Value = ".svg" },
+        new { Name = "WebP", Value = ".webp" },
+        new { Name = "BMP", Value = ".bmp" }
+    };
+    Syncfusion.EJ2.ImageEditor.ImageEditorUploadSettings uploadSettings = new Syncfusion.EJ2.ImageEditor.ImageEditorUploadSettings
+    {
+        MinFileSize = minFileSize,
+        MaxFileSize = maxFileSize,
+        AllowedExtensions = ".jpeg, .jpg, .png, .svg, .webp, .bmp"
+    };
+}
+
+@section ControlsSection{
+
+   <div class="col-lg-12 control-section">
+        <div style="text-align: center;">
+            <div class="e-img-editor-dropdown-container">
+                <label>Size As</label><br />
+                <ejs-dropdownbutton id="dropdownbtn" content="KB" items="@units" select="selectValue" beforeItemRender="beforeItemRender"></ejs-dropdownbutton>
+            </div>
+            <div class="e-img-editor-numeric-textbox-container">
+                <label>Minimum Size</label><br />
+                <ejs-numerictextbox id="minFileSize" value="@minFileSize" min="1" width="150px" change="changeMin"></ejs-numerictextbox>
+            </div>
+            <div class="e-img-editor-numeric-textbox-container">
+                <label>Maximum Size</label><br />
+                <ejs-numerictextbox id="maxFileSize" value="@maxFileSize" min="1" width="150px" change="changeMax"></ejs-numerictextbox>
+            </div>
+            <div class="e-img-editor-dropdown-container">
+                <label>Allowed Extensions</label><br />
+                <ejs-multiselect id="allowedExtensions" dataSource="@fileExtensionsList" change="changeMultiselect" showSelectAll='true' mode="CheckBox" width="210" value="@allowedExtensions">
+                    <e-multiselect-fields value="Value" text="Name"></e-multiselect-fields>
+                </ejs-multiselect>
+            </div>
+        </div>
+        <div class="e-img-editor-sample">
+            <ejs-imageeditor id="image-editor" height="400px" created="created" width="100%" uploadSettings="uploadSettings"></ejs-imageeditor>
+        </div>
+    </div>
+
+    <script>
+        let defaultUnit = 'KB';
+        let minFileSize = @minFileSize;
+        let maxFileSize = @maxFileSize;
+        let allowedExtensions = @Html.Raw(JsonSerializer.Serialize(allowedExtensions));
+
+        function selectValue(args) {
+            var dropdownObj = ej.base.getComponent(document.getElementById('dropdownbtn'), 'dropdown-btn');
+            dropdownObj.content = args.item.text;
+            defaultUnit = args.item.text;
+            updateUploadSettings();
+        }
+
+        function beforeItemRender(args) {
+            if (args.item.text === defaultUnit) {
+                args.element.classList.add('e-selected');
+            }
+        }
+
+        function changeMin(args) {
+            minFileSize = args.value;
+            updateUploadSettings();
+        }
+
+        function changeMax(args) {
+            maxFileSize = args.value;
+            updateUploadSettings();
+        }
+
+        function changeMultiselect(args) {
+            if (args.value.length === 0) {
+                allowedExtensions = [".jpeg", ".jpg", ".png", ".svg", ".webp", ".bmp"];
+            } else {
+                allowedExtensions = args.value;
+            }
+            updateUploadSettings();
+        }
+
+        function updateUploadSettings() {
+            var imageEditorObj = ej.base.getComponent(document.getElementById('image-editor'), 'image-editor');
+            imageEditorObj.uploadSettings = {
+                minFileSize: convertToBytes(minFileSize),
+                maxFileSize: convertToBytes(maxFileSize),
+                allowedExtensions: allowedExtensions.join(', ')
+            };
+            imageEditorObj.refresh();
+        }
+
+        function created() {
+            updateUploadSettings();
+        }
+
+        function convertToBytes(value) {
+            return value * (defaultUnit === 'MB' ? 1024 * 1024 : 1024);
+        }
+    </script>
+}
+
+@section Meta{
+    <meta name="description" content="Image Editor"/>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This sample demonstrates the file restriction feature in the Image Editor component, which allows customization of file extensions, minimum and maximum file sizes, and drag-and-drop functionality.</p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            This sample highlights the enhanced configuration capabilities of the Image Editor component through the <b>uploadSettings</b> property. The following features are included:
+        </p>
+        <ul>
+            <li><b>File Extensions</b>: Use a multi-select dropdown with checkboxes to dynamically choose the allowed file extensions. Supported values include <code>jpeg</code>, <code>jpg</code>, <code>png</code>, <code>svg</code>, <code>webp</code>, and <code>bmp</code>.</li>
+            <li><b>File Size</b>: Two numeric textboxes are provided at the top of the page to set the minimum and maximum file sizes (in bytes). These values dynamically update the <code>uploadSettings</code> property.</li>
+            <li><b>Dynamic Updates</b>: Changes made to the numeric textboxes or the dropdown options immediately reflect in the component's <code>uploadSettings</code>.</li>
+            <li><b>Upload Settings</b>: Predefined settings include:
+                <ul>
+                    <li><b>Allowed Extensions</b>: <code>.jpeg</code>, <code>.png</code>, <code>.svg</code>, <code>.webp</code>, <code>.bmp</code></li>
+                    <li><b>Minimum File Size</b>: 1 KB</li>
+                    <li><b>Maximum File Size</b>: 100 KB</li>
+                </ul>
+            </li>
+        </ul>
+        <p>
+            More information about the Image Editor and its configuration options can be found in this
+            <a target='_blank' href='https://ej2.syncfusion.com/documentation/image-editor/getting-started/'>
+                documentation section
+            </a>.
+        </p>
+    </div>
+}
+
+@*custom code start*@
+<style>
+    .image-editor {
+        margin: 0 auto;
+    }
+
+    .e-img-editor-sample {
+        height: 80vh;
+        width: 100%;
+        margin-top: 18px;
+    }
+
+    .control-wrapper {
+        height: 100%;
+    }
+
+    .e-img-editor-numeric-textbox-container, .e-img-editor-dropdown-container {
+        display: inline-block;
+        margin-right: 30px;
+        text-align: left;
+    }
+
+    #dropdownbtn {
+        font-weight: 400;
+    }
+
+    @@media only screen and (max-width: 700px) {
+        .e-img-editor-sample {
+            height: 75vh;
+            width: 100%;
+        }
+
+        .e-img-editor-dropdown-container,
+        .e-img-editor-numeric-textbox-container {
+            display: block;
+            margin-right: 0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+    }
+</style>
+@*custom code end*@
+
+@section Title{
+    <title>ASP.NET Core Image Editor File Restriction Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of File Restriction in ASP.NET Core Image Editor Control</h1>
+}

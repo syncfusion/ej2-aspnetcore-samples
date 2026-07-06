@@ -1,0 +1,971 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.AIAssistView.NotionAICloneModel
+@using Syncfusion.EJ2
+@using System.Text.Json;
+
+@section ControlsSection {
+    <div class="control-section">
+        <div class="notion-like-ui e-card">
+            <div class="notes-app-container">
+                <div class="notes-page">
+                    <header class="notes-header">
+                        <span class="page-icon">📘</span>
+                        <h1 class="page-title">Product Planning Notes</h1>
+                    </header>
+
+                    <section class="notes-content">
+                        <h3>Project: Website Revamp</h3>
+
+                        <h4>Objectives</h4>
+                        <ul>
+                            <li>Improve page load performance</li>
+                            <li>Simplify navigation for end users</li>
+                            <li>Optimize mobile experience</li>
+                            <li>Increase accessibility compliance</li>
+                        </ul>
+
+                        <h4>Discussion Points</h4>
+                        <ul>
+                            <li>Dashboard load time is slow on mobile devices</li>
+                            <li>Export and reporting options are difficult to locate</li>
+                            <li>Accessibility audit flagged missing ARIA labels</li>
+                        </ul>
+
+                        <h4>Ideas</h4>
+                        <ul>
+                            <li>Introduce lazy loading for charts and grids</li>
+                            <li>Move advanced filters into a secondary panel</li>
+                            <li>Add keyboard navigation and screen reader support</li>
+                        </ul>
+                    </section>
+
+                    <footer class="notes-footer">
+                        <span class="hint-icon">✨</span>
+                        <span class="hint-text">
+                            Use AI Assist to summarize notes, generate tasks, or get insights.
+                        </span>
+                    </footer>
+                </div>
+            </div>
+            <!-- Dialog container -->
+            <div id="dialogElem">
+                <div id="assistviewWrapper" class="notion-aiassistview">
+                    <div id="aiAssistView"></div>
+                </div>
+            </div>
+
+            <!-- Sidebar container -->
+            <div id="notionSidebar"></div>
+
+            <!-- Fullscreen container -->
+            <div id="fullscreenContainer"></div>
+
+            <button id="fabElem"></button>
+            <div id="toastTarget"></div>
+        </div>
+    </div>
+
+    <script id="bannerContent" type="text/x-jsrender">
+        <div class="banner-content">
+            <div class="e-icons e-assistview-icon"></div>
+            <h3>How can I help you today ?</h3>
+        </div>
+    </script>
+
+    <style>
+        #notionSidebar .notion-aiassistview {
+            height: 100%;
+        }
+        #notionSidebar .notion-aiassistview .e-footer {
+            width: 95%;
+        }
+        #notionSidebar .notion-aiassistview .banner-content {
+            height: 200px;
+        }
+        .notion-aiassistview {
+            width: auto;
+            height: 500px;
+        }
+
+        .notion-like-ui.e-card:hover {
+            background-color: unset;
+        }
+
+        #dialogElem .notion-aiassistview .e-aiassistview,
+        #notionSidebar .notion-aiassistview .e-aiassistview {
+            border: none;
+        }
+
+        .notion-aiassistview .e-aiassistview .e-suggestions ul {
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .notion-aiassistview .e-aiassistview .e-suggestions li {
+            align-self: baseline;
+            padding-left: 5px;
+        }
+
+        .notion-aiassistview
+        .e-aiassistview
+        .e-suggestions.e-suggestion-item-template
+        li {
+            padding: 7px 10px;
+        }
+        .notion-aiassistview .e-suggestion-item-template {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            align-items: center;
+        }
+        #dialogElem .notion-aiassistview .e-aiassistview .e-suggestion-list,
+        #notionSidebar .notion-aiassistview .e-aiassistview .e-suggestion-list {
+            width: 100%;
+        }
+
+        #dialogElem .notion-aiassistview .e-aiassistview .e-suggestions li,
+        #notionSidebar .notion-aiassistview .e-aiassistview .e-suggestions li {
+            box-shadow: none;
+            border: none;
+        }
+
+        #notionSidebar .notion-aiassistview .e-aiassistview .e-suggestions li {
+            width: 95%;
+        }
+
+        #dialogElem .notion-aiassistview .e-aiassistview .e-suggestions li {
+            width: max(80%, 425px);
+            margin-right: 0;
+            margin-left: 0;
+        }
+
+        .notion-aiassistview .e-aiassistview .e-suggestions li:hover {
+            background-color: var(--color-sf-content-bg-color-hover);
+            border: none;
+        }
+
+        .notion-aiassistview .assist-suggestion-content {
+            padding-left: 5px;
+        }
+
+        .notion-aiassistview .banner-content .e-assistview-icon:before {
+            font-size: 35px;
+        }
+
+        .notion-aiassistview .banner-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            height: 120px;
+            text-align: left;
+        }
+
+        .ai-assist-banner {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 400px;
+            font-size: 18px;
+            align-items: center;
+            text-align: center;
+        }
+        .ai-assist-banner h2 {
+            margin: 0;
+        }
+
+        .ai-assist-banner .e-icons:before {
+            font-size: 40px;
+        }
+        /* Default icon container */
+        .model-icon:not(.e-icons) {
+            height: 16px;
+            align-self: center;
+            width: 16px;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        /* Individual models */
+        .model-sonet {
+            background-image: url('../images/AIAssistView/Claude.svg');
+        }
+
+        .model-opus {
+            background-image: url('../images/AIAssistView/Claude.svg');
+        }
+
+        .model-gemini {
+            background-image: url('../images/AIAssistView/Gemini.svg');
+        }
+
+        .model-gpt {
+            background-image: url('../images/AIAssistView/GPT.svg');
+        }
+
+        #custombtn .model-icon:not(.e-icons) {
+            margin-right: 5px;
+            margin-top: 0;
+            height: 20px;
+            width: 20px;
+        }
+
+        #dialogElem.e-dialog .e-dlg-content {
+            border-radius: 0;
+        }
+        .e-dialog .e-dlg-content {
+            padding: 0;
+        }
+
+        .settings-item {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        .settings-item .e-switch-wrapper {
+            margin: unset;
+            margin-left: auto;
+            width: 42px;
+        }
+        .notion-aiassistview .e-toolbar .e-toolbar-item .e-tbar-btn:focus,
+        .notion-aiassistview .e-toolbar .e-toolbar-item .e-tbar-btn:active,
+        .notion-aiassistview .e-dropdown-btn:active,
+        .e-dropdown-btn.e-btn:active {
+            box-shadow: none;
+        }
+
+        .notion-aiassistview.e-dropdown-btn, .e-dropdown-btn.e-btn {
+            box-shadow: none;
+        }
+
+        .notion-aiassistview .e-btn.e-flat.e-active,
+        .notion-aiassistview .e-dropdown-btn:active,
+        .e-dropdown-btn.e-btn:active,
+        .notion-aiassistview .e-dropdown-btn:active,
+        .e-dropdown-btn.e-btn:hover,
+        .notion-aiassistview .e-dropdown-btn:focus,
+        .e-dropdown-btn.e-btn:focus {
+            background: unset;
+            border: 1px solid transparent;
+            box-shadow: none;
+            color: unset;
+        }
+
+        .e-aiassistview
+        .e-view-header
+        .e-dropdown-btn.e-toolbar-item.e-active::after {
+            background-color: unset;
+        }
+
+        .notion-aiassistview
+        .e-footer-icons-wrapper
+        .e-toolbar
+        .e-toolbar-item.settings-icon
+        .e-tbar-btn.e-btn:hover,
+        .notion-aiassistview .e-footer .e-dropdown-btn.e-btn:hover,
+        .notion-aiassistview .e-footer .e-dropdown-btn.e-btn:active {
+            color: var(--color-sf-icon-color);
+        }
+
+        .notion-like-ui.e-card, .notion-like-ui.e-card:hover {
+            border: none;
+            box-shadow: none;
+        }
+
+        .notion-like-ui .notes-app-container {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            height: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .notion-like-ui .notes-page {
+            position: relative;
+            overflow: hidden;
+            margin: 0 auto;
+            border-radius: 10px;
+            padding: 32px 36px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--color-sf-border-light);
+        }]
+        .custom-dialog.e-dialog {
+            top: auto !important;
+            bottom: 0px !important;
+        }
+        /* Header */
+        .notion-like-ui .notes-header {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 24px;
+        }
+
+        .notion-like-ui .page-icon {
+            font-size: 24px;
+        }
+
+        .notion-like-ui .page-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        /* Content */
+        .notion-like-ui .notes-content h3 {
+            font-size: 18px;
+            margin: 20px 0 12px;
+        }
+
+        .notion-like-ui .notes-content h4 {
+            font-size: 15px;
+            margin: 18px 0 8px;
+            font-weight: 600;
+        }
+
+        .notion-like-ui .notes-content ul {
+            padding-left: 20px;
+            margin: 0 0 12px;
+        }
+
+        .notion-like-ui .notes-content li {
+            margin-bottom: 6px;
+            line-height: 1.6;
+        }
+
+        /* Task list */
+        .notion-like-ui .task-list li {
+            list-style: none;
+            padding-left: 0;
+            cursor: default;
+        }
+
+        /* Footer hint */
+        .notion-like-ui .notes-footer {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 28px;
+            padding-top: 16px;
+            border-top: 1px solid #eee;
+            font-size: 13px;
+        }
+
+        .notion-like-ui .hint-icon {
+            font-size: 16px;
+        }
+
+        .notion-like-ui .e-aiassistview .e-footer .e-toolbar-items {
+            line-height: 0;
+        }
+    </style>
+}
+
+@section Meta {
+    <meta name="description" content="This example demonstrates a Notion-inspired AI AssistView with multiple chat modes, model selection, chat history, and voice interaction in ASP.NET Core." />
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>This sample demonstrates a configurable AI AssistView that supports multiple chat display modes, model selection, chat history management, file attachments, and voice-based input and output interactions.</p>
+    </div>
+}
+
+@section Description {
+    <div id="description">
+        <p>
+            The AI AssistView sample showcases how an interactive assistant experience can be embedded and managed
+            within different UI layouts while offering rich user controls and session persistence:
+        </p>
+        <ul>
+            <li>Floating, sidebar, and full-screen chat modes with seamless view switching.</li>
+            <li>Prompt suggestions rendered using a custom item template with contextual icons.</li>
+            <li>Multiple AI model selection via a dropdown, with dynamic icon updates.</li>
+            <li>Chat session creation, persistence, and history navigation.</li>
+            <li>File upload and removal support using configured attachment endpoints.</li>
+            <li>Speech-to-text input and text-to-speech playback for hands-free interaction.</li>
+            <li>Toolbar actions for starting new chats, sharing conversations, hiding the assistant, and resizing views.</li>
+            <li>Floating action button (FAB) to restore the assistant when hidden.</li>
+        </ul>
+    </div>
+}
+
+<script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Import data
+            var notionSuggestions = @Html.Raw(Json.Serialize(Model.NotionSuggestions));
+            var modelIcons = @Html.Raw(Json.Serialize(Model.ModelIcons));
+            var iconMapByIndex = @Html.Raw(Json.Serialize(Model.IconMapByIndex));
+            var baseURL = window.baseurl;
+
+            // State variables
+            let sessionChats = [];
+            let activeSessionId = null;
+            let isFirstSessionAdded = false;
+            let webIconCheckedState = true;
+            let editIconCheckedState = true;
+            let sideObj;
+            let dialogInst;
+            let screenddbtnObj;
+            let historyddbtnObj;
+            let btnObj;
+            let toastObj;
+            let settingsBtnObj;
+            let currentMode = 'Sidebar';
+
+            // Initialize AIAssistView
+            let defaultAIAssistView = new ej.interactivechat.AIAssistView({
+                views: [
+                    {
+                        type: 'Assist',
+                        name: "New AI chat"
+                    }
+                ],
+                promptSuggestions: notionSuggestions,
+                promptSuggestionItemTemplate: suggestionItemContent,
+                promptRequest: onPromptRequest,
+                bannerTemplate: function () {
+                    return '<div class="banner-content"><div class="e-icons e-assistview-icon"></div><h3>How can I help you today ?</h3></div>';
+                },
+                created: created,
+                toolbarSettings: {
+                    items: [
+                        {
+                            iconCss: 'e-icons e-export',
+                            align: 'Right',
+                            tooltip: 'Share Chat'
+                        },
+                        {
+                            iconCss: 'e-icons e-history',
+                            align: 'Right',
+                            tooltip: 'Chat History',
+                            cssClass: 'history-icon'
+                        },
+                        {
+                            iconCss: 'e-icons e-edit-notes',
+                            align: 'Right',
+                            tooltip: 'Start New chat'
+                        },
+                        {
+                            iconCss: 'e-icons e-resize',
+                            align: 'Right',
+                            tooltip: 'Switch Chat Mode',
+                            cssClass: 'screen-resizer'
+                        },
+                        {
+                            iconCss: 'e-icons e-horizontal-line',
+                            align: 'Right',
+                            tooltip: 'Hide Chat'
+                        }
+                    ],
+                    itemClicked: toolbarItemClicked
+                },
+                footerToolbarSettings: {
+                    toolbarPosition: 'Bottom',
+                    items: [
+                        {
+                            iconCss: 'e-icons e-assist-attachment-icon',
+                            align: 'Left',
+                            tooltip: 'Attach File'
+                        },
+                        {
+                            iconCss: 'e-icons e-settings',
+                            align: 'Left',
+                            tooltip: 'Settings',
+                            cssClass: 'settings-icon'
+                        },
+                        {
+                            iconCss: 'e-icons e-edit',
+                            align: 'Left',
+                            tooltip: 'Edit access',
+                            visible: false
+                        },
+                        {
+                            iconCss: 'e-icons e-time-zone',
+                            align: 'Left',
+                            tooltip: 'Web access',
+                            visible: false
+                        },
+                        {
+                            align: 'Right',
+                            text: 'Auto',
+                            template: '<button id="custombtn">Auto</button>'
+                        },
+                        {
+                            iconCss: 'e-icons e-assist-speech-to-text',
+                            align: 'Right'
+                        },
+                        {
+                            iconCss: 'e-icons e-assist-send',
+                            align: 'Right'
+                        }
+                    ],
+                    itemClick: footerToolbarItemClicked
+                },
+                responseToolbarSettings: {
+                    items: [
+                        {
+                            iconCss: 'e-icons e-assist-copy'
+                        },
+                        {
+                            iconCss: 'e-icons e-assist-like'
+                        },
+                        {
+                            iconCss: 'e-icons e-assist-dislike'
+                        },
+                        {
+                            iconCss: 'e-icons e-assist-audio'
+                        }
+                    ]
+                },
+                enableAttachments: true,
+                enableStreaming: true,
+                attachmentSettings: {
+                    saveUrl: 'https://services.syncfusion.com/js/production/api/FileUploader/Save',
+                    removeUrl: 'https://services.syncfusion.com/js/production/api/FileUploader/Remove'
+                },
+                speechToTextSettings: {
+                    enable: true
+                }
+            });
+            defaultAIAssistView.appendTo('#aiAssistView');
+
+            // Initialize Dialog
+            dialogInst = new ej.popups.Dialog({
+                target: '.notes-page',
+                position: { X: 'right', Y: 0 },
+                animationSettings: { effect: 'FadeZoom' },
+                width: '500px',
+                visible: false,
+                cssClass: 'custom-dialog'
+            });
+            dialogInst.appendTo('#dialogElem');
+
+            // Initialize FAB
+            let fabInst = new ej.buttons.Fab({
+                iconCss: 'e-icons e-magic-wand',
+                target: '.notes-page'
+            });
+            fabInst.appendTo('#fabElem');
+            fabInst.element.style.display = 'none';
+
+            fabInst.element.onclick = () => {
+                toggleBackgroundState(true);
+                moveAssistview(currentMode);
+                fabInst.element.style.display = 'none';
+            };
+
+            function dialogOpenClose() {
+                dialogInst.visible = !dialogInst.visible;
+            }
+
+            async function getAIResponse(args) {
+                try {
+                    const userID = await window.fingerPrint();
+                    if (!userID) {
+                        return 'Failed to generate user ID. Please try again later.';
+                    }
+                    const abortController = new AbortController();
+                    const response = await fetch(baseURL + '/api/AI/Stream', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authentication': userID
+                        },
+                        body: JSON.stringify({
+                            message: args.prompt
+                        }),
+                        signal: abortController.signal
+                    });
+
+                    if (!response.ok) {
+                        let text = await response.text();
+                        let errorData;
+                        try {
+                            errorData = JSON.parse(text);
+                        } catch (e) {
+                            errorData = { error: 'HTTP Error ' + response.status + ': ' + text };
+                        }
+                        throw new Error(errorData.error || ('HTTP Error ' + response.status));
+                    }
+
+                    const reader = response.body.getReader();
+                    const decoder = new TextDecoder();
+                    let fullText = '';
+
+                    while (true) {
+                        const { done, value } = await reader.read();
+                        if (done) break;
+                        fullText += decoder.decode(value, { stream: true });
+                    }
+                    return fullText;
+                } catch (error) {
+                    if (error.name === 'AbortError') {
+                        return;
+                    } else if (error.message && error.message.indexOf('token limit') !== -1) {
+                        return error.message;
+                    }
+                    return 'We could not reach the AI service; please try again later.';
+                }
+            }
+
+            async function onPromptRequest(args) {
+                defaultAIAssistView.promptSuggestions = [];
+                var content = 'Based on the following notes content:\n\n' + document.querySelector('.notes-content')?.innerText + '\n\n---\n\nUser prompt: ' + args.prompt;
+                var modifiedArgs = {
+                    prompt: content,
+                    attachedFiles: args.attachedFiles || []
+                };
+                defaultAIAssistView.addPromptResponse(await getAIResponse(modifiedArgs));
+                if (!isFirstSessionAdded && !activeSessionId) {
+                    createNewSession(true);
+                    isFirstSessionAdded = true;
+                }
+                defaultAIAssistView.promptSuggestions = [];
+            }
+
+            function toolbarItemClicked(args) {
+                if (args.item.iconCss === 'e-icons e-edit-notes') {
+                    createNewSession();
+                    defaultAIAssistView.promptSuggestions = notionSuggestions;
+                } else if (args.item.iconCss === 'e-icons e-horizontal-line') {
+                    document.querySelector('#dialogElem').appendChild(document.getElementById('assistviewWrapper'));
+                    sideObj.hide();
+                    dialogInst.hide();
+                    toggleBackgroundState(true);
+                    fabInst.element.style.display = '';
+                } else if (args.item.iconCss === 'e-icons e-export') {
+                    toastObj.show();
+                }
+            }
+
+            function footerToolbarItemClicked(args) {
+                if (args.item.iconCss === 'e-icons e-edit' || args.item.iconCss === 'e-icons e-time-zone') {
+                    settingsBtnObj.toggle();
+                }
+            }
+
+            function moveAssistview(mode) {
+                currentMode = mode;
+                let wrapper = document.getElementById('assistviewWrapper');
+                let fs = document.getElementById('fullscreenContainer');
+                if (dialogInst.visible) {
+                    dialogInst.hide();
+                }
+                sideObj.hide();
+                fs.style.display = 'none';
+
+                switch (mode) {
+                    case 'Sidebar':
+                        sideObj.show();
+                        toggleBackgroundState(true);
+                        sideObj.element.appendChild(wrapper);
+                        toggleIconClass('e-horizontal-line', 'e-chevron-right-double');
+                        break;
+
+                    case 'Floating':
+                        dialogInst.show();
+                        document.querySelector('#dialogElem').appendChild(wrapper);
+                        toggleBackgroundState(true);
+                        toggleIconClass('e-chevron-right-double', 'e-horizontal-line');
+                        break;
+
+                    case 'Full screen':
+                        fs.style.display = 'block';
+                        fs.appendChild(wrapper);
+                        toggleBackgroundState(false);
+                        toggleIconClass('e-chevron-right-double', 'e-horizontal-line');
+                        break;
+                }
+            }
+
+            function toggleIconClass(selectorIconClass, replaceIconClass) {
+                let icon = defaultAIAssistView.toolbarHeader?.querySelector('.' + selectorIconClass);
+                if (icon) {
+                    icon.className = 'e-icons ' + replaceIconClass;
+                }
+            }
+
+            function created() {
+                let items = [
+                    {
+                        text: 'Auto',
+                        iconCss: 'e-icons e-assistview-icon'
+                    },
+                    {
+                        text: 'Sonnet 4.6',
+                        iconCss: 'model-icon model-sonet'
+                    },
+                    {
+                        text: 'Opus 4.6',
+                        iconCss: 'model-icon model-opus'
+                    },
+                    {
+                        text: 'Gemini 3.1 Pro',
+                        iconCss: 'model-icon model-gemini'
+                    },
+                    {
+                        text: 'GPT 5.2',
+                        iconCss: 'model-icon model-gpt'
+                    }
+                ];
+
+                let currentModel = 'Auto';
+                btnObj = new ej.splitbuttons.DropDownButton({
+                    items: items,
+                    cssClass: 'e-caret-hide e-flat',
+                    iconCss: 'e-icons e-assistview-icon',
+                    beforeItemRender: function (args) {
+                        if (currentModel === args.item.text) {
+                            args.element.classList.add('e-selected');
+                        }
+                    },
+                    select: function (args) {
+                        currentModel = args.item.text;
+                        btnObj.content = args.item.text;
+                        updateModelIcon(args.item.text);
+                    }
+                });
+                btnObj.appendTo('#custombtn');
+
+                let settingsItems = [
+                    {
+                        text: 'Can make changes',
+                        iconCss: 'e-icons e-edit',
+                        id: 'edit'
+                    },
+                    {
+                        text: 'Web access',
+                        iconCss: 'e-icons e-time-zone',
+                        id: 'web-access'
+                    },
+                    {
+                        text: 'Help Center',
+                        iconCss: 'e-icons e-reading-view',
+                        id: 'help-center'
+                    }
+                ];
+
+                settingsBtnObj = new ej.splitbuttons.DropDownButton({
+                    items: settingsItems,
+                    cssClass: 'e-caret-hide e-flat',
+                    popupWidth: '230px',
+                    itemTemplate: function (data) {
+                        if (data.text !== 'Help Center') {
+                            return '<div class="settings-item"><span class="e-menu-icon ' + data.iconCss + '"></span><span class="custom-class">' + data.text + '</span><input type="checkbox" class="settings-switch" id="settings-switch-' + data.id + '" /></div>';
+                        }
+                        return '<div class="settings-item"><span class="e-menu-icon ' + data.iconCss + '"></span><span class="custom-class">' + data.text + '</span></div>';
+                    },
+                    open: onSettingsDropdownCreated
+                });
+                settingsBtnObj.appendTo('.settings-icon');
+
+                let screenTypes = [
+                    {
+                        text: 'Sidebar'
+                    },
+                    {
+                        text: 'Floating'
+                    },
+                    {
+                        separator: true
+                    },
+                    {
+                        text: 'Full screen'
+                    }
+                ];
+
+                screenddbtnObj = new ej.splitbuttons.DropDownButton({
+                    items: screenTypes,
+                    cssClass: 'e-caret-hide e-flat',
+                    beforeItemRender: function (args) {
+                        if (currentMode === args.item.text) {
+                            args.element.classList.add('e-selected');
+                        }
+                    },
+                    select: function (args) {
+                        if (currentMode === args.item.text) return;
+                        moveAssistview(args.item.text);
+                    }
+                });
+                screenddbtnObj.appendTo('.screen-resizer');
+
+                historyddbtnObj = new ej.splitbuttons.DropDownButton({
+                    items: [
+                        {
+                            text: 'No Chat Histroy'
+                        }
+                    ],
+                    cssClass: 'e-caret-hide e-flat',
+                    beforeItemRender: function (args) {
+                        if (activeSessionId === args.item.id) {
+                            args.element.classList.add('e-selected');
+                        }
+                    },
+                    select: function (args) {
+                        if (args.item.id) {
+                            loadSession(args.item.id);
+                        }
+                    }
+                });
+                historyddbtnObj.appendTo('.history-icon');
+
+                sideObj = new ej.navigations.Sidebar({
+                    target: '.notes-page',
+                    width: '400px',
+                    position: 'Right',
+                    animate: false
+                });
+                sideObj.appendTo('#notionSidebar');
+                var wrapper = document.getElementById('assistviewWrapper');
+                sideObj.element.appendChild(wrapper);
+                toggleIconClass('e-horizontal-line', 'e-chevron-right-double');
+                toastObj = new ej.notifications.Toast({
+                    content: 'Share chat option is clicked !',
+                    target: document.body,
+                    position: { X: 'Right', Y: 'Top' },
+                    showCloseButton: true
+                });
+                toastObj.appendTo('#toastTarget');
+            }
+
+            function onSettingsDropdownCreated() {
+                settingsBtnObj.items.forEach((item) => {
+                    let isChecked = false;
+                    if (item.text === 'Help Center') {
+                        return;
+                    } else if (item.id === 'edit') {
+                        isChecked = editIconCheckedState;
+                    } else if (item.id === 'web-access') {
+                        isChecked = webIconCheckedState;
+                    }
+                    let switchElem = document.getElementById('settings-switch-' + item.id);
+                    if (!switchElem) return;
+                    new ej.buttons.Switch({
+                        checked: isChecked,
+                        change: function (args) {
+                            toggleSwitch(args, item.text);
+                        }
+                    }).appendTo(switchElem);
+                });
+            }
+
+            function toggleBackgroundState(show) {
+                let notionContainer = document.querySelector('.notes-app-container');
+                if (notionContainer) {
+                    hiddenClass(notionContainer, show);
+                }
+            }
+
+            function hiddenClass(element, show) {
+                show ? element.classList.remove('e-hidden') : element.classList.add('e-hidden');
+            }
+
+            function toggleSwitch(args, text) {
+                let visibilty = !args.checked;
+                if (text === 'Can make changes') {
+                    editIconCheckedState = !visibilty;
+                    let editIcon = defaultAIAssistView.footerToolbarEle.element.querySelector('.e-edit').closest('.e-toolbar-item');
+                    if (editIcon) {
+                        hiddenClass(editIcon, visibilty);
+                    }
+                } else if (text === 'Web access') {
+                    webIconCheckedState = !visibilty;
+                    let webIcon = defaultAIAssistView.footerToolbarEle.element.querySelector('.e-time-zone').closest('.e-toolbar-item');
+                    if (webIcon) {
+                        hiddenClass(webIcon, visibilty);
+                    }
+                }
+            }
+
+            function suggestionItemContent(ctx) {
+                let iconClass = iconMapByIndex[ctx.index] || '';
+                return '<div class="suggestion-item active"><span class="' + iconClass + ' suggestion-icon"></span><span class="assist-suggestion-content">' + ctx.promptSuggestion + '</span></div>';
+            }
+
+            function updateModelIcon(modelName) {
+                btnObj.iconCss = 'model-icon ' + modelIcons[modelName];
+                btnObj.dataBind();
+            }
+
+            function persistActiveSession() {
+                if (!activeSessionId) return;
+
+                let session = sessionChats.find((s) => s.id === activeSessionId);
+                if (!session) return;
+
+                session.prompts = defaultAIAssistView.prompts;
+            }
+
+            function createNewSession(isAuto) {
+                isAuto = isAuto || false;
+                let prompts = defaultAIAssistView.prompts;
+
+                if (!prompts || prompts.length === 0) {
+                    activeSessionId = null;
+                    defaultAIAssistView.prompts = [];
+                    defaultAIAssistView.dataBind();
+                    return;
+                }
+
+                if (activeSessionId) {
+                    persistActiveSession();
+                } else {
+                    let session = {
+                        id: String(Date.now()),
+                        title: prompts[0] ? prompts[0].prompt : 'New Chat',
+                        prompts: prompts
+                    };
+
+                    sessionChats.push(session);
+                    activeSessionId = session.id;
+                    updateHistoryDropdown();
+                }
+
+                if (!isAuto) {
+                    activeSessionId = null;
+                    defaultAIAssistView.prompts = [];
+                    defaultAIAssistView.dataBind();
+                }
+            }
+
+            function updateHistoryDropdown() {
+                let items = sessionChats.map((session) => ({
+                    text: session.title.length > 30 ? session.title.substring(0, 30) + '...' : session.title,
+                    id: session.id
+                }));
+
+                historyddbtnObj.items = items.length ? items : [{ text: 'No Chat History' }];
+                historyddbtnObj.dataBind();
+            }
+
+            function ensureCurrentChatIsSaved() {
+                let prompts = defaultAIAssistView.prompts;
+                if (!prompts || prompts.length === 0) {
+                    return;
+                }
+                if (activeSessionId) {
+                    persistActiveSession();
+                    return;
+                }
+                let session = {
+                    id: String(Date.now()),
+                    title: prompts[0] ? prompts[0].prompt : 'New Chat',
+                    prompts: prompts
+                };
+                sessionChats.push(session);
+                updateHistoryDropdown();
+            }
+
+            function loadSession(sessionId) {
+                if (sessionId === activeSessionId) return;
+                ensureCurrentChatIsSaved();
+                let session = sessionChats.find((s) => s.id === sessionId);
+                if (!session) return;
+                activeSessionId = sessionId;
+                defaultAIAssistView.prompts = session.prompts;
+                defaultAIAssistView.promptSuggestions = [];
+                defaultAIAssistView.dataBind();
+            }
+        });
+    </script>
+}

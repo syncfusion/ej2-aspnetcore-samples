@@ -1,0 +1,156 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Grid.FilterMenuModel
+@{
+    ViewData["Title"] = "FilterMenu";
+}
+
+<h2>FilterMenu</h2>
+
+@section ControlsSection{
+    <div class="col-lg-8 control-section">
+        <div class="control-wrapper">
+            <div class="control-section">
+                <ejs-grid id="Grid" clipMode="EllipsisWithTooltip" allowFiltering="true" allowSorting="true" allowPaging="true" load="load" >
+                    <e-grid-filterSettings type="Menu"></e-grid-filterSettings>
+                    <e-grid-pagesettings pageCount="5"></e-grid-pagesettings>
+                    <e-grid-columns>
+                        <e-grid-column field="EmployeeID" headerText="Employee ID" textAlign="Right" width="120"></e-grid-column>
+                        <e-grid-column field="Employees" headerText="Employee Name" width="150"></e-grid-column>
+                        <e-grid-column field="Designation" headerText="Designation" width="130"></e-grid-column>
+                        <e-grid-column field="CurrentSalary" headerText="CurrentSalary" format="C2" width="120"></e-grid-column>
+                    </e-grid-columns>
+
+                </ejs-grid>
+            </div>
+            </div>
+        </div>
+        <template>
+            <tr class="infinite-row">
+            <td class="left-side"><div style='padding-left: 0px;'>Enable OnDemand </div></td>
+                <td><input type="checkbox" tabindex="1" id='dataloadtype' /></td>
+            </tr>
+        </template>
+        <template>
+            <tr class="immediate-row">
+            <td class="left-side"><div style='padding-left: 0px;'>Enable Immediate Filter </div></td>
+                <td><input type="checkbox" tabindex="1" id='immediateFilter' /></td>
+            </tr>
+        </template>
+<div class="col-lg-4 property-section">
+
+
+
+    <table id="property" title="Properties" style="width: 100%;">
+
+
+        <tr>
+            <td class="left-side">Filter Type :</td>
+            <td>
+                <ejs-dropdownlist id="filtertype" dataSource="@Model.filtertype" value="@("Menu")" change="onChange" index="2" popupHeight="220px"></ejs-dropdownlist>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<script>
+        function onChange() {
+            var gridObj = document.getElementById("Grid").ej2_instances[0], dropdpwnObj = document.getElementById("filtertype").ej2_instances[0];
+            gridObj.filterSettings.type = dropdpwnObj.value;
+            var propertyTbody = document.querySelector('#property tbody');
+            var enableInfiniteLoad;
+            if (dropdpwnObj.value === 'Excel' || dropdpwnObj.value === 'CheckBox') {
+                if (propertyTbody.children.length < 3) {
+                    var templates = document.getElementsByTagName("template");
+                    var cloneTemplate = templates[0].content.cloneNode(true);
+                    propertyTbody.appendChild(cloneTemplate.querySelector("tr.infinite-row"));
+                    enableInfiniteLoad = new ej.buttons.CheckBox({
+                        change: function(e) {
+                            gridObj.filterSettings.enableInfiniteScrolling = e.checked;
+                        }
+                    });
+                    enableInfiniteLoad.appendTo('#dataloadtype');
+                    var cloneImmediateTemplate = templates[1].content.cloneNode(true);
+                    propertyTbody.appendChild(cloneImmediateTemplate.querySelector("tr.immediate-row"));
+                    var immediateFilterCheckbox = new ej.buttons.CheckBox({
+                        change: (e) => {
+                            gridObj.filterSettings.mode = e.checked ? 'Immediate' : 'Default';
+                        }
+                    });
+                    immediateFilterCheckbox.appendTo('#immediateFilter');
+                } else {
+                    var immediateFilterCheckbox = (document.getElementById('immediateFilter'))['ej2_instances'][0];
+                    immediateFilterCheckbox.checked = false;
+                    gridObj.filterSettings.mode = 'Default';
+                    enableInfiniteLoad = document.getElementById('dataloadtype').ej2_instances[0];
+                    enableInfiniteLoad.checked = false;
+                    gridObj.filterSettings.enableInfiniteScrolling = false;
+                }
+            } else {
+                gridObj.filterSettings.mode = 'Default';
+                gridObj.filterSettings.enableInfiniteScrolling = false;
+                ej.base.remove(document.querySelector('#property tbody tr.infinite-row'));
+                ej.base.remove(document.querySelector('#property tbody tr.immediate-row'));
+            }
+        }
+        function load(args) {
+            var hostUrl = 'https://services.syncfusion.com/aspnet/production/';
+            var urlapi = new ej.data.DataManager({
+                url: hostUrl + "api/UrlDataSource",
+                adaptor: new ej.data.UrlAdaptor()
+            });
+            this.dataSource = urlapi;
+            this.query = new ej.data.Query().addParams('dataCount', '10000');
+        }
+</script>
+}
+@section ActionDescription{
+	<div id="action-description">
+		<p>
+            This sample demonstrates the filtering capabilities of the Grid using multiple filter types. It shows how users can interact with different filtering options to refine and view data efficiently.
+        </p>
+	</div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Filter Menu in ASP.NET Core Data Grid control. Explore here for more details."/>
+                }
+
+@section Description{
+    <div id="description">
+        <p>
+            The filtering feature allows users to display only the matching records based on filter criteria. To enable filtering, set the <code>allowFiltering</code> property to <code>true</code>.
+            The Grid supports the following filter types:
+        <ul>
+            <li><code>Menu</code></li>
+            <li><code>CheckBox</code></li>
+            <li><code>Excel</code></li>
+        </ul>
+        <p>
+            These can be configured using the <code>filterSettings.type</code> property. In this sample, the Menu filter is enabled by default, and you can switch to "CheckBox" or "Excel" filters using the dropdown.
+            When using "CheckBox" or "Excel" filters, the Grid provides two enhancements:
+        </p>
+        <ul>
+            <li><strong>On-demand loading (Performance):</strong> Loads data only when needed, which improves speed and efficiency when working with large datasets. This can be enabled by setting the <code>filterSettings.enableInfiniteScrolling</code> property to <code>true</code>.</li>
+            <li><strong>Immediate filtering (UI Experience):</strong> Applies filters instantly as soon as items are checked or unchecked, which provides a smoother interaction. This can be enabled by setting the <code>filterSettings.mode</code> property to <code>Immediate</code>.</li>
+        </ul>
+        <p><strong>Injecting Module:</strong></p>
+        <p>
+            Features of the Grid component are organized into individual, feature-specific modules. To use filtering functionality, inject the Filter module by <code>Grid.Inject(Filter)</code>.
+        </p>
+        <p>
+            More information on the filter configuration can be found in the
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/grid/filtering/filtering">
+                documentation section</a>.
+        </p>
+        <p>
+            Looking for the full ASP.NET Core Data Grid component overview, features, pricing, and documentation? Visit our <a target="_blank" href="https://www.syncfusion.com/aspnet-core-ui-controls/grid" aria-label="documentation">ASP.NET Core Data Grid component</a> page.
+        </p>
+
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Data Grid Filter Menu Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Filter Menu in ASP.NET Core Data Grid Control</h1>
+                }

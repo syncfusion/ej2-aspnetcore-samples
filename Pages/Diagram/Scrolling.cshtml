@@ -1,0 +1,416 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Diagram.ScrollingModel
+@using Syncfusion.EJ2.Diagrams;
+@{
+    var getSymbolNode = "getSymbolNodes";
+    var getSymbolInfo = "getSymbolInfo";
+}
+@section ControlsSection{
+    <div class="control-section">
+        <div style="width: 100%;">
+
+            <div class="sb-mobile-palette-bar">
+                <div id="palette-icon" style="float: right;" role="button" class="e-ddb-icons1 e-toggle-palette"></div>
+            </div>
+            <div id="palette-space" class="sb-mobile-palette" style="width:20%;float:left">
+                <ejs-symbolpalette id="symbolPalette" getNodeDefaults="@getSymbolNode" symbolHeight="50" symbolWidth="50" expandMode="@Model.Single" width="100%" height="700px" palettes="@Model.Palette" symbolMargin="new SymbolPaletteMargin() { Left=5,Right=5,Top=5,Bottom=10}" getSymbolInfo="@getSymbolInfo">
+                </ejs-symbolpalette>
+            </div>
+            <div id="diagram-space" class="sb-mobile-diagram" style="width:59%;float:left">
+                <ejs-diagram id="diagram" width="100%" height="700px" created="diagramCreated">
+                    <e-diagram-rulersettings showRulers="true"></e-diagram-rulersettings>
+                    <e-diagram-scrollsettings scrollLimit="Infinity"></e-diagram-scrollsettings>
+                    <e-diagram-snapsettings horizontalGridlines="@Model.gridLines" verticalGridlines="@Model.gridLines"></e-diagram-snapsettings>
+                </ejs-diagram>
+            </div>
+            <div id="properties" class ="sb-mobile-property-panel" style="width:20%;float:right">
+                <div class="property-panel-header">
+                    Properties
+                </div>
+                <div class="row db-prop-row">
+                    <div class="col-xs-4 db-col-right db-prop-text-style" style="padding-top: 14px">
+                        <span class="db-prop-text-style db-spacing-text">Scroll Limit</span>
+                    </div>
+                    <div class="col-xs-8 db-col-left" style="padding-top: 10px;">
+                        <div class="diagram-text-input">
+                            <ejs-dropdownlist id="scrollLimit" dataSource="@Model.DropDownModels" index="0" change="valueChange">
+                                <e-dropdownlist-fields text="text" value="value"></e-dropdownlist-fields>
+                            </ejs-dropdownlist>
+                        </div>
+                    </div>
+                </div>
+                <div id="scrollableDiv">
+                    <div class="property-panel-header">
+                        Scrollable Area
+                    </div>
+                    <div class="row db-prop-row">
+                        <div class="col-xs-12" style="padding-right: 15px;">
+                            <div style="width:10%;float:left;margin-top: 8px;">
+                                    <span>X</span>
+                                </div>
+                            <div style="width:90%;float:right;padding-left: 20px;">
+                                    <ejs-textbox id="scrollAreaX" placeholder="10" value="10" change="scrollAreaXChange"></ejs-textbox>
+                                </div>
+                            </div>
+                        </div>
+                    <div class="row db-prop-row" style="padding-top: 15px;">
+                        <div class="col-xs-12" style="padding-right: 15px;">
+                            <div style="width:10%;float:left;margin-top: 8px;">
+                                <span>Y</span>
+                            </div>
+                            <div style="width:90%;float:right;padding-left: 20px;">
+                                <ejs-textbox id="scrollAreaY" placeholder="10" value="10" change="scrollAreaYChange"></ejs-textbox>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row db-prop-row" style="padding-top: 15px;">
+                        <div class="col-xs-12" style="padding-right: 15px;;">
+                            <div style="width:10%;float:left;margin-top: 8px;">
+                                    <span>Width</span>
+                                </div>
+                            <div style="width:90%;float:right;padding-left: 20px;">
+                                    <ejs-textbox id="widthTextBox" placeholder="1500" value="1500" change="widthTextBoxChange"></ejs-textbox>
+                                </div>
+                            </div>
+                        </div>
+                    <div class="row db-prop-row" style="padding-top: 15px;">
+                        <div class="col-xs-12" style="padding-right: 15px;">
+                            <div style="width:10%;float:left;margin-top: 8px;">
+                                <span>Height</span>
+                            </div>
+                            <div style="width:90%;float:right;padding-left: 20px;">
+                                <ejs-textbox id="heightTextBox" placeholder="1500" value="1500" change="heightTextBoxChange"></ejs-textbox>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="padding-top:5px;margin-top: 20px;">
+                    <div style="float:left">Enable AutoScroll</div>
+                    <div style="float: left;margin-left: 10px;">
+                        <ejs-checkbox id="checked" checked="true" change="onChange"></ejs-checkbox>
+                    </div>
+                </div>
+                <div id="autoScrollDiv" style="margin-top: 30px">
+                    <div class="property-panel-header">
+                        AutoScroll border
+                    </div>
+                    <div class="row db-prop-row">
+                        <div class="col-xs-6" style="padding-right: 15px;width: 150px;">
+                            <div style="width:40%;float:left;margin-top: 8px;">
+                                    <span>Left</span>
+                                </div>
+                            <div style="width:60%;float:right;padding-left: 20px;">
+                                    <ejs-textbox id="leftTextBox" value="30" change="leftTextBoxChange"></ejs-textbox>
+                                </div>
+                            </div>
+                        </div>
+                    <div class="row db-prop-row" style="padding-top: 15px;">
+                        <div class="col-xs-6" style="padding-right: 15px;width: 150px;">
+                            <div style="width:40%;float:left;margin-top: 8px;">
+                                <span>Top</span>
+                            </div>
+                            <div style="width:60%;float:right;padding-left: 20px;">
+                                <ejs-textbox id="topTextBox" value="30" change="topTextBoxChange"></ejs-textbox>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row db-prop-row" style="padding-top: 15px;">
+                        <div class="col-xs-6" style="padding-right: 15px;width: 150px;">
+                            <div style="width:40%;float:left;margin-top: 8px;">
+                                    <span>Right</span>
+                                </div>
+                            <div style="width:60%;float:right;padding-left: 20px;">
+                                    <ejs-textbox id="rightTextBox" value="30" change="rightTextBoxChange"></ejs-textbox>
+                                </div>
+                            </div>
+                        </div>
+                    <div class="row db-prop-row" style="padding-top: 15px;">
+                        <div class="col-xs-6" style="padding-right: 15px;width: 150px;">
+                            <div style="width:40%;float:left;margin-top: 8px;">
+                                <span>Bottom</span>
+                            </div>
+                            <div style="width:60%;float:right;padding-left: 20px;">
+                                <ejs-textbox id="bottomTextBox" value="30" change="bottomTextBoxChange"></ejs-textbox>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <style>
+
+        .e-basic::before {
+            content: "\e726";
+        }
+
+        .e-flow::before {
+            content: "\e724";
+        }
+
+        .e-connector::before {
+            content: "\e725";
+        }
+        /* style to align the proerty panel*/
+        .diagram-text-input {
+            width: calc(100% - 25px);
+            padding: 2px 2px 0px 0px;
+        }
+
+        .disabledbutton {
+            pointer-events: none;
+            opacity: 0.4;
+        }
+        /* style to align the palette*/
+        .sb-mobile-palette {
+            width: 240px;
+            height: 100%;
+            float: left;
+            border: 1px solid rgba(0, 0, 0, 0.12);
+        }
+
+        .sb-mobile-palette-bar {
+            display: none;
+        }
+            /* style to align the diagram*/
+        .sb-mobile-diagram {
+            width: calc(100% - 242px);
+            height: 100%;
+            float: left;
+        }
+
+        .e-toggle-palette::before {
+            content: "\e700"
+        }
+
+        /*style to display icons on palettes*/
+         @@font-face {
+            font-family: 'e-ddb-icons1';
+            src: url(data:application/x-font-ttf;charset=utf-8;base64,AAEAAAAKAIAAAwAgT1MvMj1tSfIAAAEoAAAAVmNtYXDnEOdVAAABiAAAADZnbHlmdC1P4gAAAcgAAAAwaGVhZBJhohMAAADQAAAANmhoZWEIVQQDAAAArAAAACRobXR4CAAAAAAAAYAAAAAIbG9jYQAYAAAAAAHAAAAABm1heHABDgAUAAABCAAAACBuYW1lm+wy9gAAAfgAAAK1cG9zdLnsYngAAASwAAAAMAABAAAEAAAAAFwEAAAAAAAD+AABAAAAAAAAAAAAAAAAAAAAAgABAAAAAQAAgNcenF8PPPUACwQAAAAAANelrs4AAAAA16WuzgAAAAAD+AN6AAAACAACAAAAAAAAAAEAAAACAAgAAgAAAAAAAgAAAAoACgAAAP8AAAAAAAAAAQQAAZAABQAAAokCzAAAAI8CiQLMAAAB6wAyAQgAAAIABQMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUGZFZABA5wDnAAQAAAAAXAQAAAAAAAABAAAAAAAABAAAAAQAAAAAAAACAAAAAwAAABQAAwABAAAAFAAEACIAAAAEAAQAAQAA5wD//wAA5wD//wAAAAEABAAAAAEAAAAAAAAAGAAAAAIAAAAAA/gDegACAAcAACUhCQEhATUhAQQC9P6G/YoBMQFF/YqGAjf+hgH0QwAAAAAAEgDeAAEAAAAAAAAAAQAAAAEAAAAAAAEAEwABAAEAAAAAAAIABwAUAAEAAAAAAAMAEwAbAAEAAAAAAAQAEwAuAAEAAAAAAAUACwBBAAEAAAAAAAYAEwBMAAEAAAAAAAoALABfAAEAAAAAAAsAEgCLAAMAAQQJAAAAAgCdAAMAAQQJAAEAJgCfAAMAAQQJAAIADgDFAAMAAQQJAAMAJgDTAAMAAQQJAAQAJgD5AAMAAQQJAAUAFgEfAAMAAQQJAAYAJgE1AAMAAQQJAAoAWAFbAAMAAQQJAAsAJAGzIERpYWdyYW1fU2hhcGVzX0ZPTlRSZWd1bGFyRGlhZ3JhbV9TaGFwZXNfRk9OVERpYWdyYW1fU2hhcGVzX0ZPTlRWZXJzaW9uIDEuMERpYWdyYW1fU2hhcGVzX0ZPTlRGb250IGdlbmVyYXRlZCB1c2luZyBTeW5jZnVzaW9uIE1ldHJvIFN0dWRpb3d3dy5zeW5jZnVzaW9uLmNvbQAgAEQAaQBhAGcAcgBhAG0AXwBTAGgAYQBwAGUAcwBfAEYATwBOAFQAUgBlAGcAdQBsAGEAcgBEAGkAYQBnAHIAYQBtAF8AUwBoAGEAcABlAHMAXwBGAE8ATgBUAEQAaQBhAGcAcgBhAG0AXwBTAGgAYQBwAGUAcwBfAEYATwBOAFQAVgBlAHIAcwBpAG8AbgAgADEALgAwAEQAaQBhAGcAcgBhAG0AXwBTAGgAYQBwAGUAcwBfAEYATwBOAFQARgBvAG4AdAAgAGcAZQBuAGUAcgBhAHQAZQBkACAAdQBzAGkAbgBnACAAUwB5AG4AYwBmAHUAcwBpAG8AbgAgAE0AZQB0AHIAbwAgAFMAdAB1AGQAaQBvAHcAdwB3AC4AcwB5AG4AYwBmAHUAcwBpAG8AbgAuAGMAbwBtAAAAAAIAAAAAAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgECAQMABlNoYXBlcwAA) format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .e-ddb-icons1 {
+            font-family: 'e-ddb-icons1';
+            speak: none;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: normal;
+            font-variant: normal;
+            text-transform: none;
+            line-height: 1;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        @@media (max-width: 550px) {
+
+            .sb-mobile-palette {
+                z-index: 19;
+                position: absolute;
+                display: none;
+                transition: transform 300ms linear, visibility 0s linear 300ms;
+                width: 39% !important;
+                height: 100%;
+            }
+
+            .sb-mobile-palette-bar {
+                display: block;
+                width: 100%;
+                background: #fafafa;
+                padding: 10px 10px;
+                border: 0.5px solid #e0e0e0;
+                min-height: 40px;
+            }
+
+            .sb-mobile-property-panel {
+                width: 60% !important;;
+                float: left !important;
+            }
+
+            .sb-mobile-diagram {
+                width: 100% !important;
+                height: 100%;
+                float: left;
+                left: 0px;
+            }
+
+            .sb-mobile-palette-open {
+                position: absolute;
+                display: block;
+                right: 15px;
+            }
+
+            #palette-icon {
+                font-size: 20px;
+            }
+        }
+    </style>
+    <script>
+       function getSymbolNodes(symbol) {
+        var obj = symbol;
+        if (obj.id === 'terminator' || obj.id === 'process') {
+            obj.width = 80;
+            obj.height = 40;
+        }
+        else if (obj.id === 'decision' || obj.id === 'document' || obj.id === 'preDefinedProcess' ||
+            obj.id === 'paperTap' || obj.id === 'directData' || obj.id === 'multiDocument' || obj.id === 'data') {
+            obj.width = 50;
+            obj.height = 40;
+        }
+        else {
+            obj.width = 50;
+            obj.height = 50;
+        }
+        obj.style.strokeColor = '#757575';
+    }
+
+
+    function getSymbolInfo(symbol) {
+        return { fit: true };
+    }
+    function getNodeDefaults(obj, diagram) {
+        if (obj.width === undefined) {
+            obj.width = 145;
+        } else {
+            var ratio = 100 / obj.width;
+            obj.width = 100;
+            obj.height *= ratio;
+        }
+        obj.style = { fill: '#357BD2', strokeColor: 'white' };
+
+        //Set ports
+        obj.ports = getPorts(obj);
+        return obj;
+    }
+
+    function getConnectorDefaults(obj, diagram) {
+        if (obj.id === 'connector9') {
+            obj.segments = [{ direction: 'Top', length: 120, type: 'Orthogonal' }];
+        }
+        if (obj.id === 'connector10') {
+            obj.segments = [{ direction: 'Right', length: 100, type: 'Orthogonal' }];
+        }
+
+        if (obj.id.indexOf('connector') !== -1) {
+            obj.type = 'Orthogonal';
+            obj.targetDecorator = { shape: 'Arrow', width: 10, height: 10 };
+        }
+    }
+
+    function diagramCreated() {
+        var element2 = document.getElementById('scrollableDiv');
+        element2.className = "disabledbutton";
+        var diagram = document.getElementById("diagram").ej2_instances[0];
+        diagram.scrollSettings.canAutoScroll = true;
+        diagram.scrollSettings.autoScrollBorder = { left: 30, right: 30, top: 30, bottom: 30 };
+        diagram.scrollSettings.scrollableArea = new ej.diagrams.Rect(0, 0, 1500, 1500);
+        addEvents();
+        diagram.fitToPage();
+    }
+
+    function addEvents() {
+        var isMobile = window.matchMedia('(max-width:550px)').matches;
+        if (isMobile) {
+            var paletteIcon = document.getElementById('palette-icon');
+            if (paletteIcon) {
+                paletteIcon.addEventListener('click', openPalette, false);
+            }
+        }
+    }
+
+    function openPalette() {
+        var paletteSpace = document.getElementById('palette-space');
+        var isMobile = window.matchMedia('(max-width:550px)').matches;
+        if (isMobile) {
+            if (!paletteSpace.classList.contains('sb-mobile-palette-open')) {
+                paletteSpace.classList.add('sb-mobile-palette-open');
+            }
+            else {
+                paletteSpace.classList.remove('sb-mobile-palette-open');
+            }
+        }
+    }
+
+    function valueChange(args) {
+        var diagram = document.getElementById("diagram").ej2_instances[0];
+        var element = document.getElementById('scrollableDiv');
+        element.className = args.value === "Limited" ? "" : "disabledbutton";
+        diagram.scrollSettings.scrollLimit = args.value;
+    }
+    function scrollAreaXChange(args) {
+        var diagram = document.getElementById("diagram").ej2_instances[0];
+        diagram.scrollSettings.scrollableArea.x = Number(args.value);
+    }
+    function scrollAreaYChange(args) {
+        var diagram = document.getElementById("diagram").ej2_instances[0];
+        diagram.scrollSettings.scrollableArea.y = Number(args.value);
+    }
+    function widthTextBoxChange(args) {
+        var diagram = document.getElementById("diagram").ej2_instances[0];
+        diagram.scrollSettings.scrollableArea.width = Number(args.value);
+    }
+    function heightTextBoxChange(args) {
+        var diagram = document.getElementById("diagram").ej2_instances[0];
+        diagram.scrollSettings.scrollableArea.height = Number(args.value);
+    }
+
+    function onChange(args) {
+        var diagram = document.getElementById("diagram").ej2_instances[0];
+        var element4 = document.getElementById('autoScrollDiv');
+        if (args.checked) {
+            element4.className = '';
+            diagram.scrollSettings.canAutoScroll = true;
+        } else {
+            element4.className = 'disabledbutton';
+            diagram.scrollSettings.canAutoScroll = false;
+        }
+    }
+
+    function leftTextBoxChange(args) {
+        var diagram = document.getElementById("diagram").ej2_instances[0];
+        diagram.scrollSettings.autoScrollBorder.left = Number(args.value);
+    }
+    function topTextBoxChange(args) {
+        var diagram = document.getElementById("diagram").ej2_instances[0];
+        diagram.scrollSettings.autoScrollBorder.top = Number(args.value);
+    }
+    function rightTextBoxChange(args) {
+        var diagram = document.getElementById("diagram").ej2_instances[0];
+        diagram.scrollSettings.autoScrollBorder.right = Number(args.value);
+    }
+    function bottomTextBoxChange(args) {
+        var diagram = document.getElementById("diagram").ej2_instances[0];
+        diagram.scrollSettings.autoScrollBorder.bottom = Number(args.value);
+    }
+
+        @*custom code end*@
+    </script>
+}
+@section ActionDescription{
+    <p>
+       This example illustrates how to scroll a diagram using vertical and horizontal scrollbars. The scroll limit property helps limit the scrolling area.
+    </p>
+}
+@section Meta{
+                    <meta name="description" content="This example demonstrates the vertical and horizontal scrolling of diagram in ASP.NET Core Diagram control. Explore here for more details."/>
+                }
+@section Description{
+   <p> The scroll limit allows you to define the scrollable region of the Diagram while scrolling the page with a mouse.</p>
+
+<p>The scrollSettings <code>scrollLimit</code> property allows you to define the scrollable region of a Diagram. You may scroll inside the designated region if the scrollLimit is set to <code>limited</code>. When the scrollLimit is set to <code>Diagram</code>, you can scroll within the Diagram content. When the scrollLimit is set to <code>Infinity</code>, it allows infinite scrolling.</p>
+
+<p>The scrollSettings <code>autoScrollBorder</code> property is used to specify the distance from the edge of a control at which auto-scrolling should occur.</p>
+
+    <p>Looking for the full ASP.NET Core Diagram component overview, features, pricing, and documentation? Visit the <a href="https://www.syncfusion.com/aspnet-core-ui-controls/diagram" target="_blank">ASP.NET Core Diagram</a> page.</p>
+}
+@section Title{
+                    <title>ASP.NET Core Diagram vertical and horizontal scrollbars Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of vertical and horizontal scrollbars in ASP.NET Core Diagram Control</h1>
+                }

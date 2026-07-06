@@ -1,0 +1,176 @@
+@page
+@using EJ2CoreSampleBrowser.Models
+
+@using Syncfusion.EJ2
+@using Syncfusion.EJ2.Schedule
+@using Syncfusion.EJ2.Buttons
+@using Syncfusion.EJ2.Inputs
+
+@{
+    var appointments = new ScheduleData().GetConcurrentData();
+}
+@section ControlsSection {
+<div class="control-section">
+    <div class="row">
+        <!-- Scheduler -->
+        <div class="col-lg-8">
+            <div class="content-wrapper">
+                <ejs-schedule id="Schedule"
+                              width="100%"
+                              height="650px"
+                              selectedDate="new DateTime(2026, 5, 29)"
+                              currentView="Week"
+                              navigating="onNavigating">
+                    
+                    <e-schedule-views>
+                        <e-schedule-view option="Day" maxEventStack="1"></e-schedule-view>
+                        <e-schedule-view option="Week" maxEventStack="1"></e-schedule-view>
+                        <e-schedule-view option="WorkWeek" maxEventStack="1"></e-schedule-view>
+                    </e-schedule-views>
+
+                    <e-schedule-eventsettings dataSource="@appointments"></e-schedule-eventsettings>
+                </ejs-schedule>
+            </div>
+        </div>
+
+        <!-- Properties Panel -->
+        <div class="col-lg-4 property-section">
+            <div class="property-panel-section">
+                <div class="property-panel-header">Properties</div>
+
+                <div class="property-panel-content">
+                    <div class="property-row" style="display:flex;align-items:center;height:70px;">
+                        <ejs-radiobutton id="radio1" 
+                                       cssClass="schedule-radio-button"
+                                       name="eventDisplay" 
+                                       value="all"
+                                       change="onDisplayModeChange">
+                        </ejs-radiobutton>
+                        <label for="radio1" style="margin-left:30px;"><b>Show all events</b></label>
+                    </div>
+
+                    <div class="property-row" style="display:flex;align-items:center;gap:6px;;height:70px;">
+                        <ejs-radiobutton id="radio2" 
+                                       cssClass="schedule-radio-button"
+                                       name="eventDisplay" 
+                                       value="limited"
+                                       checked="true"
+                                       change="onDisplayModeChange">
+                        </ejs-radiobutton>
+                        <div style="display:flex;align-items:center;gap:6px;margin-left:30px;">
+                            <span><b>Show up to</b></span>
+                            <ejs-numerictextbox id="numeric" 
+                                              value="1" 
+                                              min="1" 
+                                              format="n0"
+                                              change="onLimitChange"
+                                              width="110px">
+                            </ejs-numerictextbox>
+                            <span><b>labels</b></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var displayMode = 'limited';
+    var maxEventsLimit = 1;
+
+    
+
+    function onNavigating(args) {
+        var value = displayMode === 'all' ? 0 : maxEventsLimit;
+            applyMaxStackToAllViews(value);
+    }
+
+    function getMaxStack() {
+        return displayMode === 'all' ? 0 : maxEventsLimit;
+    }
+
+    function onDisplayModeChange(args) {
+        displayMode = args.value;
+        var scheduleObj = document.getElementById('Schedule').ej2_instances[0];
+        var numericBox = document.getElementById('numeric').ej2_instances[0];
+        if (displayMode === 'all') {
+            scheduleObj.activeViewOptions.maxEventStack = 0;
+            numericBox.enabled = false;
+        } else {
+            scheduleObj.activeViewOptions.maxEventStack = maxEventsLimit;
+            numericBox.enabled = true;
+        }
+        scheduleObj.refreshEvents();
+    
+    }
+
+
+    function onLimitChange(args) {
+        maxEventsLimit = args.value;
+        var scheduleObj = document.getElementById('Schedule').ej2_instances[0];
+        scheduleObj.activeViewOptions.maxEventStack = maxEventsLimit;
+        scheduleObj.refreshEvents();
+    }
+
+
+    function applyMaxStackToAllViews() {
+        var scheduleObj = document.getElementById('Schedule').ej2_instances[0];
+        if (!scheduleObj) return;
+
+        var value = displayMode === 'all' ? 0 : maxEventsLimit;
+
+        var updatedViews = [
+            { option: 'Day', maxEventStack: value },
+            { option: 'Week', maxEventStack: value },
+            { option: 'WorkWeek', maxEventStack: value }
+        ];
+
+        scheduleObj.setProperties({ views: updatedViews }, true);
+        scheduleObj.dataBind();
+    }
+
+
+</script>
+
+<style>
+    .schedule-radio-button .e-radio + label {
+        margin-top: -10px;
+    }
+</style>
+
+}
+
+@section ActionDescription{
+    <div id='action-description'>
+          <p>
+            This demo illustrates how to limit the number of concurrent events displayed within a single time slot on the Scheduler component.
+          </p>
+    </div>
+}
+
+@section Description{
+    <div id='description'>
+          <p>
+            In this demo, the <code>maxEventStack</code> property allows you to control how many events are visible at a time within each time slot.
+            When multiple events overlap and exceed the specified limit, a "+N" indicator appears, showing how many additional events exist.
+            Users can click on this indicator to view remaining events in a popup window.
+          </p>
+          <p>
+            Use the options below to customize the event display:
+          </p>
+          <ul>
+            <li>Select <strong>"Show all events"</strong> to display all events</li>
+            <li>Select <strong>"Show up to N labels"</strong> to set a maximum limit for visible events per time slot</li>
+            <li>Modify the numeric value to adjust how many events display before the "+N" indicator appears</li>
+          </ul>
+          <p>
+            The <code>maxEventStack</code> property is applicable only with Day, Week, and WorkWeek views when the timeScale option is enabled.
+          </p>
+          <p>
+            Looking for the full ASP.NET Core Scheduler component overview, features, pricing, and documentation? Visit our <a target="_blank" href="https://www.syncfusion.com/aspnet-core-ui-controls/scheduler" aria-label="Navigate to the ASP.NET Core Scheduler FT page">ASP.NET Core Scheduler</a> page.
+          </p>
+    </div>
+}
+
+

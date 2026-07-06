@@ -1,0 +1,129 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Maps.ChangeProjection
+
+@using Syncfusion.EJ2.Maps;
+@section ControlsSection{
+    @{
+        var colormapping = new List<Syncfusion.EJ2.Maps.MapsColorMapping>
+        {
+            new Syncfusion.EJ2.Maps.MapsColorMapping { Value = "Permanent", Color = "#EDB46F"},
+            new Syncfusion.EJ2.Maps.MapsColorMapping { Value = "Non-Permanent", Color = "#F1931B"}
+        };
+        var titleStyle = new MapsFont
+        {
+            Size = "16px",
+            FontFamily = "Segoe UI"
+        };
+        var layerText = new Syncfusion.EJ2.Maps.MapsFont
+        {
+            FontFamily = "Segoe UI"
+        };
+        var propertyPath = new[] { "name" };
+        var align = new MapsSubTitleSettings() { Alignment = Alignment.Far, Text = "- In 2017" };
+        var uno = new ChangeProjection().unocountries();
+        var mapData = new ChangeProjection().GetWorldMap();
+    }
+    <div class="col-lg-9 control-section">
+        <div id="maps">
+            <ejs-maps id="maps" load="window.onMapLoad" loaded="onCreated">
+                <e-maps-titlesettings alignment="@Syncfusion.EJ2.Maps.Alignment.Center" text="Members of the UN Security Council" textStyle="titleStyle" subtitleSettings="align">
+                    @* <e-titlesettings-subtitlesettings text="- In 2017" alignment="@Syncfusion.EJ2.Maps.Alignment.Far"></e-titlesettings-subtitlesettings> *@
+                </e-maps-titlesettings>
+                <e-maps-zoomsettings enable="false"></e-maps-zoomsettings>
+                <e-maps-legendsettings visible="true"></e-maps-legendsettings>
+                <e-maps-layers>
+                    <e-maps-layer dataSource="@uno" shapeData="@mapData" shapePropertyPath="propertyPath" shapeDataPath="Country">
+                        <e-layersettings-tooltipsettings valuePath="Country" visible="true" font="layerText"></e-layersettings-tooltipsettings>
+                        <e-layersettings-shapesettings colorMapping="colormapping" fill="lightgrey" colorValuePath="Membership"></e-layersettings-shapesettings>
+                    </e-maps-layer>
+                </e-maps-layers>
+            </ejs-maps>
+        </div>
+            <div style="float: right; margin-right: 10px;">
+                Source:
+                <a href="https://en.wikipedia.org/wiki/List_of_members_of_the_United_Nations_Security_Council" target="_blank" aria-label="Source">en.wikipedia.org</a>
+            </div>        
+        </div>
+        <div class="col-md-3 property-section">
+            <table id="property" title="Properties" style="margin-left:-10px; width: 100%">
+                <tbody>
+                    <tr style="height: 50px">
+                        <td>
+                            <div>Projection Type</div>
+                        </td>
+                        <td>
+                            <div>
+                                <select name="projectionType" id="projectiontype" style="margin-left: 25px">
+                                    <option value="Mercator">Mercator</option>
+                                    <option value="Equirectangular">Equirectangular</option>
+                                    <option value="Miller">Miller</option>
+                                    <option value="Eckert3">Eckert3</option>
+                                    <option value="Eckert5">Eckert5</option>
+                                    <option value="Eckert6">Eckert6</option>
+                                    <option value="Winkel3">Winkel3</option>
+                                    <option value="AitOff">AitOff</option>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+}
+<script>
+    window.onload = function () {
+        var projection = new ej.dropdowns.DropDownList({
+            index: 0,
+            placeholder: 'Select projection type',
+            width: '100%',
+            change: function () {
+                maps.projectionType = projection.value;
+                maps.refresh();
+            }
+        });
+        projection.appendTo('#projectiontype');
+
+    };
+    var maps;
+    function onCreated() {
+        maps = document.getElementById('maps').ej2_instances[0];
+    }
+    @* custom code start *@
+    function onMapLoad(args) {
+        var theme = themeName ? themeName : "Material";
+        args.maps.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-high/i, 'High').replace(/5.3/i, '5');
+    }
+    @* custom code end *@
+</script>
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Projection in ASP.NET Core Maps control. Explore here for more details."/>
+                }
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample illustrates the details of permanent and non-permanent countries in the UN security council, in 2017. Projection of the map can be changed by using the <code>Projection type</code> in properties panel.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            In this example, you can see how to render a map with various projections. You can use the <code>ColorMapping</code> property to customize the color of the shapes.
+        </p>
+        <p>
+            Tooltip is enabled in this example. To see the tooltip in action, hover the mouse over a shape or tap a shape in touch enabled devices.
+        </p>
+        <br />
+        <p style="font-weight: 500">Injecting Module</p>
+        <p>
+            Maps component features are segregated into individual feature-wise modules. To use a legend, inject the <code>Legend</code> module using the <code>Maps.Inject(Legend)</code> method.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Maps Projection Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Projection in ASP.NET Core Maps Control</h1>
+                }

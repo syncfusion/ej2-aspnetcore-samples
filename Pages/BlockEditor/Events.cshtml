@@ -1,0 +1,132 @@
+﻿@page
+@model EJ2CoreSampleBrowser_NET9.Pages.BlockEditor.EventsModel
+
+@using Syncfusion.EJ2
+
+@section ControlsSection {
+    <div class="col-lg-8 control-section">
+        <div class="blockeditor-events">
+            <ejs-blockeditor id="events-blockeditor" height="600px" created="function(e){ logEvent('created'); }" blocks="@Model.BlockDataEvents" blockChanged="function(e){ blockChangeEvent(e); }" blockDragging="function(e){ logEvent('blockDragging'); }" blockDragStart="function(e){ logEvent('blockDragStart'); }" blockDropped="function(e){ logEvent('blockDropped'); }" focus="function(e){ logEvent('focus'); }" blur="function(e){ logEvent('blur'); }" selectionChanged="function(e){ logEvent('selectionChanged'); }" beforePasteCleanup="function(e){ logEvent('beforePaste'); }" afterPasteCleanup="function(e){ logEvent('afterPaste'); }">
+                <e-blockeditor-inlinetoolbarsettings itemClick="function(e){ itemClicked(e); }"></e-blockeditor-inlinetoolbarsettings>
+            </ejs-blockeditor>
+        </div>
+    </div>
+    <div class="col-lg-4 property-section">
+        <table id="property" title="Event Trace">
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="eventarea" style="height: 245px;overflow: auto">
+                            <span id="eventLog" style="word-break: normal;"></span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="evtbtn" style="padding-bottom: 10px">
+                            <ejs-button id="clear" content="Clear"></ejs-button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+}
+
+@section PreScripts {
+    <script>
+
+		// Sample integration: log which inline toolbar item was clicked
+        function itemClicked(args) {
+            appendElement(`BlockEditor inline toolbar <b>${args.item.command}</b> clicked<hr>`);
+        }
+        // Sample integration: generic logger used by template event bindings to append an event line
+        function logEvent(eventName) {
+            appendElement(`BlockEditor <b>${eventName}</b> event called<hr>`);
+        };
+        // Sample integration: summarize BlockEditor blockChange payload into a human-readable log entry
+        function blockChangeEvent(event) {
+            var changes = (event && event.changes) ? event.changes : [];
+            if (!changes.length) return;
+            // Aggregate counts per action type (Insertion/Deletion/Moved/Update)
+            var counts = {};
+            changes.forEach(function(change) {
+                var action = change.action; // 'Insertion' | 'Deletion' | 'Moved' | 'Update'
+                counts[action] = (counts[action] || 0) + 1;
+            });
+            // Build a compact message with simple pluralization (e.g., "2 blocks inserted")
+            var messages = [];
+            var plural = function(count, noun) { return count === 1 ? (count + ' ' + noun) : (count + ' ' + noun + 's'); };
+
+            if (counts.Insertion) messages.push(plural(counts.Insertion, 'block') + ' inserted');
+            if (counts.Deletion)  messages.push(plural(counts.Deletion,  'block') + ' deleted');
+            if (counts.Moved)     messages.push(plural(counts.Moved,     'block') + ' moved');
+            if (counts.Update)    messages.push(plural(counts.Update,    'block') + ' updated');
+
+            appendElement('BlockEditor <b>blockChange</b> event called: ' + messages.join(', ') + '<hr>');
+        }
+        // Sample helper: prepend a new log line so latest events appear at the top of the log panel
+        function appendElement(html) {
+            var span = document.createElement('span');
+            span.innerHTML = html;
+            var log = document.getElementById('eventLog');
+            if (log) log.insertBefore(span, log.firstChild);
+        }
+        // Sample integration: clear the event log area from the "Clear" button in the sample panel
+        document.getElementById('clear').onclick = function () {
+            var el = document.getElementById('eventLog');
+            if (el) el.innerHTML = '';
+        };
+    </script>
+}
+
+<style>
+    #eventLog b {
+        color: #018607;
+    }
+
+    .material3-dark #eventLog b, .fluent-dark #eventLog b, .bootstrap5-dark #eventLog b,
+    .bootstrap5\.3-dark #eventLog b, .bootstrap-dark #eventLog b, .tailwind-dark #eventLog b,
+    .tailwind3-dark #eventLog b, .highcontrast #eventLog b, .material-dark #eventLog b,
+    .fabric-dark #eventLog b {
+        color: #21A32E;
+    }
+
+    hr {
+        margin: 1px 10px 1px 0px;
+        border-top: 1px solid #eee;
+    }
+
+    .blockeditor-events {
+        width: 100%;
+        margin: 0 auto;
+    }
+</style>
+
+@section Meta {
+    <meta name="description" content="This example demonstrates the Events in ASP.NET Core Block Editor control. Explore here for more details." />
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>This sample demonstrates the events that trigger on every action of the Block Editor. The event details are showcased in the event trace panel.</p>
+    </div>
+}
+
+@section Description {
+    <div id="description">
+        <p>The Block Editor triggers events based on its actions. These events can be used as extension points to perform custom operations.</p>
+        <ul>
+            <li><code>created</code> - Triggers after the Block Editor is rendered completely.</li>
+            <li><code>blockChanged</code> - Triggers when the editor blocks are changed. This event provides details about the changes made to the blocks, including insertions, deletions, movements, and updates.</li>
+            <li><code>selectionChanged</code> - Triggers when the selection in the block editor changes.</li>
+            <li><code>blockDragging</code> - Triggers during the dragging operation of a block.</li>
+            <li><code>blockDragStart</code> - Triggers when the drag operation for a block starts.</li>
+            <li><code>blockDropped</code> - Triggers when a block is dropped after a drag operation.</li>
+            <li><code>focus</code> - Triggers when the block editor gains focus.</li>
+            <li><code>blur</code> - Triggers when the block editor loses focus.</li>
+            <li><code>beforePasteCleanup</code> - Triggers before pasting the content in the block editor.</li>
+            <li><code>afterPasteCleanup</code> - Triggers after pasting the content in the block editor.</li>
+        </ul>
+    </div>
+}

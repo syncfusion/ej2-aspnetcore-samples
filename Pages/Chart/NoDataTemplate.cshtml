@@ -1,0 +1,219 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Chart.NoDataTemplateModel
+@using Syncfusion.EJ2
+
+@section ControlsSection {
+    <div class="control-section">
+        <div id="container" align='center'>
+            <ejs-chart id="lineContainer" title="Milk Production in US - 2025" subTitle="Source: nass.usda.gov" load="load"
+                loaded="loaded" width="100%">
+                <e-chart-tooltipsettings enable="true"  header="Milk Production" format="${point.x} : <b>${point.y}M</b>">
+                </e-chart-tooltipsettings>
+                <e-chart-legendsettings visible="false">
+                </e-chart-legendsettings>
+                <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category">
+                    <e-majorgridlines width="0"></e-majorgridlines>
+                    <e-majorticklines width="0"></e-majorticklines>
+                </e-chart-primaryxaxis>
+                <e-chart-chartarea>
+                    <e-chartarea-border width="0"></e-chartarea-border>
+                </e-chart-chartarea>
+                <e-chart-primaryyaxis title="Production (in million pounds)">
+                    <e-titlestyle font-weight="600"></e-titlestyle>
+                    <e-linestyle width="0"></e-linestyle>
+                    <e-majorticklines width="0"></e-majorticklines>
+                </e-chart-primaryyaxis>
+                <e-series-collection>
+                    <e-series xName="x" yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Line" width="2">
+                        <e-series-marker visible="true" width="7" height="7"></e-series-marker>
+                        <e-series-animation enable="true" ></e-series-animation>
+                    </e-series>
+                </e-series-collection>
+            </ejs-chart>
+            <div id="noDataButtonOverlay" class="no-data-button-overlay" style="display: none;">
+                <ejs-button id="loadDataButton" content="Load data" iconCss="e-icons e-refresh" onclick="loadChartData()"
+                           cssClass="load-data-btn e-outline" isPrimary="false">
+                </ejs-button>
+            </div>
+        </div>
+    </div>
+    @*custom code start*@
+    <style>
+        .no-data-button-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            margin-top: 60px; /* Position below the no-data message */
+            z-index: 10;
+        }
+
+        #noDataTemplateContainer {
+            height: inherit;
+            width: inherit;
+        }
+
+        .load-data-btn {
+            margin-top: 55px;
+            border-radius: 4px !important;
+        }
+        
+        .load-data-btn .e-btn-icon {
+            margin-right: 8px;
+        }
+
+        .dark-bg {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        .material-dark .dark-bg { 
+            background-color: #262626; 
+        }
+
+        .material3-dark .dark-bg, .fluent2-dark .dark-bg, .fluent2-highcontrast .dark-bg { 
+            background-color: #1C1B1F; 
+        }
+
+        .fabric-dark .dark-bg { 
+            background-color: #201F1F; 
+        }
+
+        .fluent-dark .dark-bg { 
+            background-color: #1B1A19; 
+        }
+
+        .bootstrap-dark .dark-bg { 
+            background-color: #1A1A1A; 
+        }
+
+        .bootstrap5-dark .dark-bg, .bootstrap5\.3-dark .dark-bg { 
+            background-color: #212529; 
+        }
+
+        .tailwind-dark .dark-bg { 
+            background-color: #1E242F; 
+        }
+
+        .tailwind3-dark .dark-bg { 
+            background-color: #111827; 
+        }
+
+        .light-bg {
+            background-color: #fafafa;
+            color: #000000;
+        }
+
+        .template-align img {
+            max-width: 150px;
+            /* Adjust size as needed */
+            max-height: 150px;
+            margin-top: 55px;
+        }
+
+        .template-align {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        #control-container {
+            padding: 0px !important;
+        }
+    </style>
+    @*custom code end*@
+    <script src="~/scripts/chart/theme-color.js"></script>
+    <script id='No-Data-Template' type="text/x-template">
+        <div id='noDataTemplateContainer' class="light-bg">
+            <div class="template-align">
+                <img src="./../scripts/chart/images/no-data.png" alt="No Data" />
+            </div>
+            <div class="template-align">
+                <p style="font-size: 15px; margin: 10px 0 10px;"><strong>No data available to display.</strong></p>
+            </div>
+        </div>
+        </script>
+    <script>
+        var chartData = [
+            { x: 'January', y: 19173 },
+            { x: 'February', y: 17726 },
+            { x: 'March', y: 19874 },
+            { x: 'April', y: 19391 },
+            { x: 'May', y: 20072 },
+            { x: 'June', y: 19233 }
+        ];
+        var dataLoaded = false;
+        function load(args) {
+            loadChartTheme(args);
+            args.chart.noDataTemplate = "#No-Data-Template";
+            args.chart.series[0].dataSource = (dataLoaded ? chartData : []);
+        }
+
+        function loaded(args) {
+            var selectedTheme = loadChartTheme(args);
+            var noDataDiv = document.getElementById("noDataTemplateContainer");
+            var buttonOverlay = document.getElementById("noDataButtonOverlay");
+            if (noDataDiv) {
+                noDataDiv.className = selectedTheme.indexOf("dark") > -1 || selectedTheme.indexOf("highcontrast") > -1 ? 'dark-bg' : 'light-bg';
+
+            }
+            
+            if (buttonOverlay) {
+                buttonOverlay.style.display = !dataLoaded ? 'block' : 'none';
+            }
+        }
+
+        function loadChartData() {
+            var chart = document.getElementById('lineContainer').ej2_instances[0];
+            var buttonOverlay = document.getElementById("noDataButtonOverlay");
+            dataLoaded = true;            
+            chart.series[0].dataSource = chartData;
+            var values = chartData.map(d => d.y);
+            var min = Math.min(...values);
+            var max = Math.max(...values);
+            var range = max - min;
+            chart.primaryYAxis.minimum = Math.floor(min - range * 0.1);
+            chart.primaryYAxis.maximum = Math.ceil(max + range * 0.1);
+            chart.primaryYAxis.interval = Math.ceil(range / 5);
+            chart.series[0].animation.enable = true;            
+            if (buttonOverlay) {
+                buttonOverlay.style.display = 'none';
+            }
+            chart.refresh();
+        }
+    </script>
+}
+@*custom code start*@
+
+@section Meta {
+    <meta name="description"
+        content="This example demonstrates the No Data Template in ASP.NET Core Chart control. Explore here for more details." />
+}
+@*custom code end*@
+@section ActionDescription {
+
+    <p>
+        This sample illustrates handling the empty data chart using no data template. This template is used to display a
+        custom message or image when the data is not available in the chart.
+    </p>
+}
+@section Description {
+    <div id="description">
+        <p>
+            In this example, the <code>noDataTemplate</code> property is assigned with an HTML template that includes an image, 
+            a message indicating data unavailability, and a button to load new data into the chart. 
+            Once data is provided, a line chart is displayed.
+        </p>
+        <p>
+            <b>Tooltip</b> is enabled in the chart. To view a tooltip, hover over a data point or tap on it if you're using a touch-enabled device.
+        </p>
+    </div>
+
+}
+@section Title {
+    <title>ASP.NET Core Chart No Data Template Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of No Data Template in ASP.NET Core Chart Control</h1>
+}

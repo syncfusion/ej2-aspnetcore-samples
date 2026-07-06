@@ -1,0 +1,174 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Maps.SeatSelection
+
+@using Syncfusion.EJ2;
+
+@{
+    var seatSelection = new SeatSelection().GetSeatData();
+}
+@section ControlsSection{
+<div class="control-section">
+    <div class="row">
+        <div class="col-lg-9">
+            <div style="width:200px;margin:auto;padding-bottom:20px">
+                <img src="~/styles/images/maps/bus-icon.png" alt="Bus icon" style="width:25px;height:25px;float:left">
+                <div style="padding-left:30px;font-size:20px;font-weight:400;">Bus seat selection</div>
+            </div>
+            <div style="border: 3px solid darkgray;width:200px;display:block;margin:auto;border-radius:5px">
+                <img src="~/styles/images/maps/wheel.png" alt="Steering wheel icon" style="width:30px;height:30px;margin-left:18%;margin-top:10px">
+                <ejs-maps id="maps" load="window.onMapLoad" height="400" itemSelection="window.itemSelection" projectionType="Equirectangular">
+                    <e-maps-zoomsettings enable="false"></e-maps-zoomsettings>
+                    <e-maps-layers>
+                        <e-maps-layer geometryType="Normal" shapeData="@seatSelection">
+                            <e-layersettings-shapesettings colorValuePath="fill"></e-layersettings-shapesettings>
+                            <e-layersettings-selectionsettings enable="true" opacity="1" enableMultiSelect="true"></e-layersettings-selectionsettings>
+                        </e-maps-layer>
+                    </e-maps-layers>
+                </ejs-maps>
+            </div>
+        </div>
+        <div class="col-lg-3 property-section">
+            <table id="property" title="Seat Selection" style="width: 100%;font-weight:400 !important">
+                <tbody>
+                    <tr style="height: 30px">
+                        <td>
+                            <div style="height:0;width:15px;padding-bottom:5px;background-color:gray;border-radius:25%"></div>
+
+                            <div id="available" style="margin-top: -25px;margin-left: 15px">Available</div>
+                        </td>
+                    </tr>
+                    <tr style="height: 30px">
+                        <td>
+                            <div style="height:0;width:15px;padding-bottom:5px;background-color:Green;border-radius:25%"></div>
+
+                            <div id="selected" style="margin-top: -25px;margin-left: 15px">Selected</div>
+                        </td>
+                    </tr>
+                    <tr style="height: 30px">
+                        <td>
+                            <div style="height:0;width:15px;padding-bottom:5px;background-color:Orange;border-radius:25%"></div>
+
+                            <div id="booked" style="margin-top: -25px;margin-left: 15px">Booked</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="seat-parent">
+            <span id='clear-btn'>Clear Selection</span><br /><br />
+            <div id="selectedseats"></div>
+        </div>
+    </div>
+</div>
+}
+<script>
+    var seatInfo;
+    window.onload = function () {
+        seatInfo = document.getElementById('selectedseats');
+        document.getElementById('clear-btn').onclick = function () {
+            seatInfo.innerHTML = '';
+            var selected = document.getElementsByClassName('ShapeselectionMapStyle');
+            for (var i = 0, length_1 = selected.length; i < length_1; i++) {
+                selected[0].setAttribute('class', '');
+            }
+        };
+    };
+    @* custom code start *@
+    function onMapLoad(args) {
+        var theme = themeName ? themeName : "Material";
+        args.maps.theme = (theme.charAt(0).toUpperCase() +
+            theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-high/i, 'High').replace(/5.3/i, '5');
+    }
+    @* custom code end *@
+    function itemSelection(args) {
+        if (args.shapeData.fill === 'Orange') {
+            args.fill = 'Orange !important';
+            document.getElementById(args.target).setAttribute('class', 'ShapeselectionMapStyle');
+            return;
+        }
+        args.fill = 'green';
+        var seat = args.shapeData.seatno;
+        var connector = ' ';
+        if (seatInfo.innerHTML === '') {
+            seatInfo.innerHTML = '<span id="seat-info">Seats Selected -</span>';
+        }
+        else {
+            connector = ', ';
+        }
+        var seatString = '<span class="seats">' + connector + seat + '</span>';
+        var seatString1 = ' ' + seat + '</span><span class="seats">,';
+        var lastString = '<span id="seat-info">Seats Selected -</span><span class="seats"> ' + seat + '</span>';
+        if (seatInfo.innerHTML.indexOf(seatString) === -1 && seatInfo.innerHTML.indexOf(seatString1) === -1 &&
+            seatInfo.innerHTML.indexOf(lastString) === -1) {
+            seatInfo.innerHTML += '<span class="seats">' + connector + seat + '</span>';
+        }
+        else {
+            seatInfo.innerHTML = seatInfo.innerHTML.replace(seatString, '');
+            seatInfo.innerHTML = seatInfo.innerHTML.replace(seatString1, '');
+            if (seatInfo.innerHTML === lastString) {
+                seatInfo.innerHTML = '';
+            }
+        }
+        };
+</script>
+
+<style>
+    #control-container {
+        padding: 0px !important;
+    }
+
+    #seat-parent {
+        text-align: center;
+        cursor: pointer
+    }
+
+    #selectedseats {
+        padding: 10px;
+    }
+
+    #selectedseats, #seat-info {
+        font-size: 14px;
+    }
+
+    #clear-btn {
+        padding: 10px;
+        border: 2px solid rgb(241, 235, 247);
+        border-radius: 8px;
+        background: rgb(246, 245, 248);
+        color: black;
+        font-size: 14px;
+    }
+
+    .seats {
+        padding-top: 15px;
+    }
+</style>
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Bus seat booking in ASP.NET Core Maps control. Explore here for more details."/>
+                }
+@section ActionDescription{
+    
+		<div id="action-description">
+            <p>
+                This sample visualizes a seating chart, in which the seats can be selected similarly to bus seat booking. Available, booked, and selected seats will be displayed in different colors.
+            </p>	
+                </div>
+}
+@section Description{
+                <div id="description">
+            <p>
+              In this example, you can see how to render the normal geometry type shapes on the map. Selection is enabled in this sample. You can use the <code>fill</code>, <code>width</code>, and <code>color</code> properties in the <code>selectionSettings</code> to customize the appearance of the shapes after selection.
+            </p>
+        <br/>
+            <p style="font-weight: 500">Injecting Module</p>
+            <p>
+             Maps component features are segregated into individual feature-wise modules. To use the selection, inject the <code>Selection</code> module using the <code>Maps.Inject(Selection)</code> method.
+            </p>
+        </div>
+}
+@section Title{
+                    <title>ASP.NET Core Maps Bus seat booking Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Bus seat booking in ASP.NET Core Maps Control</h1>
+                }

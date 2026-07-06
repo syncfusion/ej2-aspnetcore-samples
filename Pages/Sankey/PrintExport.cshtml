@@ -1,0 +1,582 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Sankey.PrintExportModel
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+  <div class="row">
+    <div class="col-lg-12 control-section">
+
+      <!-- Toolbar OUTSIDE chart-shell, above it -->
+      <div class="chart-toolbar" role="toolbar" aria-label="Chart actions">
+        <button id="btnPrint" class="toolbar-btn toolbar-btn--print">
+          <span class="e-icons e-print-icon"></span>
+          <span class="btn-text">PRINT</span>
+        </button>
+        <button id="btnExport" class="toolbar-btn toolbar-btn--export">
+          <span class="e-icons e-export-icon"></span>
+          <span class="btn-text">EXPORT</span>
+        </button>
+      </div>
+
+      <!-- Flex row: chart + panel side by side -->
+      <div class="chart-shell" id="chartShell">
+
+        <!-- Chart host -->
+        <div class="chart-host" id="chartHost">
+          <ejs-sankey id="sankey-print-export"
+                height="450"
+                orientation="Horizontal"
+                background="transparent"
+                title="Supply Chain Management"
+                subTitle="Source: OECD‑ITF Global Freight Data"
+                load="onSankeyLoad"
+                >
+      <e-sankey-margin left="20" right="20" top="20" bottom="20"></e-sankey-margin>
+
+      <e-sankey-nodes>
+        @foreach (var node in Model.Nodes)
+        {
+          <e-sankey-node id="@node.Id" color="@node.Color"></e-sankey-node>
+        }
+      </e-sankey-nodes>
+
+      <e-sankey-links>
+        @foreach (var link in Model.Links)
+        {
+          <e-sankey-link sourceId="@link.SourceId" targetId="@link.TargetId" value="@link.Value"></e-sankey-link>
+        }
+      </e-sankey-links>
+
+      <e-sankey-linksettings opacity="0.4" curvature="0.5" colorType="Source"></e-sankey-linksettings>
+      <e-sankey-nodesettings width="30" padding="10" opacity="1"></e-sankey-nodesettings>
+
+      <e-sankey-labelsettings visible="true"></e-sankey-labelsettings>
+
+      <e-sankey-tooltipsettings enable="true"
+                                nodeFormat="${name}: ${value}k shipments"
+                                linkFormat="${start.name}: ${start.out}k → ${target.name}: ${target.in}k shipments">
+      </e-sankey-tooltipsettings>
+      <e-sankey-legendsettings visible="false"></e-sankey-legendsettings>
+    </ejs-sankey>
+        </div>
+
+        <aside id="exportPanel" class="export-panel" inert>
+          <div class="panel-header">
+            <!-- icon added before title -->
+            <span class="panel-header-left">
+              <span class="e-icons e-export-icon panel-header-icon"></span>
+              <span class="panel-title">Export</span>
+            </span>
+            <button id="btnClosePanel" class="panel-close" aria-label="Close export panel">
+              <span class="e-icons e-close"></span>
+            </button>
+          </div>
+          <div class="panel-body">
+            <label class="panel-label" for="expFileName">File Name:</label>
+            <input id="expFileName" class="panel-input" type="text" value="Sankey" />
+
+            <label class="panel-label" for="fileTypeDropdown">File Type:</label>
+            <input id="fileTypeDropdown" />
+
+            <div class="panel-footer" style="background: transparent">
+              <button id="btnDoExport" class="panel-action-btn panel-action-btn--export">EXPORT</button>
+              <button id="btnCancelExport" class="panel-action-btn panel-action-btn--cancel">CANCEL</button>
+            </div>
+          </div>
+        </aside>
+
+      </div><!-- /chart-shell -->
+    </div>
+  </div>
+}
+
+<script>
+  function onSankeyLoad(args) {
+      var t = location.hash.split('/')[1] || 'Tailwind3';
+      args.chart.theme = (t.charAt(0).toUpperCase() + t.slice(1))
+        .replace(/-dark/i, 'Dark').replace(/light/i, 'Light')
+        .replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast');
+      
+      var isMobile = ej.base.Browser.isDevice;
+      if (isMobile) {
+          args.chart.labelSettings.visible = false;  // hide labels on small screens
+          args.chart.legendSettings.visible = false; // hide legend on small screens
+      } else {
+          args.chart.labelSettings.visible = true;
+          args.chart.legendSettings.visible = true;
+        }
+    }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var sankey     = document.getElementById('sankey-print-export').ej2_instances[0];
+    var panel      = document.getElementById('exportPanel');
+    var shell      = document.getElementById('chartShell');
+    var chartHost  = document.getElementById('chartHost');
+
+    // ── Initialize file type dropdown ──────────────────────────────────────
+    var fileTypeDropdown = new ej.dropdowns.DropDownList({
+      dataSource: ['JPEG', 'PNG', 'SVG', 'PDF'],
+      value: 'JPEG',
+      width: '100%'
+    });
+    fileTypeDropdown.appendTo('#fileTypeDropdown');
+
+    // ── SVG resize logic (critical – was missing) ──────────────────────────
+    var originalSvgWidth = null;
+
+    function resizeSankeySvg() {
+      var svgElement = document.getElementById('sankey-print-export_svg');
+      if (!svgElement) return;
+
+      if (!originalSvgWidth) {
+        originalSvgWidth = parseFloat(svgElement.getAttribute('width')) ||
+                           svgElement.getBoundingClientRect().width;
+      }
+
+      var newWidth  = chartHost.offsetWidth;
+      var svgHeight = svgElement.getAttribute('height') ||
+                      svgElement.getBoundingClientRect().height;
+
+      svgElement.setAttribute('width', newWidth);
+      svgElement.setAttribute('viewBox', '0 0 ' + originalSvgWidth + ' ' + svgHeight);
+      svgElement.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+
+      var sankeyHost = document.getElementById('sankey-print-export');
+      if (sankeyHost) sankeyHost.style.width = newWidth + 'px';
+    }
+
+    var resizeObserver = new ResizeObserver(() => resizeSankeySvg());
+    resizeObserver.observe(chartHost);
+
+    // ── Panel open / close ─────────────────────────────────────────────────
+    let focusBeforePanel = null;
+
+    function openPanel() {
+      focusBeforePanel = document.activeElement;
+
+      panel.removeAttribute('inert');
+      panel.classList.add('open');
+      shell.classList.add('with-panel');
+
+      if (ej.base.Browser.isDevice) {
+        chartHost.style.display = 'none';
+        shell.classList.add('mobile-panel-open');
+      }
+
+      setTimeout(() => {
+        var input = document.getElementById('expFileName');
+        if (input) {
+          input.focus();
+          input.select?.();
+        }
+      }, 120);
+
+      panel.removeAttribute('aria-hidden');
+      document.addEventListener('keydown', handleGlobalEsc, false);
+      setTimeout(resizeSankeySvg, 300);
+    }
+
+    function closePanel() {
+      panel.setAttribute('inert', '');
+      panel.classList.remove('open');
+      shell.classList.remove('with-panel');
+
+      if (ej.base.Browser.isDevice) {
+        chartHost.style.display = '';
+        shell.classList.remove('mobile-panel-open');
+      }
+
+      panel.setAttribute('aria-hidden', 'true');
+
+      if (focusBeforePanel && document.body.contains(focusBeforePanel)) {
+        focusBeforePanel.focus();
+      } else {
+        document.getElementById('btnExport')?.focus();
+      }
+
+      document.removeEventListener('keydown', handleGlobalEsc);
+      setTimeout(resizeSankeySvg, 300);
+    }
+
+    function performExport() {
+      var fileName = (document.getElementById('expFileName').value || 'Sankey').trim();
+      var exportType = fileTypeDropdown.value;
+
+      function doExport() {
+          sankey.export(exportType, fileName);
+          closePanel();
+      }
+
+      if (ej.base.Browser.isDevice) {
+          closePanel();
+          setTimeout(() => {
+              resizeSankeySvg();
+             setTimeout(doExport, 80);
+          }, 40);
+      } else {
+          resizeSankeySvg();
+          doExport();
+      }
+    }
+
+    function handleGlobalEsc(e) {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closePanel();
+      }
+    }
+
+    // Esc on filename input
+    document.getElementById('expFileName')?.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closePanel();
+      }
+    });
+
+    // Keyboard activation helper
+    function addKeyboardActivation(btnId, action) {
+      var btn = document.getElementById(btnId);
+      if (!btn) return;
+      btn.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          action();
+        }
+      });
+    }
+
+    addKeyboardActivation('btnPrint',       () => sankey.print());
+    addKeyboardActivation('btnExport',      openPanel);
+    addKeyboardActivation('btnClosePanel',  closePanel);
+    addKeyboardActivation('btnCancelExport',closePanel);
+    addKeyboardActivation('btnDoExport', performExport);
+
+    // Button click handlers (mouse/touch)
+    document.getElementById('btnPrint').onclick        = () => sankey.print();
+    document.getElementById('btnExport').onclick       = openPanel;
+    document.getElementById('btnClosePanel').onclick   = closePanel;
+    document.getElementById('btnCancelExport').onclick = closePanel;
+    document.getElementById('btnDoExport').onclick = performExport;
+
+    // Initial state
+    panel.setAttribute('aria-hidden', 'true');
+  });
+</script>
+
+<style>
+
+/* Enhance visible focus indicators – WCAG 2.4.7 Focus Visible */
+.toolbar-btn:focus-visible,
+.panel-action-btn:focus-visible,
+.panel-close:focus-visible {
+  outline: 2px solid #E3165B;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(227, 22, 91, 0.15);
+}
+
+.toolbar-btn--print:focus-visible {
+  background-color: #F3F4F6 !important;
+  box-shadow: inset 0 0 0 2px #E3165B;
+}
+
+.panel-input:focus {
+  border-bottom: 2px solid #E3165B !important;
+  box-shadow: 0 1px 0 #E3165B;
+}
+
+  /* ── Section container ── */
+  .control-section { overflow: visible !important; }
+
+  /* ── Toolbar: sits ABOVE the chart-shell ── */
+  .chart-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 0 6px 0;
+  }
+
+  /* ── Shared button styles ── */
+  .toolbar-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: 4px;
+    font-weight: 600;
+    letter-spacing: .3px;
+    padding: 6px 14px;
+    cursor: pointer;
+  }
+  .toolbar-btn--print {
+    background-color: #FFFFFF !important;
+    color: #000000DE !important;
+    border: 1px solid #D1D5DB !important;
+  }
+  .toolbar-btn--print:hover { background-color: #F3F4F6 !important; }
+  .toolbar-btn--export {
+    background-color: #E3165B !important;
+    color: #FFFFFF !important;
+    border: 1px solid #E3165B !important;
+  }
+  .toolbar-btn--export:hover { background-color: #C4134F !important; }
+
+  /* ── chart-shell: FLEX ROW so panel shrinks chart ── */
+  .chart-shell {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid #E5E7EB;
+    border-radius: 4px;
+  }
+
+  .chart-shell.mobile-panel-open .export-panel {
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    border-left: none !important;
+    box-shadow: none !important;
+  }
+
+  /* ── Chart host: grows/shrinks with flex ── */
+  .chart-host {
+    flex: 1 1 auto;
+    min-width: 0;
+    transition: flex-basis .25s ease-out;
+  }
+
+  /* ── Export panel: zero-width when closed ── */
+  .export-panel {
+    flex: 0 0 0px;
+    overflow: hidden;
+    background: transparent;
+    border-left: 0px solid #E5E7EB;
+    transition: flex-basis .25s ease-out, border-left .25s ease-out;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+
+  /* ── Panel OPEN state ── */
+  .with-panel .export-panel {
+    flex: 0 0 300px;
+    border-left: 1px solid #E5E7EB;
+    overflow: visible;
+  }
+
+  /* ── Panel header ── */
+  .panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px 10px 16px;
+    border-bottom: 1px solid #E5E7EB;
+    white-space: nowrap;
+  }
+  .panel-header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .panel-header-icon {
+    font-size: 16px;
+  }
+  .panel-title {
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .panel-close {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 2px 4px;
+    color: #6B7280;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+  }
+  .panel-close:hover { color: #111827; }
+
+  /* ── Panel body ── */
+  .panel-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px 16px 0 16px;
+    white-space: nowrap;
+  }
+  .panel-label {
+    font-size: 14px;
+    margin-bottom: 2px;
+  }
+
+  /* ── Bottom-line-only input ── */
+  .panel-input {
+    width: 100%;
+    box-sizing: border-box;
+    border: none !important;
+    border-bottom: 1px solid #9CA3AF !important;
+    border-radius: 0 !important;
+    outline: none !important;
+    padding: 4px 0 6px 0;
+    background: transparent;
+    font-size: 14px;
+    color: inherit;
+  }
+  .panel-input:focus {
+    border-bottom: 2px solid #E3165B !important;
+  }
+
+  /* ── Bottom-line-only for EJ2 DropDownList ── */
+  .export-panel .e-ddl.e-input-group,
+  .export-panel .e-ddl.e-input-group.e-control-wrapper {
+    border: none !important;
+    border-radius: 0 !important;
+    border-bottom: 1px solid #9CA3AF !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+  .export-panel .e-ddl.e-input-group:focus-within,
+  .export-panel .e-ddl.e-input-group.e-control-wrapper:focus-within {
+    border-bottom: 2px solid #E3165B !important;
+  }
+  .export-panel .e-input-group::before,
+  .export-panel .e-input-group::after {
+    display: none !important;   /* removes animated underline from some themes */
+  }
+
+  /* ── Footer buttons — text only, no background ── */
+  .panel-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding-top: 20px;
+    border-top: 0px !important;
+  }
+  .panel-action-btn {
+    flex: 1;
+    background: transparent !important;
+    border: none !important;
+    font-size: 15px;
+    letter-spacing: .5px;
+    padding: 6px 0;
+    cursor: pointer;
+    border-radius: 0;
+  }
+  .panel-action-btn--export {
+    color: #E3165B !important;
+  }
+  .panel-action-btn--export:hover {
+    color: #C4134F !important;
+  }
+
+  /* ── Icon mappings ── */
+    .e-print-icon::before {
+        content: '\e34b';
+    }
+
+    .e-view.fabric .e-print-icon::before, .e-view.fabric-dark .e-print-icon::before {
+        content: '\e7df';
+    }
+
+    .e-view.bootstrap .e-print-icon::before {
+        content: '\ebd2';
+    }
+
+    .e-view.bootstrap4 .e-print-icon::before {
+        content: '\e743';
+    }
+
+    .e-view.tailwind .e-print-icon::before, .e-view.tailwind3 .e-print-icon::before, .e-view.tailwind-dark .e-print-icon::before, .e-view.tailwind3-dark .e-print-icon::before {
+        content: '\e76c';
+    }
+
+    .e-view.highcontrast .e-print-icon::before {
+        content: '\ebf9';
+    }
+
+    .e-view.bootstrap5\.3 .e-print-icon::before, .e-view.bootstrap5\.3-dark .e-print-icon::before {
+        content: '\e75d';
+    }
+
+    .e-view.fluent .e-print-icon::before, .e-view.fluent-dark .e-print-icon::before {
+        content: '\e75d';
+    }
+
+    .e-view.fluent2 .e-print-icon::before, .e-view.fluent2-dark .e-print-icon::before, .e-view.fluent2-highcontrast .e-print-icon::before {
+        content: '\e75d';
+    }
+
+    .e-view.material3 .e-print-icon::before, .e-view.material3-dark .e-print-icon::before {
+        content: '\e75d';
+    }
+
+    .e-export-icon::before {
+        content: '\e728';
+    }
+
+    .e-view.fabric .e-export-icon::before, .e-view.fabric-dark .e-export-icon::before {
+        content: '\e710';
+    }
+
+    .e-view.bootstrap4 .e-export-icon::before {
+        content: '\e780';
+    }
+
+    .e-view.tailwind-dark .e-export-icon::before, .e-view.tailwind3-dark .e-export-icon::before, .e-view.tailwind .e-export-icon::before, .e-view.tailwind3 .e-export-icon::before {
+        content: '\e7bf';
+    }
+
+    .e-view.highcontrast .e-export-icon::before {
+        content: '\e710';
+    }
+
+    .e-view.bootstrap5\.3 .e-export-icon::before, .e-view.bootstrap5\.3-dark .e-export-icon::before {
+        content: '\e72e';
+    }
+
+    .e-view.fluent .e-export-icon::before, .e-view.fluent-dark .e-export-icon::before {
+        content: '\e72e';
+    }
+
+    .e-view.fluent2 .e-export-icon::before, .e-view.fluent2-dark .e-export-icon::before, .e-view.fluent2-highcontrast .e-export-icon::before {
+        content: '\e72e';
+    }
+
+    .e-view.material3 .e-export-icon::before, .e-view.material3-dark .e-export-icon::before {
+        content: '\e72e';
+    }
+</style>
+
+@section Meta{
+  <meta name="description" content="Sankey visualizing supply chain shipments (k) by product, transport mode, region, and delivery status with interactive tooltips.">
+}
+
+@section ActionDescription{
+    <p>
+      Explore supply chain flows Sankey chart using illustrative values in thousand shipments (k). It maps product categories to transport modes, world regions, and delivery status, with flow direction and labels aligned.
+    </p>
+}
+@section Description{
+    <p>
+      This Sankey Chart visualizes shipments (k) from product categories through Air, Ground, and Sea to regions and
+      final status (Delivered, Delayed, In Transit).
+      Hover or tap nodes and links to see precise shipment counts.
+    </p>
+
+    <p><strong>Key features:</strong></p>
+    <ul>
+        <li>End‑to‑end flow from category → mode → region → status</li>
+        <li>Export to JPEG, PNG, SVG, or PDF, and print directly</li>
+        <li>Interactive tooltips showing values in thousand shipments</li>
+    </ul>
+}
+
+@section Title{
+  <title>ASP.NET Core Sankey - Supply Chain</title>
+}
+
+@section Header{
+  <h1 class='sb-sample-text'>Sankey: Supply Chain</h1>
+}

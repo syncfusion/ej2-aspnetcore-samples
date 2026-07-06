@@ -1,0 +1,321 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.AIAssistView.OverviewModel
+@using Syncfusion.EJ2
+@using System.Text.Json;
+
+@section ControlsSection {
+    <div class="control-section">
+        <div class="overview-aiassistview">
+            <ejs-aiassistview id="overviewAssistView" 
+                              enableStreaming="true"
+                              promptSuggestions="@Model.PromptSuggestionData" 
+                              bannerTemplate="#bannerContent" 
+                              promptRequest="onPromptRequest"
+                              created="onAssistViewCreated"
+                              enableAttachments="true">
+                <e-aiassistview-toolbarsettings items="@Model.ToolbarItems" itemClicked="toolbarItemClicked"></e-aiassistview-toolbarsettings>
+                <e-aiassistview-footertoolbarsettings toolbarPosition="Bottom" items="@Model.FooterToolbarItems"></e-aiassistview-footertoolbarsettings>
+                <e-aiassistview-responsetoolbarsettings items="@Model.ResponseToolbarItems"></e-aiassistview-responsetoolbarsettings>
+                <e-aiassistview-speechtotextsettings enable="true"></e-aiassistview-speechtotextsettings>
+                <e-aiassistview-attachmentsettings saveUrl="https://services.syncfusion.com/js/production/api/FileUploader/Save" 
+                                                    removeUrl="https://services.syncfusion.com/js/production/api/FileUploader/Remove">
+                </e-aiassistview-attachmentsettings>
+            </ejs-aiassistview>
+        </div>
+    </div>
+}
+
+@section PreScripts{
+    <script>
+        var baseURL = window.baseurl;
+        var prompts = @Html.Raw(JsonSerializer.Serialize(Model.PromptResponseData));
+        var suggestions = @Html.Raw(JsonSerializer.Serialize(Model.PromptSuggestionData));
+        var aiAssistViewInstance;
+        var defaultPrompts = [{
+            prompt: 'How does the weather vary throughout the week in Germany and Japan?',
+            blocks: [
+                {
+                    blockType: 'thinking',
+                    title: 'Thinking',
+                    collapsible: true,
+                    collapsed: true,
+                    isActive: false,
+                    stages: [
+                        {
+                            iconCss: 'e-icons e-search',
+                            status: 'completed',
+                            content: 'Searching for weather data from external sources and retrieving weekly forecasts for both Germany and Japan.',
+                            editableContext: [
+                                { name: 'Query Type', value: 'Weather Analysis', type: 'Variable' }
+                            ]
+                        },
+                        {
+                            iconCss: 'e-icons e-bullet-2',
+                            status: 'completed',
+                            content: 'Processing retrieved datasets and normalizing temperature values for accurate comparison.',
+                            editableContext: [
+                                { name: 'Complexity Level', value: 'Moderate', badge: 'Success', type: 'Context' }
+                            ]
+                        },
+                        {
+                            iconCss: 'e-icons e-bullet-2',
+                            status: 'completed',
+                            content: 'Analyzing weekly temperature trends to identify variations and patterns across both regions.',
+                            editableContext: [
+                                { name: 'Complexity Level', value: 'Multi-faceted', badge: 'Success', type: 'Context' }
+                            ]
+                        },
+                        {
+                            iconCss: 'e-icons e-check',
+                            status: 'completed',
+                            content: 'Summarizing key observations from the weekly data to provide a clear overview of temperature changes and generating insights.',
+                            editableContext: [
+                                { name: 'Complexity Level', value: 'Moderate', badge: 'Success', type: 'Context' }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    blockType: 'text',
+                    content: '**Weekly Weather Overview**<p>The chart below shows temperature variations across the week. The column series represents daily temperature highs, while the spline series reflects a smoother trend of average temperatures.</p>'
+                },
+                {
+                    blockType: 'tool',
+                    toolName: 'weather-chart',
+                    props: {
+                        columnData: [
+                            { x: 'Sun', y: 35 }, { x: 'Mon', y: 40 },
+                            { x: 'Tue', y: 80 }, { x: 'Wed', y: 70 }, { x: 'Thu', y: 65 }, { x: 'Fri', y: 55 },
+                            { x: 'Sat', y: 50 }
+                        ],
+                        splineData:  [
+                            { x: 'Sun', y: 30 }, { x: 'Mon', y: 28 },
+                            { x: 'Tue', y: 29 }, { x: 'Wed', y: 30 }, { x: 'Thu', y: 33 }, { x: 'Fri', y: 32 },
+                            { x: 'Sat', y: 34 }
+                        ]
+                    }
+                },
+                {
+                    blockType: 'text',
+                    content: '**Key Insights:** The bar values indicate a sharp temperature spike on Tuesday and Wednesday, suggesting very hot conditions mid-week. Meanwhile, the spline line shows a relatively stable average temperature trend throughout the week. This difference highlights short-term heat surges compared to overall steady climatic conditions.'
+                }
+            ]
+        }];
+
+        function getRandomResponse(regeneratedResponses) {
+            if (Array.isArray(regeneratedResponses)) {
+                return regeneratedResponses[Math.floor(Math.random() * regeneratedResponses.length)];
+            }
+            return regeneratedResponses;
+        }
+
+        function onAssistViewCreated() {
+            setTimeout(function () {
+                aiAssistViewInstance = document.getElementById('overviewAssistView').ej2_instances[0];
+                if (aiAssistViewInstance) {
+                    registerTools();
+                    aiAssistViewInstance.prompts = defaultPrompts;
+                }
+            }, 100);
+        }
+
+        async function getAIResponse(args) {
+            try {
+                const userID = await window.fingerPrint();
+                if (!userID) {
+                    return 'Failed to generate user ID. Please try again later.';
+                }
+                const abortController = new AbortController();
+                const response = await fetch(baseURL + '/api/AI/Stream', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authentication': userID
+                    },
+                    body: JSON.stringify({
+                        message: args.prompt
+                    }),
+                    signal: abortController.signal
+                });
+
+                if (!response.ok) {
+                    let text = await response.text();
+                    let errorData;
+                    try {
+                        errorData = JSON.parse(text);
+                    } catch (e) {
+                        errorData = { error: 'HTTP Error ' + response.status + ': ' + text };
+                    }
+                    throw new Error(errorData.error || ('HTTP Error ' + response.status));
+                }
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                let fullText = '';
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    fullText += decoder.decode(value, { stream: true });
+                }
+                return fullText;
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    return;
+                } else if (error.message && error.message.indexOf('token limit') !== -1) {
+                    return error.message;
+                }
+                return 'We could not reach the AI service; please try again later.';
+            }
+        }
+
+        async function onPromptRequest(args) {
+            var context = this;
+            var foundPrompt = prompts.find((p) => p.Prompt === args.prompt);
+            var responseHtml = foundPrompt 
+                ? (foundPrompt.RegeneratedResponses && foundPrompt.RegeneratedResponses.length > 0
+                    ? getRandomResponse(foundPrompt.RegeneratedResponses)
+                    : foundPrompt.Response)
+                : await getAIResponse(args);
+
+            context.addPromptResponse(responseHtml);
+            context.promptSuggestions = foundPrompt?.SuggestionData || suggestions || [];
+        }
+
+        function toolbarItemClicked(args) {
+            if (args.item.iconCss === 'e-icons e-refresh') {
+                this.prompts = [];
+                this.promptSuggestions = suggestions;
+            }
+        }
+
+        function registerTools() {
+            aiAssistViewInstance.registerToolUI({
+                toolName: 'weather-chart',
+                template: '<div class="chart-container"></div>',
+                handler: function (container, args) {
+                    var chart = new ej.charts.Chart({
+                        primaryXAxis: {
+                            valueType: 'Category',
+                            majorGridLines: { width: 0 },
+                            minorGridLines: { width: 0 },
+                            majorTickLines: { width: 0 }
+                        },
+                        primaryYAxis: {
+                            minimum: 0, maximum: 100, interval: 20,
+                            lineStyle: { width: 0 },
+                            labelFormat: '{value}°F', majorTickLines: { width: 0 }
+                        },
+                        chartArea: { border: { width: 0 } },
+                        axes: [
+                            {
+                                majorGridLines: { width: 0 },
+                                rowIndex: 0, opposedPosition: true,
+                                lineStyle: { width: 0 },
+                                minimum: 24, maximum: 36, interval: 2,
+                                name: 'yAxis',
+                                labelFormat: '{value}°C',
+                                majorTickLines: { width: 0 }
+                            }
+                        ],
+                        series: [
+                            {
+                                type: 'Column',
+                                dataSource: args.columnData,
+                                width: 2,
+                                xName: 'x', yName: 'y',
+                                name: 'Germany', marker: { visible: true, height: 7, width: 7 }
+                            },
+                            {
+                                type: 'Spline',
+                                dataSource: args.splineData,
+                                xName: 'x', yName: 'y',
+                                width: 2, yAxisName: 'yAxis',
+                                name: 'Japan',
+                                marker: { visible: true, width: 7, height: 7, isFilled: true }
+                            }
+                        ],
+                        legendSettings: { visible: false },
+                        tooltip: { enable: true, enableHighlight: true },
+                        width: ej.base.Browser.isDevice ? '100%' : '75%',
+                        title: 'Weather Data'
+                    });
+                    chart.appendTo(container.querySelector('.chart-container'));
+                }
+            });
+        }
+    </script>
+
+    <script id="bannerContent" type="text/x-jsrender">
+        <div class="banner-content">
+            <div class="e-icons e-assistview-icon"></div>
+            <i>Ask anything. Create faster. Work smarter with AI.</i>
+        </div>
+    </script>
+}
+
+<style>
+    .overview-aiassistview {
+        height: 620px;
+        width: 65vw;
+        margin: 0 auto;
+    }
+
+    .overview-aiassistview .banner-content .e-assistview-icon:before {
+        font-size: 35px;
+    }
+
+    .overview-aiassistview .banner-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 330px;
+        text-align: center;
+    }
+
+    .overview-aiassistview .chart-container {
+        width: fit-content;
+    }
+    .overview-aiassistview .chart-container svg text {
+       fill: rgba(0, 0, 0, 1);
+    }
+
+    body[class*="highcontrast"] .overview-aiassistview .chart-container svg text,
+    body[class*="dark"] .overview-aiassistview .chart-container svg text {
+        fill: white;
+    }
+
+    @@media only screen and (max-width: 750px) {
+        .overview-aiassistview {
+            width: 100%;
+        }
+    }
+</style>
+
+@section Meta {
+    <meta name="description" content="This example demonstrates the Overview with streaming, attachments, and regenerate functionality in ASP.NET Core AI AssistView control." />
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>This sample demonstrates an Overview UI that integrates streaming responses, generative UI responses, thinking workflow visualization, file attachments, speech-to-text input, text-to-speech playback and regenerate controls.</p>
+    </div>
+}
+
+@section Description {
+    <div id="description">
+        <p>The Overview sample composes multiple features from other samples into a single, reusable layout:</p>
+        <ul>
+            <li><code>Generative UI</code> for rendering structured AI responses including text, and tools in a conversational layout.</li>
+            <li><code>Thinking blocks</code> to visualize AI workflow stages such as searching, processing, analyzing, and summarizing in real time.</li>
+            <li><code>Streaming</code> responses rendered in real time using <code>addPromptResponse</code>.</li>
+            <li><code>File attachments</code> via the built-in attachment settings.</li>
+            <li><code>Speech-to-text</code> voice input using the browser SpeechRecognition wrapper.</li>
+            <li><code>Text-to-speech</code> playback using the audio controls and synthetic speech.</li>
+            <li><code>Regenerate</code> control to retry AI responses for a selected prompt.</li>
+        </ul>
+    </div>
+}
+@section CustomCanonicalURL{
+    <link rel="canonical" href="https://www.syncfusion.com/aspnet-core-ui-controls/ai-assistview" />
+}

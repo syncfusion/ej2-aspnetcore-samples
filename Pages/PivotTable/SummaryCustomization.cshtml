@@ -1,0 +1,500 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.PivotTable.SummaryCustomization
+
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2.PivotView
+@using Syncfusion.EJ2.DropDowns
+@section Meta{
+<meta name="description"
+    content="This example demonstrates the Show/Hide Totals in ASP.NET Core Pivot Table control. Explore here for more details." />
+}
+
+@{
+    var data = new PivotTableData().GetPivot_Data();
+    var drilledMembers = new string[] { "France", "Germany" };
+    var filterMembers = new string[] { "Gloves", "Helmets", "Shorts", "Vests" };
+    var selectedOption = "grandTotals";
+}
+@section ControlsSection{
+
+<div class="col-lg-9 control-section">
+    <div class="content-wrapper">
+        <ejs-pivotview id="pivotview" width="100%" height="500">
+            <e-datasourcesettings dataSource="@data" expandAll="false" enableSorting="true"
+                showGrandTotals="true" grandTotalsPosition="Bottom">
+                <e-formatsettings>
+                    <e-field name="Amount" format="C0" maximumSignificantDigits="10" minimumSignificantDigits="1"
+                        useGrouping="true"></e-field>
+                </e-formatsettings>
+                <e-drilledmembers>
+                    <e-field name="Country" items="@drilledMembers"></e-field>
+                </e-drilledmembers>
+                <e-filtersettings>
+                    <e-field name="Products" items="@filterMembers" type="Include"></e-field>
+                </e-filtersettings>
+                <e-rows>
+                    <e-field name="Country"></e-field>
+                    <e-field name="Products"></e-field>
+                </e-rows>
+                <e-columns>
+                    <e-field name="Year"></e-field>
+                    <e-field name="Order_Source" caption="Order Source"></e-field>
+                </e-columns>
+                <e-values>
+                    <e-field name="In_Stock" caption="In Stock"></e-field>
+                    <e-field name="Sold" caption="Units Sold"></e-field>
+                    <e-field name="Amount" caption="Sold Amount"></e-field>
+                </e-values>
+                <e-filters>
+                    <e-field name="Product_Categories" caption="Product Categories"></e-field>
+                </e-filters>
+            </e-datasourcesettings>
+            <e-gridSettings columnWidth="140"></e-gridSettings>
+        </ejs-pivotview>
+    </div>
+</div>
+
+<div class="col-lg-3 property-section pivot-table-property-section">
+    <div id="property" title="Properties" style="width: 100%;height:100%;">
+        <div>
+            <table class="property-panel-table">
+                <tbody>
+                    <tr style="height: 50px">
+                        <td style="width: auto">
+                            <div class="total-options" style="padding-left: 0; margin-right: 10px;">Totals:
+                            </div>
+                        </td>
+                        <td style="width: auto">
+                            <div style="padding-left: 0;">
+                            <ejs-dropdownlist id="options" dataSource="@Model.summaryOption" value="@selectedOption" width="100%" change="onOptionChange">
+                                <e-dropdownlist-fields text="text" value="value"></e-dropdownlist-fields>
+                            </ejs-dropdownlist>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="grandsum">
+            <table class="property-panel-table">
+                <tbody>
+                    <tr>
+                        <td>
+                            <div style="font-weight: 600; font-size: 13px; white-space: nowrap">
+                                Grand totals position
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="padding-left: 0">
+                                <ejs-radiobutton id="top" label="Top" name="position" value="Top" change="onChange1">
+                                </ejs-radiobutton>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="padding-left: 0">
+                                <ejs-radiobutton id="bottom" label="Bottom" name="position" value="Bottom"
+                                    checked="true" change="onChange1"></ejs-radiobutton>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>
+                                <div style="font-weight: 600; font-size: 13px; white-space: nowrap">
+                                    Hide grand totals
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="padding-left: 0">
+                                <ejs-radiobutton id="rowradio" label="Row" name="Total" value="Row" change="onChange">
+                                </ejs-radiobutton>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="padding-left: 0">
+                                <ejs-radiobutton id="columnradio" label="Column" name="Total" value="Column"
+                                    change="onChange"></ejs-radiobutton>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="padding-left: 0">
+                                <ejs-radiobutton id="bothradio" label="Both" name="Total" value="Both"
+                                    change="onChange">
+                                </ejs-radiobutton>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="padding-left: 0">
+                                <ejs-radiobutton id="none" label="None" name="Total" value="None" checked="true"
+                                    change="onChange"></ejs-radiobutton>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="subsum" style="display: none;">
+            <table class="property-panel-table">
+                <tbody>
+                    <tr>
+                        <td>
+                            <div style="font-weight: 600; font-size: 13px; white-space: nowrap">
+                                Sub-totals position
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="padding-left: 0">
+                                <ejs-radiobutton id="top1" label="Top" name="position1" value="Top" change="onChange3">
+                                </ejs-radiobutton>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="padding-left: 0">
+                                <ejs-radiobutton id="bottom1" label="Bottom" name="position1" value="Bottom"
+                                    change="onChange3"></ejs-radiobutton>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="padding-left: 0">
+                                <ejs-radiobutton id="auto1" label="Auto" name="position1" value="Auto" checked="true"
+                                    change="onChange3"></ejs-radiobutton>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>
+                                <div style="font-weight: 600; font-size: 13px; white-space: nowrap; padding-left: 0px;">
+                                    Hide sub-totals
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="padding-left: 0">
+                                <ejs-radiobutton id="rowradio1" label="Row" name="Total1" value="Row"
+                                    change="onChange2">
+                                </ejs-radiobutton>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="padding-left: 0">
+                                <ejs-radiobutton id="columnradio1" label="Column" name="Total1" value="Column"
+                                    change="onChange2"></ejs-radiobutton>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="padding-left: 0">
+                                <ejs-radiobutton id="bothradio1" label="Both" name="Total1" value="Both"
+                                    change="onChange2">
+                                </ejs-radiobutton>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="padding-left: 0">
+                                <ejs-radiobutton id="none1" label="None" name="Total1" value="None" checked="true"
+                                    change="onChange2"></ejs-radiobutton>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>
+                                <div style="font-weight: 600; font-size: 13px; white-space: nowrap; padding-left: 0px;">
+                                    Hide specific sub-totals
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div>
+                                <ejs-multiselect id="values" placeholder="Select fields to hide its sub-totals"
+                                    dataSource="@Model.fields" mode="CheckBox" showDropDownIcon="true"
+                                    showClearButton="false" enableSelectionOrder="true" select="onSelect"
+                                    removed="onRemoved" open="onOpen">
+                                    <e-multiselect-fields text="Name"></e-multiselect-fields>
+                                </ejs-multiselect>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<style>
+    #pivotview {
+        width: 100%;
+        height: 100%;
+    }
+
+    .pivot-table-property-section {
+        overflow: auto;
+    }
+
+    .pivot-table-property-section .property-panel-header {
+        padding-bottom: 10px;
+    }
+
+    .pivot-table-property-section .e-multiselect {
+        padding: 0;
+    }
+
+    .pivot-table-property-section .property-panel-table td {
+        width: auto;
+    }
+
+    .pivot-table-property-section .property-panel-table div {
+        padding-left: unset;
+    }
+
+    .sb-sample-content-area {
+        min-height: 255px !important;
+    }
+
+    .control-section {
+        min-height: 255px !important;
+    }
+
+    .e-multiselect.e-input-group {
+        padding: 0;
+    }
+</style>
+<script>
+    function onChange(args) {
+        var pivotObj = document.getElementById('pivotview').ej2_instances[0];
+        if (args.value === 'None') {
+            pivotObj.setProperties({ dataSourceSettings: { showGrandTotals: false } }, true);
+            pivotObj.setProperties({ dataSourceSettings: { showRowGrandTotals: true } }, true);
+            pivotObj.setProperties({ dataSourceSettings: { showColumnGrandTotals: true } }, true);
+            pivotObj.dataSourceSettings.showGrandTotals = true;
+        }
+        else {
+            pivotObj.setProperties({ dataSourceSettings: { showGrandTotals: true } }, true);
+            pivotObj.setProperties({ dataSourceSettings: { showRowGrandTotals: true } }, true);
+            pivotObj.setProperties({ dataSourceSettings: { showColumnGrandTotals: true } }, true);
+            if (args.value === 'Column') {
+                pivotObj.dataSourceSettings.showColumnGrandTotals = false;
+            } else if (args.value === 'Row') {
+                pivotObj.dataSourceSettings.showRowGrandTotals = false;
+            } else if (args.value === 'Both') {
+                pivotObj.dataSourceSettings.showGrandTotals = false;
+            }
+        }
+        pivotObj.refreshData();
+    }
+    function onChange1(args) {
+        var pivotObj = document.getElementById('pivotview').ej2_instances[0];
+        if (args.value === 'Top') {
+            pivotObj.setProperties({ dataSourceSettings: { grandTotalsPosition: 'Bottom' } }, true);
+            pivotObj.dataSourceSettings.grandTotalsPosition = 'Top';
+        }
+        else if (args.value === 'Bottom') {
+            pivotObj.setProperties({ dataSourceSettings: { grandTotalsPosition: 'Top' } }, true);
+            pivotObj.dataSourceSettings.grandTotalsPosition = 'Bottom';
+        }
+        pivotObj.refreshData();
+    }
+    function onChange2(args) {
+        var pivotObj = document.getElementById('pivotview').ej2_instances[0];
+        if (args.value === 'None') {
+            pivotObj.setProperties({ dataSourceSettings: { showSubTotals: false } }, true);
+            pivotObj.setProperties({ dataSourceSettings: { showRowSubTotals: true } }, true);
+            pivotObj.setProperties({ dataSourceSettings: { showColumnSubTotals: true } }, true);
+            pivotObj.dataSourceSettings.showSubTotals = true;
+        }
+        else {
+            pivotObj.setProperties({ dataSourceSettings: { showSubTotals: true } }, true);
+            pivotObj.setProperties({ dataSourceSettings: { showRowSubTotals: true } }, true);
+            pivotObj.setProperties({ dataSourceSettings: { showColumnSubTotals: true } }, true);
+            if (args.value === 'Column') {
+                pivotObj.dataSourceSettings.showColumnSubTotals = false;
+            } else if (args.value === 'Row') {
+                pivotObj.dataSourceSettings.showRowSubTotals = false;
+            } else if (args.value === 'Both') {
+                pivotObj.dataSourceSettings.showSubTotals = false;
+            }
+        }
+        pivotObj.refreshData();
+    }
+    function onChange3(args) {
+        var pivotObj = document.getElementById('pivotview').ej2_instances[0];
+        if (args.value === 'Top') {
+            pivotObj.setProperties({ dataSourceSettings: { subTotalsPosition: 'Top' } }, true);
+        }
+        else if (args.value === 'Bottom') {
+            pivotObj.setProperties({ dataSourceSettings: { subTotalsPosition: 'Bottom' } }, true);
+        }
+        else if (args.value === 'Auto') {
+            pivotObj.setProperties({ dataSourceSettings: { subTotalsPosition: 'Auto' } }, true);
+        }
+        pivotObj.refreshData();
+    }
+    function onSelect(args) {
+        var pivotObj = document.getElementById('pivotview').ej2_instances[0];
+        for (var i = 0; i < pivotObj.dataSourceSettings.columns.length; i++) {
+            if ((pivotObj.dataSourceSettings.columns[i].name || pivotObj.dataSourceSettings.columns[i].caption) === args.itemData.Name) {
+                pivotObj.dataSourceSettings.columns[i].showSubTotals = false;
+            }
+        }
+        for (var i = 0; i < pivotObj.dataSourceSettings.rows.length; i++) {
+            if ((pivotObj.dataSourceSettings.rows[i].name || pivotObj.dataSourceSettings.rows[i].caption) === args.itemData.Name) {
+                pivotObj.dataSourceSettings.rows[i].showSubTotals = false;
+            }
+        }
+        pivotObj.refreshData();
+    }
+    function onRemoved(args) {
+        var pivotObj = document.getElementById('pivotview').ej2_instances[0];
+        for (var i = 0; i < pivotObj.dataSourceSettings.columns.length; i++) {
+            if ((pivotObj.dataSourceSettings.columns[i].name || pivotObj.dataSourceSettings.columns[i].caption) === args.itemData.Name) {
+                pivotObj.dataSourceSettings.columns[i].showSubTotals = true;
+            }
+        }
+        for (var i = 0; i < pivotObj.dataSourceSettings.rows.length; i++) {
+            if ((pivotObj.dataSourceSettings.rows[i].name || pivotObj.dataSourceSettings.rows[i].caption) === args.itemData.Name) {
+                pivotObj.dataSourceSettings.rows[i].showSubTotals = true;
+            }
+        }
+        pivotObj.refreshData();
+    }
+    function onOpen(args) {
+        if (args.popup.element.querySelector(".e-filter-parent")) {
+            args.popup.element.querySelector(".e-filter-parent").style.display = 'none';
+        }
+    }
+    var options = [
+        { value: 'grandTotals', text: 'Grand Totals' },
+        { value: 'subTotals', text: 'Sub-totals' }
+    ];
+    function onOptionChange(args) {
+        document.getElementById('grandsum').style.display = 'none';
+        document.getElementById('subsum').style.display = 'none';
+        if (args.value == 'grandTotals') {
+            document.getElementById('grandsum').style.display = '';
+        } else if (args.value == 'subTotals') {
+            document.getElementById('subsum').style.display = '';
+        }
+    }
+</script>
+}
+
+@section PreScripts {
+<script>
+    ej.base.enableRipple(false);
+</script>
+}
+
+@section ActionDescription{
+<div id="action-description">
+    <p>This sample demonstrates showing and hiding grand totals and sub-totals, as well as change their position in
+        rows, columns, or both at runtime. Also, end users can specify and hide sub-totals of specific fields.</p>
+</div>
+}
+
+@section Description{
+<div id="description">
+    <p>
+        In this sample, you can control the position and visibility of the grand totals and sub-totals by selecting
+        options from the Totals drop-down list. The following options will be displayed based on the drop-down
+        selection:
+    </p>
+    <table>
+        <tbody>
+            <tr>
+                <td style="vertical-align: top;padding: 4px 0;width:180px"><code>Grand totals position</code></td>
+                <td style="padding: 4px 0;">: Allows to display the grand totals either at top or bottom of the row and
+                    column axes by selecting the appropriate radio button options.
+                    To display the grand totals at top, set the property <a target="_blank"
+                        href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.PivotView.PivotViewDataSourceSettings.html#Syncfusion_EJ2_PivotView_PivotViewDataSourceSettings_GrandTotalsPosition" aria-label="Navigate to the GrandTotalsPosition property reference in PivotViewDataSourceSettings for ASP.NET Core Pivot Table control">
+                        grandTotalsPosition</a> as <b>Top</b>. And, to display the grand
+                    totals at bottom, set the property <a target="_blank"
+                        href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.PivotView.PivotViewDataSourceSettings.html#Syncfusion_EJ2_PivotView_PivotViewDataSourceSettings_GrandTotalsPosition" aria-label="Navigate to the GrandTotalsPosition property reference in PivotViewDataSourceSettings for ASP.NET Core Pivot Table control">
+                        grandTotalsPosition</a> as <b>Bottom</b>.</td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top;padding: 4px 0;"><code>Hide grand totals</code></td>
+                <td style="padding: 4px 0;">: Allows to hide grand totals in row, column, or both by selecting the
+                    appropriate radio button options. To hide grand totals in both row and column, set the property<a
+                        target="_blank"
+                        href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.PivotView.PivotViewDataSourceSettings.html#Syncfusion_EJ2_PivotView_PivotViewDataSourceSettings_ShowGrandTotals" aria-label="Navigate to the ShowGrandTotals property reference in PivotViewDataSourceSettings for ASP.NET Core Pivot Table control">
+                        showGrandTotals</a> as <b>false</b>. To hide the row and column
+                    grand totals separately,
+                    set the property <a target="_blank"
+                        href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.PivotView.PivotViewDataSourceSettings.html#Syncfusion_EJ2_PivotView_PivotViewDataSourceSettings_ShowRowGrandTotals" aria-label="Navigate to the ShowRowGrandTotals property reference in PivotViewDataSourceSettings for ASP.NET Core Pivot Table control">
+                        showRowGrandTotals</a> and <a target="_blank"
+                        href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.PivotView.PivotViewDataSourceSettings.html#Syncfusion_EJ2_PivotView_PivotViewDataSourceSettings_ShowColumnGrandTotals" aria-label="Navigate to the ShowColumnGrandTotals property reference in PivotViewDataSourceSettings for ASP.NET Core Pivot Table control">
+                        showColumnGrandTotals</a> as <b>false</b>.</td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top;padding: 4px 0;"><code>Sub-totals position</code></td>
+                <td style="padding: 4px 0;">: Allows to display the sub-totals at top, bottom, or default position of
+                    the row and column axes by selecting the appropriate radio button options.
+                    To display the sub-totals at top, set the property <a target="_blank"
+                        href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.PivotView.PivotViewDataSourceSettings.html#Syncfusion_EJ2_PivotView_PivotViewDataSourceSettings_SubTotalsPosition" aria-label="Navigate to the SubTotalsPosition property reference in PivotViewDataSourceSettings for ASP.NET Core Pivot Table control">
+                        subTotalsPosition</a> as <b>Top</b>. And, to display the
+                    sub-totals at bottom, set the property <a target="_blank"
+                        href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.PivotView.PivotViewDataSourceSettings.html#Syncfusion_EJ2_PivotView_PivotViewDataSourceSettings_SubTotalsPosition" aria-label="Navigate to the SubTotalsPosition property reference in PivotViewDataSourceSettings for ASP.NET Core Pivot Table control">
+                        subTotalsPosition</a> as <b>Bottom</b>.</td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top;padding: 4px 0;"><code>Hide sub-totals</code></td>
+                <td style="padding: 4px 0;">: Allows to hide sub-totals in row, column, or both by selecting the
+                    appropriate radio button options. To hide sub-totals in both row and column, set the property<a
+                        target="_blank"
+                        href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.PivotView.PivotViewDataSourceSettings.html#Syncfusion_EJ2_PivotView_PivotViewDataSourceSettings_ShowSubTotals" aria-label="Navigate to the ShowSubTotals property reference in PivotViewDataSourceSettings for ASP.NET Core Pivot Table control">
+                        showSubTotals</a> as <b>false</b>. To hide the row and column
+                    sub-totals separately,
+                    set the property <a target="_blank"
+                        href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.PivotView.PivotViewDataSourceSettings.html#Syncfusion_EJ2_PivotView_PivotViewDataSourceSettings_ShowRowSubTotals" aria-label="Navigate to the ShowRowSubTotals property reference in PivotViewDataSourceSettings for ASP.NET Core Pivot Table control">
+                        showRowSubTotals</a> and <a target="_blank"
+                        href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.PivotView.PivotViewDataSourceSettings.html#Syncfusion_EJ2_PivotView_PivotViewDataSourceSettings_ShowColumnSubTotals" aria-label="Navigate to the ShowColumnSubTotals property reference in PivotViewDataSourceSettings for ASP.NET Core Pivot Table control">
+                        showColumnSubTotals</a> as <b>false</b>.</td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top;padding: 4px 0;"><code>Hide sub-totals for specific field(s)</code></td>
+                <td style="padding: 4px 0;">: Allows to hide sub-totals for specific fields in row and column by
+                    selecting appropriate fields from the multi-select drop-down.
+                    To hide sub-totals for a specific field, set the <a target="_blank"
+                        href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.PivotView.PivotViewRow.html#Syncfusion_EJ2_PivotView_PivotViewRow_ShowSubTotals" aria-label="Navigate to the ShowSubTotals property reference in PivotViewDataSourceSettings for ASP.NET Core Pivot Table control">
+                        showSubTotals</a> property as <b>false</b> inside the field definition.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+}
+@section Title{
+<title>ASP.NET Core Pivot Table Show/Hide Totals Example - Syncfusion Demos </title>
+}
+@section Header{
+<h1 class='sb-sample-text'>Example of Show/Hide Totals in ASP.NET Core Pivot Table Control</h1>
+}

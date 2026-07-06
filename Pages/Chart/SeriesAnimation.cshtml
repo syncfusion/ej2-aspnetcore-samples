@@ -1,0 +1,787 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Chart.SeriesAnimationModel
+@using Syncfusion.EJ2;
+@using Syncfusion.EJ2.Navigations;
+@{
+
+    var Line = new TabHeader { Text = "Line" };
+    var Column = new TabHeader { Text = "Column" };
+    var Spline = new TabHeader { Text = "Spline" };
+    var Area = new TabHeader { Text = "Area" };
+    var Bar = new TabHeader { Text = "Bar" };
+    var Bubble = new TabHeader { Text = "Bubble" };
+    var Scatter = new TabHeader { Text = "Scatter" };
+    var StepLine = new TabHeader { Text = "Step line" };
+    var RangeColumn = new TabHeader { Text = "Range column" };
+
+    var lineCharts = "#lineCharts";
+    var columnCharts = "#columnCharts";
+    var splineCharts = "#splineCharts";
+    var areaCharts = "#areaCharts";
+    var barCharts = "#barCharts";
+    var bubbleCharts = "#bubbleCharts";
+    var scatterCharts = "#scatterCharts";
+    var stepLineCharts = "#stepLineCharts";
+    var rangeCharts = "#rangeCharts";
+}
+
+@section ControlsSection {
+    <div class="control-section">
+        <div id="container">
+
+            <ejs-tab id="ej2Tab" selected="selectedTab" heightAdjustMode="@HeightStyles.None" overflowMode="@OverflowMode.Scrollable" headerPlacement="@HeaderPosition.Top" height="500px">
+                <e-tab-tabitems>
+                    <e-tab-tabitem header="@Line" content="@lineCharts"></e-tab-tabitem>
+                    <e-tab-tabitem header="@Column" content="@columnCharts"></e-tab-tabitem>
+                    <e-tab-tabitem header="@Spline" content="@splineCharts"></e-tab-tabitem>
+                    <e-tab-tabitem header="@Area" content="@areaCharts"></e-tab-tabitem>
+                    <e-tab-tabitem header="@Bar" content="@barCharts"></e-tab-tabitem>
+                    <e-tab-tabitem header="@Bubble" content="@bubbleCharts"></e-tab-tabitem>
+                    <e-tab-tabitem header="@Scatter" content="@scatterCharts"></e-tab-tabitem>
+                    <e-tab-tabitem header="@StepLine" content="@stepLineCharts"></e-tab-tabitem>
+                    <e-tab-tabitem header="@RangeColumn" content="@rangeCharts"></e-tab-tabitem>
+                </e-tab-tabitems>
+            </ejs-tab>
+
+            <div id="lineCharts">
+                <ejs-chart id="lineChart"
+                           load="lineLoad" loaded="lineLoaded">
+                    <e-chart-chartarea>
+                        <e-chartarea-border width="0"></e-chartarea-border>
+                    </e-chart-chartarea>
+                    <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category">
+                        <e-majorgridlines width="0"></e-majorgridlines>
+                        <e-majorticklines width="0"></e-majorticklines>
+                        <e-minorticklines width="0"></e-minorticklines>
+                    </e-chart-primaryxaxis>
+                    <e-chart-primaryyaxis minimum="0" maximum="100" labelFormat="{value}" edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift">
+                        <e-majorticklines width="0"></e-majorticklines>
+                        <e-linestyle width="0"></e-linestyle>
+                    </e-chart-primaryyaxis>
+                    <e-series-collection>
+                        <e-series dataSource="@Model.LineData" width=2.5 xName="x" yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Line">
+                            <e-series-marker visible="true" height="8" width="8">
+                                <e-series-datalabel visible=true position="@Syncfusion.EJ2.Charts.LabelPosition.Outer"></e-series-datalabel>
+                            </e-series-marker>
+                            <e-series-animation enable=true></e-series-animation>
+                        </e-series>
+                    </e-series-collection>
+                </ejs-chart>
+            </div>
+
+            <div id="columnCharts" style="display: none">
+                <ejs-chart id="columnChart" load="columnLoad" loaded="columnLoaded">
+                    <e-chart-chartarea>
+                        <e-chartarea-border width="0"></e-chartarea-border>
+                    </e-chart-chartarea>
+                    <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category">
+                        <e-majorgridlines width="0"></e-majorgridlines>
+                        <e-majorticklines width="0"></e-majorticklines>
+                        <e-minorticklines width="0"></e-minorticklines>
+                    </e-chart-primaryxaxis>
+                    <e-chart-primaryyaxis minimum="0" maximum="100" labelFormat="{value}" edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift">
+                        <e-majorticklines width="0"></e-majorticklines>
+                        <e-linestyle width="0"></e-linestyle>
+                    </e-chart-primaryyaxis>
+                    <e-series-collection>
+                        <e-series dataSource="@Model.ColumnData" xName="x" yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                            <e-series-marker visible="false">
+                                <e-series-datalabel visible="true" position="@Syncfusion.EJ2.Charts.LabelPosition.Outer"></e-series-datalabel>
+                            </e-series-marker>
+                            <e-series-animation enable="true"></e-series-animation>
+                            <e-series-cornerradius topLeft="4" topRight="4"></e-series-cornerradius>
+                        </e-series>
+                    </e-series-collection>
+                </ejs-chart>
+            </div>
+
+            <div id="splineCharts" style="display: none">
+                <ejs-chart id="splineChart" load="splineLoad" loaded="splineLoaded" width="100%">
+                    <e-chart-chartarea>
+                        <e-chartarea-border width="0"></e-chartarea-border>
+                    </e-chart-chartarea>
+                    <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category">
+                        <e-majorgridlines width="0"></e-majorgridlines>
+                        <e-majorticklines width="0"></e-majorticklines>
+                        <e-minorticklines width="0"></e-minorticklines>
+                    </e-chart-primaryxaxis>
+                    <e-chart-primaryyaxis minimum="0" maximum="100" labelFormat="{value}" edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift">
+                        <e-majorticklines width="0"></e-majorticklines>
+                        <e-linestyle width="0"></e-linestyle>
+                    </e-chart-primaryyaxis>
+                    <e-series-collection>
+                        <e-series dataSource="@Model.SplineData" width=2.5 xName="x" yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline">
+                            <e-series-marker visible="true" height="8" width="8">
+                                <e-series-datalabel visible="true" position="@Syncfusion.EJ2.Charts.LabelPosition.Outer"></e-series-datalabel>
+                            </e-series-marker>
+                            <e-series-animation enable="true"></e-series-animation>
+                        </e-series>
+                    </e-series-collection>
+                </ejs-chart>
+            </div>
+
+            <div id="areaCharts" style="display: none">
+                <ejs-chart id="areaChart" load="areaLoad" loaded="areaLoaded" width="100%">
+                    <e-chart-chartarea>
+                        <e-chartarea-border width="0"></e-chartarea-border>
+                    </e-chart-chartarea>
+                    <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category">
+                        <e-majorgridlines width="0"></e-majorgridlines>
+                        <e-majorticklines width="0"></e-majorticklines>
+                        <e-minorticklines width="0"></e-minorticklines>
+                    </e-chart-primaryxaxis>
+                    <e-chart-primaryyaxis minimum="0" maximum="100" labelFormat="{value}" edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift">
+                        <e-majorticklines width="0"></e-majorticklines>
+                        <e-linestyle width="0"></e-linestyle>
+                    </e-chart-primaryyaxis>
+                    <e-series-collection>
+                        <e-series dataSource="@Model.AreaData" xName="x" yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.SplineArea">
+                            <e-series-marker visible="false">
+                                <e-series-datalabel visible="true" position="@Syncfusion.EJ2.Charts.LabelPosition.Outer"></e-series-datalabel>
+                            </e-series-marker>
+                            <e-series-animation enable="true"></e-series-animation>
+                        </e-series>
+                    </e-series-collection>
+                </ejs-chart>
+            </div>
+
+            <div id="barCharts" style="display: none">
+                <ejs-chart id="barChart" load="barLoad" loaded="barLoaded" width="100%">
+                    <e-chart-chartarea>
+                        <e-chartarea-border width="0"></e-chartarea-border>
+                    </e-chart-chartarea>
+                    <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category">
+                        <e-majorgridlines width="0"></e-majorgridlines>
+                        <e-majorticklines width="0"></e-majorticklines>
+                        <e-minorticklines width="0"></e-minorticklines>
+                    </e-chart-primaryxaxis>
+                    <e-chart-primaryyaxis minimum="0" maximum="100" labelFormat="{value}" edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift">
+                        <e-majorticklines width="0"></e-majorticklines>
+                        <e-linestyle width="0"></e-linestyle>
+                    </e-chart-primaryyaxis>
+                    <e-series-collection>
+                        <e-series dataSource="@Model.BarData" xName="x" yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Bar">
+                            <e-series-marker visible="false">
+                                <e-series-datalabel visible="true" position="@Syncfusion.EJ2.Charts.LabelPosition.Outer"></e-series-datalabel>
+                            </e-series-marker>
+                            <e-series-animation enable="true"></e-series-animation>
+                            <e-series-cornerradius bottomRight="4" topRight="4"></e-series-cornerradius>
+                        </e-series>
+                    </e-series-collection>
+                </ejs-chart>
+            </div>
+
+            <div id="bubbleCharts" style="display: none">
+                <ejs-chart id="bubbleChart" load="bubbleLoad" pointRender="pointRender" loaded="bubbleLoaded" width="100%">
+                    <e-chart-chartarea>
+                        <e-chartarea-border width="0"></e-chartarea-border>
+                    </e-chart-chartarea>
+                    <e-chart-primaryxaxis minimum="1" maximum="7" interval="1">
+                        <e-majorgridlines width="0"></e-majorgridlines>
+                        <e-majorticklines width="0"></e-majorticklines>
+                    </e-chart-primaryxaxis>
+                    <e-chart-primaryyaxis minimum="0" maximum="100">
+                        <e-majorticklines width="0"></e-majorticklines>
+                    </e-chart-primaryyaxis>
+                    <e-series-collection>
+                        <e-series dataSource="@Model.BubbleData" xName="x" yName="y" size="size" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Bubble">
+                            <e-series-border width=2></e-series-border>
+                            <e-series-marker visible="false">
+                                <e-series-datalabel visible="false"></e-series-datalabel>
+                            </e-series-marker>
+                            <e-series-animation enable="true"></e-series-animation>
+                        </e-series>
+                    </e-series-collection>
+                </ejs-chart>
+            </div>
+
+            <div id="scatterCharts" style="display: none">
+                <ejs-chart id="scatterChart" load="scatterLoad" loaded="scatterLoaded" width="100%">
+                    <e-chart-chartarea>
+                        <e-chartarea-border width="0"></e-chartarea-border>
+                    </e-chart-chartarea>
+                    <e-chart-primaryxaxis minimum="1" maximum="10" interval="1" edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift">
+                        <e-majorgridlines width="0"></e-majorgridlines>
+                        <e-majorticklines width="0"></e-majorticklines>
+                    </e-chart-primaryxaxis>
+                    <e-chart-primaryyaxis minimum="0" maximum="80" interval="10" rangePadding="@Syncfusion.EJ2.Charts.ChartRangePadding.None">
+                        <e-majorticklines width="0"></e-majorticklines>
+                    </e-chart-primaryyaxis>
+                    <e-series-collection>
+                        <e-series dataSource="@Model.ScatterData" xName="x" yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Scatter">
+                            <e-series-marker visible="false" height="8" width="8" shape="@Syncfusion.EJ2.Charts.ChartShape.Circle">
+                                <e-series-datalabel visible="false"></e-series-datalabel>
+                            </e-series-marker>
+                            <e-series-animation enable="true"></e-series-animation>
+                        </e-series>
+                        <e-series dataSource="@Model.ScatterData" xName="x" yName="y1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Scatter">
+                            <e-series-marker visible="false" height="8" width="8" shape="@Syncfusion.EJ2.Charts.ChartShape.Circle">
+                                <e-series-datalabel visible="false"></e-series-datalabel>
+                            </e-series-marker>
+                            <e-series-animation enable="true"></e-series-animation>
+                        </e-series>
+                    </e-series-collection>
+                </ejs-chart>
+            </div>
+
+            <div id="stepLineCharts" style="display: none">
+                <ejs-chart id="stepLineChart" load="stepLoad" loaded="stepLoaded" width="100%">
+                    <e-chart-chartarea>
+                        <e-chartarea-border width="0"></e-chartarea-border>
+                    </e-chart-chartarea>
+                    <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category">
+                        <e-majorgridlines width="0"></e-majorgridlines>
+                        <e-majorticklines width="0"></e-majorticklines>
+                        <e-minorticklines width="0"></e-minorticklines>
+                    </e-chart-primaryxaxis>
+                    <e-chart-primaryyaxis minimum="0" maximum="100" labelFormat="{value}" edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift">
+                        <e-majorticklines width="0"></e-majorticklines>
+                        <e-linestyle width="0"></e-linestyle>
+                    </e-chart-primaryyaxis>
+                    <e-series-collection>
+                        <e-series dataSource="@Model.StepLineData" width=2.5 xName="x" yName="y" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StepLine">
+                            <e-series-marker visible="false">
+                                <e-series-datalabel visible="false"></e-series-datalabel>
+                            </e-series-marker>
+                            <e-series-animation enable="true"></e-series-animation>
+                        </e-series>
+                    </e-series-collection>
+                </ejs-chart>
+            </div>
+
+            <div id="rangeCharts" style="display: none">
+                <ejs-chart id="rangeColumnChart" load="rangeLoad" loaded="rangeLoaded" width="100%">
+                    <e-chart-chartarea>
+                        <e-chartarea-border width="0"></e-chartarea-border>
+                    </e-chart-chartarea>
+                    <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category">
+                        <e-majorgridlines width="0"></e-majorgridlines>
+                        <e-majorticklines width="0"></e-majorticklines>
+                        <e-minorticklines width="0"></e-minorticklines>
+                    </e-chart-primaryxaxis>
+                    <e-chart-primaryyaxis minimum="0" maximum="100" labelFormat="{value}" edgeLabelPlacement="@Syncfusion.EJ2.Charts.EdgeLabelPlacement.Shift">
+                        <e-majorticklines width="0"></e-majorticklines>
+                        <e-linestyle width="0"></e-linestyle>
+                    </e-chart-primaryyaxis>
+                    <e-series-collection>
+                        <e-series dataSource="@Model.RangeColumnData" columnSpacing=0.1 xName="x" high="high" low="low" type="@Syncfusion.EJ2.Charts.ChartSeriesType.RangeColumn">
+                            <e-series-marker visible="false">
+                                <e-series-datalabel visible="true" position="@Syncfusion.EJ2.Charts.LabelPosition.Outer"></e-series-datalabel>
+                            </e-series-marker>
+                            <e-series-animation enable="true"></e-series-animation>
+                            <e-series-cornerradius topLeft="4" topRight="4" bottomLeft=4 bottomRight=4></e-series-cornerradius>
+                        </e-series>
+                    </e-series-collection>
+                </ejs-chart>
+            </div>
+        </div>
+    </div>
+        <script src="~/scripts/chart/theme-color.js"></script>
+        <script type="text/javascript">
+            var scatterdata1 = shuffleArray([
+                { x: '1', y: 60, y1: 45 },
+                { x: '1.25', y: 40, y1: 30 },
+                { x: '1.5', y: 25, y1: 10 },
+                { x: '1.75', y: 15, y1: 50 },
+                { x: '2', y: 15, y1: 65 },
+                { x: '2.25', y: 35, y1: 50 },
+                { x: '2.5', y: 40, y1: 30 },
+                { x: '2.75', y: 60, y1: 25 },
+                { x: '3', y: 65, y1: 25 },
+                { x: '3.25', y: 30, y1: 15 },
+                { x: '3.5', y: 20, y1: 60 },
+                { x: '3.75', y: 50, y1: 40 },
+                { x: '4', y: 50, y1: 35 },
+                { x: '4.25', y: 55, y1: 50 },
+                { x: '4.5', y: 75, y1: 15 },
+                { x: '4.75', y: 45, y1: 60 },
+                { x: '5', y: 45, y1: 50 },
+                { x: '5.25', y: 35, y1: 30 },
+                { x: '5.5', y: 30, y1: 20 },
+                { x: '5.75', y: 55, y1: 40 },
+                { x: '6', y: 70, y1: 55 },
+                { x: '6.25', y: 60, y1: 25 },
+                { x: '6.5', y: 15, y1: 40 },
+                { x: '6.75', y: 40, y1: 15 },
+                { x: '7', y: 30, y1: 25 },
+                { x: '7.25', y: 60, y1: 35 },
+                { x: '7.5', y: 60, y1: 35 },
+                { x: '7.75', y: 25, y1: 15 },
+                { x: '8', y: 25, y1: 10 },
+                { x: '8.25', y: 50, y1: 30 },
+                { x: '8.5', y: 45, y1: 65 },
+                { x: '8.75', y: 55, y1: 20 },
+                { x: '9', y: 50, y1: 60 },
+                { x: '9.25', y: 30, y1: 45 },
+                { x: '9.5', y: 10, y1: 20 },
+                { x: '9.75', y: 40, y1: 35 },
+                { x: '10', y: 55, y1: 15 }
+            ]);
+            var scatterdata2 = shuffleArray([
+                { x: '1', y: 70, y1: 25 },
+                { x: '1.25', y: 55, y1: 40 },
+                { x: '1.5', y: 45, y1: 40 },
+                { x: '1.75', y: 30, y1: 45 },
+                { x: '2', y: 20, y1: 55 },
+                { x: '2.25', y: 30, y1: 45 },
+                { x: '2.5', y: 10, y1: 35 },
+                { x: '2.75', y: 25, y1: 15 },
+                { x: '3', y: 50, y1: 20 },
+                { x: '3.25', y: 60, y1: 30 },
+                { x: '3.5', y: 25, y1: 60 },
+                { x: '3.75', y: 50, y1: 45 },
+                { x: '4', y: 30, y1: 15 },
+                { x: '4.25', y: 55, y1: 20 },
+                { x: '4.5', y: 65, y1: 75 },
+                { x: '4.75', y: 45, y1: 35 },
+                { x: '5', y: 60, y1: 45 },
+                { x: '5.25', y: 35, y1: 10 },
+                { x: '5.5', y: 15, y1: 30 },
+                { x: '5.75', y: 30, y1: 60 },
+                { x: '6', y: 55, y1: 50 },
+                { x: '6.25', y: 25, y1: 45 },
+                { x: '6.5', y: 35, y1: 10 },
+                { x: '6.75', y: 20, y1: 30 },
+                { x: '7', y: 40, y1: 65 },
+                { x: '7.25', y: 30, y1: 45 },
+                { x: '7.5', y: 30, y1: 60 },
+                { x: '7.75', y: 45, y1: 30 },
+                { x: '8', y: 60, y1: 45 },
+                { x: '8.25', y: 50, y1: 40 },
+                { x: '8.5', y: 20, y1: 25 },
+                { x: '8.75', y: 70, y1: 15 },
+                { x: '9', y: 75, y1: 15 },
+                { x: '9.25', y: 30, y1: 50 },
+                { x: '9.5', y: 50, y1: 35 },
+                { x: '9.75', y: 55, y1: 20 },
+                { x: '10', y: 15, y1: 70 }
+            ]);
+            var scatterdata3 = shuffleArray([
+                { x: '1', y: 20, y1: 30 },
+                { x: '1.25', y: 30, y1: 20 },
+                { x: '1.5', y: 35, y1: 60 },
+                { x: '1.75', y: 40, y1: 30 },
+                { x: '2', y: 55, y1: 20 },
+                { x: '2.25', y: 45, y1: 35 },
+                { x: '2.5', y: 60, y1: 45 },
+                { x: '2.75', y: 25, y1: 30 },
+                { x: '3', y: 45, y1: 15 },
+                { x: '3.25', y: 50, y1: 45 },
+                { x: '3.5', y: 50, y1: 35 },
+                { x: '3.75', y: 15, y1: 40 },
+                { x: '4', y: 15, y1: 70 },
+                { x: '4.25', y: 45, y1: 55 },
+                { x: '4.5', y: 75, y1: 10 },
+                { x: '4.75', y: 60, y1: 25 },
+                { x: '5', y: 30, y1: 55 },
+                { x: '5.25', y: 45, y1: 35 },
+                { x: '5.5', y: 60, y1: 25 },
+                { x: '5.75', y: 40, y1: 45 },
+                { x: '6', y: 10, y1: 50 },
+                { x: '6.25', y: 20, y1: 65 },
+                { x: '6.5', y: 65, y1: 40 },
+                { x: '6.75', y: 30, y1: 30 },
+                { x: '7', y: 25, y1: 65 },
+                { x: '7.25', y: 35, y1: 40 },
+                { x: '7.5', y: 20, y1: 45 },
+                { x: '7.75', y: 60, y1: 50 },
+                { x: '8', y: 35, y1: 60 },
+                { x: '8.25', y: 25, y1: 45 },
+                { x: '8.5', y: 30, y1: 15 },
+                { x: '8.75', y: 50, y1: 70 },
+                { x: '9', y: 45, y1: 75 },
+                { x: '9.25', y: 20, y1: 35 },
+                { x: '9.5', y: 40, y1: 50 },
+                { x: '9.75', y: 45, y1: 30 },
+                { x: '10', y: 50, y1: 25 }
+            ]);
+            var scatterdata4 = shuffleArray([
+                { x: '1', y: 50, y1: 60 },
+                { x: '1.25', y: 45, y1: 55 },
+                { x: '1.5', y: 15, y1: 30 },
+                { x: '1.75', y: 55, y1: 20 },
+                { x: '2', y: 60, y1: 45 },
+                { x: '2.25', y: 55, y1: 35 },
+                { x: '2.5', y: 55, y1: 20 },
+                { x: '2.75', y: 30, y1: 50 },
+                { x: '3', y: 70, y1: 50 },
+                { x: '3.25', y: 25, y1: 35 },
+                { x: '3.5', y: 30, y1: 35 },
+                { x: '3.75', y: 45, y1: 60 },
+                { x: '4', y: 65, y1: 15 },
+                { x: '4.25', y: 20, y1: 70 },
+                { x: '4.5', y: 25, y1: 75 },
+                { x: '4.75', y: 35, y1: 25 },
+                { x: '5', y: 40, y1: 60 },
+                { x: '5.25', y: 50, y1: 30 },
+                { x: '5.5', y: 20, y1: 10 },
+                { x: '5.75', y: 35, y1: 40 },
+                { x: '6', y: 35, y1: 45 },
+                { x: '6.25', y: 30, y1: 25 },
+                { x: '6.5', y: 30, y1: 70 },
+                { x: '6.75', y: 60, y1: 20 },
+                { x: '7', y: 45, y1: 25 },
+                { x: '7.25', y: 40, y1: 35 },
+                { x: '7.5', y: 20, y1: 55 },
+                { x: '7.75', y: 50, y1: 40 },
+                { x: '8', y: 50, y1: 40 },
+                { x: '8.25', y: 35, y1: 55 },
+                { x: '8.5', y: 60, y1: 35 },
+                { x: '8.75', y: 30, y1: 60 },
+                { x: '9', y: 10, y1: 65 },
+                { x: '9.25', y: 25, y1: 50 },
+                { x: '9.5', y: 40, y1: 50 },
+                { x: '9.75', y: 30, y1: 25 },
+                { x: '10', y: 65, y1: 30 },
+            ]);
+            function selectedTab(args) {
+                let chartIds = [
+                    'lineChart', 'columnChart', 'splineChart', 'areaChart', 'barChart', 'bubbleChart', 'scatterChart', 'stepLineChart', 'rangeColumnChart'
+                ];
+                chartIds.forEach((id, index) => {
+                    if (index === args.selectedIndex) {
+                        let chartElement = document.getElementById(id);
+                        if (chartElement) {
+                            let chart = chartElement.ej2_instances[0];
+                            chart.refresh();
+                        }
+                    }
+                });
+            }
+            function generateRandomData(points) {
+                if (points) {
+                    return points.map(item => ({
+                        x: item.x,
+                        y: Math.floor(Math.random() * (90 - 10 + 1) + 10) // Randomly generate y values between 10 and 100
+                    }));
+                }
+            }
+
+            function pointRender(args) {
+                bubblePointRender(args);
+            }
+            let lineIntervalId;
+            function lineClearInterval() {
+                if (lineIntervalId) {
+                    clearInterval(lineIntervalId);
+                    lineIntervalId = null;
+                }
+            }
+
+            function lineLoaded(args) {
+                let chartElement = document.getElementById('lineCharts');
+                chartElement.setAttribute('title', '');
+            }
+
+            function lineLoad(args) {
+                loadChartTheme(args);
+                lineClearInterval();
+                lineIntervalId = setInterval(function () {
+                    let container = document.getElementById('lineChart');
+                    if (container && container.children.length > 0 && container.id === args.chart.element.id) {
+                        const updatedData = generateRandomData(args.chart.series[0].dataSource);
+                        if (args.chart.series.length > 0) {
+                            args.chart.series[0].setData(updatedData, 1400);
+                        }
+                    } else {
+                        lineClearInterval();
+                    }
+                }, 2000);
+            }
+
+            function columnLoaded(args) {
+                let chartElement = document.getElementById('columnCharts');
+                chartElement.setAttribute('title', '');
+            }
+
+            let columnIntervalId;
+            function columnClearInterval() {
+                if (columnIntervalId) {
+                    clearInterval(columnIntervalId);
+                    columnIntervalId = null;
+                }
+            }
+
+            function columnLoad(args) {
+                loadChartTheme(args);
+                columnClearInterval();
+                columnIntervalId = setInterval(function () {
+                    let container = document.getElementById('columnChart');
+                    if (container && container.children.length > 0 && container.id === args.chart.element.id) {
+                        const updatedData = generateRandomData(args.chart.series[0].dataSource);
+                        if (args.chart.series.length > 0) {
+                            args.chart.series[0].setData(updatedData, 1400);
+                        }
+                    } else {
+                        columnClearInterval();
+                    }
+                }, 2000);
+            }
+
+            function splineLoaded(args) {
+                let chartElement = document.getElementById('splineCharts');
+                chartElement.setAttribute('title', '');
+            }
+
+            let splineIntervalId;
+            function splineClearInterval() {
+                if (splineIntervalId) {
+                    clearInterval(splineIntervalId);
+                    splineIntervalId = null;
+                }
+            }
+
+            function splineLoad(args) {
+                loadChartTheme(args);
+                splineClearInterval();
+                splineIntervalId = setInterval(function () {
+                    let container = document.getElementById('splineChart');
+                    if (container && container.children.length > 0 && container.id === args.chart.element.id) {
+                        const updatedData = generateRandomData(args.chart.series[0].dataSource);
+                        if (args.chart.series.length > 0) {
+                            args.chart.series[0].setData(updatedData, 1400);
+                        }
+                    } else {
+                        splineClearInterval();
+                    }
+                }, 2000);
+            }
+
+            function areaLoaded(args) {
+                let chartElement = document.getElementById('areaCharts');
+                chartElement.setAttribute('title', '');
+            }
+
+            let areaIntervalId;
+            function areaClearInterval() {
+                if (areaIntervalId) {
+                    clearInterval(areaIntervalId);
+                    areaIntervalId = null;
+                }
+            }
+
+            function areaLoad(args) {
+                loadChartTheme(args);
+                areaClearInterval();
+                areaIntervalId = setInterval(function () {
+                    let container = document.getElementById('areaChart');
+                    if (container && container.children.length > 0 && container.id === args.chart.element.id) {
+                        const updatedData = generateRandomData(args.chart.series[0].dataSource);
+                        if (args.chart.series.length > 0) {
+                            args.chart.series[0].setData(updatedData, 1400);
+                        }
+                    } else {
+                        areaClearInterval();
+                    }
+                }, 2000);
+            }
+
+            function barLoaded(args) {
+                let chartElement = document.getElementById('barCharts');
+                chartElement.setAttribute('title', '');
+            }
+
+            let barIntervalId;
+            function barClearInterval() {
+                if (barIntervalId) {
+                    clearInterval(barIntervalId);
+                    barIntervalId = null;
+                }
+            }
+
+            function barLoad(args) {
+                loadChartTheme(args);
+                barClearInterval();
+                barIntervalId = setInterval(function () {
+                    let container = document.getElementById('barChart');
+                    if (container && container.children.length > 0 && container.id === args.chart.element.id) {
+                        const updatedData = generateRandomData(args.chart.series[0].dataSource);
+                        if (args.chart.series.length > 0) {
+                            args.chart.series[0].setData(updatedData, 1400);
+                        }
+                    } else {
+                        barClearInterval();
+                    }
+                }, 2000);
+            }
+
+            function bubbleLoaded(args) {
+                let chartElement = document.getElementById('bubbleCharts');
+                chartElement.setAttribute('title', '');
+            }
+
+            let bubbleIntervalId;
+            function bubbleClearInterval() {
+                if (bubbleIntervalId) {
+                    clearInterval(bubbleIntervalId);
+                    bubbleIntervalId = null;
+                }
+            }
+
+            function bubbleLoad(args) {
+                loadChartTheme(args);
+                bubbleClearInterval();
+                bubbleIntervalId = setInterval(function () {
+                    let container = document.getElementById('bubbleChart');
+                    if (container && container.children.length > 0 && container.id === args.chart.element.id) {
+                        let updatedData = args.chart.series[0].dataSource.map(item => {
+                            var minYValue = 5;
+                            var maxYValue = 95;
+                            var randomYValue = Math.random() * (maxYValue - minYValue) + minYValue;
+                            var minSize = 3.5;
+                            var maxSize = 9.5;
+                            var randomSize = Math.random() * (maxSize - minSize) + minSize;
+                            return Object.assign({}, item, { y: randomYValue, size: randomSize });
+                        });
+                        updatedData = shuffleArray(updatedData);
+                        if (args.chart.series.length > 0) {
+                            args.chart.series[0].setData(updatedData, 1400);
+                        }
+                    } else {
+                        bubbleClearInterval();
+                    }
+                }, 2000);
+            }
+
+            function shuffleArray(array) {
+                var _a;
+                for (var i = array.length - 1; i > 0; i--) {
+                    var j = Math.floor(Math.random() * (i + 1));
+                    _a = [array[j], array[i]], array[i] = _a[0], array[j] = _a[1];
+                }
+                return array;
+            }
+
+            function scatterLoaded(args) {
+                let chartElement = document.getElementById('scatterCharts');
+                chartElement.setAttribute('title', '');
+            }
+
+            let scatterIntervalId;
+            function scatterClearInterval() {
+                if (scatterIntervalId) {
+                    clearInterval(scatterIntervalId);
+                    scatterIntervalId = null;
+                }
+            }
+
+            function scatterLoad(args) {
+                loadChartTheme(args);
+                var index = 1;
+                var datasets = [shuffleArray(args.chart.series[0].dataSource), scatterdata1, scatterdata2, scatterdata3, scatterdata4];
+                scatterClearInterval();
+                scatterIntervalId = setInterval(function () {
+                    let container = document.getElementById('scatterChart');
+                    if (container && container.children.length > 0 && container.id === args.chart.element.id) {
+                        var scatterDataSource = datasets[index % datasets.length];
+                        index++;
+                        args.chart.series[0].setData(scatterDataSource, 2000);
+                        args.chart.series[1].setData(scatterDataSource, 2000);
+                    } else {
+                        scatterClearInterval();
+                    }
+                }, 2000);
+            }
+
+            function stepLoaded(args) {
+                let chartElement = document.getElementById('stepLineCharts');
+                chartElement.setAttribute('title', '');
+            }
+
+            let stepLineIntervalId;
+            function stepLineClearInterval() {
+                if (stepLineIntervalId) {
+                    clearInterval(stepLineIntervalId);
+                    stepLineIntervalId = null;
+                }
+            }
+
+            function stepLoad(args) {
+                loadChartTheme(args);
+                stepLineClearInterval();
+                stepLineIntervalId = setInterval(function () {
+                    let container = document.getElementById('stepLineChart');
+                    if (container && container.children.length > 0 && container.id === args.chart.element.id) {
+                        const updatedData = generateRandomData(args.chart.series[0].dataSource);
+                        if (args.chart.series.length > 0) {
+                            args.chart.series[0].setData(updatedData, 1400);
+                        }
+                    } else {
+                        stepLineClearInterval();
+                    }
+                }, 2000);
+            }
+
+            function rangeLoaded(args) {
+                let chartElement = document.getElementById('rangeCharts');
+                chartElement.setAttribute('title', '');
+            }
+
+            let rangeIntervalId;
+            function rangeClearInterval() {
+                if (rangeIntervalId) {
+                    clearInterval(rangeIntervalId);
+                    rangeIntervalId = null;
+                }
+            }
+
+            function rangeLoad(args) {
+                loadChartTheme(args);
+                rangeClearInterval();
+                rangeIntervalId = setInterval(function () {
+                    let container = document.getElementById('rangeColumnChart');
+                    if (container && container.children.length > 0 && container.id === args.chart.element.id) {
+                        const updatedData = args.chart.series[0].dataSource.map(item => {
+                            const high = Math.floor(Math.random() * (45 + 1)) + 50;
+                            const low = Math.floor(Math.random() * (40 + 1)) + 5;
+                            return { x: item.x, high, low };
+                        });
+                        if (args.chart.series.length > 0) {
+                            args.chart.series[0].setData(updatedData, 1400);
+                        }
+                    } else {
+                        rangeClearInterval();
+                    }
+                }, 2000);
+            }
+        </script>
+}
+@*custom code start*@
+@section Meta {
+        <meta name="description" content="This example demonstrates the Scatter Plot in ASP.NET Core Chart control. Explore here for more details." />
+}
+@*custom code end*@
+@section ActionDescription {
+        <div id="action-description">
+            <p>
+                This sample demonstrates the animation capabilities of various chart series types. Dynamic updates at regular intervals showcase smooth transitions and animations.
+            </p>
+        </div>
+}
+@section Description {
+        <div id="description">
+            <p>
+                In this example, different types of chart series, such as Line, Column, Spline, Area, Bar, Bubble, Scatter, Step Line, and Range Column, are animated to demonstrate real-time data updates. The chart dynamically updates with random values using the <code>setData</code> method. Each chart type reflects its unique characteristics and enhances visual understanding through animations.
+            </p>
+            <p>
+                More information on the various chart types can be found in this <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/chart-types/line" aria-label="documentation section">documentation section</a>.
+            </p>
+        </div>
+}
+@*custom code start*@
+@section Scripts {
+}
+
+    <style>
+
+        #control-container {
+            padding: 0px !important;
+        }
+    </style>
+@*custom code end*@
+@section Title {
+        <title>ASP.NET Core Chart Series Animation Example - Syncfusion Demos </title>
+}
+@section Header {
+        <h1 class='sb-sample-text'>Example of Series Animation in ASP.NET Core Chart Control</h1>
+}

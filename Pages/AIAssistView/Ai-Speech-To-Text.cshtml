@@ -1,0 +1,186 @@
+﻿@page
+@model EJ2CoreSampleBrowser_NET8.Pages.AIAssistView.Ai_Speech_To_TextModel
+@using Syncfusion.EJ2
+@using Syncfusion.EJ2.InteractiveChat
+@using System.Text.Json;
+
+@section ControlsSection {
+    <div class="control-section">
+        <div class="integration-speechtotext-section">
+            <ejs-aiassistview id="aiAssistView"
+                              bannerTemplate="#bannerContent"
+                              enableAttachments="true"
+                              promptRequest="onPromptRequest"
+                              enableStreaming="true"
+                              created="onCreated">
+                <e-aiassistview-footertoolbarsettings toolbarPosition="Bottom" items="@Model.FooterItems"></e-aiassistview-footertoolbarsettings>
+                <e-aiassistview-attachmentsettings saveUrl=@Url.Content("https://services.syncfusion.com/aspnet/production/api/FileUploader/Save") removeUrl=@Url.Content("https://services.syncfusion.com/aspnet/production/api/FileUploader/Remove")></e-aiassistview-attachmentsettings>
+                <e-aiassistview-toolbarsettings items="@Model.Items" itemClicked="toolbarItemClicked"></e-aiassistview-toolbarsettings>
+                <e-aiassistview-speechToTextSettings enable="true"></e-aiassistview-speechToTextSettings>
+            </ejs-aiassistview>
+        </div>
+    </div>
+}
+
+@section PreScripts {
+    <script>
+        var assistObj = null;
+        var baseURL = window.baseurl;
+        var suggestions = @Html.Raw(JsonSerializer.Serialize(Model.Suggestions));
+        function onCreated() {
+            assistObj = ej.base.getComponent(document.getElementById("aiAssistView"), "aiassistview");
+        }
+
+        function toolbarItemClicked(args) {
+            if (args.item.iconCss === 'e-icons e-refresh') {
+                assistObj.prompts = [];
+                assistObj.promptSuggestions = suggestions;
+            }
+        }
+
+        async function getAIResponse(args) {
+            try {
+                const userID = await window.fingerPrint();
+                if (!userID) {
+                    return 'Failed to generate user ID. Please try again later.';
+                }
+                const abortController = new AbortController();
+                const response = await fetch(baseURL + '/api/AI/Stream', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authentication': userID
+                    },
+                    body: JSON.stringify({
+                        message: args.prompt
+                    }),
+                    signal: abortController.signal
+                });
+
+                if (!response.ok) {
+                    let text = await response.text();
+                    let errorData;
+                    try {
+                        errorData = JSON.parse(text);
+                    } catch (e) {
+                        errorData = { error: 'HTTP Error ' + response.status + ': ' + text };
+                    }
+                    throw new Error(errorData.error || ('HTTP Error ' + response.status));
+                }
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                let fullText = '';
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    fullText += decoder.decode(value, { stream: true });
+                }
+                return fullText;
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    return;
+                } else if (error.message && error.message.indexOf('token limit') !== -1) {
+                    return error.message;
+                }
+                return 'We could not reach the AI service; please try again later.';
+            }
+        }
+
+        async function onPromptRequest(args) {
+            assistObj.addPromptResponse(await getAIResponse(args));
+        }
+    </script>
+
+    <script id="bannerContent" type="text/x-jsrender">
+        <div class="banner-content">
+            <div class="e-icons e-listen-icon"></div>
+            <h3>Speech To Text</h3>
+            <i>Click the below mic-button to convert your voice to text.</i>
+        </div>
+    </script>
+}
+
+<style>
+    .integration-speechtotext-section {
+        height: 550px;
+        width: 550px;
+        margin: 0 auto;
+    }
+
+        .integration-speechtotext-section .e-view-container {
+            margin: auto;
+        }
+
+        .integration-speechtotext-section .e-banner-view {
+            margin-left: 0;
+        }
+
+        .integration-speechtotext-section .banner-content .e-listen-icon:before {
+            font-size: 35px;
+        }
+
+        .integration-speechtotext-section .banner-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 330px;
+            text-align: center;
+        }
+
+    @@media only screen and (max-width: 750px) {
+        .integration-speechtotext-section
+
+    {
+        width: 100%;
+    }
+
+    }
+</style>
+
+@section Meta {
+    <meta name="description" content="This example demonstrates the integration of Speech-to-Text functionality with the ASP.NET Core AIAssistView control, using Azure OpenAI for responses. Explore here for more details." />
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>
+            This sample demonstrates the integration of <code>Speech-to-Text</code> functionality with the AI AssistView component. It allows users to convert spoken input into text using the device's microphone and the browser's <code>SpeechRecognition</code> API, with responses powered by Azure OpenAI.
+        </p>
+    </div>
+}
+
+@section Description {
+    <div id="description">
+        <p>
+            In this example, the AI AssistView component is integrated with the built-in <code>SpeechToText</code> component to enable voice-based interaction.
+        </p>
+        <p>
+            The sample demonstrates the following features:
+        </p>
+        <ul>
+            <li>
+                The <code>footerToolbarSettings</code> to customize the footer options with speech to text, attachments and a send icon.
+            </li>
+            <li>
+                The <code>speechToTextSettings</code> adds the speech to text button at the footer to captures voice input and transcribes it into text.
+            </li>
+            <li>
+                 The <code>attachmentSettings</code> to allow file uploads for the attached files.
+            </li>
+            <li>
+                The <code>toolbarSettings</code> adds a right-aligned <code>Refresh</code> button to clear previous prompts.
+            </li>
+            <li>
+                Responses are streamed dynamically using the <code>addPromptResponse</code> method for a real-time experience.
+            </li>
+            <li>
+                Markdown content in the response is rendered using the <code>Marked</code> plugin.
+            </li>
+            <li>
+                The <code>promptSuggestions</code> provides AI prompt suggestions to guide user interactions.
+            </li>
+        </ul>
+    </div>
+}

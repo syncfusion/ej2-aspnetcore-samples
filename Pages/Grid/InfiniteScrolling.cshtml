@@ -1,0 +1,394 @@
+@page
+@{
+    ViewData["Title"] = "InfiniteScrolling";
+}
+
+<h2>InfiniteScrolling</h2>
+
+@section ControlsSection{
+
+<style>
+    .image { position: absolute; background-repeat: no-repeat;
+        background-image: url('/scripts/Images/Employees/spinner.gif');
+        background-position: center; width: 16px; height: 28px; }
+
+    .e-bigger .image {
+        height: 36px;
+    }
+
+    #popup {
+        position: absolute;
+        background-color: transparent;
+        display: none;
+        z-index: 100;
+    }
+    .div-button {
+        margin: 5px 5px 5px 0;
+    }
+</style>
+
+<div class="control-section">
+    <div class="row">
+        <table>
+            <tr>
+                <td style="padding:15px" colspan='2'>
+                    <span>
+                        <ejs-button id="generate" cssClass="e-info" content="Load 100K Data"></ejs-button>
+                        <span id="popup">
+                            <span id="gif" class="image"></span>
+                        </span>
+                    </span>
+
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+    <div>
+        <ejs-grid id="InfiniteScroll" height="400" clipMode="EllipsisWithTooltip" dataBound="hide" load="load" allowFiltering="true" allowSorting="true" rowHeight="40" footerRowHeight="40" enableInfiniteScrolling="true" enableColumnVirtualization="true">
+            <e-grid-pagesettings pageSize="50"></e-grid-pagesettings>
+            <e-grid-filterSettings type="CheckBox" enableInfiniteScrolling="true"></e-grid-filterSettings>
+            <e-grid-aggregates>
+                <e-grid-aggregate>
+                    <e-aggregate-columns>
+                        <e-aggregate-column field="SalesQty" type="Sum" format="N0"
+                            footerTemplate="${Sum}">
+                        </e-aggregate-column>
+                        <e-aggregate-column field="GrossAmount" type="Sum" format="C0"
+                            footerTemplate="${Sum}">
+                        </e-aggregate-column>
+                        <e-aggregate-column field="NetAmount" type="Sum" format="C0"
+                            footerTemplate="${Sum}">
+                        </e-aggregate-column>
+                        <e-aggregate-column field="ShippingCost" type="Sum" format="C0"
+                            footerTemplate="${Sum}">
+                        </e-aggregate-column>
+                        <e-aggregate-column field="Profit" type="Sum" format="C0"
+                            footerTemplate="${Sum}">
+                        </e-aggregate-column>
+                        <e-aggregate-column field="Forecast" type="Sum" format="C0"
+                            footerTemplate="${Sum}">
+                        </e-aggregate-column>
+                        <e-aggregate-column field="ReturnQty" type="Sum" format="N0"
+                            footerTemplate="${Sum}">
+                        </e-aggregate-column>
+                        <e-aggregate-column field="ReturnAmount" type="Sum" format="C0"
+                            footerTemplate="${Sum}">
+                        </e-aggregate-column>
+                    </e-aggregate-columns>
+                </e-grid-aggregate>
+            </e-grid-aggregates>
+            <e-grid-columns>
+                <e-grid-column field="ProductId" headerText="Product ID" width="130" textAlign="Right" isPrimaryKey="true"></e-grid-column>
+                <e-grid-column field="ProductName" headerText="Product Name" width="210"></e-grid-column>
+                <e-grid-column field="GrossAmount" headerText="Gross Amount" width="180" textAlign="Right" format="C2"></e-grid-column>
+                <e-grid-column field="NetAmount" headerText="Net Amount" width="180" textAlign="Right" format="C2"></e-grid-column>
+                <e-grid-column field="ProfitMargin" headerText="Profit (%)" width="180"></e-grid-column>
+                <e-grid-column field="AchievementPercent" headerText="Achievement (%)" width="190"></e-grid-column>
+                <e-grid-column field="SalesQty" headerText="Sales Quantity" width="150" textAlign="Right"></e-grid-column>
+                <e-grid-column field="UnitPrice" headerText="Unit Price" width="120" textAlign="Right" format="C2"></e-grid-column>
+                <e-grid-column field="Month" headerText="Month" width="120"></e-grid-column>
+                <e-grid-column field="Category" headerText="Category" width="130"></e-grid-column>
+                <e-grid-column field="SubCategory" headerText="Sub Category" width="150" visible="false"></e-grid-column>
+                <e-grid-column field="Brand" headerText="Brand" width="120"></e-grid-column>
+                <e-grid-column field="City" headerText="City" width="130"></e-grid-column>
+                <e-grid-column field="State" headerText="State" width="120"></e-grid-column>
+                <e-grid-column field="Country" headerText="Country" width="160"></e-grid-column>
+                <e-grid-column field="Region" headerText="Region" width="130"></e-grid-column>
+                <e-grid-column field="Discount" headerText="Discount (%)" width="140" textAlign="Right" format="N0"></e-grid-column>
+                <e-grid-column field="Tax" headerText="Tax (%)" width="130" textAlign="Right" format="N2"></e-grid-column>
+                <e-grid-column field="ShippingCost" headerText="Shipping Cost" width="160" textAlign="Right" format="C2"></e-grid-column>
+                <e-grid-column field="Profit" headerText="Profit" width="160" textAlign="Right" format="C2"></e-grid-column>
+                <e-grid-column field="Target" headerText="Target" width="120" textAlign="Right" format="C2"></e-grid-column>
+                <e-grid-column field="Forecast" headerText="Forecast" width="150" textAlign="Right" format="C2"></e-grid-column>
+                <e-grid-column field="SalesRep" headerText="Sales Reporter" width="150"></e-grid-column>
+                <e-grid-column field="Manager" headerText="Manager" width="140"></e-grid-column>
+                <e-grid-column field="Channel" headerText="Channel" width="120"></e-grid-column>
+                <e-grid-column field="Quarter" headerText="Quarter" width="120" textAlign="Center"></e-grid-column>
+                <e-grid-column field="Year" headerText="Year" width="100" textAlign="Right"></e-grid-column>
+                <e-grid-column field="ReturnQty" headerText="Return Quantity" width="160" textAlign="Right"></e-grid-column>
+                <e-grid-column field="ReturnAmount" headerText="Return Amount" width="160" textAlign="Right" format="C2"></e-grid-column>
+                <e-grid-column field="Remarks" headerText="Remarks" width="220"></e-grid-column>
+            </e-grid-columns>
+        </ejs-grid>
+    </div>
+</div>
+<script type="text/javascript">
+    var salesDataSource = [], date1 = null, date2 = null, flag = true;
+    function createSalesDataSource() {
+        var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        var productCatalog = [
+            {
+                name: 'Smart Pro Laptop',
+                category: 'Electronics',
+                subCategory: 'Computing',
+                brand: 'Apex Tech',
+                basePrice: 1800,
+                country: 'USA',
+                state: 'California',
+                city: 'San Jose',
+                region: 'North America'
+            },
+            {
+                name: 'Ergo Desk Monitor',
+                category: 'Electronics',
+                subCategory: 'Displays',
+                brand: 'Vision Core',
+                basePrice: 780,
+                country: 'Germany',
+                state: 'Bavaria',
+                city: 'Munich',
+                region: 'Europe'
+            },
+            {
+                name: 'Office Chair X',
+                category: 'Furniture',
+                subCategory: 'Seating',
+                brand: 'Comfort Line',
+                basePrice: 450,
+                country: 'Singapore',
+                state: 'Central',
+                city: 'Singapore',
+                region: 'Asia'
+            },
+            {
+                name: 'Wireless Keyboard',
+                category: 'Accessories',
+                subCategory: 'Input Devices',
+                brand: 'Key Wave',
+                basePrice: 200,
+                country: 'USA',
+                state: 'Texas',
+                city: 'Austin',
+                region: 'North America'
+            },
+            {
+                name: '4K Business Display',
+                category: 'Electronics',
+                subCategory: 'Displays',
+                brand: 'Vision Core',
+                basePrice: 1400,
+                country: 'Brazil',
+                state: 'São Paulo',
+                city: 'São Paulo',
+                region: 'South America'
+            },
+            {
+                name: 'Ergonomic Mouse Pro',
+                category: 'Accessories',
+                subCategory: 'Input Devices',
+                brand: 'Key Wave',
+                basePrice: 90,
+                country: 'United Kingdom',
+                state: 'England',
+                city: 'London',
+                region: 'Europe'
+            },
+            {
+                name: 'Conference Speaker Set',
+                category: 'Audio',
+                subCategory: 'Conference Gear',
+                brand: 'Sound Sphere',
+                basePrice: 750,
+                country: 'Australia',
+                state: 'NSW',
+                city: 'Sydney',
+                region: 'Oceania'
+            },
+            {
+                name: 'Cloud Backup License',
+                category: 'Software',
+                subCategory: 'Subscription',
+                brand: 'Cloud Nexus',
+                basePrice: 300,
+                country: 'Canada',
+                state: 'Ontario',
+                city: 'Toronto',
+                region: 'North America'
+            },
+            {
+                name: 'Smart Docking Hub',
+                category: 'Electronics',
+                subCategory: 'Accessories',
+                brand: 'Apex Tech',
+                basePrice: 260,
+                country: 'Netherlands',
+                state: 'North Holland',
+                city: 'Amsterdam',
+                region: 'Europe'
+            },
+            {
+                name: 'Premium Standing Desk',
+                category: 'Furniture',
+                subCategory: 'Desks',
+                brand: 'Comfort Line',
+                basePrice: 950,
+                country: 'USA',
+                state: 'Washington',
+                city: 'Seattle',
+                region: 'North America'
+            },
+            {
+                name: 'Noise Cancel Headset',
+                category: 'Audio',
+                subCategory: 'Headphones',
+                brand: 'Sound Sphere',
+                basePrice: 220,
+                country: 'Japan',
+                state: 'Tokyo',
+                city: 'Tokyo',
+                region: 'Asia'
+            },
+            {
+                name: 'Security Suite License',
+                category: 'Software',
+                subCategory: 'License',
+                brand: 'Cloud Nexus',
+                basePrice: 480,
+                country: 'India',
+                state: 'Karnataka',
+                city: 'Bengaluru',
+                region: 'Asia'
+            },
+        ];
+        var salesReps = ['Maya Chen', 'Lena Fischer', 'Arun Patel', 'Noah Davis', 'Camila Souza', 'Emma Clark', 'Ethan Brown', 'Sophia Martin', 'Daniel Moore', 'Priya Nair', 'Liam Wilson', 'Olivia Brooks', 'Marco Klein', 'Ava Johnson', 'Rafael Lima', 'Isabella Rossi', 'Hiro Tanaka', 'Fatima Khan'];
+        var managers = ['Olivia Brooks', 'Marco Klein', 'Sofia Lim', 'Priya Nair', 'Rafael Lima', 'Daniel Reed', 'Ava Johnson', 'Liam Wilson', 'Grace Bennett', 'Kunal Mehta', 'Noah Turner', 'Mila Carter'];
+        var channels = ['Online', 'Retail', 'Partner', 'Distributor', 'Direct'];
+        var remarkPool = ['Top seller in the region', 'Stable demand', 'Exceeded quota', 'High repeat orders', 'Important account', 'Low-risk replenishment', 'Need follow-up on renewal', 'Expansion opportunity', 'Seasonal spike observed', 'Pending contract signature', 'Bulk order secured', 'Watch for shipping delay'];
+        var round2 = (value) => Math.round(value * 100) / 100;
+        var pick = (arr) => 
+        arr[Math.floor(Math.random() * arr.length)];
+        var productVersionMap = {};
+        for (var index = 0; index < 100000; index++) {
+            var product = productCatalog[Math.floor(Math.random() * productCatalog.length)];
+            if (!productVersionMap[product.name]) {
+                productVersionMap[product.name] = 1;
+            }
+            var version = `V${productVersionMap[product.name]}`;
+            productVersionMap[product.name]++;
+            var salesQty = Math.floor(5 + Math.random() * 100);
+            var unitPrice = round2(
+                product.basePrice * (0.8 + Math.random() * 0.4)
+            );
+            var grossAmount = round2(salesQty * unitPrice);
+            var discount = round2(2 + Math.random() * 18);
+            var discountAmount = round2((grossAmount * discount) / 100);
+            var shippingCost = round2(25 + Math.random() * 150);
+            var tax = round2(5 + Math.random() * 15);
+            var netAmount = round2(
+                grossAmount - discountAmount + shippingCost * 0.15
+            );
+            var profit = round2(
+                grossAmount - discountAmount - shippingCost - grossAmount * (0.3 + Math.random() * 0.2)
+            );
+            var target = round2(
+                grossAmount * (1.2 + Math.random() * 1.5)
+            );
+            var forecast = round2(
+                target * (0.8 + Math.random() * 0.4)
+            );
+            var profitMargin =
+                grossAmount === 0 ? 0 : round2((profit / grossAmount) * 100);
+            var achievementPercent = round2(20 + Math.random() * 80);
+            var isZero = Math.random() < 0.05;
+            var returnQty = isZero
+                ? 0
+                : Math.floor(1 + Math.random() * 5);
+            var returnAmount = returnQty > 0
+                ? round2(returnQty * unitPrice * (0.5 + Math.random() * 0.3))
+                : 0;
+            salesDataSource.push({
+                ProductId: 100001 + index,
+                ProductName: `${product.name} ${version}`,
+                Region: product.region,
+                SalesQty: salesQty,
+                GrossAmount: grossAmount,
+                NetAmount: netAmount,
+                ProfitMargin: profitMargin,
+                AchievementPercent: achievementPercent,
+                UnitPrice: unitPrice,
+                Month: pick(months),
+                Category: product.category,
+                SubCategory: product.subCategory,
+                Brand: product.brand,
+                Country: product.country,
+                State: product.state,
+                City: product.city,
+                Discount: discount,
+                Tax: tax,
+                ShippingCost: shippingCost,
+                Profit: profit,
+                Target: target,
+                Forecast: forecast,
+                SalesRep: pick(salesReps),
+                Manager: pick(managers),
+                Channel: pick(channels),
+                Quarter: `Q${Math.floor(Math.random() * 4) + 1}`,
+                Year: 2023 + Math.floor(Math.random() * 3),
+                ReturnQty: returnQty,
+                ReturnAmount: returnAmount,
+                Remarks: pick(remarkPool)
+            });
+        }
+    }
+    document.getElementById("generate").addEventListener('click', function () {
+        var grid = document.getElementById("InfiniteScroll").ej2_instances[0]
+        if (!salesDataSource.length) {
+            grid.showSpinner();
+            document.getElementById('generate').ej2_instances[0].disabled = true;
+            createSalesDataSource();
+            grid.hideSpinner();
+            grid.dataSource = salesDataSource;
+        }
+    })
+    function hide(args) {
+        if (flag) {
+            flag = false;
+        }
+    }
+    function load(args) {
+        if (args) {
+            args.enableSeamlessScrolling = true;
+        }
+    }
+</script>
+}
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample showcases the infinite scrolling capability of the Grid, designed to handle large datasets seamlessly. Click the “Load 100K Data” button to populate the Grid with data, then scroll vertically and horizontally to dynamically load rows and columns, ensuring smooth navigation.
+        </p>
+    </div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Infinite Scrolling in ASP.NET Core Data Grid control. Explore here for more details."/>
+                }
+
+@section Description{
+    <div id="description">
+    <p>
+        Infinite scrolling uses a lazy loading mechanism, where data is fetched automatically as the user scrolls to the end of the Grid. This behavior is enabled by setting the <code>enableInfiniteScrolling</code> property to <code>true</code> and defining the Grid’s <code>height</code> property.
+    </p>
+    <p>
+        The Grid also supports column virtualization, which renders only the visible columns to improve performance when working with a large number of columns. Column virtualization can be enabled by setting the <code>enableColumnVirtualization</code> property to <code>true</code>.
+        Additionally, column virtualization integrates seamlessly with aggregate operations, ensuring that calculations like <code>Sum</code>, <code>Average</code>, etc., remain accurate and are displayed correctly during horizontal scrolling.
+    </p>
+    <p>
+        More information on the infinite scrolling can be found in the
+        <a target="_blank"
+            href="https://ej2.syncfusion.com/aspnetcore/documentation/grid/scrolling/infinite-scrolling" aria-label="Navigate to the documentation for infinite scrolling in ASP.NET Core Grid control">
+        documentation section</a>.
+    </p>
+    <p>
+        Looking for the full ASP.NET Core Data Grid component overview, features, pricing, and documentation? Visit our <a target="_blank" href="https://www.syncfusion.com/aspnet-core-ui-controls/grid" aria-label="documentation">ASP.NET Core Data Grid component</a> page.
+    </p>
+</div>
+}
+@section Title{
+                    <title>ASP.NET Core Data Grid Infinite Scrolling Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Infinite Scrolling in ASP.NET Core Data Grid Control</h1>
+                }

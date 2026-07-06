@@ -1,0 +1,74 @@
+@page
+@using EJ2CoreSampleBrowser.Models;
+@using Syncfusion.EJ2.Gantt;
+
+@section ControlsSection {
+    <div class="control-section">
+        <div class="row">
+            <div class="col-md-12">
+                <ejs-gantt id="InfiniteScroll" dataSource="GanttData.InfiniteTimelineScrollData()" height="650px" rowHeight="46"
+                    taskbarHeight="25" highlightWeekends="true" allowSelection="true" treeColumnIndex="1" gridLines='Both'
+                    enableInfiniteTimelineScroll = "true">
+                    <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate"
+                        duration="Duration" progress="Progress" dependency="Predecessor" parentID="ParentID">
+                    </e-gantt-taskfields>
+                    <e-gantt-columns>
+                        <e-gantt-column field="TaskId" width="80"></e-gantt-column>
+                        <e-gantt-column field="TaskName" width="250"></e-gantt-column>
+                        <e-gantt-column field="StartDate"></e-gantt-column>
+                        <e-gantt-column field="Duration"></e-gantt-column>
+                        <e-gantt-column field="Progress"></e-gantt-column>
+                        <e-gantt-column field="Predecessor"></e-gantt-column>
+                    </e-gantt-columns>
+                     <e-gantt-editsettings allowAdding="true" allowEditing="true" allowDeleting="true"
+                        allowTaskbarEditing="true" showDeleteConfirmDialog="true"></e-gantt-editsettings>
+                    <e-gantt-labelSettings leftLabel="TaskId" rightLabel='TaskName' taskLabel = '${Progress}%'></e-gantt-labelSettings>
+                    <e-gantt-splittersettings columnIndex="3"></e-gantt-splittersettings>
+                    <e-gantt-timelinesettings viewStartDate = "12/29/2025" viewEndDate = "06/30/2026">
+                        <e-timelinesettings-toptier unit="Week" format="MMM dd, y"></e-timelinesettings-toptier>
+                        <e-timelinesettings-bottomtier unit="Day"></e-timelinesettings-bottomtier>
+                    </e-gantt-timelinesettings>
+                </ejs-gantt>
+            </div>
+        </div>
+    </div>
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>
+            This sample demonstrates the infinite timeline scrolling feature in the Gantt Chart,
+            allowing users to navigate across project timelines without fixed date boundaries.
+        </p>
+    </div>
+}
+
+@section Description {
+    <div id="description">
+        <p>
+            By enabling the
+            <a target="_blank"
+                href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.gantt.gantt.html#Syncfusion_EJ2_Gantt_Gantt_EnableInfiniteTimelineScroll">
+                enableInfiniteTimelineScroll
+            </a> property, the timeline dynamically generates additional date ranges as you scroll horizontally.
+        </p>
+
+        <p>
+            When the scroll position reaches the edges of the visible timeline, new segments are rendered automatically,
+            ensuring uninterrupted navigation in either direction.
+        </p>
+
+        <p>More information on the Essential<sup>®</sup> ASP.NET Core Gantt Chart can be found in the <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/gantt/time-line/time-line">timeline</a> documentation section.</p>
+    </div>
+}
+
+@section Meta {
+    <meta name="description"
+        content="This example demonstrates the Keyboard Interaction in ASP.NET Core Gantt control. Explore here for more details." />
+}
+@section Title {
+    <title>ASP.NET Core Gantt Keyboard Navigation Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Keyboard Navigation in ASP.NET Core Gantt Control</h1>
+}

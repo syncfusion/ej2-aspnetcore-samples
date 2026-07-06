@@ -1,0 +1,164 @@
+﻿@page
+@model EJ2CoreSampleBrowser_NET8.Pages.AIAssistView.Ai_Text_To_SpeechModel
+@using Syncfusion.EJ2
+@using Syncfusion.EJ2.InteractiveChat
+@using System.Text.Json;
+@{
+    var promptsData = new[]
+    {
+        new { prompt = "What is AI?", response = "<div> AI stands for Artificial Intelligence, enabling machines to mimic human intelligence for tasks such as learning, problem - solving, and decision - making.</ div >", suggestionData = new List<string> { } }
+    };
+}
+@section ControlsSection {
+    <div class="control-section">
+        <div class="integration-texttospeech-section">
+            <ejs-aiassistview id="aiAssistView"
+                              prompts="@promptsData"
+                              promptSuggestions="@Model.Suggestions"
+                              promptRequest="onPromptRequest"
+                              enableStreaming="true"
+                              created="onCreated">
+                <e-aiassistview-toolbarsettings items="@Model.Items" itemClicked="toolbarItemClicked"></e-aiassistview-toolbarsettings>
+                <e-aiassistview-responsetoolbarsettings items="@Model.ResponseToolbarItems"></e-aiassistview-responsetoolbarsettings>
+            </ejs-aiassistview>
+        </div>
+    </div>
+}
+
+@section PreScripts {
+    <script>
+        var assistObj = null;
+        var baseURL = window.baseurl;
+        var suggestions = @Html.Raw(JsonSerializer.Serialize(Model.Suggestions));
+
+        function onCreated() {
+            assistObj = ej.base.getComponent(document.getElementById("aiAssistView"), "aiassistview");
+        }
+
+        function toolbarItemClicked(args) {
+            if (args.item.iconCss === 'e-icons e-refresh') {
+                assistObj.prompts = [];
+                assistObj.promptSuggestions = suggestions;
+            }
+        }
+
+        async function getAIResponse(args) {
+            try {
+                const userID = await window.fingerPrint();
+                if (!userID) {
+                    return 'Failed to generate user ID. Please try again later.';
+                }
+                const abortController = new AbortController();
+                const response = await fetch(baseURL + '/api/AI/Stream', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authentication': userID
+                    },
+                    body: JSON.stringify({
+                        message: args.prompt
+                    }),
+                    signal: abortController.signal
+                });
+
+                if (!response.ok) {
+                    let text = await response.text();
+                    let errorData;
+                    try {
+                        errorData = JSON.parse(text);
+                    } catch (e) {
+                        errorData = { error: 'HTTP Error ' + response.status + ': ' + text };
+                    }
+                    throw new Error(errorData.error || ('HTTP Error ' + response.status));
+                }
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                let fullText = '';
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    fullText += decoder.decode(value, { stream: true });
+                }
+                return fullText;
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    return;
+                } else if (error.message && error.message.indexOf('token limit') !== -1) {
+                    return error.message;
+                }
+                return 'We could not reach the AI service; please try again later.';
+            }
+        }
+
+        async function onPromptRequest(args) {
+            assistObj.addPromptResponse(await getAIResponse(args));
+        }
+    </script>
+}
+
+<style>
+    .integration-texttospeech-section {
+        height: 450px;
+        width: 650px;
+        margin: 0 auto;
+    }
+
+        .integration-texttospeech-section .e-view-container {
+            margin: auto;
+        }
+
+        @@media only screen and (max-width: 750px) {
+           .integration-texttospeech-section {
+                width: 100%;
+           }
+        }
+
+</style>
+
+@section Meta {
+    <meta name="description" content="This example demonstrates the integration of Text-to-Speech functionality with the ASP.NET Core AIAssistView control, using Azure OpenAI for responses. Explore here for more details." />
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>
+            This sample demonstrates the integration of <code>Text-to-Speech</code> functionality with the AI AssistView component. It allows users to convert AI-generated responses into spoken audio using the browser's <code>SpeechSynthesis</code> API, with responses powered by Azure OpenAI.
+        </p>
+    </div>
+}
+
+@section Description {
+    <div id="description">
+        <p>
+            In this example, the AI AssistView component is integrated with <code>Text-to-Speech</code> functionality to enable voice-based interaction with AI-generated responses.
+        </p>
+        <p>
+            The sample demonstrates the following features:
+        </p>
+        <ul>
+            <li>
+                The <code>responseToolbarSettings</code> includes a custom <code>Read Aloud</code> button that extracts plain text from the AI response and uses the browser's <code>SpeechSynthesis</code> API to vocalize it.
+            </li>
+            <li>
+                The <code>SpeechSynthesisUtterance</code> interface is used to manage speech playback, including toggling between play and stop states.
+            </li>
+            <li>
+                Additional response toolbar buttons include <code>Copy</code> to copy the response text, and <code>Like</code> and <code>Need Improvement</code> for user feedback.
+            </li>
+            <li>
+                The <code>toolbarSettings</code> adds a right-aligned <code>Refresh</code> button to clear previous prompts.
+            </li>
+            <li>
+                Responses are streamed dynamically using the <code>addPromptResponse</code> method, and the <code>scrollToBottom</code> method ensures the latest response is always visible.
+            </li>
+            <li>
+                Markdown content is rendered using the <code>Marked</code> plugin for rich formatting in AI responses.
+            </li>
+            <li>
+                The <code>promptSuggestions</code> provides AI prompt suggestions to guide user interactions.
+            </li>
+        </ul>
+    </div>
+}

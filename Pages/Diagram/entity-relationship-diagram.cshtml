@@ -1,0 +1,823 @@
+
+@page
+@model EJ2CoreSampleBrowser.Pages.Diagram.ErDiagramModel
+@using Syncfusion.EJ2;
+
+@section ControlsSection {
+    <div class="control-section er-diagram-section">
+        <div style="width: 100%">
+            <div class="sb-mobile-palette-bar">
+                <div id="palette-icon-er" style="float: right;" role="button" class="e-ddb-icons1 e-toggle-palette"></div>
+            </div>
+            <div id="palette-space" class="sb-mobile-palette">
+                <div id="symbolpalette" style="width:100%; height:500px;"></div>
+            </div>
+
+            <div id="diagram-space" class="sb-mobile-diagram">
+                <div id="diagram" style="width:100%; height:760px;"></div>
+            </div>
+        </div>
+    </div>
+    <style>
+        /*To align palette */
+        .er-diagram-section .sb-mobile-palette {
+            width: 195px;
+            height: 525px;
+            float: left;
+        }
+
+        .er-diagram-section .sb-mobile-palette-bar {
+            display: none;
+        }
+
+        /*To align diagram */
+        .er-diagram-section .sb-mobile-diagram {
+            width: calc(100% - 197px);
+            height: 500px;
+            float: left;
+            border: 1px solid rgba(0, 0, 0, 0.12);
+        }
+
+        /* Icon font for palette toggle button */
+        @@font-face {
+            font-family: "e-ddb-icons1";
+            src: url(data:application/x-font-ttf;charset=utf-8;base64,AAEAAAAKAIAAAwAgT1MvMj1tSfIAAAEoAAAAVmNtYXDnEOdVAAABiAAAADZnbHlmdC1P4gAAAcgAAAAwaGVhZBJhohMAAADQAAAANmhoZWEIVQQDAAAArAAAACRobXR4CAAAAAAAAYAAAAAIbG9jYQAYAAAAAAHAAAAABm1heHABDgAUAAABCAAAACBuYW1lm+wy9gAAAfgAAAK1cG9zdLnsYngAAASwAAAAMAABAAAEAAAAAFwEAAAAAAAD+AABAAAAAAAAAAAAAAAAAAAAAgABAAAAAQAAgNcenF8PPPUACwQAAAAAANelrs4AAAAA16WuzgAAAAAD+AN6AAAACAACAAAAAAAAAAEAAAACAAgAAgAAAAAAAgAAAAoACgAAAP8AAAAAAAAAAQQAAZAABQAAAokCzAAAAI8CiQLMAAAB6wAyAQgAAAIABQMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUGZFZABA5wDnAAQAAAAAXAQAAAAAAAABAAAAAAAABAAAAAQAAAAAAAACAAAAAwAAABQAAwABAAAAFAAEACIAAAAEAAQAAQAA5wD//wAA5wD//wAAAAEABAAAAAEAAAAAAAAAGAAAAAIAAAAAA/gDegACAAcAACUhCQEhATUhAQQC9P6G/YoBMQFF/YqGAjf+hgH0QwAAAAAAEgDeAAEAAAAAAAAAAQAAAAEAAAAAAAEAEwABAAEAAAAAAAIABwAUAAEAAAAAAAMAEwAbAAEAAAAAAAQAEwAuAAEAAAAAAAUACwBBAAEAAAAAAAYAEwBMAAEAAAAAAAoALABfAAEAAAAAAAsAEgCLAAMAAQQJAAAAAgCdAAMAAQQJAAEAJgCfAAMAAQQJAAIADgDFAAMAAQQJAAMAJgDTAAMAAQQJAAQAJgD5AAMAAQQJAAUAFgEfAAMAAQQJAAYAJgE1AAMAAQQJAAoAWAFbAAMAAQQJAAsAJAGzIERpYWdyYW1fU2hhcGVzX0ZPTlRSZWd1bGFyRGlhZ3JhbV9TaGFwZXNfRk9OVERpYWdyYW1fU2hhcGVzX0ZPTlRWZXJzaW9uIDEuMERpYWdyYW1fU2hhcGVzX0ZPTlRGb250IGdlbmVyYXRlZCB1c2luZyBTeW5jZnVzaW9uIE1ldHJvIFN0dWRpb3d3dy5zeW5jZnVzaW9uLmNvbQAgAEQAaQBhAGcAcgBhAG0AXwBTAGgAYQBwAGUAcwBfAEYATwBOAFQAUgBlAGcAdQBsAGEAcgBEAGkAYQBnAHIAYQBtAF8AUwBoAGEAcABlAHMAXwBGAE8ATgBUAEQAaQBhAGcAcgBhAG0AXwBTAGgAYQBwAGUAcwBfAEYATwBOAFQAVgBlAHIAcwBpAG8AbgAgADEALgAwAEQAaQBhAGcAcgBhAG0AXwBTAGgAYQBwAGUAcwBfAEYATwBOAFQARgBvAG4AdAAgAGcAZQBuAGUAcgBhAHQAZQBkACAAdQBzAGkAbgBnACAAUwB5AG4AYwBmAHUAcwBpAG8AbgAgAE0AZQB0AHIAbwAgAFMAdAB1AGQAaQBvAHcAdwB3AC4AcwB5AG4AYwBmAHUAcwBpAG8AbgAuAGMAbwBtAAAAAAIAAAAAAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgECAQMABlNoYXBlcwAA) format("truetype");
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .e-ddb-icons1 {
+            font-family: "e-ddb-icons1";
+            speak: none;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: normal;
+            font-variant: normal;
+            text-transform: none;
+            line-height: 1;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .er-diagram-section .e-toggle-palette::before {
+            content: "\e700";
+        }
+
+        @@media (max-width: 550px) {
+            .er-diagram-section .sb-mobile-palette {
+                z-index: 19;
+                position: absolute;
+                display: none;
+                transition: transform 300ms linear, visibility 0s linear 300ms;
+                width: 45%;
+                height: 100%;
+            }
+
+            #palette-space {
+                height: fit-content;
+                background-color: white;
+            }
+
+            .er-diagram-section .sb-mobile-palette-bar {
+                display: block;
+                width: 100%;
+                background: #fafafa;
+                padding: 10px 10px;
+                border: 0.5px solid #e0e0e0;
+                min-height: 40px;
+            }
+
+            .er-diagram-section .sb-mobile-diagram {
+                width: 100%;
+            }
+
+            .er-diagram-section#palette-icon-er {
+                font-size: 20px;
+            }
+        }
+
+        .er-diagram-section .sb-mobile-palette-open {
+            position: absolute;
+            display: block;
+            right: 15px;
+        }
+    </style>
+    <script>
+        ej.diagrams.Diagram.Inject(
+            ej.diagrams.DataBinding,
+            ej.diagrams.UndoRedo,
+            ej.diagrams.LineRouting,
+            ej.diagrams.AvoidLineOverlapping,
+            ej.diagrams.ErDiagrams,
+            ej.diagrams.DiagramContextMenu
+        );
+
+        ej.diagrams.SymbolPalette.Inject(ej.diagrams.ErDiagrams);
+
+        // --- Mobile palette toggle logic (from swimlane) ---
+        function addEvents() {
+            var isMobileDevice = window.matchMedia('(max-width:550px)').matches;
+            if (isMobileDevice) {
+                var paletteIcons = document.getElementById('palette-icon-er');
+                if (paletteIcons) {
+                    paletteIcons.addEventListener('click', openPalette, false);
+                }
+            }
+        }
+        function openPalette() {
+            var paletteSpaces = document.getElementById('palette-space');
+            var isMobileDevice = window.matchMedia('(max-width:550px)').matches;
+            if (isMobileDevice) {
+                if (!paletteSpaces.classList.contains('sb-mobile-palette-open')) {
+                    paletteSpaces.classList.add('sb-mobile-palette-open');
+                } else {
+                    paletteSpaces.classList.remove('sb-mobile-palette-open');
+                }
+            }
+        }
+
+        // Color theme tokens
+        var COLOR_TOKENS = {
+            primary: {
+                headerFill: '#bfdbfe',
+                bodyFill: '#eff6ff',
+                strokeColor: '#2563eb',
+                connectorColor: '#2563eb'
+            },
+            secondary: {
+                headerFill: '#bbf7d0',
+                bodyFill: '#f0fdf4',
+                strokeColor: '#16a34a',
+                connectorColor: '#16a34a'
+            },
+            tertiary: {
+                headerFill: '#ddd6fe',
+                bodyFill: '#f5f3ff',
+                strokeColor: '#7c3aed',
+                connectorColor: '#7c3aed'
+            },
+            accent: {
+                headerFill: '#fdba74',
+                bodyFill: '#fff7ed',
+                strokeColor: '#ea580c',
+                connectorColor: '#ea580c'
+            },
+            neutral: {
+                headerFill: '#d1d5db',
+                bodyFill: '#f9fafb',
+                strokeColor: '#6b7280',
+                connectorColor: '#6b7280'
+            },
+            warning: {
+                headerFill: '#fde68a',
+                bodyFill: '#fffbeb',
+                strokeColor: '#d97706',
+                connectorColor: '#d97706'
+            }
+        };
+
+        function toFieldModel(field) {
+            return {
+                id: field.id,
+                name: field.name,
+                isPrimaryKey: field.isPrimaryKey,
+                isForeignKey: field.isForeignKey
+            };
+        }
+
+        function toNode(entity) {
+            var theme = COLOR_TOKENS[entity.color] || COLOR_TOKENS.neutral;
+            return {
+                id: entity.id,
+                offsetX: entity.position.x,
+                offsetY: entity.position.y,
+                shape: {
+                    type: 'Er',
+                    header: {
+                        annotation: {
+                            content: entity.title,
+                            style: {
+                                fontSize: 12,
+                                bold: true,
+                                color: '#111827'
+                            }
+                        },
+                        height: 34,
+                        style: {
+                            fill: theme.headerFill
+                        }
+                    },
+                    fields: entity.fields.map(toFieldModel),
+                    fieldDefaults: {
+                        alternateRowColors: [theme.bodyFill, '#ffffff']
+                    }
+                },
+                style: {
+                    fill: theme.bodyFill,
+                    strokeColor: theme.strokeColor,
+                    strokeWidth: 1.75
+                }
+            };
+        }
+
+        function toConnector(relationship) {
+            var color = relationship.color || '#64748b';
+
+            var connector = {
+                id: relationship.id,
+                sourceID: relationship.source,
+                targetID: relationship.target,
+                type: 'Orthogonal',
+                cornerRadius: 6,
+                style: {
+                    strokeColor: color,
+                    strokeWidth: 1.75
+                },
+                sourceDecorator: {
+                    style: {
+                        strokeColor: color,
+                        strokeWidth: 1.75
+                    }
+                },
+                targetDecorator: {
+                    style: {
+                        strokeColor: color,
+                        strokeWidth: 1.75
+                    }
+                },
+                shape: {
+                    type: 'Er',
+                    relationship: relationship.relationshipType,
+                    sourceMultiplicity: { type: relationship.sourceCardinality },
+                    targetMultiplicity: { type: relationship.targetCardinality }
+                }
+            };
+
+            // Add annotation if defined in relationship schema
+            if (relationship.annotation) {
+                connector.annotations = [{
+                    content: relationship.annotation,
+                    style: {
+                        color: color,
+                        fill: '#ffffff',
+                        fontSize: 13,
+                    }
+                }];
+            }
+
+            return connector;
+        }
+
+        var schema = @Html.Raw(Model.SchemaJson);
+        var nodes = schema.entities.map(function (entity) { return toNode(entity); });
+        var connectors = schema.relationships.map(function (relationship) { return toConnector(relationship); });
+        var diagramCreated = false;
+
+        var contextMenu = {
+            show: true,
+            items: [
+                {
+                    text: 'Connector Type',
+                    id: 'ConnectorType',
+                    // Sub-menu for Connector Types
+                    items: [
+                        { text: 'Straight', id: 'Straight' },
+                        { text: 'Orthogonal', id: 'Orthogonal' },
+                        { text: 'Bezier', id: 'Bezier' }
+                    ]
+                },
+                {
+                    text: 'Relationship',
+                    id: 'Relationship',
+                    // Sub-menu for Relationship Types
+                    items: [
+                        { text: 'Identifying', id: 'Identifying' },
+                        { text: 'NonIdentifying', id: 'NonIdentifying' }
+                    ]
+                },
+                {
+                    text: 'Source Multiplicity',
+                    id: 'Source_Multiplicity',
+                    // Sub-menu for Source Multiplicity
+                    items: [
+                        { text: 'One', id: 'One' },
+                        { text: 'Many', id: 'Many' },
+                        { text: 'OneAndOnlyOne', id: 'OneAndOnlyOne' },
+                        { text: 'ZeroOrOne', id: 'ZeroOrOne' },
+                        { text: 'ZeroOrMany', id: 'ZeroOrMany' },
+                        { text: 'OneOrMany', id: 'OneOrMany' }
+                    ]
+                },
+                {
+                    text: 'Target Multiplicity',
+                    id: 'Target_Multiplicity',
+                    // Sub-menu for Target Multiplicity
+                    items: [
+                        { text: 'One', id: 'One_t' },
+                        { text: 'Many', id: 'Many_t' },
+                        { text: 'OneAndOnlyOne', id: 'OneAndOnlyOne_t' },
+                        { text: 'ZeroOrOne', id: 'ZeroOrOne_t' },
+                        { text: 'ZeroOrMany', id: 'ZeroOrMany_t' },
+                        { text: 'OneOrMany', id: 'OneOrMany_t' }
+                    ]
+                },
+            ],
+            showCustomMenuOnly: true,
+        };
+        function contextMenuClick(args) {
+            // Check if any connector is selected
+            if (diagram.selectedItems.connectors.length > 0) {
+                var connector = diagram.selectedItems.connectors[0];
+                var erConnector = diagram.selectedItems.connectors[0].shape;
+                var itemId = args.item.id;
+                if (itemId === 'Straight' || itemId === 'Orthogonal' || itemId === 'Bezier') {
+                    connector.type = itemId;
+                } else if (itemId === 'Identifying' || itemId === 'NonIdentifying') {
+                    erConnector.relationship = itemId;
+                } else if (itemId === 'One' || itemId === 'Many' || itemId === 'OneAndOnlyOne' || itemId === 'ZeroOrOne' || itemId === 'ZeroOrMany' || itemId === 'OneOrMany') {
+                    erConnector.sourceMultiplicity.type = args.item.text;
+                } else if (itemId === 'One_t' || itemId === 'Many_t' || itemId === 'OneAndOnlyOne_t' || itemId === 'ZeroOrOne_t' || itemId === 'ZeroOrMany_t' || itemId === 'OneOrMany_t') {
+                    erConnector.targetMultiplicity.type = args.item.text;
+                }
+                diagram.dataBind();
+            }
+
+        }
+        function contextMenuOpen(args) {
+            var hiddenId = [];
+            if (args.element.className !== 'e-menu-parent e-ul ') {
+                hiddenId = ['ConnectorType', 'Relationship', 'Source_Multiplicity', 'Target_Multiplicity'];
+            }
+            if (diagram.selectedItems.connectors[0] instanceof ej.diagrams.Connector) {
+                hiddenId = [];
+            }
+            args.hiddenItems = hiddenId; // Set the hidden menu items based on the logic above
+        }
+
+        var diagram = new ej.diagrams.Diagram({
+            width: '100%',
+            height: '100%',
+            nodes: nodes,
+            connectors: connectors,
+            constraints: ej.diagrams.DiagramConstraints.Default |
+                ej.diagrams.DiagramConstraints.LineRouting |
+                ej.diagrams.DiagramConstraints.AvoidLineOverlapping,
+            snapSettings: { constraints: ej.diagrams.SnapConstraints.None },
+            contextMenuSettings: contextMenu,
+            contextMenuOpen: contextMenuOpen,
+            contextMenuClick: contextMenuClick,
+            getConnectorDefaults: function (connector) {
+                connector.cornerRadius = 10;
+                connector.type = 'Orthogonal';
+				connector.constraints = ej.diagrams.ConnectorConstraints.Default;
+                return connector;
+            },
+            selectedItems: { userHandles: [] },
+            onUserHandleMouseDown: onUserHandleMouseDown,
+            selectionChange: selectionChange,
+            created: created,
+            load: load
+        });
+        diagram.appendTo('#diagram');
+        addEvents();
+
+        // Symbol palette entities
+        var entityNoFields = {
+            id: 'entity_no_fields',
+            tooltip: { content: 'Entity With No-Fields' },
+            constraints: ej.diagrams.NodeConstraints.Tooltip,
+            width: 80,
+            height: 80,
+            shape: {
+                type: 'Er',
+                header: {
+                    annotation: {
+                        content: 'Entity Name',
+                        style: {
+                            fontSize: 12,
+                            bold: true,
+                            color: '#111827'
+                        }
+                    },
+                    height: 34,
+                    style: { fill: '#ddd6fe' }
+                },
+                fields: []
+            },
+            style: {
+                fill: '#f5f3ff',
+                strokeColor: '#7c3aed',
+                strokeWidth: 1.5
+            }
+        };
+
+        var entityKeyName = {
+            id: 'entity_key_name',
+            tooltip: { content: 'Entity With Key and Name' },
+            constraints: ej.diagrams.NodeConstraints.Tooltip,
+            width: 80,
+            height: 110,
+            shape: {
+                type: 'Er',
+                header: {
+                    annotation: {
+                        content: 'Entity Name',
+                        style: {
+                            fontSize: 12,
+                            bold: true,
+                            color: '#111827'
+                        }
+                    },
+                    height: 34,
+                    style: { fill: '#ddd6fe' }
+                },
+                fields: [
+                    { id: 'field_id', name: 'Attribute', isPrimaryKey: true }
+                ]
+            },
+            style: {
+                fill: '#f5f3ff',
+                strokeColor: '#7c3aed',
+                strokeWidth: 1.5
+            }
+        };
+
+        var entityKeyNameType = {
+            id: 'entity_key_name_type',
+            tooltip: { content: 'Entity With Key, Name and Type' },
+            constraints: ej.diagrams.NodeConstraints.Tooltip,
+            width: 80,
+            height: 125,
+            shape: {
+                type: 'Er',
+                header: {
+                    annotation: {
+                        content: 'Entity Name',
+                        style: {
+                            fontSize: 12,
+                            bold: true,
+                            color: '#111827'
+                        }
+                    },
+                    height: 34,
+                    style: { fill: '#ddd6fe' }
+                },
+                fields: [
+                    { id: 'field_id_type', name: 'Attribute', isPrimaryKey: true, dataType: 'INT' }
+                ]
+            },
+            style: {
+                fill: '#f5f3ff',
+                strokeColor: '#7c3aed',
+                strokeWidth: 1.5
+            }
+        };
+
+        var entityKeyNameTypeConstraints = {
+            id: 'entity_key_name_type_constraints',
+            tooltip: { content: 'Entity With Key, Name, Type and Constraints' },
+            constraints: ej.diagrams.NodeConstraints.Tooltip,
+            width: 80,
+            height: 140,
+            shape: {
+                type: 'Er',
+                header: {
+                    annotation: {
+                        content: 'Entity Name',
+                        style: {
+                            fontSize: 12,
+                            bold: true,
+                            color: '#111827'
+                        }
+                    },
+                    height: 34,
+                    style: { fill: '#ddd6fe' }
+                },
+                fields: [
+                    { id: 'field_id_constraints', name: 'Attribute', isPrimaryKey: true, dataType: 'INT', constraints: ['NotNull'] }
+                ]
+            },
+            style: {
+                fill: '#f5f3ff',
+                strokeColor: '#7c3aed',
+                strokeWidth: 1.5
+            }
+        };
+
+        // Connector symbols (FIXED: syntax error corrected)
+        var connectorSymbols = [
+            {
+                id: 'Link1',
+                tooltip: { content: 'One to One' },
+                constraints: ej.diagrams.ConnectorConstraints.Tooltip,
+                sourcePoint: { x: 0, y: 0 }, targetPoint: { x: 30, y: 30 },
+                shape: {
+                    type: 'Er',
+                    sourceMultiplicity: { type: 'One' },
+                    targetMultiplicity: { type: 'One' }
+                },
+                style: { strokeColor: '#7c3aed', strokeWidth: 1.5 },
+                sourceDecorator: {
+                    style: { strokeColor: '#7c3aed', strokeWidth: 1.5 }
+                },
+                targetDecorator: {
+                    style: { strokeColor: '#7c3aed', strokeWidth: 1.5 }
+                }
+            },
+            {
+                id: 'Link2',
+                tooltip: { content: 'Many to Many' },
+                constraints: ej.diagrams.ConnectorConstraints.Tooltip,
+                sourcePoint: { x: 0, y: 0 }, targetPoint: { x: 30, y: 30 },
+                shape: {
+                    type: 'Er',
+                    sourceMultiplicity: { type: 'Many' },
+                    targetMultiplicity: { type: 'Many' }
+                },
+                style: { strokeColor: '#7c3aed', strokeWidth: 1.5 },
+                sourceDecorator: {
+                    style: { strokeColor: '#7c3aed', strokeWidth: 1.5 }
+                },
+                targetDecorator: {
+                    style: { strokeColor: '#7c3aed', strokeWidth: 1.5 }
+                }
+            },
+            {
+                id: 'Link3',
+                tooltip: { content: 'OneAndOnlyOne to OneAndOnlyOne' },
+                constraints: ej.diagrams.ConnectorConstraints.Tooltip,
+                sourcePoint: { x: 0, y: 0 }, targetPoint: { x: 30, y: 30 },
+                shape: {
+                    type: 'Er',
+                    sourceMultiplicity: { type: 'OneAndOnlyOne' },
+                    targetMultiplicity: { type: 'OneAndOnlyOne' }
+                },
+                style: { strokeColor: '#7c3aed', strokeWidth: 1.5 },
+                sourceDecorator: {
+                    style: { strokeColor: '#7c3aed', strokeWidth: 1.5 }
+                },
+                targetDecorator: {
+                    style: { strokeColor: '#7c3aed', strokeWidth: 1.5 }
+                }
+            },
+            {
+                id: 'Link4',
+                tooltip: { content: 'ZeroOrOne to ZeroOrOne' },
+                constraints: ej.diagrams.ConnectorConstraints.Tooltip,
+                sourcePoint: { x: 0, y: 0 }, targetPoint: { x: 30, y: 30 },
+                shape: {
+                    type: 'Er',
+                    sourceMultiplicity: { type: 'ZeroOrOne' },
+                    targetMultiplicity: { type: 'ZeroOrOne' }
+                },
+                style: { strokeColor: '#7c3aed', strokeWidth: 1.5 },
+                sourceDecorator: {
+                    style: { strokeColor: '#7c3aed', strokeWidth: 1.5 }
+                },
+                targetDecorator: {
+                    style: { strokeColor: '#7c3aed', strokeWidth: 1.5 }
+                }
+            },
+            {
+                id: 'Link5',
+                tooltip: { content: 'OneOrMany to OneOrMany' },
+                constraints: ej.diagrams.ConnectorConstraints.Tooltip,
+                sourcePoint: { x: 0, y: 0 }, targetPoint: { x: 30, y: 30 },
+                shape: {
+                    type: 'Er',
+                    sourceMultiplicity: { type: 'OneOrMany' },
+                    targetMultiplicity: { type: 'OneOrMany' }
+                },
+                style: { strokeColor: '#7c3aed', strokeWidth: 1.5 },
+                sourceDecorator: {
+                    style: { strokeColor: '#7c3aed', strokeWidth: 1.5 }
+                },
+                targetDecorator: {
+                    style: { strokeColor: '#7c3aed', strokeWidth: 1.5 }
+                }
+            },
+            {
+                id: 'Link6',
+                tooltip: { content: 'ZeroOrMany to ZeroOrMany' },
+                constraints: ej.diagrams.ConnectorConstraints.Tooltip,
+                sourcePoint: { x: 0, y: 0 }, targetPoint: { x: 30, y: 30 },
+                shape: {
+                    type: 'Er',
+                    sourceMultiplicity: { type: 'ZeroOrMany' },
+                    targetMultiplicity: { type: 'ZeroOrMany' }
+                },
+                style: { strokeColor: '#7c3aed', strokeWidth: 1.5 },
+                sourceDecorator: {
+                    style: { strokeColor: '#7c3aed', strokeWidth: 1.5 }
+                },
+                targetDecorator: {
+                    style: { strokeColor: '#7c3aed', strokeWidth: 1.5 }
+                }
+            }
+        ];
+
+        // Symbol palette configuration
+        var erPalettes = [
+            {
+                id: 'entities',
+                expanded: true,
+                title: 'ER Entities',
+                symbols: [entityNoFields, entityKeyName, entityKeyNameType, entityKeyNameTypeConstraints]
+            },
+            {
+                id: 'connectors',
+                expanded: true,
+                title: 'Connectors',
+                symbols: connectorSymbols
+            }
+        ];
+
+        var palette = new ej.diagrams.SymbolPalette({
+            palettes: erPalettes,
+            width: '100%',
+            height: '100%',
+            symbolWidth: 70,
+            symbolHeight: 70,
+            enableAnimation: false,
+            symbolMargin: { left: 8, right: 8, top: 8, bottom: 8 }
+        });
+
+        palette.appendTo('#symbolpalette');
+
+        function onUserHandleMouseDown(args) {
+            var handle = args.element;
+            if (!handle) {
+                return;
+            }
+            var handleName = handle.name;
+            var node = getSelectedErEntity();
+            if (handleName === 'AddField') {
+                if (!node) {
+                    return;
+                }
+                var newField = createNewErField(node);
+                diagram.addErField(node, newField);
+            } else if (handleName === 'RemoveField') {
+                if (!node) {
+                    return;
+                }
+                var fieldToRemove = getSelectedFieldToRemove(node);
+                if (!fieldToRemove) {
+                    return;
+                }
+                diagram.removeErField(node, fieldToRemove);
+            }
+        }
+        function createNewErField(node) {
+            var erShape = node.shape;
+            var fields = erShape.fields || [];
+
+            var newField = {
+                id: node.id + '_field_' + new Date().getTime(),
+                name: 'NewField'
+            };
+
+            if (fields.length === 0) {
+                return newField;
+            }
+
+            var lastField = fields[fields.length - 1];
+
+            if (lastField.dataType && lastField.dataType !== '') {
+                newField.dataType = 'VARCHAR(20)';
+            }
+
+            if (lastField.constraints && lastField.constraints.length > 0) {
+                newField.constraints = ['NotNull'];
+            }
+
+            return newField;
+        }
+        function selectionChange() {
+            var selectedNodes = diagram.selectedItems.nodes || [];
+            diagram.selectedItems.userHandles = [];
+            if (selectedNodes.length === 1) {
+                var node = selectedNodes[0];
+                if (node && node.shape && node.shape.type === 'Er' && node.style && node.style.strokeColor) {
+                    diagram.selectedItems.userHandles = [{
+                        name: 'AddField',
+                        offset: 1,
+                        side: 'Bottom',
+                        content: '<g class="insert-handle">' +
+                            '<rect class="bg" x="1" y="1" width="14" height="14" rx="3" ry="3" fill="' + node.style.strokeColor + '"/>' +
+                            '<path class="plus" d="M8 5 V11 M5 8 H11" stroke="white" stroke-width="1.2" stroke-linecap="round"/>' +
+                            '<style>.insert-handle { cursor: pointer; }.insert-handle:hover .bg { fill: ' + node.style.strokeColor + '; }</style>' +
+                            '</g>',
+                        tooltip: { content: 'Add Field' },
+                        size: 24,
+                        margin: { left: 20, bottom: 38 }
+                    }];
+                } else if (node && node.shape && node.style && node.style.strokeColor) {
+                    var isPKField = node.annotations && node.annotations.length > 0 && node.annotations[0].content === 'PK';
+                    if (!isPKField) {
+                        diagram.selectedItems.userHandles = [{
+                            name: 'RemoveField',
+                            offset: 1,
+                            side: 'Bottom',
+                            content: '<g class="minus-handle">' +
+                                '<circle class="bg" cx="8" cy="8" r="7" fill="' + node.style.strokeColor + '"/>' +
+                                '<path class="minus" d="M5 8 H11" stroke="white" stroke-width="1.2" stroke-linecap="round"/>' +
+                                '<style>.minus-handle { cursor: pointer; }.minus-handle:hover .bg { fill: ' + node.style.strokeColor + '; }</style>' +
+                                '</g>',
+                            tooltip: { content: 'Remove Field' },
+                            size: 24,
+                            margin: { left: 20, bottom: 36 }
+                        }];
+                    }
+                }
+            }
+            diagram.dataBind();
+        }
+        function created() {
+            diagramCreated = true;
+            diagram.tool = ej.diagrams.DiagramTools.SingleSelect;
+            diagram.dataBind();
+            diagram.fitToPage();
+			addEvents();
+        }
+        function load() {
+            if (diagramCreated) {
+                setTimeout(function () { diagram.fitToPage(); }, 10);
+            }
+        }
+        function getSelectedErEntity() {
+            if (diagram.selectedItems && diagram.selectedItems.nodes && diagram.selectedItems.nodes.length === 0) {
+                return undefined;
+            }
+            var selectedNode = diagram.selectedItems.nodes[0];
+            selectedNode = diagram.nameTable[selectedNode.id] || selectedNode;
+            if (selectedNode.shape && selectedNode.shape.type === 'Er') {
+                return selectedNode;
+            }
+            if (selectedNode.parentId) {
+                var parentNode = diagram.nameTable[selectedNode.parentId];
+                if (parentNode && parentNode.shape && parentNode.shape.type === 'Er') {
+                    return parentNode;
+                }
+            }
+            return undefined;
+        }
+        function getSelectedFieldToRemove(entityNode) {
+            var erEntity = entityNode.shape;
+            if (!erEntity || !erEntity.fields || erEntity.fields.length === 0) {
+                return undefined;
+            }
+            var selectedNodes = diagram.selectedItems.nodes || [];
+            if (!selectedNodes || selectedNodes.length === 0) {
+                return erEntity.fields[erEntity.fields.length - 1];
+            }
+            var selectedNode = selectedNodes[0];
+            var parentId = selectedNode.parentId || '';
+            if (parentId === entityNode.id && entityNode.children) {
+                var selectedChildIndex = entityNode.children.indexOf(selectedNode.id);
+                if (selectedChildIndex > 0 && selectedChildIndex <= erEntity.fields.length) {
+                    return erEntity.fields[selectedChildIndex - 1];
+                }
+            }
+            return erEntity.fields[erEntity.fields.length - 1];
+        }
+
+    </script>
+}
+
+@section ActionDescription {
+    <p>
+        This sample demonstrates a <b>healthcare appointment management ER diagram</b> created using the
+        <a href="https://www.syncfusion.com/aspnet-core-ui-controls/diagram" target="_blank">ASP.NET Core Diagram</a>. It visualizes how core entities such as doctors, patients,
+        appointments, diagnoses, and prescriptions are structured and interconnected in a real-world hospital database
+        system.
+    </p>
+}
+
+@section Description {
+    <p>
+        This sample showcases how to create and interact with an ER diagram using the ASP.NET Core
+        Diagram. The diagram is built using nodes of <code>type: 'Er'</code> to represent database entities and their
+        fields, while connectors define relationships with cardinality between entities.
+    </p>
+    <p>
+        <b>User handles</b> allow adding or removing fields within entities. When an entity node is selected, a “+”
+        handle appears, enabling the addition of new fields. These fields can then be interactively reordered using
+        drag‑and‑drop actions. When an individual field is selected, a “−” handle is displayed to remove that specific
+        field. The diagram supports built‑in interactions such as selecting entities and editing their fields.
+    </p>
+    <br>
+}
+
+@section Meta {
+	<meta name="description"
+		  content="This example demonstrates the ER Diagram in ASP.NET Core Diagram control. Explore here for more details." />
+}
+
+@section Title {
+	<title>ASP.NET Core Diagram ER Diagram Example - Syncfusion Demos</title>
+}
+
+@section Header {
+	<h1 class='sb-sample-text'>Example of ER Diagram in ASP.NET Core Diagram Control</h1>
+}

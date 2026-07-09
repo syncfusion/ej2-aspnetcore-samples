@@ -70,6 +70,7 @@ Clone the repository. This repository contains the .NET 8, .NET 9 and .NET 10 pr
             <div><p class="controlcategory">INTERACTIVE CHAT</p></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/ai-assistview/getting-started">AI AssistView</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/chat-ui/getting-started">Chat UI</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/inline-ai-assist/getting-started">Inline AI Assist - Preview</a></div>
             <p>&nbsp;</p>
             <div><p class="controlcategory">DATA VISUALIZATION</p></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/getting-started">Charts</a></div>
@@ -89,6 +90,7 @@ Clone the repository. This repository contains the .NET 8, .NET 9 and .NET 10 pr
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/treemap/getting-started">TreeMap</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/bullet-chart/getting-started">Bullet Chart</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/kanban/getting-started">Kanban</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/sankey/getting-started">Sankey - Preview</a></div>
             <p>&nbsp;</p>
             <div><p class="controlcategory">FORMS</p></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/query-builder/getting-started">Query Builder</a></div>
@@ -102,7 +104,7 @@ Clone the repository. This repository contains the .NET 8, .NET 9 and .NET 10 pr
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/markdowneditor/overview#/fluent2">Markdown Editor</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/in-place-editor/getting-started">In-place Editor</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/image-editor/getting-started">Image Editor</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/block-editor/getting-started">Block Editor - Preview</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/block-editor/getting-started">Block Editor/a></div>
             <p>&nbsp;</p>
             <div><p class="controlcategory">CALENDARS</p></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/schedule/getting-started">Scheduler</a></div>

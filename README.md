@@ -104,7 +104,7 @@ Clone the repository. This repository contains the .NET 8, .NET 9 and .NET 10 pr
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/markdowneditor/overview#/fluent2">Markdown Editor</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/in-place-editor/getting-started">In-place Editor</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/image-editor/getting-started">Image Editor</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/block-editor/getting-started">Block Editor/a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/block-editor/getting-started">Block Editor</a></div>
             <p>&nbsp;</p>
             <div><p class="controlcategory">CALENDARS</p></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/schedule/getting-started">Scheduler</a></div>

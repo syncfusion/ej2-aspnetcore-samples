@@ -27,7 +27,6 @@ using System.ClientModel;
 #endregion
 
 #region Diagram Usings
-using EJ2SDiagramSample.Pages;
 using EJ2CoreSampleBrowser.Services;
 using StackExchange.Redis;
 #endregion
@@ -120,10 +119,6 @@ builder.Services.AddSignalR(options =>
     options.MaximumParallelInvocationsPerClient = 2;
     options.HandshakeTimeout = TimeSpan.FromMinutes(1);
 })
-.AddStackExchangeRedis(builder.Configuration.GetConnectionString("Redis"), options =>
-{
-    options.Configuration.ChannelPrefix = "diagramHub";
-})
 .AddJsonProtocol(options =>
 {
     options.PayloadSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
@@ -140,10 +135,6 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(provider =>
         ?? "localhost:6379,abortConnect=false";
     return ConnectionMultiplexer.Connect(connectionString);
 });
-
-// Custom Services
-builder.Services.AddScoped<IRedisService, RedisService>();
-builder.Services.AddScoped<IDiagramService, DiagramService>();
 
 #endregion
 
@@ -243,14 +234,5 @@ app.UseEndpoints(endpoints =>
     endpoints.MapHub<ScheduleHub>("/scheduleHub");
 });
 #endregion
-
-#region Diagram Hub Configuration
-// DiagramHub for real-time Syncfusion Diagram collaboration
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapHub<DiagramHub>("/diagramHub");
-});
-#endregion
-
 app.Run();
 

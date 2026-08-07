@@ -1,4 +1,4 @@
-﻿[![.NET](https://github.com/syncfusion/ej2-aspnetcore-samples/actions/workflows/dotnet.yml/badge.svg)](https://github.com/syncfusion/ej2-aspnetcore-samples/actions/workflows/dotnet.yml)
+﻿[![.NET](https://github.com/syncfusion/ej2-aspnetcore-samples/actions/workflows/dotnet.yml/badge.svg)](https://github.com/syncfusion/ej2-aspnetcore-samples/actions/workflows/dotnet.yml) 
 
  # Syncfusion® ASP.NET Core Component Examples        
 

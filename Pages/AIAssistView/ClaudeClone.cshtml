@@ -1,0 +1,349 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.AIAssistView.ClaudeCloneModel
+@using Syncfusion.EJ2
+@using System.Text.Json;
+
+@section ControlsSection {
+    <div class="control-section claude-clone">
+        <div class="claude-aiassist" id="claudeContainer">
+            <div id="claude_aiassistview"></div>
+            <div id="buttonsContainer" class="claude-buttons-container">
+                <button id="codeBtn">Code</button>
+                <button id="writeBtn">Write</button>
+                <button id="choiceBtn">Claude's Choice</button>
+                <button id="learnBtn">Learn</button>
+                <button id="lifeBtn">Life stuff</button>
+            </div>
+        </div>
+    </div>
+
+    <script id="bannerContent" type="text/x-jsrender">
+        <div class="banner-content">
+            <div class="claude-header">
+                <img src="./../images/AIAssistView/Claude.svg" alt="Claude">
+                <h2>Golden hour thinking</h2>
+            </div>
+        </div>
+    </script>
+
+    <style>
+        .control-section.claude-clone {
+            min-height: 550px;
+        }
+        
+        .claude-aiassist {
+            width: 60vw;
+            margin: 10px auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .claude-aiassist.middle-footer {
+            height: 350px; 
+            gap: 10px;
+        }
+
+        .claude-aiassist.bottom-footer {
+            height: 500px;
+        }
+
+        @@media only screen and (max-width: 750px) {
+            .claude-aiassist {
+                width: 100%;
+            }
+        }
+
+        .claude-aiassist .claude-header img {
+            width: 25px;
+            height: 25px;
+            margin-bottom: 12px;
+        }
+
+        .claude-aiassist .claude-header {
+            display: flex;
+            justify-content: center;
+            height: 150px;
+            text-align: center;
+            gap: 10px;
+            align-items: end;
+        }
+
+        .claude_model .model-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .claude_model .model-item .model-description {
+            font-size: 11px;
+        }
+
+        .claude_model .model-content {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .claude_model.e-dropdown-popup ul .e-item {
+            line-height: 18px;
+            padding: 25px 20px 25px 12px;
+        }
+     
+        .claude-aiassist .claude-buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            flex-shrink: 0;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .claude-aiassist.bottom-footer .claude-buttons-container {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .claude-aiassist #claude_aiassistview  {
+            border: none;
+        }
+    </style>
+}
+
+@section PreScripts {
+    <script>
+        var baseURL = window.baseurl;
+        var defaultPromptResponseData = @Html.Raw(JsonSerializer.Serialize(Model.PromptResponseData));
+        
+        let claudeContainer = document.getElementById('claudeContainer');
+        let isFirstPrompt = true;
+
+        let claudeAIAssistView = new ej.interactivechat.AIAssistView({
+            promptRequest: onPromptRequest,
+            enableStreaming: "true",
+            showHeader: false,
+            promptPlaceholder: 'How can i help you today?',
+            enableAttachments: true,
+            bannerTemplate: "#bannerContent",
+            created: created,
+            attachmentSettings: {
+                saveUrl: 'https://services.syncfusion.com/js/production/api/FileUploader/Save',
+                removeUrl: 'https://services.syncfusion.com/js/production/api/FileUploader/Remove'
+            },
+            footerToolbarSettings: {
+                toolbarPosition: 'Bottom',
+                items: [
+                    {
+                        iconCss: 'e-icons e-assist-attachment-icon',
+                        align: 'Left'
+                    },
+                    {
+                        align: 'Right',
+                        template: '<button id="custombtn">Opus 4.6</button>'
+                    }
+                ]
+            }
+        });
+
+        claudeAIAssistView.appendTo('#claude_aiassistview');
+
+        if (claudeContainer) {
+            claudeContainer.classList.add('middle-footer');
+        }
+
+        async function getAIResponse(args) {
+            try {
+                const userID = await window.fingerPrint();
+                if (!userID) {
+                    return 'Failed to generate user ID. Please try again later.';
+                }
+                const abortController = new AbortController();
+                const response = await fetch(baseURL + '/api/AI/Stream', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authentication': userID
+                    },
+                    body: JSON.stringify({
+                        message: args.prompt
+                    }),
+                    signal: abortController.signal
+                });
+
+                if (!response.ok) {
+                    let text = await response.text();
+                    let errorData;
+                    try {
+                        errorData = JSON.parse(text);
+                    } catch (e) {
+                        errorData = { error: 'HTTP Error ' + response.status + ': ' + text };
+                    }
+                    throw new Error(errorData.error || ('HTTP Error ' + response.status));
+                }
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                let fullText = '';
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    fullText += decoder.decode(value, { stream: true });
+                }
+                return fullText;
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    return;
+                } else if (error.message && error.message.indexOf('token limit') !== -1) {
+                    return error.message;
+                }
+                return 'We could not reach the AI service; please try again later.';
+            }
+        }
+
+        async function onPromptRequest(args) {
+            if (isFirstPrompt && claudeContainer) {
+                claudeContainer.classList.remove('middle-footer');
+                claudeContainer.classList.add('bottom-footer');
+                isFirstPrompt = false;
+            }
+
+            let foundPrompt = defaultPromptResponseData.find((p) => p.prompt === args.prompt);
+            var response = foundPrompt ? foundPrompt.Response : await getAIResponse(args);
+            claudeAIAssistView.addPromptResponse(response);
+        }
+
+        function created() {
+            let items = [
+                {
+                    text: 'Opus 4.6',
+                    description: 'Most capable for ambitious work'
+                },
+                {
+                    text: 'Sonnet 4.6',
+                    description: 'Most efficient for everyday tasks'
+                },
+                {
+                    text: 'Haiku 4.5',
+                    description: 'Fastest for quick answers'
+                },
+                {
+                    text: 'Extended thinking',
+                    description: 'Think longer for complex tasks',
+                    id: 'extended-thinking'
+                }
+            ];
+
+            let currentModel = 'Opus 4.6';
+            let extendedThinkingEnabled = false;
+
+            let btnObj = new ej.splitbuttons.DropDownButton({
+                items: items,
+                cssClass: 'e-flat claude_model',
+                itemTemplate: function (data) {
+                    let contentHtml = `
+                        <div class="model-content">
+                            <div class="model-name">${data.text}</div>
+                            <div class="model-description">${data.description}</div>
+                        </div>`;
+
+                    if (data.id === 'extended-thinking') {
+                        contentHtml += `
+                            <div class="toggle-container">
+                                <input
+                                    type="checkbox"
+                                    class="extended-thinking-toggle"
+                                    id="extended-thinking-switch"
+                                />
+                            </div>`;
+                    }
+
+                    return `<div class="model-item">${contentHtml}</div>`;
+                },
+                beforeItemRender: function (args) {
+                    if (currentModel === args.item.text) {
+                        args.element.classList.add('e-selected');
+                    }
+                },
+                open: onModelDropdownOpen,
+                select: function (args) {
+                    currentModel = args.item.text;
+                    btnObj.content = args.item.text;
+                }
+            });
+            btnObj.appendTo('#custombtn');
+
+            function onModelDropdownOpen() {
+                let toggleInput = document.getElementById('extended-thinking-switch');
+                if (toggleInput && !toggleInput.classList.contains('e-switch')) {
+                    new ej.buttons.Switch({
+                        checked: extendedThinkingEnabled,
+                        change: function (args) {
+                            extendedThinkingEnabled = args.checked;
+                        }
+                    }).appendTo(toggleInput);
+
+                    let toggleContainer = (toggleInput).closest('.toggle-container');
+                    if (toggleContainer) {
+                        toggleContainer.addEventListener('click', function (e) {
+                            e.stopPropagation();
+                        });
+                    }
+                }
+            }
+        }
+
+        new ej.buttons.Button({
+            iconCss: 'e-icons e-code-view'
+        }, '#codeBtn');
+
+        new ej.buttons.Button({
+            iconCss: 'e-icons e-edit'
+        }, '#writeBtn');
+
+        new ej.buttons.Button({
+            iconCss: 'e-icons e-stamp'
+        }, '#choiceBtn');
+
+        new ej.buttons.Button({
+            iconCss: 'e-icons e-layers'
+        }, '#learnBtn');
+
+        new ej.buttons.Button({
+            iconCss: 'e-icons e-activities'
+        }, '#lifeBtn');
+    </script>
+}
+
+@section Meta {
+    <meta name="description" content="This example demonstrates the Claude-inspired AI AssistView with attachment support, simulated AI responses, and a configurable AI model selector in ASP.NET Core." />
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>This sample demonstrates a Claude-inspired AI AssistView that provides a focused conversational experience with attachment support, simulated AI responses, and a configurable AI model selector embedded within the chat footer.</p>
+    </div>
+}
+
+@section Description {
+    <div id="description">
+        <p>
+            The AI AssistView in this sample showcases how a branded, lightweight assistant interface can be
+            created using Syncfusion's <code>AIAssistView</code> control while offering essential interaction
+            features and UI customization options:
+        </p>
+        <ul>
+            <li>Minimal header-less chat layout for distraction-free conversations.</li>
+            <li>Custom banner template displaying branded assistant visuals and contextual messaging.</li>
+            <li>Simulated AI response handling using the <code>promptRequest</code> callback.</li>
+            <li>File attachment support with configurable save and remove endpoints.</li>
+            <li>Footer toolbar customization with attachment actions and a model selector.</li>
+            <li>Dropdown-based AI model switching (Opus, Sonnet, Haiku, Extended thinking).</li>
+        </ul>
+        <p>
+            This example serves as a foundation for integrating real LLM services and building branded conversational interfaces with modular UI controls.
+        </p>
+    </div>
+}

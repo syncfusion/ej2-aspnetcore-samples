@@ -1,0 +1,330 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.AIAssistView.GeminiCloneModel
+@using Syncfusion.EJ2
+@using System.Text.Json;
+
+@section ControlsSection {
+    <div class="control-section gemini-clone">
+        <div class="gemini-aiassist" id="geminiContainer">
+            <div id="gemini_aiassistview"></div>
+            <div id="buttonsContainer" class="gemini-buttons-container">
+                <button id="imgBtn">Create image</button>
+                <button id="iplBtn">Follow IPL</button>
+                <button id="musicBtn">Create Music</button>
+                <button id="writeBtn">Write anything</button>
+            </div>
+        </div>
+    </div>
+
+    <script id="bannerContent" type="text/x-jsrender">
+        <div class="banner-content">
+            <div class="gemini-header">
+                <h3>Meet Gemini, your personal AI assistant </h3> 
+            </div>
+        </div>
+    </script>
+
+    <style>
+        .control-section.gemini-clone {
+            min-height: 550px;
+        }
+        .gemini-aiassist {
+            width: 60vw;
+            margin: 10px auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .gemini-aiassist.middle-footer {
+            height: 350px; 
+            gap: 10px;
+        }
+
+        .gemini-aiassist.bottom-footer {
+            height: 500px;
+        }
+
+        @@media only screen and (max-width: 750px) {
+            .gemini-aiassist {
+                width: 100%;
+            }
+        }
+
+        .gemini-aiassist .gemini-header {
+            display: flex;
+            justify-content: flex-start;
+            height: 150px;
+            align-items: end;
+        }
+
+        .gemini_model .model-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .gemini_model .model-item .model-description {
+            font-size: 11px;
+        }
+
+        .gemini_model .model-content {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .gemini_model.e-dropdown-popup ul .e-item {
+            line-height: 18px;
+            padding: 25px 20px 25px 12px;
+        }
+        
+        .gemini-aiassist .gemini-buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            flex-shrink: 0;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gemini-aiassist.bottom-footer .gemini-buttons-container {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .gemini-aiassist .gemini-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .gemini-aiassist #gemini_aiassistview  {
+            border: none;
+        }
+        .gemini-aiassist h3 {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+    </style>
+}
+
+@section PreScripts {
+    <script>
+        var defaultPromptResponseData = @Html.Raw(JsonSerializer.Serialize(Model.PromptResponseData));
+        var baseURL = window.baseurl;
+        let geminiContainer = document.getElementById('geminiContainer');
+        let isFirstPrompt = true;
+
+        let geminiAIAssistView = new ej.interactivechat.AIAssistView({
+            promptRequest: onPromptRequest,
+            promptChanged: toggleButtons,
+            showHeader: false,
+            promptPlaceholder: 'Ask Gemini',
+            enableAttachments: true,
+            speechToTextSettings: {
+                enable: true
+            },
+            bannerTemplate: "#bannerContent",
+            created: created,
+            attachmentSettings: {
+                saveUrl: 'https://services.syncfusion.com/js/production/api/FileUploader/Save',
+                removeUrl: 'https://services.syncfusion.com/js/production/api/FileUploader/Remove'
+            },
+            footerToolbarSettings: {
+                toolbarPosition: 'Bottom',
+                items: [
+                    {
+                        iconCss: 'e-icons e-assist-attachment-icon',
+                        align: 'Left'
+                    },
+                    {
+                        align: 'Right',
+                        template: '<button id="custombtn">Fast</button>'
+                    },
+                    {
+                        iconCss: 'e-icons e-assist-speech-to-text',
+                        align: 'Right'
+                    }
+                ]
+            }
+        });
+
+        geminiAIAssistView.appendTo('#gemini_aiassistview');
+
+        if (geminiContainer) {
+            geminiContainer.classList.add('middle-footer');
+        }
+
+        async function getAIResponse(args) {
+            try {
+                const userID = await window.fingerPrint();
+                if (!userID) {
+                    return 'Failed to generate user ID. Please try again later.';
+                }
+                const abortController = new AbortController();
+                const response = await fetch(baseURL + '/api/AI/Stream', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authentication': userID
+                    },
+                    body: JSON.stringify({
+                        message: args.prompt
+                    }),
+                    signal: abortController.signal
+                });
+
+                if (!response.ok) {
+                    let text = await response.text();
+                    let errorData;
+                    try {
+                        errorData = JSON.parse(text);
+                    } catch (e) {
+                        errorData = { error: 'HTTP Error ' + response.status + ': ' + text };
+                    }
+                    throw new Error(errorData.error || ('HTTP Error ' + response.status));
+                }
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                let fullText = '';
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    fullText += decoder.decode(value, { stream: true });
+                }
+                return fullText;
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    return;
+                } else if (error.message && error.message.indexOf('token limit') !== -1) {
+                    return error.message;
+                }
+                return 'We could not reach the AI service; please try again later.';
+            }
+        }
+
+        async function onPromptRequest(args) {
+            if (isFirstPrompt && geminiContainer) {
+                geminiContainer.classList.remove('middle-footer');
+                geminiContainer.classList.add('bottom-footer');
+                isFirstPrompt = false;
+            }
+
+            let foundPrompt = defaultPromptResponseData.find((p) => p.prompt === args.prompt);
+            var response = foundPrompt ? foundPrompt.Response : await getAIResponse(args);
+            geminiAIAssistView.addPromptResponse(response);
+            toggleButtons();
+        }
+
+        function toggleButtons() {
+            let sendBtn = (geminiAIAssistView.element.querySelector('.e-assist-send')).parentElement;
+            let audioBtn = geminiAIAssistView.element.querySelector('.e-assistview-speech-to-text');
+
+            let hasPrompt =
+                geminiAIAssistView.prompt &&
+                geminiAIAssistView.prompt.replace(/<br\s*\/?>/gi, '').replace(/&nbsp;/gi, '').replace(/\s+/g, '').trim();
+
+            if (hasPrompt) {
+                if (sendBtn) sendBtn.style.display = 'block';
+                if (audioBtn) audioBtn.style.display = 'none';
+            } else {
+                if (sendBtn) sendBtn.style.display = 'none';
+                if (audioBtn) audioBtn.style.display = 'block';
+            }
+        }
+
+        function created() {
+            let items = [
+                {
+                    text: 'Fast',
+                    description: 'Answers quickly'
+                },
+                {
+                    text: 'Thinking',
+                    description: 'Solve complex problems'
+                },
+                {
+                    text: 'Pro',
+                    description: 'Advanced maths and code with 3.1 Pro'
+                }
+            ];
+
+            let currentModel = 'Fast';
+
+            let btnObj = new ej.splitbuttons.DropDownButton({
+                items: items,
+                cssClass: 'e-flat gemini_model',
+                itemTemplate: function (data) {
+                    let contentHtml = `
+                        <div class="model-content">
+                            <div class="model-name">${data.text}</div>
+                            <div class="model-description">${data.description}</div>
+                        </div>`;
+                    return `<div class="model-item">${contentHtml}</div>`;
+                },
+                beforeItemRender: function (args) {
+                    if (currentModel === args.item.text) {
+                        args.element.classList.add('e-selected');
+                    }
+                },
+                select: function (args) {
+                    currentModel = args.item.text;
+                    btnObj.content = args.item.text;
+                }
+            });
+            btnObj.appendTo('#custombtn');
+            toggleButtons();
+        }
+
+        new ej.buttons.Button({
+            iconCss: 'e-icons e-image'
+        }, '#imgBtn');
+
+        new ej.buttons.Button({
+            iconCss: 'e-icons e-callout'
+        }, '#iplBtn');
+
+        new ej.buttons.Button({
+            iconCss: 'e-icons e-play'
+        }, '#musicBtn');
+
+        new ej.buttons.Button({
+        }, '#writeBtn');
+    </script>
+}
+
+@section Meta {
+    <meta name="description" content="This example demonstrates the Gemini-inspired AI AssistView with attachment support, speech-to-text input, and a configurable AI model selector in ASP.NET Core." />
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>This sample demonstrates a Gemini-inspired AI AssistView that provides a focused conversational experience with attachment support, simulated AI responses, and a configurable AI model selector embedded within the chat footer.</p>
+    </div>
+}
+
+@section Description {
+    <div id="description">
+        <p>
+            The AI AssistView in this sample showcases how a branded, lightweight assistant interface can be
+            created using Syncfusion's <code>AIAssistView</code> control while offering essential interaction
+            features and UI customization options:
+        </p>
+        <ul>
+            <li>Minimal header-less chat layout for distraction-free conversations.</li>
+            <li>Custom banner template displaying branded assistant visuals and contextual messaging.</li>
+            <li>Simulated AI response handling using the <code>promptRequest</code> callback.</li>
+            <li>File attachment support with configurable save and remove endpoints.</li>
+            <li>Footer toolbar customization with attachment actions and a model selector.</li>
+            <li>Speech-to-text input for hands-free interaction.</li>
+            <li>Dropdown-based AI model switching (Fast, Thinking, Pro).</li>
+        </ul>
+        <p>
+            This example serves as a foundation for integrating real LLM services and building branded conversational interfaces with modular UI controls.
+        </p>
+    </div>
+}

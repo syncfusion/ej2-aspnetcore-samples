@@ -1,0 +1,420 @@
+@page
+
+@section ControlsSection {
+    <div class="control-section">
+        <ejs-grid id="DOMVirtualGrid" allowFiltering="true" allowSorting="true" load="load" height="400" rowHeight="50" clipMode="EllipsisWithTooltip" enableVirtualization="true" enableDomVirtualization="true" allowSelection="true">
+            <e-grid-filtersettings type="Excel"></e-grid-filtersettings>
+            <e-grid-pageSettings pageSize="100"></e-grid-pageSettings>
+            <e-grid-domVirtualizationSettings rowBuffer="10"></e-grid-domVirtualizationSettings>
+            <e-grid-columns>
+                <e-grid-column field="EmployeeID" headerText="Employee ID" isPrimaryKey="true" textAlign="Right" width="150"></e-grid-column>
+                <e-grid-column field="Employees" headerText="Employee Name" template="#empAvatarTemplate" width="260"></e-grid-column>
+                <e-grid-column field="Designation" headerText="Designation" width="170"></e-grid-column>
+                <e-grid-column field="Status" headerText="Status" template="#statusTemplate" width="150"></e-grid-column>
+                <e-grid-column field="Trustworthiness" headerText="Trustworthiness" template="#trustTemplate" width="200" visible="false"></e-grid-column>
+                <e-grid-column field="Rating" headerText="Rating" template="#ratingTemplate" width="160" visible="false"></e-grid-column>
+                <e-grid-column field="Software" headerText="Software" allowSorting="false" allowFiltering="false" template="#progessTemplate" width="180" visible="false"></e-grid-column>
+                <e-grid-column field="CurrentSalary" headerText="Current Salary" format="C2" textAlign="Right" width="160"></e-grid-column>
+                <e-grid-column field="Location" headerText="Location" width="160"></e-grid-column>
+                <e-grid-column field="Address" headerText="Address" width="240"></e-grid-column>
+            </e-grid-columns>
+        </ejs-grid>
+
+    </div>
+
+    <template>
+        <input class="rating">
+    </template>
+    <script type="text/x-jsrender" id="ratingTemplate">
+        ${ratingDetail(data)}
+    </script>
+
+    <script type="text/x-jsrender" id="empAvatarTemplate">
+        ${empAvatarDetail(data)}
+    </script>
+    
+    <script type="text/x-jsrender" id="progessTemplate">
+        ${progessDetail(data)}
+    </script>
+
+    <script type="text/x-jsrender" id="trustTemplate">
+        <img style="width: 31px; height: 24px" src="@Url.Content("~/styles/images/grid/${Trustworthiness}.png")" alt="Flag Icon"/>
+        <span id="Trusttext">${Trustworthiness}</span>
+    </script>
+
+    <script type="text/x-jsrender" id="statusTemplate">
+        ${statusDetail(data)}
+    </script>
+
+    <script type="text/javascript">
+        function load(args) {
+            var hostUrl = 'https://services.syncfusion.com/aspnet/production/';
+            var urlapi = new ej.data.DataManager({
+                url: hostUrl + "api/UrlDataSource",
+                adaptor: new ej.data.UrlAdaptor()
+            });
+            this.dataSource = urlapi;
+            this.query = new ej.data.Query().addParams('dataCount', '100000');
+        }
+        var avatarColorClasses = [
+            'avatar-red', 'avatar-blue', 'avatar-green', 'avatar-orange', 'avatar-purple'
+        ];
+
+        function getInitials(name) {
+            var parts = name.trim().split(' ');
+            if (parts.length >= 2) {
+                return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
+            }
+            return name.substring(0, 2).toUpperCase();
+        }
+
+        function getAvatarClass(name) {
+            var sum = 0;
+            for (var i = 0; i < name.length; i++) {
+                sum += name.charCodeAt(i);
+            }
+            return avatarColorClasses[sum % avatarColorClasses.length];
+        }
+
+        function empAvatarDetail(e) {
+            var wrapper = document.createElement('div');
+            wrapper.className = 'customer-details';
+            var avatarDiv = document.createElement('div');
+            avatarDiv.className = 'customer-avatar ' + getAvatarClass(e.Employees);
+            avatarDiv.textContent = getInitials(e.Employees);
+            var infoDiv = document.createElement('div');
+            infoDiv.className = 'customer-info';
+            var namePara = document.createElement('p');
+            namePara.className = 'customer-name';
+            namePara.textContent = e.Employees;
+            var emailPara = document.createElement('p');
+            emailPara.className = 'customer-email';
+            emailPara.textContent = e.Mail;
+            infoDiv.appendChild(namePara);
+            infoDiv.appendChild(emailPara);
+            wrapper.appendChild(avatarDiv);
+            wrapper.appendChild(infoDiv);
+            return wrapper.outerHTML;
+        }
+
+        function ratingDetail(e) {
+            var temp = document.getElementsByTagName("template")[0];
+            var cloneTemplate = temp.content.cloneNode(true);
+            var ratingElement = cloneTemplate.querySelector(".rating");
+            var rating = new ej.inputs.Rating({
+                value: e.Rating,
+                readOnly: true,
+                cssClass: 'custom-rating'
+            });
+            rating.appendTo(ratingElement);
+            return ratingElement.ej2_instances[0].wrapper.outerHTML;
+        }
+
+        function progessDetail(e) {
+            var myProgress = document.createElement('div');
+            myProgress.id = 'myProgress';
+            myProgress.className = 'pbar';
+            var myBar = document.createElement('div');
+            myBar.id = 'myBar';
+            myBar.className = 'bar';
+            if (e.Status === 'Inactive') {
+                myBar.classList.add('progressdisable');
+            }
+            if (e.Software <= 20) {
+                e.Software = e.Software + 30;
+            }
+            myBar.style.width = e[e.column.field] + '%';
+            var pbarlabel = document.createElement('div');
+            pbarlabel.id = 'pbarlabel';
+            pbarlabel.className = 'barlabel';
+            pbarlabel.textContent = e.Software + '%';
+            myBar.appendChild(pbarlabel);
+            myProgress.appendChild(myBar);
+            return myProgress.outerHTML;
+        }
+
+        function statusDetail(e) {
+            var div = document.createElement('div');
+            var span = document.createElement('span');
+            if (e.Status === 'Active') {
+                span.className = 'statustxt e-activecolor';
+                span.textContent = 'Active';
+                div.className = 'statustemp e-activecolor';
+            } else {
+                span.className = 'statustxt e-inactivecolor';
+                span.textContent = 'Inactive';
+                div.className = 'statustemp e-inactivecolor';
+            }
+            div.appendChild(span);
+            return div.outerHTML;
+        }
+    </script>
+
+    <style>
+        /* Employee avatar column styles */
+        #DOMVirtualGrid .customer-details {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 4px 0;
+            width: 100%;
+        }
+    
+        #DOMVirtualGrid .customer-avatar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: 600;
+        }
+    
+        #DOMVirtualGrid .customer-info {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+    
+        #DOMVirtualGrid .customer-name {
+            margin: 0 0 2px;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.2;
+            color: #202124;
+        }
+    
+        #DOMVirtualGrid .customer-email {
+            margin: 0;
+            font-size: 13px;
+            line-height: 1.2;
+            color: #5f6368;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    
+        /* Avatar pastel color variants */
+        #DOMVirtualGrid .avatar-red {
+            color: rgb(217, 48, 37);
+            background-color: rgb(252, 232, 230);
+        }
+    
+        #DOMVirtualGrid .avatar-blue {
+            color: rgb(26, 115, 232);
+            background-color: rgb(232, 240, 254);
+        }
+    
+        #DOMVirtualGrid .avatar-green {
+            color: rgb(19, 115, 51);
+            background-color: rgb(230, 244, 234);
+        }
+    
+        #DOMVirtualGrid .avatar-orange {
+            color: rgb(234, 134, 0);
+            background-color: rgb(254, 247, 224);
+        }
+    
+        #DOMVirtualGrid .avatar-purple {
+            color: rgb(147, 51, 234);
+            background-color: rgb(243, 232, 255);
+        }
+    
+        /* Dark theme overrides */
+        .fabric-dark #DOMVirtualGrid .customer-name,
+        .material-dark #DOMVirtualGrid .customer-name,
+        .bootstrap-dark #DOMVirtualGrid .customer-name,
+        .tailwind-dark #DOMVirtualGrid .customer-name,
+        .tailwind3-dark #DOMVirtualGrid .customer-name,
+        .bootstrap5-dark #DOMVirtualGrid .customer-name,
+        .bootstrap5\.3-dark #DOMVirtualGrid .customer-name,
+        .material3-dark #DOMVirtualGrid .customer-name,
+        .fluent-dark #DOMVirtualGrid .customer-name,
+        .fluent2-dark #DOMVirtualGrid .customer-name,
+        .fluent2-highcontrast #DOMVirtualGrid .customer-name,
+        .highcontrast #DOMVirtualGrid .customer-name {
+            color: rgb(232, 234, 237);
+        }
+    
+        .fabric-dark #DOMVirtualGrid .customer-email,
+        .material-dark #DOMVirtualGrid .customer-email,
+        .bootstrap-dark #DOMVirtualGrid .customer-email,
+        .tailwind-dark #DOMVirtualGrid .customer-email,
+        .tailwind3-dark #DOMVirtualGrid .customer-email,
+        .bootstrap5-dark #DOMVirtualGrid .customer-email,
+        .bootstrap5\.3-dark #DOMVirtualGrid .customer-email,
+        .material3-dark #DOMVirtualGrid .customer-email,
+        .fluent-dark #DOMVirtualGrid .customer-email,
+        .fluent2-dark #DOMVirtualGrid .customer-email,
+        .fluent2-highcontrast #DOMVirtualGrid .customer-email,
+        .highcontrast #DOMVirtualGrid .customer-email {
+            color: rgb(154, 160, 166);
+        }
+    
+        .fabric-dark #DOMVirtualGrid .avatar-red,
+        .material-dark #DOMVirtualGrid .avatar-red,
+        .bootstrap-dark #DOMVirtualGrid .avatar-red,
+        .tailwind-dark #DOMVirtualGrid .avatar-red,
+        .tailwind3-dark #DOMVirtualGrid .avatar-red,
+        .bootstrap5-dark #DOMVirtualGrid .avatar-red,
+        .bootstrap5\.3-dark #DOMVirtualGrid .avatar-red,
+        .material3-dark #DOMVirtualGrid .avatar-red,
+        .fluent-dark #DOMVirtualGrid .avatar-red,
+        .fluent2-dark #DOMVirtualGrid .avatar-red,
+        .fluent2-highcontrast #DOMVirtualGrid .avatar-red {
+            color: rgb(242, 139, 130);
+            background-color: rgb(89, 53, 50);
+        }
+    
+        .fabric-dark #DOMVirtualGrid .avatar-blue,
+        .material-dark #DOMVirtualGrid .avatar-blue,
+        .bootstrap-dark #DOMVirtualGrid .avatar-blue,
+        .tailwind-dark #DOMVirtualGrid .avatar-blue,
+        .tailwind3-dark #DOMVirtualGrid .avatar-blue,
+        .bootstrap5-dark #DOMVirtualGrid .avatar-blue,
+        .bootstrap5\.3-dark #DOMVirtualGrid .avatar-blue,
+        .material3-dark #DOMVirtualGrid .avatar-blue,
+        .fluent-dark #DOMVirtualGrid .avatar-blue,
+        .fluent2-dark #DOMVirtualGrid .avatar-blue,
+        .fluent2-highcontrast #DOMVirtualGrid .avatar-blue {
+            color: rgb(138, 180, 248);
+            background-color: rgb(52, 65, 85);
+        }
+    
+        .fabric-dark #DOMVirtualGrid .avatar-green,
+        .material-dark #DOMVirtualGrid .avatar-green,
+        .bootstrap-dark #DOMVirtualGrid .avatar-green,
+        .tailwind-dark #DOMVirtualGrid .avatar-green,
+        .tailwind3-dark #DOMVirtualGrid .avatar-green,
+        .bootstrap5-dark #DOMVirtualGrid .avatar-green,
+        .bootstrap5\.3-dark #DOMVirtualGrid .avatar-green,
+        .material3-dark #DOMVirtualGrid .avatar-green,
+        .fluent-dark #DOMVirtualGrid .avatar-green,
+        .fluent2-dark #DOMVirtualGrid .avatar-green,
+        .fluent2-highcontrast #DOMVirtualGrid .avatar-green {
+            color: rgb(129, 201, 149);
+            background-color: rgb(46, 73, 58);
+        }
+    
+        .fabric-dark #DOMVirtualGrid .avatar-orange,
+        .material-dark #DOMVirtualGrid .avatar-orange,
+        .bootstrap-dark #DOMVirtualGrid .avatar-orange,
+        .tailwind-dark #DOMVirtualGrid .avatar-orange,
+        .tailwind3-dark #DOMVirtualGrid .avatar-orange,
+        .bootstrap5-dark #DOMVirtualGrid .avatar-orange,
+        .bootstrap5\.3-dark #DOMVirtualGrid .avatar-orange,
+        .material3-dark #DOMVirtualGrid .avatar-orange,
+        .fluent-dark #DOMVirtualGrid .avatar-orange,
+        .fluent2-dark #DOMVirtualGrid .avatar-orange, 
+        .fluent2-highcontrast #DOMVirtualGrid .avatar-orange {
+            color: rgb(253, 214, 99);
+            background-color: rgb(83, 69, 44);
+        }
+    
+        .fabric-dark #DOMVirtualGrid .avatar-purple,
+        .material-dark #DOMVirtualGrid .avatar-purple,
+        .bootstrap-dark #DOMVirtualGrid .avatar-purple,
+        .tailwind-dark #DOMVirtualGrid .avatar-purple,
+        .tailwind3-dark #DOMVirtualGrid .avatar-purple,
+        .bootstrap5-dark #DOMVirtualGrid .avatar-purple,
+        .bootstrap5\.3-dark #DOMVirtualGrid .avatar-purple,
+        .material3-dark #DOMVirtualGrid .avatar-purple,
+        .fluent-dark #DOMVirtualGrid .avatar-purple,
+        .fluent2-dark #DOMVirtualGrid .avatar-purple,
+        .fluent2-highcontrast #DOMVirtualGrid .avatar-purple {
+            color: rgb(197, 138, 249);
+            background-color: rgb(79, 55, 91);
+        }
+    
+        /* Status template styles */
+        #DOMVirtualGrid .statustemp.e-inactivecolor {
+            background-color: #ffd7cc;
+            width: 64px;
+        }
+    
+        #DOMVirtualGrid .statustemp.e-activecolor {
+            background-color: #ccffcc;
+            width: 57px;
+        }
+    
+        #DOMVirtualGrid .statustxt.e-activecolor {
+            color: #00cc00;
+        }
+    
+        #DOMVirtualGrid .statustxt.e-inactivecolor {
+            color: #e60000;
+        }
+    
+        #DOMVirtualGrid .statustemp {
+            position: relative;
+            height: 19px;
+            border-radius: 5px;
+            text-align: center;
+        }
+    
+        #DOMVirtualGrid td.e-rowcell .statustxt.e-activecolor {
+            color: #00cc00;
+            position: relative;
+            top: 9px;
+        }
+    
+        #DOMVirtualGrid td.e-rowcell .statustxt.e-inactivecolor {
+            color: #e60000;
+            position: relative;
+            top: 9px;
+        }
+    
+        .bootstrap5 #DOMVirtualGrid td.e-rowcell .statustxt.e-inactivecolor,
+        .bootstrap5 #DOMVirtualGrid td.e-rowcell .statustxt.e-activecolor {
+            top: 8px;
+        }
+    
+        .e-bigger #DOMVirtualGrid.e-grid .statustxt {
+            position: relative;
+            top: -2px;
+        }
+    
+    </style>
+
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This demo showcases the DOM Virtualization feature in the Grid, enabling efficient handling of large datasets. Instead of rendering all records at once, the Grid intelligently displays only the rows visible within the viewport, ensuring smooth scrolling and responsive performance.</p>
+    </div>
+}
+
+@section Meta{
+    <meta name="description" content="This example demonstrates the Overview in ASP.NET Core Data Grid control. Explore here for more details." />
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            DOM virtualization is a performance optimization feature that renders only the visible rows within the Grid viewport instead of rendering the entire dataset. This significantly improves performance when working with large volumes of data.
+        </p>
+         <p>
+            With this feature enabled, the Grid calculates the content height and renders only the necessary <code>tr</code> elements required for the visible portion of the Grid. As the user scrolls, previously rendered rows are replaced with newly required rows, ensuring that only a minimal number of DOM elements are maintained at any time. This behavior improves both rendering speed and memory usage, making the Grid highly efficient for large datasets.
+        </p>
+        <p>
+            DOM virtualization can be enabled by setting the <code>enableDomVirtualization</code> property to <code>true</code>. In this demo, the Grid is loaded with "100k" records using both DOM virtualization and row virtualization features. Row virtualization is enabled using the <code>enableVirtualization</code> property.
+        </p>
+        <p>
+            More information on the infinite scrolling can be found in the
+            <a target="_blank"
+                href="https://ej2.syncfusion.com/aspnetcore/documentation/grid/getting-started" aria-label="Navigate to the documentation for infinite scrolling in ASP.NET Core Grid control">
+            documentation section</a>.
+        </p>
+        <p>
+            Looking for the full ASP.NET Core Data Grid component overview, features, pricing, and documentation? Visit our <a target="_blank" href="https://www.syncfusion.com/aspnet-core-ui-controls/grid" aria-label="documentation">ASP.NET Core Data Grid component</a> page.
+        </p>
+    </div>
+}
+@section Title{
+    <title>ASP.NET Core Data Grid Overview Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Overview in ASP.NET Core Data Grid Control</h1>
+}

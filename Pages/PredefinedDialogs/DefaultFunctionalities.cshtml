@@ -1,0 +1,144 @@
+@page
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+    <div class=" col-lg-12 control-section" id="predefinedDialogDefault">
+        <ejs-button id="alertBtn" content="Alert" cssClass="e-warning"></ejs-button>
+        <ejs-button id="confirmBtn" content="Confirm" cssClass="e-success"></ejs-button>
+        <ejs-button id="promptBtn" content="Prompt" isPrimary="true"></ejs-button>
+        <span id="statusText"></span>
+    </div>
+}
+@section PreScripts {
+    <script>
+   document.getElementById('alertBtn').onclick = function () {
+       document.getElementById("statusText").style.display="none";
+            ej.popups.DialogUtility.alert({
+            title: 'Low Battery',
+            content: '10% of battery remaining',
+            okButton: { click: alertokClick},
+            position: { X: 'center', Y: 'center' },
+            closeOnEscape: true,
+            close : alertokClick
+        });
+    };
+    function alertokClick(){
+        this.hide();
+        document.getElementById('statusText').innerHTML="The user closed the Alert dialog.";
+        document.getElementById("statusText").style.display="block";
+    }
+    document.getElementById('confirmBtn').onclick = function () {
+        document.getElementById("statusText").style.display="none";
+        ej.popups.DialogUtility.confirm({
+            title: ' Delete Multiple Items',
+            content: "Are you sure you want to permanently delete these items?",
+            okButton: { click:confirmOkAction},
+            cancelButton: { click:confirmCancelAction},
+            position: { X: 'center', Y: 'center' },
+            closeOnEscape: true,
+            close : confirmCancelAction
+        });
+    };
+    function confirmOkAction(){
+        this.hide();
+        document.getElementById('statusText').innerHTML="The user confirmed the dialog box";
+        document.getElementById("statusText").style.display="block";
+    }
+    function confirmCancelAction(){
+        this.hide();
+        document.getElementById('statusText').innerHTML="The user canceled the dialog box.";
+        document.getElementById("statusText").style.display="block";
+    }
+    document.getElementById('promptBtn').onclick = function () {
+        document.getElementById("statusText").style.display="none";
+        ej.popups.DialogUtility.confirm({
+            title: 'Join Chat Group',
+            content: '<p>Enter your name: </p> <input id= "inputEle" type="text" name="Required" class="e-input" placeholder="Type here.." />',
+            okButton: { click:promptOkAction},
+            cancelButton: { click:promptCancelAction},
+            position: { X: 'center', Y: 'center' },
+            closeOnEscape: true,
+            close : promptOkAction
+        });
+    }
+    function promptOkAction(){
+        var value;
+        value=document.getElementById("inputEle").value;
+        if(value==""){
+        this.hide();
+        document.getElementById('statusText').innerHTML="The user's input is returned as \" \" ";
+        document.getElementById("statusText").style.display="block";
+        }
+        else {
+        this.hide();
+        document.getElementById('statusText').innerHTML="The user's input is returned as" + " " + value;
+        document.getElementById("statusText").style.display="block";
+        }
+    }
+    function promptCancelAction(){
+        this.hide();
+        document.getElementById('statusText').innerHTML="The user canceled the prompt dialog";
+        document.getElementById("statusText").style.display="block";
+    }
+    </script>
+    <style>
+    #_dialog-content{
+        line-height: 2.5;
+    }
+    #predefinedDialogDefault {
+        height: 100%;
+        padding: 25px 0 0 15px;
+    }
+    #predefinedDialogDefault #statusText{
+        font-size:16px;
+        margin-top:20px;
+    }
+    #predefinedDialogDefault .e-btn{
+        margin-right:5px;
+    }
+    .e-alert-dialog.e-dialog.e-popup, .e-confirm-dialog.e-dialog.e-popup{
+        margin: 30px auto;
+        width: auto;
+    }
+</style>
+}
+@section ActionDescription{
+    <div id="action-description">
+         <p>This example demonstrates the usage of dialog utility to display various forms of dialog, including<b> alert, confirm </b>and <b>prompt</b> dialog. Three buttons have been added to this example, click one of them to open the relevant dialog box.</p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        	<p>The predefined dialogs are used to display messages and collect user input within a web page. The following are the three types of Dialogs:
+	    </p>
+	        <ul>
+	            <li><code>Alert</code>- Used to show errors, warnings, and information that need user awareness.</li>
+	            <li><code>Confirm</code> - Used to get approval from user that appears before any critical action.</li>
+	            <li><code>Prompt</code> - Used to get input from the user. </li>
+	        </ul>
+	        <p>
+	            <b>See also</b>
+	        </p>
+	        <ul>
+	            <li> <a target="_blank"
+	            href="https://ej2.syncfusion.com/aspnetcore/documentation/predefined-dialogs/getting-started" aria-label="Navigate to the documentation for getting started with ASP.NET Core Predefined Dialogs control">
+	          Getting started with predefined dialogs </a>
+	        </li>
+	        </ul>
+
+    </div>
+}
+
+@*custom code start*@
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Customize Content in ASP.NET Core Predefined Dialogs control. Explore here for more details."/>
+                }
+
+@*custom code end*@
+@section Title{
+                    <title>ASP.NET Core Predefined Dialogs default functionalities Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of default functionalities in ASP.NET Core Predefined Dialogs Control</h1>
+                }

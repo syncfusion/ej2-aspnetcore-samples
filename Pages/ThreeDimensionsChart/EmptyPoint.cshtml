@@ -1,0 +1,63 @@
+﻿@page
+@model EJ2CoreSampleBrowser.Pages.ThreeDimensionsChart.EmptyPointModel
+
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="control-section" align="center">
+        <ejs-chart3d id="columnContainer" load="load" pointRender="labelRender" title="Olympic Gold Medal Counts - Tokyo 2020" enableRotation="true" rotation="7" tilt="10" depth="100" wallColor="transparent" height="400">
+            <e-chart3d-tooltipsettings enable="true" header="${point.x}" format="Gold Medal : <b>${point.y}">
+            </e-chart3d-tooltipsettings>
+            <e-chart3d-legendsettings visible="false" enableHighlight="true">
+            </e-chart3d-legendsettings>
+            <e-chart3d-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category" labelPlacement="@Syncfusion.EJ2.Charts.LabelPlacement.BetweenTicks" interval="1" labelRotation="-45">
+            </e-chart3d-primaryxaxis>
+            <e-chart3d-primaryyaxis maximum="20" interval="4">
+            </e-chart3d-primaryyaxis>
+            <e-chart3d-series-collection>
+                <e-chart3d-series dataSource="@Model.ChartPoints" xName="X" yName="Y" name="Gold" columnSpacing="0.1" type="@Syncfusion.EJ2.Charts.Chart3DSeriesType.Column">
+                </e-chart3d-series>
+            </e-chart3d-series-collection>
+        </ejs-chart3d>
+    </div>
+    <script src="~/scripts/three-dimensional-chart/theme-color.js"></script>
+    <script>
+        function load(args) {
+            load3DChartTheme(args);
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+        }
+        function labelRender(args) {
+            pointRender(args);
+        }
+    </script>
+}
+@*custom code start*@
+@section Scripts {
+}
+<style>
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@section Meta{
+    <meta name="description" content="This example demonstrates the 3D Column in ASP.NET Core 3D Chart control. Explore here for more details." />
+                }
+@*custom code end*@
+@section ActionDescription{
+    <p>
+        This example of a 3D column chart visualizes the medal count from the Tokyo Olympics using the default column series in the 3D chart.
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can see how to render and configure a 3D column chart, accommodating null and zero values. The null points represent missing data, while zero is considered a valid value in the 3D chart.
+    </p>
+    <p>
+        <code>Tooltips</code> are enabled in this example, to see the tooltip in action, hover a point or tap on a point in touch enabled devices.
+    </p>
+}
+@section Title{
+    <title>ASP.NET Core 3D Column Chart Example - Syncfusion Demos </title>
+                }
+@section Header{
+    <h1 class='sb-sample-text'>Example of Column with null and 0 values in ASP.NET Core 3D Chart Control</h1>
+                }

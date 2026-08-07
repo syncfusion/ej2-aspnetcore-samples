@@ -1,0 +1,107 @@
+@page
+
+@using Syncfusion.EJ2
+@{
+    var defaultanimation = new Syncfusion.EJ2.Popups.DialogAnimationSettings { Effect = Syncfusion.EJ2.Popups.DialogEffect.None };
+    var resizeDirectionHandles = new List<string>() { "All" };
+}
+@section ControlsSection {
+    <div class="col-lg-12 control-section" id="target">
+        <ejs-button id="dialogBtn" cssClass="dlgbtn" content="Open Dialog"></ejs-button>
+        <ejs-dialog id="resizeDialog" allowDragging="true" resizeHandles="resizeDirectionHandles" enableResize="true" animationSettings="defaultanimation" visible="true" width="300px" target="#target" open="dialogOpen"
+                    close="dialogClose" showCloseIcon="true" header="Resize Me!!!">
+            <e-content-template>
+                <span>This is a dialog with resizable support.</span>
+            </e-content-template>
+        </ejs-dialog>
+    </div>
+}
+@section PreScripts{
+    <script>
+        document.getElementById('dialogBtn').onclick = function () {
+            var dialogObj = document.getElementById('resizeDialog').ej2_instances[0];
+            dialogObj.show();
+        };
+        function dialogClose() {
+            document.getElementById('dialogBtn').style.display = 'block';
+        }
+        function dialogOpen() {
+            document.getElementById('dialogBtn').style.display = 'none';
+            /* custom code start */
+            document.getElementById("resizeDialog").ej2_instances[0].zIndex = 10000;
+            /* custom code end */
+        }
+    </script>
+}
+<style>
+    #target {
+        height: 100%;
+        min-height: 350px;
+    }
+    .e-btn-hide {
+        display: none;
+    }
+    /* custom code start */
+    #control-container {
+        padding: 0px !important;
+    }
+
+    .dlgbtn {
+        margin-right: 10px;
+    }
+
+    #container {
+        height: 100%;
+        min-height: 280px;
+        position: relative;
+    }
+
+    @@media screen and (min-width: 150px) and (max-width: 480px) {
+        .control-section {
+            margin-bottom: 30px;
+        }
+
+        .control-wrapper {
+            margin-bottom: 0px;
+        }
+    }
+    .material #resizeDialog.e-dialog, .bootstrap #resizeDialog.e-dialog, 
+    .bootstrap4 #resizeDialog.e-dialog {
+        min-height: 125px;
+    }
+    .fabric #resizeDialog.e-dialog, .highcontrast #resizeDialog.e-dialog {
+        min-height: 135px;
+    }
+    /* custom code end */
+</style>
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the resize operation of the dialog control in all directions. To resize the modal dialog, select and resize a dialog using its handle (grip) or hover on any of the edges or border of the dialog within the sample container.
+            The "open dialog" button is used to reopen the dialog if it is closed.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+        <p>
+            Users can create resizable modal dialog by setting the enableResize property to true, which is used to change the size of a dialog dynamically and view its content with expanded mode.
+            The resizeHandles property can also be configured for which directions the dialog should resize.
+            When you configure the target property along with enableResize property, the dialog can be resized within its specified target container.
+        </p>
+    </div>
+}
+
+@*custom code start*@
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Resizable in ASP.NET Core Dialog control. Explore here for more details."/>
+                }
+
+@*custom code end*@
+@section Title{
+                    <title>ASP.NET Core Dialog Resizable Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Resizable in ASP.NET Core Dialog Control</h1>
+                }

@@ -1,0 +1,365 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.AIAssistView.GenerativeUIModel
+@using Syncfusion.EJ2
+@using System.Text.Json;
+
+@section ControlsSection {
+    <div class="control-section">
+        <div class="generative-aiassistview">
+            <ejs-aiassistview id="generativeAssistView" 
+                              enableStreaming="true"
+                              promptSuggestions="@Model.PromptSuggestionData" 
+                              bannerTemplate="#bannerContent" 
+                              promptRequest="onPromptRequest"
+                              created="onAssistViewCreated">
+                <e-aiassistview-toolbarsettings items="@Model.ToolbarItems" itemClicked="toolbarItemClicked"></e-aiassistview-toolbarsettings>
+                <e-aiassistview-responsetoolbarsettings items="@Model.ResponseToolbarItems"></e-aiassistview-responsetoolbarsettings>
+            </ejs-aiassistview>
+        </div>
+    </div>
+}
+
+@section PreScripts{
+    <script>
+        var baseURL = window.baseurl;
+        var blockData = @Html.Raw(JsonSerializer.Serialize(Model.BlockData));
+        var suggestions = @Html.Raw(JsonSerializer.Serialize(Model.PromptSuggestionData));
+        var aiAssistViewInstance;
+
+        var toolSystemPrompt = `You are an AI assistant that generates Syncfusion AIAssistView blocks.
+        Return ONLY valid JSON.
+        Output format:
+        {
+            "blocks": [
+                {
+                "blockType": "text",
+                "content": "Description"
+                },
+                {
+                "blockType": "tool",
+                "toolName": "chart-tool",
+                "props": {
+                    "chartType": "Line|Column|Bar|Area|Spline",
+                    "title": "",
+                    "xAxisTitle": "",
+                    "yAxisTitle": "",
+                    "dataSource": [],
+                    "xField": "",
+                    "yField": "",
+                    "enableTooltip": true,
+                    "enableLegend": true
+                }
+                }
+            ]
+        }
+        Supported tools:
+            - weather-card
+            - grid-tool
+            - chart-tool
+        Rules:
+        1. Always return a single "blocks" array.
+        2. Return ONLY valid JSON.
+        3. Never wrap JSON in markdown.
+        4. Never truncate JSON.
+        5. You may return ANY number of blocks.
+        6. You may mix blocks in ANY order.
+        7. Always provide rich responses with:
+            - At least 1 explanation block
+            - At least 1 visualization/tool block when relevant
+        8. For chart-tool ALWAYS use: { "chartType": "", "title": "", "xAxisTitle": "", "yAxisTitle": "", "dataSource": [], "xField": "", "yField": "", "enableTooltip": true, "enableLegend": true }
+        9. For grid-tool: { "data": [], "columns": [] }
+        10. For weather-card: { "location": "", "temperature": "", "condition": "", "humidity": "", "windSpeed": "" }
+        11. Use realistic public/sample/demo data.
+        Return ONLY JSON.`;
+
+        async function getAIResponse(args) {
+            try {
+                var userID = await window.fingerPrint();
+                if (!userID) {
+                    return { error: 'Failed to generate user ID. Please try again later.' };
+                }
+                var abortCtrl = new AbortController();
+                var response = await fetch(baseURL + '/api/AI/Stream', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authentication': userID
+                    },
+                    body: JSON.stringify({
+                        message: args.prompt,
+                        systemPrompt: toolSystemPrompt
+                    }),
+                    signal: abortCtrl.signal
+                });
+
+                if (!response.ok) {
+                    var text = await response.text();
+                    var errorData;
+                    try {
+                        errorData = JSON.parse(text);
+                    } catch (e) {
+                        errorData = { error: 'HTTP Error ' + response.status + ': ' + text };
+                    }
+                    throw new Error(errorData.error || ('HTTP Error ' + response.status));
+                }
+
+                var reader = response.body.getReader();
+                var decoder = new TextDecoder();
+                var fullText = '';
+
+                while (true) {
+                    var result = await reader.read();
+                    if (result.done) break;
+                    fullText += decoder.decode(result.value, { stream: true });
+                }
+                
+                // Try to parse as JSON blocks
+                try {
+                    var parsedResponse = JSON.parse(fullText);
+                    return parsedResponse; // Return parsed blocks object
+                } catch (e) {
+                    // If not valid JSON, return as text content wrapped in text block
+                    return {
+                        blocks: [
+                            {
+                                blockType: 'text',
+                                content: fullText
+                            }
+                        ]
+                    };
+                }
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    return { blocks: [] };
+                } else if (error.message && error.message.indexOf('token limit') !== -1) {
+                    return { error: error.message };
+                }
+                return { error: 'We could not reach the AI service; please try again later.' };
+            }
+        };
+
+        function onAssistViewCreated() {
+            setTimeout(function () {
+                aiAssistViewInstance = document.getElementById('generativeAssistView').ej2_instances[0];
+                if (aiAssistViewInstance) {
+                    registerTools();
+                }
+            }, 500);
+        }
+
+        async function onPromptRequest(args) {
+            var context = this;
+            var aiData = await getAIResponse(args);
+            context.addPromptResponse({ blocks: aiData.blocks || [{ blockType: 'text', content: "We could not reach the AI service; please try again later." }] });
+        }
+
+        function toolbarItemClicked(args) {
+            if (args.item.iconCss === 'e-icons e-refresh') {
+                this.prompts = [];
+                this.promptSuggestions = suggestions;
+            }
+        }
+
+        function weatherTemplate(args) {
+            var defaults = {
+                location: 'Unknown Location',
+                temperature: '--',
+                condition: '--',
+                humidity: '--',
+                windSpeed: '--'
+            };
+            var data = Object.assign({}, defaults, args);
+            
+            return `<div tabindex="0" class="e-card" id="weather_card" role="button">
+                <div class="e-card-header">
+                    <div class="e-card-header-caption">
+                        <div class="e-card-header-title">${data.location}</div>
+                        <div class="e-card-sub-title">${data.condition}</div>
+                    </div>
+                </div>
+                <div class="e-card-header weather_report">
+                    <div class="e-card-header-image"></div>
+                    <div class="e-card-header-caption">
+                        <div class="e-card-header-title">${data.temperature}</div>
+                        <div class="e-card-sub-title">Humidity: ${data.humidity}</div>
+                        <div class="e-card-sub-title">Wind: ${data.windSpeed}</div>
+                    </div>
+                </div>
+            </div>`;
+        }
+
+        function registerTools() {
+            aiAssistViewInstance.registerToolUI({
+                toolName: 'weather-card',
+                template: weatherTemplate
+            });
+
+            aiAssistViewInstance.registerToolUI({
+                toolName: 'chart-tool',
+                template: '<div class="chartContainer"></div>',
+                handler: function (container, args) {
+                    var chartConfig = {
+                        dataSource: args.dataSource || args.data || [],
+                        xField: args.xField || args.xName,
+                        yField: args.yField || args.yName,
+                        chartType: args.chartType || args.type || 'Line'
+                    };
+                    if (chartConfig.chartType === 'Pie' || chartConfig.chartType === 'Doughnut') {
+                        chartConfig.chartType = 'Line';
+                    }
+                    new ej.charts.Chart({
+                        title: args.title || '',
+                        primaryXAxis: { valueType: 'Category', title: args.xAxisTitle || chartConfig.xField, labelIntersectAction: 'Rotate45' },
+                        primaryYAxis: { title: args.yAxisTitle || chartConfig.yField },
+                        tooltip: { enable: args.enableTooltip !== false },
+                        legendSettings: { visible: args.enableLegend !== false },
+                        series: [{
+                            type: chartConfig.chartType,
+                            dataSource: chartConfig.dataSource,
+                            xName: chartConfig.xField,
+                            yName: chartConfig.yField,
+                            marker: { visible: true }
+                        }]
+                    }).appendTo(container.querySelector('.chartContainer'));
+                }
+            });
+
+            aiAssistViewInstance.registerToolUI({
+                toolName: 'grid-tool',
+                template: '<div class="gridContainer"></div>',
+                handler: function (container, args) {
+                    var data = args.data || [];
+                    var columns = args.columns || (data.length ? Object.keys(data[0]).map(function (field) {
+                        return {
+                            field: field,
+                            headerText: field,
+                            width: 150
+                        };
+                    }) : []);
+                    
+                    new ej.grids.Grid({
+                        dataSource: data,
+                        columns: columns,
+                        allowPaging: false,
+                        pageSettings: { pageSize: 8 },
+                        width: 'fit-content'
+                    }).appendTo(container.querySelector('.gridContainer'));
+                }
+            });
+            aiAssistViewInstance.prompts = [{
+                prompt: "What are France's GDP growth trends?",
+                blocks: blockData.chartBlockData
+            }];
+        }
+    </script>
+
+    <script id="bannerContent" type="text/x-jsrender">
+        <div class="banner-content">
+            <div class="e-icons e-assistview-icon"></div>
+            <h3>AI Assistance Generative UI</h3>
+            <i>Render interactive tools such as weather cards, charts, data grids etc directly inside AI responses.</i>
+        </div>
+    </script>
+}
+
+<style>
+    .generative-aiassistview {
+        height: 600px;
+        width: 60vw;
+        margin: 0 auto;
+    }
+
+    .generative-aiassistview .banner-content .e-assistview-icon:before {
+        font-size: 35px;
+    }
+
+    .generative-aiassistview .banner-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 330px;
+        text-align: center;
+    }
+
+    @@media only screen and (max-width: 750px) {
+        .generative-aiassistview {
+            width: 100%;
+        }
+    }
+
+    .generative-aiassistview .chartContainer {
+        width: max-content;
+    }
+
+    .generative-aiassistview .chartContainer svg text {
+       fill: rgba(0, 0, 0, 1);
+    }
+
+    body[class*="highcontrast"] .generative-aiassistview .chartContainer svg text,
+    body[class*="dark"] .generative-aiassistview .chartContainer svg text {
+        fill: white;
+    }
+
+    /* Weather Card Layout Customization */
+
+    .generative-aiassistview #weather_card.e-card {
+        background-image: url('https://ej2.syncfusion.com/javascript/demos/src/card/images/weather.png');
+        width: 420px;
+    }
+
+    .generative-aiassistview .material3-dark .e-card .e-card-header,
+    .generative-aiassistview .material-dark .e-card .e-card-header {
+        padding: 10px;
+    }
+
+    .generative-aiassistview #weather_card.e-card .e-card-header-caption .e-card-header-title,
+    .generative-aiassistview #weather_card.e-card .e-card-header-caption .e-card-sub-title {
+        color: white;
+    }
+
+    .generative-aiassistview .highcontrast #weather_card.e-card .e-card-header.weather_report .e-card-header-image {
+        border: none;
+    }
+
+    .generative-aiassistview #weather_card.e-card .weather_report .e-card-header-caption {
+        text-align: right;
+    }
+
+    .generative-aiassistview #weather_card.e-card .e-card-header.weather_report .e-card-header-image {
+        background-image: url('https://ej2.syncfusion.com/javascript/demos/src/card/images/rainy.svg');
+    }
+
+    .generative-aiassistview .col-xs-6.col-sm-6.col-lg-6.col-md-6 {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .generative-aiassistview .card-layout {
+        margin: auto;
+        max-width: 400px;
+    }
+</style>
+
+@section Meta {
+    <meta name="description" content="This sample demonstrates how to render interactive generative UI tools directly within AI responses using user prompts in the AI AssistView control." />
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>This sample demonstrates how to render interactive generative UI tools directly within AI responses using user prompts in the AI AssistView control. By configuring an appropriate <code>system prompt</code>, the AI can generate well-structured prompts that automatically invoke the registered tools, enabling seamless integration of dynamic and interactive UI elements within responses.</p>
+    </div>
+}
+
+@section Description {
+    <div id="description">
+        <p>In this example, the AI AssistView is configured with the UI tools:</p>
+        <ul>
+            <li>The <code>addPromptResponse</code> method adds AI responses to the AIAssistView by accepting a blocks array that defines content structure. Tools are registered using <code>registerToolUI()</code>, which defines a template and handler function for rendering.</li>
+            <li>Tool registration - Three registered tools deliver rich content: <code>weather-card</code> for forecast displays, <code>chart-tool</code> for GDP growth visualization, and <code>sales-grid</code> for regional performance data.</li>
+            <li><a target="_blank" href="https://ej2.syncfusion.com/javascript/documentation/api/ai-assistview#bannertemplate">bannerTemplate</a> - Customizes the initial banner content with icon and heading.</li>
+            <li><a target="_blank" href="https://ej2.syncfusion.com/javascript/documentation/api/ai-assistview#promptsuggestions">promptSuggestions</a> - Provides predefined prompts for weather forecasts, sales analysis, and economic trend data.</li>
+            <li><a target="_blank" href="https://ej2.syncfusion.com/javascript/documentation/api/ai-assistview#promptrequest">promptRequest</a> - Handles prompt execution and dynamically renders custom tools.</li>
+            <li><a target="_blank" href="https://ej2.syncfusion.com/javascript/documentation/api/ai-assistview#enablestreaming">enableStreaming</a> - Enables real-time response streaming with simulated delay.</li>
+        </ul>
+    </div>
+}

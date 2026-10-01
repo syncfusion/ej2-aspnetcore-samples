@@ -1,0 +1,153 @@
+﻿@page
+@model EJ2CoreSampleBrowser.Pages.Gantt.SelectionModel
+@using EJ2CoreSampleBrowser.Models;
+@using Syncfusion.EJ2.Gantt;
+
+@section ControlsSection
+{
+    <div class="control-section">
+
+        <div style="display:flex;">
+            <span style="padding-right:20px; font-size:15px; margin-top:5px;">
+                <b>Hierarchy Checkbox Selection Mode</b>
+            </span>
+
+            <div style="width:130px; padding-bottom:10px;">
+                <ejs-dropdownlist id="SelectionModeList"
+                                  dataSource="@CheckboxSelectionModel.DropDownListData1.SelectionModeList()"
+                                  width="125px"
+                                  change="onModeChange"
+                                  value="@("hierarchy")">
+                    <e-dropdownlist-fields text="Type"
+                                           value="Id">
+                    </e-dropdownlist-fields>
+                </ejs-dropdownlist>
+            </div>
+        </div>
+
+        <ejs-gantt id="Selection"
+                   dataSource="@GanttData.hierarchyCheckboxData()"
+                   height="650px"
+                   hierarchyCheckboxMode="Hierarchy"
+                   rowHeight="46"
+                   enableHover="true"
+                   taskbarHeight="25"
+                   highlightWeekends="true"
+                   allowSelection="true"
+                   allowFiltering="true"
+                   treeColumnIndex="2"
+                   allowResizing="true"
+                   projectStartDate="03/26/2025"
+                   projectEndDate="07/20/2025"
+                   toolbar="@(new List<string>() { "Search" })">
+
+            <e-gantt-taskfields id="TaskId"
+                                name="TaskName"
+                                startDate="StartDate"
+                                endDate="EndDate"
+                                duration="Duration"
+                                progress="Progress"
+                                dependency="Predecessor"
+                                parentID="ParentID">
+            </e-gantt-taskfields>
+
+            <e-gantt-columns>
+                <e-gantt-column field="CheckBox"
+                                headerText=""
+                                showCheckbox="true"
+                                width="70"
+                                allowFiltering="false">
+                </e-gantt-column>
+
+                <e-gantt-column field="TaskId"
+                                visible="false">
+                </e-gantt-column>
+
+                <e-gantt-column field="TaskName"
+                                width="250">
+                </e-gantt-column>
+
+                <e-gantt-column field="StartDate"></e-gantt-column>
+
+                <e-gantt-column field="EndDate"></e-gantt-column>
+
+                <e-gantt-column field="Duration"></e-gantt-column>
+
+                <e-gantt-column field="Progress"></e-gantt-column>
+
+                <e-gantt-column field="Predecessor"></e-gantt-column>
+            </e-gantt-columns>
+
+            <e-gantt-labelSettings leftLabel="TaskName"></e-gantt-labelSettings>
+
+            <e-gantt-splittersettings columnIndex="2"></e-gantt-splittersettings>
+
+            <e-gantt-selectionsettings mode="Row"
+                                       type="Multiple"
+                                       enableToggle="false">
+            </e-gantt-selectionsettings>
+
+        </ejs-gantt>
+
+    </div>
+
+    <script>
+        function onModeChange(e) {
+            var gantt = document.getElementById("Selection").ej2_instances[0];
+            var mode = e.value;
+
+            gantt.hierarchyCheckboxMode = mode;
+            gantt.refresh();
+        }
+    </script>
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>
+            This sample demonstrates hierarchy-based checkbox selection in the Gantt Chart. It allows configuring how checkbox selection is propagated across parent and child task records using different hierarchy modes.
+        </p>
+    </div>
+}
+
+@section Description {
+    <div id="description">
+        <p>
+            The hierarchy checkbox selection feature simplifies parent-child selection management by automatically handling descendant propagation and ancestor state calculations. It supports parent selection, child selection, and indeterminate checkbox states without requiring custom implementation. The hierarchy selection behavior can be configured using the
+            <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.gantt.gantt.html#Syncfusion_EJ2_Gantt_Gantt_HierarchyCheckboxMode">hierarchyCheckboxMode</a>
+            property.
+        </p>
+
+        <p>
+            The following hierarchy checkbox modes are supported:
+        </p>
+        <ul>
+            <li>
+                <code>self</code> - Selecting or deselecting a checkbox affects only the current row. Parent and child records remain unchanged.
+            </li>
+            <li>
+                <code>hierarchy</code> - Selecting a parent record automatically selects all descendant records. Child selection updates the corresponding parent state and displays indeterminate states when applicable.
+            </li>
+            <li>
+                <code>filteredHierarchy</code> - Works similar to <code>hierarchy</code>, but checkbox propagation is applied only to the currently visible records after filtering or searching.
+            </li>
+        </ul>
+
+        <p>
+            More information on the Essential<sup>®</sup> ASP.NET Core Gantt Chart can be found in this <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/gantt/selection/selection">selection</a> documentation section.
+        </p>
+        <br/>
+        <p>Looking for the full ASP.NET Core Gantt Chart component overview, features, pricing, and documentation? Visit the <a target="_blank" href="https://www.syncfusion.com/gantt-sdk/aspnet-core-gantt-chart">ASP.NET Core Gantt Chart</a> page.</p>
+    </div>
+}
+
+@section Meta {
+    <meta name="description"
+        content="This example demonstrates the Checkbox Selection in ASP.NET Core Gantt control. Explore here for more details." />
+}
+@section Title {
+    <title>ASP.NET Core Gantt Checkbox Selection Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Checkbox Selection in ASP.NET Core Gantt Control</h1>
+}

@@ -1,0 +1,122 @@
+﻿@page
+@using EJ2CoreSampleBrowser.Models;
+@using Syncfusion.EJ2.Gantt;
+
+@section ControlsSection {
+    <div class="control-section">
+        <div class="row">
+            <div class="col-md-12">
+                <ejs-gantt id='Editing' dataSource="@GanttData.DefaultEditingData()" gridLines="Both" treeColumnIndex="1"
+                    created="created" actionBegin="actionBegin" height="650px" rowHeight="46" taskbarHeight="25"
+                    allowSelection="true" highlightWeekends="true" resources="@GanttData.EditingResources()"
+                    projectStartDate="03/26/2025" projectEndDate="11/15/2025" enableHover="true"
+                    toolbar="@(new List<string>() { "Add", "Edit", "Update", "Delete", "Cancel", "ExpandAll", "CollapseAll", "Indent", "Outdent" })">
+                    <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate" endDate="EndDate"
+                        duration="Duration" durationUnit="DurationUnit" progress="Progress" dependency="Predecessor" parentID="ParentID" notes="Notes"
+                        resourceInfo="ResourceId">
+                    </e-gantt-taskfields>
+                    <e-gantt-resourcefields id="ResourceId" name="ResourceName"></e-gantt-resourcefields>
+                    <e-gantt-splittersettings columnIndex="3"></e-gantt-splittersettings>
+                    <e-gantt-columns>
+                        <e-gantt-column field="TaskId" width="80"></e-gantt-column>
+                        <e-gantt-column field="TaskName" headerText="Job Name" width="250"
+                            clipMode="EllipsisWithTooltip"></e-gantt-column>
+                        <e-gantt-column field="Duration"></e-gantt-column>
+                        <e-gantt-column field="StartDate"></e-gantt-column>
+                        <e-gantt-column field="EndDate"></e-gantt-column>
+                        <e-gantt-column field="Progress"></e-gantt-column>
+                        <e-gantt-column field="Predecessor"></e-gantt-column>
+                    </e-gantt-columns>
+                    <e-gantt-editsettings allowAdding="true" allowEditing="true" allowDeleting="true"
+                        allowTaskbarEditing="true" showDeleteConfirmDialog="true"></e-gantt-editsettings>
+                    <e-gantt-timelinesettings>
+                        <e-timelinesettings-toptier unit="Week" format="MMM dd, y"></e-timelinesettings-toptier>
+                        <e-timelinesettings-bottomtier unit="Day"></e-timelinesettings-bottomtier>
+                    </e-gantt-timelinesettings>
+                    <e-gantt-labelSettings leftLabel="TaskName" rightLabel="ResourceId"></e-gantt-labelSettings>
+                    <e-gantt-eventmarkers>
+                        <e-gantt-eventmarker day="4/17/2024" label="Project approval and kick-off"></e-gantt-eventmarker>
+                        <e-gantt-eventmarker day="5/3/2024" label="Foundation inspection"></e-gantt-eventmarker>
+                        <e-gantt-eventmarker day="6/7/2024" label="Site manager inspection"></e-gantt-eventmarker>
+                        <e-gantt-eventmarker day="7/16/2024" label="Property handover and sign-off"></e-gantt-eventmarker>
+                    </e-gantt-eventmarkers>
+                    <e-gantt-editdialogfields>
+                        <e-gantt-editdialogfield type="General"></e-gantt-editdialogfield>
+                        <e-gantt-editdialogfield type="Dependency"></e-gantt-editdialogfield>
+                        <e-gantt-editdialogfield type="Resources"></e-gantt-editdialogfield>
+                        <e-gantt-editdialogfield type="Notes"></e-gantt-editdialogfield>
+                    </e-gantt-editdialogfields>
+                </ejs-gantt>
+            </div>
+        </div>
+    </div>
+    <script>
+        var startDate
+        function created(args) {
+            var gantt = document.getElementsByClassName('e-gantt')[0].ej2_instances[0];
+            gantt.treeGrid.grid.columns[1].validationRules = { required: true, minLength: [5, 'Task name should have a minimum length of 5 characters'] };
+            gantt.treeGrid.grid.columns[3].validationRules = { required: [customFn, 'Please enter a value greater than the start date.'] };
+            gantt.treeGrid.grid.columns[4].validationRules = { required: true };
+            gantt.treeGrid.grid.columns[5].validationRules = { required: true, min: 0, max: 100 };
+            gantt.enableHover = true;
+        }
+        function actionBegin(args) {
+            if (args.columnName === "EndDate" || args.requestType === "beforeOpenAddDialog" || args.requestType === "beforeOpenEditDialog") {
+                startDate = args.rowData.ganttProperties.startDate;
+            }
+            if (args.requestType === "taskbarediting" && args.taskBarEditAction === "ChildDrag") {
+                startDate = args.data.ganttProperties.startDate;
+            }
+        }
+        function customFn(args) {
+            var endDate;
+            var gantt = (document.getElementsByClassName('e-gantt')[0]).ej2_instances[0];
+            if (args.element && args.value) {
+                var dateOptions = { format: gantt.dateFormat, type: 'dateTime', skeleton: 'yMd' };
+                endDate = gantt.globalize.parseDate(args.value, dateOptions);
+                if (!startDate && gantt.editModule.dialogModule['beforeOpenArgs']) {
+                    startDate = gantt.editModule.dialogModule['beforeOpenArgs'].rowData['ganttProperties'].startDate;
+                    endDate = gantt.editModule.dialogModule['beforeOpenArgs'].rowData['ganttProperties'].endDate;
+                }
+                startDate.setHours(0, 0, 0, 0);
+                endDate.setHours(0, 0, 0, 0);
+            }
+            return startDate <= endDate;
+        }
+
+    </script>
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>This sample demonstrates task editing and CRUD operations in the Gantt Chart using a residential construction project workflow. You can add, edit, delete, indent, outdent, and update tasks using the toolbar or direct user interactions.</p>
+    </div>
+}
+@section Description {
+    <div id="description">
+        <p>The Gantt Chart supports built-in CRUD operations through the <code><a target="_blank" rel="noopener noreferrer" href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.gantt.gantt.html#Syncfusion_EJ2_Gantt_Gantt_EditSettings">editSettings</a></code> property. In this example, adding, editing, deleting, and taskbar editing are enabled, allowing tasks to be modified directly from both the TreeGrid and chart areas.</p>
+          <ul>
+            <li><code>Add</code> - Creates a new task</li>
+            <li><code>Edit </code> - Modifies the selected task.</li>
+            <li><code>Indent</code> - Makes the selected task a child task.</li>
+            <li><code>Outdent</code> - Promotes the selected task to a higher level.</li>
+            <li><code>Delete</code> - Removes the selected task.</li>
+            <li><code>Update</code> / <code>Cancel</code> - Saves or discards the current changes.</li>
+          </ul>
+        <p>Tasks can be edited by double-clicking a row, using the toolbar commands, or opening the edit dialog. Taskbars can also be modified through drag-and-drop interactions, including updating task dates, durations, progress, and dependency relationships. This sample demonstrates resource assignment, dependency editing, notes editing, and support for custom duration units through the <code>taskFields.durationUnit</code> mapping such as <code>week</code>, <code>month</code>, <code>days</code>, <code>hours</code> and <code>minutes</code>.</p>
+        <p>More information on the Essential<sup>®</sup> Gantt Chart can be found in this <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/gantt/managing-tasks/editing-tasks">editing tasks</a> documentation section.</p>
+        <br/>
+        <p>Looking for the full ASP.NET Core Gantt Chart component overview, features, pricing, and documentation? Visit the <a target="_blank" href="https://www.syncfusion.com/gantt-sdk/aspnet-core-gantt-chart">ASP.NET Core Gantt Chart</a> page.</p>
+    </div>
+}
+
+@section Meta {
+    <meta name="description"
+        content="This example demonstrates the Editing in ASP.NET Core Gantt control. Explore here for more details." />
+}
+@section Title {
+    <title>ASP.NET Core Gantt Editing Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Editing in ASP.NET Core Gantt Control</h1>
+}

@@ -1,0 +1,270 @@
+﻿@page
+@model EJ2CoreSampleBrowser_NET10.Pages.FormRenderer.CustomComponentModel
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+<div class="control-section">
+    <div class="col-lg-12 control-section sb-property-border">
+        <div id="form-control control-wrapper">
+            <ejs-form-renderer id="form-renderer-control" schema="@Model.ContactSchema" created="onFormRendererCreated">
+                <e-form-renderer-custom-widget-settings>
+                    <e-form-renderer-custom-widget-setting templateId="textboxTemplate"
+                                                           template="#customWidgetTemplate">
+                    </e-form-renderer-custom-widget-setting>
+                    <e-form-renderer-custom-widget-setting templateId="emailTemplate"
+                                                           template="#emailTemplate">
+                    </e-form-renderer-custom-widget-setting>
+                    <e-form-renderer-custom-widget-setting type="dropdown"
+                                                           template="#dropdownTemplate">
+                    </e-form-renderer-custom-widget-setting>
+                    <e-form-renderer-custom-widget-setting type="textarea"
+                                                           template="#textareaTemplate">
+                    </e-form-renderer-custom-widget-setting>
+                    <e-form-renderer-custom-widget-setting type="checkbox"
+                                                           template="#checkboxTemplate">
+                    </e-form-renderer-custom-widget-setting>
+                    <e-form-renderer-custom-widget-setting type="button"
+                                                           template="#buttonTemplate">
+                    </e-form-renderer-custom-widget-setting>
+                </e-form-renderer-custom-widget-settings>
+            </ejs-form-renderer>
+        </div>
+    </div>
+</div>
+}
+
+@section PreScripts {
+
+<!-- Textbox -->
+<script id="customWidgetTemplate" type="text/x-template">
+    <input class="e-input"
+           id="form-renderer-control-${fieldData.id}"
+           name="${fieldData.name}"
+           type="text"
+           placeholder="${fieldData.placeholder}"
+           data-field-id="${fieldData.id}" />
+</script>
+
+<!-- Email -->
+<script id="emailTemplate" type="text/x-template">
+    <input class="e-input"
+           id="form-renderer-control-${fieldData.id}"
+           name="${fieldData.name}"
+           type="${fieldData.textboxType}"
+           placeholder="${fieldData.placeholder}"
+           data-field-id="${fieldData.id}" />
+</script>
+
+<!-- Dropdown -->
+<script id="dropdownTemplate" type="text/x-template">
+    <select class="fr-dropdown"
+            id="form-renderer-control-${fieldData.id}"
+            name="${fieldData.name}"
+            data-field-id="${fieldData.id}"
+            ${window.buildSelectOptions(fieldData)}
+>
+    </select>
+</script>
+
+<!-- Textarea -->
+<script id="textareaTemplate" type="text/x-template">
+    <textarea class="e-input"
+              id="form-renderer-control-${fieldData.id}"
+              name="${fieldData.name}"
+              placeholder="${fieldData.placeholder}"
+              data-field-id="${fieldData.id}"></textarea>
+</script>
+
+<!-- Checkbox -->
+<script id="checkboxTemplate" type="text/x-template">
+    <label style="font-size:14px;font-weight:500;">
+        <input type="checkbox"
+               id="form-renderer-control-${fieldData.id}"
+               name="${fieldData.name}"
+               style="margin-right:10px;height:15px;width:15px;"
+               data-field-id="${fieldData.id}" />
+        ${fieldData.label}
+    </label>
+</script>
+
+<!-- Button -->
+<script id="buttonTemplate" type="text/x-template">
+    <button class="e-btn e-primary"
+            id="form-renderer-control-${fieldData.id}"
+            name="${fieldData.name}"
+            type="${fieldData.buttonType}">
+        ${fieldData.label}
+    </button>
+</script>
+
+<!-- Helpers -->
+<script>
+    window.buildSelectOptions = function(fieldData) {
+        return fieldData.options
+            .map(function(opt) {
+                return '<option value="' + opt.value + '">' + opt.text + '</option>';
+            })
+            .join('');
+    };
+</script>
+
+<!-- Event listeners (same as MVC) -->
+<script>
+function onFormRendererCreated() {
+    var formRendererInstance = ej.base.getComponent(
+        document.getElementById('form-renderer-control'),
+        'form-renderer'
+    );
+
+    if (!formRendererInstance) {
+        console.error('FormRenderer instance not found!');
+        return;
+    }
+
+    document.querySelectorAll('#form-renderer-control [data-field-id]').forEach(function (parentEl) {
+        var fieldId = parentEl.getAttribute('data-field-id');
+        var selectEl = parentEl.querySelector('select');
+        var inputEl = parentEl.querySelector('input, select, textarea');
+
+        // Populate dropdown options if marked
+        if (selectEl && selectEl.hasAttribute('data-options-marker')) {
+            var fieldData = getFieldData(fieldId);
+            if (fieldData && fieldData.options) {
+                fieldData.options.forEach(function (opt) {
+                    var o = document.createElement('option');
+                    o.value = opt.value;
+                    o.text = opt.text;
+                    selectEl.appendChild(o);
+                });
+            }
+            selectEl.removeAttribute('data-options-marker');
+        }
+
+        // Attach event listeners
+        if (!inputEl) return;
+
+        inputEl.addEventListener('change', function (e) {
+            var value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+            formRendererInstance.setFieldValue(fieldId, value);
+        });
+
+        inputEl.addEventListener('input', function (e) {
+            var value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+            formRendererInstance.setFieldValue(fieldId, value);
+        });
+
+        inputEl.addEventListener('blur', function (e) {
+            if (e.target.type === 'checkbox') return;
+            formRendererInstance.setFieldValue(fieldId, e.target.value);
+        });
+    });
+}
+
+function getFieldData(fieldId) {
+    var formRendererInstance = ej.base.getComponent(
+        document.getElementById('form-renderer-control'),
+        'form-renderer'
+    );
+    return null;
+}
+</script>
+}
+
+<style>
+    .fr-dropdown {
+        width: 100%;
+        height: 32px;
+        border-radius: 5px;
+        background-color: inherit;
+        color: inherit;
+    }
+
+    .bootstrap5\.3 .fr-dropdown,
+    .bootstrap5\.3-dark .fr-dropdown,
+    .fluent2 .fr-dropdown,
+    .fluent2-dark .fr-dropdown,
+    .fluent2-highcontrast .fr-dropdown,
+    .tailwind3 .fr-dropdown,
+    .tailwind3-dark .fr-dropdown {
+        border-color: var(--color-sf-border);
+    }
+
+    .material3 .fr-dropdown,
+    .material3-dark .fr-dropdown {
+        border-color: rgba(var(--color-sf-outline));
+    }
+
+    .bootstrap5\.3 .fr-dropdown option,
+    .bootstrap5\.3-dark .fr-dropdown option,
+    .fluent2 .fr-dropdown option,
+    .fluent2-dark .fr-dropdown option,
+    .fluent2-highcontrast .fr-dropdown option {
+        background-color: var(--color-sf-flyout-bg-color);
+        color: var(--color-sf-content-text-color);
+    }
+
+    .material3 .fr-dropdown option {
+        background-color: linear-gradient(0deg, rgba(var(--color-sf-surface), 1), rgba(var(--color-sf-surface), 1)), rgba(var(--color-sf-surface));
+        color: rgba(var(--color-sf-on-surface));
+    }
+
+    .material3-dark .fr-dropdown option {
+        background-color: #000;
+        color: #fff;
+    }
+
+    .tailwind3 .fr-dropdown option,
+    .tailwind3-dark .fr-dropdown option {
+        background-color: var(--color-sf-flyout-bg-color);
+        color: var(--color-sf-flyout-text-color);
+    }
+
+    .fluent2 #form-renderer-control-message,
+    .fluent2-dark #form-renderer-control-message,
+    .fluent2-highcontrast #form-renderer-control-message {
+        height: auto;
+    }
+
+    #form-renderer-control .form-group {
+        margin-bottom: 0px;
+    }
+</style>
+
+@section Meta{
+<meta name="description" content="This example demonstrates the Syncfusion ASP.NET Core Form Renderer component that renders schema driven form. Explore here for more details." />
+}
+@section ActionDescription{
+<div id="action-description">
+    <p>
+        This sample demonstrates how to render custom components for individual form field components
+        in the Form Renderer control. Templates allow you to replace the built-in form components with
+        custom or third-party UI components, enabling greater flexibility and customization.
+    </p>
+</div>
+}
+@section Description{
+<div id="description">
+    <p>
+        In this sample, a "Contact Us" form is rendered using the Form Renderer control. The text box,
+        text area, drop-down list, checkbox, and button fields are customized using HTML templates.
+    </p>
+    <p>
+        Users can interactively fill out the form, benefit from built-in validation, and submit their
+        responses for data collection.
+    </p>
+    <p>
+        Design custom forms visually and export their schema in seconds with our interactive
+        <a href="https://ej2.syncfusion.com/aspnetcore/formbuilder/default#/fluent2">Form Builder</a> — a powerful
+        no-code tool for building responsive forms through an intuitive drag-and-drop interface.
+    </p>
+</div>
+}
+@section Title{
+<title>ASP.NET Core Form Renderer Custom Components Example - Syncfusion Demos </title>
+}
+@section Header{
+<h1 class='sb-sample-text'>Example of Custom Components in ASP.NET Core Form Renderer Control</h1>
+}
+@section CustomCanonicalURL{
+    <link rel="canonical" href="https://www.syncfusion.com/aspnet-core-ui-controls/form-renderer" />
+}

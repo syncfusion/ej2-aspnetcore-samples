@@ -1,0 +1,116 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Sankey.OrientationModel
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+    <div class="control-section" align="center">
+        <!-- Vertical Sankey: U.S. GHG Emissions (2022) -->
+        <ejs-sankey id="sankey-orientation"
+                    width="90%"
+                    height="650"
+                    background="transparent"
+                    orientation="Vertical"
+                    title="U.S. Greenhouse Gas Emissions by Economic Sector (2022)"
+                    subTitle="Source: EPA 2022 GHG Inventory"
+                    load="onSankeyLoad"
+                    >
+            <!-- Layout/spacing -->
+            <e-sankey-margin left="20" right="20" top="20" bottom="20"></e-sankey-margin>
+
+            <!-- Nodes -->
+            <e-sankey-nodes>
+                @foreach (var node in Model.Nodes)
+                {
+                    <e-sankey-node id="@node.Id" color="@node.Color"></e-sankey-node>
+                }
+            </e-sankey-nodes>
+
+            <!-- Links -->
+            <e-sankey-links>
+                @foreach (var link in Model.Links)
+                {
+                    <e-sankey-link sourceId="@link.SourceId" targetId="@link.TargetId" value="@link.Value"></e-sankey-link>
+                }
+            </e-sankey-links>
+
+            <!-- Node & Link styling -->
+            <e-sankey-nodesettings width="30" padding="8"></e-sankey-nodesettings>
+            <e-sankey-linksettings opacity="0.5" curvature="0.55" colorType="Source"></e-sankey-linksettings>
+
+            <!-- Labels -->
+            <e-sankey-labelsettings visible="true"></e-sankey-labelsettings>
+
+            <!-- Tooltip & Legend -->
+            <e-sankey-tooltipsettings enable="true"
+                                      nodeFormat="${name}: ${value} MMT CO₂e"
+                                      linkFormat="${start.name}: ${start.out} MMT CO₂e → ${target.name}: ${target.in} MMT CO₂e">
+            </e-sankey-tooltipsettings>
+            <e-sankey-legendsettings visible="false" position="Right"></e-sankey-legendsettings>
+        </ejs-sankey>
+    </div>
+}
+
+
+  <script>
+    function onSankeyLoad(args) {
+      var isMobile = ej.base.Browser.isDevice;
+
+      var t = location.hash.split('/')[1] || 'Tailwind3';
+      args.chart.theme = (t.charAt(0).toUpperCase() + t.slice(1))
+        .replace(/-dark/i, 'Dark').replace(/light/i, 'Light')
+        .replace(/contrast/i, 'Contrast').replace(/-highContrast/i, 'HighContrast');
+
+      if (args.chart.element.id === 'sankey-orientation') {
+        if (isMobile) {
+          args.chart.height = '650px';
+          args.chart.labelSettings.visible = false;  // hide labels on small screens
+          args.chart.legendSettings.visible = false; // hide legend on small screens
+          args.chart.title = 'U.S. Greenhouse Gas Emissions';
+          args.chart.tooltip.linkFormat = isMobile ? '${start.name}: ${start.out} MMT CO₂e → <br/> ${target.name}: ${target.in} MMT CO₂e' : '${start.name}: ${start.out} MMT CO₂e → ${target.name}: ${target.in} MMT CO₂e';
+        } else {
+          // Desktop defaults per sample
+          args.chart.title = 'U.S. Greenhouse Gas Emissions by Economic Sector (2022)';
+          args.chart.labelSettings.visible = true;
+          args.chart.legendSettings.visible = true;
+          args.chart.legendSettings.position = 'Right';
+          args.chart.legendSettings.margin = { left: 100 };
+        }
+      }
+    }
+  </script>
+
+
+<style>
+  #control-container { padding: 0 !important; }
+</style>
+
+@section Meta{
+    <meta name="description" content="ASP.NET Core vertical Sankey diagram of U.S. greenhouse gas emissions by sector (2022), showing direct and indirect electricity pathways to total atmospheric emissions.">
+}
+
+@section ActionDescription{
+        <p>
+            Explore U.S. greenhouse gas emissions by economic sector (2022) in a vertical Sankey chart measured in MMT CO₂e (million metric tons of CO₂ equivalent). Trace top‑to‑bottom flows from sectors—Transportation, Industry, Commercial, Residential, and Agriculture—through direct and indirect electricity use to total atmospheric emissions.
+        </p>
+}
+@section Description{
+        <p>
+            This vertical Sankey chart visualizes U.S. GHG emissions in MMT CO₂e, showing how sector sources split into road, aviation, direct emissions, and indirect electricity use before reaching total atmospheric emissions.
+            Hover or tap nodes and links to see precise MMT CO₂e values and relationships.
+        </p>
+
+        <p><strong>Key features:</strong></p>
+        <ul>
+            <li>Break down emissions by sector and pathway (direct vs. indirect electricity)</li>
+            <li>Follow top‑to‑bottom flows to the atmosphere for clear attribution</li>
+            <li>Interactive tooltips reveal exact MMT CO₂e values per node and link</li>
+        </ul>
+}
+
+@section Title{
+    <title>ASP.NET Core Vertical Sankey - U.S. GHG Emissions (2022)</title>
+}
+
+@section Header{
+    <h1 class='sb-sample-text'>Vertical Sankey: U.S. GHG Emissions (2022)</h1>
+}

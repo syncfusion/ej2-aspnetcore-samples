@@ -1,0 +1,142 @@
+@page
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+    <div class="col-lg-12 control-section">
+        <div class="content-wrapper ador-textbox">
+            <div class="row">
+                <ejs-textbox id="prpend" cssClass="e-prepend-textbox" placeholder="Enter your Name" floatLabelType="Auto" 
+                    prependTemplate="@Html.Raw("<span class='e-icons e-user'></span><span class='e-input-separator'></span>")">
+                </ejs-textbox>
+            </div>
+            <div class="row">
+                <ejs-textbox id="append" cssClass="e-eye-icon" placeholder="Password" floatLabelType="Auto" created="onAppendCreated" 
+                    appendTemplate="@Html.Raw("<span class='e-input-separator'></span><span id='text-icon' class='e-icons e-eye'></span>")">
+                </ejs-textbox>
+            </div>
+            <div class="row">
+                <ejs-textbox id="iconTextbox" cssClass="e-icon-textbox" placeholder="Enter the Mail Address" floatLabelType="Auto" created="onIconTemplateCreated"
+                    prependTemplate="@Html.Raw("<span class='e-icons e-people'></span><span class='e-input-separator'></span>")" 
+                    appendTemplate="@Html.Raw("<span>.com</span><span class='e-input-separator'></span><span id='delete-text' class='e-icons e-trash'></span>")">
+                </ejs-textbox>
+            </div>
+        </div>
+    </div>
+}
+
+@*custom code start*@
+<style>
+    .content-wrapper {
+        width: 35%;
+        margin: 5% auto;
+        min-width: 250px;
+    }
+    .ador-textbox .row {
+        margin: 7% 0;
+    }
+    .e-float-input span:not([class]):not(.e-float-text):not(.e-input-separator):not(.e-delete-text) {
+        line-height: 1; 
+        padding-right: 5px;
+    }
+    .material3 .e-eye-icon label.e-float-text,
+    .material3-dark .e-eye-icon label.e-float-text {
+        top: -3px !important;
+    }
+    .bootstrap5\.3 .ador-textbox .e-icon-textbox .e-prepend-template,
+    .bootstrap5\.3 .ador-textbox .e-prepend-textbox .e-prepend-template,
+    .bootstrap5\.3-dark .ador-textbox .e-icon-textbox .e-prepend-template,
+    .bootstrap5\.3-dark .ador-textbox .e-prepend-textbox .e-prepend-template,
+    .tailwind3 .ador-textbox .e-icon-textbox .e-prepend-template,
+    .tailwind3 .ador-textbox .e-prepend-textbox .e-prepend-template,
+    .tailwind3-dark .ador-textbox .e-icon-textbox .e-prepend-template,
+    .tailwind3-dark .ador-textbox .e-prepend-textbox .e-prepend-template  {
+        padding-right: 0 !important;
+    }
+    .tailwind3 .ador-textbox .e-icon-textbox.e-float-input:not(.e-error):not(.e-input-focus) input:not(:focus):valid~label.e-float-text.e-label-bottom,
+    .tailwind3 .ador-textbox .e-prepend-textbox.e-float-input:not(.e-error):not(.e-input-focus) input:not(:focus):valid~label.e-float-text.e-label-bottom,
+    .tailwind3-dark .ador-textbox .e-icon-textbox.e-float-input:not(.e-error):not(.e-input-focus) input:not(:focus):valid~label.e-float-text.e-label-bottom,
+    .tailwind3-dark .ador-textbox .e-prepend-textbox.e-float-input:not(.e-error):not(.e-input-focus) input:not(:focus):valid~label.e-float-text.e-label-bottom {
+        top: 50% !important;
+    }
+    .e-bigger.material3 .ador-textbox .e-float-input:not(.e-error):not(.e-input-focus) input:not(:focus):valid~label.e-float-text.e-label-bottom,
+    .e-bigger.material3-dark .ador-textbox .e-float-input:not(.e-error):not(.e-input-focus) input:not(:focus):valid~label.e-float-text.e-label-bottom {
+        top: -5px !important;
+    }
+    .e-bigger.fluent2 .ador-textbox .e-float-input:not(.e-error):not(.e-input-focus) input:not(:focus):valid~label.e-float-text.e-label-bottom,
+    .e-bigger.fluent2-dark .ador-textbox .e-float-input:not(.e-error):not(.e-input-focus) input:not(:focus):valid~label.e-float-text.e-label-bottom,
+    .e-bigger.fluent2-highcontrast .ador-textbox .e-float-input:not(.e-error):not(.e-input-focus) input:not(:focus):valid~label.e-float-text.e-label-bottom {
+        top: -8px !important;
+    }
+    .ador-textbox .e-eye-icon .e-icons.e-eye,
+    .ador-textbox .e-eye-icon .e-icons.e-eye-slash,
+    .ador-textbox .e-icon-textbox .e-icons.e-trash {
+        cursor: pointer;
+    }
+</style>
+@*custom code end*@
+
+@section PreScripts {
+    <script>
+        function onPrependCreated() {
+            var prefixLabel = new ej.dropdowns.DropDownList({width: '65px'});
+            prefixLabel.appendTo('#select');
+        }
+        function onAppendCreated() {
+            var textIcon = document.querySelector('#text-icon');
+            if (textIcon) {
+                textIcon.addEventListener('click', function() {
+                    var appendTextbox = document.getElementById("append").ej2_instances[0];
+                    if (appendTextbox.type === 'text') {
+                        appendTextbox.type = 'Password';
+                        textIcon.className = 'e-icons e-eye-slash';
+                    } else {
+                        appendTextbox.type = 'text';
+                        textIcon.className = 'e-icons e-eye';
+                    }
+                    appendTextbox.dataBind();
+                });
+            }
+        }
+        function onIconTemplateCreated() {
+            var deleteIcon = document.querySelector('#delete-text');
+            if (deleteIcon) {
+                deleteIcon.addEventListener('click', function() {
+                    var iconTextbox = document.getElementById("iconTextbox").ej2_instances[0];
+                    iconTextbox.value = '';
+                    iconTextbox.dataBind();
+                });
+            }
+        }
+    </script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This example demonstrates the adornment capabilities of the Syncfusion TextBox component. Adornments are custom elements that can be added by using the <code>prependTemplate</code> and <code>appendTemplate</code> properties of the textbox to provide additional functionality or visual cues. This feature allows for enhanced user interaction, such as a dropdown for prefixes or clickable icons to toggle password visibility or clear input. This feature allows for enhanced user interaction, such as a dropdown for prefixes or clickable icons to toggle password visibility or clear input.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+       <p>This sample demonstrates the adornment feature of the Syncfusion ASP.NET Core TextBox, showcasing how to integrate custom elements or icons at both the beginning and end of the input field</p>
+        <ul>
+            <li>The first textbox displays a prepended user icon representing the username.</li>
+            <li>The second textbox features an appended eye icon, allowing users to toggle password visibility.</li>
+            <li>The third textbox combines a prepended people icon with an appended ".com" text and a trash icon that clears the input when clicked.</li>
+        </ul>
+        <p>These examples highlight the flexibility and enhanced user experience provided by TextBox adornments.</p>
+    </div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Adornments TextBox in ASP.NET Core TextBox control. Explore here for more details."/>
+                }
+@section Title{
+                    <title>ASP.NET Core TextBox Adornments TextBox Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Adornments TextBox in ASP.NET Core TextBox Control</h1>
+                }

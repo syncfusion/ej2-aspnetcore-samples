@@ -1,0 +1,106 @@
+﻿@page
+@model EJ2CoreSampleBrowser.Pages.Grid.AdvancedFilterModel
+
+
+@section ControlsSection {
+    <div class="control-section">
+        <ejs-grid id="Grid" dataSource="@Model.datasource" allowSorting="true" allowAdvancedFiltering="true" enableVirtualization="true" toolbar="@(new List<string>() { "Edit", "Delete", "AdvancedFilter" })" height="400" rowHeight="45" load="load" actionBegin="actionBegin">
+            <e-grid-pagesettings pageSize="50"></e-grid-pagesettings>
+            <e-grid-editSettings allowEditing="true" allowDeleting="true" mode="Dialog"></e-grid-editSettings>
+            <e-grid-columns>
+                <e-grid-column field="TicketID" headerText="Ticket ID" textAlign="Right" width="120" isPrimaryKey="true"></e-grid-column>
+                <e-grid-column field="Title" headerText="Title" width="260" allowEditing="false"></e-grid-column>
+                <e-grid-column field="TypeofRequest" headerText="Type" width="150" allowEditing="false"></e-grid-column>
+                <e-grid-column field="Assignee" headerText="Assignee" width="150" editType="dropdownedit"></e-grid-column>
+                <e-grid-column field="Priority" headerText="Priority" width="130" editType="dropdownedit"></e-grid-column>
+                <e-grid-column field="Status" headerText="Status" width="130" editType="dropdownedit"></e-grid-column>
+                <e-grid-column field="CreatedDate" headerText="Created Date" width="140" textAlign="Right" format="yMd" allowEditing="false"></e-grid-column>
+                <e-grid-column field="DueDate" headerText="Due Date" width="140" textAlign="Right" format="yMd" editType="datepickeredit"></e-grid-column>
+            </e-grid-columns>
+        </ejs-grid>
+    </div>
+
+    <script>
+        var initialAdvancedFilterRule = {
+            condition: 'and',
+            rules: [{
+                field: 'Status',
+                label: 'Status',
+                type: 'string',
+                operator: 'notequal',
+                value: 'done'
+            }]
+        };
+        function load(args) {
+            var grid = document.getElementById('Grid').ej2_instances[0];
+            grid.advancedFilterSettings = {
+                queryBuilderSettings: {
+                    rule: initialAdvancedFilterRule
+                }
+            };
+            if (args) {
+				args.enableSeamlessScrolling = true;
+			}
+        };
+
+        function actionBegin(args) {
+            var grid = document.getElementById('Grid').ej2_instances[0];
+            if (!grid) {
+                return;
+            }
+
+            var hideColumns = function (visible) {
+                var fields = ['Title', 'TypeofRequest', 'CreatedDate'];
+                fields.forEach(function (field) {
+                    var column = grid.getColumnByField(field);
+                    if (column) {
+                        column.visible = visible;
+                    }
+                });
+            };
+
+            if (args.requestType === 'beginEdit' || args.requestType === 'add') {
+                hideColumns(false);
+            }
+
+            if (args.requestType === 'save' || args.requestType === 'cancel') {
+                hideColumns(true);
+            }
+        }
+    </script>
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>
+            This sample demonstrates the Advanced Filter feature of the Data Grid, providing a Query Builder-based interface for creating complex filtering criteria. Users can filter records using multiple conditions and combine them with logical operators such as "AND" and "OR" to achieve precise results.
+        </p>
+    </div>
+}
+
+@section Meta {
+    <meta name="description" content="This example demonstrates the Advanced Filtering Feature in ASP.NET Core Data Grid control. Explore here for more details." />
+}
+
+@section Description {
+    <div id="description">
+        <p>
+            In this demo, the Advanced Filter dialog is opened from the toolbar by enabling the <code>allowAdvancedFiltering</code> property and adding <code>AdvancedFilter</code> to the toolbar items. The Query Builder interface allows users to filter records by defining conditions and rule groups, which are applied to the grid when the "Apply" action is performed.
+        </p>
+        <p>
+            More information on the filter configuration can be found in this <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/grid/filtering.html">documentation section</a>.
+        </p>
+        <p>
+            Looking for the full ASP.NET Core Data Grid component overview, features, pricing, and documentation? Visit our <a target="_blank" href="https://www.syncfusion.com/aspnet-core-ui-controls/grid" aria-label="documentation">ASP.NET Core Data Grid component</a> page.
+        </p>
+    </div>
+}
+
+@section Title {
+    <title>ASP.NET Core Data Grid Advanced Filtering Example - Syncfusion Demos </title>
+}
+
+@section Header {
+    <h1 class='sb-sample-text'>Example of Advanced Filtering in ASP.NET Core Data Grid Control</h1>
+}
+

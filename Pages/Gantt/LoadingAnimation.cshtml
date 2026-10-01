@@ -1,0 +1,104 @@
+﻿@page
+@using EJ2CoreSampleBrowser.Models;
+@using Syncfusion.EJ2.Gantt;
+@model EJ2CoreSampleBrowser.Pages.Gantt.LoadingAnimationModel
+
+@section ControlsSection {
+    <div class="col-lg-9 control-section">
+        <div class="control-wrapper">
+            <ejs-gantt id='Gantt' dataSource="@GanttData.VirtualData()" height="650px" rowHeight="46" taskbarHeight="25"
+                highlightWeekends="true" enableVirtualization="true" allowSelection="true" allowFiltering="true"
+                allowSorting="true" gridLines="Both" treeColumnIndex="1" projectEndDate="09/21/2025">
+                <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate" duration="Duration"
+                    progress="Progress" parentID="ParentID">
+                </e-gantt-taskfields>
+                <e-gantt-loadingIndicator indicatorType="Shimmer"></e-gantt-loadingIndicator>
+                <e-gantt-columns>
+                    <e-gantt-column field="TaskId"></e-gantt-column>
+                    <e-gantt-column field="TaskName" width="200px"></e-gantt-column>
+                    <e-gantt-column field="StartDate" width= "170"></e-gantt-column>
+                    <e-gantt-column field="Duration"></e-gantt-column>
+                    <e-gantt-column field="Progress"></e-gantt-column>
+                </e-gantt-columns>
+                <e-gantt-labelSettings taskLabel="Progress"></e-gantt-labelSettings>
+                <e-gantt-splittersettings columnIndex="2"></e-gantt-splittersettings>
+            </ejs-gantt>
+        </div>
+    </div>
+
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties" style="width: 100%; margin-left: -10px;">
+            <colgroup>
+                <col span="1" style="width: 40%;">
+                <col span="1" style="width: 60%;">
+            </colgroup>
+            <tbody>
+                <tr style="height: 50px">
+                    <td style="padding-top:0">
+                        <div>Indicator Type</div>
+                    </td>
+                    <td>
+                        <div style="margin-left: -10px; width: 120%">
+                            <ejs-dropdownlist id="dropdown" dataSource="@Model.TypeDropData" change="onChange" index="0"
+                                popupHeight="220px"></ejs-dropdownlist>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        function onChange() {
+            var gantt = document.getElementById("Gantt").ej2_instances[0];
+            var dropdown = document.getElementById("dropdown").ej2_instances[0]
+            if (dropdown.value === 'Shimmer') {
+                gantt.loadingIndicator.indicatorType = 'Shimmer';
+                gantt.enableVirtualMaskRow = true;
+                gantt.refresh();
+            } else {
+                gantt.loadingIndicator.indicatorType = 'Spinner';
+                gantt.enableVirtualMaskRow = false;
+                gantt.refresh();
+            }
+        }
+    </script>
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>This sample demonstrates the loading animation support in the Gantt Chart. Use the property panel to switch between the <code>Shimmer</code> and <code>Spinner</code> loading indicators displayed during data loading, refreshing, virtual scrolling, and other Gantt actions.</p>
+    </div>
+}
+
+@section Description {
+    <div id="description">
+        <p>
+          This example demonstrates the loading indicator functionality in the Gantt Chart. Loading indicators are displayed during initial rendering, data refreshing, virtual scrolling, and while performing operations such as sorting and filtering.
+        </p>
+        <p>
+          The Gantt Chart supports the following loading indicator types:
+        </p>
+        <ul>
+          <li><code>Shimmer</code> - Displays placeholder rows that mimic the layout of the content while data is loading.</li>
+          <li><code>Spinner</code> - Displays a loading spinner until the requested operation is completed</li>
+        </ul>
+        <p>Use the <code><a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Gantt.GanttLoadingIndicator.html#Syncfusion_EJ2_Gantt_GanttLoadingIndicator_IndicatorType">Indicator Type</a></code> option in the property panel to switch between <code>Shimmer</code> and <code>Spinner</code> loading indicators. This behavior can also be configured using the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Gantt.GanttLoadingIndicator.html#Syncfusion_EJ2_Gantt_GanttLoadingIndicator_IndicatorType">loadingIndicator.indicatorType</a> property.</p>
+        <p>
+          When <code><a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.gantt.gantt.html#Syncfusion_EJ2_Gantt_Gantt_EnableVirtualMaskRow">enableVirtualMaskRow</a></code> is enabled, shimmer placeholders are displayed during virtual scrolling to provide a smoother loading experience when working with large datasets
+        </p>
+        <p>More information on the Essential<sup>®</sup> Gantt Chart can be found in this <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/gantt/loading-animation">loading animation</a> documentation section.</p>
+        <br/>
+        <p>Looking for the full ASP.NET Core Gantt Chart component overview, features, pricing, and documentation? Visit the <a target="_blank" href="https://www.syncfusion.com/gantt-sdk/aspnet-core-gantt-chart">ASP.NET Core Gantt Chart</a> page.</p>
+    </div>
+}
+
+@section Meta {
+    <meta name="description"
+        content="This example demonstrates the Loading Animation in ASP.NET Core Gantt control. Explore here for more details." />
+}
+@section Title {
+    <title>ASP.NET Core Gantt Loading Animation Scrolling Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Loading Animation in ASP.NET Core Gantt Control</h1>
+}

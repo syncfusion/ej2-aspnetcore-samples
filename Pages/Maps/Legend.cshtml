@@ -1,0 +1,249 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Maps.Legend
+
+@using Syncfusion.EJ2.Maps;
+
+@{
+    var colormapping = new List<Syncfusion.EJ2.Maps.MapsColorMapping>
+    {
+        new MapsColorMapping
+        {
+            From = 0.00001, To = 100, Color = "rgb(153,174,214)", Label = "<100"
+        },
+        new MapsColorMapping
+        {
+            From = 100.0, To = 200, Color = "rgb(115,143,199)", Label = "100 - 200"
+        },
+        new MapsColorMapping
+        {
+            From = 200.0, To = 300, Color = "rgb(77,112,184)", Label = "200 - 300"
+        },
+        new MapsColorMapping
+        {
+            From = 300.0, To = 500, Color = "rgb(38,82,168)", Label = "300 - 500"
+        },
+        new MapsColorMapping
+        {
+            From = 500.0, To = 19000, Color = "rgb(0,51,153)", Label = ">500"
+        },
+        new MapsColorMapping
+        {
+            Color = null, Label = null
+
+        }
+    };
+    var titleStyle = new MapsFont
+    {
+        Size = "16px",
+        FontFamily = "Segoe UI"
+    };
+    var layerStyle = new MapsFont
+    {
+        FontFamily = "Segoe UI"
+    };
+    var propertyPath = new[] { "name" };
+    var worldmap = new Legend().GetWorldMap();
+    var population = new Legend().getPopulation();
+}
+
+@section ControlsSection{
+    
+    <div class="col-lg-8 control-section">
+        <div>
+            <ejs-maps id="maps" load="window.onMapLoad" tooltipRender="tooltipRender">
+                <e-maps-titleSettings alignment="@Syncfusion.EJ2.Maps.Alignment.Center" text="Population density (per square kilometer) - 2015" textStyle="titleStyle"></e-maps-titleSettings>
+                <e-maps-zoomsettings enable="false"></e-maps-zoomsettings>
+                <e-maps-legendsettings visible="true" position="@LegendPosition.Top"></e-maps-legendsettings>
+                <e-maps-layers>
+                    <e-maps-layer shapeData="@worldmap" shapeDataPath="name" shapePropertyPath="propertyPath" dataSource="@population">
+                        <e-layersettings-shapesettings colorValuePath="density" fill="#E5E5E5" colorMapping="colormapping"></e-layersettings-shapesettings>
+                        <e-layersettings-tooltipsettings visible="true" valuePath="name" format="${name} : ${density}" textStyle="layerStyle"></e-layersettings-tooltipsettings>
+                    </e-maps-layer>
+                </e-maps-layers>
+            </ejs-maps>
+        </div>
+        <div style="float: right; margin-right: 10px;">
+            Source:
+            <a href="https://simple.wikipedia.org/wiki/List_of_countries_by_population_density" target="_blank" aria-label="wikipedia">simple.wikipedia.org</a>
+        </div>
+    </div>
+    <div class="col-lg-4 property-section">
+        <table id="property" title="Properties" style="width: 100%">
+            <tbody>
+                <tr style="height: 50px">
+                    <td>
+                        <div style="padding: 0px;">Legend mode</div>
+                    </td>
+                    <td style="padding-left: 10px">
+                        <select name="selectIndex" autocomplete="off" id="legendMode">
+                            <option value="Default" selected>Default</option>
+                            <option value="Interactive">Interactive</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td>
+                        <div style="padding: 0px;">Legend position</div>
+                    </td>
+                    <td style="padding-left: 10px">
+                        <select name="legendPos" autocomplete="off" id="legendPosition">
+                            <option value="Top" selected>Top</option>
+                            <option value="Bottom">Bottom</option>
+                            <option value="Left">Left</option>
+                            <option value="Right">Right</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td>
+                        <div  style="padding-top: 7px;margin-left:-10px;">Show legend for remaining data source items</div>
+                    </td>
+                    <td style="padding-left: 10px">
+                        <div style="padding-top: 0px; margin-left: -20px">
+                            <input type="checkbox" id="opacity" style="margin-top: 10px;" />
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height: 50px">
+                    <td>
+                        <div class="property-text" style="padding-top: 7px;margin-left:-10px;">Show population density when the legend item is toggled</div>
+                    </td>
+                    <td style="padding-left: 10px">
+                        <div style="padding-top: 0px; margin-left: -20px">
+                            <input type="checkbox" id="togglelegend" />
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+}
+<style>
+    .e-view.fluent2 #property .e-checkbox-wrapper .e-icons, .e-view.fluent2-dark #property .e-checkbox-wrapper .e-icons, .e-view.fluent2-highcontrast #property .e-checkbox-wrapper .e-icons {
+        margin-left: 0px;
+    }
+</style>
+<script>
+
+    function tooltipRender(args) {
+        if (!args.options.data) {
+            args.cancel = true;
+        }
+    };
+    var maps;
+    @* custom code start *@
+    function onMapLoad(args) {
+        maps = args.maps;
+        var theme = themeName ? themeName : "Material";
+        args.maps.theme = (theme.charAt(0).toUpperCase() +
+                theme.slice(1)).replace(/-dark/i, 'Dark').replace(/contrast/i, 'Contrast').replace(/-high/i, 'High').replace(/5.3/i, '5');
+    }
+    @* custom code end *@
+    window.onload = function () {
+        var legendPosition = new ej.dropdowns.DropDownList({
+            index: 0,
+            placeholder: 'Legend Position',
+            width: '100%',
+            change: () => {
+                maps.legendSettings.position = legendPosition.value;
+                if (legendPosition.value === 'Left' || legendPosition.value === 'Right') {
+                    maps.legendSettings.orientation = 'Vertical';
+                    if (maps.legendSettings.mode === 'Interactive') {
+                        maps.legendSettings.height = '70%';
+                        maps.legendSettings.width = '10';
+                    } else {
+                        maps.legendSettings.height = '';
+                        maps.legendSettings.width = '';
+                    }
+                } else {
+                    maps.legendSettings.orientation = 'Horizontal';
+                    if (maps.legendSettings.mode === 'Interactive') {
+                        maps.legendSettings.height = '10';
+                        maps.legendSettings.width = '';
+                    }
+                }
+                maps.refresh();
+            }
+        });
+        legendPosition.appendTo('#legendPosition');
+        var mode = new ej.dropdowns.DropDownList({
+            index: 0,
+            placeholder: 'Select layoutMode type',
+            width: '100%',
+            change: () => {
+                maps.legendSettings.mode = mode.value;
+                if (mode.value === 'Interactive') {
+                    if (maps.legendSettings.orientation === 'Horizontal' || maps.legendSettings.orientation === 'None') {
+                        maps.legendSettings.height = '10';
+                        maps.legendSettings.width = '';
+                    } else {
+                        maps.legendSettings.height = '70%';
+                        maps.legendSettings.width = '10';
+                    }
+                } else {
+                    maps.legendSettings.height = '';
+                    maps.legendSettings.width = '';
+                }
+                maps.refresh();
+            }
+        });
+        mode.appendTo('#legendMode');
+
+        var highlightCheckBox = new ej.buttons.CheckBox(
+            {
+                change: (args) => {
+                    if (args.checked) {
+                        maps.layers[0].shapeSettings.colorMapping[5].color = 'lightgrey';
+                        maps.layers[0].shapeSettings.colorMapping[5].label = 'No Data';
+                    } else {
+                        maps.layers[0].shapeSettings.colorMapping[5].color = null;
+                        maps.layers[0].shapeSettings.colorMapping[5].label = null;
+                    }
+                    maps.refresh();
+                },
+                checked: false
+            },
+            '#opacity');
+
+        var toggleCheckBox = new ej.buttons.CheckBox(
+            {
+                change: (args) => {
+                    maps.legendSettings.toggleLegendSettings.enable = args.checked;
+                    maps.refresh();
+                },
+                checked: false
+            },
+          '#togglelegend');
+
+    }
+</script>
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Legend in ASP.NET Core Maps control. Explore here for more details."/>
+                }
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample visualizes grouping of countries in the legend based on its population density. The legend will be displayed at the top of the map.
+        </p>
+    </div>
+}
+@section Description{
+
+    <div id="description">
+        <p>
+            In this example, you can see how to render a legend in the maps. A legend item denotes the value of a shape. Any number of legend items can be added to the legend. You can bind the desired colors to the shapes, if its values are within the specified range using the <code>ColorMapping</code> property. You can also show or hide color mapping related to population density when toggling the legend item
+
+        </p>
+        <p>
+            Tooltip is enabled in this example. To see the tooltip in action, hover the mouse over a shape or tap a shape in touch enabled devices.
+        </p>
+    </div>
+}
+@section Title{
+                    <title>ASP.NET Core Maps Legend Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Legend in ASP.NET Core Maps Control</h1>
+                }

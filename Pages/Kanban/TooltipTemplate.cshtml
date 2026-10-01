@@ -1,0 +1,164 @@
+@page
+
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2
+
+@{
+    var data = new KanbanDataModels().KanbanTasks();
+}
+@section ControlsSection{
+    <div class="col-lg-9 control-section">
+        <div class="control_wrapper">
+            <ejs-kanban id="Kanban" keyField="Status" dataSource="@data" created="onCreate" enableTooltip="true" tooltipTemplate="#tooltipTemp">
+                <e-kanban-columns>
+                    <e-kanban-column headerText="To Do" keyField="Open"></e-kanban-column>
+                    <e-kanban-column headerText="In Progress" keyField="InProgress"></e-kanban-column>
+                    <e-kanban-column headerText="Testing" keyField="Testing"></e-kanban-column>
+                    <e-kanban-column headerText="Done" keyField="Close"></e-kanban-column>
+                </e-kanban-columns>
+                <e-kanban-cardsettings contentField="Summary" headerField="Id"></e-kanban-cardsettings>
+            </ejs-kanban>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties">
+            <tbody>
+                <tr>
+                    <td>
+                        <div>
+                            <ejs-checkbox id="enableTooltip" label="Enable ToolTip" checked="true" change="onChange"></ejs-checkbox>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>
+                            <ejs-checkbox id="enableTooltipTemplate" label="Enable tooltip Template" checked="true" change="onChange"></ejs-checkbox>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script id="tooltipTemp" type="text/x-template">
+        <div class='e-kanbantooltiptemp'>
+            <table>
+                <tr>
+                    <td class="details">
+                        <table>
+                            <colgroup>
+                                <col style="width:30%">
+                                <col style="width:70%">
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <td class="CardHeader">Assignee:</td>
+                                    <td>${Assignee}</td>
+                                </tr>
+                                <tr>
+                                    <td class="CardHeader">Type:</td>
+                                    <td>${Type}</td>
+                                </tr>
+                                <tr>
+                                    <td class="CardHeader">Estimate:</td>
+                                    <td>${Estimate}</td>
+                                </tr>
+                                <tr>
+                                    <td class="CardHeader">Summary:</td>
+                                    <td>${Summary}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </script>
+}
+
+<
+<style type="text/css">
+    .e-kanbantooltiptemp {
+        width: 250px;
+        padding: 3px;
+    }
+
+        .e-kanbantooltiptemp > table {
+            width: 100%;
+        }
+
+        .e-kanbantooltiptemp td {
+            vertical-align: top;
+        }
+</style>
+
+@section PreScripts {
+    <script>
+        var kanbanObj;
+        function onCreate() {
+            kanbanObj = this;
+        }
+        function onChange(args) {
+
+            var value = this.element.id;
+            switch (value) {
+                case 'enableTooltip':
+                    kanbanObj.enableTooltip = args.checked;
+                    break;
+                case 'enableTooltipTemplate':
+                    kanbanObj.tooltipTemplate = null;
+                    if (args.checked) {
+                        kanbanObj.tooltipTemplate = '#tooltipTemp';
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    </script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates tooltip customization in the Kanban component, enabling additional card information to be presented through rich and interactive tooltip content.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+    <p>
+        This sample demonstrates the tooltip functionality of the Kanban component using the
+        <a href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.kanban.kanban.html#Syncfusion_EJ2_Kanban_Kanban_EnableTooltip" target="_blank">enableTooltip</a>
+        and
+        <a href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.kanban.kanban.html#Syncfusion_EJ2_Kanban_Kanban_TooltipTemplate" target="_blank">tooltipTemplate</a>
+        properties. Tooltips provide additional contextual information about cards when users hover over them.
+    </p>
+    <ul>
+        <li><code>enableTooltip</code>: If you set this property to <code>true</code>, the cards show a
+            tooltip with the default format.</li>
+        <li><code>tooltipTemplate</code>: If you set <code>enableTooltip</code> to <code>true</code> and
+            configure the <code>tooltipTemplate</code>, the cards show a tooltip with templated content
+            (the <code>Assignee</code>, <code>Type</code>, <code>Estimate</code> and <code>Summary</code>
+            fields in this demo).</li>
+    </ul>
+    <p>
+        More information on the Essential<sup>®</sup> JS2 Kanban board can be found in this
+        <a href="https://ej2.syncfusion.com/aspnetcore/documentation/kanban/tooltip" target="_blank">tooltip</a> documentation section.
+    </p>
+    <p>
+        Looking for the full ASP.NET Core Kanban component overview, features, pricing, and documentation?
+        Visit the <a href="https://www.syncfusion.com/gantt-sdk/aspnet-core-kanban-board" target="_blank">ASP.NET Core</a> page.
+    </p>
+    </div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Tooltip Template in ASP.NET Core Kanban control. Explore here for more details."/>
+                }
+@section Title{
+                    <title>ASP.NET Core Kanban Tooltip Template Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Tooltip Template in ASP.NET Core Kanban Control</h1>
+                }

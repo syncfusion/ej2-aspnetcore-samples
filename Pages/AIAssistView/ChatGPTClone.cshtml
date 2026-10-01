@@ -1,0 +1,232 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.AIAssistView.ChatGPTCloneModel
+@using Syncfusion.EJ2
+@using System.Text.Json
+
+@section ControlsSection {
+    <div class="control-section chatgpt-clone">
+        <div class="chatgpt-aiassist" id="chatgptContainer">
+            <ejs-aiassistview id="chatgpt_aiassistview"
+                              promptRequest="onPromptRequest"
+                              created="created"
+                              showHeader="false"
+                              promptPlaceholder="Ask anything"
+                              enableAttachments="true"
+                              stopRespondingClick="stopAIResponse"
+                              bannerTemplate="#bannerContent">
+                <e-aiassistview-attachmentsettings
+                    saveUrl="https://services.syncfusion.com/js/production/api/FileUploader/Save"
+                    removeUrl="https://services.syncfusion.com/js/production/api/FileUploader/Remove">
+                </e-aiassistview-attachmentsettings>
+                <e-aiassistview-speechtotextsettings enable="true"></e-aiassistview-speechtotextsettings>
+                <e-aiassistview-footertoolbarsettings
+                    toolbarPosition="Bottom"
+                    items="@Model.FooterToolbarItems">
+                </e-aiassistview-footertoolbarsettings>
+            </ejs-aiassistview>
+        </div>
+    </div>
+
+    <script id="bannerContent" type="text/x-jsrender">
+        <div class="banner-content">
+            <div class="chatgpt-header">
+                <h3>Where should we begin?</h3>
+            </div>
+        </div>
+    </script>
+
+    <style>
+        .control-section.chatgpt-clone {
+            min-height: 550px;
+        }
+        .chatgpt-aiassist {
+            width: 60vw;
+            margin: 10px auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chatgpt-aiassist.middle-footer {
+            height: 350px;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .chatgpt-aiassist.middle-footer #chatgpt_aiassistview {
+            height: 220px;
+            flex: 0 0 220px;
+        }
+
+        .chatgpt-aiassist.bottom-footer {
+            height: 500px;
+        }
+
+        @@media only screen and (max-width: 750px) {
+            .chatgpt-aiassist {
+                width: 100%;
+            }
+        }
+
+        .chatgpt-aiassist .chatgpt-header {
+            display: flex;
+            justify-content: center;
+            height: 150px;
+            align-items: end;
+        }
+
+        .chatgpt-aiassist .chatgpt-header h3 {
+            font-weight: 400;
+            font-size: 28px;
+        }
+
+        .chatgpt-aiassist #chatgpt_aiassistview {
+            border: none;
+            height: 80%;
+        }
+
+        .chatgpt-aiassist .e-footer-content:focus-within,
+        .chatgpt-aiassist .e-footer.e-toolbar-inline:focus-within {
+            border-color: #b4b4c2;
+        }
+
+        .chatgpt-aiassist .e-footer .e-assist-prompt-textarea {
+            min-height: 28px;
+            padding: 8px 12px;
+        }
+
+        .chatgpt-aiassist .e-footer .e-assist-textarea {
+            padding: 8px 12px;
+        }
+
+        .chatgpt-aiassist .e-footer .e-toolbar {
+            background: transparent;
+            border: none;
+        }
+
+        .chatgpt-aiassist .e-footer .e-toolbar .e-btn.e-flat,
+        .chatgpt-aiassist .e-footer .e-toolbar .e-btn.e-flat:hover {
+            background: transparent;
+            box-shadow: none;
+        }
+
+    </style>
+}
+
+@section PreScripts {
+    <script>
+        var defaultPromptResponseData = @Html.Raw(JsonSerializer.Serialize(Model.PromptResponseData));
+        var baseURL = window.baseurl;
+        var chatgptContainer;
+        var isFirstPrompt = true;
+        var chatgptAIAssistView;
+        var abortController;
+
+        function created() {
+            chatgptAIAssistView = this;
+            chatgptContainer = document.getElementById('chatgptContainer');
+
+            if (chatgptContainer) {
+                chatgptContainer.classList.add('middle-footer');
+            }
+        }
+
+        async function getAIResponse(args) {
+            try {
+                const userID = await window.fingerPrint();
+                if (!userID) {
+                    return 'Failed to generate user ID. Please try again later.';
+                }
+
+                abortController = new AbortController();
+                const response = await fetch(baseURL + '/api/AI/Stream', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authentication': userID
+                    },
+                    body: JSON.stringify({
+                        message: args.prompt
+                    }),
+                    signal: abortController.signal
+                });
+
+                if (!response.ok) {
+                    const text = await response.text();
+                    let errorData;
+                    try {
+                        errorData = JSON.parse(text);
+                    } catch (e) {
+                        errorData = { error: 'HTTP Error ' + response.status + ': ' + text };
+                    }
+                    throw new Error(errorData.error || 'HTTP Error ' + response.status);
+                }
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                let fullText = '';
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) {
+                        break;
+                    }
+                    fullText += decoder.decode(value, { stream: true });
+                }
+                return fullText;
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    return;
+                }
+                if (error.message && error.message.indexOf('token limit') !== -1) {
+                    return error.message;
+                }
+                return 'We could not reach the AI service; please try again later.';
+            }
+        }
+
+        async function onPromptRequest(args) {
+            if (isFirstPrompt && chatgptContainer) {
+                chatgptContainer.classList.remove('middle-footer');
+                chatgptContainer.classList.add('bottom-footer');
+                isFirstPrompt = false;
+            }
+            var response = await getAIResponse(args);
+            chatgptAIAssistView.addPromptResponse(response);
+        }
+
+        function stopAIResponse() {
+            if (abortController) {
+                abortController.abort();
+            }
+        }
+
+    </script>
+}
+
+@section Meta {
+    <meta name="description" content="This example demonstrates a ChatGPT-inspired AI AssistView with attachment and speech-to-text support in ASP.NET Core." />
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p> This sample demonstrates a ChatGPT-inspired AI AssistView with a compact, distraction-free layout, attachment support, speech-to-text input, and a simulated AI response flow.</p>
+    </div>
+}
+
+@section Description {
+    <div id="description">
+        <p>
+            The AI AssistView in this sample showcases how a branded, lightweight assistant interface can be created using Syncfusion’s <code>AIAssistView</code> control while offering essential interaction features and UI customization options:
+        </p>
+        <ul>
+            <li>Configured the <code>footerToolbarSettings</code> property to add footer toolbar items on both the left and right sides of the footer.</li>
+            <li>Custom banner template that displays the welcoming "Where should we begin?" message.</li>
+            <li>Simulated AI response handling using the <code>promptRequest</code> event.</li>
+            <li>Attachment support with configurable save and remove endpoints.</li>
+            <li>Speech-to-text input for hands-free interaction.</li>
+        </ul>
+        <p>
+            This example serves as a foundation for integrating real LLM services and building branded conversational interfaces with modular UI controls.
+        </p>
+    </div>
+}

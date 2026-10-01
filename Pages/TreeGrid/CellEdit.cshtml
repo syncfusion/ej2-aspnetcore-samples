@@ -1,0 +1,112 @@
+@page
+@using EJ2CoreSampleBrowser.Models;
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+    <div class="control-section">
+        <div class="content-wrapper">
+            <ejs-treegrid id="TreeGrid" dataSource="@RetailInventoryData.GetRetailInventoryData()" height="500" idMapping="productId" parentIdMapping="parentId" treeColumnIndex="1" allowPaging="true" toolbar='@(new List<string>() { "Add", "Delete", "Update", "Cancel" })'>
+                <e-treegrid-editsettings allowAdding="true" allowEditing="true" allowDeleting="true" mode="Cell"></e-treegrid-editsettings>
+                <e-treegrid-columns>
+                    <e-treegrid-column field="productId" headerText="Product ID" isPrimaryKey="true" validationRules="@(new { required = true, number = true })" editType="numericedit" textAlign="Right" width="110"></e-treegrid-column>
+                    <e-treegrid-column field="productName" headerText="Product Name" validationRules="@(new { required = true })" editType="stringedit" width="180"></e-treegrid-column>
+                    <e-treegrid-column field="supplier" headerText="Supplier" width="170"></e-treegrid-column>
+                    <e-treegrid-column field="stockQty" headerText="Stock Qty" validationRules="@(new { required = true, number = true })" editType="numericedit" textAlign="Right" width="100"></e-treegrid-column>
+                    <e-treegrid-column field="unitPrice" headerText="Unit Price (₹)" textAlign="Right" width="120" format="C2" validationRules="@(new { required = true })" editType="numericedit"></e-treegrid-column>
+                    <e-treegrid-column field="status" headerText="Status" width="130" template="#statusTemplate" editType="dropdownedit" validationRules="@(new { required = true })"></e-treegrid-column>
+                </e-treegrid-columns>
+            </ejs-treegrid>
+        </div>
+    </div>
+
+    <script type="text/x-template" id="statusTemplate">
+        ${if(status === 'Active')}
+            <span class="status-badge status-active">${status}</span>
+        ${else if(status === 'Low Stock')}
+            <span class="status-badge status-low-stock">${status}</span>
+        ${else if(status === 'Pending Restock')}
+            <span class="status-badge status-pending">${status}</span>
+        ${else if(status === 'Out of Stock')}
+            <span class="status-badge status-out-stock">${status}</span>
+        ${else}
+            <span class="status-badge status-discontinued">${status}</span>
+        ${/if}
+    </script>
+
+    <style>
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .status-active {
+            color: #166534;
+            background-color: #dcfce7;
+        }
+
+        .status-low-stock {
+            color: #92400e;
+            background-color: #fef3c7;
+        }
+
+        .status-pending {
+            color: #1d4ed8;
+            background-color: #dbeafe;
+        }
+
+        .status-out-stock {
+            color: #991b1b;
+            background-color: #fee2e2;
+        }
+
+        .status-discontinued {
+            color: #374151;
+            background-color: #e5e7eb;
+        }
+    </style>
+}
+
+@*custom code start*@
+
+@section Meta{
+    <meta name="description" content="This example demonstrates cell editing in the ASP.NET Core Tree Grid control. Explore here for more details." />
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates cell editing in the TreeGrid, allowing users to quickly update individual field values directly within the data view.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            Cell editing enables users to modify one cell at a time without opening a separate edit form. This mode is enabled by setting
+            <code>editSettings.mode</code> as <code>Cell</code>. A cell becomes editable on
+            double-clicking it, and changes are saved when the user presses the <strong>Enter</strong> key or shifts focus to another cell.
+        </p>
+        <p>
+            This mode provides a streamlined way to update data while working within the TreeGrid. It can be used together with features such as validation, custom editors, and formatting to deliver an efficient editing experience.
+        </p>
+       
+        <p>
+            More information about TreeGrid editing can be found in the
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/tree-grid/editing/cell-editing">
+                documentation section
+            </a>.
+        </p>
+    </div>
+}
+
+@section Title{
+    <title>ASP.NET Core Tree Grid Cell Editing Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Cell Editing in ASP.NET Core Tree Grid Control</h1>
+}

@@ -1,0 +1,86 @@
+﻿@page
+@using EJ2CoreSampleBrowser.Models;
+@using Syncfusion.EJ2.Gantt;
+@model EJ2CoreSampleBrowser.Pages.Gantt.ResourceViewModel
+
+@section ControlsSection {
+    <div class="control-section">
+        <div class="row">
+            <div class="col-md-12">
+                <ejs-gantt id='ResourceView' dataSource="@GanttData.ResourceViewData()"
+                    resources="@GanttData.GetResourceGroup()" viewType="ResourceView" allowResizing="true"
+                    allowSelection="true" highlightWeekends="true" treeColumnIndex="1" height="650px" rowHeight="46"
+                    taskbarHeight="25" showOverAllocation="true" taskType="FixedWork" projectStartDate="03/26/2025"
+                    projectEndDate="05/18/2025" toolbar=@Model.ToolbarItems toolbarClick="toolbarClick">
+                    <e-gantt-editsettings allowAdding="true" allowEditing="true" allowDeleting="true"
+                        allowTaskbarEditing="true" showDeleteConfirmDialog="true"></e-gantt-editsettings>
+                    <e-gantt-columns>
+                        <e-gantt-column field="TaskId" visible="false"></e-gantt-column>
+                        <e-gantt-column field="TaskName" headerText="Name" width="250"></e-gantt-column>
+                        <e-gantt-column field="Work" headerText="Work"></e-gantt-column>
+                        <e-gantt-column field="Progress"></e-gantt-column>
+                        <e-gantt-column field="ResourceGroup" headerText="Group"></e-gantt-column>
+                        <e-gantt-column field="StartDate"></e-gantt-column>
+                        <e-gantt-column field="Duration"></e-gantt-column>
+                    </e-gantt-columns>
+                    <e-gantt-labelSettings rightLabel="Resources" taskLabel="Progress"></e-gantt-labelSettings>
+                    <e-gantt-splitterSettings columnIndex="3"></e-gantt-splitterSettings>
+                    <e-gantt-resourcefields id="ResourceId" name="ResourceName" unit="ResourceUnit" group="ResourceGroup">
+                    </e-gantt-resourcefields>
+                    <e-gantt-taskfields id="TaskId" name="TaskName" startDate="StartDate" endDate="EndDate"
+                        duration="Duration" progress="Progress" dependency="Predecessor" child="SubTasks" work="Work"
+                        resourceInfo="Resources">
+                    </e-gantt-taskfields>
+                    <e-gantt-editdialogfields>
+                        <e-gantt-editdialogfield type="General"></e-gantt-editdialogfield>
+                        <e-gantt-editdialogfield type="Dependency"></e-gantt-editdialogfield>
+                        <e-gantt-editdialogfield type="Resources"></e-gantt-editdialogfield>
+                    </e-gantt-editdialogfields>
+                </ejs-gantt>
+                <script>
+                    function toolbarClick(args) {
+                        if (args.item.id === 'showhidebar') {
+                            var ganttObj = document.getElementById("ResourceView").ej2_instances[0];
+                            ganttObj.showOverAllocation = ganttObj.showOverAllocation ? false : true;
+                        }
+                    }
+                </script>
+            </div>
+        </div>
+    </div>
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>This sample demonstrates the Resource View in the Gantt Chart, where tasks are organized under their assigned resources. Tasks without resource assignments are displayed under the <code>Unassigned Tasks</code> category. The sample also highlights overallocation ranges and provides an option to show or hide overallocation indicators.</p>
+    </div>
+}
+
+@section Description {
+    <div id="description">
+        <p>The Resource View displays tasks grouped by their assigned resources, providing a resource-centric perspective of the project schedule. This view can be enabled by setting the <code>viewType</code> property to <code>ResourceView</code></p>
+        <p>In this example, resources are mapped to tasks using the <code><a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.gantt.gantt.html#Syncfusion_EJ2_Gantt_Gantt_ResourceFields">resourceFields</a></code> and <code>taskFields.resourceInfo</code> properties. Tasks without resource assignments are automatically grouped under the <strong>Unassigned Tasks</strong> category.
+          Resource overallocation occurs when a resource is scheduled to work on multiple tasks during overlapping time periods. Overallocation ranges are highlighted in the timeline to help identify resource conflicts. The custom toolbar button can be used to show or hide overallocation indicators.</p>
+        <p>Resources can be grouped using the following resource field mappings:</p>
+        <ul>
+          <li><code>ID</code>: To map resource ID.</li>
+          <li><code>Name</code>: To map resource name.</li>
+          <li><code>Unit</code>: To map resource unit.</li>
+          <li><code>Group</code>: To map resource group.</li>
+        </ul>
+        <p>More information on the Essential<sup>®</sup> Gantt Chart can be found in this <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/gantt/resource-view">resource view</a> documentation section.</p>
+        <br/>
+        <p>Looking for the full ASP.NET Core Gantt Chart component overview, features, pricing, and documentation? Visit the <a target="_blank" href="https://www.syncfusion.com/gantt-sdk/aspnet-core-gantt-chart">ASP.NET Core Gantt Chart</a> page.</p>
+    </div>
+}
+
+@section Meta {
+    <meta name="description"
+        content="This example demonstrates the Resource View in ASP.NET Core Gantt control. Explore here for more details." />
+}
+@section Title {
+    <title>ASP.NET Core Gantt Resource View Example - Syncfusion Demos </title>
+}
+@section Header {
+    <h1 class='sb-sample-text'>Example of Resource View in ASP.NET Core Gantt Control</h1>
+}

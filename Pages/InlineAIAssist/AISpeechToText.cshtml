@@ -1,0 +1,466 @@
+@page
+@using EJ2CoreSampleBrowser.Services
+@using Syncfusion.EJ2
+
+@{
+    var commandsData = new object[]
+    {
+        new { id = "improveContent", label = "Improve Content", tooltip = "Improve the selected content", prompt = "Improve the selected content.", iconCss = "e-icons e-edit" },
+        new { id = "shorten", label = "Shorten", tooltip = "Shorten the selected text", prompt = "Shorten the selected text.", iconCss = "e-icons e-shorten" },
+        new { id = "elaborate", label = "Elaborate", tooltip = "Expand on the following content with more detail and explanation", prompt = "Expand on the following content with more detail and explanation.", iconCss = "e-icons e-elaborate" },
+        new { id = "summarize", label = "Summarize", tooltip = "Summarize the selected text", prompt = "Summarize the selected text.", iconCss = "e-icons e-description" }
+    };
+}
+
+@section ControlsSection {
+    <div class="control-section">
+        <div class="meeting-container inline-speech-to-text">
+            <div class="meeting-header">
+                <div>
+                    <h2>Meeting Notes Assistant</h2>
+                </div>
+            </div>
+            <div class="meeting-card meeting-highlight">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                    <div>
+                        <div style="font-size: 12px; color: #666; font-weight: 600; margin-bottom: 4px;">MEETING</div>
+                        <div style="font-size: 14px; font-weight: 600;">Project Phoenix Sprint Planning</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 12px; color: #666; font-weight: 600; margin-bottom: 4px;">DATE & TIME</div>
+                        <div style="font-size: 14px;">August 12, 2025 • 2:00 PM - 3:00 PM</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 12px; color: #666; font-weight: 600; margin-bottom: 4px;">PARTICIPANTS</div>
+                        <div style="font-size: 14px;">4 attendees</div>
+                    </div>
+                </div>
+            </div>
+            <h4 style="margin-top: 24px; margin-bottom: 8px;">Attendees:</h4>
+            <div class="meeting-card">
+                <div class="row">
+                    <span class="attendee"><span class="avatar">JD</span> John Doe (Product Lead)</span>
+                    <span class="attendee"><span class="avatar">AS</span> Alice Smith (Engineering)</span>
+                    <span class="attendee"><span class="avatar">BC</span> Bob Chen (Design)</span>
+                    <span class="attendee"><span class="avatar">EM</span> Emily White (QA)</span>
+                </div>
+            </div>
+            <h4 style="margin-top: 24px; margin-bottom: 8px;">Meeting Notes:</h4>
+            <p class="hint" style="margin-bottom: 12px;"><mark>Select text to generate summaries, extract action items, identify decisions, or dictate updates using voice input.</mark></p>
+            <div id="targetContent" class="demo-text-area" contenteditable="true">
+                <p>John opened the meeting by stating that the main goal is to finalize the beta release timeline for Project Phoenix. He mentioned that marketing needs the final feature list by August 20th to prepare the launch campaign.</p>
+                <p>Alice raised a concern about the API integration. She said, "The third-party payment gateway API is rate-limited, and we need to implement exponential backoff. I estimate this will take 3 days, pushing the backend freeze to August 15th."</p>
+                <p>Bob presented the new dashboard UI. The team agreed that the dark mode looks excellent, but the contrast on the primary buttons needs to be adjusted for accessibility. Bob will submit updated designs by Thursday.</p>
+                <p>Emily requested that we freeze code by August 18th to allow exactly one week for QA. She emphasized that regression testing must cover the new WebSocket architecture. Action items: Alice to document the API backoff strategy, Bob to fix button contrast, and Emily to draft the QA matrix by EOD Friday.</p>
+            </div>
+            <ejs-inlineaiassist id="inlinePrompt" responseMode="Inline" relateTo="#targetContent" created="onInlinePromptCreated" promptRequest="onPromptRequest" close="onInlinePromptClose">
+                <e-inlineaiassist-speechtotextsettings enable="true"></e-inlineaiassist-speechtotextsettings>
+                <e-inlineaiassist-commandSettings commands="commandsData"></e-inlineaiassist-commandSettings>
+                <e-inlineaiassist-responsesettings itemSelect="onResponseItemSelect"></e-inlineaiassist-responsesettings>
+            </ejs-inlineaiassist>
+        </div>
+    </div>
+}
+
+<style>
+    /* Container */
+    .inline-speech-to-text.meeting-container {
+        max-width: 820px;
+        margin: 0 auto;
+    }
+
+    /* Header */
+    .inline-speech-to-text .meeting-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+    }
+
+    .inline-speech-to-text .meeting-header h2 {
+        margin: 0;
+        font-size: 22px;
+    }
+
+    /* Card Layout */
+    .inline-speech-to-text .meeting-card {
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 16px;
+    }
+
+    .inline-speech-to-text .meeting-card .row {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .inline-speech-to-text .meeting-highlight {
+        background: #f8f4ff;
+        border-left: 4px solid #6a1b9a;
+    }
+
+    /* Attendee Badge */
+    .inline-speech-to-text .attendee {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        color: #444;
+        background: #f5f5f5;
+        padding: 4px 8px;
+        border-radius: 12px;
+    }
+
+    /* Avatar */
+    .inline-speech-to-text .avatar {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: #6a1b9a;
+        color: #fff;
+        font-size: 11px;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Text Area */
+    .inline-speech-to-text .demo-text-area {
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 16px;
+        min-height: 220px;
+        color: #222;
+    }
+
+    .inline-speech-to-text .demo-text-area p {
+        margin: 0 0 16px 0;
+        font-size: 14px;
+        line-height: 1.65;
+    }
+
+    /* Hint Text */
+    .inline-speech-to-text .hint {
+        font-size: 12px;
+        margin-top: 12px;
+        font-style: italic;
+    }
+
+    .inline-speech-to-text .hint mark {
+        background-color: #fcf8e3;
+    }
+
+    /* Dark Mode & High Contrast */
+    body[class*="dark"] .inline-speech-to-text .meeting-card,
+    body[class*="dark"] .inline-speech-to-text .meeting-highlight,
+    body[class*="fluent2-highcontrast"] .inline-speech-to-text .meeting-card,
+    body[class*="fluent2-highcontrast"] .inline-speech-to-text .meeting-highlight {
+        background: none;
+    }
+
+    body[class*="dark"] .inline-speech-to-text .hint,
+    body[class*="fluent2-highcontrast"] .inline-speech-to-text .hint {
+        color: #ffffff;
+    }
+
+    body[class*="dark"] .inline-speech-to-text .demo-text-area,
+    body[class*="fluent2-highcontrast"] .inline-speech-to-text .demo-text-area {
+        background: none;
+        color: unset;
+    }
+
+    .inline-speech-to-text .e-inlineaiassist-selected-text {
+        display: inline-block;
+    }
+
+</style>
+
+@section PreScripts {
+    <script>
+        var abortController;
+        var baseURL = window.baseurl;
+        var inlinePrompt;
+        var savedRange = null;
+        var selectedSpan = null;
+        var originalContentHTML = '';
+        var originalSpanHTML = '';
+        var isAccepted = false;
+        var isPopupOpen = false;
+
+        function onInlinePromptCreated() {
+            var element = document.getElementById('inlinePrompt');
+            inlinePrompt = ej.base.getComponent(element, 'inlineaiassist');
+
+            var targetContent = document.getElementById('targetContent');
+            if (targetContent) {
+                targetContent.addEventListener('mouseup', handleTextSelection);
+                targetContent.addEventListener('keyup', handleKeyUp);
+            }
+        }
+
+        function handleTextSelection() {
+            if (!saveSelection() || !inlinePrompt) {
+                return;
+            }
+            var selection = window.getSelection();
+            if (!selection || !selection.rangeCount) {
+                return;
+            }
+            var range = selection.getRangeAt(0);
+            if (!range || range.collapsed) {
+                return;
+            }
+            originalContentHTML = document.getElementById('targetContent').innerHTML;
+            var wrapper = document.createElement('span');
+            wrapper.className = 'e-inlineaiassist-selected-text';
+            var selectedContent = range.extractContents();
+            wrapper.appendChild(selectedContent);
+            range.insertNode(wrapper);
+            selectedSpan = wrapper;
+            originalSpanHTML = wrapper.innerHTML;
+            savedRange = document.createRange();
+            savedRange.selectNodeContents(selectedSpan);
+            window.setTimeout(function () {
+                inlinePrompt.relateTo = selectedSpan;
+                inlinePrompt.dataBind();
+                inlinePrompt.showPopup();
+                isPopupOpen = true;
+            }, 10);
+        }
+
+        function handleKeyUp() {
+            if (saveSelection() && isPopupOpen && inlinePrompt) {
+                inlinePrompt.relateTo = document.getElementById('targetContent');
+                inlinePrompt.dataBind();
+            }
+        }
+
+        function saveSelection() {
+            var selection = window.getSelection();
+            if (selection.rangeCount > 0 && !selection.isCollapsed) {
+                savedRange = selection.getRangeAt(0).cloneRange();
+                return true;
+            }
+            return false;
+        }
+
+        function restoreSelection() {
+            if (!savedRange) return false;
+            var selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(savedRange);
+            return true;
+        }
+
+        function getSelectedText() {
+            return savedRange ? savedRange.toString() : '';
+        }
+
+        function createFragmentFromHTML(html) {
+            var tempDiv = document.createElement('div');
+            tempDiv.innerHTML = html || '';
+            var fragment = document.createDocumentFragment();
+            while (tempDiv.firstChild) {
+                fragment.appendChild(tempDiv.firstChild);
+            }
+            return fragment;
+        }
+
+        function unwrapSelectedSpan() {
+            if (!selectedSpan || !selectedSpan.parentNode) {
+                return;
+            }
+            var parent = selectedSpan.parentNode;
+            parent.replaceChild(createFragmentFromHTML(selectedSpan.innerHTML), selectedSpan);
+            selectedSpan = null;
+            originalSpanHTML = '';
+        }
+
+        function restoreOriginalSpan() {
+            if (!selectedSpan || !selectedSpan.parentNode) {
+                return;
+            }
+            var parent = selectedSpan.parentNode;
+            parent.replaceChild(createFragmentFromHTML(originalSpanHTML), selectedSpan);
+            selectedSpan = null;
+            originalSpanHTML = '';
+        }
+
+        // Event handler for prompt request
+        function onPromptRequest(args) {
+            var selectedText = getSelectedText();
+            var contextPrompt = args.prompt || '';
+            if (selectedText) {
+                contextPrompt = contextPrompt + ' ' + selectedText;
+            }
+            if (!contextPrompt.trim()) {
+                inlinePrompt.addResponse("I'm here to assist with your meeting notes. Try selecting text and choosing a command.");
+                return;
+            }
+
+            window.fingerPrint().then(function (userID) {
+                try {
+                    abortController = new AbortController();
+                    fetch(baseURL + '/api/AI/Stream', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authentication': userID
+                        },
+                        body: JSON.stringify({ message: contextPrompt }),
+                        signal: abortController.signal
+                    })
+                    .then(function (response) {
+                        if (!response.ok) {
+                            return response.text().then(function (text) {
+                                if (response.status === 402) {
+                                    showBanner(text);
+                                }
+                                var errorData;
+                                try {
+                                    errorData = JSON.parse(text);
+                                } catch (e) {
+                                    errorData = { error: 'HTTP Error ' + response.status + ': ' + text };
+                                }
+                                throw new Error(errorData.error || ('HTTP Error ' + response.status));
+                            });
+                        }
+                        var reader = response.body.getReader();
+                        var decoder = new TextDecoder();
+                        var fullText = '';
+
+                        function processStream() {
+                            return reader.read().then(function (result) {
+                                if (result.done) {
+                                    inlinePrompt.addResponse(fullText, true);
+                                    return;
+                                }
+                                var chunk = decoder.decode(result.value, { stream: true });
+                                fullText += chunk;
+                                inlinePrompt.addResponse(fullText, false);
+                                if (selectedSpan) {
+                                    var tempDiv = document.createElement('div');
+                                    tempDiv.textContent = fullText;
+                                    selectedSpan.textContent = tempDiv.textContent || fullText;
+                                    if (inlinePrompt.popupObj) {
+                                        inlinePrompt.popupObj.refreshPosition();
+                                    }
+                                }
+                                return processStream();
+                            });
+                        }
+                        return processStream();
+                    })
+                    .catch(function (error) {
+                        if (error.name === 'AbortError') {
+                            return;
+                        }
+                        setTimeout(function () {
+                            var fallbackResponse = 'We could not reach the AI service; please try again later.';
+                            if (selectedSpan) {
+                                selectedSpan.innerHTML = fallbackResponse;
+                            }
+                            inlinePrompt.addResponse(fallbackResponse);
+                        }, 1000);
+                    });
+                } catch (e) {}
+            }).catch(function (e) {});
+        }
+
+        // Event handler for response item selection
+        function onResponseItemSelect(args) {
+            if (args.command.label === 'Accept') {
+                isAccepted = true;
+                if (selectedSpan && selectedSpan.parentNode) {
+                    var response = inlinePrompt.prompts[inlinePrompt.prompts.length - 1].response;
+                    unwrapSelectedSpan();
+                    selectedSpan = null;
+                    var tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = response;
+                    var fragment = document.createDocumentFragment();
+                    while (tempDiv.firstChild) {
+                        fragment.appendChild(tempDiv.firstChild);
+                    }
+                    savedRange.insertNode(fragment);
+                } else if (savedRange) {
+                    restoreSelection();
+                    if (savedRange) {
+                        savedRange.deleteContents();
+                        var response = inlinePrompt.prompts[inlinePrompt.prompts.length - 1].response;
+                        var tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = response;
+                        var fragment = document.createDocumentFragment();
+                        while (tempDiv.firstChild) {
+                            fragment.appendChild(tempDiv.firstChild);
+                        }
+                        savedRange.insertNode(fragment);
+                    }
+                }
+                savedRange = null;
+                inlinePrompt.hidePopup();
+                isPopupOpen = false;
+            } else if (args.command.label === 'Discard') {
+                if (selectedSpan && selectedSpan.parentNode) {
+                    restoreOriginalSpan();
+                }
+                savedRange = null;
+                inlinePrompt.hidePopup();
+                isPopupOpen = false;
+            }
+        }
+
+        // Event handler for inline prompt close
+        function onInlinePromptClose() {
+            if (!isAccepted && originalContentHTML) {
+                var targetContent = document.getElementById('targetContent');
+                if (targetContent) {
+                    targetContent.innerHTML = originalContentHTML;
+                }
+            }
+            selectedSpan = null;
+            originalSpanHTML = '';
+            savedRange = null;
+            originalContentHTML = '';
+            isAccepted = false;
+            isPopupOpen = false;
+            window.getSelection().removeAllRanges();
+        }
+    </script>
+}
+
+@section Meta {
+    <meta name="description" content="This demo explains how to use the Inline AI Assist component with speech-to-text support for meeting notes." />
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>This sample demonstrates the Inline AI Assist component with built-in speech-to-text for meeting notes. Select text to run a command or use the mic to dictate prompts.</p>
+    </div>
+}
+
+@section Description {
+    <div id="description">
+        <p>In this example, the Inline AI Assist component showcase the following features:</p>
+        <ul>
+            <li><code>speechToTextSettings</code> - Enable built-in speech-to-text voice input for inline prompt request</li>
+            <li><code>commandSettings</code> - Predefined commands (Improve Content, Shorten, Elaborate, Summarize) applied to the selected text.</li>
+            <li><code>relateTo</code> - Position the assistant popup near the selected paragraph for contextual suggestions.</li>
+            <li><code>promptRequest</code> - Handle prompt submission and insert formatted AI responses into the editable notes area.</li>
+            <li><code>responseSettings</code> - Manage Accept to insert AI output and Discard to cancel the suggestion.</li>
+        </ul>
+    </div>
+}
+
+@section Header {
+    <h1 class='sb-sample-text'>Inline AI Assist with Speech-to-Text</h1>
+}
+
+@section Title {
+    <title>ASP.NET Core Inline AI Assist with Speech-to-Text - Syncfusion Demos</title>
+}

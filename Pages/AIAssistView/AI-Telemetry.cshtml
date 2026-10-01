@@ -1,0 +1,189 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.AIAssistView.AITelemetryModel
+@using Syncfusion.EJ2
+@using System.Text.Json;
+
+@section ControlsSection {
+    <div class="control-section">
+        <div class="telemetry-aiassistview">
+            <ejs-aiassistview id="aiAssistView" promptSuggestions="@Model.PromptSuggestionData" enableStreaming="true" bannerTemplate="#bannerContent" promptRequest="onPromptRequest"  created="onCreated">
+                <e-aiassistview-toolbarsettings items="@Model.Items" itemClicked="toolbarItemClicked"></e-aiassistview-toolbarsettings>
+                <e-aiassistview-telemetrysettings enable="true"></e-aiassistview-telemetrysettings>
+                </ejs-aiassistview>
+        </div>
+    </div>
+}
+
+@section PreScripts{
+    <script>
+        var assistObj = null;
+        var baseURL = window.baseurl;
+        var prompts = @Html.Raw(JsonSerializer.Serialize(Model.PromptResponseData));
+        var suggestions = @Html.Raw(JsonSerializer.Serialize(Model.PromptSuggestionData));
+        var abortController;
+
+        function onCreated() {
+            assistObj = ej.base.getComponent(document.getElementById("aiAssistView"), "aiassistview");
+        }
+
+        async function getAIResponse(args) {
+            try {
+                var fileContents = [];
+                var aiPrompt = args.prompt;
+                if (args.attachedFiles && args.attachedFiles.length > 0) {
+                    fileContents = await window.getFileContext(args.attachedFiles);
+                    var attachedFileContext = 'Attached Files:\n';
+                    fileContents.forEach(function(file) {
+                        attachedFileContext += '\n--- File: ' + file.name + ' (Type: ' + file.type + ', File Type: ' + file.fileType + ') ---\n';
+
+                        if (file.fileType === 'text') {
+                            attachedFileContext += file.content + '\n';
+                        } else if (file.fileType === 'image') {
+                            attachedFileContext += '[Image file: ' + file.name + ' - Base64 encoded data available]\n';
+                            attachedFileContext += file.content + '\n';
+                        } else {
+                            attachedFileContext += '[Binary file: ' + file.name + ' - Please process this file]\n';
+                            attachedFileContext += file.content.substring(0, 500) + '...\n';
+                        }
+                    });
+                    aiPrompt = attachedFileContext + '\n\nUser Prompt: ' + args.prompt;
+                }
+
+                const userID = await window.fingerPrint();
+                if (!userID) {
+                    return { response: 'Failed to generate user ID. Please try again later.' };
+                }
+                abortController = new AbortController();
+                var systemPrompt = args.systemPrompt || 'You are a helpful assistant.';
+                const requestBody = {
+                    visitorId: userID,
+                    messages: {
+                        messages: [
+                            { role: 'system', content: systemPrompt },
+                            { role: 'user', content: aiPrompt }
+                        ]
+                    }
+                };
+                if (fileContents && fileContents.length > 0) {
+                    requestBody.fileContents = fileContents;
+                }
+                const response = await fetch(baseURL + '/api/AI/AssistView', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authentication': userID
+                    },
+                    body: JSON.stringify(requestBody),
+                    signal: abortController.signal
+                });
+
+                if (!response.ok) {
+                    let text = await response.text();
+                    let errorData;
+                    try {
+                        errorData = JSON.parse(text);
+                    } catch (e) {
+                        errorData = { error: 'HTTP Error ' + response.status + ': ' + text };
+                    }
+                    throw new Error(errorData.error || ('HTTP Error ' + response.status));
+                }
+
+                const result = await response.json().catch(async function () {
+                    return { response: await response.text() };
+                });
+                const aiResponse = result.response ? result.response.replace('END_INSERTION', '') : 'We could not reach the AI service; please try again later.';
+                return { response: aiResponse, model: result.model, usage: result.usage };
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    return null;
+                } else if (error.message && error.message.indexOf('token limit') !== -1) {
+                    return { response: error.message };
+                }
+                return { response: 'We could not reach the AI service; please try again later.' };
+            }
+        }
+
+        async function onPromptRequest(args) {
+            if (!assistObj) {
+                return;
+            }
+            var foundPrompt = prompts.find(prompt => prompt.Prompt == args.prompt);
+            var result = await getAIResponse(args);
+            if (!result) {
+                return;
+            }
+            var telemetryData;
+            if (result.usage) {
+                telemetryData = {
+                    model: result.model,
+                    inputTokens: result.usage.prompt_tokens,
+                    outputTokens: result.usage.completion_tokens,
+                    reasoningTokens: result.usage.completion_tokens_details ? result.usage.completion_tokens_details.reasoning_tokens : undefined,
+                    cachedInputTokens: result.usage.prompt_tokens_details ? result.usage.prompt_tokens_details.cached_tokens : undefined
+                };
+            }
+            assistObj.addPromptResponse(result.response, true, telemetryData);
+            assistObj.promptSuggestions = (foundPrompt && foundPrompt.SuggestionData && foundPrompt.SuggestionData.length > 0) ? foundPrompt.SuggestionData : suggestions;
+        }
+
+        function toolbarItemClicked(args) {
+            if (args.item.iconCss === 'e-icons e-refresh') {
+                assistObj.prompts = [];
+                assistObj.promptSuggestions = suggestions;
+            }
+        }
+    </script>
+
+    <script id="bannerContent" type="text/x-jsrender">
+        <div class="banner-content">
+            <div class="e-icons e-assistview-icon"></div>
+            <h3>AI Telemetry</h3>
+            <i>Send a prompt or pick a suggestion to see telemetry metrics for the turn.</i>
+        </div>
+    </script>
+}
+
+<style>
+    .telemetry-aiassistview {
+        height: 600px;
+        width: 60vw;
+        margin: 0 auto;
+    }
+
+    .telemetry-aiassistview .banner-content .e-assistview-icon:before {
+        font-size: 35px;
+    }
+
+    .telemetry-aiassistview .banner-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 330px;
+        text-align: center;
+    }
+
+    @@media only screen and (max-width: 750px) {
+        .telemetry-aiassistview {
+            width: 100%;
+        }
+    }
+</style>
+
+@section Meta{
+    <meta name="description" content="This example demonstrates the Telemetry in ASP.NET Core AI AssistView control. Explore here for more details." />
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This sample demonstrates the telemetry functionality in the AI AssistView. When enabled, it captures per-turn metrics such as response duration, streaming chunks, model identifier, and token usage, and reports them on every response.</p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>In this example, the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.InteractiveChat.AIAssistView.html#Syncfusion_EJ2_InteractiveChat_AIAssistView_TelemetrySettings">telemetrySettings</a> <code>enable</code> property is set to <code>true</code>, so each prompt/response turn automatically reports its metrics. Additionally, the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.InteractiveChat.AIAssistView.html#Syncfusion_EJ2_InteractiveChat_AIAssistView_BannerTemplate">bannerTemplate</a> customizes the banner content, and <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.InteractiveChat.AIAssistViewToolbarSettings.html#Syncfusion_EJ2_InteractiveChat_AIAssistViewToolbarSettings">toolbarSettings</a> adds custom toolbar items like a right-aligned <code>Refresh</code> button. The <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.InteractiveChat.AIAssistView.html#Syncfusion_EJ2_InteractiveChat_AIAssistView_PromptSuggestions">promptSuggestions</a> provides AI prompt suggestions, and <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.InteractiveChat.AIAssistView.html#Syncfusion_EJ2_InteractiveChat_AIAssistView_PromptRequest">promptRequest</a> handles prompt requests when triggered. Hover the duration chip shown in the response toolbar to inspect the metric breakdown for that turn.</p>
+    </div>
+}
+@section CustomCanonicalURL{
+    <link rel="canonical" href="https://www.syncfusion.com/aspnet-core-ui-controls/ai-assistview" />
+}

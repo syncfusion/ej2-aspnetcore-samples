@@ -1,0 +1,76 @@
+@page
+
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+    <div class="control-section">
+        <div class="control_wrapper">
+            <ejs-kanban id="Kanban" keyField="Status" allowDragAndDrop="false" dialogOpen="dialogOpen" >
+                <e-data-manager url="https://services.syncfusion.com/aspnet/production/api/Kanban" crossdomain="true"></e-data-manager>
+                <e-kanban-columns>
+                    <e-kanban-column headerText="To Do" keyField="Open"></e-kanban-column>
+                    <e-kanban-column headerText="In Progress" keyField="InProgress"></e-kanban-column>
+                    <e-kanban-column headerText="Testing" keyField="Testing"></e-kanban-column>
+                    <e-kanban-column headerText="Done" keyField="Close"></e-kanban-column>
+                </e-kanban-columns>
+                <e-kanban-cardsettings headerField="Id" contentField="Summary"></e-kanban-cardsettings>
+            </ejs-kanban>
+        </div>
+    </div>
+}
+
+<script>
+    function dialogOpen(args) {
+        args.cancel = true;
+    }
+
+</script>
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This demo presents a task management workflow rendered on a Kanban board using a remote
+            service as the data source. It demonstrates the essential
+            <a href="https://ej2.syncfusion.com/aspnetcore/documentation/kanban/data-binding" target="_blank">dataSource</a>
+            property that binds a <a href="https://ej2.syncfusion.com/aspnetcore/documentation/data/overview" target="_blank">DataManager</a>
+            instance to the board, along with the
+            <a href="https://ej2.syncfusion.com/aspnetcore/documentation/kanban/columns" target="_blank">columns</a>,
+            <a href="https://ej2.syncfusion.com/aspnetcore/documentation/kanban/key-field" target="_blank">keyField</a>,
+            and the <a href="https://ej2.syncfusion.com/aspnetcore/documentation/kanban/events#dialogopen" target="_blank">dialogOpen</a>
+            event APIs. The <code>DataManager</code> fetches the task collection from a remote endpoint and
+            the <code>dialogOpen</code> event is used to cancel the default dialog so the cards remain
+            read-only on double-click.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+    <p>
+        This sample demonstrates remote data binding in the Kanban component using the
+        <a href="https://ej2.syncfusion.com/aspnetcore/documentation/kanban/data-binding" target="_blank">dataSource</a>
+        property and a
+        <a href="https://ej2.syncfusion.com/aspnetcore/documentation/data/overview" target="_blank">DataManager</a>
+        instance. The DataManager acts as an intermediary between the Kanban board and a remote service, enabling data to be fetched and displayed from external data sources.
+    </p>
+    <p>
+        To connect with a remote service, the DataManager requires a service endpoint URL and an adaptor. The adaptor is responsible for processing requests and responses between the component and the remote data source. The <code>syncfusion/ej2-data</code> package provides several built-in adaptors, including <code>UrlAdaptor</code>, <code>ODataAdaptor</code>, <code>ODataV4Adaptor</code>, <code>WebApiAdaptor</code>, and <code>WebMethodAdaptor</code>, for working with different service types.
+    </p>
+    <p>
+        More information on the Essential<sup>®</sup> JS2 Kanban board can be found in this
+        <a href="https://ej2.syncfusion.com/aspnetcore/documentation/kanban/data-binding#remote-data" target="_blank">remote data</a> documentation section.
+    </p>
+    <p>
+        Looking for the full ASP.NET Core Kanban component overview, features, pricing, and documentation?
+        Visit the <a href="https://www.syncfusion.com/gantt-sdk/aspnet-core-kanban-board" target="_blank">ASP.NET Core</a> page.
+    </p>
+    </div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Remote Data in ASP.NET Core Kanban control. Explore here for more details."/>
+                }
+@section Title{
+                    <title>ASP.NET Core Kanban Remote Data Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Remote Data in ASP.NET Core Kanban Control</h1>
+                }

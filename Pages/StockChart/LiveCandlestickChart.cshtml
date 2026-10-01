@@ -1,0 +1,961 @@
+@page
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <style>
+        /* Scoped styles for the live-candlestick-chart sample. */
+        .local-stock-page {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        .local-stock-page .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4px 2px;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .local-stock-page .app-title {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .local-stock-page .app-subtitle {
+            display: block;
+            margin-top: 2px;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .local-stock-page .connection-status {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px 12px;
+            border-radius: 14px;
+            font-size: 12px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .local-stock-page .connection-status.connecting {
+
+            color: #92400e;
+        }
+
+
+        .local-stock-page .connection-status.error {
+
+            color: #991b1b;
+        }
+
+        .local-stock-page .info-panel {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 12px;
+            padding: 16px 20px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+
+        }
+
+        .local-stock-page .info-cell {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            min-width: 0;
+        }
+
+        .local-stock-page .info-label {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .local-stock-page .info-value {
+            overflow: hidden;
+            font-size: 18px;
+            font-weight: 600;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .local-stock-page .chart-shell {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .local-stock-page .status-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0 2px;
+              font-size: 12px;
+            flex-wrap: wrap;
+        }
+        @@media (max-width: 720px) {
+            .local-stock-page .app-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .local-stock-page .info-panel {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                padding: 12px 16px;
+            }
+
+            .local-stock-page .info-value {
+                font-size: 16px;
+            }
+        }
+
+        @@media (max-width: 420px) {
+            .local-stock-page .info-panel {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <div class="control-section">
+        <div class="local-stock-page">
+            <div class="app-header">
+                <div>
+                    <h1 class="app-title">
+                        Real-Time Candlestick Chart
+                    </h1>
+
+                    <span class="app-subtitle">
+                        Syncfusion EJ2 StockChart &middot;
+                        Simulated one-minute OHLCV data streaming
+                    </span>
+                </div>
+
+                <span
+                    id="connection-status"
+                    class="connection-status connecting"
+                    role="status"
+                    aria-live="polite">
+                    Initializing local data
+                </span>
+            </div>
+
+            <div
+                class="info-panel"
+                aria-label="Current candlestick OHLCV values">
+                <div class="info-cell">
+                    <span class="info-label">Open</span>
+                    <span
+                        id="open-value"
+                        class="info-value"
+                        aria-label="Current candle open value">
+                        &mdash;
+                    </span>
+                </div>
+
+                <div class="info-cell">
+                    <span class="info-label">High</span>
+                    <span
+                        id="high-value"
+                        class="info-value"
+                        aria-label="Current candle high value">
+                        &mdash;
+                    </span>
+                </div>
+
+                <div class="info-cell">
+                    <span class="info-label">Low</span>
+                    <span
+                        id="low-value"
+                        class="info-value"
+                        aria-label="Current candle low value">
+                        &mdash;
+                    </span>
+                </div>
+
+                <div class="info-cell">
+                    <span class="info-label">Close</span>
+                    <span
+                        id="close-value"
+                        class="info-value"
+                        aria-label="Current candle close value">
+                        &mdash;
+                    </span>
+                </div>
+
+                <div class="info-cell">
+                    <span class="info-label">Volume</span>
+                    <span
+                        id="volume-value"
+                        class="info-value"
+                        aria-label="Current candle volume value">
+                        &mdash;
+                    </span>
+                </div>
+            </div>
+
+            <div class="chart-shell">
+                <div
+                    id="stockChart"
+                    role="img"
+                    aria-label="Real-time candlestick stock chart with simulated local OHLCV data">
+                </div>
+
+                <div class="status-row" aria-live="polite">
+                    <span class="info-label">Last candle status</span>
+                    <span id="candle-status">Initializing data stream</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="action-description">
+        <p>
+            This
+            <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.syncfusion.com/aspnet-core-ui-controls/stock-chart"
+                aria-label="ASP.NET Core Stock Chart with simulated real-time local data">
+                ASP.NET Core Stock Chart
+            </a>
+            example demonstrates a
+            <strong>real-time candlestick chart</strong> driven by continuously
+            updated local data. The chart starts with 120 simulated one-minute
+            OHLCV candles and then dynamically updates the active candle or
+            appends a new candle using <code>series.setData()</code> and
+            <code>series.addPoint()</code>.
+        </p>
+    </div>
+
+    <div id="description">
+        <p>
+            In this example, the chart uses a plain in-memory array as its data
+            source, so no network request is required. A timer simulates a
+            real-time stock data stream by generating frequent price updates for
+            one-minute OHLCV candles.
+        </p>
+
+        <p>
+            Each generated record is processed in one of the following ways:
+        </p>
+
+        <ul>
+            <li>
+                When the generated record has the
+                <strong>same timestamp</strong> as the latest candle, the existing
+                candle is updated using
+                <code>series.setData(candle, 0)</code>. Animation is disabled for
+                this operation because updates occur frequently.
+            </li>
+
+            <li>
+                When the generated record has a
+                <strong>newer timestamp</strong>, a new one-minute candlestick is
+                appended using
+                <code>series.addPoint(candle, 100)</code> with a short animation.
+            </li>
+        </ul>
+
+        <p>
+            The open, high, low, close, and volume values shown above the chart
+            represent the latest simulated candle. The values are refreshed
+            whenever the local data stream updates the active candle or adds a
+            new one.
+        </p>
+
+        <p>
+            You can replace the simulated data returned by
+            <code>createInitialLocalData()</code> with data from an API,
+            WebSocket, or another local data source. The same update logic can be
+            used to build real-time stock market visualizations, financial
+            dashboards, and live trading charts.
+        </p>
+
+        <br>
+        <p>
+            More information about configuring the Stock Chart component is
+            available in the
+            <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://ej2.syncfusion.com/aspnetcore/documentation/stock-chart/getting-started/"
+                aria-label="Navigate to the ASP.NET Core Stock Chart getting started documentation">
+                Stock Chart documentation
+            </a>.
+        </p>
+    </div>
+
+    <script src="~/scripts/StockChartData/theme-color.js"></script>
+    <script>
+        (function () {
+            'use strict';
+    
+            /*
+             * =====================================================
+             * CONFIGURATION
+             * =====================================================
+             */
+    
+            var ONE_MINUTE_MS = 60 * 1000;
+            var UPDATE_INTERVAL_MS = 100;
+            var UPDATES_PER_CANDLE = 10;
+            var UPDATE_ANIMATION_DURATION = 0;
+            var ADD_ANIMATION_DURATION = 100;
+            var PRICE_MOVEMENT_MULTIPLIER = 2;
+            var INITIAL_CANDLE_COUNT = 120;
+            var INITIAL_PRICE = 375;
+    
+            /*
+             * =====================================================
+             * SAMPLE STATE
+             * =====================================================
+             */
+    
+            var stockData = [];
+            var stockChart = null;
+            var updateTimer = null;
+            var updateIndex = 0;
+            var sampleInstanceId = 0;
+            var isSampleDisposing = false;
+            var beforeUnloadHandler = null;
+            var pageHideHandler = null;
+    
+            /*
+             * The registry is stored globally so a newly evaluated copy of this
+             * script can dispose the previous copy during culture or theme changes.
+             * All other variables remain private to this IIFE.
+             */
+            var REGISTRY_KEY = '_liveCandlestickSampleRegistry';
+            var registry = window[REGISTRY_KEY] = window[REGISTRY_KEY] || {};
+    
+            /*
+             * =====================================================
+             * HTML ELEMENT IDS
+             * =====================================================
+             */
+    
+            var ELEMENT_IDS = {
+                stockChart: 'stockChart',
+                connectionStatus: 'connection-status',
+                candleStatus: 'candle-status',
+                openValue: 'open-value',
+                highValue: 'high-value',
+                lowValue: 'low-value',
+                closeValue: 'close-value',
+                volumeValue: 'volume-value'
+            };
+    
+            /*
+             * =====================================================
+             * DISPLAY HELPERS
+             * =====================================================
+             */
+    
+            function setElementValue(elementId, value) {
+                var element = document.getElementById(elementId);
+    
+                if (element) {
+                    element.textContent = value;
+                }
+            }
+    
+            function updateConnectionStatus(message, statusClass) {
+                var element = document.getElementById(ELEMENT_IDS.connectionStatus);
+    
+                if (!element) {
+                    return;
+                }
+    
+                element.textContent = message;
+                element.className = 'connection-status ' + statusClass;
+            }
+    
+            function formatPrice(value) {
+                if (!isFinite(value)) {
+                    return '\u2014';
+                }
+    
+                return Number(value).toFixed(2);
+            }
+    
+            function formatVolume(value) {
+                if (!isFinite(value)) {
+                    return '\u2014';
+                }
+    
+                return Number(value).toFixed(4);
+            }
+    
+            function updateMarketValues(candle, status) {
+                if (!candle || isSampleDisposing) {
+                    return;
+                }
+    
+                setElementValue(ELEMENT_IDS.openValue, formatPrice(candle.open));
+                setElementValue(ELEMENT_IDS.highValue, formatPrice(candle.high));
+                setElementValue(ELEMENT_IDS.lowValue, formatPrice(candle.low));
+                setElementValue(ELEMENT_IDS.closeValue, formatPrice(candle.close));
+                setElementValue(ELEMENT_IDS.volumeValue, formatVolume(candle.volume));
+                setElementValue(ELEMENT_IDS.candleStatus, status);
+            }
+    
+            /*
+             * =====================================================
+             * DATA HELPERS
+             * =====================================================
+             */
+    
+            function correctFloat(value) {
+                return Number(value.toFixed(4));
+            }
+    
+            function randomBetween(minimum, maximum) {
+                return minimum + Math.random() * (maximum - minimum);
+            }
+    
+            function getCurrentMinute() {
+                return Math.floor(Date.now() / ONE_MINUTE_MS) * ONE_MINUTE_MS;
+            }
+    
+            function createHistoricalCandle(timestamp, openingPrice) {
+                var movement = randomBetween(-1.5, 1.5);
+                var close = correctFloat(Math.max(1, openingPrice + movement));
+                var high = correctFloat(Math.max(openingPrice, close) + randomBetween(0.05, 0.7));
+                var low = correctFloat(Math.max(1, Math.min(openingPrice, close) - randomBetween(0.05, 0.7)));
+    
+                return {
+                    x: new Date(timestamp),
+                    open: correctFloat(openingPrice),
+                    high: high,
+                    low: low,
+                    close: close,
+                    volume: correctFloat(randomBetween(1, 30))
+                };
+            }
+    
+            function createInitialLocalData() {
+                var currentMinute = getCurrentMinute();
+                var startingTime = currentMinute - (INITIAL_CANDLE_COUNT - 1) * ONE_MINUTE_MS;
+                var price = INITIAL_PRICE;
+                var index;
+                var timestamp;
+                var candle;
+    
+                stockData = [];
+    
+                for (index = 0; index < INITIAL_CANDLE_COUNT; index++) {
+                    timestamp = startingTime + index * ONE_MINUTE_MS;
+                    candle = createHistoricalCandle(timestamp, price);
+    
+                    stockData.push(candle);
+                    price = candle.close;
+                }
+            }
+    
+            function createUpdatedCandle(currentCandle) {
+                var movement = correctFloat((Math.random() - 0.5) * PRICE_MOVEMENT_MULTIPLIER);
+                var newClose = correctFloat(Math.max(1, currentCandle.close + movement));
+    
+                return {
+                    x: currentCandle.x,
+                    open: currentCandle.open,
+                    high: correctFloat(Math.max(currentCandle.high, newClose)),
+                    low: correctFloat(Math.min(currentCandle.low, newClose)),
+                    close: newClose,
+                    volume: correctFloat(currentCandle.volume + randomBetween(0.01, 0.3))
+                };
+            }
+    
+            function createNewCandle(previousCandle) {
+                var openingPrice = previousCandle.close;
+    
+                return {
+                    x: new Date(previousCandle.x.getTime() + ONE_MINUTE_MS),
+                    open: openingPrice,
+                    high: openingPrice,
+                    low: openingPrice,
+                    close: openingPrice,
+                    volume: correctFloat(randomBetween(0.1, 1))
+                };
+            }
+    
+            /*
+             * =====================================================
+             * LIFECYCLE HELPERS
+             * =====================================================
+             */
+    
+            function isStockChartElementMounted() {
+                var chartElement = document.getElementById(ELEMENT_IDS.stockChart);
+    
+                return !!chartElement &&
+                    chartElement.isConnected &&
+                    document.documentElement.contains(chartElement);
+            }
+    
+            function stopDynamicUpdates() {
+                if (updateTimer !== null) {
+                    window.clearInterval(updateTimer);
+                    updateTimer = null;
+                }
+            }
+    
+            function removeSampleEvents() {
+                if (beforeUnloadHandler !== null) {
+                    window.removeEventListener('beforeunload', beforeUnloadHandler);
+                    beforeUnloadHandler = null;
+                }
+    
+                if (pageHideHandler !== null) {
+                    window.removeEventListener('pagehide', pageHideHandler);
+                    pageHideHandler = null;
+                }
+            }
+    
+            function destroyStockChart() {
+                var chartToDestroy = stockChart;
+    
+                /*
+                 * Clear the module reference before calling destroy(). A queued
+                 * interval callback cannot retrieve the chart while destruction
+                 * is in progress.
+                 */
+                stockChart = null;
+    
+                if (!chartToDestroy || chartToDestroy.isDestroyed) {
+                    return;
+                }
+    
+                try {
+                    chartToDestroy.destroy();
+                } catch (error) {
+                    /*
+                     * The sample browser may already have destroyed the control.
+                     */
+                }
+            }
+    
+            function disposeSample() {
+                if (isSampleDisposing) {
+                    return;
+                }
+    
+                isSampleDisposing = true;
+    
+                /*
+                 * Invalidate callbacks captured by the current interval.
+                 */
+                sampleInstanceId++;
+    
+                /*
+                 * Stop asynchronous work before destroying the control.
+                 */
+                stopDynamicUpdates();
+                removeSampleEvents();
+                destroyStockChart();
+    
+                stockData = [];
+                updateIndex = 0;
+            }
+    
+            function addSampleEvents() {
+                removeSampleEvents();
+    
+                beforeUnloadHandler = function () {
+                    disposeSample();
+                };
+    
+                pageHideHandler = function () {
+                    disposeSample();
+                };
+    
+                window.addEventListener('beforeunload', beforeUnloadHandler);
+                window.addEventListener('pagehide', pageHideHandler);
+            }
+    
+            /*
+             * =====================================================
+             * STOCK CHART SERIES HELPERS
+             * =====================================================
+             */
+    
+            function getCandleSeries() {
+                var innerChart;
+                var directSeries;
+                var innerSeries;
+    
+                if (
+                    isSampleDisposing ||
+                    !stockChart ||
+                    stockChart.isDestroyed ||
+                    !isStockChartElementMounted()
+                ) {
+                    return null;
+                }
+    
+                try {
+                    innerChart = stockChart.chart;
+    
+                    if (
+                        !innerChart ||
+                        innerChart.isDestroyed ||
+                        !innerChart.element ||
+                        !innerChart.element.isConnected
+                    ) {
+                        return null;
+                    }
+    
+                    directSeries = stockChart.series && stockChart.series.length
+                        ? stockChart.series[0]
+                        : null;
+    
+                    if (
+                        directSeries &&
+                        directSeries.chart &&
+                        !directSeries.chart.isDestroyed &&
+                        typeof directSeries.setData === 'function' &&
+                        typeof directSeries.addPoint === 'function'
+                    ) {
+                        return directSeries;
+                    }
+    
+                    innerSeries = innerChart.series && innerChart.series.length
+                        ? innerChart.series[0]
+                        : null;
+    
+                    if (
+                        innerSeries &&
+                        innerSeries.chart &&
+                        !innerSeries.chart.isDestroyed &&
+                        typeof innerSeries.setData === 'function' &&
+                        typeof innerSeries.addPoint === 'function'
+                    ) {
+                        return innerSeries;
+                    }
+                } catch (error) {
+                    return null;
+                }
+    
+                return null;
+            }
+    
+            function updateCurrentPoint(candle) {
+                var series = getCandleSeries();
+    
+                if (!series) {
+                    return false;
+                }
+    
+                try {
+                    series.setData(candle, UPDATE_ANIMATION_DURATION);
+                    return true;
+                } catch (error) {
+                    /*
+                     * The inner Chart can be destroyed after getCandleSeries()
+                     * completes but before setData() begins.
+                     */
+                    disposeSample();
+                    return false;
+                }
+            }
+    
+            function addNewPoint(candle) {
+                var series = getCandleSeries();
+    
+                if (!series) {
+                    return false;
+                }
+    
+                try {
+                    series.addPoint(candle, ADD_ANIMATION_DURATION);
+                    return true;
+                } catch (error) {
+                    /*
+                     * The inner Chart can be destroyed after getCandleSeries()
+                     * completes but before addPoint() begins.
+                     */
+                    disposeSample();
+                    return false;
+                }
+            }
+    
+            /*
+             * =====================================================
+             * DYNAMIC UPDATE LOOP
+             * =====================================================
+             */
+    
+            function processDynamicUpdate(instanceId) {
+                var lastIndex;
+                var currentCandle;
+                var shouldAddNewCandle;
+                var newCandle;
+                var updatedCandle;
+    
+                if (
+                    instanceId !== sampleInstanceId ||
+                    isSampleDisposing
+                ) {
+                    return;
+                }
+    
+                /*
+                 * ASP.NET MVC sample navigation or a culture change may replace
+                 * the control markup without firing beforeunload. The interval
+                 * detects the detached element and performs complete cleanup.
+                 */
+                if (!isStockChartElementMounted()) {
+                    disposeSample();
+                    return;
+                }
+    
+                if (!stockData.length || !getCandleSeries()) {
+                    return;
+                }
+    
+                lastIndex = stockData.length - 1;
+                currentCandle = stockData[lastIndex];
+                shouldAddNewCandle = updateIndex > 0 && updateIndex % UPDATES_PER_CANDLE === 0;
+    
+                if (shouldAddNewCandle) {
+                    newCandle = createNewCandle(currentCandle);
+    
+                    /*
+                     * Call the component API before modifying the local data.
+                     * If the chart is being destroyed, local state is unchanged.
+                     */
+                    if (!addNewPoint(newCandle)) {
+                        return;
+                    }
+    
+                    stockData.push(newCandle);
+                    updateMarketValues(newCandle, 'New simulated one-minute candle');
+                } else {
+                    updatedCandle = createUpdatedCandle(currentCandle);
+    
+                    if (!updateCurrentPoint(updatedCandle)) {
+                        return;
+                    }
+    
+                    stockData[lastIndex] = updatedCandle;
+                    updateMarketValues(updatedCandle, 'Current candle updated');
+                }
+    
+                updateIndex++;
+            }
+    
+            function startDynamicUpdates(instanceId) {
+                stopDynamicUpdates();
+    
+                if (
+                    instanceId !== sampleInstanceId ||
+                    isSampleDisposing ||
+                    !getCandleSeries()
+                ) {
+                    return;
+                }
+    
+                updateTimer = window.setInterval(function () {
+                    processDynamicUpdate(instanceId);
+                }, UPDATE_INTERVAL_MS);
+            }
+    
+            /*
+             * =====================================================
+             * SAMPLE INITIALIZATION
+             * =====================================================
+             */
+    
+            /*
+             * Dispose a previous execution of this sample. This handles culture
+             * and theme changes where the Razor sample script is evaluated again
+             * without unloading the browser window.
+             */
+            if (typeof registry.dispose === 'function') {
+                try {
+                    registry.dispose();
+                } catch (error) {
+                    /*
+                     * The previous sample may already have been disposed.
+                     */
+                }
+            }
+    
+            /*
+             * Register this IIFE's cleanup function before creating the chart.
+             */
+            registry.dispose = disposeSample;
+    
+            isSampleDisposing = false;
+            sampleInstanceId++;
+    
+            var currentInstanceId = sampleInstanceId;
+    
+            createInitialLocalData();
+            addSampleEvents();
+    
+            updateConnectionStatus('Local data ready', 'connected');
+            updateMarketValues(
+                stockData.length ? stockData[stockData.length - 1] : null,
+                stockData.length ? 'Local data loaded' : 'No local data available'
+            );
+    
+            stockChart = new ej.charts.StockChart({
+                width: '100%',
+                height: '100%',
+                title: 'Real-Time Stock Market Data',
+                chartArea: {
+                    border: {
+                        width: 0
+                    }
+                },
+                primaryXAxis: {
+                    valueType: 'DateTime',
+                    intervalType: 'Auto',
+                    labelFormat: 'HH:mm',
+                    lineStyle: {
+                        color: 'transparent'
+                    },
+                    crosshairTooltip: {
+                        enable: false
+                    }
+                },
+                primaryYAxis: {
+                    labelPosition: 'Outside',
+                    lineStyle: {
+                        color: 'transparent'
+                    },
+                    majorTickLines: {
+                        color: 'transparent',
+                        height: 0
+                    },
+                    crosshairTooltip: {
+                        enable: false
+                    }
+                },
+                crosshair: {
+                    enable: false
+                },
+                tooltip: {
+                    enable: false
+                },
+                series: [
+                    {
+                        dataSource: stockData,
+                        type: 'Candle',
+                        xName: 'x',
+                        open: 'open',
+                        high: 'high',
+                        low: 'low',
+                        close: 'close',
+                        volume: 'volume',
+                        name: 'Local dynamic data',
+                        bullFillColor: '#90EE90',
+                        bearFillColor: '#FF7F7F',
+                        enableSolidCandles: true,
+                        border: {
+                            width: 1
+                        },
+                        animation: {
+                            enable: false
+                        },
+                        lastValueLabel: {
+                            enable: true,
+                            background: '#FF7F7F',
+                            dashArray: '3,2',
+                            lineWidth: 0.5,
+                            font: {
+                                color: '#ffffff',
+                                size: '11px'
+                            }
+                        }
+                    }
+                ],
+                seriesType: [],
+                indicatorType: [],
+                trendlineType: [],
+                periods: [
+                    {
+                        text: '15m',
+                        interval: 15,
+                        intervalType: 'Minutes'
+                    },
+                    {
+                        text: '1h',
+                        interval: 1,
+                        intervalType: 'Hours',
+                        selected: true
+                    },
+                    {
+                        text: 'All'
+                    }
+                ],
+                enableCustomRange: false,
+                load: function (args) {
+                    loadStockChartTheme(args);
+                },
+                loaded: function () {
+                    if (
+                        currentInstanceId !== sampleInstanceId ||
+                        isSampleDisposing
+                    ) {
+                        return;
+                    }
+    
+                    startDynamicUpdates(currentInstanceId);
+                }
+            });
+    
+            stockChart.appendTo('#stockChart');
+        }());
+    </script>
+}
+@*custom code start*@
+@section Scripts {
+
+}
+@*custom code end*@
+@section ActionDescription{
+    <p>This <a target="_blank" href="https://www.syncfusion.com/aspnet-core-ui-controls/stock-chart" aria-label="Navigate to explore the syncfusion ASP.NET Core Stock Chart">ASP.NET Core Stock Chart</a> example demonstrates a <strong>real-time candlestick chart</strong> driven by continuously updated local data. The chart starts with 120 simulated one-minute OHLCV candles and then dynamically updates the active candle or appends a new candle using <code>series.setData()</code> and <code>series.addPoint()</code>.</p>
+}
+@section Description{
+    <p>
+        In this example, the chart uses a plain in-memory array as its data
+        source, so no network request is required. A timer simulates a
+        real-time stock data stream by generating frequent price updates for
+        one-minute OHLCV candles.
+    </p>
+    <p>
+        The open, high, low, close, and volume values shown above the chart
+        represent the latest simulated candle. The values are refreshed
+        whenever the local data stream updates the active candle or adds a
+        new one.
+    </p>
+    <p>
+        More information about configuring the Stock Chart component is
+        available in the
+        <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://ej2.syncfusion.com/aspnetcore/documentation/stock-chart/getting-started/"
+            aria-label="Navigate to the ASP.NET Core Stock Chart getting started documentation">
+            Stock Chart documentation
+        </a>.
+    </p>
+}
+@section Title{
+                    <title>ASP.NET Core StockChart Live Candlestick Chart Example - Syncfusion Demos </title>
+                }
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Live Candlestick Chart in ASP.NET Core StockChart control. Explore here for more details."/>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Live Candlestick Chart in ASP.NET Core StockChart Control</h1>
+                }

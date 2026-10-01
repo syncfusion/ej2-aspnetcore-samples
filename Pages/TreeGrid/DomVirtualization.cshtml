@@ -1,0 +1,220 @@
+@page
+@using EJ2CoreSampleBrowser.Models;
+@using Syncfusion.EJ2
+
+@{
+    ViewData["Title"] = "DOM Virtualization";
+}
+
+@section ControlsSection{
+
+    <div class="control-section">
+        <div class="content-wrapper">
+            <ejs-treegrid id="TreeGrid" dataSource="@DomVirtualizationData.GetDomVirtualizationData()" height="400" rowHeight="50" allowSorting="true"
+                          enableVirtualization="true" enableDomVirtualization="true" enableVirtualMaskRow="true" clipMode="EllipsisWithTooltip"
+                          idMapping="ItemID" parentIdMapping="ParentItemID" treeColumnIndex="2">
+                <e-treegrid-pagesettings pageSize="100"></e-treegrid-pagesettings>
+                <e-treegrid-domVirtualizationSettings rowBuffer="20"></e-treegrid-domVirtualizationSettings>
+                <e-treegrid-columns>
+                    <e-treegrid-column field="ItemID" headerText="ID" width="110" textAlign="Right" isPrimaryKey="true" visible="true"></e-treegrid-column>
+                    <e-treegrid-column field="ParentItemID" headerText="Parent ID" width="110" textAlign="Right" visible="false"></e-treegrid-column>
+                    <e-treegrid-column field="ItemName" headerText="Inventory Name" width="320"></e-treegrid-column>
+                    <e-treegrid-column field="ItemType" headerText="Type" width="120" visible="false"></e-treegrid-column>
+                    <e-treegrid-column field="Category" headerText="Category" width="200"></e-treegrid-column>
+                    <e-treegrid-column field="Region" headerText="Location" width="200" template="#regionTemplate"></e-treegrid-column>
+                    <e-treegrid-column field="Supplier" headerText="Supplier" width="240"></e-treegrid-column>
+                    <e-treegrid-column field="StockStatus" headerText="Stock Status" width="180" template="#statusTemplate"></e-treegrid-column>
+                    <e-treegrid-column field="Quantity" headerText="Quantity" width="120" textAlign="Right" editType="numericedit"></e-treegrid-column>
+                    <e-treegrid-column field="UnitPrice" headerText="Unit Price" width="130" textAlign="Right" format="C2" editType="numericedit"></e-treegrid-column>
+                </e-treegrid-columns>
+            </ejs-treegrid>
+        </div>
+    </div>
+
+    <script type="text/x-template" id="statusTemplate">
+        <div class="rg-badge ${getStatusClass(StockStatus)}">${StockStatus}</div>
+    </script>
+
+    <script type="text/x-template" id="regionTemplate">
+        <div class="rg-region">
+            <span class="rg-region-flag">${getFlagSvg(Country)}</span>
+            <span class="rg-region-name">${Region}</span>
+        </div>
+    </script>
+
+    <script>
+        function getStatusClass(status) {
+            var normalized = (status || '').toLowerCase();
+            if (normalized.indexOf('discontinued') === 0) return 'rg-badge-stock-discontinued';
+            if (normalized.indexOf('low stock') === 0) return 'rg-badge-stock-low';
+            if (normalized.indexOf('out of stock') === 0) return 'rg-badge-stock-out';
+            return 'rg-badge-stock-available';
+        }
+
+        function getFlagSvg(region) {
+            var svg = '';
+            switch (region) {
+                case 'United States':
+                    svg = '<svg width="20" height="14" viewBox="0 0 20 14" style="border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,0.2)"><rect width="20" height="14" fill="#B22234"/><rect y="0" width="20" height="2" fill="#fff"/><rect y="4" width="20" height="2" fill="#fff"/><rect y="8" width="20" height="2" fill="#fff"/><rect y="12" width="20" height="2" fill="#fff"/><rect width="8" height="8" fill="#3C3B6E"/></svg>';
+                    break;
+                case 'Canada':
+                    svg = '<svg width="20" height="14" viewBox="0 0 20 14" style="border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,0.2)"><rect width="20" height="14" fill="#fff"/><rect width="4" height="14" fill="#D52B1E"/><rect x="16" width="4" height="14" fill="#D52B1E"/><path d="M10 4 L11 6 L9.5 6.5 L11 7 L10 10 L9 7 L7.5 6.5 L9 6 Z" fill="#D52B1E"/></svg>';
+                    break;
+                case 'United Kingdom':
+                    svg = '<svg width="20" height="14" viewBox="0 0 20 14" style="border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,0.2)"><rect width="20" height="14" fill="#012169"/><path d="M0 0L20 14M20 0L0 14" stroke="#FFF" stroke-width="3"/><path d="M10 0V14M0 7H20" stroke="#FFF" stroke-width="4"/><path d="M10 0V14M0 7H20" stroke="#C8102E" stroke-width="2"/></svg>';
+                    break;
+                case 'France':
+                    svg = '<svg width="20" height="14" viewBox="0 0 20 14" style="border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,0.2)"><rect width="7" height="14" fill="#0055A4"/><rect x="7" width="6" height="14" fill="#FFF"/><rect x="13" width="7" height="14" fill="#EF4135"/></svg>';
+                    break;
+                case 'Australia':
+                    svg = '<svg width="20" height="14" viewBox="0 0 20 14" style="border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,0.2)"><rect width="20" height="14" fill="#012169"/><rect width="8" height="6" fill="#012169"/><path d="M0 0L8 6M8 0L0 6" stroke="#FFF" stroke-width="1"/><path d="M4 0V6M0 3H8" stroke="#FFF" stroke-width="2"/><circle cx="15" cy="10" r="1.2" fill="#FFF"/><circle cx="17" cy="7" r="0.8" fill="#FFF"/></svg>';
+                    break;
+                case 'Japan':
+                    svg = '<svg width="20" height="14" viewBox="0 0 20 14" style="border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,0.2)"><rect width="20" height="14" fill="#FFF"/><circle cx="10" cy="7" r="4" fill="#BC002D"/></svg>';
+                    break;
+                case 'Germany':
+                    svg = '<svg width="20" height="14" viewBox="0 0 20 14" style="border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,0.2)"><rect width="20" height="4.67" fill="#000"/><rect y="4.67" width="20" height="4.67" fill="#DD0000"/><rect y="9.34" width="20" height="4.66" fill="#FFCE00"/></svg>';
+                    break;
+                case 'Singapore':
+                    svg = '<svg width="20" height="14" viewBox="0 0 20 14" style="border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,0.2)"><rect width="20" height="7" fill="#EF3340"/><rect y="7" width="20" height="7" fill="#FFF"/><circle cx="6" cy="4" r="2.2" fill="#FFF"/><circle cx="7" cy="4" r="1.7" fill="#EF3340"/></svg>';
+                    break;
+                case 'Brazil':
+                    svg = '<svg width="20" height="14" viewBox="0 0 20 14" style="border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,0.2)"><rect width="20" height="14" fill="#009B3A"/><path d="M10 1 L19 7 L10 13 L1 7 Z" fill="#FEDF00"/><circle cx="10" cy="7" r="3.5" fill="#002776"/></svg>';
+                    break;
+                case 'Netherlands':
+                    svg = '<svg width="20" height="14" viewBox="0 0 20 14" style="border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,0.2)"><rect width="20" height="4.67" fill="#AE1C28"/><rect y="4.67" width="20" height="4.67" fill="#FFF"/><rect y="9.34" width="20" height="4.66" fill="#21468B"/></svg>';
+                    break;
+                case 'South Korea':
+                    svg = '<svg width="20" height="14" viewBox="0 0 20 14" style="border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,0.2)"><rect width="20" height="14" fill="#FFF"/><circle cx="10" cy="7" r="3.5" fill="#CD2E3A"/><path d="M7 5 L10 8 L13 5" stroke="#0047A0" stroke-width="1.2" fill="none"/><path d="M7 9 L10 6 L13 9" stroke="#0047A0" stroke-width="1.2" fill="none"/></svg>';
+                    break;
+                case 'Switzerland':
+                    svg = '<svg width="20" height="14" viewBox="0 0 20 14" style="border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,0.2)"><rect width="20" height="14" fill="#D52B1E"/><rect x="8" y="3" width="4" height="8" fill="#FFF"/><rect x="6" y="5" width="8" height="4" fill="#FFF"/></svg>';
+                    break;
+                case 'Sweden':
+                    svg = '<svg width="20" height="14" viewBox="0 0 20 14" style="border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,0.2)"><rect width="20" height="14" fill="#006AA7"/><rect x="6" width="3" height="14" fill="#FECC02"/><rect y="5" width="20" height="3" fill="#FECC02"/></svg>';
+                    break;
+                case 'Italy':
+                    svg = '<svg width="20" height="14" viewBox="0 0 20 14" style="border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,0.2)"><rect width="7" height="14" fill="#009246"/><rect x="7" width="6" height="14" fill="#FFF"/><rect x="13" width="7" height="14" fill="#CE2B37"/></svg>';
+                    break;
+                case 'Spain':
+                    svg = '<svg width="20" height="14" viewBox="0 0 20 14" style="border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,0.2)"><rect width="20" height="4.67" fill="#AA151B"/><rect y="4.67" width="20" height="4.67" fill="#F1BF00"/><rect y="9.34" width="20" height="4.66" fill="#AA151B"/></svg>';
+                    break;
+                case 'India':
+                    svg = '<svg width="20" height="14" viewBox="0 0 20 14" style="border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,0.2)"><rect width="20" height="4.67" fill="#FF9933"/><rect y="4.67" width="20" height="4.67" fill="#FFF"/><rect y="9.34" width="20" height="4.66" fill="#138808"/><circle cx="10" cy="7" r="1.6" fill="#000080"/></svg>';
+                    break;
+                default:
+                    svg = '<svg width="20" height="14" viewBox="0 0 20 14"><rect width="20" height="14" fill="#6b7280"/></svg>';
+            }
+            return svg;
+        }
+    </script>
+}
+
+@section Meta{
+    <meta name="description" content="This demo showcases DOM virtualization in the ASP.NET Core Tree Grid by rendering only the rows needed for the current viewport while working with a large self-referential data source." />
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            DOM virtualization is a performance optimization feature that renders only the visible rows within the Tree Grid
+            viewport instead of rendering the entire dataset. This significantly improves performance when working with large
+            volumes of hierarchical data.
+        </p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            With DOM virtualization enabled, the Tree Grid calculates the content height and renders only the necessary
+            <code>tr</code> elements for the visible portion of the control. As the user scrolls, previously rendered rows are
+            replaced with newly required rows, ensuring that only a minimal number of DOM elements are maintained at any time.
+            This improves rendering speed and memory usage for large datasets.
+        </p>
+        <p>
+            DOM virtualization is enabled by setting the <code>enableDomVirtualization</code> property to <code>true</code>. This
+            demo loads 100,000 hierarchical records using DOM virtualization. Row virtualization is enabled using the
+            <code>enableVirtualization</code> property.
+        </p>
+        <p>
+            More information on DOM virtualization can be found in the
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/tree-grid/virtual-scroll"
+              aria-label="Navigate to the documentation for DOM virtualization in ASP.NET Core Tree Grid control">documentation</a>
+            section.
+        </p>
+        <p>
+            Looking for the full ASP.NET Core Tree Grid component overview, features, pricing, and documentation? Visit our
+            <a target="_blank" href="https://www.syncfusion.com/aspnet-core-ui-controls/tree-grid">ASP.NET Core Tree Grid component</a> page.
+        </p>
+    </div>
+}
+
+@section Title{
+    <title>ASP.NET Core Tree Grid DOM Virtualization Example - Syncfusion Demos</title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of DOM Virtualization in ASP.NET Core Tree Grid Control</h1>
+}
+
+<style>
+    .rg-badge {
+        box-sizing: border-box;
+        border-radius: 4px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 500;
+        width: 120px;
+        min-height: 32px;
+        line-height: 1.2;
+        text-align: center;
+    }
+
+    .rg-badge-stock-available {
+        color: #15803d;
+        background-color: #fff;
+        border: 1.5px solid #ede3fb;
+        border-radius: 20px;
+    }
+
+    .rg-badge-stock-low {
+        color: #b45309;
+        background-color: #fff;
+        border: 1.5px solid #ede3fb;
+        border-radius: 20px;
+    }
+
+    .rg-badge-stock-out {
+        color: #dc2626;
+        background-color: #fff;
+        border: 1.5px solid #ede3fb;
+        border-radius: 20px;
+    }
+
+    .rg-badge-stock-discontinued {
+        color: #6b7280;
+        background-color: #fff;
+        border: 1.5px solid #ede3fb;
+        border-radius: 20px;
+    }
+
+    .rg-region {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .rg-region-flag {
+        display: inline-flex;
+        width: 20px;
+        height: 14px;
+        border-radius: 2px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        flex-shrink: 0;
+    }
+</style>

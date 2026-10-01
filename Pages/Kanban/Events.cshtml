@@ -1,0 +1,177 @@
+@page
+
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2
+
+@{
+    var data = new KanbanDataModels().KanbanTasks();
+}
+
+@section ControlsSection{
+    <div class="col-lg-8 control-section">
+        <div class="control_wrapper">
+            <ejs-kanban id="Kanban" keyField="Status" height="500" dataSource="@data" created="onCreate" actionBegin="onActionBegin"
+                        actionComplete="onActionComplete" actionFailure="onActionFailure" dataBinding="onDataBinding" dataBound="onDataBound" cardRendered="onCardRendered" queryCellInfo="OnQueryCellInfo" cardClick="onCardClick" cardDoubleClick="onCardDoubleClick" dragStart="onDragStart" drag="onDrag"
+                        dragStop="onDragStop">
+                <e-kanban-columns>
+                    <e-kanban-column headerText="To Do" keyField="Open" allowToggle="true"></e-kanban-column>
+                    <e-kanban-column headerText="In Progress" keyField="InProgress" allowToggle="true"></e-kanban-column>
+                    <e-kanban-column headerText="Done" keyField="Close" allowToggle="true"></e-kanban-column>
+                </e-kanban-columns>
+                <e-kanban-cardsettings contentField="Summary" headerField="Id"></e-kanban-cardsettings>
+                <e-kanban-swimlanesettings keyField="Assignee"></e-kanban-swimlanesettings>
+            </ejs-kanban>
+        </div>
+    </div>
+    <div class="col-lg-4 property-section">
+        <table id="property" title="Event Trace">
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="eventarea">
+                            <span class="EventLog" id="EventLog"></span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="evtbtn">
+                            <ejs-button id="clear" content="Clear"></ejs-button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+}
+
+<style>
+    .eventarea {
+        height: 245px;
+        overflow: auto
+    }
+
+    .EventLog {
+        word-break: normal;
+    }
+
+    .evtbtn {
+        padding-bottom: 10px
+    }
+
+    #EventLog b {
+        color: #018607;
+    }
+    .fluent-dark .e-kanban #EventLog b, .bootstrap5-dark .e-kanban #EventLog b, .tailwind-dark .e-kanban #EventLog b, .tailwind3-dark .e-kanban #EventLog b, .material-dark .e-kanban #EventLog b, .fabric-dark .e-kanban #EventLog b, .bootstrap-dark .e-kanban #EventLog b, .highcontrast .e-kanban #EventLog b, .material3-dark .e-kanban #EventLog b {
+        color:#21A32E;
+    }
+
+    hr {
+        margin: 1px 10px 1px 0px;
+        border-top: 1px solid #eee;
+    }
+</style>
+
+@section PreScripts {
+    <script>
+        document.getElementById('clear').onclick = () => {
+            document.getElementById('EventLog').innerHTML = '';
+        };
+        function onCreate() {
+            appendElement('Kanban <b>Load</b> event called<hr>');
+        }
+        function onActionBegin() {
+            appendElement('Kanban <b>Action Begin</b> event called<hr>');
+        }
+        function onActionComplete() {
+            appendElement('Kanban <b>Action Complete</b> event called<hr>');
+        }
+        function onActionFailure() {
+            appendElement('Kanban <b>Action Failure</b> event called<hr>');
+        }
+        function onDataBinding() {
+            appendElement('Kanban <b>Data Binding</b> event called<hr>');
+        }
+        function onDataBound() {
+            appendElement('Kanban <b>Data Bound</b> event called<hr>');
+        }
+        function onCardRendered(args) {
+            appendElement('Kanban - ' + args.data.Id + ' - <b>Card Rendered</b> event called<hr>');
+        }
+        function OnQueryCellInfo() {
+            appendElement('Kanban <b>Query Cell Info</b> event called<hr>');
+        }
+        function onCardClick(args) {
+            appendElement('Kanban - ' + args.data.Id + ' - <b>Card Click</b> event called<hr>');
+        }
+        function onCardDoubleClick(args) {
+            appendElement('Kanban - ' + args.data.Id + ' - <b>Card Double Click</b> event called<hr>');
+        }
+        function onDragStart() {
+            appendElement('Kanban <b>Drag Start</b> event called<hr>');
+        }
+        function onDrag() {
+            appendElement('Kanban <b>Drag</b> event called<hr>');
+        }
+        function onDragStop() {
+            appendElement('Kanban <b>Drag Stop</b> event called<hr>');
+        }
+        function appendElement(html) {
+            var span = document.createElement('span');
+            span.innerHTML = html;
+            var log = document.getElementById('EventLog');
+            log.insertBefore(span, log.firstChild);
+        }
+    </script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the client-side event capabilities of the Kanban component, providing insights into user interactions and component lifecycle activities through real-time event monitoring.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+    <p>
+        This sample demonstrates the client-side events available in the Kanban component and how they can be used to monitor user interactions, data operations, rendering processes, and drag-and-drop actions.
+        All events triggered by the board are logged in the event tracer panel for easy tracking and debugging.
+    </p>
+    <p>The following events are showcased in this sample:</p>
+    <ol>
+        <li><a href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.kanban.kanban.html#Syncfusion_EJ2_Kanban_Kanban_Created" target="_blank">created</a></li>
+        <li><a href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.kanban.kanban.html#Syncfusion_EJ2_Kanban_Kanban_ActionBegin" target="_blank">actionBegin</a></li>
+        <li><a href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.kanban.kanban.html#Syncfusion_EJ2_Kanban_Kanban_ActionComplete" target="_blank">actionComplete</a></li>
+        <li><a href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.kanban.kanban.html#Syncfusion_EJ2_Kanban_Kanban_ActionFailure" target="_blank">actionFailure</a></li>
+        <li><a href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.kanban.kanban.html#Syncfusion_EJ2_Kanban_Kanban_DataBinding" target="_blank">dataBinding</a></li>
+        <li><a href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.kanban.kanban.html#Syncfusion_EJ2_Kanban_Kanban_DataBound" target="_blank">dataBound</a></li>
+        <li><a href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.kanban.kanban.html#Syncfusion_EJ2_Kanban_Kanban_CardRendered" target="_blank">cardRendered</a></li>
+        <li><a href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.kanban.kanban.html#Syncfusion_EJ2_Kanban_Kanban_QueryCellInfo" target="_blank">queryCellInfo</a></li>
+        <li><a href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.kanban.kanban.html#Syncfusion_EJ2_Kanban_Kanban_CardClick" target="_blank">cardClick</a></li>
+        <li><a href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.kanban.kanban.html#Syncfusion_EJ2_Kanban_Kanban_CardDoubleClick" target="_blank">cardDoubleClick</a></li>
+        <li><a href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.kanban.kanban.html#Syncfusion_EJ2_Kanban_Kanban_Dragstart" target="_blank">dragStart</a></li>
+        <li><a href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.kanban.kanban.html#Syncfusion_EJ2_Kanban_Kanban_Drag" target="_blank">drag</a></li>
+        <li><a href="https://help.syncfusion.com/cr/aspnetcore-js2/syncfusion.ej2.kanban.kanban.html#Syncfusion_EJ2_Kanban_Kanban_Dragstop" target="_blank">dragStop</a></li>
+    </ol>
+    <p>
+        More information on the Essential<sup>®</sup> JS2 Kanban board can be found in this
+        <a href="https://ej2.syncfusion.com/aspnetcore/documentation/kanban/getting-started/" target="_blank">events</a> documentation section.
+    </p>
+    <p>
+        Looking for the full ASP.NET Core Kanban component overview, features, pricing, and documentation?
+        Visit the <a href="https://www.syncfusion.com/gantt-sdk/aspnet-core-kanban-board" target="_blank">ASP.NET Core</a> page.
+    </p>
+    </div>
+
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Events in ASP.NET Core Kanban control. Explore here for more details."/>
+                }
+@section Title{
+                    <title>ASP.NET Core Kanban Events Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Events in ASP.NET Core Kanban Control</h1>
+                }

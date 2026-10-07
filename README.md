@@ -63,57 +63,59 @@ Clone the repository. This repository contains the .NET 8, .NET 9 and .NET 10 pr
         <td>
             <p></p>
             <div><p class="controlcategory">GRIDS</p></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/grid/getting-started-core">DataGrid</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/pivot-table/getting-started">Pivot Table</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/tree-grid/getting-started-core">TreeGrid</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/grid-sdk/asp-net-core/data-grid/getting-started-core">DataGrid</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/grid-sdk/asp-net-core/pivot-table/getting-started">Pivot Table</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/grid-sdk/asp-net-core/tree-grid/getting-started-core">TreeGrid</a></div>
             <p>&nbsp;</p>
             <div><p class="controlcategory">INTERACTIVE CHAT</p></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/ai-assistview/getting-started">AI AssistView</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/chat-ui/getting-started">Chat UI</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/inline-ai-assist/getting-started">Inline AI Assist - Preview</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/inline-ai-assist/getting-started">Inline AI Assist</a></div>
             <p>&nbsp;</p>
             <div><p class="controlcategory">DATA VISUALIZATION</p></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/getting-started">Charts</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/3d-chart/getting-started">3D Chart</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/circular-chart-3d/getting-started">3D Circular Chart</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/stock-chart/getting-started">Stock Chart</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/circular-gauge/getting-started">Arc Gauge</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/circular-gauge/getting-started">Circular Gauge</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/diagram/getting-started">Diagram</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/heatmap-chart/getting-started">HeatMap Chart</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/linear-gauge/getting-started">Linear Gauge</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/maps/getting-started">Maps</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/range-navigator/getting-started">Range Selector</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/smithchart/getting-started">Smith Chart</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/barcode/getting-started">Barcode Generator</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/sparkline/getting-started">Sparkline Charts</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/treemap/getting-started">TreeMap</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/bullet-chart/getting-started">Bullet Chart</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/kanban/getting-started">Kanban</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/sankey/getting-started">Sankey - Preview</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/chart-sdk/asp-net-core/charts/getting-started">Charts</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/chart-sdk/asp-net-core/3d-charts/getting-started">3D Chart</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/chart-sdk/asp-net-core/3d-circular-charts/getting-started">3D Circular Chart</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/chart-sdk/asp-net-core/stock-charts/getting-started">Stock Chart</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/chart-sdk/asp-net-core/circular-gauge/getting-started">Arc Gauge</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/chart-sdk/asp-net-core/circular-gauge/getting-started">Circular Gauge</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/diagram-sdk/asp-net-core/getting-started">Diagram</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/chart-sdk/asp-net-core/heatmap-chart/getting-started">HeatMap Chart</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/chart-sdk/asp-net-core/linear-gauge/getting-started">Linear Gauge</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/chart-sdk/asp-net-core/maps/getting-started">Maps</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/chart-sdk/asp-net-core/range-navigator/getting-started">Range Selector</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/chart-sdk/asp-net-core/smith-chart/getting-started">Smith Chart</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/chart-sdk/asp-net-core/barcode-generator/getting-started">Barcode Generator</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/chart-sdk/asp-net-core/sparkline-charts/getting-started">Sparkline Charts</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/chart-sdk/asp-net-core/treemap/getting-started">TreeMap</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/chart-sdk/asp-net-core/bullet-chart/getting-started">Bullet Chart</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/gantt-sdk/asp-net-core/kanban/getting-started">Kanban</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/chart-sdk/asp-net-core/sankey-diagram/getting-started">Sankey</a></div>
             <p>&nbsp;</p>
             <div><p class="controlcategory">FORMS</p></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/query-builder/getting-started">Query Builder</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/form-builder/getting-started">Form Builder - Preview</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/form-renderer/getting-started">Form Rendered - Preview</a></div>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
         </td>
         <td>
             <p></p>
             <div><p class="controlcategory">VIEWERS & EDITORS</p></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/rich-text-editor/getting-started">RichTextEditor</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/markdowneditor/overview#/fluent2">Markdown Editor</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/rich-text-editor-sdk/asp-net-core/rich-text-editor/getting-started">RichTextEditor</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/rich-text-editor-sdk/asp-net-core/markdown-editor/getting-started">Markdown Editor</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/in-place-editor/getting-started">In-place Editor</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/image-editor/getting-started">Image Editor</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/block-editor/getting-started">Block Editor</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/rich-text-editor-sdk/asp-net-core/block-editor/getting-started">Block Editor</a></div>
             <p>&nbsp;</p>
             <div><p class="controlcategory">CALENDARS</p></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/schedule/getting-started">Scheduler</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/calendar/getting-started">Calendar</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/datepicker/getting-started">DatePicker</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/daterangepicker/getting-started">DateRangePicker</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/datetimepicker/getting-started">DateTime Picker</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/timepicker/getting-started">TimePicker</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/gantt/getting-started">Gantt Chart</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/scheduler-sdk/asp-net-core/schedule/getting-started">Scheduler</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/scheduler-sdk/asp-net-core/calendar/getting-started">Calendar</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/scheduler-sdk/asp-net-core/date-picker/getting-started">DatePicker</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/scheduler-sdk/asp-net-core/daterange-picker/getting-started">DateRangePicker</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/scheduler-sdk/asp-net-core/datetime-picker/getting-started">DateTime Picker</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/scheduler-sdk/asp-net-core/time-picker/getting-started">TimePicker</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/gantt-sdk/asp-net-core/gantt-chart/getting-started">Gantt Chart</a></div>
             <p>&nbsp;</p>
             <div><p class="controlcategory">BUTTONS</p></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/button/getting-started">Button</a></div>
@@ -159,7 +161,7 @@ Clone the repository. This repository contains the .NET 8, .NET 9 and .NET 10 pr
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/toolbar/getting-started">Toolbar</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/ribbon/getting-started">Ribbon</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/treeview/getting-started">TreeView</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/file-manager/getting-started">File Manager</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://help.syncfusion.com/file-manager-sdk/asp-net-core/getting-started">File Manager</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/stepper/getting-started">Stepper</a></div>
             <p>&nbsp;</p>
             <div><p class="controlcategory">NOTIFICATION</p></div>
@@ -167,7 +169,7 @@ Clone the repository. This repository contains the .NET 8, .NET 9 and .NET 10 pr
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/badge/getting-started-asp-core">Badge</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/toast/getting-started">Toast</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/progress-bar/getting-started">Progress Bar</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/skeleton/getting-started-asp-core">Skeleton</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/skeleton/getting-started">Skeleton</a></div>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
@@ -193,12 +195,12 @@ Clone the repository. This repository contains the .NET 8, .NET 9 and .NET 10 pr
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/speech-to-text/getting-started">Speech To Text</a></div>
             <p>&nbsp;</p>
             <div><p class="controlcategory">LAYOUT</p></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/avatar/getting-started-asp-core">Avatar</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/avatar/getting-started">Avatar</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/card/getting-started">Card</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/dialog/getting-started">Dialog</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/predefined-dialogs/getting-started">Predefined Dialogs</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/listview/getting-started">ListView</a></div>
-            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/tooltip/getting-started-asp-core">Tooltip</a></div>
+            <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/tooltip/getting-started">Tooltip</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/splitter/getting-started">Splitter</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/dashboard-layout/getting-started/">Dashboard Layout</a></div>
             <div class="controlanchorlink"><a target="_self" href="https://ej2.syncfusion.com/aspnetcore/documentation/timeline/getting-started">Timeline</a></div>

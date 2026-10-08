@@ -2709,7 +2709,7 @@ function escapeHtml(str) {
 function initializeNotificationSystem() {
     const STORAGE_KEY = 'sbNotificationSeen';
     const VERSION_KEY = 'sbNotificationVersion';
-    const CURRENT_VERSION = '32.1.19'; // Update this with each release
+    const CURRENT_VERSION = '35.1.37'; // Update this with each release
 
     function getDot() {
         return document.querySelector('.sb-notification-btn .e-badge-dot');

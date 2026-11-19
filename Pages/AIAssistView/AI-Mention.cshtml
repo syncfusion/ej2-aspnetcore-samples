@@ -1,0 +1,257 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.AIAssistView.Ai_MentionModel
+@using Syncfusion.EJ2
+@using System.Text.Json;
+
+@section ControlsSection {
+    <div class="control-section">
+        <div class="mention-aiassistview">
+            <ejs-aiassistview id="aiAssistView" promptPlaceholder="@Model.PromptPlaceholder" promptSuggestions="@Model.PromptSuggestionData" enableStreaming="true" bannerTemplate="#bannerContent" mentions="@Model.MentionData" promptRequest="onPromptRequest" stopRespondingClick="stopAIResponse" created="onCreated">
+                <e-aiassistview-toolbarsettings items="@Model.Items" itemClicked="toolbarItemClicked"></e-aiassistview-toolbarsettings>
+            </ejs-aiassistview>
+        </div>
+    </div>
+}
+
+@section PreScripts{
+    <script>
+        var assistObj = null;
+        var baseURL = window.baseurl;
+        var suggestions = @Html.Raw(JsonSerializer.Serialize(Model.PromptSuggestionData));
+        var mentionSystemPrompt = @Html.Raw(JsonSerializer.Serialize(Model.MentionSystemPrompt));
+        var skillPrompts = @Html.Raw(JsonSerializer.Serialize(Model.SkillPrompts));
+        var agentPrompts = @Html.Raw(JsonSerializer.Serialize(Model.AgentPrompts));
+
+        function buildSystemPrompt(mentions) {
+            var parts = [];
+            (mentions || []).forEach(function (m) {
+                var id = m.itemData.id;
+                if (skillPrompts[id]) { parts.push(skillPrompts[id]); }
+                if (agentPrompts[id]) { parts.push(agentPrompts[id]); }
+            });
+            parts.push(mentionSystemPrompt);
+            return parts.join('\n\n');
+        }
+
+        function onCreated() {
+            assistObj = ej.base.getComponent(document.getElementById("aiAssistView"), "aiassistview");
+            // Registering generative tool UI
+            assistObj.registerToolUI({
+                toolName: 'weather-card',
+                template: weatherTemplate
+            });
+        }
+
+        function weatherTemplate(args) {
+            var defaults = {
+                location: 'Unknown Location',
+                temperature: '--',
+                condition: '--',
+                humidity: '--',
+                windSpeed: '--'
+            };
+            var data = Object.assign({}, defaults, args);
+
+            return `<div tabindex="0" class="e-card" id="weather_card" role="button">
+                <div class="e-card-header">
+                    <div class="e-card-header-caption">
+                        <div class="e-card-header-title">${data.location}</div>
+                        <div class="e-card-sub-title">${data.condition}</div>
+                    </div>
+                </div>
+                <div class="e-card-header weather_report">
+                    <div class="e-card-header-image"></div>
+                    <div class="e-card-header-caption">
+                        <div class="e-card-header-title">${data.temperature}</div>
+                        <div class="e-card-sub-title">Humidity: ${data.humidity}</div>
+                        <div class="e-card-sub-title">Wind: ${data.windSpeed}</div>
+                    </div>
+                </div>
+            </div>`;
+        }
+
+        var abortController;
+
+        async function getAIResponse(args) {
+            try {
+                const userID = await window.fingerPrint();
+                if (!userID) {
+                    return null;
+                }
+                const response = await fetch(baseURL + '/api/AI/Stream', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authentication': userID
+                    },
+                    body: JSON.stringify({
+                        message: args.systemPrompt + '\n\nUser prompt:\n' + args.prompt
+                    }),
+                    signal: abortController.signal
+                });
+
+                if (!response.ok) {
+                    const text = await response.text();
+                    throw new Error('HTTP Error ' + response.status + ': ' + text);
+                }
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                let fullText = '';
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) {
+                        break;
+                    }
+                    fullText += decoder.decode(value, { stream: true });
+                }
+
+                fullText += decoder.decode();
+
+                const responseText = fullText.trim();
+                const jsonText = responseText.replace(/^```json\s*/i, '').replace(/^```\s*/, '').replace(/\s*```$/, '').trim();
+
+                if (jsonText.startsWith('{')) {
+                    try {
+                        const aiData = JSON.parse(jsonText);
+                        if (Array.isArray(aiData.blocks)) {
+                            return { blocks: aiData.blocks };
+                        }
+                    } catch (error) {
+                        return responseText;
+                    }
+                }
+
+                return responseText || null;
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    return null;
+                }
+                return 'We could not reach the AI service; please try again later.';
+            }
+        }
+
+        async function onPromptRequest(args) {
+            if (!assistObj) {
+                return;
+            }
+            abortController = new AbortController();
+            try {
+                var aiArgs = {
+                    prompt: args.prompt,
+                    systemPrompt: buildSystemPrompt(args.mentions || [])
+                };
+                var response = await getAIResponse(aiArgs);
+                if (response !== null) {assistObj.addPromptResponse(response);}
+            } catch (error) {
+                assistObj.addPromptResponse('We could not reach the AI service; please try again later.');
+            }
+            assistObj.promptSuggestions = suggestions;
+        }
+
+        function toolbarItemClicked(args) {
+            if (args.item.iconCss === 'e-icons e-refresh') {
+                assistObj.prompts = [];
+                assistObj.promptSuggestions = suggestions;
+	            stopAIResponse();
+            }
+        }
+        
+        function stopAIResponse() {
+            if (abortController) {
+                abortController.abort();
+            }
+        }
+
+    </script>
+
+    <script id="bannerContent" type="text/x-jsrender">
+        <div class="banner-content">
+            <div class="e-icons e-assistview-icon"></div>
+            <h3>AI Assistant with Mentions</h3>
+            <i>Use mentions to quickly access contextual options and enhance prompts within the AI AssistView.</i>
+        </div>
+    </script>
+}
+
+<style>
+    .mention-aiassistview {
+        height: 600px;
+        width: 60vw;
+        margin: 0 auto;
+    }
+
+    .mention-aiassistview .banner-content .e-assistview-icon:before {
+        font-size: 35px;
+    }
+
+    .mention-aiassistview .banner-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 330px;
+        text-align: center;
+    }
+
+    @@media only screen and (max-width: 750px) {
+        .mention-aiassistview {
+            width: 100%;
+        }
+    }
+
+    /* Weather Card Layout Customization */
+
+    .mention-aiassistview #weather_card.e-card {
+        background-image: url('https://ej2.syncfusion.com/javascript/demos/src/card/images/weather.png');
+        width: 420px;
+    }
+
+    .mention-aiassistview .material3-dark .e-card .e-card-header,
+    .mention-aiassistview .material-dark .e-card .e-card-header {
+        padding: 10px;
+    }
+
+    .mention-aiassistview #weather_card.e-card .e-card-header-caption .e-card-header-title,
+    .mention-aiassistview #weather_card.e-card .e-card-header-caption .e-card-sub-title {
+        color: white;
+    }
+
+    .mention-aiassistview .highcontrast #weather_card.e-card .e-card-header.weather_report .e-card-header-image {
+        border: none;
+    }
+
+    .mention-aiassistview #weather_card.e-card .weather_report .e-card-header-caption {
+        text-align: right;
+    }
+
+    .mention-aiassistview #weather_card.e-card .e-card-header.weather_report .e-card-header-image {
+        background-image: url('https://ej2.syncfusion.com/javascript/demos/src/card/images/rainy.svg');
+    }
+
+    .mention-aiassistview .col-xs-6.col-sm-6.col-lg-6.col-md-6 {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .mention-aiassistview .card-layout {
+        margin: auto;
+        max-width: 400px;
+    }
+</style>
+
+@section Meta{
+    <meta name="description" content="This sample demonstrates the mention support capabilities in ASP.NET Core AI AssistView control. Explore here for more details." />
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This sample demonstrates the mention support capabilities of the AI AssistView control. Mentions can be referenced directly within prompts, enabling intelligent and context-aware interactions.</p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>In this example, the <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.InteractiveChat.AIAssistView.html#Syncfusion_EJ2_InteractiveChat_AIAssistView_Mentions">mentions</a> property is used to configure multiple mention sources, enabling users to quickly access contextual actions within the AI AssistView. The <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.InteractiveChat.AIAssistView.html#Syncfusion_EJ2_InteractiveChat_AIAssistView_BannerTemplate">bannerTemplate</a> customizes the banner content, and <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.InteractiveChat.AIAssistView.html#Syncfusion_EJ2_InteractiveChat_AIAssistView_ToolbarSettings">toolbarSettings</a> adds custom toolbar items like a right-aligned <code>Refresh</code> button. The <a target="_blank" href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.InteractiveChat.AIAssistView.html#Syncfusion_EJ2_InteractiveChat_AIAssistView_PromptRequest">promptRequest</a> event processes the selected mentions and generates responses based on the chosen skills and agents.</p>
+    </div>
+}

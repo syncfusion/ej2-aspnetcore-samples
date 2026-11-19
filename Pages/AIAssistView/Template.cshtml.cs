@@ -1,0 +1,47 @@
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using EJ2CoreSampleBrowser.Models;
+using Syncfusion.EJ2.Navigations;
+
+namespace EJ2CoreSampleBrowser.Pages.AIAssistView
+{
+    public class TemplateModel : PageModel
+    {
+        public List<ToolbarItem> Items = new List<ToolbarItem>();
+        public List<AIAssitCarouselDataBinding> datasrc = new List<AIAssitCarouselDataBinding>();
+        public List<PromptResponseData> PromptResponseData { get; set; }
+        public string[] PromptSuggestionData { get; set; }
+        public void OnGet()
+        {
+            Items.Add(new ToolbarItem { Type = ItemType.Input, Align = ItemAlign.Right, Template = "<button id=\"ddMenu\"></button>" });
+            datasrc.Add(new AIAssitCarouselDataBinding
+            {
+                ImgPath = "./../css/carousel/images/moscow.jpg",
+                Suggestion = "How do I prioritize tasks effectively?"
+            });
+            datasrc.Add(new AIAssitCarouselDataBinding
+            {
+                ImgPath = "./../css/carousel/images/san-francisco.jpg",
+                Suggestion = "How do I set daily goals in my work day?"
+            });
+            datasrc.Add(new AIAssitCarouselDataBinding
+            {
+                ImgPath = "./../css/carousel/images/london.jpg",
+                Suggestion = "Steps to publish a e-book with marketing strategy"
+            });
+            datasrc.Add(new AIAssitCarouselDataBinding
+            {
+                ImgPath = "./../css/carousel/images/tokyo.jpg",
+                Suggestion = "What tools or apps can help me prioritize tasks?"
+            });
+
+            PromptResponseData = new PromptResponseData().GetTemplatePromptResponseData();
+            PromptSuggestionData = new PromptResponseData().GetAllSuggestionData();
+        }
+    }
+
+    public class AIAssitCarouselDataBinding
+    {
+        public string Suggestion { get; set; }
+        public string ImgPath { get; set; }
+    }
+}

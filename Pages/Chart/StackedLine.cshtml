@@ -1,0 +1,91 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Chart.StackedLineModel
+@using Syncfusion.EJ2
+@section ControlsSection{
+    <div class="control-section" align="center">
+        <ejs-chart id="container" load="load" title="Yearly Renewable Energy Generation in India (2015-2023)" subTitle="Source: wikipedia.org">
+            <e-chart-tooltipsettings enable="true" showNearestTooltip="true" enableHighlight="true" header="<b>${series.name}</b>" format="${point.x} : <b>${point.y}</b>">
+            </e-chart-tooltipsettings>
+            <e-chart-legendsettings enableHighlight="true"></e-chart-legendsettings>
+            <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Double" interval="1">
+                <e-linestyle width="0"></e-linestyle>
+                <e-majorgridlines width="0"></e-majorgridlines>
+                <e-minorgridlines width="0"></e-minorgridlines>
+                <e-majorticklines width="0"></e-majorticklines>
+                <e-minorticklines width="0"></e-minorticklines>
+            </e-chart-primaryxaxis>
+            <e-chart-primaryyaxis labelFormat="{value}TWh" title="Energy Generation (TWh)">
+                <e-linestyle width="0"></e-linestyle>
+                <e-majorgridlines width="1"></e-majorgridlines>
+                <e-minorgridlines width="1"></e-minorgridlines>
+                <e-majorticklines width="0"></e-majorticklines>
+                <e-minorticklines width="0"></e-minorticklines>
+            </e-chart-primaryyaxis>
+            <e-chart-chartarea>
+                <e-chartarea-border width="0"></e-chartarea-border>
+                <e-chartarea-margin bottom=12></e-chartarea-margin>
+            </e-chart-chartarea>
+            <e-series-collection>
+                <e-series dataSource="@Model.ChartPoints" name="Wind" xName="X" width="2" yName="Y" opacity="1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StackingLine">
+                    <e-series-marker visible="true" width="7" height="7" shape="@Syncfusion.EJ2.Charts.ChartShape.Circle" isFilled="true"></e-series-marker>
+                </e-series>
+                <e-series dataSource="@Model.ChartPoints" name="Bio mass" xName="X" width="2" yName="Y1" opacity="1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StackingLine">
+                    <e-series-marker visible="true" width="7" height="7" shape="@Syncfusion.EJ2.Charts.ChartShape.Diamond" isFilled="true"></e-series-marker>
+                </e-series>
+                <e-series dataSource="@Model.ChartPoints" name="Small Hydro" xName="X" width="2" yName="Y2" opacity="1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StackingLine">
+                    <e-series-marker visible="true" width="5" height="5" shape="@Syncfusion.EJ2.Charts.ChartShape.Rectangle" isFilled="true"></e-series-marker>
+                </e-series>
+                <e-series dataSource="@Model.ChartPoints" name="Solar" xName="X" width="2" yName="Y3" opacity="1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.StackingLine">
+                    <e-series-marker visible="true" width="6" height="6" shape="@Syncfusion.EJ2.Charts.ChartShape.Triangle" isFilled="true"></e-series-marker>
+                </e-series>
+            </e-series-collection>
+        </ejs-chart>
+        </div>
+    <script src="~/scripts/chart/theme-color.js"></script>
+    <script>
+        function load(args) {
+            loadChartTheme(args);
+            args.chart.width = ej.base.Browser.isDevice ? "100%" : "75%";
+            args.chart.primaryXAxis.labelIntersectAction = ej.base.Browser.isDevice?'None':'Trim';
+            args.chart.primaryXAxis.labelRotation = ej.base.Browser.isDevice?'-45':'0';
+        }
+    </script>
+}
+@*custom code start*@
+@section Scripts {
+
+}
+
+<style>
+
+    #control-container {
+        padding: 0px !important;
+    }
+</style>
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Stacked Line in ASP.NET Core Chart control. Explore here for more details."/>
+                }
+@*custom code end*@
+@section ActionDescription{
+    <p>
+        This <a target="_blank" href="https://www.syncfusion.com/aspnet-core-ui-controls/charts/chart-types/stacked-line-chart" aria-label="Navigate to explore the syncfusion ASP.NET Core Stacked Line Chart">ASP.NET Core Stacked Line Chart</a> example visualizes the yearly renewable energy generation in India from 2015 to 2023.
+    </p>
+}
+@section Description{
+    <p>
+        In this example, you can see how to render and configure the stacked line chart. The stacked line chart visualizes data with y-values stacked one over another in a series order. It shows the relationship between individual values to the total sum of points.
+    </p>
+    <p>
+        <code>Tooltip</code> is enabled in this example. To see a tooltip in action, hover over or tap on the chart.
+    </p>
+    <p>
+        More information about the stacked line series can be found in this
+        <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/chart-types/stacked-line" aria-label="Navigate to the documentation for Stacked Line Chart in ASP.NET CORE Charts Component">documentation section</a>.
+    </p>
+}
+@section Title{
+                    <title>ASP.NET Core Chart Stacked Line Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Stacked Line in ASP.NET Core Chart Control</h1>
+                }

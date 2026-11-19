@@ -1,0 +1,151 @@
+@page
+
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2
+@{ 
+    string[] orderTransition = { "Ready to Serve", "Ready to Deliver" };
+    string[] serveTransition = { "Served" };
+    string[] deliverTransition = { "Delivered" };
+    var data = new KanbanDataModels().KanbanPizzaData();
+}
+
+@section ControlsSection{
+    <div class="control-section">
+        <div class="control_wrapper">
+            <ejs-kanban id="Kanban" keyField="Category" dataSource="@data">
+                <e-kanban-columns>
+                    <e-kanban-column headerText="Order" keyField="Order" allowToggle="true" allowDrop="false" transitionColumns="@orderTransition"></e-kanban-column>
+                    <e-kanban-column headerText="Ready to Serve" keyField="Ready to Serve" allowToggle="true" transitionColumns="@serveTransition"></e-kanban-column>
+                    <e-kanban-column headerText="Home Delivery" keyField="Ready to Deliver" allowToggle="true" transitionColumns="@deliverTransition"></e-kanban-column>
+                    <e-kanban-column headerText="Delivered" keyField="Delivered, Served" allowToggle="true" allowDrag="false"></e-kanban-column>
+                </e-kanban-columns>
+                <e-kanban-cardsettings headerField="Id" contentField="Description" template="#cardTemplate"></e-kanban-cardsettings>
+            </ejs-kanban>
+        </div>
+    </div>
+    <script id="cardTemplate" type="text/x-jsrender">
+        <div class='card-template'>
+            <div class='card-template-wrap'>
+                <div>
+                    <div class='e-card-header'>
+                        <div class='e-card-header-caption'>
+                            <div class='e-card-header-title e-tooltip-text'>${Title}</div>
+                        </div>
+                    </div>
+                    <div class='e-card-content'>
+                        <div class='e-text'>${Description}</div>
+                        <div class='e-card-kanban-image'><img src='../images/Kanban/${ImageURL}' alt=''></div>
+                    </div>
+                    <div class='e-card-custom-footer'>
+                        ${getTags(data.Tags)}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script>
+        function getTags(data) {
+            var tagDiv = '';
+            var tags = data.split(',');
+            for (var a = 0; a < tags.length; a++) {
+                var tag = tags[a];
+                tagDiv += '<div class="e-card-tag-field">' + tag + '</div>';
+            }
+            return tagDiv;
+        }
+    </script>
+}
+
+<style>
+    .e-kanban .e-card-kanban-image {
+        height: 45px;
+        width: 45px;
+        margin-left: auto;
+    }
+
+        .e-kanban .e-card-kanban-image img {
+            height: inherit;
+            width: inherit;
+            border-radius: 50%;
+        }
+
+    .e-kanban .e-card .e-card-tag-field {
+        background: #ececec;
+        color: #6b6b6b;
+        margin-right: 5px;
+        line-height: 1.1;
+        font-size: 13px;
+        border-radius: 3px;
+        padding: 4px;
+    }
+
+    .e-kanban .e-card-custom-footer {
+        display: flex;
+        padding: 0px 12px 12px;
+        line-height: 1;
+        height: 35px;
+    }
+
+    .e-kanban .e-card td {
+        background-color: #fff;
+    }
+
+    .e-kanban .e-card .e-card-content {
+        display: flex;
+    }
+
+    .e-kanban .e-card .e-text {
+        width: fit-content;
+    }
+</style>
+
+@section ActionDescription{
+    <div id="action-description">
+    <p>
+        This sample demonstrates workflow customization in the Kanban component, enabling controlled card transitions between workflow stages based on predefined business rules.
+    </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+    <p>
+        This sample demonstrates workflow validation in the Kanban component by restricting card movement between specific columns. Workflow rules help ensure that cards progress through predefined stages and follow the intended business process.
+    </p>
+    <p>
+        The following column properties are used to control card transitions:
+    </p>
+    <ul>
+        <li>
+            <a href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Kanban.KanbanColumn.html#Syncfusion_EJ2_Kanban_KanbanColumn_TransitionColumns" target="_blank">transitionColumns</a>:
+            Specifies the columns to which cards can be moved from the current column.
+        </li>
+        <li>
+            <a href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Kanban.KanbanColumn.html#Syncfusion_EJ2_Kanban_KanbanColumn_AllowDrag" target="_blank">allowDrag</a>:
+            Enables or disables dragging cards from a column.
+        </li>
+        <li>
+            <a href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Kanban.KanbanColumn.html#Syncfusion_EJ2_Kanban_KanbanColumn_AllowDrop" target="_blank">allowDrop</a>:
+            Enables or disables dropping cards into a column.
+        </li>
+    </ul>
+
+    <p>
+        More information on the Essential<sup>®</sup> JS2 Kanban board can be found in this
+        <a href="https://help.syncfusion.com/cr/aspnetcore-js2/Syncfusion.EJ2.Kanban.KanbanColumn.html#Syncfusion_EJ2_Kanban_KanbanColumn_TransitionColumns" target="_blank">transition columns</a> documentation section.
+    </p>
+    <p>
+        Looking for the full ASP.NET Core Kanban component overview, features, pricing, and documentation?
+        Visit the <a href="https://www.syncfusion.com/gantt-sdk/aspnet-core-kanban-board" target="_blank">ASP.NET Core</a> page.
+    </p>
+    </div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Workflow in ASP.NET Core Kanban control. Explore here for more details."/>
+                }
+@section Title{
+                    <title>ASP.NET Core Kanban Workflow Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Workflow in ASP.NET Core Kanban Control</h1>
+                }

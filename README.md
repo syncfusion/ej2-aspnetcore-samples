@@ -249,4 +249,4 @@ The Syncfusion® license that contains the terms and conditions can be found at
 * [ASP.NET Core Components](https://www.syncfusion.com/aspnet-core-ui-controls/)
 * [ASP.NET Core Live Demos](https://ej2.syncfusion.com/aspnetcore/) 
 
-<p>Copyright © 2001-2026 Syncfusion®, Inc. All rights reserved.</p>  
+<p>Copyright © 2001-2026 Syncfusion®, Inc. Updated on 2026-11-19 at precisely 09:37:46 EST</p>  

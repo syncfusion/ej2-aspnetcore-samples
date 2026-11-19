@@ -1,0 +1,29 @@
+﻿@using Syncfusion.EJ2
+@model EJ2CoreSampleBrowser.Models.QueryTemplateModel.ActionModel
+
+@{
+    List<Object> Conditions = new List<object>()
+    {
+        new {text = "AND", value="and" },
+        new {text = "OR", value="or"}
+    };
+}
+<div class="e-groupheader">
+    <ejs-dropdownlist id=@(Model.RuleID + "_cndtnbtn") fields=@Model.Fields value=@Model.Condition cssClass="e-outline" width="100px" dataSource="Conditions" >
+    </ejs-dropdownlist> 
+    <div class = "e-header">
+        <div class = "e-qb-hdr-content">
+            <ejs-button id=@(Model.RuleID + "_addbtn") content="Add Group" class="e-grp-btn" isPrimary="true" onclick="addgrpChange(event)"></ejs-button>
+        </div>
+        <div class = "e-qb-hdr-content">    
+            <ejs-button id=@(Model.RuleID + "_addrlbtn") content="Add Condition" class="e-cond-btn" isPrimary="true" onclick="addruleChange(event)"></ejs-button>
+        </div>
+        @if(Model.RuleID != "querybuilder_group0") {
+            <div class = "e-qb-hdr-content"> 
+                <ejs-button id=@(Model.RuleID + "_dltbtn") content="Remove" class="e-del-btn" cssClass="e-danger" onclick="deleteChange(event)"></ejs-button>
+            </div>
+        }
+    </div>
+</div>
+
+<ejs-scripts></ejs-scripts>

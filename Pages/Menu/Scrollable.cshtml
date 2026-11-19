@@ -1,0 +1,85 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Menu.ScrollableModel
+using Syncfusion.EJ2;
+@using Syncfusion.EJ2.Navigations;
+
+@section ControlsSection{
+    <div class="control-section">
+        <div class="scrollable-menu-control">
+            <ejs-menu id="menu" items="@Model.menuItems" cssClass="e-custom-scroll" enableScrolling="true" beforeOpen="onBeforeOpen" animationSettings="@Model.animationSettings"></ejs-menu>
+        </div>
+    </div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Scrollable in ASP.NET Core Menu Bar control. Explore here for more details."/>
+                }
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This sample demonstrates the <code>Scrollable</code> option in the Menu component. Click the scroll arrows to view the hidden menu items.</p>
+    </div>
+}
+
+@section Description{
+    <div id="description">
+        <p>
+            The menu component supports horizontal and vertical scrolling to render large menus and submenus in an adaptive way. This can be achieved by enabling the <code>enableScrolling</code> property and by restricting the corresponding menu/submenu size.
+        </p>
+        <p>
+            In this demo, the parent menu is horizontally scrollable while the submenu and nested submenu are vertically scrollable.
+        </p>
+        <p>
+            More information about menu can be found in this
+            <a target="_blank" href="https://ej2.syncfusion.com/aspnetcore/documentation/menu/use-case-scenarios#scrollable-menu" aria-label="Navigate to the documentation for Scrollable menu in ASP.NET Core Menu control">
+                documentation
+            </a> section.
+        </p>
+    </div>
+}
+
+<script>
+    function onBeforeOpen(args) {
+        // Restricting sub menu wrapper height
+        if (args.parentItem.text === 'Appliances') {
+            ej.base.closest(args.element, '.e-menu-wrapper').style.height = '320px';
+        }
+        if (args.parentItem.text === 'Mobile') {
+            ej.base.closest(args.element, '.e-menu-wrapper').style.height = '260px';
+        }
+    }
+</script>
+@*custom code start*@
+<style>
+
+    /**
+    * ej2 Menu styles
+    */
+    .scrollable-menu-control {
+        margin-top: 45px;
+        text-align: center;
+    }
+
+    /**
+    * Restricting the parent menu wrapper size
+    */
+    .scrollable-menu-control .e-menu-wrapper.e-custom-scroll {
+        width: 492px;
+    }
+    .e-bigger .scrollable-menu-control .e-menu-wrapper.e-custom-scroll {
+        width: 565px;
+    }
+
+    @@media only screen and (max-width: 500px) {
+        .e-bigger .scrollable-menu-control .e-menu-wrapper.e-custom-scroll {
+            width: 290px;
+        }
+    }
+</style>
+@*custom code end*@
+@section Title{
+                    <title>ASP.NET Core Menu Bar Scrollable Example - Syncfusion Demos </title>
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Scrollable in ASP.NET Core Menu Bar Control</h1>
+                }

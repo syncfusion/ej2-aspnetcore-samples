@@ -1,0 +1,540 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Schedule.CascadingEventEditor
+
+@using Syncfusion.EJ2
+
+@section ControlsSection{
+
+<div class="control-section">
+    <div class="content-wrapper">
+
+        <ejs-schedule id="Schedule"
+              height="600px"
+              cssClass="custom-scheduler"
+              selectedDate="new DateTime(2026, 5, 11)"
+              currentView="TimelineDay"
+              editorTemplate="#EditorTemplate"
+              resourceHeaderTemplate="#resourceTemplate"
+              headerIndentTemplate="#headerIndentTemplate"
+              popupOpen="onPopupOpen"
+              popupClose="onPopupClose"
+              eventRendered="onEventRendered">
+
+    <e-schedule-views>
+        <e-schedule-view option="TimelineDay"></e-schedule-view>
+    </e-schedule-views>
+
+    <e-schedule-group resources="@(new string[] { "Staff" })">
+    </e-schedule-group>
+
+    <e-schedule-resources>
+        <e-schedule-resource field="StaffId"
+                             name="Staff"
+                             title="Staff"
+                             dataSource="@Model.staffData"
+                             textField="text"
+                             idField="id"
+                             colorField="color">
+        </e-schedule-resource>
+    </e-schedule-resources>
+
+    <e-schedule-eventsettings dataSource="@Model.eventsData">
+    </e-schedule-eventsettings>
+
+</ejs-schedule>
+
+    </div>
+</div>
+
+<script id="EditorTemplate" type="text/x-template">
+    <table style="width:100%;">
+        <tr>
+            <td>Name</td>
+            <td><input class="e-field e-input" name="Subject" /></td>
+        </tr>
+
+        <tr>
+            <td>Type</td>
+            <td><input name="Type" class="e-field" /></td>
+        </tr>
+
+        <tr class="meeting-field" style="display:none;">
+            <td>Floor</td>
+            <td><input name="FloorId" class="e-field" /></td>
+        </tr>
+
+        <tr class="meeting-field" style="display:none;">
+            <td>Room</td>
+            <td><input name="RoomId" class="e-field" /></td>
+        </tr>
+
+        <tr>
+            <td>Staff</td>
+            <td><input name="StaffId" class="e-field" /></td>
+        </tr>
+
+        <tr>
+            <td>Start</td>
+            <td><input name="StartTime" class="e-field" /></td>
+        </tr>
+
+        <tr>
+            <td>End</td>
+            <td><input name="EndTime" class="e-field" /></td>
+        </tr>
+    </table>
+</script>
+<script id="resourceTemplate" type="text/x-template">
+    <div class="template-wrap">
+        <div style="display:flex;gap:8px;align-items:center;">
+            <div style="
+                width:32px;
+                height:32px;
+                border-radius:50%;
+                background:${resourceData.color};
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                color:#fff;">
+                ${resourceData.text[0]}
+            </div>
+
+            <div>${resourceData.text}</div>
+        </div>
+
+        <div>${resourceData.type}</div>
+    </div>
+</script>
+
+<script id="headerIndentTemplate" type="text/x-template">
+    <div class="template-wrap header-indent">
+        <div>Staff</div>
+        <div>Type</div>
+    </div>
+</script>
+
+<script type="text/javascript">
+
+    var floors = [
+        { id: 1, name: 'Floor 1' },
+        { id: 2, name: 'Floor 2' },
+    ];
+
+    var rooms = [
+        { id: 101, name: 'Room 101', floorId: 1 },
+        { id: 102, name: 'Room 102', floorId: 1 },
+        { id: 201, name: 'Room 201', floorId: 2 },
+        { id: 202, name: 'Room 202', floorId: 2 },
+    ];
+
+    var typeOptions = ['Meeting', 'Appointment', 'Internal'];
+
+    var staffData = @Html.Raw(Json.Serialize(Model.staffData));
+
+    function getTypeColor(type) {
+        switch (type) {
+            case 'Meeting': return '#22c55e';
+            case 'Appointment': return '#3b82f6';
+            case 'Internal': return '#f59e0b';
+            default: return '#6b7280';
+        }
+    }
+
+    function onPopupOpen(args) {
+        if (args.type !== 'Editor') return;
+
+        args.element.classList.add('cascading-editor-dialog');
+
+        var data = args.data;
+
+        var typeValue = data.Type || 'Meeting';
+        var floorValue = data.FloorId || null;
+        var roomValue = data.RoomId || null;
+
+        function getField(name) {
+            var fields = args.element.querySelectorAll('.e-field');
+            for (var i = 0; i < fields.length; i++) {
+                if (fields[i].name === name) return fields[i];
+            }
+            return null;
+        }
+
+        var typeEl = getField('Type');
+        var floorEl = getField('FloorId');
+        var roomEl = getField('RoomId');
+        var staffEl = getField('StaffId');
+        var startEl = getField('StartTime');
+        var endEl = getField('EndTime');
+
+        if (!typeEl) return;
+
+        var typeObj = new ej.dropdowns.DropDownList({
+            dataSource: typeOptions,
+            value: typeValue,
+            change: onTypeChange
+        });
+        typeObj.appendTo(typeEl);
+
+        var floorObj = new ej.dropdowns.DropDownList({
+            dataSource: floors,
+            fields: { text: 'name', value: 'id' },
+            value: floorValue,
+            change: onFloorChange
+        });
+        floorObj.appendTo(floorEl);
+
+        var roomObj = new ej.dropdowns.DropDownList({
+            dataSource: [],
+            fields: { text: 'name', value: 'id' },
+            value: roomValue,
+            change: onRoomChange
+        });
+        roomObj.appendTo(roomEl);
+
+        new ej.dropdowns.DropDownList({
+            dataSource: staffData,
+            fields: { text: 'text', value: 'id' },
+            value: data.StaffId || null
+        }).appendTo(staffEl);
+
+        new ej.calendars.DateTimePicker({ value: data.StartTime }).appendTo(startEl);
+        new ej.calendars.DateTimePicker({ value: data.EndTime }).appendTo(endEl);
+
+        toggleMeeting(typeValue === 'Meeting');
+
+        if (typeValue === 'Meeting') {
+            var filteredRooms = floorValue ? rooms.filter(r => r.floorId === floorValue) : [];
+            roomObj.dataSource = filteredRooms;
+            roomObj.dataBind();
+        } else {
+            toggleMeeting(false);
+        }
+
+        function onTypeChange(e) {
+            floorObj.value = null;
+            roomObj.value = null;
+            roomObj.dataSource = [];
+            roomObj.dataBind();
+            toggleMeeting(e.value === 'Meeting');
+        }
+
+        function onFloorChange(e) {
+            var filtered = rooms.filter(r => r.floorId === e.value);
+            roomObj.dataSource = filtered;
+            roomObj.dataBind();
+            roomObj.value = null;
+        }
+
+        function onRoomChange(e) {}
+
+        function toggleMeeting(show) {
+            var rows = args.element.querySelectorAll('.meeting-field');
+            rows.forEach(function (row) {
+                row.style.display = show ? '' : 'none';
+            });
+        }
+    }
+
+    function onPopupClose(args) {
+        if (args.type === 'Editor') {
+            args.element.classList.remove('cascading-editor-dialog');
+        }
+    }
+
+    function onEventRendered(args) {
+        args.element.style.backgroundColor =
+            getTypeColor(args.data.Type || 'Meeting');
+    }
+
+</script>
+
+<style>
+    .e-schedule.custom-scheduler .template-wrap {
+        display: flex;
+        width: 100%;
+        align-items: center;
+    }
+
+    .e-schedule.custom-scheduler .template-wrap>div:first-child {
+        flex: 0 0 65%;
+        display: flex;
+        align-items: center;
+        padding: 10px 8px;
+        box-sizing: border-box;
+    }
+
+    .e-schedule.custom-scheduler .template-wrap>div:last-child {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        padding: 10px 8px;
+        box-sizing: border-box;
+    }
+
+    .e-schedule.custom-scheduler .header-indent {
+        font-weight: 500;
+        padding-left: 7px;
+    }
+
+    .e-schedule.custom-scheduler .e-resource-left-td {
+        width: 224px !important;
+    }
+
+    .e-schedule.custom-scheduler .e-resource-cells {
+        vertical-align: middle;
+    }
+
+    .e-schedule.custom-scheduler .e-resource-cells>div {
+        padding: 6px 0;
+    }
+
+    .e-schedule.custom-scheduler .e-resource-text {
+        padding: 0 !important;
+    }
+
+
+    .e-schedule.custom-scheduler .e-resource-text {
+        display: flex !important;
+        align-items: center;
+        height: 100%;
+    }
+
+    .e-schedule.custom-scheduler .e-resource-cells {
+        vertical-align: middle;
+    }
+
+    .e-schedule.custom-scheduler .template-wrap {
+        display: flex;
+        align-items: center;
+        height: 100%;
+    }
+
+    .e-schedule.custom-scheduler {
+        margin-top: 12px;
+    }
+
+    .e-schedule.custom-scheduler .schedule-container {
+        padding: 16px 10px 10px;
+        /* top padding increased */
+        height: 650px;
+        box-sizing: border-box;
+    }
+
+    .e-schedule.custom-scheduler .template-wrap {
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+
+    .e-schedule.custom-scheduler .template-wrap>div:first-child {
+        flex: 0 0 65%;
+        padding: 10px 8px;
+        box-sizing: border-box;
+
+    }
+
+    .e-schedule.custom-scheduler .template-wrap>div:last-child {
+        flex: 1;
+        display: flex;
+        align-items: center;
+    }
+
+    .e-schedule.custom-scheduler .e-resource-cells {
+        position: relative;
+    }
+
+    .e-schedule.custom-scheduler .e-resource-cells::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 65%;
+        width: 1px;
+        background-color: var(--color-sf-border-light, #dee2e6);
+    }
+
+    .e-schedule.custom-scheduler .template-wrap {
+        display: flex;
+        align-items: center;
+        height: 100%;
+    }
+
+    .e-schedule.custom-scheduler .e-resource-text {
+        padding-left: 0 !important;
+    }
+
+    .e-schedule.custom-scheduler .template-wrap>div:first-child {
+        padding-left: 0 !important;
+    }
+
+    .e-schedule.custom-scheduler .e-resource-left-td {
+        position: relative;
+    }
+
+    .e-schedule.custom-scheduler .e-resource-left-td::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 65%;
+        width: 1px;
+        background-color: var(--color-sf-border-light, #dee2e6);
+    }
+
+    .cascading-editor-dialog .e-dlg-content table tr {
+        height: auto;
+    }
+
+    .cascading-editor-dialog .e-field {
+        height: 36px !important;
+    }
+
+    .cascading-editor-dialog td:first-child {
+        padding-right: 12px;
+        vertical-align: middle;
+    }
+
+    .cascading-editor-dialog .e-dlg-content {
+        padding: 20px 24px !important;
+    }
+
+    .cascading-editor-dialog .e-footer-content {
+        padding: 12px 20px;
+    }
+
+    .cascading-editor-dialog table {
+        width: 100% !important;
+        border-collapse: collapse;
+    }
+
+    .cascading-editor-dialog table td {
+        padding: 6px 4px !important;
+        vertical-align: middle;
+    }
+
+    .cascading-editor-dialog table td:first-child {
+        width: 100px;
+        font-weight: 500;
+    }
+
+    .cascading-editor-dialog table td:last-child {
+        flex: 1;
+    }
+
+    .cascading-editor-dialog .e-field {
+        max-width: 350px;
+        padding: 8px 12px !important;
+        border: 1px solid;
+        border-radius: 4px !important;
+        font-size: 14px !important;
+    }
+
+    .e-schedule.custom-scheduler.e-rtl .template-wrap {
+        flex-direction: row-reverse;
+    }
+
+    .cascading-editor-dialog .e-field,
+    .cascading-editor-dialog .e-control-wrapper {
+        max-width: 350px;
+        width: 100%;
+    }
+
+    .cascading-editor-dialog .e-input {
+        display: block;
+    }
+
+    .cascading-editor-dialog table td:last-child {
+        padding-right: 20px !important;
+    }
+
+    .cascading-editor-dialog .e-field,
+    .cascading-editor-dialog .e-control-wrapper {
+        width: 100% !important;
+        max-width: 350px;
+    }
+
+    .cascading-editor-dialog input[name="Subject"] {
+        width: 100% !important;
+        max-width: 350px;
+        box-sizing: border-box;
+    }
+
+    /* Fix dropdown border to full box */
+    .cascading-editor-dialog .e-input-group,
+    .cascading-editor-dialog .e-control-wrapper {
+        border: 1px solid #d1d5db !important;
+        border-radius: 4px !important;
+    }
+
+    /* Remove underline */
+    .cascading-editor-dialog .e-input-group:after,
+    .cascading-editor-dialog .e-input-group:before {
+        display: none !important;
+    }
+
+    .material3-dark .e-schedule.custom-scheduler .e-resource-cells::after {
+        background-color: #444746;
+    }
+    .material-dark .e-schedule.custom-scheduler .e-resource-cells::after {
+        background-color: #616161;
+    }
+    .material3-dark .e-schedule.custom-scheduler .e-resource-left-td::after {
+        background-color: #444746;
+    }
+    .material-dark .e-schedule.custom-scheduler .e-resource-left-td::after {
+        background-color: #616161;
+    }
+</style>
+
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>
+            This demo showcases the Cascading Event Editor in the <a href="https://www.syncfusion.com/scheduler-sdk/aspnet-core-scheduler">ASP.NET Core Scheduler</a>.
+            Editor fields dynamically update based on user selections, enabling guided input,
+            improving accuracy, and enhancing usability for complex scheduling scenarios.
+        </p>
+    </div>
+}
+
+@section Description {
+    <div id="description">
+        <p>
+            This example demonstrates a <strong>Cascading Event Editor</strong> built with the Syncfusion Scheduler
+            component.
+            It enhances the default editor by introducing dependent fields that react to user input,
+            creating a more structured and efficient event creation experience.
+        </p>
+
+        <p><strong>Cascading Dropdowns</strong></p>
+        <p>
+            Dropdown selections dynamically filter related fields, ensuring users only see relevant options.
+            This reduces clutter and simplifies the form interaction.
+        </p>
+
+        <p><strong>Improved Data Consistency</strong></p>
+        <p>
+            Field dependencies enforce logical relationships, minimizing invalid entries and maintaining
+            clean, structured data—ideal for hierarchical scenarios like resources, categories, or services.
+        </p>
+
+        <p><strong>Flexible Customization</strong></p>
+        <p>
+            The editor layout is fully customizable, allowing integration of custom inputs, validation,
+            and UI enhancements to match specific business needs.
+        </p>
+
+        <p><strong>Key Benefits</strong></p>
+        <p>
+            This approach simplifies data entry, reduces errors, and boosts productivity through
+            intelligent field interactions—making it well-suited for advanced scheduling and booking applications.
+        </p>
+    </div>
+}
+@section Title {
+    <title>ASP.NET Core Scheduler Cascading Combos Example - Syncfusion Demos </title>
+                }
+@section Header {
+    <h1 class='sb-sample-text'>Example of Cascading Combos in ASP.NET Core Scheduler Control</h1>
+                }

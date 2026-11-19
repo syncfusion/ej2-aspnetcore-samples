@@ -1,0 +1,33 @@
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using EJ2CoreSampleBrowser.Models;
+using Syncfusion.EJ2.QueryBuilder;
+namespace EJ2CoreSampleBrowser.Pages.QueryBuilder;
+
+public class CloneFunctionalitiesModel : PageModel
+{
+    public QueryBuilderRule rule { get; set; }
+    public List<string> values { get; set; }
+    public List<EmployeeView> EmployeeData { get; set; }
+    
+    public void OnGet()
+    {
+        rule = new QueryBuilderRule()
+        {
+            Condition = "and",
+            Rules = new List<QueryBuilderRule>()
+            {
+                new QueryBuilderRule { Label="Employee ID", Field="EmployeeID", Type="number", Operator="equal", Value = 1 },
+                new QueryBuilderRule { Label="Title", Field="Title", Type="string", Operator="equal", Value = "Sales Manager" },
+                new QueryBuilderRule { Condition="or", Rules = new List<QueryBuilderRule>()
+                    {
+                        new QueryBuilderRule { Label="Country", Field="Country", Type="string", Operator="equal", Value = "USA" }
+                    }
+                },
+                new QueryBuilderRule { Label="FirstName", Field="FirstName", Type="string", Operator="equal", Value = "Nancy" }
+            }
+        };
+        values = new List<string> { "Mr.", "Mrs." };
+
+        EmployeeData = EmployeeView.GetAllRecords();
+    }
+}

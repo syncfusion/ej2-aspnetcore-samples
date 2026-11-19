@@ -1,0 +1,211 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Kanban.SearchFilter
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2
+
+@{
+    var PriorityData = new string[] { "None", "High", "Normal", "Low" };
+    var kanbanData = new KanbanDataModels().KanbanTasks();
+}
+
+@section ControlsSection{
+
+    <div class="col-lg-9 control-section">
+        <div class="content-wrapper">
+            <ejs-kanban id="Kanban" keyField="Status" dataSource="@kanbanData" created="kanbanCreate">
+                <e-kanban-columns>
+                    <e-kanban-column headerText="To Do" keyField="Open"></e-kanban-column>
+                    <e-kanban-column headerText="In Progress" keyField="InProgress"></e-kanban-column>
+                    <e-kanban-column headerText="Testing" keyField="Testing"></e-kanban-column>
+                    <e-kanban-column headerText="Done" keyField="Close"></e-kanban-column>
+                </e-kanban-columns>
+                <e-kanban-cardsettings contentField="Summary" headerField="Id"></e-kanban-cardsettings>
+                <e-kanban-swimlanesettings keyField="Assignee"></e-kanban-swimlanesettings>
+            </ejs-kanban>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section">
+        <div class="property-panel-section">
+            <p class="property-panel-header">Filtering</p>
+            <div class="property-panel-content">
+                <table class="e-filter-table">
+                    <tr>
+                        <td class="e-filter-label">
+                            <div>Priority</div>
+                        </td>
+                        <td>
+                            <div>
+                                <ejs-dropdownlist id="priority_filter" dataSource="@PriorityData" index="0" select="prioritySelect" created="priorityCreate" placeholder="Select a priority"></ejs-dropdownlist>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="e-filter-label">
+                            <div>Status</div>
+                        </td>
+                        <td>
+                            <div>
+                                <ejs-dropdownlist id="status_filter" dataSource="@Model.data" index="0" select="statusSelect" created="statusCreate" placeholder="Select a status">
+                                    <e-dropdownlist-fields text="Id" value="Value"></e-dropdownlist-fields>
+                                </ejs-dropdownlist>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <p class="property-panel-header">Searching</p>
+            <div class="property-panel-content">
+                <table class="e-filter-table">
+                    <tr>
+                        <td>
+                            <div>
+                                <ejs-textbox id="search_text" placeholder="Enter search text" showClearButton="true" created="searchCreated"></ejs-textbox>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div class='e-reset'>
+                    <ejs-button id="reset_filter" content="Reset"></ejs-button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+<style>
+    .property-panel-content .e-filter-table {
+        width: 100%;
+    }
+
+    .property-panel-content .e-filter-label {
+        width: 30%
+    }
+
+    .property-panel-content .e-reset {
+        padding-top: 13px;
+        text-align: center;
+    }
+
+    .property-panel-content td {
+        padding-top: 10px;
+    }
+
+    .property-panel-header {
+        padding-bottom: 0px;
+    }
+</style>
+
+@section PreScripts {
+    <script>
+        var kanbanObj, priorityObj, statusObj;
+        var emptyValue = true;
+        function kanbanCreate() {
+            kanbanObj = this;
+        }
+
+        function priorityCreate() {
+            priorityObj = this;
+        }
+
+        function statusCreate() {
+            statusObj = this;
+        }
+
+        function searchCreated() {
+            textObj = this;
+        }
+
+        function prioritySelect(args) {
+            var filterQuery = new ej.data.Query();
+            if (args.itemData.value !== 'None') {
+                filterQuery = new ej.data.Query().where('Priority', 'equal', args.itemData.value);
+            }
+            statusObj.value = 'None';
+            kanbanObj.query = filterQuery;
+        }
+
+        function statusSelect(args) {
+            var filterQuery = new ej.data.Query();
+            if (args.itemData.Value !== 'None') {
+                filterQuery = new ej.data.Query().where('Status', 'equal', args.itemData.Value);
+            }
+            priorityObj.value = 'None';
+            kanbanObj.query = filterQuery;
+        }
+        document.getElementById('reset_filter').onclick = function () {
+            textObj.value = '';
+            reset();
+        };
+        document.getElementById('search_text').onfocus = function (e) {
+            if (e.target.value === '') {
+                reset();
+            }
+        };
+        function reset() {
+            priorityObj.value = 'None';
+            statusObj.value = 'None';
+            kanbanObj.query = new ej.data.Query();
+        }
+        document.getElementById('search_text').onkeyup = function (e) {
+            if (e.code === 'Tab' || e.code === 'Escape' || e.code === 'ShiftLeft' || (e.code === 'Backspace' && emptyValue)) {
+                return;
+            }
+            var searchValue = e.target.value;
+            searchValue.length === 0 ? emptyValue = true : emptyValue = false;
+            var searchQuery = new ej.data.Query();
+            if (searchValue !== '') {
+                searchQuery = new ej.data.Query().search(searchValue, ['Id', 'Summary'], 'contains', true);
+            }
+            kanbanObj.query = searchQuery;
+        };
+    </script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the filtering and searching capabilities of the Kanban component, enabling users to quickly locate and organize cards based on specific criteria.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+
+    <p>
+        This sample demonstrates how to filter and search cards in the Kanban component using the
+        <a href="https://ej2.syncfusion.com/documentation/api/kanban/index-default#query" target="_blank">query</a>
+        property. The query API can be used to display specific cards based on custom filtering and search criteria.
+    </p>
+    <ul>
+        <li>
+            The <code>where</code> method is used to filter cards based on field values such as <strong>Priority</strong> and <strong>Status</strong>.
+        </li>
+        <li>
+            The <code>search</code> method is used to locate cards by matching text across the <code>Id</code> and <code>Summary</code> fields.
+        </li>
+    </ul>
+    <p>
+        The reset option clears the applied filters and search criteria by restoring the Kanban
+        <code>query</code> to a new <code>Query</code> instance, displaying all cards on the board.
+    </p>
+        <p>
+        More information on the Essential<sup>®</sup> JS2 Kanban board can be found in this
+        <a href="https://ej2.syncfusion.com/documentation/api/kanban/index-default#query" target="_blank">query </a> documentation section.
+    </p>
+    <p>
+        Looking for the full ASP.NET Core Kanban component overview, features, pricing, and documentation?
+        Visit the <a href="https://www.syncfusion.com/gantt-sdk/aspnet-core-kanban-board" target="_blank">ASP.NET Core</a> page.
+    </p>
+    </div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Search and Filter Cards in ASP.NET Core Kanban control. Explore here for more details."/>
+                }
+@section Title{
+                    <title>ASP.NET Core Kanban Search and Filter Cards Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Search and Filter Cards in ASP.NET Core Kanban Control</h1>
+                }

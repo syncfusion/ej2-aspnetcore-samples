@@ -1,0 +1,159 @@
+@page
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2.Gantt
+@model EJ2CoreSampleBrowser.Pages.Gantt.RenderOptimizationModel
+
+@section ControlsSection {
+
+<div class="control-section">
+
+    <div style="display:flex;">
+        <div style="width:130px;padding-bottom:10px;">
+
+            <ejs-dropdownlist id="recordCount"
+                              dataSource="@Model.DropDownData"
+                              index="0"
+                              change="onDropdownChange">
+
+                <e-dropdownlist-fields
+                    text="Text"
+                    value="Value">
+                </e-dropdownlist-fields>
+
+            </ejs-dropdownlist>
+
+        </div>
+
+        <span style="padding-left:20px;font-size:15px;margin-top:5px;">
+            <b>Data initial load time:</b>
+            <span id="loadTime">0</span> sec
+        </span>
+    </div>
+
+    <ejs-gantt id="RenderOptimization"
+               dataSource="@GanttData.GenerateVirtualData(5000)"
+               treeColumnIndex="1"
+               enableVirtualization="true"
+               allowSelection="true"
+               enablePredecessorValidation="false"
+               autoCalculateDateScheduling="false"
+               highlightWeekends="true"
+               dataBound="onDataBound"
+               height="650px"
+               width="100%"
+               rowHeight="46"
+               taskbarHeight="25"
+               projectStartDate="03/29/2026"
+               projectEndDate="09/20/2026">
+
+        <e-gantt-taskfields
+            id="TaskId"
+            name="TaskName"
+            startDate="StartDate"
+            endDate="EndDate"
+            duration="Duration"
+            progress="Progress"
+            parentID="ParentID"
+            dependency="Predecessor">
+        </e-gantt-taskfields>
+
+        <e-gantt-labelsettings taskLabel="Progress">
+        </e-gantt-labelsettings>
+
+        <e-gantt-splittersettings columnIndex="2">
+        </e-gantt-splittersettings>
+
+        <e-gantt-columns>
+            <e-gantt-column field="TaskId"></e-gantt-column>
+            <e-gantt-column field="TaskName"
+                            headerText="Task Name"
+                            width="300">
+            </e-gantt-column>
+            <e-gantt-column field="StartDate"></e-gantt-column>
+            <e-gantt-column field="Duration"></e-gantt-column>
+            <e-gantt-column field="Progress"></e-gantt-column>
+        </e-gantt-columns>
+
+    </ejs-gantt>
+
+</div>
+
+<script>
+
+    let startLoadTime = new Date();
+    let shouldCalculateLoadTime = true;
+
+    const data5000 = @Html.Raw(
+        System.Text.Json.JsonSerializer.Serialize(
+            GanttData.GenerateVirtualData(5000)
+        )
+    );
+
+    const data10000 = @Html.Raw(
+        System.Text.Json.JsonSerializer.Serialize(
+            GanttData.GenerateVirtualData(10000)
+        )
+    );
+
+    function onDropdownChange(args) {
+        var gantt = document.getElementById('RenderOptimization').ej2_instances[0];
+        startLoadTime = new Date();
+        shouldCalculateLoadTime = true;
+        if (args.value == "5000") {
+            gantt.dataSource = data5000;
+        }
+        else {
+            gantt.dataSource = data10000;
+        }
+        gantt.refresh();
+    }
+
+    function onDataBound() {
+        if (!shouldCalculateLoadTime) {
+            return;
+        }
+        shouldCalculateLoadTime = false;
+        var diff = (new Date().getTime() - startLoadTime.getTime()) / 1000;
+        document.getElementById("loadTime").innerHTML = diff.toFixed(2);
+    }
+</script>
+
+}
+
+@section ActionDescription {
+    <div id="action-description">
+        <p>
+            This sample demonstrates render optimization in Gantt by minimizing DOM updates during rendering.
+            The sample disables <code>autoCalculateDateScheduling</code> and uses a valid pre-calculated data source
+            so task dates are not recomputed during rendering, improving initial load performance.
+        </p>
+    </div>
+}
+
+@section Description {
+    <div id="description">
+        <p>
+            This demo measures initial data load time and demonstrates render optimization by disabling <code>autoCalculateDateScheduling</code> and
+            providing a valid (pre-calculated) data source so the Gantt does not recompute task dates during rendering. When combined with
+            virtualization, this reduces DOM updates and improves both initial load and scroll performance.
+        </p>
+        <p>More information on the Essential<sup>®</sup> Gantt Chart can be found in this <a target="_blank" href="https://help.syncfusion.com/gantt-sdk/asp-net-core/gantt-chart/getting-started">documentation section.</a></p>
+        <br/>
+        <p>Looking for the full ASP.NET Core Gantt Chart component overview, features, pricing, and documentation? Visit the <a target="_blank" href="https://www.syncfusion.com/gantt-sdk/aspnet-core-gantt-chart">ASP.NET Core Gantt Chart</a> page.</p>
+    </div>
+}
+
+@section Meta {
+    <meta name="description"
+          content="This example demonstrates render optimization and virtualization in ASP.NET Core Gantt control." />
+}
+
+@section Title {
+    <title>ASP.NET Core Gantt Render Optimization Example - Syncfusion Demos</title>
+}
+
+@section Header {
+    <h1 class="sb-sample-text">
+        Example of Render Optimization in ASP.NET Core Gantt Control
+    </h1>
+}

@@ -1,0 +1,79 @@
+@page
+@using Syncfusion.EJ2
+@using Newtonsoft.Json
+@using EJ2CoreSampleBrowser.Models
+@{
+    var data = new Countries().CountriesList();
+}
+
+@section ControlsSection{
+<div class="col-lg-8 control-section">
+    <div class='control-wrapper'>
+        <div style='padding-top:75px;'>
+                <ejs-combobox id="country" placeholder="Select a country" allowFiltering="true" filtering="onfiltering" dataSource="@data" popupHeight="270px" debounceDelay="300">
+                <e-combobox-fields text="Name" value="Code"></e-combobox-fields>
+            </ejs-combobox>
+        </div>
+    </div>
+</div>
+    <div class="col-lg-4 property-section" style="padding-bottom:15px">
+     <div class="property-panel-section">
+          <div class="property-panel-header">Properties</div>
+            <div class="property-panel-content">
+                <label class="example-label">Debounce Delay</label>
+                <ejs-numerictextbox id="numeric" format="n0" value="300" min="0" change="change"></ejs-numerictextbox>
+            </div>
+      </div>
+</div>
+@*custom code start*@
+<style>
+    .control-wrapper {
+        margin: 0 auto;
+        width: 250px;
+    }
+</style>
+@*custom code end*@
+<script type="text/javascript">
+    function onfiltering(e) {
+        var query = new ej.data.Query();
+        query = (e.text !== '') ? query.where('Name', 'startswith', e.text, true) : query;
+        e.updateData(@Html.Raw(JsonConvert.SerializeObject(data)), query);
+    }
+    function change(args) {
+        var comboBoxObj = document.getElementById('country').ej2_instances[0];
+        comboBoxObj.debounceDelay = args.value;
+     }
+</script>
+}
+@section Meta{
+<meta name="description" content="This example demonstrates the Filtering in ASP.NET Core ComboBox control. Explore here for more details."/>
+}
+@section ActionDescription{
+<div id="action-description">
+    <p>
+        This sample demonstrates the filtering functionalities of the ComboBox. Type a character in ComboBox
+        element and choose an item from the filtered list based on the typed characters.
+    </p>
+</div>
+}
+@section Description{
+<div id="description">
+    <p>
+        The ComboBox has built-in support to filter the data source when <code>allowFiltering</code> is enabled. It performs
+        when characters are typed in the search box. In <code>filtering</code> event, you can filter down the data source and
+        return the resulted data to ComboBox via <code>updateData</code> method to display its list items.
+        The debounce delay, in milliseconds, for filtering the items in the ComboBox component can be set by using the <code>debounceDelay</code> property.
+    </p>
+    <p>This sample illustrates that, query the data source and pass the resulted data to ComboBox through the <code>updateData</code> method in <code>filtering</code> event.</p>
+    <p>
+        More information on the filtering feature configuration can be found in the
+        <a href="https://ej2.syncfusion.com/aspnetcore/documentation/combo-box/filtering" target="_blank "aria-label="Navigate to the documentation for filtering in ASP.NET Core ComboBox control" > Documentation section</a>.
+    </p>
+</div>
+}
+@section Title{
+<title>ASP.NET Core ComboBox Filtering Example - Syncfusion Demos </title>
+}
+@section Header{
+<h1 class='sb-sample-text'>Example of Filtering in ASP.NET Core ComboBox Control</h1>
+}

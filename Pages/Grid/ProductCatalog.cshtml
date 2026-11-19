@@ -1,0 +1,658 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Grid.ProductCatalogModel
+
+
+@{
+    ViewData["Title"] = "ProductCatalog";
+}
+
+@section ControlsSection {
+
+<div class="control-section">
+
+    <ejs-grid id="Grid"
+              dataSource="@Model.Products"
+              allowSorting="true"
+              allowFiltering="true"
+              detailTemplate="#detailTemplate"
+              detailDataBound="detailDataBound"
+              height="520">
+
+        <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
+
+        <e-grid-columns>
+
+            <e-grid-column field="ProductID"
+                           headerText="ID"
+                           width="80"
+                           textAlign="Left"
+                           isPrimaryKey="true"
+                           height="520">
+            </e-grid-column>
+
+            <e-grid-column field="ProductName"
+                           headerText="Product"
+                           width="180"
+                           textAlign="Center"
+                           template="#productTemplate">
+            </e-grid-column>
+
+            <e-grid-column field="Category"
+                           headerText="Category"
+                           textAlign="Center"
+                           width="120">
+            </e-grid-column>
+
+            <e-grid-column headerText="Sales"
+                           width="120"
+                           textAlign="Center"
+                           template="#salesTemplate">
+            </e-grid-column>
+
+            <e-grid-column field="Price"
+                           headerText="Price"
+                           width="120"
+                           format="C2"
+                           textAlign="Center">
+            </e-grid-column>
+            <e-grid-column field="Status"
+                           headerText="Status"
+                           width="140"
+                           textAlign="Center"
+                           template="#statusTemplate">
+            </e-grid-column>
+
+        </e-grid-columns>
+
+    </ejs-grid>
+
+</div>
+}
+
+<script id="productTemplate" type="text/x-jsrender">
+    ${getProductTemplate(data)}
+</script>
+
+<script>
+function getProductTemplate(data) {
+
+ var imagePath = "../scripts/Images/Grid/" + data.ProductName + ".png";
+
+    return `
+        <div class="product-cell">
+            <img src="${imagePath}" class="product-image" alt="${data.ProductName}" />
+            <div class="product-copy">
+                <div class="product-name">${data.ProductName}</div>
+                <div class="product-meta">
+                    <span class="product-description">${data.Description}</span>
+                    <span class="product-sku">SKU: ${data.SKU}</span>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+</script>
+<script id="salesTemplate" type="text/x-jsrender">
+${getSalesTemplate(data)}
+</script>
+
+
+
+<script id="statusTemplate" type="text/x-jsrender">
+${getStatusTemplate(data)}
+</script>
+
+<script id="detailTemplate" type="text/x-template">
+    <div class="detail-page">
+        <div class="detail-top">
+            <div class="product-detail-wrapper">
+                <div class="detail-grid">
+                    <div class="e-card">
+                        <div class="e-card-header">
+                            <div class="e-card-header-caption">
+                                <div class="e-card-title">Product Description</div>
+                            </div>
+                        </div>
+                        <div class="e-card-content">
+                            <div class="product-description-text">${ProductDescription}</div>
+                            <h4 class="sub-title">Key Highlights</h4>
+                            <ul class="highlight-list"></ul>
+                        </div>
+                    </div>
+
+                    <div class="e-card">
+                        <div class="e-card-header">
+                            <div class="e-card-header-caption">
+                                <div class="e-card-title">Technical Specifications</div>
+                            </div>
+                        </div>
+                        <div class="e-card-content specification-content"></div>
+                    </div>
+
+                    <div class="e-card">
+                        <div class="e-card-header">
+                            <div class="e-card-header-caption">
+                                <div class="e-card-title">Pricing Details</div>
+                            </div>
+                        </div>
+                        <div class="e-card-content">
+                            <div class="info-row">
+                                <span>Current Price</span>
+                                <span class="current-price">${formatCurrency(Price)}</span>
+                            </div>
+                            <div class="info-row">
+                                <span>Original Price</span>
+                                <span class="original-price">${formatCurrency(OriginalPrice)}</span>
+                            </div>
+                            <div class="info-row">
+                                <span>Discount</span>
+                                <span class="discount-price">${getDiscount(OriginalPrice, Price)}%</span>
+                            </div>
+                            <div class="info-row">
+                                <span>Cost Price</span>
+                                <span class="cost-price">${formatCurrency(CostPrice)}</span>
+                            </div>
+                            <div class="info-row">
+                                <span>Profit Margin</span>
+                                <span class="profit-price">${ProfitMargin}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script>
+function detailDataBound(args) {
+    var highlightList = args.detailElement.querySelector('.highlight-list');
+    var specContainer = args.detailElement.querySelector('.specification-content');
+
+    if (highlightList) {
+        var highlights = args.data.Highlights;
+
+        if (typeof highlights === 'string') {
+            highlights = highlights.split(',');
+        }
+
+        if (highlights && highlights.length) {
+            highlightList.innerHTML = '';
+            highlights.forEach(function (item) {
+                var li = document.createElement('li');
+                li.innerHTML = '<span class="bullet"></span><span>' + item + '</span>';
+                highlightList.appendChild(li);
+            });
+        } else {
+            highlightList.innerHTML = '';
+        }
+    }
+
+    if (specContainer && args.data.Specifications) {
+        var html = '';
+
+        Object.keys(args.data.Specifications).forEach(function (key) {
+            html += '<div class="info-row">' +
+                '<span>' + key + '</span>' +
+                '<strong>' + args.data.Specifications[key] + '</strong>' +
+                '</div>';
+        });
+
+        specContainer.innerHTML = html;
+    }
+}
+
+function getSalesTemplate(data) {
+
+    var trend =
+        ((data.SalesMonth3 - data.SalesMonth2) /
+        Math.max(data.SalesMonth2, 1)) * 100;
+
+    var icon = trend >= 0 ? "↑" : "↓";
+
+    return `
+        <div class="sales-cell">
+            <span class="sales-number">${data.SalesMonth3.toLocaleString()}</span>
+            <span class="sales-growth ${trend >= 0 ? 'positive' : 'negative'}">${icon} ${Math.abs(trend).toFixed(1)}%</span>
+        </div>`;
+}
+
+function getStatusTemplate(data) {
+
+    var cls = data.Status === "In Stock"
+        ? "status-success"
+        : "status-danger";
+
+    return `
+        <div class="status-cell">
+
+            <span class="status-badge ${cls}">
+                ${data.Status}
+            </span>
+
+            <div class="status-units">
+                ${data.Units} units
+            </div>
+
+        </div>
+    `;
+}
+
+function getDiscount(original, price) {
+    if (!original || !price) {
+        return "0";
+    }
+
+    var discount = ((original - price) / original) * 100;
+    return Math.round(discount);
+}
+
+function formatCurrency(value) {
+    var number = Number(value);
+
+    if (isNaN(number)) {
+        number = 0;
+    }
+
+    return '$' + number.toLocaleString();
+}
+
+</script>
+
+<style>
+#Grid .product-cell {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 0;
+    height: 100%;
+    text-align: left;
+}
+
+#Grid .product-image {
+    width: 52px;
+    height: 52px;
+    min-width: 52px;
+    min-height: 52px;
+    border-radius: 10px;
+    object-fit: cover;
+    display: block;
+}
+
+#Grid .product-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    text-align: left;
+}
+
+#Grid .product-name {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#Grid .product-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    color: #6b7280;
+    line-height: 1.3;
+}
+
+#Grid .product-description,
+#Grid .product-sku {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 10px;
+    font-weight: 400;
+    color: #6b7280;
+}
+
+#Grid .sales-cell {
+    display: inline;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+#Grid .sales-number {
+    font-weight: 600;
+    font-size: 13px;
+}
+
+#Grid .sales-growth {
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+    line-height: 1;
+}
+
+#Grid .sales-growth.positive {
+    color: #22c55e;
+}
+
+#Grid .sales-growth.negative {
+    color: #ef4444;
+}
+
+#Grid .status-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+}
+
+#Grid .status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+    border-radius: 12px;
+    border: 1px solid;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 10px 14px;
+    white-space: nowrap;
+}
+
+#Grid .status-badge-success,
+#Grid .status-success {
+    background: #F0FDF4;
+    border-color: #BBF7D0;
+    color: #065f46;
+}
+
+#Grid .status-badge-error,
+#Grid .status-danger {
+    background: #FEF2F2;
+    border-color: #FECACA;
+    color: #7f1d1d;
+}
+
+#Grid .status-units {
+    padding-top: 6px;
+}
+
+#Grid .detail-page {
+    padding: 16px;
+}
+
+#Grid .detail-top {
+    display: grid;
+    gap: 16px;
+    align-items: stretch;
+}
+
+#Grid .e-detailrow .e-detailcell {
+    padding: 0 !important;
+    overflow: hidden;
+}
+
+#Grid .product-detail-wrapper {
+    padding: 0;
+}
+
+#Grid .detail-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    align-items: start;
+}
+
+#Grid .detail-grid > .e-card {
+    width: 100%;
+    margin: 0;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+#Grid .detail-grid .e-card .e-card-title,
+#Grid .detail-grid .e-card .sub-title {
+    font-size: inherit;
+    font-weight: 700;
+    color: inherit;
+    font-family: inherit;
+    line-height: 1.4;
+}
+
+#Grid .bullet {
+    width: 10px;
+    height: 10px;
+    background: #a78bfa;
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px #ede9fe;
+    flex-shrink: 0;
+}
+
+#Grid .detail-grid .e-card .e-card-content {
+    padding: 12px;
+    color: inherit;
+    font-family: inherit;
+}
+
+#Grid .detail-grid .e-card .product-description-text,
+#Grid .detail-grid .e-card .highlight-list li,
+#Grid .detail-grid .e-card .info-row span {
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 400;
+}
+
+#Grid .detail-grid .e-card .info-row strong {
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 400;
+}
+
+#Grid .info-row  .original-price{
+     text-decoration: line-through;
+}
+
+#Grid .sub-title {
+    font-weight: 700;
+    margin: 14px 0;
+}
+
+#Grid .product-description-text {
+    line-height: 1.6;
+    font-size: inherit;
+}
+
+#Grid .highlight-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#Grid .highlight-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    font-weight: 400;
+}
+
+#Grid .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+}
+
+#Grid .info-row:last-child {
+    border-bottom: none;
+}
+
+#Grid .info-row span {
+    font-weight: 400;
+}
+
+#Grid .info-row strong {
+    flex: 1 1 58%;
+    text-align: right;
+    font-weight: 400;
+    word-break: break-word;
+}
+
+#Grid .e-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+#Grid .e-card-content {
+    padding: 14px;
+    flex: 1;
+}
+
+#Grid .current-price {
+    color: #6366f1 !important;
+}
+
+#Grid .discount-price {
+    color: #ef4444 !important;
+}
+
+#Grid .profit-price {
+    color: #22c55e !important;
+}
+
+body.material-dark #Grid .detail-grid > .e-card,
+body.material3-dark #Grid .detail-grid > .e-card,
+body.fabric-dark #Grid .detail-grid > .e-card,
+body.bootstrap-dark #Grid .detail-grid > .e-card,
+.tailwind-dark #Grid .detail-grid > .e-card {
+    background: #0f1720;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 18px;
+    box-shadow: none;
+}
+
+body.material-dark #Grid .e-card-header,
+body.material3-dark #Grid .e-card-header,
+body.fabric-dark #Grid .e-card-header,
+body.bootstrap-dark #Grid .e-card-header,
+.tailwind-dark #Grid .e-card-header {
+    background: transparent;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    color: #e6eef8;
+}
+
+body.material-dark #Grid .e-card-content,
+body.material3-dark #Grid .e-card-content,
+body.fabric-dark #Grid .e-card-content,
+body.bootstrap-dark #Grid .e-card-content,
+.tailwind-dark #Grid .e-card-content {
+    background: transparent;
+    color: #d1d5db;
+}
+
+body.material-dark #Grid .product-name,
+body.material3-dark #Grid .product-name,
+body.fabric-dark #Grid .product-name,
+body.bootstrap-dark #Grid .product-name,
+.tailwind-dark #Grid .product-name {
+    color: #f8fafc;
+}
+
+body.material-dark #Grid .product-description,
+body.material3-dark #Grid .product-description,
+body.fabric-dark #Grid .product-description,
+body.bootstrap-dark #Grid .product-description,
+.tailwind-dark #Grid .product-description,
+body.material-dark #Grid .product-sku,
+body.material3-dark #Grid .product-sku,
+body.fabric-dark #Grid .product-sku,
+body.bootstrap-dark #Grid .product-sku,
+.tailwind-dark #Grid .product-sku {
+    color: #9ca3af;
+}
+
+body.material-dark #Grid .info-row,
+body.material3-dark #Grid .info-row,
+body.fabric-dark #Grid .info-row,
+body.bootstrap-dark #Grid .info-row,
+.tailwind-dark #Grid .info-row {
+    border-bottom: 1px solid rgba(255,255,255,0.035);
+}
+
+body.material-dark #Grid .highlight-list li,
+body.material3-dark #Grid .highlight-list li,
+body.fabric-dark #Grid .highlight-list li,
+body.bootstrap-dark #Grid .highlight-list li,
+.tailwind-dark #Grid .highlight-list li {
+    color: #e6eef8;
+}
+
+body.material-dark #Grid .current-price,
+body.material3-dark #Grid .current-price,
+body.fabric-dark #Grid .current-price,
+body.bootstrap-dark #Grid .current-price,
+.tailwind-dark #Grid .current-price {
+    color: #818cf8 !important;
+}
+
+body.material-dark #Grid .discount-price,
+body.material3-dark #Grid .discount-price,
+body.fabric-dark #Grid .discount-price,
+body.bootstrap-dark #Grid .discount-price,
+.tailwind-dark #Grid .discount-price {
+    color: #f87171 !important;
+}
+
+body.material-dark #Grid .profit-price,
+body.material3-dark #Grid .profit-price,
+body.fabric-dark #Grid .profit-price,
+body.bootstrap-dark #Grid .profit-price,
+.tailwind-dark #Grid .profit-price {
+    color: #4ade80 !important;
+}
+</style>
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>This sample demonstrates a product catalog built using the Syncfusion® ASP Core Data Grid with column templates and a detail template. Each row displays product information through customized templates, including product details, sales trends, ratings, pricing, and stock status.</p>
+    </div>
+}
+
+@section Meta{
+    <meta name="description" content="This example demonstrates the Overview in ASP.NET Core Data Grid control. Explore here for more details." />
+}
+
+@section Description{
+    <div id="description">
+        <p>
+           The Syncfusion® ASP Core Data Grid demonstrates the use of detail and column templates to display product inventory. Custom templates are applied to columns such as "Product", "Sales", and "Status".</p>
+      <p>
+        Rows can be expanded to display a detail section using the Syncfusion® Card layout. This section presents product information including detailed descriptions, specifications, and pricing details.  
+        </p>
+       <p>
+            For more details on the detail template feature, refer to <a target="_blank" href="https://ej2.syncfusion.com/aspnetmvc/documentation/grid/row/detail-template" aria-label="documentation"> this documentation section</a>.
+        </p>
+        <p>
+            Looking for the full ASP.NET Core Data Grid component overview, features, pricing, and documentation? Visit our <a target="_blank" href="https://www.syncfusion.com/aspnet-core-ui-controls/grid" aria-label="documentation">ASP.NET Core Data Grid component</a> page.
+        </p>
+    </div>
+}
+@section Title{
+    <title>ASP.NET Core Data Grid Product Catalog Example - Syncfusion Demos </title>
+}
+@section Header{
+    <h1 class='sb-sample-text'>Example of Product Catalog in ASP.NET Core Data Grid Control</h1>
+}
+@section CustomCanonicalURL{
+    <link rel="canonical" href="https://www.syncfusion.com/aspnet-core-ui-controls/grid" />
+}

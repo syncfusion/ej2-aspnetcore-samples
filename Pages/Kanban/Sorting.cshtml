@@ -1,0 +1,237 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Kanban.Sorting
+@using EJ2CoreSampleBrowser.Models
+@using Syncfusion.EJ2
+
+@{
+    var data = new KanbanDataModels().KanbanTasks();
+    var fieldData = new string[] { "None" };
+    var directionData = new string[] { "Ascending", "Descending" };
+}
+@section ControlsSection{
+    <div class="col-lg-9 control-section">
+        <div class="control_wrapper">
+            <ejs-kanban id="Kanban" keyField="Status" dataSource="@data" created="kanbanCreate">
+                <e-kanban-columns>
+                    <e-kanban-column headerText="To Do" keyField="Open"></e-kanban-column>
+                    <e-kanban-column headerText="In Progress" keyField="InProgress"></e-kanban-column>
+                    <e-kanban-column headerText="Done" keyField="Close"></e-kanban-column>
+                </e-kanban-columns>
+                <e-kanban-cardsettings headerField="Id" contentField="Summary" template="#cardTemplate"></e-kanban-cardsettings>
+            </ejs-kanban>
+        </div>
+    </div>
+    <div class="col-lg-3 property-section">
+        <table id="property" title="Properties">
+            <tr>
+                <td>
+                    <div>Sort By</div>
+                </td>
+                <td>
+                    <ejs-dropdownlist id="sortBy" dataSource="@Model.sortData" index="1" change="onChange" created="sortCreate">
+                        <e-dropdownlist-fields text="Sort" value="Id"></e-dropdownlist-fields>
+                    </ejs-dropdownlist>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>Field</div>
+                </td>
+                <td>
+                    <ejs-dropdownlist id="field" dataSource="@fieldData" index="0" enabled="false" created="fieldCreate">
+                    </ejs-dropdownlist>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>Direction</div>
+                </td>
+                <td>
+                    <ejs-dropdownlist id="direction" dataSource="@directionData" index="0" change="onChange" created="directionCreate">
+                    </ejs-dropdownlist>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 10px">
+                    <ejs-button id="sort" content="Sort"></ejs-button>
+                </td>
+                <td style="padding: 10px">
+                    <ejs-button id="clear" content="Clear"></ejs-button>
+                </td>
+            </tr>
+        </table>
+    </div>
+}
+<style>
+    .e-kanban .e-card-footer-css {
+        align-self: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        height: 16px;
+        width: 16px;
+        margin-right: 8px;
+    }
+
+    .e-kanban .e-rank {
+        font-size: 12px;
+    }
+    
+    .property-panel-content td {
+        padding-top: 10px;
+    }
+
+    .material-dark .e-kanban .e-rank {
+        color: #f9fbfd;
+    }
+
+    .e-kanban .e-Low {
+        background-image: url(https://syncfusion.atlassian.net/images/icons/priorities/trivial.svg);
+    }
+
+    .e-kanban .e-High {
+        background-image: url(https://syncfusion.atlassian.net/images/icons/priorities/major.svg);
+    }
+
+    .e-kanban .e-Critical {
+        background-image: url(https://syncfusion.atlassian.net/images/icons/priorities/critical.svg);
+    }
+
+    .e-kanban .e-Release {
+        background-image: url(https://syncfusion.atlassian.net/images/icons/priorities/critical.svg);
+    }
+
+    .e-kanban .e-Normal {
+        background-image: url(https://syncfusion.atlassian.net/images/icons/priorities/minor.svg);
+    }
+</style>
+@section PreScripts {
+    <script id="cardTemplate" type="text/x-jsrender">
+        <div class='card-template'>
+            <div class='e-card-header'>
+                <div class='e-card-header-caption'>
+                    <div class='e-card-header-title e-tooltip-text'>${Id}</div>
+                </div>
+            </div>
+            <div class='e-card-content e-tooltip-text'>
+                <div class='e-text'>${Summary}</div>
+            </div>
+            <div class='e-card-footer'>
+                <div class='e-${Priority} e-card-footer-css'></div>
+                <div class='e-rank'>Rank #${RankId}</div>
+            </div>
+        </div>
+    </script>
+    <script>
+        var kanbanObj, sortObj, fieldObj, directionObj;
+        function kanbanCreate() {
+            kanbanObj = this;
+        }
+
+        function sortCreate() {
+            sortObj = this;
+        }
+
+        function fieldCreate() {
+            fieldObj = this;
+        }
+
+        function directionCreate() {
+            directionObj = this;
+        }
+
+        function onChange(args) {
+            var data;
+            if (args.value === 'DataSourceOrder' || args.value === 'Index') {
+                data = args.value === 'Index' ? 'RankId' : 'None';
+                setFieldValue(data);
+            }
+            if (args.value === 'Custom') {
+                fieldObj.dataSource = ['Priority', 'RankId', 'Summary'];
+                fieldObj.value = 'Priority';
+                fieldObj.enabled = true;
+            }
+          if (args.value === 'Ascending') {
+            data = sortObj.value === 'Index' ? 'RankId' : 'None';
+            setFieldValue(data);
+            directionObj.value = 'Ascending';
+          }
+          if (args.value === 'Descending') {
+            data = sortObj.value === 'Index' ? 'RankId' : 'None';
+            setFieldValue(data);
+            directionObj.value = 'Descending';
+          }
+        }
+        function setFieldValue(data) {
+            fieldObj.dataSource = [data];
+            fieldObj.value = data;
+            fieldObj.enabled = false;
+        }
+        document.getElementById('sort').onclick = function () {
+            setKanbanProperties();
+        };
+        document.getElementById('clear').onclick = function () {
+            sortObj.value = 'Index';
+            directionObj.value = 'Ascending';
+            setFieldValue('None');
+            setKanbanProperties();
+        };
+        function setKanbanProperties() {
+            kanbanObj.sortSettings.sortBy = sortObj.value;
+            kanbanObj.sortSettings.field = fieldObj.value;
+            kanbanObj.sortSettings.direction = directionObj.value;
+        }
+    </script>
+}
+
+@section ActionDescription{
+    <div id="action-description">
+        <p>
+            This sample demonstrates the card sorting capabilities of the Kanban component, enabling workflow items to be organized and displayed based on different sorting criteria and orders.
+        </p>
+    </div>
+}
+@section Description{
+    <div id="description">
+    <p>
+        This sample demonstrates the card sorting capabilities of the Kanban component using the
+        <a href="https://ej2.syncfusion.com/aspnetcore/documentation/kanban/sort" target="_blank">sortSettings</a>
+        configuration. Cards can be organized based on data source order, index values, or custom fields, and displayed in ascending or descending order.
+    </p>
+    <p>
+        The <code>sortBy</code> property provides the following options:
+    </p>
+    <ul>
+        <li>
+            <code>DataSourceOrder</code>: Cards are arranged according to their order in the data source. Since the original data order is used, no additional <code>field</code> mapping is required.
+        </li>
+        <li>
+            <code>Index</code>: Cards are sorted based on an integer field value, such as <code>RankId</code>. When cards are reordered through drag-and-drop, the mapped field value is automatically updated to reflect the new position.
+        </li>
+        <li>
+            <code>Custom</code>: Cards are sorted using a user-defined field. Both string and numeric fields can be used, such as <code>Priority</code>, <code>RankId</code>, or <code>Summary</code>. The original field values are preserved when cards are moved.
+        </li>
+    </ul> 
+    <p>
+        The <code>direction</code> property determines whether cards are displayed in ascending or descending order within each column.
+    </p>
+        <p>
+        More information on the Essential<sup>®</sup> JS2 Kanban board can be found in this
+        <a href="https://ej2.syncfusion.com/aspnetcore/documentation/kanban/sort" target="_blank">sorting</a> documentation section.
+    </p>
+        <p>
+            Looking for the full ASP.NET Core Kanban component overview, features, pricing, and documentation?
+            Visit the <a href="https://www.syncfusion.com/gantt-sdk/aspnet-core-kanban-board" target="_blank">ASP.NET Core</a> page.
+        </p>
+    </div>
+}
+
+@section Meta{
+                    <meta name="description" content="This example demonstrates the Sorting Cards in ASP.NET Core Kanban control. Explore here for more details."/>
+                }
+@section Title{
+                    <title>ASP.NET Core Kanban Sorting Cards Example - Syncfusion Demos </title> 
+                }
+@section Header{
+                    <h1 class='sb-sample-text'>Example of Sorting Cards in ASP.NET Core Kanban Control</h1>
+                }

@@ -1,0 +1,821 @@
+@page
+@model EJ2CoreSampleBrowser.Pages.Chart.MultiAxisCombinationModel
+@using Syncfusion.EJ2
+@using Syncfusion.EJ2.Charts
+
+@{
+    var temperatureGradient = new ChartLinearGradient
+    {
+        X1 = 0,
+        Y1 = 0,
+        X2 = 1,
+        Y2 = 0,
+        GradientColorStop = new List<ChartGradientColorStop>
+        {
+            new ChartGradientColorStop
+            {
+                Color = "#FB923C",
+                Offset = 0,
+                Opacity = 1
+            },
+            new ChartGradientColorStop
+            {
+                Color = "#F97316",
+                Offset = 55,
+                Opacity = 1
+            },
+            new ChartGradientColorStop
+            {
+                Color = "#C2410C",
+                Offset = 100,
+                Opacity = 1
+            }
+        }
+    };
+
+    var co2Gradient = new ChartLinearGradient
+    {
+        X1 = 0,
+        Y1 = 0,
+        X2 = 1,
+        Y2 = 0,
+        GradientColorStop = new List<ChartGradientColorStop>
+        {
+            new ChartGradientColorStop
+            {
+                Color = "#60A5FA",
+                Offset = 0,
+                Opacity = 1
+            },
+            new ChartGradientColorStop
+            {
+                Color = "#2563EB",
+                Offset = 50,
+                Opacity = 1
+            },
+            new ChartGradientColorStop
+            {
+                Color = "#1E40AF",
+                Offset = 100,
+                Opacity = 1
+            }
+        }
+    };
+
+    var seaIceGradient = new ChartLinearGradient
+    {
+        X1 = 0,
+        Y1 = 0,
+        X2 = 0,
+        Y2 = 1,
+        GradientColorStop = new List<ChartGradientColorStop>
+        {
+            new ChartGradientColorStop
+            {
+                Color = "#10B981",
+                Offset = 0,
+                Opacity = 0.30
+            },
+            new ChartGradientColorStop
+            {
+                Color = "#34D399",
+                Offset = 45,
+                Opacity = 0.15
+            },
+            new ChartGradientColorStop
+            {
+                Color = "#ECFDF5",
+                Offset = 100,
+                Opacity = 0.02
+            }
+        }
+    };
+
+    var co2Annotation = @"
+        <div class='climate-insight climate-insight-blue climate-insight-anchor-down'>
+            <div class='climate-insight-marker climate-insight-marker-diamond'></div>
+            <div class='climate-insight-leader'></div>
+            <div class='climate-insight-pill'>
+                <span class='climate-insight-pin climate-insight-pin-diamond'></span>
+                <span class='climate-insight-label'>CO₂ seasonal peak</span>
+                <span class='climate-insight-value'>430.5 ppm</span>
+            </div>
+        </div>";
+
+    var seaIceAnnotation = @"
+        <div class='climate-insight climate-insight-green climate-insight-anchor-up'>
+            <div class='climate-insight-marker climate-insight-marker-rectangle'></div>
+            <div class='climate-insight-leader'></div>
+            <div class='climate-insight-pill'>
+                <span class='climate-insight-pin climate-insight-pin-rectangle'></span>
+                <span class='climate-insight-label'>Sea ice annual low</span>
+                <span class='climate-insight-value'>4.68 M km²</span>
+            </div>
+        </div>";
+
+    var temperatureAnnotation = @"
+        <div class='climate-insight climate-insight-orange climate-insight-anchor-right'>
+            <div class='climate-insight-marker climate-insight-marker-circle'></div>
+            <div class='climate-insight-leader'></div>
+            <div class='climate-insight-pill'>
+                <span class='climate-insight-pin climate-insight-pin-circle'></span>
+                <span class='climate-insight-label'>Hottest anomaly</span>
+                <span class='climate-insight-value'>+1.75°C</span>
+            </div>
+        </div>";
+}
+
+@section ControlsSection {
+    <div class="control-section" align="center">
+        <div class="climate-chart-container">
+            <ejs-chart
+                id="climateChart"
+                load="load"
+                loaded="chartLoaded"
+                legendRender="legendRender"
+                title="Global Climate Pulse"
+                subTitle="Monthly global climate signals during 2025 • Copernicus C3S • NOAA GML • NSIDC"
+                style="display: block; text-align: center"
+            >
+                <e-chart-titlestyle
+                    textAlignment="@Alignment.Near"
+                    fontFamily="Segoe UI"
+                    fontWeight="700"
+                    size="24px"
+                    textOverflow="@TextOverflow.Wrap">
+                </e-chart-titlestyle>
+
+                <e-chart-subtitlestyle
+                    textAlignment="@Alignment.Near"
+                    fontFamily="Segoe UI"
+                    fontWeight="500"
+                    size="13px"
+                    textOverflow="@TextOverflow.Wrap">
+                </e-chart-subtitlestyle>
+
+                <e-chart-chartarea>
+                    <e-chartarea-border width="0">
+                    </e-chartarea-border>
+                </e-chart-chartarea>
+
+                <e-chart-primaryxaxis
+                    valueType="@Syncfusion.EJ2.Charts.ValueType.DateTimeCategory"
+                    intervalType="@IntervalType.Months"
+                    interval="1"
+                    labelFormat="MMM"
+                    edgeLabelPlacement="@EdgeLabelPlacement.Shift"
+                    plotOffsetLeft="10"
+                    plotOffsetRight="10"
+                >
+                    <e-majorgridlines width="0">
+                    </e-majorgridlines>
+
+                    <e-minorgridlines width="0">
+                    </e-minorgridlines>
+
+                    <e-majorticklines width="0">
+                    </e-majorticklines>
+
+                    <e-linestyle width="0">
+                    </e-linestyle>
+
+                    <e-labelstyle
+                        fontFamily="Segoe UI"
+                        fontWeight="600"
+                        size="12px">
+                    </e-labelstyle>
+                </e-chart-primaryxaxis>
+
+                <e-chart-primaryyaxis
+                    title="Temperature Anomaly (°C)"
+                    minimum="1.2"
+                    maximum="1.8"
+                    interval="0.1"
+                    labelFormat="{value}°C"
+                    edgeLabelPlacement="@EdgeLabelPlacement.Shift"
+                >
+                    <e-majorgridlines
+                        width="1"
+                        dashArray="3,4">
+                    </e-majorgridlines>
+
+                    <e-minorgridlines width="0">
+                    </e-minorgridlines>
+
+                    <e-majorticklines width="0">
+                    </e-majorticklines>
+
+                    <e-linestyle
+                        width="1.5"
+                        color="#F97316">
+                    </e-linestyle>
+
+                    <e-labelstyle
+                        fontFamily="Segoe UI"
+                        fontWeight="600"
+                        size="12px"
+                        color="#EA580C">
+                    </e-labelstyle>
+
+                    <e-titlestyle
+                        fontFamily="Segoe UI"
+                        fontWeight="700"
+                        size="13px"
+                        color="#EA580C"
+                        textAlignment="@Alignment.Center">
+                    </e-titlestyle>
+                </e-chart-primaryyaxis>
+
+                <e-chart-axes>
+                    <e-chart-axis
+                        name="CO2Axis"
+                        title="Atmospheric CO₂ (ppm)"
+                        opposedPosition="true"
+                        minimum="422"
+                        maximum="432"
+                        interval="2"
+                        labelFormat="{value} ppm"
+                        edgeLabelPlacement="@EdgeLabelPlacement.Shift"
+                    >
+                        <e-majorgridlines width="0">
+                        </e-majorgridlines>
+
+                        <e-minorgridlines width="0">
+                        </e-minorgridlines>
+
+                        <e-majorticklines width="0">
+                        </e-majorticklines>
+
+                        <e-linestyle
+                            width="1.5"
+                            color="#2563EB">
+                        </e-linestyle>
+
+                        <e-labelstyle
+                            fontFamily="Segoe UI"
+                            fontWeight="600"
+                            size="12px"
+                            color="#2563EB">
+                        </e-labelstyle>
+
+                        <e-titlestyle
+                            fontFamily="Segoe UI"
+                            fontWeight="700"
+                            size="13px"
+                            color="#2563EB"
+                            textAlignment="@Alignment.Center">
+                        </e-titlestyle>
+                    </e-chart-axis>
+
+                    <e-chart-axis
+                        name="SeaIceAxis"
+                        title="Arctic Sea Ice (million km²)"
+                        opposedPosition="true"
+                        minimum="4"
+                        maximum="16"
+                        interval="2"
+                        labelFormat="{value}M"
+                        edgeLabelPlacement="@EdgeLabelPlacement.Shift"
+                    >
+                        <e-majorgridlines width="0">
+                        </e-majorgridlines>
+
+                        <e-minorgridlines width="0">
+                        </e-minorgridlines>
+
+                        <e-majorticklines width="0">
+                        </e-majorticklines>
+
+                        <e-linestyle
+                            width="1.5"
+                            color="#059669">
+                        </e-linestyle>
+
+                        <e-labelstyle
+                            fontFamily="Segoe UI"
+                            fontWeight="600"
+                            size="12px"
+                            color="#059669">
+                        </e-labelstyle>
+
+                        <e-titlestyle
+                            fontFamily="Segoe UI"
+                            fontWeight="700"
+                            size="13px"
+                            color="#059669"
+                            textAlignment="@Alignment.Center">
+                        </e-titlestyle>
+                    </e-chart-axis>
+                </e-chart-axes>
+
+                <e-chart-tooltipsettings
+                    enable="true"
+                    shared="true"
+                    enableMarker="true"
+                    opacity="0.97"
+                    header="<b>${point.x}</b>"
+                    format="${series.name} : <b>${point.y}</b>">
+                </e-chart-tooltipsettings>
+
+                <e-chart-crosshairsettings
+                    enable="true"
+                    lineType="@LineType.Vertical"
+                    dashArray="4,4"
+                >
+                    <e-crosshairsettings-line width="1">
+                    </e-crosshairsettings-line>
+                </e-chart-crosshairsettings>
+
+                <e-chart-legendsettings
+                    visible="true"
+                    position="@LegendPosition.Bottom"
+                    alignment="@Alignment.Center"
+                    shapeWidth="10"
+                    shapeHeight="10"
+                    shapePadding="8"
+                    padding="24"
+                    enableHighlight="true"
+                    toggleVisibility="false"
+                >
+                    <e-legendsettings-textstyle
+                        fontFamily="Segoe UI"
+                        fontWeight="600"
+                        size="12px">
+                    </e-legendsettings-textstyle>
+                </e-chart-legendsettings>
+
+                <e-chart-annotations>
+                    <e-chart-annotation
+                        content="@co2Annotation"
+                        x="0"
+                        y="430.51"
+                        coordinateUnits="@Units.Point"
+                        region="@Regions.Chart"
+                        yAxisName="CO2Axis">
+                    </e-chart-annotation>
+
+                    <e-chart-annotation
+                        content="@seaIceAnnotation"
+                        x="0"
+                        y="4.68"
+                        coordinateUnits="@Units.Point"
+                        region="@Regions.Chart"
+                        yAxisName="SeaIceAxis">
+                    </e-chart-annotation>
+
+                    <e-chart-annotation
+                        content="@temperatureAnnotation"
+                        x="0"
+                        y="1.75"
+                        coordinateUnits="@Units.Point"
+                        region="@Regions.Chart">
+                    </e-chart-annotation>
+                </e-chart-annotations>
+
+                <e-series-collection>
+                    <e-series
+                        dataSource="@Model.ChartPoints"
+                        type="@ChartSeriesType.Area"
+                        name="Arctic Sea Ice (million km²)"
+                        xName="Month"
+                        yName="SeaIceExtent"
+                        yAxisName="SeaIceAxis"
+                        fill="#10B981"
+                        opacity="1"
+                        width="2.5"
+                        linearGradient="@seaIceGradient"
+                    >
+                        <e-series-border
+                            width="2.5"
+                            color="#059669">
+                        </e-series-border>
+
+                        <e-series-marker
+                            visible="true"
+                            shape="@ChartShape.Rectangle"
+                            width="8"
+                            height="8"
+                            isFilled="true"
+                            fill="#10B981">
+                        </e-series-marker>
+
+                        <e-series-animation
+                            enable="true"
+                            duration="1200"
+                            delay="0">
+                        </e-series-animation>
+                    </e-series>
+
+                    <e-series
+                        dataSource="@Model.ChartPoints"
+                        type="@ChartSeriesType.Line"
+                        name="Temperature Anomaly (°C)"
+                        xName="Month"
+                        yName="TemperatureAnomaly"
+                        fill="#F97316"
+                        width="4"
+                        linearGradient="@temperatureGradient"
+                    >
+                        <e-series-marker
+                            visible="true"
+                            shape="@ChartShape.Circle"
+                            width="8"
+                            height="8"
+                            isFilled="true"
+                            fill="#F97316">
+                        </e-series-marker>
+
+                        <e-series-animation
+                            enable="true"
+                            duration="1400"
+                            delay="450">
+                        </e-series-animation>
+                    </e-series>
+
+                    <e-series
+                        dataSource="@Model.ChartPoints"
+                        type="@ChartSeriesType.Spline"
+                        splineType="@SplineType.Natural"
+                        name="Atmospheric CO₂ (ppm)"
+                        xName="Month"
+                        yName="AtmosphericCO2"
+                        yAxisName="CO2Axis"
+                        fill="#2563EB"
+                        width="3.5"
+                        linearGradient="@co2Gradient"
+                    >
+                        <e-series-marker
+                            visible="true"
+                            shape="@ChartShape.Diamond"
+                            width="8"
+                            height="8"
+                            isFilled="true"
+                            fill="#2563EB">
+                        </e-series-marker>
+
+                        <e-series-animation
+                            enable="true"
+                            duration="1400"
+                            delay="950">
+                        </e-series-animation>
+                    </e-series>
+                </e-series-collection>
+            </ejs-chart>
+        </div>
+    </div>
+    <script src="~/scripts/chart/theme-color.js"></script>
+
+    <script>
+        function load(args) {
+            loadChartTheme(args);
+            args.chart.width = ej.base.Browser.isDevice ? '100%' : '90%';
+            args.chart.annotations[0].x = new Date(2025, 4, 1);
+            args.chart.annotations[1].x = new Date(2025, 8, 1);
+            args.chart.annotations[2].x = new Date(2025, 0, 1);
+            var chartElement = args.chart.element;
+            if (args.chart.enableRtl) {
+                chartElement.classList.add('climate-chart-rtl');
+            } else {
+                chartElement.classList.remove('climate-chart-rtl');
+            }
+        }
+
+        function chartLoaded() {
+            var chartElement = document.getElementById('climateChart');
+
+            if (chartElement) {
+                chartElement.setAttribute('title', '');
+            }
+        }
+
+        function legendRender(args) {
+            if (args.text === 'Temperature Anomaly (°C)') {
+                args.shape = 'Circle';
+                args.fill = '#F97316';
+            } else if (args.text === 'Atmospheric CO₂ (ppm)') {
+                args.shape = 'Diamond';
+                args.fill = '#2563EB';
+            } else if (
+                args.text === 'Arctic Sea Ice (million km²)'
+            ) {
+                args.shape = 'Rectangle';
+                args.fill = '#10B981';
+            }
+        }
+    </script>
+}
+
+@* custom code start *@
+@section Scripts {
+}
+
+<style>
+    #control-container {
+        padding: 0 !important;
+    }
+
+    .climate-chart-container {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 18px 20px 8px;
+        background: transparent;
+        border: 1px solid #dce5ef;
+        border-radius: 18px;
+        box-shadow:
+            0 1px 2px rgba(15, 23, 42, 0.03),
+            0 10px 28px rgba(15, 23, 42, 0.06);
+    }
+
+    .climate-feature-list {
+        margin: 12px 0;
+        padding-left: 24px;
+        list-style-type: disc;
+    }
+
+    .climate-feature-list li {
+        display: list-item;
+        margin-bottom: 6px;
+    }
+
+    .climate-insight {
+        position: relative;
+        width: 0;
+        height: 0;
+        pointer-events: none;
+    }
+
+    .climate-insight-marker {
+        position: absolute;
+        top: -7px;
+        left: -7px;
+        z-index: 3;
+        width: 14px;
+        height: 14px;
+        box-sizing: border-box;
+        border: 2px solid #fff;
+        background: currentColor;
+    }
+
+    .climate-insight-marker-circle {
+        border-radius: 50%;
+    }
+
+    .climate-insight-marker-diamond {
+        transform: rotate(45deg);
+    }
+
+    .climate-insight-marker-rectangle {
+        border-radius: 2px;
+    }
+
+    .climate-insight-leader {
+        position: absolute;
+        z-index: 2;
+        background: currentColor;
+        opacity: 0.55;
+    }
+
+    .climate-insight-pill {
+        position: absolute;
+        z-index: 2;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 32px;
+        box-sizing: border-box;
+        padding: 6px 12px 6px 8px;
+        border: 1px solid #dbe4ee;
+        border-radius: 8px;
+        background: var(--sf-chart-bg, #fff);
+        box-shadow: 0 6px 16px rgba(15, 23, 42, 0.12);
+        color: #334155;
+        font-family: "Segoe UI", sans-serif;
+        font-size: 11px;
+        font-weight: 600;
+        line-height: 14px;
+        white-space: nowrap;
+    }
+
+    .climate-insight-anchor-down .climate-insight-pill {
+        top: 34px;
+        left: 0;
+        transform: translate(-50%, 0);
+    }
+
+    .climate-insight-anchor-down .climate-insight-leader {
+        top: 9px;
+        left: 0;
+        width: 1.5px;
+        height: 23px;
+        transform: translateX(-50%);
+    }
+
+    .climate-insight-anchor-up .climate-insight-pill {
+        top: -34px;
+        left: 0;
+        transform: translate(-50%, -100%);
+    }
+
+    .climate-insight-anchor-up .climate-insight-leader {
+        top: -32px;
+        left: 0;
+        width: 1.5px;
+        height: 23px;
+        transform: translateX(-50%);
+    }
+
+    .climate-insight-anchor-right .climate-insight-pill {
+        top: 0;
+        left: 34px;
+        transform: translate(0, -50%);
+    }
+
+    .climate-insight-anchor-right .climate-insight-leader {
+        top: 0;
+        left: 9px;
+        width: 23px;
+        height: 1.5px;
+        transform: translateY(-50%);
+    }
+
+    .climate-chart-rtl
+    .climate-insight-anchor-right
+    .climate-insight-pill {
+        right: 34px;
+        left: auto;
+        transform: translate(0, -50%);
+    }
+
+    .climate-chart-rtl
+    .climate-insight-anchor-right
+    .climate-insight-leader {
+        right: 9px;
+        left: auto;
+        width: 23px;
+        height: 1.5px;
+        transform: translateY(-50%);
+    }
+    .climate-insight-pin {
+        width: 9px;
+        height: 9px;
+        flex: 0 0 9px;
+    }
+
+    .climate-insight-pin-circle {
+        border-radius: 50%;
+    }
+
+    .climate-insight-pin-diamond {
+        transform: rotate(45deg);
+    }
+
+    .climate-insight-pin-rectangle {
+        border-radius: 1.5px;
+    }
+
+    .climate-insight-label {
+        color: #334155;
+        font-weight: 600;
+    }
+
+    .climate-insight-value {
+        padding: 1px 6px;
+        border-radius: 4px;
+        background: rgba(15, 23, 42, 0.04);
+        font-weight: 700;
+    }
+
+    .climate-insight-blue {
+        color: #2563eb;
+    }
+
+    .climate-insight-blue .climate-insight-pin {
+        background: #2563eb;
+    }
+
+    .climate-insight-blue .climate-insight-value {
+        color: #1d4ed8;
+        background: rgba(37, 99, 235, 0.1);
+    }
+
+    .climate-insight-green {
+        color: #059669;
+    }
+
+    .climate-insight-green .climate-insight-pin {
+        background: #059669;
+    }
+
+    .climate-insight-green .climate-insight-value {
+        color: #047857;
+        background: rgba(5, 150, 105, 0.1);
+    }
+
+    .climate-insight-orange {
+        color: #ea580c;
+    }
+
+    .climate-insight-orange .climate-insight-pin {
+        background: #ea580c;
+    }
+
+    .climate-insight-orange .climate-insight-value {
+        color: #c2410c;
+        background: rgba(234, 88, 12, 0.1);
+    }
+
+    @@media only screen and (max-width: 640px) {
+        .climate-chart-container {
+            padding: 12px 8px 6px;
+            border-radius: 12px;
+        }
+
+        .climate-insight-pill {
+            min-height: 26px;
+            gap: 5px;
+            padding: 4px 8px 4px 6px;
+            font-size: 10px;
+            line-height: 12px;
+        }
+
+        .climate-insight-value {
+            display: none;
+        }
+    }
+</style>
+
+@section Meta {
+    <meta
+        name="description"
+        content="This example demonstrates a multi-axis combination chart in the ASP.NET Core Chart control. Explore here for more details." />
+}
+@* custom code end *@
+
+@section ActionDescription {
+    <p>
+        This example visualizes monthly global climate signals during 2025
+        using temperature anomaly, atmospheric CO₂, and Arctic sea ice extent
+        data. Multiple axes are used to compare measurements with different
+        units and value ranges in a single chart.
+    </p>
+}
+
+@section Description {
+    <p>
+        The chart demonstrates how unrelated datasets with different value
+        ranges can be plotted together to provide a unified view of climate
+        signals.
+    </p>
+
+    <p>
+        In this example, the combination chart is configured with the following
+        features:
+    </p>
+
+    <ul class="climate-feature-list">
+        <li>
+            An area series for Arctic sea ice extent on the outer-right Y axis.
+        </li>
+        <li>
+            A line series for temperature anomalies on the primary Y axis.
+        </li>
+        <li>
+            A spline series for atmospheric CO₂ on the inner-right Y axis.
+        </li>
+        <li>
+            Distinct color-coded axes, labels, and legends for each measurement.
+        </li>
+        <li>
+            Annotations that highlight the temperature anomaly peak, seasonal
+            CO₂ peak, and annual sea ice minimum.
+        </li>
+    </ul>
+
+    <p>
+        <code>Tooltip</code> and <code>Crosshair</code> are enabled in this
+        example. Hover over a point or tap on one on touch-enabled devices to
+        display the shared tooltip. Move the pointer along the chart to track
+        values across all three axes.
+    </p>
+
+    <p>
+        More information about multiple axes can be found in this
+        <a
+            target="_blank"
+            href="https://ej2.syncfusion.com/aspnetcore/documentation/chart/axis-customization#multiple-axis">
+            documentation section
+        </a>.
+    </p>
+}
+
+@section Title {
+    <title>
+        ASP.NET Core Chart Multi-Axis Combination Example - Syncfusion Demos
+    </title>
+}
+
+@section Header {
+    <h1 class="sb-sample-text">
+        Example of Multi-Axis Combination Chart in ASP.NET Core Chart Control
+    </h1>
+}
